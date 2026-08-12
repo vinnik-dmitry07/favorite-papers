@@ -1,0 +1,48 @@
+{
+  "arxiv": {
+    "2405.12250": "Your Transformer is Secretly Linear",
+    "2201.00650": "Deep Learning Interviews: Hundreds of fully solved job interview questions from a wide range of key topics in AI",
+    "2501.04519": "rStar-Math: Small LLMs Can Master Math Reasoning with Self-Evolved Deep Thinking",
+    "2501.05441": "The GAN is dead; long live the GAN! A Modern GAN Baseline"
+  },
+  "openreview": {
+    "BZ5a1r-kVsf": "<not resolved>",
+    "pOoKI3ouv1": "<not resolved>",
+    "hcQfTsVnBo": "<not resolved>",
+    "OpC-9aBBVJe": "<not resolved>",
+    "wUU-7XTL5XO": "<not resolved>",
+    "ry_WPG-A-": "<not resolved>",
+    "s0JVsx3bx1": "<not resolved>",
+    "bA6BgSbaUi": "<not resolved>",
+    "NhU661EZ9C": "<not resolved>",
+    "XyGJJ4FPoX": "<not resolved>"
+  },
+  "acl": {
+    "2022.acl-long.360": "PRIMERA: Pyramid-based Masked Sentence Pre-training for Multi-document Summarization - ACL Anthology",
+    "2022.emnlp-main.340": "Super-NaturalInstructions: Generalization via Declarative Instructions on 1600+ NLP Tasks - ACL Anthology",
+    "2023.acl-demo.51": "A System for Answering Simple Questions in Multiple Languages - ACL Anthology",
+    "2025.acl-long.126": "INVESTORBENCH: A Benchmark for Financial Decision-Making Tasks with LLM-based Agent - ACL Anthology"
+  },
+  "doi": {
+    "10.1038/s44222-022-00001-9": "Synthetic morphology with agential materials (2023, Nature Reviews Bioengineering)",
+    "10.1038/s42256-023-00754-x": "A social path to human-like artificial intelligence (2023, Nature Machine Intelligence)",
+    "10.1038/d41586-024-01413-w": "Why mathematics is set to be revolutionized by AI (2024, Nature)",
+    "10.1038/s41566-024-01394-2": "Inverse-designed low-index-contrast structures on a silicon photonics platform for vector–matrix multiplication (2024, Nature Photonics)",
+    "10.1038/s41377-022-00717-8": "Photonic matrix multiplication lights up photonic accelerator and beyond (2022, Light: Science &amp; Applications)",
+    "10.1038/s41586-024-07522-w": "Language is primarily a tool for communication rather than thought (2024, Nature)",
+    "10.1038/s41586-024-07711-7": "Loss of plasticity in deep continual learning (2024, Nature)",
+    "10.1038/s41582-021-00464-1": "Cycles in epilepsy (2021, Nature Reviews Neurology)",
+    "10.1038/s41583-022-00642-0": "Attractor and integrator networks in the brain (2022, Nature Reviews Neuroscience)",
+    "10.1038/s41467-021-26568-2": "Correspondence between neuroevolution and gradient descent (2021, Nature Communications)",
+    "10.1126/science.adn9083": "In vivo dendritic cell reprogramming for cancer immunotherapy (2024, Science)",
+    "10.1371/journal.pcbi.1011005": "Neural spiking for causal inference and learning (2023, PLOS Computational Biology)",
+    "10.1111/tops.12278": "Analogy and Abstraction (2017, Topics in Cognitive Science)",
+    "10.1137/030601879": "Sampling Rotation Groups by Successive Orthogonal Images (2008, SIAM Journal on Scientific Computing)"
+  },
+  "biorxiv": {
+    "10.1101/2023.04.04.535512": "Emergence of belief-like representations through reinforcement learning",
+    "10.1101/2023.03.27.534424": "Five years later, with double the demographic data, naked mole-rat mortality rates continue to defy Gompertzian laws by not increasing with age",
+    "10.1101/2024.05.24.595748": "The fruit fly, Drosophila melanogaster, as a micro-robotics platform.",
+    "10.1101/2024.02.22.581686": "MetaWorm: An Integrative Data-Driven Model Simulating C. elegans Brain, Body and Environment Interactions"
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "2112.04035": {
+    "title": "Relating transformers to models and neural representations of the hippocampal formation",
+    "published": "2021-12-07",
+    "authors": [
+      "James C. R. Whittington",
+      "Joseph Warren",
+      "Timothy E. J. Behrens"
+    ]
+  },
+  "1905.10985": {
+    "title": "AI-GAs: AI-generating algorithms, an alternate paradigm for producing general artificial intelligence",
+    "published": "2019-05-27",
+    "authors": [
+      "Jeff Clune"
+    ]
+  },
+  "2505.13763": {
+    "title": "Language Models Are Capable of Metacognitive Monitoring and Control of Their Internal Activations",
+    "published": "2025-05-19",
+    "authors": [
+      "Li Ji-An",
+      "Hua-Dong Xiong",
+      "Robert C. Wilson"
+    ]
+  },
+  "2502.00873": {
+    "title": "Language Models Use Trigonometry to Do Addition",
+    "published": "2025-02-02",
+    "authors": [
+      "Subhash Kantamneni",
+      "Max Tegmark"
+    ]
+  },
+  "2508.16204": {
+    "title": "Competition and Attraction Improve Model Fusion",
+    "published": "2025-08-22",
+    "authors": [
+      "João Abrantes",
+      "Robert Tjarko Lange",
+      "Yujin Tang"
+    ]
+  },
+  "2201.09746": {
+    "title": "Reinforcement Learning Textbook",
+    "published": "2022-01-19",
+    "authors": [
+      "Sergey Ivanov"
+    ]
+  },
+  "2505.22954": {
+    "title": "Darwin Godel Machine: Open-Ended Evolution of Self-Improving Agents",
+    "published": "2025-05-29",
+    "authors": [
+      "Jenny Zhang",
+      "Shengran Hu",
+      "Cong Lu"
+    ]
+  },
+  "2509.03646": {
+    "title": "Emergent Hierarchical Reasoning in LLMs through Reinforcement Learning",
+    "published": "2025-09-03",
+    "authors": [
+      "Haozhe Wang",
+      "Qixin Xu",
+      "Che Liu"
+    ]
+  },
+  "2405.15071": {
+    "title": "Grokked Transformers are Implicit Reasoners: A Mechanistic Journey to the Edge of Generalization",
+    "published": "2024-05-23",
+    "authors": [
+      "Boshi Wang",
+      "Xiang Yue",
+      "Yu Su"
+    ]
+  }
+}

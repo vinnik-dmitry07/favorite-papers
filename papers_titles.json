@@ -1,0 +1,1590 @@
+{
+  "2006.09882": {
+    "title": "Unsupervised Learning of Visual Features by Contrasting Cluster Assignments",
+    "published": "2020-06-17",
+    "authors": [
+      "Mathilde Caron",
+      "Ishan Misra",
+      "Julien Mairal",
+      "Priya Goyal"
+    ]
+  },
+  "2011.14826": {
+    "title": "Revisiting Rainbow: Promoting more Insightful and Inclusive Deep Reinforcement Learning Research",
+    "published": "2020-11-20",
+    "authors": [
+      "Johan S. Obando-Ceron",
+      "Pablo Samuel Castro"
+    ]
+  },
+  "1809.04356": {
+    "title": "Deep learning for time series classification: a review",
+    "published": "2018-09-12",
+    "authors": [
+      "Hassan Ismail Fawaz",
+      "Germain Forestier",
+      "Jonathan Weber",
+      "Lhassane Idoumghar"
+    ]
+  },
+  "2105.13016": {
+    "title": "Stylizing 3D Scene via Implicit Representation and HyperNetwork",
+    "published": "2021-05-27",
+    "authors": [
+      "Pei-Ze Chiang",
+      "Meng-Shiun Tsai",
+      "Hung-Yu Tseng",
+      "Wei-sheng Lai"
+    ]
+  },
+  "1910.01708": {
+    "title": "Benchmarking Batch Deep Reinforcement Learning Algorithms",
+    "published": "2019-10-03",
+    "authors": [
+      "Scott Fujimoto",
+      "Edoardo Conti",
+      "Mohammad Ghavamzadeh",
+      "Joelle Pineau"
+    ]
+  },
+  "2002.05867": {
+    "title": "Transformers as Soft Reasoners over Language",
+    "published": "2020-02-14",
+    "authors": [
+      "Peter Clark",
+      "Oyvind Tafjord",
+      "Kyle Richardson"
+    ]
+  },
+  "1506.01186": {
+    "title": "Cyclical Learning Rates for Training Neural Networks",
+    "published": "2015-06-03",
+    "authors": [
+      "Leslie N. Smith"
+    ]
+  },
+  "2001.08361": {
+    "title": "Scaling Laws for Neural Language Models",
+    "published": "2020-01-23",
+    "authors": [
+      "Jared Kaplan",
+      "Sam McCandlish",
+      "Tom Henighan",
+      "Tom B. Brown"
+    ]
+  },
+  "2002.05202": {
+    "title": "GLU Variants Improve Transformer",
+    "published": "2020-02-12",
+    "authors": [
+      "Noam Shazeer"
+    ]
+  },
+  "2006.07982": {
+    "title": "ShapeFlow: Learnable Deformations Among 3D Shapes",
+    "published": "2020-06-14",
+    "authors": [
+      "Chiyu \"Max\" Jiang",
+      "Jingwei Huang",
+      "Andrea Tagliasacchi",
+      "Leonidas Guibas"
+    ]
+  },
+  "2106.06860": {
+    "title": "A Minimalist Approach to Offline Reinforcement Learning",
+    "published": "2021-06-12",
+    "authors": [
+      "Scott Fujimoto",
+      "Shixiang Shane Gu"
+    ]
+  },
+  "2009.04759": {
+    "title": "Activate or Not: Learning Customized Activation",
+    "published": "2020-09-10",
+    "authors": [
+      "Ningning Ma",
+      "Xiangyu Zhang",
+      "Ming Liu",
+      "Jian Sun"
+    ]
+  },
+  "2004.12919": {
+    "title": "First return, then explore",
+    "published": "2020-04-27",
+    "authors": [
+      "Adrien Ecoffet",
+      "Joost Huizinga",
+      "Joel Lehman",
+      "Kenneth O. Stanley"
+    ]
+  },
+  "1810.04805": {
+    "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+    "published": "2018-10-11",
+    "authors": [
+      "Jacob Devlin",
+      "Ming-Wei Chang",
+      "Kenton Lee",
+      "Kristina Toutanova"
+    ]
+  },
+  "1807.02787": {
+    "title": "Financial Trading as a Game: A Deep Reinforcement Learning Approach",
+    "published": "2018-07-08",
+    "authors": [
+      "Chien Yi Huang"
+    ]
+  },
+  "1710.05941": {
+    "title": "Searching for Activation Functions",
+    "published": "2017-10-16",
+    "authors": [
+      "Prajit Ramachandran",
+      "Barret Zoph",
+      "Quoc V. Le"
+    ]
+  },
+  "1712.06567": {
+    "title": "Deep Neuroevolution: Genetic Algorithms Are a Competitive Alternative for Training Deep Neural Networks for Reinforcement Learning",
+    "published": "2017-12-18",
+    "authors": [
+      "Felipe Petroski Such",
+      "Vashisht Madhavan",
+      "Edoardo Conti",
+      "Joel Lehman"
+    ]
+  },
+  "1801.01290": {
+    "title": "Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor",
+    "published": "2018-01-04",
+    "authors": [
+      "Tuomas Haarnoja",
+      "Aurick Zhou",
+      "Pieter Abbeel",
+      "Sergey Levine"
+    ]
+  },
+  "1611.06455": {
+    "title": "Time Series Classification from Scratch with Deep Neural Networks: A Strong Baseline",
+    "published": "2016-11-20",
+    "authors": [
+      "Zhiguang Wang",
+      "Weizhong Yan",
+      "Tim Oates"
+    ]
+  },
+  "1707.06887": {
+    "title": "A Distributional Perspective on Reinforcement Learning",
+    "published": "2017-07-21",
+    "authors": [
+      "Marc G. Bellemare",
+      "Will Dabney",
+      "Rémi Munos"
+    ]
+  },
+  "2010.11967": {
+    "title": "Language Models are Open Knowledge Graphs",
+    "published": "2020-10-22",
+    "authors": [
+      "Chenguang Wang",
+      "Xiao Liu",
+      "Dawn Song"
+    ]
+  },
+  "2002.11887": {
+    "title": "Using a thousand optimization tasks to learn hyperparameter search strategies",
+    "published": "2020-02-27",
+    "authors": [
+      "Luke Metz",
+      "Niru Maheswaranathan",
+      "Ruoxi Sun",
+      "C. Daniel Freeman"
+    ]
+  },
+  "2104.14294": {
+    "title": "Emerging Properties in Self-Supervised Vision Transformers",
+    "published": "2021-04-29",
+    "authors": [
+      "Mathilde Caron",
+      "Hugo Touvron",
+      "Ishan Misra",
+      "Hervé Jégou"
+    ]
+  },
+  "2101.02235": {
+    "title": "Did Aristotle Use a Laptop? A Question Answering Benchmark with Implicit Reasoning Strategies",
+    "published": "2021-01-06",
+    "authors": [
+      "Mor Geva",
+      "Daniel Khashabi",
+      "Elad Segal",
+      "Tushar Khot"
+    ]
+  },
+  "2003.01859": {
+    "title": "Applications of deep learning in stock market prediction: recent progress",
+    "published": "2020-02-29",
+    "authors": [
+      "Weiwei Jiang"
+    ]
+  },
+  "1511.06581": {
+    "title": "Dueling Network Architectures for Deep Reinforcement Learning",
+    "published": "2015-11-20",
+    "authors": [
+      "Ziyu Wang",
+      "Tom Schaul",
+      "Matteo Hessel",
+      "Hado van Hasselt"
+    ]
+  },
+  "1511.05952": {
+    "title": "Prioritized Experience Replay",
+    "published": "2015-11-18",
+    "authors": [
+      "Tom Schaul",
+      "John Quan",
+      "Ioannis Antonoglou",
+      "David Silver"
+    ]
+  },
+  "1509.06461": {
+    "title": "Deep Reinforcement Learning with Double Q-learning",
+    "published": "2015-09-22",
+    "authors": [
+      "Hado van Hasselt",
+      "Arthur Guez",
+      "David Silver"
+    ]
+  },
+  "2012.02689": {
+    "title": "Isometric Multi-Shape Matching",
+    "published": "2020-12-04",
+    "authors": [
+      "Maolin Gao",
+      "Zorah Lähner",
+      "Johan Thunberg",
+      "Daniel Cremers"
+    ]
+  },
+  "2005.01643": {
+    "title": "Offline Reinforcement Learning: Tutorial, Review, and Perspectives on Open Problems",
+    "published": "2020-05-04",
+    "authors": [
+      "Sergey Levine",
+      "Aviral Kumar",
+      "George Tucker",
+      "Justin Fu"
+    ]
+  },
+  "2009.11243": {
+    "title": "Tasks, stability, architecture, and compute: Training more effective learned optimizers, and using them to train themselves",
+    "published": "2020-09-23",
+    "authors": [
+      "Luke Metz",
+      "Niru Maheswaranathan",
+      "C. Daniel Freeman",
+      "Ben Poole"
+    ]
+  },
+  "2011.13388": {
+    "title": "3DSNet: Unsupervised Shape-to-Shape 3D Style Transfer",
+    "published": "2020-11-26",
+    "authors": [
+      "Mattia Segu",
+      "Margarita Grinvald",
+      "Roland Siegwart",
+      "Federico Tombari"
+    ]
+  },
+  "2012.07436": {
+    "title": "Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting",
+    "published": "2020-12-14",
+    "authors": [
+      "Haoyi Zhou",
+      "Shanghang Zhang",
+      "Jieqi Peng",
+      "Shuai Zhang"
+    ]
+  },
+  "1708.07120": {
+    "title": "Super-Convergence: Very Fast Training of Neural Networks Using Large Learning Rates",
+    "published": "2017-08-23",
+    "authors": [
+      "Leslie N. Smith",
+      "Nicholay Topin"
+    ]
+  },
+  "1608.08242": {
+    "title": "Temporal Convolutional Networks: A Unified Approach to Action Segmentation",
+    "published": "2016-08-29",
+    "authors": [
+      "Colin Lea",
+      "Rene Vidal",
+      "Austin Reiter",
+      "Gregory D. Hager"
+    ]
+  },
+  "1710.02298": {
+    "title": "Rainbow: Combining Improvements in Deep Reinforcement Learning",
+    "published": "2017-10-06",
+    "authors": [
+      "Matteo Hessel",
+      "Joseph Modayil",
+      "Hado van Hasselt",
+      "Tom Schaul"
+    ]
+  },
+  "1802.09477": {
+    "title": "Addressing Function Approximation Error in Actor-Critic Methods",
+    "published": "2018-02-26",
+    "authors": [
+      "Scott Fujimoto",
+      "Herke van Hoof",
+      "David Meger"
+    ]
+  },
+  "1803.03635": {
+    "title": "The Lottery Ticket Hypothesis: Finding Sparse, Trainable Neural Networks",
+    "published": "2018-03-09",
+    "authors": [
+      "Jonathan Frankle",
+      "Michael Carbin"
+    ]
+  },
+  "1706.10059": {
+    "title": "A Deep Reinforcement Learning Framework for the Financial Portfolio Management Problem",
+    "published": "2017-06-30",
+    "authors": [
+      "Zhengyao Jiang",
+      "Dixing Xu",
+      "Jinjun Liang"
+    ]
+  },
+  "1912.01683": {
+    "title": "Optimal Policies Tend to Seek Power",
+    "published": "2019-12-03",
+    "authors": [
+      "Alexander Matt Turner",
+      "Logan Smith",
+      "Rohin Shah",
+      "Andrew Critch"
+    ]
+  },
+  "2301.06627": {
+    "title": "Dissociating language and thought in large language models",
+    "published": "2023-01-16",
+    "authors": [
+      "Kyle Mahowald",
+      "Anna A. Ivanova",
+      "Idan A. Blank",
+      "Nancy Kanwisher"
+    ]
+  },
+  "2302.06675": {
+    "title": "Symbolic Discovery of Optimization Algorithms",
+    "published": "2023-02-13",
+    "authors": [
+      "Xiangning Chen",
+      "Chen Liang",
+      "Da Huang",
+      "Esteban Real"
+    ]
+  },
+  "2304.06528": {
+    "title": "Power-seeking can be probable and predictive for trained agents",
+    "published": "2023-04-13",
+    "authors": [
+      "Victoria Krakovna",
+      "Janos Kramar"
+    ]
+  },
+  "2206.13477": {
+    "title": "Parametrically Retargetable Decision-Makers Tend To Seek Power",
+    "published": "2022-06-27",
+    "authors": [
+      "Alexander Matt Turner",
+      "Prasad Tadepalli"
+    ]
+  },
+  "2111.11755": {
+    "title": "Guided-TTS: A Diffusion Model for Text-to-Speech via Classifier Guidance",
+    "published": "2021-11-23",
+    "authors": [
+      "Heeseung Kim",
+      "Sungwon Kim",
+      "Sungroh Yoon"
+    ]
+  },
+  "2208.00748": {
+    "title": "Efficient Long-Text Understanding with Short-Text Models",
+    "published": "2022-08-01",
+    "authors": [
+      "Maor Ivgi",
+      "Uri Shaham",
+      "Jonathan Berant"
+    ]
+  },
+  "2112.04139": {
+    "title": "Bidimensional Leaderboards: Generate and Evaluate Language Hand in Hand",
+    "published": "2021-12-08",
+    "authors": [
+      "Jungo Kasai",
+      "Keisuke Sakaguchi",
+      "Ronan Le Bras",
+      "Lavinia Dunagan"
+    ]
+  },
+  "2110.09485": {
+    "title": "Learning in High Dimension Always Amounts to Extrapolation",
+    "published": "2021-10-18",
+    "authors": [
+      "Randall Balestriero",
+      "Jerome Pesenti",
+      "Yann LeCun"
+    ]
+  },
+  "2111.07832": {
+    "title": "iBOT: Image BERT Pre-Training with Online Tokenizer",
+    "published": "2021-11-15",
+    "authors": [
+      "Jinghao Zhou",
+      "Chen Wei",
+      "Huiyu Wang",
+      "Wei Shen"
+    ]
+  },
+  "2203.08913": {
+    "title": "Memorizing Transformers",
+    "published": "2022-03-16",
+    "authors": [
+      "Yuhuai Wu",
+      "Markus N. Rabe",
+      "DeLesley Hutchins",
+      "Christian Szegedy"
+    ]
+  },
+  "2112.03978": {
+    "title": "Attractor and integrator networks in the brain",
+    "published": "2021-12-07",
+    "authors": [
+      "Mikail Khona",
+      "Ila R. Fiete"
+    ]
+  },
+  "2212.11565": {
+    "title": "Tune-A-Video: One-Shot Tuning of Image Diffusion Models for Text-to-Video Generation",
+    "published": "2022-12-22",
+    "authors": [
+      "Jay Zhangjie Wu",
+      "Yixiao Ge",
+      "Xintao Wang",
+      "Weixian Lei"
+    ]
+  },
+  "2301.04104": {
+    "title": "Mastering Diverse Domains through World Models",
+    "published": "2023-01-10",
+    "authors": [
+      "Danijar Hafner",
+      "Jurgis Pasukonis",
+      "Jimmy Ba",
+      "Timothy Lillicrap"
+    ]
+  },
+  "2208.10442": {
+    "title": "Image as a Foreign Language: BEiT Pretraining for All Vision and Vision-Language Tasks",
+    "published": "2022-08-22",
+    "authors": [
+      "Wenhui Wang",
+      "Hangbo Bao",
+      "Li Dong",
+      "Johan Bjorck"
+    ]
+  },
+  "2206.04615": {
+    "title": "Beyond the Imitation Game: Quantifying and extrapolating the capabilities of language models",
+    "published": "2022-06-09",
+    "authors": [
+      "Aarohi Srivastava",
+      "Abhinav Rastogi",
+      "Abhishek Rao",
+      "Abu Awal Md Shoeb"
+    ]
+  },
+  "2201.09746": {
+    "title": "Reinforcement Learning Textbook",
+    "published": "2022-01-19",
+    "authors": [
+      "Sergey Ivanov"
+    ]
+  },
+  "2205.07802": {
+    "title": "The Primacy Bias in Deep Reinforcement Learning",
+    "published": "2022-05-16",
+    "authors": [
+      "Evgenii Nikishin",
+      "Max Schwarzer",
+      "Pierluca D'Oro",
+      "Pierre-Luc Bacon"
+    ]
+  },
+  "2112.07899": {
+    "title": "Large Dual Encoders Are Generalizable Retrievers",
+    "published": "2021-12-15",
+    "authors": [
+      "Jianmo Ni",
+      "Chen Qu",
+      "Jing Lu",
+      "Zhuyun Dai"
+    ]
+  },
+  "2212.09196": {
+    "title": "Emergent Analogical Reasoning in Large Language Models",
+    "published": "2022-12-19",
+    "authors": [
+      "Taylor Webb",
+      "Keith J. Holyoak",
+      "Hongjing Lu"
+    ]
+  },
+  "2301.08243": {
+    "title": "Self-Supervised Learning from Images with a Joint-Embedding Predictive Architecture",
+    "published": "2023-01-19",
+    "authors": [
+      "Mahmoud Assran",
+      "Quentin Duval",
+      "Ishan Misra",
+      "Piotr Bojanowski"
+    ]
+  },
+  "2302.00923": {
+    "title": "Multimodal Chain-of-Thought Reasoning in Language Models",
+    "published": "2023-02-02",
+    "authors": [
+      "Zhuosheng Zhang",
+      "Aston Zhang",
+      "Mu Li",
+      "Hai Zhao"
+    ]
+  },
+  "2207.02098": {
+    "title": "Neural Networks and the Chomsky Hierarchy",
+    "published": "2022-07-05",
+    "authors": [
+      "Grégoire Delétang",
+      "Anian Ruoss",
+      "Jordi Grau-Moya",
+      "Tim Genewein"
+    ]
+  },
+  "2304.01433": {
+    "title": "TPU v4: An Optically Reconfigurable Supercomputer for Machine Learning with Hardware Support for Embeddings",
+    "published": "2023-04-04",
+    "authors": [
+      "Norman P. Jouppi",
+      "George Kurian",
+      "Sheng Li",
+      "Peter Ma"
+    ]
+  },
+  "2302.10866": {
+    "title": "Hyena Hierarchy: Towards Larger Convolutional Language Models",
+    "published": "2023-02-21",
+    "authors": [
+      "Michael Poli",
+      "Stefano Massaroli",
+      "Eric Nguyen",
+      "Daniel Y. Fu"
+    ]
+  },
+  "2302.07253": {
+    "title": "Energy Transformer",
+    "published": "2023-02-14",
+    "authors": [
+      "Benjamin Hoover",
+      "Yuchen Liang",
+      "Bao Pham",
+      "Rameswar Panda"
+    ]
+  },
+  "2304.07193": {
+    "title": "DINOv2: Learning Robust Visual Features without Supervision",
+    "published": "2023-04-14",
+    "authors": [
+      "Maxime Oquab",
+      "Timothée Darcet",
+      "Théo Moutakanni",
+      "Huy Vo"
+    ]
+  },
+  "2210.10760": {
+    "title": "Scaling Laws for Reward Model Overoptimization",
+    "published": "2022-10-19",
+    "authors": [
+      "Leo Gao",
+      "John Schulman",
+      "Jacob Hilton"
+    ]
+  },
+  "2210.08964": {
+    "title": "PromptCast: A New Prompt-based Learning Paradigm for Time Series Forecasting",
+    "published": "2022-09-20",
+    "authors": [
+      "Hao Xue",
+      "Flora D. Salim"
+    ]
+  },
+  "2304.05977": {
+    "title": "ImageReward: Learning and Evaluating Human Preferences for Text-to-Image Generation",
+    "published": "2023-04-12",
+    "authors": [
+      "Jiazheng Xu",
+      "Xiao Liu",
+      "Yuchen Wu",
+      "Yuxuan Tong"
+    ]
+  },
+  "2208.11173": {
+    "title": "The Alberta Plan for AI Research",
+    "published": "2022-08-23",
+    "authors": [
+      "Richard S. Sutton",
+      "Michael Bowling",
+      "Patrick M. Pilarski"
+    ]
+  },
+  "2302.10174": {
+    "title": "Towards Universal Fake Image Detectors that Generalize Across Generative Models",
+    "published": "2023-02-20",
+    "authors": [
+      "Utkarsh Ojha",
+      "Yuheng Li",
+      "Yong Jae Lee"
+    ]
+  },
+  "2302.13971": {
+    "title": "LLaMA: Open and Efficient Foundation Language Models",
+    "published": "2023-02-27",
+    "authors": [
+      "Hugo Touvron",
+      "Thibaut Lavril",
+      "Gautier Izacard",
+      "Xavier Martinet"
+    ]
+  },
+  "2302.14045": {
+    "title": "Language Is Not All You Need: Aligning Perception with Language Models",
+    "published": "2023-02-27",
+    "authors": [
+      "Shaohan Huang",
+      "Li Dong",
+      "Wenhui Wang",
+      "Yaru Hao"
+    ]
+  },
+  "2212.09741": {
+    "title": "One Embedder, Any Task: Instruction-Finetuned Text Embeddings",
+    "published": "2022-12-19",
+    "authors": [
+      "Hongjin Su",
+      "Weijia Shi",
+      "Jungo Kasai",
+      "Yizhong Wang"
+    ]
+  },
+  "2209.01975": {
+    "title": "Selective Annotation Makes Language Models Better Few-Shot Learners",
+    "published": "2022-09-05",
+    "authors": [
+      "Hongjin Su",
+      "Jungo Kasai",
+      "Chen Henry Wu",
+      "Weijia Shi"
+    ]
+  },
+  "2210.08340": {
+    "title": "Toward Next-Generation Artificial Intelligence: Catalyzing the NeuroAI Revolution",
+    "published": "2022-10-15",
+    "authors": [
+      "Anthony Zador",
+      "Sean Escola",
+      "Blake Richards",
+      "Bence Ölveczky"
+    ]
+  },
+  "2212.14024": {
+    "title": "Demonstrate-Search-Predict: Composing retrieval and language models for knowledge-intensive NLP",
+    "published": "2022-12-28",
+    "authors": [
+      "Omar Khattab",
+      "Keshav Santhanam",
+      "Xiang Lisa Li",
+      "David Hall"
+    ]
+  },
+  "2108.12958": {
+    "title": "3DStyleNet: Creating 3D Shapes with Geometric and Texture Style Variations",
+    "published": "2021-08-30",
+    "authors": [
+      "Kangxue Yin",
+      "Jun Gao",
+      "Maria Shugrina",
+      "Sameh Khamis"
+    ]
+  },
+  "2206.13353": {
+    "title": "Is Power-Seeking AI an Existential Risk?",
+    "published": "2022-06-16",
+    "authors": [
+      "Joseph Carlsmith"
+    ]
+  },
+  "2303.07103": {
+    "title": "Could a Large Language Model be Conscious?",
+    "published": "2023-03-04",
+    "authors": [
+      "David J. Chalmers"
+    ]
+  },
+  "2311.16452": {
+    "title": "Can Generalist Foundation Models Outcompete Special-Purpose Tuning? Case Study in Medicine",
+    "published": "2023-11-28",
+    "authors": [
+      "Harsha Nori",
+      "Yin Tat Lee",
+      "Sheng Zhang",
+      "Dean Carignan"
+    ]
+  },
+  "2312.17742": {
+    "title": "Learning Vision from Models Rivals Learning Vision from Data",
+    "published": "2023-12-28",
+    "authors": [
+      "Yonglong Tian",
+      "Lijie Fan",
+      "Kaifeng Chen",
+      "Dina Katabi"
+    ]
+  },
+  "2306.02451": {
+    "title": "For SALE: State-Action Representation Learning for Deep Reinforcement Learning",
+    "published": "2023-06-04",
+    "authors": [
+      "Scott Fujimoto",
+      "Wei-Di Chang",
+      "Edward J. Smith",
+      "Shixiang Shane Gu"
+    ]
+  },
+  "2309.12288": {
+    "title": "The Reversal Curse: LLMs trained on \"A is B\" fail to learn \"B is A\"",
+    "published": "2023-09-21",
+    "authors": [
+      "Lukas Berglund",
+      "Meg Tong",
+      "Max Kaufmann",
+      "Mikita Balesni"
+    ]
+  },
+  "2402.01817": {
+    "title": "LLMs Can't Plan, But Can Help Planning in LLM-Modulo Frameworks",
+    "published": "2024-02-02",
+    "authors": [
+      "Subbarao Kambhampati",
+      "Karthik Valmeekam",
+      "Lin Guan",
+      "Mudit Verma"
+    ]
+  },
+  "2309.16797": {
+    "title": "Promptbreeder: Self-Referential Self-Improvement Via Prompt Evolution",
+    "published": "2023-09-28",
+    "authors": [
+      "Chrisantha Fernando",
+      "Dylan Banarse",
+      "Henryk Michalewski",
+      "Simon Osindero"
+    ]
+  },
+  "2306.13575": {
+    "title": "Scaling MLPs: A Tale of Inductive Bias",
+    "published": "2023-06-23",
+    "authors": [
+      "Gregor Bachmann",
+      "Sotiris Anagnostidis",
+      "Thomas Hofmann"
+    ]
+  },
+  "2401.03395": {
+    "title": "Deep Learning-based Image and Video Inpainting: A Survey",
+    "published": "2024-01-07",
+    "authors": [
+      "Weize Quan",
+      "Jiaxi Chen",
+      "Yanli Liu",
+      "Dong-Ming Yan"
+    ]
+  },
+  "2404.05405": {
+    "title": "Physics of Language Models: Part 3.3, Knowledge Capacity Scaling Laws",
+    "published": "2024-04-08",
+    "authors": [
+      "Zeyuan Allen-Zhu",
+      "Yuanzhi Li"
+    ]
+  },
+  "2305.19452": {
+    "title": "Bigger, Better, Faster: Human-level Atari with human-level efficiency",
+    "published": "2023-05-30",
+    "authors": [
+      "Max Schwarzer",
+      "Johan Obando-Ceron",
+      "Aaron Courville",
+      "Marc Bellemare"
+    ]
+  },
+  "2401.05946": {
+    "title": "Learning Cognitive Maps from Transformer Representations for Efficient Planning in Partially Observed Environments",
+    "published": "2024-01-11",
+    "authors": [
+      "Antoine Dedieu",
+      "Wolfgang Lehrach",
+      "Guangyao Zhou",
+      "Dileep George"
+    ]
+  },
+  "2401.13912": {
+    "title": "A Survey of Deep Learning and Foundation Models for Time Series Forecasting",
+    "published": "2024-01-25",
+    "authors": [
+      "John A. Miller",
+      "Mohammed Aldosari",
+      "Farah Saeed",
+      "Nasid Habib Barna"
+    ]
+  },
+  "2402.12483": {
+    "title": "Artifacts or Abduction: How Do LLMs Answer Multiple-Choice Questions Without the Question?",
+    "published": "2024-02-19",
+    "authors": [
+      "Nishant Balepur",
+      "Abhilasha Ravichander",
+      "Rachel Rudinger"
+    ]
+  },
+  "2402.16822": {
+    "title": "Rainbow Teaming: Open-Ended Generation of Diverse Adversarial Prompts",
+    "published": "2024-02-26",
+    "authors": [
+      "Mikayel Samvelyan",
+      "Sharath Chandra Raparthy",
+      "Andrei Lupu",
+      "Eric Hambro"
+    ]
+  },
+  "2305.13673": {
+    "title": "Physics of Language Models: Part 1, Learning Hierarchical Language Structures",
+    "published": "2023-05-23",
+    "authors": [
+      "Zeyuan Allen-Zhu",
+      "Yuanzhi Li"
+    ]
+  },
+  "2311.06242": {
+    "title": "Florence-2: Advancing a Unified Representation for a Variety of Vision Tasks",
+    "published": "2023-11-10",
+    "authors": [
+      "Bin Xiao",
+      "Haiping Wu",
+      "Weijian Xu",
+      "Xiyang Dai"
+    ]
+  },
+  "2312.13558": {
+    "title": "The Truth is in There: Improving Reasoning in Language Models with Layer-Selective Rank Reduction",
+    "published": "2023-12-21",
+    "authors": [
+      "Pratyusha Sharma",
+      "Jordan T. Ash",
+      "Dipendra Misra"
+    ]
+  },
+  "2310.04378": {
+    "title": "Latent Consistency Models: Synthesizing High-Resolution Images with Few-Step Inference",
+    "published": "2023-10-06",
+    "authors": [
+      "Simian Luo",
+      "Yiqin Tan",
+      "Longbo Huang",
+      "Jian Li"
+    ]
+  },
+  "2309.10232": {
+    "title": "Fully parallel optical matrix-matrix multiplication",
+    "published": "2023-09-19",
+    "authors": [
+      "Yufeng Zhang",
+      "Hao Yan",
+      "Kaizhi Wang"
+    ]
+  },
+  "2312.13327": {
+    "title": "In-Context Reinforcement Learning for Variable Action Spaces",
+    "published": "2023-12-20",
+    "authors": [
+      "Viacheslav Sinii",
+      "Alexander Nikulin",
+      "Vladislav Kurenkov",
+      "Ilya Zisman"
+    ]
+  },
+  "2310.07820": {
+    "title": "Large Language Models Are Zero-Shot Time Series Forecasters",
+    "published": "2023-10-11",
+    "authors": [
+      "Nate Gruver",
+      "Marc Finzi",
+      "Shikai Qiu",
+      "Andrew Gordon Wilson"
+    ]
+  },
+  "2311.02462": {
+    "title": "Levels of AGI for Operationalizing Progress on the Path to AGI",
+    "published": "2023-11-04",
+    "authors": [
+      "Meredith Ringel Morris",
+      "Jascha Sohl-Dickstein",
+      "Noah Fiedel",
+      "Tris Warkentin"
+    ]
+  },
+  "2309.15807": {
+    "title": "Emu: Enhancing Image Generation Models Using Photogenic Needles in a Haystack",
+    "published": "2023-09-27",
+    "authors": [
+      "Xiaoliang Dai",
+      "Ji Hou",
+      "Chih-Yao Ma",
+      "Sam Tsai"
+    ]
+  },
+  "2403.07815": {
+    "title": "Chronos: Learning the Language of Time Series",
+    "published": "2024-03-12",
+    "authors": [
+      "Abdul Fatir Ansari",
+      "Lorenzo Stella",
+      "Caner Turkmen",
+      "Xiyuan Zhang"
+    ]
+  },
+  "2312.00276": {
+    "title": "Metalearning Continual Learning Algorithms",
+    "published": "2023-12-01",
+    "authors": [
+      "Kazuki Irie",
+      "Róbert Csordás",
+      "Jürgen Schmidhuber"
+    ]
+  },
+  "2308.08708": {
+    "title": "Consciousness in Artificial Intelligence: Insights from the Science of Consciousness",
+    "published": "2023-08-17",
+    "authors": [
+      "Patrick Butlin",
+      "Robert Long",
+      "Eric Elmoznino",
+      "Yoshua Bengio"
+    ]
+  },
+  "2305.01625": {
+    "title": "Unlimiformer: Long-Range Transformers with Unlimited Length Input",
+    "published": "2023-05-02",
+    "authors": [
+      "Amanda Bertsch",
+      "Uri Alon",
+      "Graham Neubig",
+      "Matthew R. Gormley"
+    ]
+  },
+  "2304.15004": {
+    "title": "Are Emergent Abilities of Large Language Models a Mirage?",
+    "published": "2023-04-28",
+    "authors": [
+      "Rylan Schaeffer",
+      "Brando Miranda",
+      "Sanmi Koyejo"
+    ]
+  },
+  "2309.08872": {
+    "title": "PDFTriage: Question Answering over Long, Structured Documents",
+    "published": "2023-09-16",
+    "authors": [
+      "Jon Saad-Falcon",
+      "Joe Barrow",
+      "Alexa Siu",
+      "Ani Nenkova"
+    ]
+  },
+  "2304.08467": {
+    "title": "Learning to Compress Prompts with Gist Tokens",
+    "published": "2023-04-17",
+    "authors": [
+      "Jesse Mu",
+      "Xiang Lisa Li",
+      "Noah Goodman"
+    ]
+  },
+  "2304.09355": {
+    "title": "To Compress or Not to Compress- Self-Supervised Learning and Information Theory: A Review",
+    "published": "2023-04-19",
+    "authors": [
+      "Ravid Shwartz-Ziv",
+      "Yann LeCun"
+    ]
+  },
+  "2304.07297": {
+    "title": "Language Instructed Reinforcement Learning for Human-AI Coordination",
+    "published": "2023-04-13",
+    "authors": [
+      "Hengyuan Hu",
+      "Dorsa Sadigh"
+    ]
+  },
+  "2310.10688": {
+    "title": "A decoder-only foundation model for time-series forecasting",
+    "published": "2023-10-14",
+    "authors": [
+      "Abhimanyu Das",
+      "Weihao Kong",
+      "Rajat Sen",
+      "Yichen Zhou"
+    ]
+  },
+  "2310.01728": {
+    "title": "Time-LLM: Time Series Forecasting by Reprogramming Large Language Models",
+    "published": "2023-10-03",
+    "authors": [
+      "Ming Jin",
+      "Shiyu Wang",
+      "Lintao Ma",
+      "Zhixuan Chu"
+    ]
+  },
+  "2403.19709": {
+    "title": "Hierarchical Recurrent Adapters for Efficient Multi-Task Adaptation of Large Speech Models",
+    "published": "2024-03-25",
+    "authors": [
+      "Tsendsuren Munkhdalai",
+      "Youzheng Chen",
+      "Khe Chai Sim",
+      "Fadi Biadsy"
+    ]
+  },
+  "2304.12210": {
+    "title": "A Cookbook of Self-Supervised Learning",
+    "published": "2023-04-24",
+    "authors": [
+      "Randall Balestriero",
+      "Mark Ibrahim",
+      "Vlad Sobal",
+      "Ari Morcos"
+    ]
+  },
+  "2309.14402": {
+    "title": "Physics of Language Models: Part 3.2, Knowledge Manipulation",
+    "published": "2023-09-25",
+    "authors": [
+      "Zeyuan Allen-Zhu",
+      "Yuanzhi Li"
+    ]
+  },
+  "2309.14316": {
+    "title": "Physics of Language Models: Part 3.1, Knowledge Storage and Extraction",
+    "published": "2023-09-25",
+    "authors": [
+      "Zeyuan Allen-Zhu",
+      "Yuanzhi Li"
+    ]
+  },
+  "2311.00344": {
+    "title": "A Definition of Open-Ended Learning Problems for Goal-Conditioned Agents",
+    "published": "2023-11-01",
+    "authors": [
+      "Olivier Sigaud",
+      "Gianluca Baldassarre",
+      "Cedric Colas",
+      "Stephane Doncieux"
+    ]
+  },
+  "2310.08278": {
+    "title": "Lag-Llama: Towards Foundation Models for Probabilistic Time Series Forecasting",
+    "published": "2023-10-12",
+    "authors": [
+      "Kashif Rasul",
+      "Arjun Ashok",
+      "Andrew Robert Williams",
+      "Hena Ghonia"
+    ]
+  },
+  "2409.03137": {
+    "title": "The AdEMAMix Optimizer: Better, Faster, Older",
+    "published": "2024-09-05",
+    "authors": [
+      "Matteo Pagliardini",
+      "Pierre Ablin",
+      "David Grangier"
+    ]
+  },
+  "2407.15017": {
+    "title": "Knowledge Mechanisms in Large Language Models: A Survey and Perspective",
+    "published": "2024-07-22",
+    "authors": [
+      "Mengru Wang",
+      "Yunzhi Yao",
+      "Ziwen Xu",
+      "Shuofei Qiao"
+    ]
+  },
+  "2407.20311": {
+    "title": "Physics of Language Models: Part 2.1, Grade-School Math and the Hidden Reasoning Process",
+    "published": "2024-07-29",
+    "authors": [
+      "Tian Ye",
+      "Zicheng Xu",
+      "Yuanzhi Li",
+      "Zeyuan Allen-Zhu"
+    ]
+  },
+  "2405.20541": {
+    "title": "Perplexed by Perplexity: Perplexity-Based Data Pruning With Small Reference Models",
+    "published": "2024-05-30",
+    "authors": [
+      "Zachary Ankner",
+      "Cody Blakeney",
+      "Kartik Sreenivasan",
+      "Max Marion"
+    ]
+  },
+  "2405.16684": {
+    "title": "gzip Predicts Data-dependent Scaling Laws",
+    "published": "2024-05-26",
+    "authors": [
+      "Rohan Pandey"
+    ]
+  },
+  "2404.09173": {
+    "title": "TransformerFAM: Feedback attention is working memory",
+    "published": "2024-04-14",
+    "authors": [
+      "Dongseong Hwang",
+      "Weiran Wang",
+      "Zhuoyuan Huo",
+      "Khe Chai Sim"
+    ]
+  },
+  "2509.20317": {
+    "title": "SIM-CoT: Supervised Implicit Chain-of-Thought",
+    "published": "2025-09-24",
+    "authors": [
+      "Xilin Wei",
+      "Xiaoran Liu",
+      "Yuhang Zang",
+      "Xiaoyi Dong"
+    ]
+  },
+  "2509.09675": {
+    "title": "CDE: Curiosity-Driven Exploration for Efficient Reinforcement Learning in Large Language Models",
+    "published": "2025-09-11",
+    "authors": [
+      "Runpeng Dai",
+      "Linfeng Song",
+      "Haolin Liu",
+      "Zhenwen Liang"
+    ]
+  },
+  "2405.08007": {
+    "title": "People cannot distinguish GPT-4 from a human in a Turing test",
+    "published": "2024-05-09",
+    "authors": [
+      "Cameron R. Jones",
+      "Benjamin K. Bergen"
+    ]
+  },
+  "2410.21272": {
+    "title": "Arithmetic Without Algorithms: Language Models Solve Math With a Bag of Heuristics",
+    "published": "2024-10-28",
+    "authors": [
+      "Yaniv Nikankin",
+      "Anja Reusch",
+      "Aaron Mueller",
+      "Yonatan Belinkov"
+    ]
+  },
+  "2411.03820": {
+    "title": "Beyond The Rainbow: High Performance Deep Reinforcement Learning on a Desktop PC",
+    "published": "2024-11-06",
+    "authors": [
+      "Tyler Clark",
+      "Mark Towers",
+      "Christine Evers",
+      "Jonathon Hare"
+    ]
+  },
+  "2503.21676": {
+    "title": "How do language models learn facts? Dynamics, curricula and hallucinations",
+    "published": "2025-03-27",
+    "authors": [
+      "Nicolas Zucchet",
+      "Jörg Bornschein",
+      "Stephanie Chan",
+      "Andrew Lampinen"
+    ]
+  },
+  "2507.18074": {
+    "title": "AlphaGo Moment for Model Architecture Discovery",
+    "published": "2025-07-24",
+    "authors": [
+      "Yixiu Liu",
+      "Yang Nan",
+      "Weixian Xu",
+      "Xiangkun Hu"
+    ]
+  },
+  "2410.07095": {
+    "title": "MLE-bench: Evaluating Machine Learning Agents on Machine Learning Engineering",
+    "published": "2024-10-09",
+    "authors": [
+      "Jun Shern Chan",
+      "Neil Chowdhury",
+      "Oliver Jaffe",
+      "James Aung"
+    ]
+  },
+  "2511.15593": {
+    "title": "What Does It Take to Be a Good AI Research Agent? Studying the Role of Ideation Diversity",
+    "published": "2025-11-19",
+    "authors": [
+      "Alexis Audran-Reiss",
+      "Jordi Armengol-Estapé",
+      "Karen Hambardzumyan",
+      "Amar Budhiraja"
+    ]
+  },
+  "2405.18377": {
+    "title": "LLaMA-NAS: Efficient Neural Architecture Search for Large Language Models",
+    "published": "2024-05-28",
+    "authors": [
+      "Anthony Sarah",
+      "Sharath Nittur Sridhar",
+      "Maciej Szankin",
+      "Sairam Sundaresan"
+    ]
+  },
+  "2406.03689": {
+    "title": "Evaluating the World Model Implicit in a Generative Model",
+    "published": "2024-06-06",
+    "authors": [
+      "Keyon Vafa",
+      "Justin Y. Chen",
+      "Ashesh Rambachan",
+      "Jon Kleinberg"
+    ]
+  },
+  "2501.16142": {
+    "title": "Towards General-Purpose Model-Free Reinforcement Learning",
+    "published": "2025-01-27",
+    "authors": [
+      "Scott Fujimoto",
+      "Pierluca D'Oro",
+      "Amy Zhang",
+      "Yuandong Tian"
+    ]
+  },
+  "2508.16204": {
+    "title": "Competition and Attraction Improve Model Fusion",
+    "published": "2025-08-22",
+    "authors": [
+      "João Abrantes",
+      "Robert Tjarko Lange",
+      "Yujin Tang"
+    ]
+  },
+  "2602.16711": {
+    "title": "TeCoNeRV: Leveraging Temporal Coherence for Compressible Neural Representations for Videos",
+    "published": "2026-02-18",
+    "authors": [
+      "Namitha Padmanabhan",
+      "Matthew Gwilliam",
+      "Abhinav Shrivastava"
+    ]
+  },
+  "2406.11741": {
+    "title": "Transcendence: Generative Models Can Outperform The Experts That Train Them",
+    "published": "2024-06-17",
+    "authors": [
+      "Edwin Zhang",
+      "Vincent Zhu",
+      "Naomi Saphra",
+      "Anat Kleiman"
+    ]
+  },
+  "2502.06807": {
+    "title": "Competitive Programming with Large Reasoning Models",
+    "published": "2025-02-03",
+    "authors": [
+      " OpenAI",
+      " :",
+      "Ahmed El-Kishky",
+      "Alexander Wei"
+    ]
+  },
+  "2412.06769": {
+    "title": "Training Large Language Models to Reason in a Continuous Latent Space",
+    "published": "2024-12-09",
+    "authors": [
+      "Shibo Hao",
+      "Sainbayar Sukhbaatar",
+      "DiJia Su",
+      "Xian Li"
+    ]
+  },
+  "2405.20233": {
+    "title": "Grokfast: Accelerated Grokking by Amplifying Slow Gradients",
+    "published": "2024-05-30",
+    "authors": [
+      "Jaerin Lee",
+      "Bong Gyun Kang",
+      "Kihoon Kim",
+      "Kyoung Mu Lee"
+    ]
+  },
+  "2410.07041": {
+    "title": "Emergent properties with repeated examples",
+    "published": "2024-10-09",
+    "authors": [
+      "François Charton",
+      "Julia Kempe"
+    ]
+  },
+  "2405.18357": {
+    "title": "Faithful Logical Reasoning via Symbolic Chain-of-Thought",
+    "published": "2024-05-28",
+    "authors": [
+      "Jundong Xu",
+      "Hao Fei",
+      "Liangming Pan",
+      "Qian Liu"
+    ]
+  },
+  "2406.04268": {
+    "title": "Open-Endedness is Essential for Artificial Superhuman Intelligence",
+    "published": "2024-06-06",
+    "authors": [
+      "Edward Hughes",
+      "Michael Dennis",
+      "Jack Parker-Holder",
+      "Feryal Behbahani"
+    ]
+  },
+  "2404.07982": {
+    "title": "The Role of Language Imbalance in Cross-lingual Generalisation: Insights from Cloned Language Experiments",
+    "published": "2024-04-11",
+    "authors": [
+      "Anton Schäfer",
+      "Shauli Ravfogel",
+      "Thomas Hofmann",
+      "Tiago Pimentel"
+    ]
+  },
+  "2404.07143": {
+    "title": "Leave No Context Behind: Efficient Infinite Context Transformers with Infini-attention",
+    "published": "2024-04-10",
+    "authors": [
+      "Tsendsuren Munkhdalai",
+      "Manaal Faruqui",
+      "Siddharth Gopal"
+    ]
+  },
+  "2405.15682": {
+    "title": "The Road Less Scheduled",
+    "published": "2024-05-24",
+    "authors": [
+      "Aaron Defazio",
+      "Xingyu Alice Yang",
+      "Harsh Mehta",
+      "Konstantin Mishchenko"
+    ]
+  },
+  "2505.24832": {
+    "title": "How much do language models memorize?",
+    "published": "2025-05-30",
+    "authors": [
+      "John X. Morris",
+      "Chawin Sitawarin",
+      "Chuan Guo",
+      "Narine Kokhlikyan"
+    ]
+  },
+  "2503.16348": {
+    "title": "Palatable Conceptions of Disembodied Being",
+    "published": "2025-03-20",
+    "authors": [
+      "Murray Shanahan"
+    ]
+  },
+  "2412.02076": {
+    "title": "Topology-Preserving Image Segmentation with Spatial-Aware Persistent Feature Matching",
+    "published": "2024-12-03",
+    "authors": [
+      "Bo Wen",
+      "Haochen Zhang",
+      "Dirk-Uwe G. Bartsch",
+      "William R. Freeman"
+    ]
+  },
+  "2412.14135": {
+    "title": "Scaling of Search and Learning: A Roadmap to Reproduce o1 from Reinforcement Learning Perspective",
+    "published": "2024-12-18",
+    "authors": [
+      "Zhiyuan Zeng",
+      "Qinyuan Cheng",
+      "Zhangyue Yin",
+      "Bo Wang"
+    ]
+  },
+  "2412.13663": {
+    "title": "Smarter, Better, Faster, Longer: A Modern Bidirectional Encoder for Fast, Memory Efficient, and Long Context Finetuning and Inference",
+    "published": "2024-12-18",
+    "authors": [
+      "Benjamin Warner",
+      "Antoine Chaffin",
+      "Benjamin Clavié",
+      "Orion Weller"
+    ]
+  },
+  "2405.14838": {
+    "title": "From Explicit CoT to Implicit CoT: Learning to Internalize CoT Step by Step",
+    "published": "2024-05-23",
+    "authors": [
+      "Yuntian Deng",
+      "Yejin Choi",
+      "Stuart Shieber"
+    ]
+  },
+  "2505.17117": {
+    "title": "From Tokens to Thoughts: How LLMs and Humans Trade Compression for Meaning",
+    "published": "2025-05-21",
+    "authors": [
+      "Chen Shani",
+      "Liron Soffer",
+      "Dan Jurafsky",
+      "Yann LeCun"
+    ]
+  },
+  "2407.00695": {
+    "title": "Learning Formal Mathematics From Intrinsic Motivation",
+    "published": "2024-06-30",
+    "authors": [
+      "Gabriel Poesia",
+      "David Broman",
+      "Nick Haber",
+      "Noah D. Goodman"
+    ]
+  },
+  "2405.04517": {
+    "title": "xLSTM: Extended Long Short-Term Memory",
+    "published": "2024-05-07",
+    "authors": [
+      "Maximilian Beck",
+      "Korbinian Pöppel",
+      "Markus Spanring",
+      "Andreas Auer"
+    ]
+  },
+  "2406.11813": {
+    "title": "How Do Large Language Models Acquire Factual Knowledge During Pretraining?",
+    "published": "2024-06-17",
+    "authors": [
+      "Hoyeon Chang",
+      "Jinho Park",
+      "Seonghyeon Ye",
+      "Sohee Yang"
+    ]
+  },
+  "2606.25010": {
+    "title": "Emergent Capabilities Arise Randomly from Learning Sparse Attention Patterns",
+    "published": "2026-06-23",
+    "authors": [
+      "Vatsal Baherwani",
+      "Zixi Chen",
+      "Shikai Qiu",
+      "Andrew Gordon Wilson"
+    ]
+  },
+  "2605.13821": {
+    "title": "Harnessing Agentic Evolution",
+    "published": "2026-05-13",
+    "authors": [
+      "Jiayi Zhang",
+      "Yongfeng Gu",
+      "Jianhao Ruan",
+      "Maojia Song"
+    ]
+  },
+  "2607.27372": {
+    "title": "Explorative Modeling: Unlocking a Third Pretraining Axis and End-to-End Generation",
+    "published": "2026-07-29",
+    "authors": [
+      "Alexi Gladstone",
+      "Heng Ji",
+      "Yilun Du"
+    ]
+  },
+  "2606.18543": {
+    "title": "CEO-Bench: Can Agents Play the Long Game?",
+    "published": "2026-06-16",
+    "authors": [
+      "Haozhe Chen",
+      "Karthik Narasimhan",
+      "Zhuang Liu"
+    ]
+  },
+  "2603.19461": {
+    "title": "Hyperagents",
+    "published": "2026-03-19",
+    "authors": [
+      "Jenny Zhang",
+      "Bingchen Zhao",
+      "Wannan Yang",
+      "Jakob Foerster"
+    ]
+  },
+  "2607.13104": {
+    "title": "Self-Improvements in Modern Agentic Systems: A Survey",
+    "published": "2026-07-14",
+    "authors": [
+      "Zhe Ren",
+      "Yimeng Chen",
+      "Dandan Guo",
+      "Guowei Rong"
+    ]
+  },
+  "2606.02572": {
+    "title": "VISReg: Variance-Invariance-Sketching Regularization for JEPA training",
+    "published": "2026-06-01",
+    "authors": [
+      "Haiyu Wu",
+      "Randall Balestriero",
+      "Morgan Levine"
+    ]
+  },
+  "2606.08720": {
+    "title": "This is how the Neocortex Learns",
+    "published": "2026-06-07",
+    "authors": [
+      "Randall C. O'Reilly"
+    ]
+  }
+}
