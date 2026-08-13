@@ -118,7 +118,7 @@ TRANSLATE_QS = '_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp'
 
 def channel_translate_link(handle: str, post_id: str) -> str:
     return (
-        f'https://t-me.translate.goog/{handle}/{post_id}?{TRANSLATE_QS}'
+        f'https://t-me.translate.goog/s/{handle}/{post_id}?{TRANSLATE_QS}'
     )
 
 
@@ -393,7 +393,7 @@ def main() -> None:
         'Telegram links: ``[tg](...)`` is included only when a public channel '
         'post (``t.me/<channel>/<id>``) was found in the saved message. It opens '
         'that post through Google Translate to English '
-        '(``https://t-me.translate.goog/<channel>/<id>?_x_tr_sl=auto&_x_tr_tl=en...``). '
+        '(``https://t-me.translate.goog/s/<channel>/<id>?_x_tr_sl=auto&_x_tr_tl=en...``). '
         'Papers without such a public post link have no Telegram badge.\n'
     )
     text = '\n'.join(out)
