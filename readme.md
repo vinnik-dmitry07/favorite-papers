@@ -40,6 +40,7 @@ The full list with save dates is in `arxiv_dump.txt`; titles and authors are in
 
 ## Post-training
 
+- Litmaps — [https://app.litmaps.com/shared/9f68a972-570d-48c9-9895-8d4979d52df0](https://app.litmaps.com/shared/9f68a972-570d-48c9-9895-8d4979d52df0)
 - Proximal Policy Optimization (PPO) — [https://arxiv.org/abs/1707.06347](https://arxiv.org/abs/1707.06347)
 - DeepSeekMath: introducing Group Relative Policy Optimization (GRPO) — [https://arxiv.org/abs/2402.03300](https://arxiv.org/abs/2402.03300)
 - Understanding R1-Zero-Like Training: Dr. GRPO — [https://arxiv.org/abs/2503.20783](https://arxiv.org/abs/2503.20783)
@@ -342,7 +343,6 @@ The full list with save dates is in `arxiv_dump.txt`; titles and authors are in
 
 ## Other
 
-- ShapeFlow — [https://arxiv.org/abs/2006.07982](https://arxiv.org/abs/2006.07982) · 3DSNet — [https://arxiv.org/abs/2011.13388](https://arxiv.org/abs/2011.13388) · 3DStyleNet — [https://arxiv.org/abs/2108.12958](https://arxiv.org/abs/2108.12958) · Isometric Multi-Shape Matching — [https://arxiv.org/abs/2012.02689](https://arxiv.org/abs/2012.02689) · Stylizing 3D Scene — [https://arxiv.org/abs/2105.13016](https://arxiv.org/abs/2105.13016)
 - Orbifold Tutte embeddings (geometry processing) — [https://www.semanticscholar.org/paper/4165542ba777ea63facc7ea9866f43ba63f054ae](https://www.semanticscholar.org/paper/4165542ba777ea63facc7ea9866f43ba63f054ae)
 - TPU v4 — [https://arxiv.org/abs/2304.01433](https://arxiv.org/abs/2304.01433) [tg](https://t-me.translate.goog/s/gonzo_ML/2313?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - Optical matrix multiplication — [https://arxiv.org/abs/2309.10232](https://arxiv.org/abs/2309.10232) [tg](https://t-me.translate.goog/s/gonzo_ML/2313?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
