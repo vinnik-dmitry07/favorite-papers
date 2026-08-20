@@ -74,5 +74,253 @@
       "Xiang Yue",
       "Yu Su"
     ]
+  },
+  "2607.27372": {
+    "title": "Explorative Modeling: Unlocking a Third Pretraining Axis and End-to-End Generation",
+    "published": "2026-07-29",
+    "authors": [
+      "Alexi Gladstone",
+      "Heng Ji",
+      "Yilun Du"
+    ]
+  },
+  "2605.00347": {
+    "title": "Odysseus: Scaling VLMs to 100+ Turn Decision-Making in Games via Reinforcement Learning",
+    "published": "2026-05-01",
+    "authors": [
+      "Chengshuai Shi",
+      "Wenzhe Li",
+      "Xinran Liang"
+    ]
+  },
+  "2503.00735": {
+    "title": "LADDER: Self-Improving LLMs Through Recursive Problem Decomposition",
+    "published": "2025-03-02",
+    "authors": [
+      "Toby Simonds",
+      "Akira Yoshiyama"
+    ]
+  },
+  "2608.08311": {
+    "title": "Ouroboros: A Self-Developing Frontier Coding Agent with Reviewed Core Evolution",
+    "published": "2026-08-08",
+    "authors": [
+      "Anton Razzhigaev",
+      "Andrei Gritsaev",
+      "Andrei Kaznacheev"
+    ]
+  },
+  "2507.01098": {
+    "title": "Proof of a perfect platonic representation hypothesis",
+    "published": "2025-07-01",
+    "authors": [
+      "Liu Ziyin",
+      "Isaac Chuang"
+    ]
+  },
+  "2506.08007": {
+    "title": "Reinforcement Pre-Training",
+    "published": "2025-06-09",
+    "authors": [
+      "Qingxiu Dong",
+      "Li Dong",
+      "Yao Tang"
+    ]
+  },
+  "2602.18037": {
+    "title": "Gradient Regularization Mitigates Reward Hacking in Reinforcement Learning from Human Feedback and Verifiable Rewards",
+    "published": "2026-02-20",
+    "authors": [
+      "Johannes Ackermann",
+      "Michael Noukhovitch",
+      "Takashi Ishida"
+    ]
+  },
+  "2605.06241": {
+    "title": "Rethinking RL for LLM Reasoning: It's Sparse Policy Selection, Not Capability Learning",
+    "published": "2026-05-07",
+    "authors": [
+      "Ömer Faruk Akgül",
+      "Rajgopal Kannan",
+      "Willie Neiswanger"
+    ]
+  },
+  "2504.16084": {
+    "title": "TTRL: Test-Time Reinforcement Learning",
+    "published": "2025-04-22",
+    "authors": [
+      "Yuxin Zuo",
+      "Kaiyan Zhang",
+      "Li Sheng"
+    ]
+  },
+  "2607.23379": {
+    "title": "When Activation Oracles Learn Not to Read: Concept-Specific Blind Spots in Fine-Tuned Oracles",
+    "published": "2026-07-25",
+    "authors": [
+      "Tobias Bersia",
+      "Tatiana Gaintseva"
+    ]
+  },
+  "2510.13786": {
+    "title": "The Art of Scaling Reinforcement Learning Compute for LLMs",
+    "published": "2025-10-15",
+    "authors": [
+      "Devvrit Khatri",
+      "Lovish Madaan",
+      "Rishabh Tiwari"
+    ]
+  },
+  "2506.10947": {
+    "title": "Spurious Rewards: Rethinking Training Signals in RLVR",
+    "published": "2025-06-12",
+    "authors": [
+      "Rulin Shao",
+      "Shuyue Stella Li",
+      "Rui Xin"
+    ]
+  },
+  "2508.05629": {
+    "title": "On the Generalization of SFT: A Reinforcement Learning Perspective with Reward Rectification",
+    "published": "2025-08-07",
+    "authors": [
+      "Yongliang Wu",
+      "Yizhou Zhou",
+      "Zhou Ziheng"
+    ]
+  },
+  "2601.14525": {
+    "title": "Towards Execution-Grounded Automated AI Research",
+    "published": "2026-01-20",
+    "authors": [
+      "Chenglei Si",
+      "Zitong Yang",
+      "Yejin Choi"
+    ]
+  },
+  "2510.00977": {
+    "title": "It Takes Two: Your GRPO Is Secretly DPO",
+    "published": "2025-10-01",
+    "authors": [
+      "Yihong Wu",
+      "Liheng Ma",
+      "Lei Ding"
+    ]
+  },
+  "2601.16175": {
+    "title": "Learning to Discover at Test Time",
+    "published": "2026-01-22",
+    "authors": [
+      "Mert Yuksekgonul",
+      "Daniel Koceja",
+      "Xinhao Li"
+    ]
+  },
+  "2507.12856": {
+    "title": "Supervised Fine Tuning on Curated Data is Reinforcement Learning (and can be improved)",
+    "published": "2025-07-17",
+    "authors": [
+      "Chongli Qin",
+      "Jost Tobias Springenberg"
+    ]
+  },
+  "2508.11408": {
+    "title": "On-Policy RL Meets Off-Policy Experts: Harmonizing Supervised Fine-Tuning and Reinforcement Learning via Dynamic Weighting",
+    "published": "2025-08-15",
+    "authors": [
+      "Wenhao Zhang",
+      "Yuexiang Xie",
+      "Yuchang Sun"
+    ]
+  },
+  "2506.01939": {
+    "title": "Beyond the 80/20 Rule: High-Entropy Minority Tokens Drive Effective Reinforcement Learning for LLM Reasoning",
+    "published": "2025-06-02",
+    "authors": [
+      "Shenzhi Wang",
+      "Le Yu",
+      "Chang Gao"
+    ]
+  },
+  "2608.09888": {
+    "title": "BDH-CQ: In-Context Learning with Recurrent Latent Reasoning",
+    "published": "2026-08-10",
+    "authors": [
+      "Björn Engdahl",
+      "Adrian Kosowski",
+      "Jan Chorowski"
+    ]
+  },
+  "2601.20802": {
+    "title": "Reinforcement Learning via Self-Distillation",
+    "published": "2026-01-28",
+    "authors": [
+      "Jonas Hübotter",
+      "Frederike Lübeck",
+      "Lejs Behric"
+    ]
+  },
+  "2504.20571": {
+    "title": "Reinforcement Learning for Reasoning in Large Language Models with One Training Example",
+    "published": "2025-04-29",
+    "authors": [
+      "Yiping Wang",
+      "Qing Yang",
+      "Zhiyuan Zeng"
+    ]
+  },
+  "2505.15134": {
+    "title": "The Unreasonable Effectiveness of Entropy Minimization in LLM Reasoning",
+    "published": "2025-05-21",
+    "authors": [
+      "Shivam Agarwal",
+      "Zimin Zhang",
+      "Lifan Yuan"
+    ]
+  },
+  "2505.21493": {
+    "title": "Reinforcing General Reasoning without Verifiers",
+    "published": "2025-05-27",
+    "authors": [
+      "Xiangxin Zhou",
+      "Zichen Liu",
+      "Anya Sims"
+    ]
+  },
+  "2505.21444": {
+    "title": "Can Large Reasoning Models Self-Train?",
+    "published": "2025-05-27",
+    "authors": [
+      "Sheikh Shafayat",
+      "Fahim Tajwar",
+      "Ruslan Salakhutdinov"
+    ]
+  },
+  "2512.02807": {
+    "title": "SR-GRPO: Stable Rank as an Intrinsic Geometric Reward for Large Language Model Alignment",
+    "published": "2025-12-02",
+    "authors": [
+      "Yixuan Tang",
+      "Yi Yang"
+    ]
+  },
+  "2607.07847": {
+    "title": "When Does Continual Learning Require Learning",
+    "published": "2026-07-08",
+    "authors": [
+      "Anne Harrington",
+      "Nayan Saxena",
+      "Michael Murphy"
+    ]
+  },
+  "2606.23740": {
+    "title": "Weight-Space Geometry of Offline Reasoning Training",
+    "published": "2026-06-26",
+    "authors": [
+      "Aleksandr Nikolich",
+      "Igor Kiselev",
+      "Vladimir Platonov",
+      "Karina Romanova"
+    ]
   }
 }

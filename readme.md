@@ -4,380 +4,350 @@ Source: Telegram "Saved Messages" export (9,375 messages, 2017–2026).
 Found 172 unique arXiv papers plus roughly 50 works outside arXiv
 (OpenReview, ACL Anthology, Nature/Science/Cell, bioRxiv, lab publications).
 The full list with save dates is in `arxiv_dump.txt`; titles and authors are in
-`papers_titles.json` and `extra_titles.json`. The "Addendum" sections at the bottom
-were compiled after a separate pass over posts from 43 ML channels.
-
-## Canonical works (must-read classics)
-
-| Year | Paper | Link |
-| --- | --- | --- |
-| 2015 | Deep Reinforcement Learning with Double Q-learning | https://arxiv.org/abs/1509.06461 [tg](https://t-me.translate.goog/s/knowledge_accumulator/192?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) |
-| 2015 | Prioritized Experience Replay | https://arxiv.org/abs/1511.05952 [tg](https://t-me.translate.goog/s/knowledge_accumulator/192?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) |
-| 2015 | Dueling Network Architectures for Deep RL | https://arxiv.org/abs/1511.06581 [tg](https://t-me.translate.goog/s/knowledge_accumulator/192?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) |
-| 2017 | A Distributional Perspective on RL (C51) | https://arxiv.org/abs/1707.06887 [tg](https://t-me.translate.goog/s/knowledge_accumulator/192?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) |
-| 2017 | Rainbow: Combining Improvements in Deep RL | https://arxiv.org/abs/1710.02298 [tg](https://t-me.translate.goog/s/knowledge_accumulator/192?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) |
-| 2017 | Searching for Activation Functions (Swish) | https://arxiv.org/abs/1710.05941 |
-| 2018 | Soft Actor-Critic (SAC) | https://arxiv.org/abs/1801.01290 |
-| 2018 | Addressing Function Approximation Error in Actor-Critic (TD3) | https://arxiv.org/abs/1802.09477 |
-| 2018 | The Lottery Ticket Hypothesis | https://arxiv.org/abs/1803.03635 |
-| 2018 | BERT | https://arxiv.org/abs/1810.04805 [tg](https://t-me.translate.goog/s/abstractDL/193?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) |
-| 2020 | Scaling Laws for Neural Language Models | https://arxiv.org/abs/2001.08361 |
-| 2020 | GLU Variants Improve Transformer (SwiGLU) | https://arxiv.org/abs/2002.05202 |
-| 2020 | SwAV: Unsupervised Learning by Contrasting Cluster Assignments | https://arxiv.org/abs/2006.09882 |
-| 2021 | DINO: Emerging Properties in Self-Supervised ViT | https://arxiv.org/abs/2104.14294 |
-| 2023 | LLaMA: Open and Efficient Foundation Language Models | https://arxiv.org/abs/2302.13971 |
-| 2023 | I-JEPA (Self-Supervised Learning from Images with JEPA) | https://arxiv.org/abs/2301.08243 [tg](https://t-me.translate.goog/s/dl_stories/497?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) |
-| 2023 | DINOv2 | https://arxiv.org/abs/2304.07193 |
-| 2023 | Are Emergent Abilities of LLMs a Mirage? (NeurIPS best paper) | https://arxiv.org/abs/2304.15004 [tg](https://t-me.translate.goog/s/abstractDL/130?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) |
+`papers_titles.json` and `extra_titles.json`. A later Saved Messages export
+(2026-08-19) added the Post-training section and several papers in the topic lists below.
 
 ## Reinforcement learning
 
-- Deep Neuroevolution: GAs as an alternative to training RL networks — https://arxiv.org/abs/1712.06567
-- Benchmarking Batch Deep RL Algorithms — https://arxiv.org/abs/1910.01708
-- First return, then explore (Go-Explore, Nature) — https://arxiv.org/abs/2004.12919
-- Offline RL: Tutorial, Review, and Perspectives — https://arxiv.org/abs/2005.01643
-- Revisiting Rainbow — https://arxiv.org/abs/2011.14826
-- A Minimalist Approach to Offline RL (TD3+BC) — https://arxiv.org/abs/2106.06860
-- The Primacy Bias in Deep RL — https://arxiv.org/abs/2205.07802
-- For SALE: State-Action Representation Learning — https://arxiv.org/abs/2306.02451
-- BBF: Bigger, Better, Faster — Human-level Atari with human-level efficiency — https://arxiv.org/abs/2305.19452 [tg](https://t-me.translate.goog/s/knowledge_accumulator/192?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- Beyond The Rainbow: High Performance Deep RL on a Desktop PC — https://arxiv.org/abs/2411.03820
-- Towards General-Purpose Model-Free RL (MR.Q) — https://arxiv.org/abs/2501.16142
-- In-Context RL for Variable Action Spaces — https://arxiv.org/abs/2312.13327 [tg](https://t-me.translate.goog/s/knowledge_accumulator/135?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- Metalearning Continual Learning Algorithms — https://arxiv.org/abs/2312.00276 [tg](https://t-me.translate.goog/s/knowledge_accumulator/93?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- DreamerV3: Mastering Diverse Domains through World Models — https://arxiv.org/abs/2301.04104
-- The Alberta Plan for AI Research (Sutton) — https://arxiv.org/abs/2208.11173
-- CDE: Curiosity-Driven Exploration for RL in LLMs — https://arxiv.org/abs/2509.09675
+- Deep Reinforcement Learning with Double Q-learning — [https://arxiv.org/abs/1509.06461](https://arxiv.org/abs/1509.06461) [tg](https://t-me.translate.goog/s/knowledge_accumulator/192?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Prioritized Experience Replay — [https://arxiv.org/abs/1511.05952](https://arxiv.org/abs/1511.05952) [tg](https://t-me.translate.goog/s/knowledge_accumulator/192?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Dueling Network Architectures for Deep RL — [https://arxiv.org/abs/1511.06581](https://arxiv.org/abs/1511.06581) [tg](https://t-me.translate.goog/s/knowledge_accumulator/192?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- A Distributional Perspective on RL (C51) — [https://arxiv.org/abs/1707.06887](https://arxiv.org/abs/1707.06887) [tg](https://t-me.translate.goog/s/knowledge_accumulator/192?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Rainbow: Combining Improvements in Deep RL — [https://arxiv.org/abs/1710.02298](https://arxiv.org/abs/1710.02298) [tg](https://t-me.translate.goog/s/knowledge_accumulator/192?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Soft Actor-Critic (SAC) — [https://arxiv.org/abs/1801.01290](https://arxiv.org/abs/1801.01290)
+- Addressing Function Approximation Error in Actor-Critic (TD3) — [https://arxiv.org/abs/1802.09477](https://arxiv.org/abs/1802.09477)
+- Deep Neuroevolution: GAs as an alternative to training RL networks — [https://arxiv.org/abs/1712.06567](https://arxiv.org/abs/1712.06567)
+- Benchmarking Batch Deep RL Algorithms — [https://arxiv.org/abs/1910.01708](https://arxiv.org/abs/1910.01708)
+- First return, then explore (Go-Explore, Nature) — [https://arxiv.org/abs/2004.12919](https://arxiv.org/abs/2004.12919)
+- Offline RL: Tutorial, Review, and Perspectives — [https://arxiv.org/abs/2005.01643](https://arxiv.org/abs/2005.01643)
+- Revisiting Rainbow — [https://arxiv.org/abs/2011.14826](https://arxiv.org/abs/2011.14826)
+- A Minimalist Approach to Offline RL (TD3+BC) — [https://arxiv.org/abs/2106.06860](https://arxiv.org/abs/2106.06860)
+- The Primacy Bias in Deep RL — [https://arxiv.org/abs/2205.07802](https://arxiv.org/abs/2205.07802)
+- For SALE: State-Action Representation Learning — [https://arxiv.org/abs/2306.02451](https://arxiv.org/abs/2306.02451)
+- Sample-Efficient RL by Breaking the Replay Ratio Barrier (ICLR 2023, precursor of BBF) — [https://openreview.net/forum?id=OpC-9aBBVJe](https://openreview.net/forum?id=OpC-9aBBVJe) [tg](https://t-me.translate.goog/s/knowledge_accumulator/192?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- BBF: Bigger, Better, Faster — Human-level Atari with human-level efficiency — [https://arxiv.org/abs/2305.19452](https://arxiv.org/abs/2305.19452) [tg](https://t-me.translate.goog/s/knowledge_accumulator/192?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Beyond The Rainbow: High Performance Deep RL on a Desktop PC — [https://arxiv.org/abs/2411.03820](https://arxiv.org/abs/2411.03820)
+- Towards General-Purpose Model-Free RL (MR.Q) — [https://arxiv.org/abs/2501.16142](https://arxiv.org/abs/2501.16142)
+- In-Context RL for Variable Action Spaces — [https://arxiv.org/abs/2312.13327](https://arxiv.org/abs/2312.13327) [tg](https://t-me.translate.goog/s/knowledge_accumulator/135?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Metalearning Continual Learning Algorithms — [https://arxiv.org/abs/2312.00276](https://arxiv.org/abs/2312.00276) [tg](https://t-me.translate.goog/s/knowledge_accumulator/93?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- DreamerV3: Mastering Diverse Domains through World Models — [https://arxiv.org/abs/2301.04104](https://arxiv.org/abs/2301.04104)
+- DIAMOND: a diffusion world model that plays CS:GO — [https://diamond-wm.github.io/](https://diamond-wm.github.io/)
+- Meta-Reinforcement Learning with Zero-Shot RL — [https://openreview.net/forum?id=XyGJJ4FPoX](https://openreview.net/forum?id=XyGJJ4FPoX)
+- 1000 Layer Networks for Self-Supervised RL (NeurIPS 2025 Best Paper) — [https://arxiv.org/abs/2503.14858](https://arxiv.org/abs/2503.14858) · [https://openreview.net/forum?id=s0JVsx3bx1](https://openreview.net/forum?id=s0JVsx3bx1) · [https://arxiviq.substack.com/p/neurips-2025-1000-layer-networks](https://arxiviq.substack.com/p/neurips-2025-1000-layer-networks)
+- The Alberta Plan for AI Research (Sutton) — [https://arxiv.org/abs/2208.11173](https://arxiv.org/abs/2208.11173)
+- CDE: Curiosity-Driven Exploration for RL in LLMs — [https://arxiv.org/abs/2509.09675](https://arxiv.org/abs/2509.09675)
+- The Multi-Armed Bandit Problem and Its Solutions (Lilian Weng) — [https://lilianweng.github.io/lil-log/2018/01/23/the-multi-armed-bandit-problem-and-its-solutions.html](https://lilianweng.github.io/lil-log/2018/01/23/the-multi-armed-bandit-problem-and-its-solutions.html)
+
+## Post-training
+
+- Proximal Policy Optimization (PPO) — [https://arxiv.org/abs/1707.06347](https://arxiv.org/abs/1707.06347)
+- DeepSeekMath: introducing Group Relative Policy Optimization (GRPO) — [https://arxiv.org/abs/2402.03300](https://arxiv.org/abs/2402.03300)
+- Understanding R1-Zero-Like Training: Dr. GRPO — [https://arxiv.org/abs/2503.20783](https://arxiv.org/abs/2503.20783)
+- DAPO: Decoupled Clip and Dynamic Sampling Policy Optimization — [https://arxiv.org/abs/2503.14476](https://arxiv.org/abs/2503.14476)
+- Group-in-Group Policy Optimization (GiGPO) — [https://arxiv.org/abs/2505.10978](https://arxiv.org/abs/2505.10978)
+- It Takes Two: Your GRPO Is Secretly DPO — [https://arxiv.org/abs/2510.00977](https://arxiv.org/abs/2510.00977) [tg](https://t-me.translate.goog/s/dealerAI/1092?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Group Sequence Policy Optimization (GSPO) — [https://arxiv.org/abs/2507.18071](https://arxiv.org/abs/2507.18071)
+- Soft Adaptive Policy Optimization (SAPO) — [https://arxiv.org/abs/2511.20347](https://arxiv.org/abs/2511.20347)
+- ESPO: Entropy Importance Sampling Policy Optimization — [https://arxiv.org/abs/2512.00499](https://arxiv.org/abs/2512.00499)
+- Single-stream Policy Optimization — [https://arxiv.org/abs/2509.13232](https://arxiv.org/abs/2509.13232)
+- Skip-Connected Policy Optimization (SKPO) — [https://arxiv.org/abs/2604.08690](https://arxiv.org/abs/2604.08690)
+- Critique-GRPO: Advancing LLM Reasoning with Natural Language and Numerical Feedback — [https://arxiv.org/abs/2506.03106](https://arxiv.org/abs/2506.03106)
+- Klear-Reasoner: Gradient-Preserving Clipping Policy Optimization (GPPO) — [https://arxiv.org/abs/2508.07629](https://arxiv.org/abs/2508.07629)
+- SR-GRPO: Stable Rank as an Intrinsic Geometric Reward — [https://arxiv.org/abs/2512.02807](https://arxiv.org/abs/2512.02807)
+- GRPO-VPS: Verifiable Process Supervision — [https://arxiv.org/abs/2604.20659](https://arxiv.org/abs/2604.20659)
+- Learning from Own Solutions: Self-Conditioned Credit Assignment (SC-GRPO) — [https://arxiv.org/abs/2606.18810](https://arxiv.org/abs/2606.18810)
+- Weight-Space Geometry of Offline Reasoning Training (ICML 2026 workshop) — [https://arxiv.org/abs/2606.23740](https://arxiv.org/abs/2606.23740)
+- Oat-Zero: reproducing R1-Zero and analyzing self-reflection — [https://oatllm.notion.site/oat-zero](https://oatllm.notion.site/oat-zero)
+- Beyond the 80/20 Rule: High-Entropy Minority Tokens Drive Effective RL — [https://arxiv.org/abs/2506.01939](https://arxiv.org/abs/2506.01939)
+- Rethinking RL for LLM Reasoning: It's Sparse Policy Selection, Not Capability Learning — [https://arxiv.org/abs/2605.06241](https://arxiv.org/abs/2605.06241)
+- Does Reinforcement Learning Really Incentivize Reasoning Capacity Beyond the Base Model? — [https://arxiv.org/abs/2504.13837](https://arxiv.org/abs/2504.13837)
+- Reasoning with Sampling: Your Base Model is Smarter Than You Think — [https://arxiv.org/abs/2510.14901](https://arxiv.org/abs/2510.14901)
+- From f(x) and g(x) to f(g(x)): LLMs Learn New Skills in RL by Composing Old Ones — [https://arxiv.org/abs/2509.25123](https://arxiv.org/abs/2509.25123) · [https://husky-morocco-f72.notion.site/From-f-x-and-g-x-to-f-g-x-LLMs-Learn-New-Skills-in-RL-by-Composing-Old-Ones-2499aba4486f802c8108e76a12af3020](https://husky-morocco-f72.notion.site/From-f-x-and-g-x-to-f-g-x-LLMs-Learn-New-Skills-in-RL-by-Composing-Old-Ones-2499aba4486f802c8108e76a12af3020)
+- Learning to Reason without External Rewards (Intuitor / RLIF) — [https://arxiv.org/abs/2505.19590](https://arxiv.org/abs/2505.19590)
+- TTRL: Test-Time Reinforcement Learning — [https://arxiv.org/abs/2504.16084](https://arxiv.org/abs/2504.16084)
+- Spurious Rewards Paradox: How RLVR Activates Memorization Shortcuts — [https://arxiv.org/abs/2601.11061](https://arxiv.org/abs/2601.11061) [tg](https://t-me.translate.goog/s/buckwheat_thoughts/306?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- LADDER: Self-Improving LLMs Through Recursive Problem Decomposition — [https://arxiv.org/abs/2503.00735](https://arxiv.org/abs/2503.00735)
+- Emergent Hierarchical Reasoning in LLMs through Reinforcement Learning — [https://arxiv.org/abs/2509.03646](https://arxiv.org/abs/2509.03646)
+- Learning to Discover at Test Time (TTT-Discover) — [https://arxiv.org/abs/2601.16175](https://arxiv.org/abs/2601.16175) [tg](https://t-me.translate.goog/s/gonzo_ML/4643?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- The Art of Scaling Reinforcement Learning Compute for LLMs — [https://arxiv.org/abs/2510.13786](https://arxiv.org/abs/2510.13786)
+- On the Generalization of SFT: Reward Rectification (DFT) — [https://arxiv.org/abs/2508.05629](https://arxiv.org/abs/2508.05629)
+- Reinforcement Learning via Self-Distillation — [https://arxiv.org/abs/2601.20802](https://arxiv.org/abs/2601.20802)
+- When Does Continual Learning Require Learning — [https://arxiv.org/abs/2607.07847](https://arxiv.org/abs/2607.07847)
+- MiniMax-M1: Scaling Test-Time Compute Efficiently with Lightning Attention — [https://arxiv.org/abs/2506.13585](https://arxiv.org/abs/2506.13585)
+- BDH-CQ: In-Context Learning with Recurrent Latent Reasoning — [https://arxiv.org/abs/2608.09888](https://arxiv.org/abs/2608.09888)
+- Odysseus: Scaling VLMs to 100+ Turn Decision-Making in Games via RL — [https://arxiv.org/abs/2605.00347](https://arxiv.org/abs/2605.00347) · [https://odysseus-project.github.io/](https://odysseus-project.github.io/)
+- Towards Execution-Grounded Automated AI Research — [https://arxiv.org/abs/2601.14525](https://arxiv.org/abs/2601.14525)
+- Gradient Regularization Mitigates Reward Hacking in RLHF and RLVR — [https://arxiv.org/abs/2602.18037](https://arxiv.org/abs/2602.18037)
+- RIFT: A RubrIc Failure Mode Taxonomy and Automated Diagnostics — [https://arxiv.org/abs/2604.01375](https://arxiv.org/abs/2604.01375)
 
 ## LLMs: architectures, context, training
 
-- Memorizing Transformers — https://arxiv.org/abs/2203.08913 [tg](https://t-me.translate.goog/s/gonzo_ML/404?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- Hyena Hierarchy — https://arxiv.org/abs/2302.10866
-- Unlimiformer: Long-Range Transformers with Unlimited Length Input — https://arxiv.org/abs/2305.01625 [tg](https://t-me.translate.goog/s/gonzo_ML/404?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- Infini-attention: Leave No Context Behind — https://arxiv.org/abs/2404.07143 [tg](https://t-me.translate.goog/s/gonzo_ML/292?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- TransformerFAM: Feedback attention is working memory — https://arxiv.org/abs/2404.09173 [tg](https://t-me.translate.goog/s/gonzo_ML/292?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- xLSTM: Extended Long Short-Term Memory — https://arxiv.org/abs/2405.04517
-- ModernBERT — https://arxiv.org/abs/2412.13663
-- Kosmos-1: Language Is Not All You Need — https://arxiv.org/abs/2302.14045
-- Florence-2 — https://arxiv.org/abs/2311.06242
-- Scaling MLPs: A Tale of Inductive Bias — https://arxiv.org/abs/2306.13575 [tg](https://t-me.translate.goog/s/gonzo_ML/800?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- Neural Networks and the Chomsky Hierarchy — https://arxiv.org/abs/2207.02098
+- BERT — [https://arxiv.org/abs/1810.04805](https://arxiv.org/abs/1810.04805) [tg](https://t-me.translate.goog/s/abstractDL/193?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Searching for Activation Functions (Swish) — [https://arxiv.org/abs/1710.05941](https://arxiv.org/abs/1710.05941)
+- GLU Variants Improve Transformer (SwiGLU) — [https://arxiv.org/abs/2002.05202](https://arxiv.org/abs/2002.05202)
+- LLaMA: Open and Efficient Foundation Language Models — [https://arxiv.org/abs/2302.13971](https://arxiv.org/abs/2302.13971)
+- Memorizing Transformers — [https://arxiv.org/abs/2203.08913](https://arxiv.org/abs/2203.08913) [tg](https://t-me.translate.goog/s/gonzo_ML/404?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Hyena Hierarchy — [https://arxiv.org/abs/2302.10866](https://arxiv.org/abs/2302.10866)
+- Unlimiformer: Long-Range Transformers with Unlimited Length Input — [https://arxiv.org/abs/2305.01625](https://arxiv.org/abs/2305.01625) [tg](https://t-me.translate.goog/s/gonzo_ML/404?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Infini-attention: Leave No Context Behind — [https://arxiv.org/abs/2404.07143](https://arxiv.org/abs/2404.07143) [tg](https://t-me.translate.goog/s/gonzo_ML/292?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- TransformerFAM: Feedback attention is working memory — [https://arxiv.org/abs/2404.09173](https://arxiv.org/abs/2404.09173) [tg](https://t-me.translate.goog/s/gonzo_ML/292?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- xLSTM: Extended Long Short-Term Memory — [https://arxiv.org/abs/2405.04517](https://arxiv.org/abs/2405.04517)
+- ModernBERT — [https://arxiv.org/abs/2412.13663](https://arxiv.org/abs/2412.13663)
+- Kosmos-1: Language Is Not All You Need — [https://arxiv.org/abs/2302.14045](https://arxiv.org/abs/2302.14045)
+- Florence-2 — [https://arxiv.org/abs/2311.06242](https://arxiv.org/abs/2311.06242)
+- Scaling MLPs: A Tale of Inductive Bias — [https://arxiv.org/abs/2306.13575](https://arxiv.org/abs/2306.13575) [tg](https://t-me.translate.goog/s/gonzo_ML/800?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Neural Networks and the Chomsky Hierarchy — [https://arxiv.org/abs/2207.02098](https://arxiv.org/abs/2207.02098)
+- Continuous Thought Machines (Sakana AI) — [https://pub.sakana.ai/ctm/](https://pub.sakana.ai/ctm/)
+- Code Llama (Meta) — [https://ai.meta.com/research/publications/code-llama-open-foundation-models-for-code/](https://ai.meta.com/research/publications/code-llama-open-foundation-models-for-code/)
+- Large Concept Models (Meta) — [https://ai.meta.com/research/publications/large-concept-models-language-modeling-in-a-sentence-representation-space/](https://ai.meta.com/research/publications/large-concept-models-language-modeling-in-a-sentence-representation-space/)
+- AudioPaLM: an LLM that can speak and listen — [https://google-research.github.io/seanet/audiopalm/examples/](https://google-research.github.io/seanet/audiopalm/examples/)
+- Your Transformer is Secretly Linear (ACL 2024, AIRI) — [https://arxiv.org/abs/2405.12250](https://arxiv.org/abs/2405.12250) [tg](https://t-me.translate.goog/s/abstractDL/247?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) · [https://www.lesswrong.com/posts/JSWF2ZLt6YahyAauE/../deep-learning-models-might-be-secretly-almost-linear](https://www.lesswrong.com/posts/JSWF2ZLt6YahyAauE/../deep-learning-models-might-be-secretly-almost-linear)
+- The most cited neural nets of the 20th century (Schmidhuber) — [https://people.idsia.ch/~juergen/most-cited-neural-nets.html](https://people.idsia.ch/~juergen/most-cited-neural-nets.html)
 
 ## Reasoning and the "physics" of language models
 
-- Physics of Language Models (series): 1 — https://arxiv.org/abs/2305.13673 · 2.1 — https://arxiv.org/abs/2407.20311 · 3.1 — https://arxiv.org/abs/2309.14316 · 3.2 — https://arxiv.org/abs/2309.14402 · 3.3 (Knowledge Capacity Scaling Laws) — https://arxiv.org/abs/2404.05405
-- The Reversal Curse — https://arxiv.org/abs/2309.12288 [tg](https://t-me.translate.goog/s/abstractDL/193?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- Multimodal Chain-of-Thought Reasoning — https://arxiv.org/abs/2302.00923
-- Coconut: Reasoning in a Continuous Latent Space — https://arxiv.org/abs/2412.06769 [tg](https://t-me.translate.goog/s/data_secrets/5507?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- SIM-CoT: Supervised Implicit Chain-of-Thought — https://arxiv.org/abs/2509.20317 [tg](https://t-me.translate.goog/s/abstractDL/311?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- From Explicit CoT to Implicit CoT — https://arxiv.org/abs/2405.14838
-- Arithmetic Without Algorithms: Bag of Heuristics — https://arxiv.org/abs/2410.21272
-- LLMs Can't Plan, But Can Help Planning (LLM-Modulo) — https://arxiv.org/abs/2402.01817
-- Competitive Programming with Large Reasoning Models (OpenAI o-series) — https://arxiv.org/abs/2502.06807
-- Scaling of Search and Learning: A Roadmap to Reproduce o1 — https://arxiv.org/abs/2412.14135
-- How do language models learn facts? (DeepMind) — https://arxiv.org/abs/2503.21676
-- How Do LLMs Acquire Factual Knowledge During Pretraining? — https://arxiv.org/abs/2406.11813
-- Knowledge Mechanisms in LLMs: A Survey — https://arxiv.org/abs/2407.15017
-- The Truth is in There: Layer-Selective Rank Reduction (LASER) — https://arxiv.org/abs/2312.13558
-- Dissociating language and thought in LLMs — https://arxiv.org/abs/2301.06627
-- Emergent Analogical Reasoning in LLMs — https://arxiv.org/abs/2212.09196
-- Emergent Capabilities Arise Randomly from Sparse Attention Patterns — https://arxiv.org/abs/2606.25010 [tg](https://t-me.translate.goog/s/gonzo_ML/1031?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- Transcendence: Generative Models Can Outperform The Experts That Train Them — https://arxiv.org/abs/2406.11741 [tg](https://t-me.translate.goog/s/seeallochnaya/299?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- Evaluating the World Model Implicit in a Generative Model — https://arxiv.org/abs/2406.03689
+- Are Emergent Abilities of LLMs a Mirage? (NeurIPS best paper) — [https://arxiv.org/abs/2304.15004](https://arxiv.org/abs/2304.15004) [tg](https://t-me.translate.goog/s/abstractDL/130?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Physics of Language Models (series): 1 — [https://arxiv.org/abs/2305.13673](https://arxiv.org/abs/2305.13673) · 2.1 — [https://arxiv.org/abs/2407.20311](https://arxiv.org/abs/2407.20311) · 3.1 — [https://arxiv.org/abs/2309.14316](https://arxiv.org/abs/2309.14316) · 3.2 — [https://arxiv.org/abs/2309.14402](https://arxiv.org/abs/2309.14402) · 3.3 (Knowledge Capacity Scaling Laws) — [https://arxiv.org/abs/2404.05405](https://arxiv.org/abs/2404.05405)
+- The Reversal Curse — [https://arxiv.org/abs/2309.12288](https://arxiv.org/abs/2309.12288) [tg](https://t-me.translate.goog/s/abstractDL/193?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Multimodal Chain-of-Thought Reasoning — [https://arxiv.org/abs/2302.00923](https://arxiv.org/abs/2302.00923)
+- Coconut: Reasoning in a Continuous Latent Space — [https://arxiv.org/abs/2412.06769](https://arxiv.org/abs/2412.06769) [tg](https://t-me.translate.goog/s/data_secrets/5507?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- SIM-CoT: Supervised Implicit Chain-of-Thought — [https://arxiv.org/abs/2509.20317](https://arxiv.org/abs/2509.20317) [tg](https://t-me.translate.goog/s/abstractDL/311?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- From Explicit CoT to Implicit CoT — [https://arxiv.org/abs/2405.14838](https://arxiv.org/abs/2405.14838)
+- Arithmetic Without Algorithms: Bag of Heuristics — [https://arxiv.org/abs/2410.21272](https://arxiv.org/abs/2410.21272)
+- Pre-trained Large Language Models Use Fourier Features to Compute Addition — [https://arxiv.org/abs/2406.03445](https://arxiv.org/abs/2406.03445)
+- The Lookahead Limitation: Why Multi-Operand Addition is Hard for LLMs — [https://arxiv.org/abs/2502.19981](https://arxiv.org/abs/2502.19981)
+- Modular Arithmetic: Language Models Solve Math Digit by Digit — [https://arxiv.org/abs/2508.02513](https://arxiv.org/abs/2508.02513)
+- Why Can't Transformers Learn Multiplication? — [https://arxiv.org/abs/2510.00184](https://arxiv.org/abs/2510.00184)
+- In-Context Algebra — [https://arxiv.org/abs/2512.16902](https://arxiv.org/abs/2512.16902)
+- AI-rithmetic — [https://arxiv.org/abs/2602.10416](https://arxiv.org/abs/2602.10416)
+- Language Models Compare Quantities Using Number-specific and Unit-specific Heuristics — [https://arxiv.org/abs/2606.03982](https://arxiv.org/abs/2606.03982)
+- LLMs Can't Plan, But Can Help Planning (LLM-Modulo) — [https://arxiv.org/abs/2402.01817](https://arxiv.org/abs/2402.01817)
+- Large Language Models Still Can't Plan / PlanBench (Kambhampati) — [https://openreview.net/forum?id=wUU-7XTL5XO](https://openreview.net/forum?id=wUU-7XTL5XO)
+- Competitive Programming with Large Reasoning Models (OpenAI o-series) — [https://arxiv.org/abs/2502.06807](https://arxiv.org/abs/2502.06807)
+- Scaling of Search and Learning: A Roadmap to Reproduce o1 — [https://arxiv.org/abs/2412.14135](https://arxiv.org/abs/2412.14135)
+- How do language models learn facts? (DeepMind) — [https://arxiv.org/abs/2503.21676](https://arxiv.org/abs/2503.21676)
+- How Do LLMs Acquire Factual Knowledge During Pretraining? — [https://arxiv.org/abs/2406.11813](https://arxiv.org/abs/2406.11813)
+- Knowledge Mechanisms in LLMs: A Survey — [https://arxiv.org/abs/2407.15017](https://arxiv.org/abs/2407.15017)
+- The Truth is in There: Layer-Selective Rank Reduction (LASER) — [https://arxiv.org/abs/2312.13558](https://arxiv.org/abs/2312.13558)
+- Dissociating language and thought in LLMs — [https://arxiv.org/abs/2301.06627](https://arxiv.org/abs/2301.06627)
+- Language is primarily a tool for communication rather than thought (Fedorenko et al., Nature 2024) — [https://doi.org/10.1038/s41586-024-07522-w](https://doi.org/10.1038/s41586-024-07522-w)
+- Emergent Analogical Reasoning in LLMs — [https://arxiv.org/abs/2212.09196](https://arxiv.org/abs/2212.09196)
+- Emergent Capabilities Arise Randomly from Sparse Attention Patterns — [https://arxiv.org/abs/2606.25010](https://arxiv.org/abs/2606.25010) [tg](https://t-me.translate.goog/s/gonzo_ML/1031?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) · [https://arxiviq.substack.com/p/emergent-capabilities-arise-randomly](https://arxiviq.substack.com/p/emergent-capabilities-arise-randomly)
+- Transcendence: Generative Models Can Outperform The Experts That Train Them — [https://arxiv.org/abs/2406.11741](https://arxiv.org/abs/2406.11741) [tg](https://t-me.translate.goog/s/seeallochnaya/299?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Evaluating the World Model Implicit in a Generative Model — [https://arxiv.org/abs/2406.03689](https://arxiv.org/abs/2406.03689)
+- Spurious Rewards: Rethinking Training Signals in RLVR — [https://arxiv.org/abs/2506.10947](https://arxiv.org/abs/2506.10947) [tg](https://t-me.translate.goog/s/buckwheat_thoughts/197?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Reinforcement Learning for Reasoning with One Training Example — [https://arxiv.org/abs/2504.20571](https://arxiv.org/abs/2504.20571) [tg](https://t-me.translate.goog/s/buckwheat_thoughts/197?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Reinforcing General Reasoning without Verifiers — [https://arxiv.org/abs/2505.21493](https://arxiv.org/abs/2505.21493) [tg](https://t-me.translate.goog/s/buckwheat_thoughts/197?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- The Unreasonable Effectiveness of Entropy Minimization in LLM Reasoning — [https://arxiv.org/abs/2505.15134](https://arxiv.org/abs/2505.15134) [tg](https://t-me.translate.goog/s/buckwheat_thoughts/197?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Can Large Reasoning Models Self-Train? — [https://arxiv.org/abs/2505.21444](https://arxiv.org/abs/2505.21444) [tg](https://t-me.translate.goog/s/buckwheat_thoughts/197?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Incorrect Baseline Evaluations Call into Question Recent LLM-RL Claims — [https://safe-lip-9a8.notion.site/Incorrect-Baseline-Evaluations-Call-into-Question-Recent-LLM-RL-Claims-2012f1fbf0ee8094ab8ded1953c15a37](https://safe-lip-9a8.notion.site/Incorrect-Baseline-Evaluations-Call-into-Question-Recent-LLM-RL-Claims-2012f1fbf0ee8094ab8ded1953c15a37)
+(critiques the cluster above: Spurious Rewards, one-shot RLVR, verifier-free RL, entropy minimization, self-train)
+- Grokked Transformers are Implicit Reasoners — [https://arxiv.org/abs/2405.15071](https://arxiv.org/abs/2405.15071)
+- Grokking Group Multiplication with Cosets — [https://openreview.net/forum?id=hcQfTsVnBo](https://openreview.net/forum?id=hcQfTsVnBo)
+- Progress measures for grokking via mechanistic interpretability — [https://arxiv.org/abs/2301.05217](https://arxiv.org/abs/2301.05217)
+- rStar-Math: Small LLMs Can Master Math Reasoning — [https://arxiv.org/abs/2501.04519](https://arxiv.org/abs/2501.04519) [tg](https://t-me.translate.goog/s/data_secrets/5738?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Characterizing emergent phenomena in LLMs (Google Research) — [https://ai.googleblog.com/2022/11/characterizing-emergent-phenomena-in.html](https://ai.googleblog.com/2022/11/characterizing-emergent-phenomena-in.html)
+- Why mathematics is set to be revolutionized by AI (Nature 2024) — [https://doi.org/10.1038/d41586-024-01413-w](https://doi.org/10.1038/d41586-024-01413-w)
+- Language Models Are Capable of Metacognitive Monitoring and Control of Their Internal Activations — [https://arxiv.org/abs/2505.13763](https://arxiv.org/abs/2505.13763)
+- Language Models Use Trigonometry to Do Addition (Kantamneni & Tegmark) — [https://arxiv.org/abs/2502.00873](https://arxiv.org/abs/2502.00873)
+- Position: LLMs can't jump — [https://openreview.net/pdf?id=klU4737opt](https://openreview.net/pdf?id=klU4737opt)
 
 ## Data, training, optimization
 
-- Cyclical Learning Rates — https://arxiv.org/abs/1506.01186
-- Super-Convergence (one-cycle) — https://arxiv.org/abs/1708.07120
-- Lion: Symbolic Discovery of Optimization Algorithms — https://arxiv.org/abs/2302.06675 [tg](https://t-me.translate.goog/s/gonzo_ML/800?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- The Road Less Scheduled (Schedule-Free) — https://arxiv.org/abs/2405.15682
-- The AdEMAMix Optimizer — https://arxiv.org/abs/2409.03137
-- Learned optimizers: training an optimizer with itself — https://arxiv.org/abs/2009.11243 · https://arxiv.org/abs/2002.11887
-- Grokfast: Accelerated Grokking — https://arxiv.org/abs/2405.20233
-- How much do language models memorize? — https://arxiv.org/abs/2505.24832
-- Emergent properties with repeated examples (FAIR) — https://arxiv.org/abs/2410.07041 [tg](https://t-me.translate.goog/s/abstractDL/275?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- Perplexed by Perplexity: Data Pruning With Small Reference Models — https://arxiv.org/abs/2405.20541
-- gzip Predicts Data-dependent Scaling Laws — https://arxiv.org/abs/2405.16684
-- Scaling Laws for Reward Model Overoptimization — https://arxiv.org/abs/2210.10760
-- Learning in High Dimension Always Amounts to Extrapolation — https://arxiv.org/abs/2110.09485
-- Learning Vision from Models Rivals Learning Vision from Data — https://arxiv.org/abs/2312.17742
+- The Lottery Ticket Hypothesis — [https://arxiv.org/abs/1803.03635](https://arxiv.org/abs/1803.03635)
+- Scaling Laws for Neural Language Models — [https://arxiv.org/abs/2001.08361](https://arxiv.org/abs/2001.08361)
+- Cyclical Learning Rates — [https://arxiv.org/abs/1506.01186](https://arxiv.org/abs/1506.01186)
+- Super-Convergence (one-cycle) — [https://arxiv.org/abs/1708.07120](https://arxiv.org/abs/1708.07120)
+- Lion: Symbolic Discovery of Optimization Algorithms — [https://arxiv.org/abs/2302.06675](https://arxiv.org/abs/2302.06675) [tg](https://t-me.translate.goog/s/gonzo_ML/800?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- The Road Less Scheduled (Schedule-Free) — [https://arxiv.org/abs/2405.15682](https://arxiv.org/abs/2405.15682)
+- The AdEMAMix Optimizer — [https://arxiv.org/abs/2409.03137](https://arxiv.org/abs/2409.03137)
+- Learned optimizers: training an optimizer with itself — [https://arxiv.org/abs/2009.11243](https://arxiv.org/abs/2009.11243) · [https://arxiv.org/abs/2002.11887](https://arxiv.org/abs/2002.11887)
+- Grokfast: Accelerated Grokking — [https://arxiv.org/abs/2405.20233](https://arxiv.org/abs/2405.20233)
+- How much do language models memorize? — [https://arxiv.org/abs/2505.24832](https://arxiv.org/abs/2505.24832) · [https://arxiviq.substack.com/p/the-measure-of-memory](https://arxiviq.substack.com/p/the-measure-of-memory) · [https://openreview.net/forum?id=bA6BgSbaUi](https://openreview.net/forum?id=bA6BgSbaUi) · [https://openreview.net/forum?id=NhU661EZ9C](https://openreview.net/forum?id=NhU661EZ9C)
+- Emergent properties with repeated examples (FAIR) — [https://arxiv.org/abs/2410.07041](https://arxiv.org/abs/2410.07041) [tg](https://t-me.translate.goog/s/abstractDL/275?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Perplexed by Perplexity: Data Pruning With Small Reference Models — [https://arxiv.org/abs/2405.20541](https://arxiv.org/abs/2405.20541)
+- gzip Predicts Data-dependent Scaling Laws — [https://arxiv.org/abs/2405.16684](https://arxiv.org/abs/2405.16684)
+- Scaling Laws for Reward Model Overoptimization — [https://arxiv.org/abs/2210.10760](https://arxiv.org/abs/2210.10760)
+- Learning in High Dimension Always Amounts to Extrapolation — [https://arxiv.org/abs/2110.09485](https://arxiv.org/abs/2110.09485)
+- How Neural Networks Extrapolate: From Feedforward to Graph Neural Networks — [https://arxiv.org/abs/2009.11848](https://arxiv.org/abs/2009.11848)
+- Learning Vision from Models Rivals Learning Vision from Data — [https://arxiv.org/abs/2312.17742](https://arxiv.org/abs/2312.17742)
+- Explorative Modeling: Unlocking a Third Pretraining Axis — [https://arxiv.org/abs/2607.27372](https://arxiv.org/abs/2607.27372) · [https://explorative-modeling.github.io/](https://explorative-modeling.github.io/) · [https://arxiviq.substack.com/p/explorative-modeling-unlocking-a](https://arxiviq.substack.com/p/explorative-modeling-unlocking-a)
+- Loss of plasticity in deep continual learning (Sutton et al., Nature 2024) — [https://doi.org/10.1038/s41586-024-07711-7](https://doi.org/10.1038/s41586-024-07711-7)
+- Nested Learning (Google, NeurIPS 2025) — [https://abehrouz.github.io/files/NL.pdf](https://abehrouz.github.io/files/NL.pdf) [tg](https://t-me.translate.goog/s/data_secrets/5900?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) · [https://research.google/blog/introducing-nested-learning-a-new-ml-paradigm-for-continual-learning/](https://research.google/blog/introducing-nested-learning-a-new-ml-paradigm-for-continual-learning/) [tg](https://t-me.translate.goog/s/data_secrets/5900?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Deep Double Descent (OpenAI) — [https://openai.com/index/deep-double-descent/](https://openai.com/index/deep-double-descent/)
+- On the Information Bottleneck Theory of Deep Learning (Saxe et al.) — [https://openreview.net/forum?id=ry_WPG-A-](https://openreview.net/forum?id=ry_WPG-A-)
+- ADAM Optimization with Adaptive Batch Selection / AdamCB — [https://iclr.cc/virtual/2025/poster/30565](https://iclr.cc/virtual/2025/poster/30565)
+- Optimizing Millions of Hyperparameters by Implicit Differentiation — [https://paperswithcode.com/paper/optimizing-millions-of-hyperparameters-by](https://paperswithcode.com/paper/optimizing-millions-of-hyperparameters-by)
+- Training compute of frontier models grows 4–5x/year (Epoch AI) — [https://epochai.org/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year](https://epochai.org/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year)
+- How much LLM training data is there, in the limit? — [https://www.educatingsilicon.com/2024/05/09/how-much-llm-training-data-is-there-in-the-limit/](https://www.educatingsilicon.com/2024/05/09/how-much-llm-training-data-is-there-in-the-limit/)
+- Reinforcement Pre-Training (RPT) — [https://arxiv.org/abs/2506.08007](https://arxiv.org/abs/2506.08007)
+- Supervised Fine Tuning on Curated Data is Reinforcement Learning — [https://arxiv.org/abs/2507.12856](https://arxiv.org/abs/2507.12856)
+- On-Policy RL Meets Off-Policy Experts (SFT+RL dynamic weighting) — [https://arxiv.org/abs/2508.11408](https://arxiv.org/abs/2508.11408)
 
 ## Self-supervised learning and vision
 
-- A Cookbook of Self-Supervised Learning — https://arxiv.org/abs/2304.12210
-- To Compress or Not to Compress: SSL and Information Theory — https://arxiv.org/abs/2304.09355
-- iBOT: Image BERT Pre-Training with Online Tokenizer — https://arxiv.org/abs/2111.07832
-- BEiT-3: Image as a Foreign Language — https://arxiv.org/abs/2208.10442
-- VISReg: Variance-Invariance-Sketching Regularization for JEPA — https://arxiv.org/abs/2606.02572
-- Latent Consistency Models — https://arxiv.org/abs/2310.04378
-- Tune-A-Video — https://arxiv.org/abs/2212.11565
-- Emu: Enhancing Image Generation with Photogenic Needles — https://arxiv.org/abs/2309.15807
-- ImageReward — https://arxiv.org/abs/2304.05977
-- Towards Universal Fake Image Detectors — https://arxiv.org/abs/2302.10174
+- SwAV: Unsupervised Learning by Contrasting Cluster Assignments — [https://arxiv.org/abs/2006.09882](https://arxiv.org/abs/2006.09882)
+- DINO: Emerging Properties in Self-Supervised ViT — [https://arxiv.org/abs/2104.14294](https://arxiv.org/abs/2104.14294)
+- I-JEPA (Self-Supervised Learning from Images with JEPA) — [https://arxiv.org/abs/2301.08243](https://arxiv.org/abs/2301.08243) [tg](https://t-me.translate.goog/s/dl_stories/497?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- DINOv2 — [https://arxiv.org/abs/2304.07193](https://arxiv.org/abs/2304.07193)
+- A Path Towards Autonomous Machine Intelligence (LeCun, 2022) — [https://openreview.net/forum?id=BZ5a1r-kVsf](https://openreview.net/forum?id=BZ5a1r-kVsf)
+- A Cookbook of Self-Supervised Learning — [https://arxiv.org/abs/2304.12210](https://arxiv.org/abs/2304.12210)
+- To Compress or Not to Compress: SSL and Information Theory — [https://arxiv.org/abs/2304.09355](https://arxiv.org/abs/2304.09355)
+- iBOT: Image BERT Pre-Training with Online Tokenizer — [https://arxiv.org/abs/2111.07832](https://arxiv.org/abs/2111.07832)
+- BEiT-3: Image as a Foreign Language — [https://arxiv.org/abs/2208.10442](https://arxiv.org/abs/2208.10442)
+- VISReg: Variance-Invariance-Sketching Regularization for JEPA — [https://arxiv.org/abs/2606.02572](https://arxiv.org/abs/2606.02572) · [https://haiyuwu.github.io/visreg](https://haiyuwu.github.io/visreg) · [https://arxiviq.substack.com/p/visreg-variance-invariance-sketching](https://arxiviq.substack.com/p/visreg-variance-invariance-sketching)
+- Latent Consistency Models — [https://arxiv.org/abs/2310.04378](https://arxiv.org/abs/2310.04378)
+- Tune-A-Video — [https://arxiv.org/abs/2212.11565](https://arxiv.org/abs/2212.11565)
+- Emu: Enhancing Image Generation with Photogenic Needles — [https://arxiv.org/abs/2309.15807](https://arxiv.org/abs/2309.15807)
+- EMU Video: Factorizing Text-to-Video Generation (Meta) — [https://ai.meta.com/blog/emu-text-to-video-generation-image-editing-research/](https://ai.meta.com/blog/emu-text-to-video-generation-image-editing-research/)
+- Voicebox (Meta, speech generation) — [https://ai.facebook.com/blog/voicebox-generative-ai-model-speech/](https://ai.facebook.com/blog/voicebox-generative-ai-model-speech/)
+- Perfusion (NVIDIA) — [https://research.nvidia.com/labs/par/Perfusion/](https://research.nvidia.com/labs/par/Perfusion/) · HyperDreamBooth — [https://hyperdreambooth.github.io/](https://hyperdreambooth.github.io/)
+- The GAN is dead; long live the GAN! (R3GAN) — [https://arxiv.org/abs/2501.05441](https://arxiv.org/abs/2501.05441)
+- ImageReward — [https://arxiv.org/abs/2304.05977](https://arxiv.org/abs/2304.05977)
+- Towards Universal Fake Image Detectors — [https://arxiv.org/abs/2302.10174](https://arxiv.org/abs/2302.10174)
 
 ## Retrieval, embeddings, benchmarks
 
-- BIG-bench: Beyond the Imitation Game — https://arxiv.org/abs/2206.04615
-- Large Dual Encoders Are Generalizable Retrievers (GTR) — https://arxiv.org/abs/2112.07899
-- INSTRUCTOR: One Embedder, Any Task — https://arxiv.org/abs/2212.09741
-- DSP: Demonstrate-Search-Predict (precursor of DSPy) — https://arxiv.org/abs/2212.14024 [tg](https://t-me.translate.goog/s/seeallochnaya/20?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- Gist Tokens: Learning to Compress Prompts — https://arxiv.org/abs/2304.08467
-- Promptbreeder: Self-Referential Self-Improvement — https://arxiv.org/abs/2309.16797 [tg](https://t-me.translate.goog/s/rybolos_channel/1442?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- Rainbow Teaming — https://arxiv.org/abs/2402.16822 [tg](https://t-me.translate.goog/s/rybolos_channel/1442?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- Medprompt: Can Generalist Foundation Models Outcompete Special-Purpose Tuning? — https://arxiv.org/abs/2311.16452
-- StrategyQA: Did Aristotle Use a Laptop? — https://arxiv.org/abs/2101.02235
-- Artifacts or Abduction: multiple-choice questions without the question — https://arxiv.org/abs/2402.12483
-- MLE-bench: Evaluating ML Agents on ML Engineering — https://arxiv.org/abs/2410.07095 [tg](https://t-me.translate.goog/s/rybolos_channel/1670?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- CEO-Bench: Can Agents Play the Long Game? — https://arxiv.org/abs/2606.18543
-- People cannot distinguish GPT-4 from a human in a Turing test — https://arxiv.org/abs/2405.08007
+- BIG-bench: Beyond the Imitation Game — [https://arxiv.org/abs/2206.04615](https://arxiv.org/abs/2206.04615)
+- Large Dual Encoders Are Generalizable Retrievers (GTR) — [https://arxiv.org/abs/2112.07899](https://arxiv.org/abs/2112.07899)
+- INSTRUCTOR: One Embedder, Any Task — [https://arxiv.org/abs/2212.09741](https://arxiv.org/abs/2212.09741)
+- Matryoshka Representation Learning — [https://arxiv.org/abs/2205.13147](https://arxiv.org/abs/2205.13147)
+- DSP: Demonstrate-Search-Predict (precursor of DSPy) — [https://arxiv.org/abs/2212.14024](https://arxiv.org/abs/2212.14024) [tg](https://t-me.translate.goog/s/seeallochnaya/20?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Open Domain Question Answering (Lilian Weng) — [https://lilianweng.github.io/posts/2020-10-29-odqa/](https://lilianweng.github.io/posts/2020-10-29-odqa/)
+- Self-RAG — [https://selfrag.github.io/](https://selfrag.github.io/)
+- PRIMERA: Pyramid-based Masked Sentence Pre-training — [https://aclanthology.org/2022.acl-long.360/](https://aclanthology.org/2022.acl-long.360/) [tg](https://t-me.translate.goog/s/gonzo_ML/404?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Super-NaturalInstructions (1600+ NLP tasks) — [https://aclanthology.org/2022.emnlp-main.340/](https://aclanthology.org/2022.emnlp-main.340/)
+- A System for Answering Simple Questions in Multiple Languages — [https://aclanthology.org/2023.acl-demo.51/](https://aclanthology.org/2023.acl-demo.51/) [tg](https://t-me.translate.goog/s/abstractDL/193?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Gist Tokens: Learning to Compress Prompts — [https://arxiv.org/abs/2304.08467](https://arxiv.org/abs/2304.08467)
+- Promptbreeder: Self-Referential Self-Improvement — [https://arxiv.org/abs/2309.16797](https://arxiv.org/abs/2309.16797) [tg](https://t-me.translate.goog/s/rybolos_channel/1442?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Rainbow Teaming — [https://arxiv.org/abs/2402.16822](https://arxiv.org/abs/2402.16822) [tg](https://t-me.translate.goog/s/rybolos_channel/1442?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Medprompt: Can Generalist Foundation Models Outcompete Special-Purpose Tuning? — [https://arxiv.org/abs/2311.16452](https://arxiv.org/abs/2311.16452)
+- StrategyQA: Did Aristotle Use a Laptop? — [https://arxiv.org/abs/2101.02235](https://arxiv.org/abs/2101.02235)
+- Artifacts or Abduction: multiple-choice questions without the question — [https://arxiv.org/abs/2402.12483](https://arxiv.org/abs/2402.12483)
+- MLE-bench: Evaluating ML Agents on ML Engineering — [https://arxiv.org/abs/2410.07095](https://arxiv.org/abs/2410.07095) [tg](https://t-me.translate.goog/s/rybolos_channel/1670?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- CEO-Bench: Can Agents Play the Long Game? — [https://arxiv.org/abs/2606.18543](https://arxiv.org/abs/2606.18543)
+- People cannot distinguish GPT-4 from a human in a Turing test — [https://arxiv.org/abs/2405.08007](https://arxiv.org/abs/2405.08007)
 
 ## Agents, open-endedness, AGI
 
-- Open-Endedness is Essential for Artificial Superhuman Intelligence — https://arxiv.org/abs/2406.04268
-- A Definition of Open-Ended Learning Problems — https://arxiv.org/abs/2311.00344
-- Levels of AGI (DeepMind) — https://arxiv.org/abs/2311.02462
-- AlphaGo Moment for Model Architecture Discovery — https://arxiv.org/abs/2507.18074
-- Self-Improvements in Modern Agentic Systems: A Survey (Schmidhuber) — https://arxiv.org/abs/2607.13104
-- What Does It Take to Be a Good AI Research Agent? — https://arxiv.org/abs/2511.15593 [tg](https://t-me.translate.goog/s/rybolos_channel/1670?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- Harnessing Agentic Evolution — https://arxiv.org/abs/2605.13821 · Hyperagents — https://arxiv.org/abs/2603.19461
-- Competition and Attraction Improve Model Fusion (Sakana AI) — https://arxiv.org/abs/2508.16204
-- Learning Formal Mathematics From Intrinsic Motivation — https://arxiv.org/abs/2407.00695
+- Open-Endedness is Essential for Artificial Superhuman Intelligence — [https://arxiv.org/abs/2406.04268](https://arxiv.org/abs/2406.04268)
+- A Definition of Open-Ended Learning Problems — [https://arxiv.org/abs/2311.00344](https://arxiv.org/abs/2311.00344)
+- Levels of AGI (DeepMind) — [https://arxiv.org/abs/2311.02462](https://arxiv.org/abs/2311.02462)
+- AlphaGo Moment for Model Architecture Discovery — [https://arxiv.org/abs/2507.18074](https://arxiv.org/abs/2507.18074)
+- Self-Improvements in Modern Agentic Systems: A Survey (Schmidhuber) — [https://arxiv.org/abs/2607.13104](https://arxiv.org/abs/2607.13104)
+- What Does It Take to Be a Good AI Research Agent? — [https://arxiv.org/abs/2511.15593](https://arxiv.org/abs/2511.15593) [tg](https://t-me.translate.goog/s/rybolos_channel/1670?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Harnessing Agentic Evolution — [https://arxiv.org/abs/2605.13821](https://arxiv.org/abs/2605.13821) · Hyperagents — [https://arxiv.org/abs/2603.19461](https://arxiv.org/abs/2603.19461)
+- Ouroboros: A Self-Developing Frontier Coding Agent — [https://arxiv.org/abs/2608.08311](https://arxiv.org/abs/2608.08311) · [https://razzant.github.io/ouroboros/](https://razzant.github.io/ouroboros/)
+- LLM Powered Autonomous Agents (Lilian Weng) — [https://lilianweng.github.io/posts/2023-06-23-agent/](https://lilianweng.github.io/posts/2023-06-23-agent/)
+- Competition and Attraction Improve Model Fusion (Sakana AI) — [https://arxiv.org/abs/2508.16204](https://arxiv.org/abs/2508.16204)
+- Learning Formal Mathematics From Intrinsic Motivation — [https://arxiv.org/abs/2407.00695](https://arxiv.org/abs/2407.00695)
+- AI-GAs: AI-generating algorithms, an alternate paradigm for producing general AI (Clune) — [https://arxiv.org/abs/1905.10985](https://arxiv.org/abs/1905.10985)
+- Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents — [https://arxiv.org/abs/2505.22954](https://arxiv.org/abs/2505.22954)
+- Robust agents learn causal world models (ICLR 2024 best paper) — [https://openreview.net/forum?id=pOoKI3ouv1](https://openreview.net/forum?id=pOoKI3ouv1)
+- ShinkaEvolve (Sakana AI) — [https://sakana.ai/shinka-evolve/](https://sakana.ai/shinka-evolve/) [tg](https://t-me.translate.goog/s/data_secrets/7688?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- MineDojo — [https://minedojo.org/](https://minedojo.org/)
+- A social path to human-like artificial intelligence (Nat Mach Intell 2023) — [https://doi.org/10.1038/s42256-023-00754-x](https://doi.org/10.1038/s42256-023-00754-x)
+- Few-shot tool use doesn't really work yet (Google Research) — [https://research.google/blog/few-shot-tool-use-doesnt-really-work-yet/](https://research.google/blog/few-shot-tool-use-doesnt-really-work-yet/)
+
+## Harness
+
+- Harnesses for models (Lilian Weng, 2026) — [https://lilianweng.github.io/posts/2026-07-04-harness/](https://lilianweng.github.io/posts/2026-07-04-harness/)
+- DeepSeek Harness — [https://github.com/deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek-harness)
+- First evidence of recursive self-improvement (AIDE2, Weco) — [https://www.weco.ai/blog/first-evidence-of-recursive-self-improvement](https://www.weco.ai/blog/first-evidence-of-recursive-self-improvement)
+- Schema: a symbolic world model for ARC-AGI-3 — [http://schema-harness.github.io](http://schema-harness.github.io) · traces — [https://huggingface.co/datasets/schema-harness/arc-agi-3-schema-traces](https://huggingface.co/datasets/schema-harness/arc-agi-3-schema-traces)
+- Language model harnesses are compositional generalizers (Alex Zhang) — [https://alexzhang13.github.io/blog/2026/harness/](https://alexzhang13.github.io/blog/2026/harness/)
+- PRO-LONG: Programmatic Memory Enables Long-Horizon Reasoning — [https://github.com/alexisfox7/RGB-Agent](https://github.com/alexisfox7/RGB-Agent) · [https://arxiv.org/abs/2607.20064](https://arxiv.org/abs/2607.20064)
+- SimpleTES: A New Scaling Axis for Open-ended Discovery — [https://haotianye.com/blog/simpletes/](https://haotianye.com/blog/simpletes/)
+- Duck Harness: Winning Solution for ARC-AGI-3 Milestone 1 (Tufa Labs) — [https://tufalabs.ai/research/duck-harness/](https://tufalabs.ai/research/duck-harness/)
+- Prime Agent: a self-improving RLM agent (Prime Intellect) — [https://github.com/PrimeIntellect-ai/prime-agent](https://github.com/PrimeIntellect-ai/prime-agent)
 
 ## AI safety and consciousness
 
-- Optimal Policies Tend to Seek Power — https://arxiv.org/abs/1912.01683 [tg](https://t-me.translate.goog/s/gonzo_ML/1160?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- Parametrically Retargetable Decision-Makers Tend To Seek Power — https://arxiv.org/abs/2206.13477 [tg](https://t-me.translate.goog/s/gonzo_ML/1160?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- Is Power-Seeking AI an Existential Risk? — https://arxiv.org/abs/2206.13353 [tg](https://t-me.translate.goog/s/gonzo_ML/1160?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- Power-seeking can be probable and predictive for trained agents — https://arxiv.org/abs/2304.06528 [tg](https://t-me.translate.goog/s/gonzo_ML/1160?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- Consciousness in AI: Insights from the Science of Consciousness — https://arxiv.org/abs/2308.08708
-- Could a Large Language Model be Conscious? (Chalmers) — https://arxiv.org/abs/2303.07103
-- Palatable Conceptions of Disembodied Being (Shanahan) — https://arxiv.org/abs/2503.16348
+- Optimal Policies Tend to Seek Power — [https://arxiv.org/abs/1912.01683](https://arxiv.org/abs/1912.01683) [tg](https://t-me.translate.goog/s/gonzo_ML/1160?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Parametrically Retargetable Decision-Makers Tend To Seek Power — [https://arxiv.org/abs/2206.13477](https://arxiv.org/abs/2206.13477) [tg](https://t-me.translate.goog/s/gonzo_ML/1160?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Is Power-Seeking AI an Existential Risk? — [https://arxiv.org/abs/2206.13353](https://arxiv.org/abs/2206.13353) [tg](https://t-me.translate.goog/s/gonzo_ML/1160?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Power-seeking can be probable and predictive for trained agents — [https://arxiv.org/abs/2304.06528](https://arxiv.org/abs/2304.06528) [tg](https://t-me.translate.goog/s/gonzo_ML/1160?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Consciousness in AI: Insights from the Science of Consciousness — [https://arxiv.org/abs/2308.08708](https://arxiv.org/abs/2308.08708)
+- Could a Large Language Model be Conscious? (Chalmers) — [https://arxiv.org/abs/2303.07103](https://arxiv.org/abs/2303.07103)
+- Palatable Conceptions of Disembodied Being (Shanahan) — [https://arxiv.org/abs/2503.16348](https://arxiv.org/abs/2503.16348)
+- When Activation Oracles Learn Not to Read — [https://arxiv.org/abs/2607.23379](https://arxiv.org/abs/2607.23379)
+- Reasoning Models Don't Always Say What They Think (Anthropic) — [https://www.anthropic.com/research/reasoning-models-dont-say-think](https://www.anthropic.com/research/reasoning-models-dont-say-think)
+- Emergent Introspective Awareness in Large Language Models (Anthropic, October 2025) — [https://transformer-circuits.pub/2025/introspection/index.html](https://transformer-circuits.pub/2025/introspection/index.html)
+- An Extremely Opinionated Annotated List of My Favourite Mechanistic Interpretability Papers v2 (Alignment Forum) — [https://www.alignmentforum.org/posts/NfFST5Mio7BCAQHPA/an-extremely-opinionated-annotated-list-of-my-favourite-1](https://www.alignmentforum.org/posts/NfFST5Mio7BCAQHPA/an-extremely-opinionated-annotated-list-of-my-favourite-1)
+- Weak-to-strong generalization (OpenAI SuperAlignment) — [https://openai.com/research/weak-to-strong-generalization](https://openai.com/research/weak-to-strong-generalization)
+- Tracing thoughts of a language model / Circuit tracing (Anthropic) — [https://www.anthropic.com/research/tracing-thoughts-language-model](https://www.anthropic.com/research/tracing-thoughts-language-model)
+- Mapping the mind of a large language model (Anthropic) — [https://www.anthropic.com/news/mapping-mind-language-model](https://www.anthropic.com/news/mapping-mind-language-model)
+- Circuit tracing / attribution graphs (methods) — [https://transformer-circuits.pub/2025/attribution-graphs/methods.html](https://transformer-circuits.pub/2025/attribution-graphs/methods.html) [tg](https://t-me.translate.goog/s/data_secrets/5251?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Attribution graphs, the biology of the model — [https://transformer-circuits.pub/2025/attribution-graphs/biology.html](https://transformer-circuits.pub/2025/attribution-graphs/biology.html) [tg](https://t-me.translate.goog/s/data_secrets/5251?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Situational Awareness (Aschenbrenner) — [https://situational-awareness.ai](https://situational-awareness.ai) [tg](https://t-me.translate.goog/s/seeallochnaya/1282?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- AI 2027 (Kokotajlo) — [https://ai-2027.com/](https://ai-2027.com/)
 
 ## Time series
 
-- Chronos: Learning the Language of Time Series — https://arxiv.org/abs/2403.07815 [tg](https://t-me.translate.goog/s/gonzo_ML/2148?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- TimesFM: A decoder-only foundation model for time-series forecasting — https://arxiv.org/abs/2310.10688 [tg](https://t-me.translate.goog/s/gonzo_ML/2148?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- Lag-Llama — https://arxiv.org/abs/2310.08278 [tg](https://t-me.translate.goog/s/gonzo_ML/2148?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- Time-LLM — https://arxiv.org/abs/2310.01728 [tg](https://t-me.translate.goog/s/gonzo_ML/2148?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- LLMTime: LLMs Are Zero-Shot Time Series Forecasters — https://arxiv.org/abs/2310.07820 [tg](https://t-me.translate.goog/s/gonzo_ML/2148?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- Informer — https://arxiv.org/abs/2012.07436 [tg](https://t-me.translate.goog/s/gonzo_ML/2148?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- PromptCast — https://arxiv.org/abs/2210.08964 [tg](https://t-me.translate.goog/s/gonzo_ML/2148?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- Deep learning for time series classification: a review — https://arxiv.org/abs/1809.04356
-- Time Series Classification from Scratch (strong baseline) — https://arxiv.org/abs/1611.06455
-- Survey of Deep Learning and Foundation Models for TS Forecasting — https://arxiv.org/abs/2401.13912 [tg](https://t-me.translate.goog/s/gonzo_ML/2148?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Chronos: Learning the Language of Time Series — [https://arxiv.org/abs/2403.07815](https://arxiv.org/abs/2403.07815) [tg](https://t-me.translate.goog/s/gonzo_ML/2148?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- TimesFM: A decoder-only foundation model for time-series forecasting — [https://arxiv.org/abs/2310.10688](https://arxiv.org/abs/2310.10688) [tg](https://t-me.translate.goog/s/gonzo_ML/2148?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Lag-Llama — [https://arxiv.org/abs/2310.08278](https://arxiv.org/abs/2310.08278) [tg](https://t-me.translate.goog/s/gonzo_ML/2148?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Time-LLM — [https://arxiv.org/abs/2310.01728](https://arxiv.org/abs/2310.01728) [tg](https://t-me.translate.goog/s/gonzo_ML/2148?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- LLMTime: LLMs Are Zero-Shot Time Series Forecasters — [https://arxiv.org/abs/2310.07820](https://arxiv.org/abs/2310.07820) [tg](https://t-me.translate.goog/s/gonzo_ML/2148?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Informer — [https://arxiv.org/abs/2012.07436](https://arxiv.org/abs/2012.07436) [tg](https://t-me.translate.goog/s/gonzo_ML/2148?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- PromptCast — [https://arxiv.org/abs/2210.08964](https://arxiv.org/abs/2210.08964) [tg](https://t-me.translate.goog/s/gonzo_ML/2148?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Deep learning for time series classification: a review — [https://arxiv.org/abs/1809.04356](https://arxiv.org/abs/1809.04356)
+- Time Series Classification from Scratch (strong baseline) — [https://arxiv.org/abs/1611.06455](https://arxiv.org/abs/1611.06455)
+- Survey of Deep Learning and Foundation Models for TS Forecasting — [https://arxiv.org/abs/2401.13912](https://arxiv.org/abs/2401.13912) [tg](https://t-me.translate.goog/s/gonzo_ML/2148?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- N-BEATS — [https://paperswithcode.com/paper/n-beats-neural-basis-expansion-analysis-for](https://paperswithcode.com/paper/n-beats-neural-basis-expansion-analysis-for) · DeepAR — [https://paperswithcode.com/paper/deepar-probabilistic-forecasting-with](https://paperswithcode.com/paper/deepar-probabilistic-forecasting-with)
 
 ## NeuroAI
 
-- Toward Next-Generation AI: Catalyzing the NeuroAI Revolution — https://arxiv.org/abs/2210.08340
-- This is how the Neocortex Learns (O'Reilly) — https://arxiv.org/abs/2606.08720
-- Attractor and integrator networks in the brain — https://arxiv.org/abs/2112.03978
-- From Tokens to Thoughts: How LLMs and Humans Trade Compression for Meaning — https://arxiv.org/abs/2505.17117
+- Toward Next-Generation AI: Catalyzing the NeuroAI Revolution — [https://arxiv.org/abs/2210.08340](https://arxiv.org/abs/2210.08340)
+- This is how the Neocortex Learns (O'Reilly) — [https://arxiv.org/abs/2606.08720](https://arxiv.org/abs/2606.08720)
+- Attractor and integrator networks in the brain — [https://arxiv.org/abs/2112.03978](https://arxiv.org/abs/2112.03978) · [https://doi.org/10.1038/s41583-022-00642-0](https://doi.org/10.1038/s41583-022-00642-0)
+- From Tokens to Thoughts: How LLMs and Humans Trade Compression for Meaning — [https://arxiv.org/abs/2505.17117](https://arxiv.org/abs/2505.17117)
+- Relating transformers to models and neural representations of the hippocampal formation (Whittington et al.) — [https://arxiv.org/abs/2112.04035](https://arxiv.org/abs/2112.04035)
+- Is my red your red? Evaluating structural correspondences of color qualia (iScience 2025) — [https://www.cell.com/iscience/fulltext/S2589-0042(25)00289-5](https://www.cell.com/iscience/fulltext/S2589-0042(25)00289-5)
+- Correspondence between neuroevolution and gradient descent (Nat Commun 2021) — [https://doi.org/10.1038/s41467-021-26568-2](https://doi.org/10.1038/s41467-021-26568-2)
+- Neural spiking for causal inference and learning (PLOS Comp Biol 2023) — [https://doi.org/10.1371/journal.pcbi.1011005](https://doi.org/10.1371/journal.pcbi.1011005)
+- Emergence of belief-like representations through RL (bioRxiv) — [https://doi.org/10.1101/2023.04.04.535512](https://doi.org/10.1101/2023.04.04.535512)
+- MetaWorm: an integrative model of the C. elegans brain and body (bioRxiv) — [https://doi.org/10.1101/2024.02.22.581686](https://doi.org/10.1101/2024.02.22.581686)
+- CogPGT: a genetic predictor of IQ — [https://herasight-project.webflow.io/technical-paper/cogpgt-1](https://herasight-project.webflow.io/technical-paper/cogpgt-1)
 
-## Addendum: works without a direct arXiv link
+## Representation alignment
 
-Found on a second pass over posts from the listed channels — they were cited
-via OpenReview, HuggingFace Papers, ACL Anthology, DOI, or lab blogs.
+- The Platonic Representation Hypothesis — [https://arxiv.org/abs/2405.07987](https://arxiv.org/abs/2405.07987)
+- Proof of a perfect platonic representation hypothesis — [https://arxiv.org/abs/2507.01098](https://arxiv.org/abs/2507.01098)
+- Revisiting the Platonic Representation Hypothesis: An Aristotelian View — [https://arxiv.org/abs/2602.14486](https://arxiv.org/abs/2602.14486)
+- Comparing representational geometries using whitened unbiased-distance-matrix similarity — [https://arxiv.org/abs/2007.02789](https://arxiv.org/abs/2007.02789)
+- Correcting Biased Centered Kernel Alignment Measures — [https://arxiv.org/abs/2405.01012](https://arxiv.org/abs/2405.01012)
+- Estimating Neural Representation Alignment from Sparsely Sampled Inputs — [https://arxiv.org/abs/2502.15104](https://arxiv.org/abs/2502.15104)
+- Verbalizable Representations Form a Global Workspace in Language Models
+(Anthropic, July 2026) — [https://transformer-circuits.pub/2026/workspace/](https://transformer-circuits.pub/2026/workspace/)
 
-### The big ones that were least worth missing
+## Finance
 
-- **A Path Towards Autonomous Machine Intelligence** (LeCun, 2022) — the position paper
-  on JEPA and world models, published only on OpenReview:
-  https://openreview.net/forum?id=BZ5a1r-kVsf
-- **Loss of plasticity in deep continual learning** (Sutton et al., Nature 2024) —
-  https://doi.org/10.1038/s41586-024-07711-7
-- **Weak-to-strong generalization** (OpenAI SuperAlignment, Sutskever among the authors) —
-  https://openai.com/research/weak-to-strong-generalization
-- **Robust agents learn causal world models** (ICLR 2024 best paper) —
-  https://openreview.net/forum?id=pOoKI3ouv1
-- **1000 Layer Networks for Self-Supervised RL** (NeurIPS 2025 Best Paper) —
-  https://openreview.net/forum?id=s0JVsx3bx1
-- **Language is primarily a tool for communication rather than thought**
-  (Fedorenko et al., Nature 2024) — https://doi.org/10.1038/s41586-024-07522-w
-- **Nested Learning** (Google, NeurIPS 2025) — nested levels of optimization against
-  catastrophic forgetting; the export contains only the Data Secrets summary of 2025-11-08
-- **Tracing thoughts of a language model / Circuit tracing** (Anthropic, 2025) —
-  https://www.anthropic.com/research/tracing-thoughts-language-model
-- **Mapping the mind of a large language model** (Anthropic, SAE interpretability) —
-  https://www.anthropic.com/news/mapping-mind-language-model
+- A Deep Reinforcement Learning Framework for the Financial Portfolio Management Problem — [https://arxiv.org/abs/1706.10059](https://arxiv.org/abs/1706.10059)
+- Financial Trading as a Game: A Deep Reinforcement Learning Approach — [https://arxiv.org/abs/1807.02787](https://arxiv.org/abs/1807.02787)
+- Deep Learning for Financial Applications: A Survey — [https://arxiv.org/abs/2003.01859](https://arxiv.org/abs/2003.01859)
+- INVESTORBENCH: a financial benchmark for LLM agents — [https://aclanthology.org/2025.acl-long.126/](https://aclanthology.org/2025.acl-long.126/)
+- The Virtue of Complexity debate (Kelly, Malamud & Zhou versus Nagel) — [https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5239006](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5239006) · [https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5346842](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5346842) · [https://voices.uchicago.edu/stefannagel/files/2025/07/Complexity_2.pdf](https://voices.uchicago.edu/stefannagel/files/2025/07/Complexity_2.pdf) · [https://bfi.uchicago.edu/wp-content/uploads/2025/08/BFI_WP_2025-104.pdf](https://bfi.uchicago.edu/wp-content/uploads/2025/08/BFI_WP_2025-104.pdf)
+- Deep Adaptive Input Normalization for price forecasting from Limit Order Book data — [https://www.researchgate.net/publication/331273826](https://www.researchgate.net/publication/331273826)
+- An Intelligent Financial Portfolio Trading Strategy using Deep Q-Learning — [https://www.groundai.com/project/an-intelligent-financial-portfolio-trading-strategy-using-deep-q-learning8432/3](https://www.groundai.com/project/an-intelligent-financial-portfolio-trading-strategy-using-deep-q-learning8432/3)
+- Learning to Replicate Expert Judgment in Financial Tasks (Thinking Machines) — [https://thinkingmachines.ai/news/learning-to-replicate-expert-judgment-in-financial-tasks/](https://thinkingmachines.ai/news/learning-to-replicate-expert-judgment-in-financial-tasks/)
 
-### New arXiv papers (arrived via HuggingFace Papers)
+## Books
 
-- Your Transformer is Secretly Linear (ACL 2024, AIRI) — https://arxiv.org/abs/2405.12250 [tg](https://t-me.translate.goog/s/abstractDL/247?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- rStar-Math: Small LLMs Can Master Math Reasoning — https://arxiv.org/abs/2501.04519 [tg](https://t-me.translate.goog/s/data_secrets/5738?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- The GAN is dead; long live the GAN! (R3GAN) — https://arxiv.org/abs/2501.05441
-- Deep Learning Interviews (problem collection) — https://arxiv.org/abs/2201.00650
+- Deep Learning: Foundations and Concepts (Bishop & Bishop) — [https://link.springer.com/book/10.1007/978-3-031-45468-4](https://link.springer.com/book/10.1007/978-3-031-45468-4)
+- Neuroevolution book — [https://neuroevolutionbook.com/](https://neuroevolutionbook.com/)
+- RLHF book — [https://rlhfbook.com/](https://rlhfbook.com/)
+- Reinforcement Learning Textbook (Sergey Ivanov) — [https://arxiv.org/abs/2201.09746](https://arxiv.org/abs/2201.09746)
+- Deep Learning Interviews (problem collection) — [https://arxiv.org/abs/2201.00650](https://arxiv.org/abs/2201.00650)
 
-### OpenReview
+## Other
 
-- Sample-Efficient RL by Breaking the Replay Ratio Barrier (ICLR 2023 oral, precursor of BBF)
-  — https://openreview.net/forum?id=OpC-9aBBVJe [tg](https://t-me.translate.goog/s/knowledge_accumulator/192?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- Large Language Models Still Can't Plan / PlanBench (Kambhampati, NeurIPS 2022)
-  — https://openreview.net/forum?id=wUU-7XTL5XO
-- On the Information Bottleneck Theory of Deep Learning (Saxe et al., ICLR 2018)
-  — https://openreview.net/forum?id=ry_WPG-A-
-- Grokking Group Multiplication with Cosets (ICML 2024) —
-  https://openreview.net/forum?id=hcQfTsVnBo
-- Meta-Reinforcement Learning with Zero-Shot RL — https://openreview.net/forum?id=XyGJJ4FPoX
-- How much can language models memorize? (ICML 2026 award versions) —
-  https://openreview.net/forum?id=bA6BgSbaUi · https://openreview.net/forum?id=NhU661EZ9C
-
-### ACL Anthology / PapersWithCode
-
-- PRIMERA: Pyramid-based Masked Sentence Pre-training — https://aclanthology.org/2022.acl-long.360/ [tg](https://t-me.translate.goog/s/gonzo_ML/404?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- Super-NaturalInstructions (1600+ NLP tasks) — https://aclanthology.org/2022.emnlp-main.340/
-- A System for Answering Simple Questions in Multiple Languages — https://aclanthology.org/2023.acl-demo.51/ [tg](https://t-me.translate.goog/s/abstractDL/193?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- INVESTORBENCH: a financial benchmark for LLM agents — https://aclanthology.org/2025.acl-long.126/
-- N-BEATS and DeepAR — https://paperswithcode.com/paper/n-beats-neural-basis-expansion-analysis-for ·
-  https://paperswithcode.com/paper/deepar-probabilistic-forecasting-with
-- Optimizing Millions of Hyperparameters by Implicit Differentiation —
-  https://paperswithcode.com/paper/optimizing-millions-of-hyperparameters-by
-
-### Lab publications (not on arXiv)
-
-- Code Llama (Meta) — https://ai.meta.com/research/publications/code-llama-open-foundation-models-for-code/
-- Large Concept Models: language modeling in a sentence representation space (Meta) —
-  https://ai.meta.com/research/publications/large-concept-models-language-modeling-in-a-sentence-representation-space/
-- Deep Double Descent (OpenAI) — https://openai.com/index/deep-double-descent/
-- ShinkaEvolve — an open-source counterpart to AlphaEvolve (Sakana AI) — https://sakana.ai/shinka-evolve/ [tg](https://t-me.translate.goog/s/data_secrets/7688?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- EMU Video: Factorizing Text-to-Video Generation (Meta) —
-  https://ai.meta.com/blog/emu-text-to-video-generation-image-editing-research/
-- Training compute of frontier models grows 4–5x/year (Epoch AI) —
-  https://epochai.org/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year
-
-### Neuroscience and biology (mostly Neuroexistentialism, Axis of Ordinary)
-
-- Attractor and integrator networks in the brain (Nat Rev Neurosci 2022) — 10.1038/s41583-022-00642-0
-- Correspondence between neuroevolution and gradient descent (Nat Commun 2021) — 10.1038/s41467-021-26568-2
-- A social path to human-like artificial intelligence (Nat Mach Intell 2023) — 10.1038/s42256-023-00754-x
-- Neural spiking for causal inference and learning (PLOS Comp Biol 2023) — 10.1371/journal.pcbi.1011005
-- Why mathematics is set to be revolutionized by AI (Nature 2024) — 10.1038/d41586-024-01413-w
-- Emergence of belief-like representations through RL (bioRxiv) — 10.1101/2023.04.04.535512
-- MetaWorm: an integrative model of the C. elegans brain and body (bioRxiv) — 10.1101/2024.02.22.581686
-- Photonic computing: 10.1038/s41566-024-01394-2 [tg](https://t-me.translate.goog/s/gonzo_ML/2313?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) · 10.1038/s41377-022-00717-8 [tg](https://t-me.translate.goog/s/gonzo_ML/2313?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-
-## Addendum 2: exhaustive pass over non-arXiv sources
-
-All 938 domains and 28 PDF links in the export were checked. Below is what genuinely
-qualifies as research work and did not make it into the earlier sections.
-
-### Classics that are not on arXiv
-
-- **Long Short-Term Memory** (Hochreiter & Schmidhuber, Neural Computation, 1997) —
-  https://direct.mit.edu/neco/article-abstract/9/8/1735/6109/Long-Short-Term-Memory
-- **Learning to Forget: Continual Prediction with LSTM** (Gers et al., 2000) —
-  https://direct.mit.edu/neco/article-abstract/12/10/2451/6415/Learning-to-Forget-Continual-Prediction-with-LSTM
-- The most cited neural nets of the 20th century (Schmidhuber's overview) —
-  https://people.idsia.ch/~juergen/most-cited-neural-nets.html
-
-### Anthropic: interpretability on transformer-circuits.pub
-
-- Circuit tracing / attribution graphs, the methods part —
-  https://transformer-circuits.pub/2025/attribution-graphs/methods.html [tg](https://t-me.translate.goog/s/data_secrets/5251?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- Attribution graphs, the "biology" of the model: specific Claude mechanisms examined —
-  https://transformer-circuits.pub/2025/attribution-graphs/biology.html [tg](https://t-me.translate.goog/s/data_secrets/5251?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-
-### Nested Learning (Google)
-
-- The paper PDF itself — https://abehrouz.github.io/files/NL.pdf [tg](https://t-me.translate.goog/s/data_secrets/5900?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- Blog post describing the paradigm and the HOPE model —
-  https://research.google/blog/introducing-nested-learning-a-new-ml-paradigm-for-continual-learning/ [tg](https://t-me.translate.goog/s/data_secrets/5900?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-
-### Works that arrived via project pages
-
-- Self-RAG — https://selfrag.github.io/
-- DIAMOND: a diffusion world model that plays CS:GO — https://diamond-wm.github.io/
-- AudioPaLM: an LLM that can speak and listen — https://google-research.github.io/seanet/audiopalm/examples/
-- Voicebox (Meta, speech generation) — https://ai.facebook.com/blog/voicebox-generative-ai-model-speech/
-- Perfusion (NVIDIA) — https://research.nvidia.com/labs/par/Perfusion/ ·
-  HyperDreamBooth — https://hyperdreambooth.github.io/
-- MineDojo — https://minedojo.org/
-- Schema: a symbolic world model for ARC-AGI-3 — http://schema-harness.github.io
-
-### Financial ML
-
-- The "Virtue of Complexity" debate (Kelly, Malamud & Zhou versus Nagel's critique):
-  https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5239006 ·
-  https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5346842 ·
-  https://voices.uchicago.edu/stefannagel/files/2025/07/Complexity_2.pdf ·
-  https://bfi.uchicago.edu/wp-content/uploads/2025/08/BFI_WP_2025-104.pdf
-- Deep Adaptive Input Normalization for price forecasting from Limit Order Book data —
-  https://www.researchgate.net/publication/331273826
-- An Intelligent Financial Portfolio Trading Strategy using Deep Q-Learning —
-  https://www.groundai.com/project/an-intelligent-financial-portfolio-trading-strategy-using-deep-q-learning8432/3
-- Learning to Replicate Expert Judgment in Financial Tasks (Thinking Machines) —
-  https://thinkingmachines.ai/news/learning-to-replicate-expert-judgment-in-financial-tasks/
-
-### Miscellaneous
-
-- Machine Learning for Ancient Languages: A Survey (Computational Linguistics, MIT Press) —
-  https://direct.mit.edu/coli/article/doi/10.1162/coli_a_00481/116160/
-- ADAM Optimization with Adaptive Batch Selection / AdamCB (ICLR 2025) —
-  https://iclr.cc/virtual/2025/poster/30565
-- Characterizing emergent phenomena in LLMs (Google Research) —
-  https://ai.googleblog.com/2022/11/characterizing-emergent-phenomena-in.html
-- Few-shot tool use doesn't really work yet (Google Research) —
-  https://research.google/blog/few-shot-tool-use-doesnt-really-work-yet/
-- Deep learning models might be secretly almost linear (LessWrong; echoes
-  "Your Transformer is Secretly Linear") —
-  https://www.lesswrong.com/posts/JSWF2ZLt6YahyAauE/../deep-learning-models-might-be-secretly-almost-linear
-- How much LLM training data is there, in the limit? —
-  https://www.educatingsilicon.com/2024/05/09/how-much-llm-training-data-is-there-in-the-limit/
-- CogPGT: a genetic predictor of IQ — https://herasight-project.webflow.io/technical-paper/cogpgt-1
-- Orbifold Tutte embeddings (geometry processing) —
-  https://www.semanticscholar.org/paper/4165542ba777ea63facc7ea9866f43ba63f054ae
-
-### Books and long-form texts (not papers, but relevant)
-
-- Deep Learning: Foundations and Concepts, Bishop & Bishop —
-  https://link.springer.com/book/10.1007/978-3-031-45468-4
-- Neuroevolution book — https://neuroevolutionbook.com/ · RLHF book — https://rlhfbook.com/
-- Situational Awareness (Aschenbrenner) — https://situational-awareness.ai [tg](https://t-me.translate.goog/s/seeallochnaya/1282?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) ·
-  AI 2027 (Kokotajlo) — https://ai-2027.com/
-
-## Addendum 3: added manually
-
-Open-ended evolution and self-improvement:
-
-- AI-GAs: AI-generating algorithms, an alternate paradigm for producing general AI
-  (Jeff Clune, 2019) — https://arxiv.org/abs/1905.10985
-- Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents (2025) —
-  https://arxiv.org/abs/2505.22954
-- Competition and Attraction Improve Model Fusion (Sakana AI) — https://arxiv.org/abs/2508.16204
-- Continuous Thought Machines (Sakana AI): synchronization of neural activity over time
-  as the representation — https://pub.sakana.ai/ctm/
-
-Reasoning mechanisms and model introspection:
-
-- Emergent Hierarchical Reasoning in LLMs through Reinforcement Learning —
-  https://arxiv.org/abs/2509.03646
-- Grokked Transformers are Implicit Reasoners: A Mechanistic Journey to the Edge of
-  Generalization — https://arxiv.org/abs/2405.15071
-- Language Models Are Capable of Metacognitive Monitoring and Control of Their Internal
-  Activations — https://arxiv.org/abs/2505.13763
-- Language Models Use Trigonometry to Do Addition (Kantamneni & Tegmark) —
-  https://arxiv.org/abs/2502.00873
-- Emergent Introspective Awareness in Large Language Models (Anthropic, October 2025) —
-  https://transformer-circuits.pub/2025/introspection/index.html
-
-Neuroscience and consciousness:
-
-- Relating transformers to models and neural representations of the hippocampal formation
-  (Whittington et al.) — https://arxiv.org/abs/2112.04035
-- Is my red your red? Evaluating structural correspondences of color qualia
-  (iScience 2025, unsupervised alignment via optimal transport) —
-  https://www.cell.com/iscience/fulltext/S2589-0042(25)00289-5
-
-Other:
-
-- Reinforcement Learning Textbook (Sergey Ivanov) — https://arxiv.org/abs/2201.09746
-- Position: LLMs can't jump — https://openreview.net/pdf?id=klU4737opt
-  (title taken from search results; the OpenReview page is behind bot protection)
-
-## Other (niche/applied)
-
-Finance and trading: RL for portfolio management (https://arxiv.org/abs/1706.10059), Financial Trading as a Game (https://arxiv.org/abs/1807.02787), a review of DL in market forecasting (https://arxiv.org/abs/2003.01859).
-3D and graphics: ShapeFlow, 3DSNet, 3DStyleNet, Isometric Multi-Shape Matching, Stylizing 3D Scene (2006.07982, 2011.13388, 2108.12958, 2012.02689, 2105.13016).
-Hardware: TPU v4 (https://arxiv.org/abs/2304.01433 [tg](https://t-me.translate.goog/s/gonzo_ML/2313?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)), optical matrix multiplication (https://arxiv.org/abs/2309.10232 [tg](https://t-me.translate.goog/s/gonzo_ML/2313?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)).
+- ShapeFlow — [https://arxiv.org/abs/2006.07982](https://arxiv.org/abs/2006.07982) · 3DSNet — [https://arxiv.org/abs/2011.13388](https://arxiv.org/abs/2011.13388) · 3DStyleNet — [https://arxiv.org/abs/2108.12958](https://arxiv.org/abs/2108.12958) · Isometric Multi-Shape Matching — [https://arxiv.org/abs/2012.02689](https://arxiv.org/abs/2012.02689) · Stylizing 3D Scene — [https://arxiv.org/abs/2105.13016](https://arxiv.org/abs/2105.13016)
+- Orbifold Tutte embeddings (geometry processing) — [https://www.semanticscholar.org/paper/4165542ba777ea63facc7ea9866f43ba63f054ae](https://www.semanticscholar.org/paper/4165542ba777ea63facc7ea9866f43ba63f054ae)
+- TPU v4 — [https://arxiv.org/abs/2304.01433](https://arxiv.org/abs/2304.01433) [tg](https://t-me.translate.goog/s/gonzo_ML/2313?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Optical matrix multiplication — [https://arxiv.org/abs/2309.10232](https://arxiv.org/abs/2309.10232) [tg](https://t-me.translate.goog/s/gonzo_ML/2313?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Photonic computing — [https://doi.org/10.1038/s41566-024-01394-2](https://doi.org/10.1038/s41566-024-01394-2) [tg](https://t-me.translate.goog/s/gonzo_ML/2313?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) · [https://doi.org/10.1038/s41377-022-00717-8](https://doi.org/10.1038/s41377-022-00717-8) [tg](https://t-me.translate.goog/s/gonzo_ML/2313?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Machine Learning for Ancient Languages: A Survey — [https://direct.mit.edu/coli/article/doi/10.1162/coli_a_00481/116160/](https://direct.mit.edu/coli/article/doi/10.1162/coli_a_00481/116160/)
 
 ---
 
