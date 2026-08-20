@@ -251,6 +251,9 @@ The full list with save dates is in `arxiv_dump.txt`; titles and authors are in
 ## Harness
 
 - Harnesses for models (Lilian Weng, 2026) — [https://lilianweng.github.io/posts/2026-07-04-harness/](https://lilianweng.github.io/posts/2026-07-04-harness/)
+- Meta-Harness: End-to-End Optimization of Model Harnesses — [https://arxiv.org/abs/2603.28052](https://arxiv.org/abs/2603.28052) · [https://yoonholee.com/meta-harness/](https://yoonholee.com/meta-harness/) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5093?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Externalization in LLM Agents: A Unified Review of Memory, Skills, Protocols and Harness Engineering — [https://arxiv.org/abs/2604.08224](https://arxiv.org/abs/2604.08224) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5479?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Harness Engineering (OpenAI) — [https://openai.com/index/harness-engineering/](https://openai.com/index/harness-engineering/)
 - DeepSeek Harness — [https://github.com/deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) [⌲ tg](https://t-me.translate.goog/s/data_secrets/9722?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - First evidence of recursive self-improvement (AIDE2, Weco) — [https://www.weco.ai/blog/first-evidence-of-recursive-self-improvement](https://www.weco.ai/blog/first-evidence-of-recursive-self-improvement)
 - Schema: a symbolic world model for ARC-AGI-3 — [http://schema-harness.github.io](http://schema-harness.github.io) · traces — [https://huggingface.co/datasets/schema-harness/arc-agi-3-schema-traces](https://huggingface.co/datasets/schema-harness/arc-agi-3-schema-traces)
