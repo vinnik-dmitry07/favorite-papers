@@ -108,7 +108,7 @@ PAPER_PATTERNS = [
 
 TME_POST = re.compile(r'https?://t\.me/([A-Za-z0-9_]+)/(\d+)')
 TG_BADGE = re.compile(
-    r'\s*\[tg\]\((?:https?://|tg://)[^)]+\)'
+    r'\s*\[(?:✈️ )?tg\]\((?:https?://|tg://)[^)]+\)'
 )
 MD_URL = re.compile(r'https?://[^\s\)\]>]+')
 
@@ -271,7 +271,7 @@ def build_index(messages: list[dict]) -> dict[str, str]:
 
 
 def badge(url: str) -> str:
-    return f'[tg]({url})'
+    return f'[✈️ tg]({url})'
 
 
 def annotate_line(line: str, index: dict[str, str]) -> str:
@@ -296,7 +296,7 @@ def annotate_line(line: str, index: dict[str, str]) -> str:
     def doi_replacer(match: re.Match) -> str:
         doi = match.group(1).rstrip(').,;\'"')
         end = match.end()
-        if updated[end:end + 5] == ' [tg]':
+        if updated[end:].startswith(' [tg]') or updated[end:].startswith(' [✈️ tg]'):
             return match.group(0)
         link = lookup_link({f'doi:{doi}'}, index)
         if not link:
@@ -369,11 +369,11 @@ def main() -> None:
             new = annotate_table_row(line, index)
         else:
             new = annotate_line(line, index)
-        if '[tg](' in new and '[tg](' not in line:
+        if '[✈️ tg](' in new and '[✈️ tg](' not in line:
             linked += 1
         elif has_ref and 'Year' not in line and '| ---' not in line:
             # still no badge on a reference-bearing line
-            if '[tg](' not in new and MD_URL.search(new):
+            if '[✈️ tg](' not in new and '[tg](' not in new and MD_URL.search(new):
                 # only count if we recognize a paper key at all
                 keys = set()
                 for url in MD_URL.findall(new):
@@ -390,7 +390,7 @@ def main() -> None:
     # footnote about link types
     note = (
         '\n---\n\n'
-        'Telegram links: ``[tg](...)`` is included only when a public channel '
+        'Telegram links: ``[✈️ tg](...)`` is included only when a public channel '
         'post (``t.me/<channel>/<id>``) was found in the saved message. It opens '
         'that post through Google Translate to English '
         '(``https://t-me.translate.goog/s/<channel>/<id>?_x_tr_sl=auto&_x_tr_tl=en...``). '
