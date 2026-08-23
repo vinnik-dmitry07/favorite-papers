@@ -266,6 +266,7 @@ The full list with save dates is in `arxiv_dump.txt`; titles and authors are in
 ## AI safety and consciousness
 
 - When Activation Oracles Learn Not to Read — [https://arxiv.org/abs/2607.23379](https://arxiv.org/abs/2607.23379)
+- Is Evaluation Awareness Just Format Sensitivity? Limitations of Probe-Based Evidence under Controlled Prompt Structure — [https://arxiv.org/abs/2603.19426](https://arxiv.org/abs/2603.19426) [⌲ tg](https://t-me.translate.goog/s/testchatldt/277852?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - Emergent Introspective Awareness in Large Language Models (Anthropic, October 2025) — [https://transformer-circuits.pub/2025/introspection/index.html](https://transformer-circuits.pub/2025/introspection/index.html) [⌲ tg](https://t-me.translate.goog/s/data_secrets/8155?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - Reasoning Models Don't Always Say What They Think (Anthropic) — [https://www.anthropic.com/research/reasoning-models-dont-say-think](https://www.anthropic.com/research/reasoning-models-dont-say-think) [⌲ tg](https://t-me.translate.goog/s/buckwheat_thoughts/181?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - AI 2027 (Kokotajlo) — [https://ai-2027.com/](https://ai-2027.com/)
