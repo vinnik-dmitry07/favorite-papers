@@ -1,11 +1,8 @@
 # Key ML papers from result.json
 
-Source: Telegram "Saved Messages" export (9,375 messages, 2017–2026).
-Found 172 unique arXiv papers plus roughly 50 works outside arXiv
-(OpenReview, ACL Anthology, Nature/Science/Cell, bioRxiv, lab publications).
-The full list with save dates is in `arxiv_dump.txt`; titles and authors are in
-`papers_titles.json` and `extra_titles.json`. A later Saved Messages export
-(2026-08-19) added the Post-training section and several papers in the topic lists below.
+![Litmaps](map.png)
+
+Litmaps — [https://app.litmaps.com/shared/5bb436d0-a026-493a-a765-f48fda77ad0c](https://app.litmaps.com/shared/5bb436d0-a026-493a-a765-f48fda77ad0c)
 
 ## Reinforcement learning
 
@@ -44,6 +41,7 @@ The full list with save dates is in `arxiv_dump.txt`; titles and authors are in
 - When Does Continual Learning Require Learning — [https://arxiv.org/abs/2607.07847](https://arxiv.org/abs/2607.07847) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5812?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - Weight-Space Geometry of Offline Reasoning Training (ICML 2026 workshop) — [https://arxiv.org/abs/2606.23740](https://arxiv.org/abs/2606.23740)
 - Learning from Own Solutions: Self-Conditioned Credit Assignment (SC-GRPO) — [https://arxiv.org/abs/2606.18810](https://arxiv.org/abs/2606.18810)
+- Revisiting Reinforcement Learning with Verifiable Rewards from a Contrastive Perspective — [https://arxiv.org/abs/2605.12969](https://arxiv.org/abs/2605.12969)
 - Rethinking RL for LLM Reasoning: It's Sparse Policy Selection, Not Capability Learning — [https://arxiv.org/abs/2605.06241](https://arxiv.org/abs/2605.06241)
 - Odysseus: Scaling VLMs to 100+ Turn Decision-Making in Games via RL — [https://arxiv.org/abs/2605.00347](https://arxiv.org/abs/2605.00347) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5323?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) · [https://odysseus-project.github.io/](https://odysseus-project.github.io/)
 - GRPO-VPS: Verifiable Process Supervision — [https://arxiv.org/abs/2604.20659](https://arxiv.org/abs/2604.20659)
@@ -178,9 +176,11 @@ The full list with save dates is in `arxiv_dump.txt`; titles and authors are in
 - gzip Predicts Data-dependent Scaling Laws — [https://arxiv.org/abs/2405.16684](https://arxiv.org/abs/2405.16684)
 - The Road Less Scheduled (Schedule-Free) — [https://arxiv.org/abs/2405.15682](https://arxiv.org/abs/2405.15682)
 - Training compute of frontier models grows 4–5x/year (Epoch AI) — [https://epochai.org/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year](https://epochai.org/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/2783?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Continual Learning and Catastrophic Forgetting — [https://arxiv.org/abs/2403.05175](https://arxiv.org/abs/2403.05175)
 - MetaOptimize: A Framework for Optimizing Step Sizes and Other Meta-parameters — [https://arxiv.org/abs/2402.02342](https://arxiv.org/abs/2402.02342)
 - Step-size Optimization for Continual Learning — [https://arxiv.org/abs/2401.17401](https://arxiv.org/abs/2401.17401)
 - Learning Vision from Models Rivals Learning Vision from Data — [https://arxiv.org/abs/2312.17742](https://arxiv.org/abs/2312.17742)
+- Catastrophic Forgetting in Deep Learning: A Comprehensive Taxonomy — [https://arxiv.org/abs/2312.10549](https://arxiv.org/abs/2312.10549)
 - No Train No Gain: Revisiting Efficient Training Algorithms for Transformer LMs — [https://arxiv.org/abs/2307.06440](https://arxiv.org/abs/2307.06440)
 - Sophia: A Scalable Stochastic Second-order Optimizer for LM Pre-training — [https://arxiv.org/abs/2305.14342](https://arxiv.org/abs/2305.14342)
 - Lion: Symbolic Discovery of Optimization Algorithms — [https://arxiv.org/abs/2302.06675](https://arxiv.org/abs/2302.06675) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/800?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
@@ -199,11 +199,15 @@ The full list with save dates is in `arxiv_dump.txt`; titles and authors are in
 - The Lottery Ticket Hypothesis — [https://arxiv.org/abs/1803.03635](https://arxiv.org/abs/1803.03635) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/21?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - AdamW: Decoupled Weight Decay Regularization — [https://arxiv.org/abs/1711.05101](https://arxiv.org/abs/1711.05101)
 - Super-Convergence (one-cycle) — [https://arxiv.org/abs/1708.07120](https://arxiv.org/abs/1708.07120)
+- Measuring Catastrophic Forgetting in Neural Networks — [https://arxiv.org/abs/1708.02072](https://arxiv.org/abs/1708.02072)
+- Overcoming catastrophic forgetting in neural networks (EWC, Kirkpatrick et al., PNAS 2017) — [https://doi.org/10.1073/pnas.1611835114](https://doi.org/10.1073/pnas.1611835114)
 - Cyclical Learning Rates — [https://arxiv.org/abs/1506.01186](https://arxiv.org/abs/1506.01186)
 
 ## Self-supervised learning and vision
 
 - VISReg: Variance-Invariance-Sketching Regularization for JEPA — [https://arxiv.org/abs/2606.02572](https://arxiv.org/abs/2606.02572) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5832?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) · [https://haiyuwu.github.io/visreg](https://haiyuwu.github.io/visreg) · [https://arxiviq.substack.com/p/visreg-variance-invariance-sketching](https://arxiviq.substack.com/p/visreg-variance-invariance-sketching)
+- When Does LeJEPA Learn a World Model? — [https://arxiv.org/abs/2605.26379](https://arxiv.org/abs/2605.26379)
+- LeJEPA: Provable and Scalable Self-Supervised Learning Without the Heuristics — [https://arxiv.org/abs/2511.08544](https://arxiv.org/abs/2511.08544)
 - The GAN is dead; long live the GAN! (R3GAN) — [https://arxiv.org/abs/2501.05441](https://arxiv.org/abs/2501.05441) [⌲ tg](https://t-me.translate.goog/s/data_secrets/5891?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - EMU Video: Factorizing Text-to-Video Generation (Meta) — [https://ai.meta.com/blog/emu-text-to-video-generation-image-editing-research/](https://ai.meta.com/blog/emu-text-to-video-generation-image-editing-research/)
 - Latent Consistency Models — [https://arxiv.org/abs/2310.04378](https://arxiv.org/abs/2310.04378) [⌲ tg](https://t-me.translate.goog/s/lovedeathtransformers/6578?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
@@ -220,6 +224,7 @@ The full list with save dates is in `arxiv_dump.txt`; titles and authors are in
 - BEiT-3: Image as a Foreign Language — [https://arxiv.org/abs/2208.10442](https://arxiv.org/abs/2208.10442) [⌲ tg](https://t-me.translate.goog/s/abstractDL/157?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - A Path Towards Autonomous Machine Intelligence (LeCun, 2022) — [https://openreview.net/forum?id=BZ5a1r-kVsf](https://openreview.net/forum?id=BZ5a1r-kVsf)
 - iBOT: Image BERT Pre-Training with Online Tokenizer — [https://arxiv.org/abs/2111.07832](https://arxiv.org/abs/2111.07832)
+- VICReg: Variance-Invariance-Covariance Regularization — [https://arxiv.org/abs/2105.04906](https://arxiv.org/abs/2105.04906)
 - DINO: Emerging Properties in Self-Supervised ViT — [https://arxiv.org/abs/2104.14294](https://arxiv.org/abs/2104.14294)
 - SwAV: Unsupervised Learning by Contrasting Cluster Assignments — [https://arxiv.org/abs/2006.09882](https://arxiv.org/abs/2006.09882)
 
@@ -328,6 +333,7 @@ The full list with save dates is in `arxiv_dump.txt`; titles and authors are in
 - MetaWorm: an integrative model of the C. elegans brain and body (bioRxiv) — [https://doi.org/10.1101/2024.02.22.581686](https://doi.org/10.1101/2024.02.22.581686)
 - Neural spiking for causal inference and learning (PLOS Comp Biol 2023) — [https://doi.org/10.1371/journal.pcbi.1011005](https://doi.org/10.1371/journal.pcbi.1011005)
 - Emergence of belief-like representations through RL (bioRxiv) — [https://doi.org/10.1101/2023.04.04.535512](https://doi.org/10.1101/2023.04.04.535512)
+- Sleep prevents catastrophic forgetting in spiking neural networks (PLOS Comp Biol 2022) — [https://doi.org/10.1371/journal.pcbi.1010628](https://doi.org/10.1371/journal.pcbi.1010628)
 - Toward Next-Generation AI: Catalyzing the NeuroAI Revolution — [https://arxiv.org/abs/2210.08340](https://arxiv.org/abs/2210.08340)
 - Relating transformers to models and neural representations of the hippocampal formation (Whittington et al.) — [https://arxiv.org/abs/2112.04035](https://arxiv.org/abs/2112.04035)
 - Attractor and integrator networks in the brain — [https://arxiv.org/abs/2112.03978](https://arxiv.org/abs/2112.03978) · [https://doi.org/10.1038/s41583-022-00642-0](https://doi.org/10.1038/s41583-022-00642-0)
