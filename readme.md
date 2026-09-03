@@ -331,6 +331,7 @@ Litmaps — [https://app.litmaps.com/shared/5bb436d0-a026-493a-a765-f48fda77ad0c
 
 ## Time series
 
+- TimesFM-3: A zero-shot foundation model for multivariate forecasting — [https://research.google/blog/timesfm-3-a-zero-shot-foundation-model-for-multivariate-forecasting/](https://research.google/blog/timesfm-3-a-zero-shot-foundation-model-for-multivariate-forecasting/)
 - Chronos: Learning the Language of Time Series — [https://arxiv.org/abs/2403.07815](https://arxiv.org/abs/2403.07815) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/2148?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - Survey of Deep Learning and Foundation Models for TS Forecasting — [https://arxiv.org/abs/2401.13912](https://arxiv.org/abs/2401.13912) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/2148?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - TimesFM: A decoder-only foundation model for time-series forecasting — [https://arxiv.org/abs/2310.10688](https://arxiv.org/abs/2310.10688) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/2148?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
