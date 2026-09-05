@@ -1,0 +1,223 @@
+{
+  "url:diamond-wm.github.io": {
+    "arxiv": "2405.12399"
+  },
+  "openreview:XyGJJ4FPoX": {
+    "arxiv": "2210.00350"
+  },
+  "url:oatllm.notion.site/oat-zero": {
+    "date": "2025-03-21",
+    "date_source": "known"
+  },
+  "url:pub.sakana.ai/ctm": {
+    "arxiv": "2505.05522"
+  },
+  "url:ai.meta.com/research/publications/large-concept-models-language-modeling-in-a-sentence-representation-space": {
+    "arxiv": "2412.08821"
+  },
+  "url:ai.meta.com/research/publications/code-llama-open-foundation-models-for-code": {
+    "arxiv": "2308.12950"
+  },
+  "url:google-research.github.io/seanet/audiopalm/examples": {
+    "arxiv": "2306.12925"
+  },
+  "url:people.idsia.ch/~juergen/most-cited-neural-nets.html": {
+    "date": "2021-12-01",
+    "date_source": "known"
+  },
+  "openreview:klU4737opt": {
+    "date": "2026-01-27",
+    "date_source": "known"
+  },
+  "url:safe-lip-9a8.notion.site/incorrect-baseline-evaluations-call-into-question-recent-llm-rl-claims-2012f1fbf0ee8094ab8ded1953c15a37": {
+    "date": "2025-05-29",
+    "date_source": "known"
+  },
+  "openreview:wUU-7XTL5XO": {
+    "arxiv": "2206.10498"
+  },
+  "openreview:hcQfTsVnBo": {
+    "arxiv": "2312.06581"
+  },
+  "url:epochai.org/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year": {
+    "date": "2024-05-28",
+    "date_source": "known"
+  },
+  "openreview:ry_WPG-A-": {
+    "date": "2017-10-27",
+    "date_source": "known"
+  },
+  "openreview:OpC-9aBBVJe": {
+    "date": "2022-09-28",
+    "date_source": "known"
+  },
+  "openreview:BZ5a1r-kVsf": {
+    "date": "2022-06-27",
+    "date_source": "known"
+  },
+  "url:cameronrwolfe.substack.com/p/grpo-tricks": {
+    "date": "2026-01-05",
+    "date_source": "page",
+    "authors": ["Cameron R. Wolfe"]
+  },
+  "url:ai.googleblog.com/2022/11/characterizing-emergent-phenomena-in.html": {
+    "date": "2022-11-10",
+    "date_source": "page"
+  },
+  "url:iclr.cc/virtual/2025/poster/30565": {
+    "date": "2024-10-01",
+    "date_source": "known",
+    "arxiv": "2512.06795"
+  },
+  "url:alexzhang13.github.io/blog/2026/harness": {
+    "date": "2026-07-20",
+    "date_source": "page"
+  },
+  "url:ai-2027.com": {
+    "date": "2025-04-03",
+    "date_source": "page"
+  },
+  "url:transformer-circuits.pub/2025/attribution-graphs/methods.html": {
+    "date": "2025-03-27",
+    "date_source": "page"
+  },
+  "url:transformer-circuits.pub/2025/attribution-graphs/biology.html": {
+    "date": "2025-03-27",
+    "date_source": "page"
+  },
+  "url:transformer-circuits.pub/2026/workspace": {
+    "date": "2026-07-06",
+    "date_source": "page"
+  },
+  "url:lilianweng.github.io/lil-log/2018/01/23/the-multi-armed-bandit-problem-and-its-solutions.html": {
+    "date": "2018-01-23",
+    "date_source": "page",
+    "authors": ["Lilian Weng"]
+  },
+  "url:papers.ssrn.com/sol3/papers.cfm?abstract_id=5239006": {
+    "date": "2025-05-07",
+    "date_source": "page"
+  },
+  "url:rlhfbook.com": {
+    "date": "2024-05-24",
+    "date_source": "github",
+    "arxiv": "2504.12501",
+    "authors": ["Nathan Lambert"]
+  },
+  "url:cell.com/iscience/fulltext/s2589-0042(25)00289-5": {
+    "date": "2024-08-14",
+    "date_source": "known"
+  },
+  "acl:2023.acl-demo.51": {
+    "date": "2023-07-01",
+    "date_source": "page"
+  },
+  "acl:2025.acl-long.126": {
+    "date": "2025-07-01",
+    "date_source": "page"
+  },
+  "url:ai.meta.com/blog/emu-text-to-video-generation-image-editing-research": {
+    "arxiv": "2311.10709"
+  },
+  "url:research.nvidia.com/labs/par/perfusion": {
+    "arxiv": "2305.01644"
+  },
+  "url:hyperdreambooth.github.io": {
+    "arxiv": "2307.06949"
+  },
+  "url:ai.facebook.com/blog/voicebox-generative-ai-model-speech": {
+    "arxiv": "2306.15687"
+  },
+  "url:selfrag.github.io": {
+    "arxiv": "2310.11511"
+  },
+  "url:research.google/blog/few-shot-tool-use-doesnt-really-work-yet": {
+    "arxiv": "2310.10062",
+    "date": "2024-05-30",
+    "date_source": "known"
+  },
+  "url:minedojo.org": {
+    "arxiv": "2206.08853"
+  },
+  "url:github.com/deepseek-ai/deepseek-harness": {
+    "date": "2026-08-13",
+    "date_source": "github"
+  },
+  "url:github.com/primeintellect-ai/prime-agent": {
+    "date": "2026-05-08",
+    "date_source": "github"
+  },
+  "url:github.com/alexisfox7/rgb-agent": {
+    "arxiv": "2607.20064"
+  },
+  "url:schema-harness.github.io": {
+    "date": "2026-07-17",
+    "date_source": "known"
+  },
+  "url:anthropic.com/research/reasoning-models-dont-say-think": {
+    "arxiv": "2505.05410"
+  },
+  "url:anthropic.com/research/tracing-thoughts-language-model": {
+    "date": "2025-03-27",
+    "date_source": "known"
+  },
+  "url:anthropic.com/news/mapping-mind-language-model": {
+    "date": "2024-05-21",
+    "date_source": "known"
+  },
+  "url:research.google/blog/timesfm-3-a-zero-shot-foundation-model-for-multivariate-forecasting": {
+    "date": "2026-08-31",
+    "date_source": "known"
+  },
+  "url:sakana.ai/shinka-evolve": {
+    "arxiv": "2509.19349"
+  },
+  "url:openai.com/research/weak-to-strong-generalization": {
+    "arxiv": "2312.09390"
+  },
+  "url:paperswithcode.com/paper/n-beats-neural-basis-expansion-analysis-for": {
+    "arxiv": "1905.10437"
+  },
+  "url:paperswithcode.com/paper/deepar-probabilistic-forecasting-with": {
+    "arxiv": "1704.04110"
+  },
+  "url:herasight-project.webflow.io/technical-paper/cogpgt-1": {
+    "date": "2025-10-21",
+    "date_source": "known"
+  },
+  "url:groundai.com/project/an-intelligent-financial-portfolio-trading-strategy-using-deep-q-learning8432/3": {
+    "arxiv": "1907.03665"
+  },
+  "url:researchgate.net/publication/331273826": {
+    "arxiv": "1902.07892"
+  },
+  "url:link.springer.com/book/10.1007/978-3-031-45468-4": {
+    "date": "2023-11-01",
+    "date_source": "page"
+  },
+  "url:direct.mit.edu/coli/article/doi/10.1162/coli_a_00481/116160": {
+    "date": "2023-09-01",
+    "date_source": "known"
+  },
+  "url:semanticscholar.org/paper/4165542ba777ea63facc7ea9866f43ba63f054ae": {
+    "date": "2015-08-01",
+    "date_source": "known"
+  },
+  "acl:2022.emnlp-main.340": {
+    "arxiv": "2204.07705"
+  },
+  "acl:2022.acl-long.360": {
+    "arxiv": "2110.08499"
+  },
+  "doi:10.1038/s41586-024-07711-7": {
+    "arxiv": "2306.13812"
+  },
+  "openreview:pOoKI3ouv1": {
+    "arxiv": "2402.10877"
+  },
+  "url:transformer-circuits.pub/2025/introspection": {
+    "date": "2025-10-29",
+    "date_source": "known",
+    "authors": ["Jack Lindsey"]
+  }
+}

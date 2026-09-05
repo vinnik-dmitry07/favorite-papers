@@ -1,0 +1,2110 @@
+Dubey, 2024
+The Llama 3 Herd of Models
+arXiv.org
+0
+References
+22.3k
+Citations
+15
+
+Tag
+
+Add to Litmap
+
+Remove
+Kirkpatrick, 2017
+Overcoming catastrophic forgetting in neural networks
+Proceedings of the National Academy of Sciences of the United States of America
+75
+References
+14.1k
+Citations
+10
+
+Tag
+
+Add to Litmap
+
+Remove
+Catastrophic forgetting
+Shao, 2024
+DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models
+arXiv.org
+86
+References
+10.1k
+Citations
+35
+
+Tag
+
+Add to Litmap
+
+Remove
+Mathematical Reasoning in Neural Networks and Language Models
+Srivastava, 2023
+Beyond the Imitation Game: Quantifying and extrapolating the capabilities of language models
+arXiv.org
+0
+References
+3.6k
+Citations
+1
+
+Tag
+
+Add to Litmap
+
+Remove
+Alignment & Coherence & Mechanistic Interpretability and Internal Representations
+Yu, 2025
+DAPO: An Open-Source LLM Reinforcement Learning System at Scale
+arXiv.org
+41
+References
+1
+3k
+Citations
+27
+
+Tag
+
+Add to Litmap
+
+Remove
+Scaling, Training Efficiency, and Optimization
+Reinforcement Learning Algorithms and Applications
+Foret, 2020
+Sharpness-Aware Minimization for Efficiently Improving Generalization
+International Conference on Learning Representations
+107
+References
+2.6k
+Citations
+3
+
+Tag
+
+Add to Litmap
+
+Remove
+Optimizers and Gradient Descent
+Generalization and Model Robustness
+Architectural Innovations in Deep Learning
+Prompt Engineering and Task Adaptation
+Cunningham, 2023
+Sparse Autoencoders Find Highly Interpretable Features in Language Models
+arXiv.org
+35
+References
+1.8k
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Alignment & Coherence & Mechanistic Interpretability and Internal Representations
+Bardes, 2022
+VICReg: Variance-Invariance-Covariance Regularization for Self-Supervised Learning
+International Conference on Learning Representations
+93
+References
+1.7k
+Citations
+2
+
+Tag
+
+Add to Litmap
+
+Remove
+Jepa
+You, 2020
+Large Batch Optimization for Deep Learning: Training BERT in 76 minutes
+International Conference on Learning Representations
+53
+References
+1.6k
+Citations
+2
+
+Tag
+
+Add to Litmap
+
+Remove
+Optimizers and Gradient Descent
+Liu, 2025
+Understanding R1-Zero-Like Training: A Critical Perspective
+arXiv (Cornell University)
+34
+References
+1
+1.5k
+Citations
+16
+
+Tag
+
+Add to Litmap
+
+Remove
+Mathematical Reasoning in Neural Networks and Language Models
+Reinforcement Learning Algorithms and Applications
+Nanda, 2023
+Progress measures for grokking via mechanistic interpretability
+International Conference on Learning Representations
+32
+References
+1.2k
+Citations
+8
+
+Tag
+
+Add to Litmap
+
+Remove
+Mathematical Reasoning in Neural Networks and Language Models
+Yue, 2025
+Does Reinforcement Learning Really Incentivize Reasoning Capacity in LLMs Beyond the Base Model?
+arXiv.org
+71
+References
+4
+1.2k
+Citations
+14
+
+Tag
+
+Add to Litmap
+
+Remove
+Scaling, Training Efficiency, and Optimization
+Mathematical Reasoning in Neural Networks and Language Models
+Reinforcement Learning Algorithms and Applications
+Kemker, 2018
+Measuring Catastrophic Forgetting in Neural Networks
+AAAI Conference on Artificial Intelligence
+65
+References
+1
+1.1k
+Citations
+2
+
+Tag
+
+Add to Litmap
+
+Remove
+Catastrophic forgetting
+Such, 2017
+Deep Neuroevolution: Genetic Algorithms Are a Competitive Alternative for Training Deep Neural Networks for Reinforcement Learning
+arXiv: Neural and Evolutionary Computing
+98
+References
+1k
+Citations
+2
+
+Tag
+
+Add to Litmap
+
+Remove
+Scaling, Training Efficiency, and Optimization
+Evolutionary Approaches in AI
+Zheng, 2025
+Group Sequence Policy Optimization
+arXiv.org
+6
+References
+1
+862
+Citations
+10
+
+Tag
+
+Add to Litmap
+
+Remove
+Scaling, Training Efficiency, and Optimization
+Reinforcement Learning Algorithms and Applications
+Chen, 2023
+Symbolic Discovery of Optimization Algorithms
+arXiv (Cornell University)
+190
+References
+1
+849
+Citations
+5
+
+Tag
+
+Add to Litmap
+
+Remove
+Scaling, Training Efficiency, and Optimization
+Optimizers and Gradient Descent
+Self-Improvement and Adaptation in AI Systems
+Prompt Engineering and Task Adaptation
+Hao, 2024
+Training Large Language Models to Reason in a Continuous Latent Space
+arXiv.org
+79
+References
+2
+814
+Citations
+1
+
+Tag
+
+Add to Litmap
+
+Remove
+Recurrent Models
+Fernando, 2023
+Promptbreeder: Self-Referential Self-Improvement Via Prompt Evolution
+arXiv.org
+97
+References
+719
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Self-Improvement and Adaptation in AI Systems
+Generalization and Model Robustness
+Prompt Engineering and Task Adaptation
+Wang, 2025
+Beyond the 80/20 Rule: High-Entropy Minority Tokens Drive Effective Reinforcement Learning for LLM Reasoning
+arXiv.org
+51
+References
+3
+705
+Citations
+10
+
+Tag
+
+Add to Litmap
+
+Remove
+Mathematical Reasoning in Neural Networks and Language Models
+Feedback Mechanisms and Learning Paradigms
+Reinforcement Learning Algorithms and Applications
+Xu, 2021
+How Neural Networks Extrapolate: From Feedforward to Graph Neural Networks
+International Conference on Learning Representations
+185
+References
+488
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Generalization and Model Robustness
+
+Khona, 2022
+Attractor and integrator networks in the brain
+Nature Reviews Neuroscience
+354
+References
+486
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Architectural Innovations in Deep Learning
+Dohare, 2024
+Loss of plasticity in deep continual learning
+The Naturalist
+207
+References
+1
+453
+Citations
+1
+
+Tag
+
+Add to Litmap
+
+Remove
+Evolutionary Approaches in AI
+Continual Learning and Plasticity
+Feng, 2025
+Group-in-Group Policy Optimization for LLM Agent Training
+arXiv.org
+99
+References
+3
+434
+Citations
+1
+
+Tag
+
+Add to Litmap
+
+Remove
+Reinforcement Learning Algorithms and Applications
+Liu, 2023
+Sophia: A Scalable Stochastic Second-order Optimizer for Language Model Pre-training
+arXiv.org
+120
+References
+2
+377
+Citations
+1
+
+Tag
+
+Add to Litmap
+
+Remove
+Optimizers and Gradient Descent
+Geiping, 2025
+Scaling up Test-Time Compute with Latent Reasoning: A Recurrent Depth Approach
+arXiv.org
+0
+References
+353
+Citations
+3
+
+Tag
+
+Add to Litmap
+
+Remove
+Recurrent Models
+Agrawal, 2025
+GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning
+arXiv.org
+0
+References
+344
+Citations
+2
+
+Tag
+
+Add to Litmap
+
+Remove
+Self-refining
+OLMo, 2024
+2 OLMo 2 Furious
+arXiv (Cornell University)
+0
+References
+312
+Citations
+2
+
+Tag
+
+Add to Litmap
+
+Remove
+Zuo, 2025
+TTRL: Test-Time Reinforcement Learning
+arXiv.org
+84
+References
+4
+298
+Citations
+5
+
+Tag
+
+Add to Litmap
+
+Remove
+Stepping stone
+Self-Improvement and Adaptation in AI Systems
+Reinforcement Learning Algorithms and Applications
+Chen, 2025
+MiniMax-M1: Scaling Test-Time Compute Efficiently with Lightning Attention
+arXiv.org
+98
+References
+3
+284
+Citations
+6
+
+Tag
+
+Add to Litmap
+
+Remove
+Architectural Innovations in Deep Learning
+Zhao, 2025
+Learning to Reason without External Rewards
+arXiv.org
+66
+References
+5
+258
+Citations
+2
+
+Tag
+
+Add to Litmap
+
+Remove
+Mathematical Reasoning in Neural Networks and Language Models
+Feedback Mechanisms and Learning Paradigms
+Reinforcement Learning Algorithms and Applications
+Shao, 2025
+Spurious Rewards: Rethinking Training Signals in RLVR
+arXiv.org
+51
+References
+7
+258
+Citations
+5
+
+Tag
+
+Add to Litmap
+
+Remove
+Stepping stone
+Mathematical Reasoning in Neural Networks and Language Models
+Feedback Mechanisms and Learning Paradigms
+Reinforcement Learning Algorithms and Applications
+Zhao, 2026
+Self-Distilled Reasoner: On-Policy Self-Distillation for Large Language Models
+arXiv.org
+47
+References
+6
+255
+Citations
+5
+
+Tag
+
+Add to Litmap
+
+Remove
+Self-distillation
+Hübotter, 2026
+Reinforcement Learning via Self-Distillation
+arXiv (Cornell University)
+185
+References
+13
+241
+Citations
+5
+
+Tag
+
+Add to Litmap
+
+Remove
+Self-distillation
+Scaling, Training Efficiency, and Optimization
+Self-Improvement and Adaptation in AI Systems
+Reinforcement Learning Algorithms and Applications
+Sharma, 2025
+Constitutional Classifiers: Defending against Universal Jailbreaks across Thousands of Hours of Red Teaming
+arXiv.org
+0
+References
+222
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Alignment & Coherence & Mechanistic Interpretability and Internal Representations
+Scaling, Training Efficiency, and Optimization
+Generalization and Model Robustness
+Prompt Engineering and Task Adaptation
+Clune, 2019
+AI-GAs: AI-generating algorithms, an alternate paradigm for producing general artificial intelligence.
+arXiv: Artificial Intelligence
+367
+References
+2
+193
+Citations
+1
+
+Tag
+
+Add to Litmap
+
+Remove
+Scaling, Training Efficiency, and Optimization
+Evolutionary Approaches in AI
+Shenfeld, 2026
+Self-Distillation Enables Continual Learning
+arXiv (Cornell University)
+73
+References
+3
+178
+Citations
+4
+
+Tag
+
+Add to Litmap
+
+Remove
+Self-distillation
+van de Ven, 2024
+Continual Learning and Catastrophic Forgetting
+arXiv.org
+286
+References
+2
+171
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Catastrophic forgetting
+Alon, 2023
+Self-Refine: Iterative Refinement with Self-Feedback
+0
+References
+170
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Self-refining
+Balestriero, 2021
+Learning in High Dimension Always Amounts to Extrapolation
+arXiv: Learning
+50
+References
+153
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Generalization and Model Robustness
+Geiping, 2022
+Cramming: Training a Language Model on a Single GPU in One Day
+arXiv.org
+209
+References
+1
+152
+Citations
+1
+
+Tag
+
+Add to Litmap
+
+Remove
+Scaling, Training Efficiency, and Optimization
+Balestriero, 2025
+LeJEPA: Provable and Scalable Self-Supervised Learning Without the Heuristics
+arXiv (Cornell University)
+169
+References
+1
+151
+Citations
+2
+
+Tag
+
+Add to Litmap
+
+Remove
+Jepa
+Wu, 2025
+On the Generalization of SFT: A Reinforcement Learning Perspective with Reward Rectification
+arXiv.org
+122
+References
+2
+151
+Citations
+1
+
+Tag
+
+Add to Litmap
+
+Remove
+Scaling, Training Efficiency, and Optimization
+Self-Improvement and Adaptation in AI Systems
+Generalization and Model Robustness
+Prompt Engineering and Task Adaptation
+Yang, 2024
+Self-Distillation Bridges Distribution Gap in Language Model Fine-Tuning
+arXiv.org
+59
+References
+1
+148
+Citations
+2
+
+Tag
+
+Add to Litmap
+
+Remove
+Self-distillation
+Khatri, 2025
+The Art of Scaling Reinforcement Learning Compute for LLMs
+arXiv (Cornell University)
+52
+References
+4
+135
+Citations
+4
+
+Tag
+
+Add to Litmap
+
+Remove
+Scaling, Training Efficiency, and Optimization
+Nikankin, 2024
+Arithmetic Without Algorithms: Language Models Solve Math With a Bag of Heuristics
+arXiv.org
+49
+References
+2
+131
+Citations
+6
+
+Tag
+
+Add to Litmap
+
+Remove
+Alignment & Coherence & Mechanistic Interpretability and Internal Representations
+Nikankin, 2024
+Arithmetic Without Algorithms: Language Models Solve Math With a Bag of Heuristics
+arXiv.org
+49
+References
+2
+130
+Citations
+6
+
+Tag
+
+Add to Litmap
+
+Remove
+Heuristic Approaches in Language Models
+Mathematical Reasoning in Neural Networks and Language Models
+Li, 2026
+Rethinking On-Policy Distillation of Large Language Models: Phenomenology, Mechanism, and Recipe
+arXiv (Cornell University)
+71
+References
+8
+117
+Citations
+1
+
+Tag
+
+Add to Litmap
+
+Remove
+Self-distillation
+Lee, 2026
+Meta-Harness: End-to-End Optimization of Model Harnesses
+arXiv (Cornell University)
+59
+References
+2
+115
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Scaling, Training Efficiency, and Optimization
+Architectural Innovations in Deep Learning
+Lindsey, 2026
+Emergent Introspective Awareness in Large Language Models
+arXiv (Cornell University)
+0
+References
+109
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Alignment & Coherence & Mechanistic Interpretability and Internal Representations
+Karan, 2025
+Reasoning with Sampling: Your Base Model is Smarter Than You Think
+arXiv.org
+57
+References
+3
+109
+Citations
+1
+
+Tag
+
+Add to Litmap
+
+Remove
+Scaling, Training Efficiency, and Optimization
+Mathematical Reasoning in Neural Networks and Language Models
+Feedback Mechanisms and Learning Paradigms
+Reinforcement Learning Algorithms and Applications
+Zhang, 2025
+Critique-GRPO: Advancing LLM Reasoning with Natural Language and Numerical Feedback
+arXiv.org
+53
+References
+2
+105
+Citations
+1
+
+Tag
+
+Add to Litmap
+
+Remove
+Mathematical Reasoning in Neural Networks and Language Models
+Feedback Mechanisms and Learning Paradigms
+Reinforcement Learning Algorithms and Applications
+Parashar, 2025
+Curriculum Reinforcement Learning from Easy to Hard Tasks Improves LLM Reasoning
+arXiv.org
+73
+References
+3
+103
+Citations
+1
+
+Tag
+
+Add to Litmap
+
+Remove
+Environment Generation
+Chang, 2025
+Soft Adaptive Policy Optimization
+arXiv (Cornell University)
+12
+References
+2
+101
+Citations
+2
+
+Tag
+
+Add to Litmap
+
+Remove
+Scaling, Training Efficiency, and Optimization
+Mathematical Reasoning in Neural Networks and Language Models
+Reinforcement Learning Algorithms and Applications
+Yuksekgonul, 2026
+Learning to Discover at Test Time
+arXiv (Cornell University)
+0
+References
+100
+Citations
+3
+
+Tag
+
+Add to Litmap
+
+Remove
+Scaling, Training Efficiency, and Optimization
+AI in Scientific Discovery and Problem Solving
+Kantamneni, 2025
+Language Models Use Trigonometry to Do Addition
+arXiv (Cornell University)
+0
+References
+95
+Citations
+6
+
+Tag
+
+Add to Litmap
+
+Remove
+Mathematical Reasoning in Neural Networks and Language Models
+Behrouz, 2025
+Nested Learning: The Illusion of Deep Learning Architectures
+arXiv (Cornell University)
+155
+References
+1
+95
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Architectural Innovations in Deep Learning
+Zhang, 2026
+MemRL: Self-Evolving Agents via Runtime Reinforcement Learning on Episodic Memory
+arXiv (Cornell University)
+97
+References
+2
+91
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Environment Generation
+Goldowsky-Dill, 2025
+Detecting Strategic Deception Using Linear Probes
+arXiv (Cornell University)
+0
+References
+89
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Alignment & Coherence & Mechanistic Interpretability and Internal Representations
+Generalization and Model Robustness
+Zhang, 2025
+Recursive Language Models
+arXiv (Cornell University)
+46
+References
+87
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Recursive Models
+Fu, 2026
+Revisiting On-Policy Distillation: Empirical Failure Modes and Simple Fixes
+arXiv (Cornell University)
+57
+References
+5
+78
+Citations
+1
+
+Tag
+
+Add to Litmap
+
+Remove
+Self-distillation
+Aleixo, 2023
+Catastrophic Forgetting in Deep Learning: A Comprehensive Taxonomy
+arXiv.org
+303
+References
+2
+73
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Catastrophic forgetting
+Kim, 2026
+Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?
+arXiv (Cornell University)
+34
+References
+4
+70
+Citations
+2
+
+Tag
+
+Add to Litmap
+
+Remove
+Self-distillation
+Li, 2025
+NorMuon: Making Muon more efficient and scalable
+arXiv.org
+38
+References
+1
+67
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Optimizers and Gradient Descent
+Kaddour, 2023
+No Train No Gain: Revisiting Efficient Training Algorithms For Transformer-based Language Models
+arXiv.org
+160
+References
+4
+63
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Optimizers and Gradient Descent
+Zhou, 2024
+Pre-trained Large Language Models Use Fourier Features to Compute Addition
+arXiv.org
+54
+References
+1
+60
+Citations
+5
+
+Tag
+
+Add to Litmap
+
+Remove
+Mathematical Reasoning in Neural Networks and Language Models
+Duéñez-Guzmán, 2023
+A social path to human-like artificial intelligence
+Nature Machine Intelligence
+187
+References
+1
+59
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Self-Improvement and Adaptation in AI Systems
+Evolutionary Approaches in AI
+Su, 2025
+Klear-Reasoner: Advancing Reasoning Capability via Gradient-Preserving Clipping Policy Optimization
+arXiv.org
+24
+References
+3
+54
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Mathematical Reasoning in Neural Networks and Language Models
+Feedback Mechanisms and Learning Paradigms
+Wang, 2025
+Emergent Hierarchical Reasoning in LLMs through Reinforcement Learning
+arXiv.org
+55
+References
+3
+54
+Citations
+1
+
+Tag
+
+Add to Litmap
+
+Remove
+Mathematical Reasoning in Neural Networks and Language Models
+Feedback Mechanisms and Learning Paradigms
+Reinforcement Learning Algorithms and Applications
+Li, 2026
+Unifying Group-Relative and Self-Distillation Policy Optimization via Sample Routing
+arXiv (Cornell University)
+60
+References
+9
+52
+Citations
+1
+
+Tag
+
+Add to Litmap
+
+Remove
+Self-distillation
+Yuan, 2025
+From 
+ and 
+ to 
+: LLMs Learn New Skills in RL by Composing Old Ones
+arXiv.org
+48
+References
+5
+52
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Stepping stone
+Generalization and Model Robustness
+Reinforcement Learning Algorithms and Applications
+Wei, 2025
+Toward Training Superintelligent Software Agents through Self-Play SWE-RL
+arXiv.org
+0
+References
+47
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Environment Generation
+Yue, 2026
+Dr. Zero: Self-Evolving Search Agents without Training Data
+arXiv.org
+61
+References
+4
+44
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Environment Generation
+Whitelam, 2021
+Correspondence between neuroevolution and gradient descent
+Nature Communications
+76
+References
+1
+44
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Scaling, Training Efficiency, and Optimization
+Evolutionary Approaches in AI
+Zeng, 2025
+RLVE: Scaling Up Reinforcement Learning for Language Models with Adaptive Verifiable Environments
+arXiv.org
+73
+References
+3
+37
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Environment Generation
+Golden, 2022
+Sleep prevents catastrophic forgetting in spiking neural networks by forming a joint synaptic weight representation
+PLOS Computational Biology
+107
+References
+2
+34
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Catastrophic forgetting
+Sigaud, 2023
+A Definition of Open-Ended Learning Problems for Goal-Conditioned Agents
+arXiv.org
+82
+References
+33
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Continual Learning and Plasticity
+Xu, 2025
+Single-stream Policy Optimization
+arXiv.org
+50
+References
+4
+31
+Citations
+1
+
+Tag
+
+Add to Litmap
+
+Remove
+Scaling, Training Efficiency, and Optimization
+Self-Improvement and Adaptation in AI Systems
+Generalization and Model Robustness
+Reinforcement Learning Algorithms and Applications
+Wu, 2025
+It Takes Two: Your GRPO Is Secretly DPO
+arXiv (Cornell University)
+73
+References
+4
+29
+Citations
+1
+
+Tag
+
+Add to Litmap
+
+Remove
+Mathematical Reasoning in Neural Networks and Language Models
+Feedback Mechanisms and Learning Paradigms
+Reinforcement Learning Algorithms and Applications
+Smith, 2017
+Super-Convergence: Very Fast Training of Neural Networks Using Large Learning Rates
+arXiv (Cornell University)
+0
+References
+26
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Optimizers and Gradient Descent
+Zhang, 2025
+Encoder-Decoder Gemma: Improving the Quality-Efficiency Trade-Off via Adaptation
+arXiv.org
+85
+References
+24
+Citations
+1
+
+Tag
+
+Add to Litmap
+
+Remove
+Encoder-Decoder
+Darlow, 2025
+Continuous Thought Machines
+arXiv.org
+101
+References
+1
+23
+Citations
+2
+
+Tag
+
+Add to Litmap
+
+Remove
+Recurrent Models
+Architectural Innovations in Deep Learning
+Blayney, 2026
+A Mechanistic Analysis of Looped Reasoning Language Models
+arXiv (Cornell University)
+59
+References
+2
+19
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Recurrent Models
+Simonds, 2025
+LADDER: Self-Improving LLMs Through Recursive Problem Decomposition
+arXiv.org
+0
+References
+19
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Scaling, Training Efficiency, and Optimization
+Self-Improvement and Adaptation in AI Systems
+Mathematical Reasoning in Neural Networks and Language Models
+Baeumel, 2025
+The Lookahead Limitation: Why Multi-Operand Addition is Hard for LLMs
+arXiv.org
+28
+References
+5
+18
+Citations
+2
+
+Tag
+
+Add to Litmap
+
+Remove
+Heuristic Approaches in Language Models
+Mathematical Reasoning in Neural Networks and Language Models
+Zhang, 2025
+Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents
+0
+References
+15
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Self-Improvement and Adaptation in AI Systems
+Evolutionary Approaches in AI
+Si, 2026
+Towards Execution-Grounded Automated AI Research
+arXiv (Cornell University)
+71
+References
+2
+14
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Scaling, Training Efficiency, and Optimization
+AI in Scientific Discovery and Problem Solving
+Irie, 2023
+Metalearning Continual Learning Algorithms
+Trans. Mach. Learn. Res.
+167
+References
+1
+13
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Continual Learning and Plasticity
+Zhang, 2026
+Hyperagents
+arXiv (Cornell University)
+0
+References
+13
+Citations
+1
+
+Tag
+
+Add to Litmap
+
+Remove
+Self-Improvement and Adaptation in AI Systems
+Sheng, 2025
+ESPO: Entropy Importance Sampling Policy Optimization
+arXiv.org
+25
+References
+5
+12
+Citations
+1
+
+Tag
+
+Add to Litmap
+
+Remove
+Scaling, Training Efficiency, and Optimization
+Mathematical Reasoning in Neural Networks and Language Models
+Feedback Mechanisms and Learning Paradigms
+Reinforcement Learning Algorithms and Applications
+Xu, 2025
+A Formal Comparison Between Chain-of-Thought and Latent Thought
+arXiv.org
+77
+References
+2
+12
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Recurrent Models
+Zhang, 2025
+T5Gemma 2: Seeing, Reading, and Understanding Longer
+arXiv (Cornell University)
+109
+References
+1
+11
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Encoder-Decoder
+Degris, 2024
+Step-size Optimization for Continual Learning
+arXiv.org
+32
+References
+10
+Citations
+1
+
+Tag
+
+Add to Litmap
+
+Remove
+Optimizers and Gradient Descent
+Continual Learning and Plasticity
+Xiao-yan, 2025
+Why Can't Transformers Learn Multiplication? Reverse-Engineering Reveals Long-Range Dependency Pitfalls
+arXiv (Cornell University)
+24
+References
+4
+10
+Citations
+1
+
+Tag
+
+Add to Litmap
+
+Remove
+Heuristic Approaches in Language Models
+Mathematical Reasoning in Neural Networks and Language Models
+Cutkosky, 2024
+The Road Less Scheduled
+0
+References
+9
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Generalization and Model Robustness
+Ye, 2026
+Structured Scaling of AI Discovery Across Diverse Scientific Domains
+Research Square
+0
+References
+9
+Citations
+1
+
+Tag
+
+Add to Litmap
+
+Remove
+AI in Scientific Discovery and Problem Solving
+Reinforcement Learning Algorithms and Applications
+Yan, 2026
+Spurious Rewards Paradox: Mechanistically Understanding How RLVR Activates Memorization Shortcuts in LLMs
+arXiv (Cornell University)
+33
+References
+2
+8
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Stepping stone
+Mathematical Reasoning in Neural Networks and Language Models
+Feedback Mechanisms and Learning Paradigms
+Sharifnassab, 2024
+MetaOptimize: A Framework for Optimizing Step Sizes and Other Meta-parameters
+arXiv.org
+76
+References
+2
+8
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Architectural Innovations in Deep Learning
+Abrantes, 2025
+Competition and Attraction Improve Model Fusion
+Proceedings of the Genetic and Evolutionary Computation Conference
+37
+References
+7
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Continual Learning and Plasticity
+Baeumel, 2025
+Modular Arithmetic: Language Models Solve Math Digit by Digit
+arXiv.org
+27
+References
+6
+7
+Citations
+2
+
+Tag
+
+Add to Litmap
+
+Remove
+Generalization and Model Robustness
+Reinforcement Learning Algorithms and Applications
+Wang, 2024
+Knowledge Mechanisms in Large Language Models: A Survey and Perspective
+0
+References
+6
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Alignment & Coherence & Mechanistic Interpretability
+Wilf, 2025
+Propose, Solve, Verify: Self-Play Through Formal Verification
+arXiv.org
+48
+References
+1
+6
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Environment Generation
+Ackermann, 2026
+Gradient Regularization Prevents Reward Hacking in Reinforcement Learning from Human Feedback and Verifiable Rewards
+arXiv (Cornell University)
+45
+References
+2
+5
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Optimizers and Gradient Descent
+Feedback Mechanisms and Learning Paradigms
+Zhang, 2026
+Harnessing Agentic Evolution
+arXiv (Cornell University)
+48
+References
+4
+4
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Self-Improvement and Adaptation in AI Systems
+Evolutionary Approaches in AI
+He, 2026
+LiveMathematicianBench: A Live Benchmark for Mathematician-Level Reasoning with Proof Sketches
+arXiv (Cornell University)
+0
+References
+3
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Chau, 2023
+Energy Transformer
+0
+References
+2
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Self-Improvement and Adaptation in AI Systems
+Todd, 2025
+In-Context Algebra
+arXiv (Cornell University)
+111
+References
+6
+2
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Mathematical Reasoning in Neural Networks and Language Models
+Devbunova, 2026
+Is Evaluation Awareness Just Format Sensitivity? Limitations of Probe-Based Evidence under Controlled Prompt Structure
+arXiv (Cornell University)
+10
+References
+2
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Alignment & Coherence & Mechanistic Interpretability and Internal Representations
+Teng, 2026
+Skip-Connected Policy Optimization for Implicit Advantage
+arXiv (Cornell University)
+72
+References
+14
+2
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Scaling, Training Efficiency, and Optimization
+Dohare, 2021
+Continual Backprop: Stochastic Gradient Descent with Persistent Randomness
+arXiv (Cornell University)
+0
+References
+2
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Scaling, Training Efficiency, and Optimization
+Klindt, 2026
+When Does LeJEPA Learn a World Model?
+Cold Spring Harbor Laboratory Institutional Repository (Cold Spring Harbor Laboratory)
+139
+References
+2
+2
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Jepa
+Li, 2026
+Skip a Layer or Loop It? Learning Program-of-Layers in LLMs
+arXiv (Cornell University)
+42
+References
+2
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Recurrent Models
+Wang, 2026
+GRPO-VPS: Enhancing Group Relative Policy Optimization with Verifiable Process Supervision for Effective Reasoning
+arXiv (Cornell University)
+41
+References
+4
+1
+Citation
+
+Tag
+
+Add to Litmap
+
+Remove
+Stepping stone
+Feedback Mechanisms and Learning Paradigms
+Reinforcement Learning Algorithms and Applications
+Khemani, 2025
+Self-Programming AI: Code-Learning Agents for Autonomous Refactoring and Architectural Evolution
+Research Square (Research Square)
+3
+References
+1
+Citation
+
+Tag
+
+Add to Litmap
+
+Remove
+Self-refining
+Tang, 2025
+SR-GRPO: Stable Rank as an Intrinsic Geometric Reward for Large Language Model Alignment
+arXiv.org
+57
+References
+1
+0
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Generalization and Model Robustness
+Zhang, 2026
+Revisiting Reinforcement Learning with Verifiable Rewards from a Contrastive Perspective
+arXiv (Cornell University)
+54
+References
+6
+0
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Reinforcement Learning Algorithms and Applications
+Jiang, 2026
+From Reasoning Chains to Verifiable Subproblems: Curriculum Reinforcement Learning Enables Credit Assignment for LLM Reasoning
+arXiv (Cornell University)
+54
+References
+5
+0
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Environment Generation
+Wu, 2026
+VISReg: Variance-Invariance-Sketching Regularization for JEPA training
+arXiv (Cornell University)
+83
+References
+1
+0
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Jepa
+Liu, 2026
+SPADE: Self-Play in Adaptive Synthetic Executable Environments
+arXiv (Cornell University)
+0
+References
+0
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Environment Generation
+Stepping stone
+Dong, 2026
+Q-Learning With World Models
+0
+References
+0
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Reinforcement Learning Algorithms and Applications
+Sasaki, 2026
+Language Models Compare Quantities Using Number-specific and Unit-specific Heuristics
+arXiv (Cornell University)
+28
+References
+5
+0
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Heuristic Approaches in Language Models
+Mathematical Reasoning in Neural Networks and Lang
+Shan, 2026
+Learning from Own Solutions: Self-Conditioned Credit Assignment for Reinforcement Learning with Verifiable Rewards
+arXiv (Cornell University)
+0
+References
+0
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Stepping stone
+Self-Improvement and Adaptation in AI Systems
+Reinforcement Learning Algorithms and Applications
+Nikolich, 2026
+Weight-Space Geometry of Offline Reasoning Training
+arXiv (Cornell University)
+0
+References
+0
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Feedback Mechanisms and Learning Paradigms
+Engdahl, 2026
+BDH-CQ: In-Context Learning with Recurrent Latent Reasoning
+arXiv (Cornell University)
+0
+References
+0
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Recurrent Models
+AI in Scientific Discovery and Problem Solving
+Ren, 2026
+Self-Improvements in Modern Agentic Systems: A Survey
+arXiv (Cornell University)
+0
+References
+0
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Self-Improvement and Adaptation in AI Systems
+Gurnee, 2026
+Verbalizable Representations Form a Global Workspace in Language Models
+arXiv (Cornell University)
+0
+References
+0
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Alignment & Coherence & Mechanistic Interpretability and Internal Representations
+Gladstone, 2026
+Explorative Modeling: Unlocking a Third Pretraining Axis and End-to-End Generation
+arXiv (Cornell University)
+0
+References
+0
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Scaling, Training Efficiency, and Optimization
+Bersia, 2026
+When Activation Oracles Learn Not to Read: Concept-Specific Blind Spots in Fine-Tuned Oracles
+arXiv (Cornell University)
+0
+References
+0
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Alignment & Coherence & Mechanistic Interpretability and Internal Representations
+Allal, 2024
+Scaling Laws and Compute-Optimal Training Beyond Fixed Training Durations
+0
+References
+0
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Scaling, Training Efficiency, and Optimization
+Architectural Innovations in Deep Learning
+Reinforcement Learning Algorithms and Applications
+Taïga, 2026
+DiffusionGemma Technical Report
+arXiv (Cornell University)
+0
+References
+0
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Encoder-Decoder
+Singh, 2026
+The Loss Does Not See the Basis, but Adam Does
+arXiv (Cornell University)
+0
+References
+0
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Optimizers and Gradient Descent
+Bie, 2026
+AI-rithmetic
+arXiv (Cornell University)
+46
+References
+5
+0
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Mathematical Reasoning in Neural Networks and Language Models
+Qi, 2026
+RIFT: A RubrIc Failure Mode Taxonomy and Automated Diagnostics
+arXiv (Cornell University)
+36
+References
+0
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Scaling, Training Efficiency, and Optimization
+Razzhigaev, 2026
+Ouroboros: A Self-Developing Frontier Coding Agent with Reviewed Core Evolution
+arXiv (Cornell University)
+0
+References
+0
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Self-Improvement and Adaptation in AI Systems
+Harrington, 2026
+When Does Continual Learning Require Learning
+arXiv (Cornell University)
+0
+References
+0
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Self-Improvement and Adaptation in AI Systems
+Reinforcement Learning Algorithms and Applications
+Akgül, 2026
+Rethinking RL for LLM Reasoning: It's Sparse Policy Selection, Not Capability Learning
+arXiv (Cornell University)
+40
+References
+4
+0
+Citations
+
+Tag
+
+Add to Litmap
+
+Remove
+Stepping stone
+Scaling, Training Efficiency, and Optimization
+Reinforcement Learning Algorithms and Applications
+</user_query>

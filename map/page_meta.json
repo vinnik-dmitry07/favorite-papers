@@ -1,0 +1,1125 @@
+{
+  "url:diamond-wm.github.io": {
+    "title": "Diffusion for World Modeling: Visual Details Matter in Atari (DIAMOND) 💎"
+  },
+  "arxiv:2306.02451": {
+    "title": "For SALE: State-Action Representation Learningfor Deep Reinforcement Learning",
+    "resolved": "https://ar5iv.labs.arxiv.org/html/2306.02451"
+  },
+  "url:lilianweng.github.io/lil-log/2018/01/23/the-multi-armed-bandit-problem-and-its-solutions.html": {
+    "title": "The Multi Armed Bandit Problem And Its Solutions",
+    "date": "2018-01-23",
+    "authors": [
+      "https://lilianweng.github.io/about/"
+    ]
+  },
+  "url:cameronrwolfe.substack.com/p/grpo-tricks": {
+    "title": "GRPO++: Tricks for Making RL Actually Work",
+    "date": "2026-01-13",
+    "authors": [
+      "Cameron R. Wolfe, Ph.D."
+    ]
+  },
+  "url:oatllm.notion.site/oat-zero": {
+    "title": "Notion | Where teams and agents work together"
+  },
+  "url:pub.sakana.ai/ctm": {
+    "title": "Continuous Thought Machines"
+  },
+  "url:people.idsia.ch/~juergen/most-cited-neural-nets.html": {
+    "title": "The most cited AIs are all based on work done in my labs."
+  },
+  "url:safe-lip-9a8.notion.site/incorrect-baseline-evaluations-call-into-question-recent-llm-rl-claims-2012f1fbf0ee8094ab8ded1953c15a37": {
+    "title": "Notion | Where teams and agents work together"
+  },
+  "doi:10.1073/pnas.2520095123": {
+    "title": "Evidence from formal logical reasoning reveals that the language of thought is not natural language",
+    "date": "2026-07-06",
+    "authors": [
+      "Hope Kean",
+      "Alexander Fung",
+      "Paris Jaggers",
+      "Jason Chen"
+    ]
+  },
+  "doi:10.1038/s41586-024-07522-w": {
+    "title": "Language is primarily a tool for communication rather than thought",
+    "date": "2024-06-19",
+    "authors": [
+      "Evelina Fedorenko",
+      "Steven T. Piantadosi",
+      "Edward A. F. Gibson"
+    ]
+  },
+  "doi:10.1038/d41586-024-01413-w": {
+    "title": "Why mathematics is set to be revolutionized by AI",
+    "date": "2024-05-14",
+    "authors": [
+      "Thomas Fink"
+    ]
+  },
+  "url:ai.googleblog.com/2022/11/characterizing-emergent-phenomena-in.html": {
+    "title": "Characterizing Emergent Phenomena in Large Language Models",
+    "resolved": "https://research.google/blog/characterizing-emergent-phenomena-in-large-language-models/"
+  },
+  "url:abehrouz.github.io/files/nl.pdf": {
+    "title": "Introducing Nested Learning: A new ML paradigm for continual learning"
+  },
+  "doi:10.1038/s41586-024-07711-7": {
+    "title": "Loss of plasticity in deep continual learning",
+    "date": "2024-08-21",
+    "authors": [
+      "Shibhansh Dohare",
+      "J. Fernando Hernandez-Garcia",
+      "Qingfeng Lan",
+      "Parash Rahman"
+    ]
+  },
+  "url:epochai.org/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year": {
+    "title": "Training compute of frontier AI models grows by 4-5x per year",
+    "authors": [
+      "Jaime Sevilla",
+      "Edu RoldÃ¡n"
+    ],
+    "resolved": "https://epoch.ai/publications/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year"
+  },
+  "url:openai.com/index/deep-double-descent": {
+    "title": "Deep double descent",
+    "date": "2020-01-23"
+  },
+  "url:paperswithcode.com/paper/optimizing-millions-of-hyperparameters-by": {
+    "title": "Paper page - Optimizing Millions of Hyperparameters by Implicit Differentiation",
+    "date": "2026-08-17",
+    "resolved": "https://huggingface.co/papers/1911.02590"
+  },
+  "doi:10.1073/pnas.1611835114": {
+    "title": "Overcoming catastrophic forgetting in neural networks",
+    "date": "2017-03-14",
+    "authors": [
+      "James Kirkpatrick",
+      "Razvan Pascanu",
+      "Neil Rabinowitz",
+      "Joel Veness"
+    ]
+  },
+  "url:ai.meta.com/blog/emu-text-to-video-generation-image-editing-research": {
+    "title": "Emu Video and Emu Edit: Our latest generative AI research milestones"
+  },
+  "url:ai.facebook.com/blog/voicebox-generative-ai-model-speech": {
+    "title": "Introducing Voicebox: The first generative AI model for speech to generalize across tasks with state-of-the-art performance",
+    "resolved": "https://ai.meta.com/blog/voicebox-generative-ai-model-speech/"
+  },
+  "acl:2023.acl-demo.51": {
+    "title": "A System for Answering Simple Questions in Multiple Languages"
+  },
+  "acl:2022.emnlp-main.340": {
+    "title": "Super-NaturalInstructions: Generalization via Declarative Instructions on 1600+ NLP Tasks"
+  },
+  "acl:2022.acl-long.360": {
+    "title": "PRIMERA: Pyramid-based Masked Sentence Pre-training for Multi-document Summarization"
+  },
+  "url:lilianweng.github.io/posts/2020-10-29-odqa": {
+    "title": "How to Build an Open-Domain Question Answering System?",
+    "date": "2020-10-29",
+    "authors": [
+      "Lilian Weng"
+    ]
+  },
+  "url:sakana.ai/shinka-evolve": {
+    "title": "Sakana AI",
+    "authors": [
+      "Sakana AI"
+    ],
+    "date": "2025-09-25"
+  },
+  "doi:10.21203/rs.3.rs-6688473/v1": {
+    "title": "Self-Programming AI: Code-Learning Agents for Autonomous Refactoring and Architectural Evolution",
+    "date": "2025-05-20",
+    "authors": [
+      "Kushal Khemani"
+    ]
+  },
+  "url:research.google/blog/few-shot-tool-use-doesnt-really-work-yet": {
+    "title": "Few-shot tool-use doesn’t really work (yet)"
+  },
+  "url:lilianweng.github.io/posts/2023-06-23-agent": {
+    "title": "LLM Powered Autonomous Agents",
+    "date": "2023-06-23",
+    "authors": [
+      "Lilian Weng"
+    ]
+  },
+  "doi:10.1038/s42256-023-00754-x": {
+    "title": "A social path to human-like artificial intelligence",
+    "date": "2023-11-17",
+    "authors": [
+      "Edgar A. Duéñez-Guzmán",
+      "Suzanne Sadedin",
+      "Jane X. Wang",
+      "Kevin R. McKee"
+    ]
+  },
+  "url:github.com/deepseek-ai/deepseek-harness": {
+    "title": "GitHub - deepseek-ai/deepseek-harness: DeepSeek Harness: Everything is a Plugin."
+  },
+  "url:github.com/primeintellect-ai/prime-agent": {
+    "title": "GitHub - PrimeIntellect-ai/prime-agent: A self-improving RLM agent for coding workflows and long-running autonomous tasks."
+  },
+  "url:lilianweng.github.io/posts/2026-07-04-harness": {
+    "title": "Harness Engineering for Self-Improvement",
+    "date": "2026-07-04",
+    "authors": [
+      "Lilian Weng"
+    ]
+  },
+  "url:github.com/alexisfox7/rgb-agent": {
+    "title": "GitHub - alexisfox7/PRO-LONG: Programmatic memory for long-horizon LLM agents: the harness appends everything to one log, and the agent searches it with code. 97.4% on ARC-AGI-3 (arXiv:2607.20064)",
+    "resolved": "https://github.com/alexisfox7/PRO-LONG"
+  },
+  "url:weco.ai/blog/first-evidence-of-recursive-self-improvement": {
+    "title": "AIDE²: First Evidence of Recursive Self-Improvement | Weco AI",
+    "date": "2026-07-14"
+  },
+  "url:alexzhang13.github.io/blog/2026/harness": {
+    "title": "Alex L. Zhang | Language model harnesses are compositional generalizers",
+    "authors": [
+      "Alex L. Zhang"
+    ]
+  },
+  "url:tufalabs.ai/research/duck-harness": {
+    "title": "Duck Harness: Winning Solution for ARC-AGI-3 Milestone 1",
+    "date": "2026-07-01",
+    "authors": [
+      "Harold Bessis, Jeroen Cottaar, Isaiah Pressman, Andries Smit, Michal Tešnar, Stefano Viel"
+    ]
+  },
+  "url:openai.com/index/harness-engineering": {
+    "title": "Harness engineering: leveraging Codex in an agent-first world",
+    "date": "2026-08-25"
+  },
+  "url:anthropic.com/research/reasoning-models-dont-say-think": {
+    "title": "Reasoning models don't always say what they think"
+  },
+  "url:ai-2027.com": {
+    "title": "AI 2027"
+  },
+  "url:anthropic.com/research/tracing-thoughts-language-model": {
+    "title": "Tracing the thoughts of a large language model"
+  },
+  "url:transformer-circuits.pub/2025/attribution-graphs/methods.html": {
+    "title": "Circuit Tracing: Revealing Computational Graphs in Language Models"
+  },
+  "url:transformer-circuits.pub/2025/attribution-graphs/biology.html": {
+    "title": "On the Biology of a Large Language Model"
+  },
+  "url:alignmentforum.org/posts/nffst5mio7bcaqhpa/an-extremely-opinionated-annotated-list-of-my-favourite-1": {
+    "title": "An Extremely Opinionated Annotated List of My Favourite Mechanistic Interpretability Papers v2",
+    "authors": [
+      "Neel Nanda"
+    ],
+    "date": "2024-07-07"
+  },
+  "url:situational-awareness.ai": {
+    "title": "Introduction - SITUATIONAL AWARENESS: The Decade Ahead",
+    "date": "2024-05-29",
+    "resolved": "https://situational-awareness.ai/"
+  },
+  "url:anthropic.com/news/mapping-mind-language-model": {
+    "title": "Mapping the mind of a large language model"
+  },
+  "url:openai.com/research/weak-to-strong-generalization": {
+    "title": "Weak-to-strong generalization",
+    "date": "2024-02-14",
+    "resolved": "https://openai.com/index/weak-to-strong-generalization/"
+  },
+  "url:research.google/blog/timesfm-3-a-zero-shot-foundation-model-for-multivariate-forecasting": {
+    "title": "TimesFM-3: A zero-shot foundation model for multivariate forecasting"
+  },
+  "url:paperswithcode.com/paper/n-beats-neural-basis-expansion-analysis-for": {
+    "title": "Paper page - N-BEATS: Neural basis expansion analysis for interpretable time series forecasting",
+    "resolved": "https://huggingface.co/papers/1905.10437"
+  },
+  "doi:10.1101/2024.02.22.581686": {
+    "title": "MetaWorm: An Integrative Data-Driven Model Simulating <i>C. elegans</i> Brain, Body and Environment Interactions",
+    "date": "2024-02-26",
+    "authors": [
+      "Mengdi Zhao",
+      "Ning Wang",
+      "Xinrui Jiang",
+      "Xiaoyang Ma"
+    ]
+  },
+  "doi:10.1371/journal.pcbi.1011005": {
+    "title": "Neural spiking for causal inference and learning",
+    "date": "2023-04-04",
+    "authors": [
+      "Benjamin James Lansdell",
+      "Konrad Paul Kording"
+    ]
+  },
+  "doi:10.1101/2023.04.04.535512": {
+    "title": "Emergence of belief-like representations through reinforcement learning",
+    "date": "2023-04-07",
+    "authors": [
+      "Jay A. Hennig",
+      "Sandra A. Romero Pinto",
+      "Takahiro Yamaguchi",
+      "Scott W. Linderman"
+    ]
+  },
+  "doi:10.1371/journal.pcbi.1010628": {
+    "title": "Sleep prevents catastrophic forgetting in spiking neural networks by forming a joint synaptic weight representation",
+    "date": "2022-11-18",
+    "authors": [
+      "Ryan Golden",
+      "Jean Erik Delanois",
+      "Pavel Sanda",
+      "Maxim Bazhenov"
+    ]
+  },
+  "doi:10.1038/s41467-021-26568-2": {
+    "title": "Correspondence between neuroevolution and gradient descent",
+    "date": "2021-11-02",
+    "authors": [
+      "Stephen Whitelam",
+      "Viktor Selin",
+      "Sang-Won Park",
+      "Isaac Tamblyn"
+    ]
+  },
+  "url:thinkingmachines.ai/news/learning-to-replicate-expert-judgment-in-financial-tasks": {
+    "title": "Learning to Replicate Expert Judgment in Financial Tasks",
+    "date": "2026-06-30",
+    "authors": [
+      "Thinking Machines Lab"
+    ]
+  },
+  "acl:2025.acl-long.126": {
+    "title": "INVESTORBENCH: A Benchmark for Financial Decision-Making Tasks with LLM-based Agent"
+  },
+  "url:rlhfbook.com": {
+    "title": "Reinforcement Learning from Human Feedback",
+    "date": "2025-01-01",
+    "authors": [
+      "Lambert, Nathan"
+    ]
+  },
+  "url:neuroevolutionbook.com": {
+    "title": "Neuroevolution",
+    "date": "2025-09-07"
+  },
+  "url:link.springer.com/book/10.1007/978-3-031-45468-4": {
+    "title": "Deep Learning"
+  },
+  "doi:10.1038/s41566-024-01394-2": {
+    "title": "Inverse-designed low-index-contrast structures on a silicon photonics platform for vector–matrix multiplication",
+    "date": "2024-02-16",
+    "authors": [
+      "Vahid Nikkhah",
+      "Ali Pirmoradi",
+      "Farshid Ashtiani",
+      "Brian Edwards"
+    ]
+  },
+  "url:iclr.cc/virtual/2025/poster/30565": {
+    "date": "2025-01-29"
+  },
+  "url:educatingsilicon.com/2024/05/09/how-much-llm-training-data-is-there-in-the-limit": {
+    "date": "2024-05-09"
+  },
+  "arxiv:2608.17163": {
+    "resolved": "https://arxiv.org/html/2608.17163"
+  },
+  "arxiv:2509.09675": {
+    "resolved": "https://arxiv.org/html/2509.09675"
+  },
+  "arxiv:2503.14858": {
+    "resolved": "https://arxiv.org/html/2503.14858"
+  },
+  "arxiv:2501.16142": {
+    "resolved": "https://arxiv.org/html/2501.16142"
+  },
+  "arxiv:2411.03820": {
+    "resolved": "https://arxiv.org/html/2411.03820"
+  },
+  "arxiv:2312.13327": {
+    "resolved": "https://arxiv.org/html/2312.13327"
+  },
+  "arxiv:2312.00276": {
+    "resolved": "https://arxiv.org/html/2312.00276"
+  },
+  "arxiv:2305.19452": {
+    "resolved": "https://arxiv.org/html/2305.19452"
+  },
+  "arxiv:2301.04104": {
+    "resolved": "https://arxiv.org/html/2301.04104"
+  },
+  "arxiv:2205.07802": {
+    "resolved": "https://arxiv.org/html/2205.07802"
+  },
+  "arxiv:2106.06860": {
+    "resolved": "https://arxiv.org/html/2106.06860"
+  },
+  "arxiv:2011.14826": {
+    "resolved": "https://arxiv.org/html/2011.14826"
+  },
+  "arxiv:2005.01643": {
+    "resolved": "https://arxiv.org/html/2005.01643"
+  },
+  "arxiv:2004.12919": {
+    "resolved": "https://arxiv.org/html/2004.12919"
+  },
+  "arxiv:1910.01708": {
+    "resolved": "https://arxiv.org/html/1910.01708"
+  },
+  "arxiv:1802.09477": {
+    "resolved": "https://arxiv.org/html/1802.09477"
+  },
+  "arxiv:1801.01290": {
+    "resolved": "https://arxiv.org/html/1801.01290"
+  },
+  "arxiv:1712.06567": {
+    "resolved": "https://arxiv.org/html/1712.06567"
+  },
+  "arxiv:1710.02298": {
+    "resolved": "https://arxiv.org/html/1710.02298"
+  },
+  "arxiv:1707.06887": {
+    "resolved": "https://arxiv.org/html/1707.06887"
+  },
+  "arxiv:1511.06581": {
+    "resolved": "https://arxiv.org/html/1511.06581"
+  },
+  "arxiv:1511.05952": {
+    "resolved": "https://arxiv.org/html/1511.05952"
+  },
+  "arxiv:1509.06461": {
+    "resolved": "https://arxiv.org/html/1509.06461"
+  },
+  "arxiv:2608.09888": {
+    "resolved": "https://arxiv.org/html/2608.09888"
+  },
+  "arxiv:2607.07847": {
+    "resolved": "https://arxiv.org/html/2607.07847"
+  },
+  "arxiv:2606.23740": {
+    "resolved": "https://arxiv.org/html/2606.23740"
+  },
+  "arxiv:2606.18810": {
+    "resolved": "https://arxiv.org/html/2606.18810"
+  },
+  "arxiv:2605.12969": {
+    "resolved": "https://arxiv.org/html/2605.12969"
+  },
+  "arxiv:2605.06241": {
+    "resolved": "https://arxiv.org/html/2605.06241"
+  },
+  "arxiv:2604.20659": {
+    "resolved": "https://arxiv.org/html/2604.20659"
+  },
+  "arxiv:2604.13016": {
+    "resolved": "https://arxiv.org/html/2604.13016"
+  },
+  "arxiv:2604.08690": {
+    "resolved": "https://arxiv.org/html/2604.08690"
+  },
+  "arxiv:2604.02288": {
+    "resolved": "https://arxiv.org/html/2604.02288"
+  },
+  "arxiv:2604.01375": {
+    "resolved": "https://arxiv.org/html/2604.01375"
+  },
+  "arxiv:2603.25562": {
+    "resolved": "https://arxiv.org/html/2603.25562"
+  },
+  "arxiv:2603.24472": {
+    "resolved": "https://arxiv.org/html/2603.24472"
+  },
+  "arxiv:2602.18037": {
+    "resolved": "https://arxiv.org/html/2602.18037"
+  },
+  "arxiv:2601.20861": {
+    "resolved": "https://arxiv.org/html/2601.20861"
+  },
+  "arxiv:2601.20802": {
+    "resolved": "https://arxiv.org/html/2601.20802"
+  },
+  "arxiv:2601.19897": {
+    "resolved": "https://arxiv.org/html/2601.19897"
+  },
+  "arxiv:2601.18734": {
+    "resolved": "https://arxiv.org/html/2601.18734"
+  },
+  "arxiv:2601.16175": {
+    "resolved": "https://arxiv.org/html/2601.16175"
+  },
+  "arxiv:2601.14525": {
+    "resolved": "https://arxiv.org/html/2601.14525"
+  },
+  "arxiv:2601.11061": {
+    "resolved": "https://arxiv.org/html/2601.11061"
+  },
+  "arxiv:2512.02807": {
+    "resolved": "https://arxiv.org/html/2512.02807"
+  },
+  "arxiv:2512.00499": {
+    "resolved": "https://arxiv.org/html/2512.00499"
+  },
+  "arxiv:2511.20347": {
+    "resolved": "https://arxiv.org/html/2511.20347"
+  },
+  "arxiv:2510.14901": {
+    "resolved": "https://arxiv.org/html/2510.14901"
+  },
+  "arxiv:2510.13786": {
+    "resolved": "https://arxiv.org/html/2510.13786"
+  },
+  "arxiv:2510.00977": {
+    "resolved": "https://arxiv.org/html/2510.00977"
+  },
+  "arxiv:2509.25123": {
+    "resolved": "https://arxiv.org/html/2509.25123"
+  },
+  "arxiv:2509.13232": {
+    "resolved": "https://arxiv.org/html/2509.13232"
+  },
+  "arxiv:2509.03646": {
+    "resolved": "https://arxiv.org/html/2509.03646"
+  },
+  "arxiv:2508.07629": {
+    "resolved": "https://arxiv.org/html/2508.07629"
+  },
+  "arxiv:2508.05629": {
+    "resolved": "https://arxiv.org/html/2508.05629"
+  },
+  "arxiv:2507.19457": {
+    "resolved": "https://arxiv.org/html/2507.19457"
+  },
+  "arxiv:2507.18071": {
+    "resolved": "https://arxiv.org/html/2507.18071"
+  },
+  "arxiv:2506.13585": {
+    "resolved": "https://arxiv.org/html/2506.13585"
+  },
+  "arxiv:2506.03106": {
+    "resolved": "https://arxiv.org/html/2506.03106"
+  },
+  "arxiv:2506.01939": {
+    "resolved": "https://arxiv.org/html/2506.01939"
+  },
+  "arxiv:2505.19590": {
+    "resolved": "https://arxiv.org/html/2505.19590"
+  },
+  "arxiv:2505.10978": {
+    "resolved": "https://arxiv.org/html/2505.10978"
+  },
+  "arxiv:2504.16084": {
+    "resolved": "https://arxiv.org/html/2504.16084"
+  },
+  "arxiv:2504.13837": {
+    "resolved": "https://arxiv.org/html/2504.13837"
+  },
+  "arxiv:2503.20783": {
+    "resolved": "https://arxiv.org/html/2503.20783"
+  },
+  "arxiv:2503.14476": {
+    "resolved": "https://arxiv.org/html/2503.14476"
+  },
+  "arxiv:2503.00735": {
+    "resolved": "https://arxiv.org/html/2503.00735"
+  },
+  "arxiv:2402.13669": {
+    "resolved": "https://arxiv.org/html/2402.13669"
+  },
+  "arxiv:2402.03300": {
+    "resolved": "https://arxiv.org/html/2402.03300"
+  },
+  "arxiv:2303.17651": {
+    "resolved": "https://arxiv.org/html/2303.17651"
+  },
+  "arxiv:2608.00146": {
+    "resolved": "https://arxiv.org/html/2608.00146"
+  },
+  "arxiv:2606.06574": {
+    "resolved": "https://arxiv.org/html/2606.06574"
+  },
+  "arxiv:2512.24601": {
+    "resolved": "https://arxiv.org/html/2512.24601"
+  },
+  "arxiv:2512.14856": {
+    "resolved": "https://arxiv.org/html/2512.14856"
+  },
+  "arxiv:2504.06225": {
+    "resolved": "https://arxiv.org/html/2504.06225"
+  },
+  "arxiv:2412.13663": {
+    "resolved": "https://arxiv.org/html/2412.13663"
+  },
+  "arxiv:2405.12250": {
+    "resolved": "https://arxiv.org/html/2405.12250"
+  },
+  "arxiv:2405.04517": {
+    "resolved": "https://arxiv.org/html/2405.04517"
+  },
+  "arxiv:2404.09173": {
+    "resolved": "https://arxiv.org/html/2404.09173"
+  },
+  "arxiv:2404.07143": {
+    "resolved": "https://arxiv.org/html/2404.07143"
+  },
+  "arxiv:2311.06242": {
+    "resolved": "https://arxiv.org/html/2311.06242"
+  },
+  "arxiv:2306.13575": {
+    "resolved": "https://arxiv.org/html/2306.13575"
+  },
+  "arxiv:2305.01625": {
+    "resolved": "https://arxiv.org/html/2305.01625"
+  },
+  "arxiv:2302.14045": {
+    "resolved": "https://arxiv.org/html/2302.14045"
+  },
+  "arxiv:2302.10866": {
+    "resolved": "https://arxiv.org/html/2302.10866"
+  },
+  "arxiv:2302.07253": {
+    "resolved": "https://arxiv.org/html/2302.07253"
+  },
+  "arxiv:2207.02098": {
+    "resolved": "https://arxiv.org/html/2207.02098"
+  },
+  "arxiv:2203.08913": {
+    "resolved": "https://arxiv.org/html/2203.08913"
+  },
+  "arxiv:2002.05202": {
+    "resolved": "https://arxiv.org/html/2002.05202"
+  },
+  "arxiv:1710.05941": {
+    "resolved": "https://arxiv.org/html/1710.05941"
+  },
+  "arxiv:2606.25010": {
+    "resolved": "https://arxiv.org/html/2606.25010"
+  },
+  "arxiv:2606.03982": {
+    "resolved": "https://arxiv.org/html/2606.03982"
+  },
+  "arxiv:2604.11791": {
+    "resolved": "https://arxiv.org/html/2604.11791"
+  },
+  "arxiv:2602.10416": {
+    "resolved": "https://arxiv.org/html/2602.10416"
+  },
+  "arxiv:2512.16902": {
+    "resolved": "https://arxiv.org/html/2512.16902"
+  },
+  "arxiv:2510.00184": {
+    "resolved": "https://arxiv.org/html/2510.00184"
+  },
+  "arxiv:2509.25239": {
+    "resolved": "https://arxiv.org/html/2509.25239"
+  },
+  "arxiv:2509.20317": {
+    "resolved": "https://arxiv.org/html/2509.20317"
+  },
+  "arxiv:2508.02513": {
+    "resolved": "https://arxiv.org/html/2508.02513"
+  },
+  "arxiv:2506.10947": {
+    "resolved": "https://arxiv.org/html/2506.10947"
+  },
+  "arxiv:2505.21493": {
+    "resolved": "https://arxiv.org/html/2505.21493"
+  },
+  "arxiv:2505.21444": {
+    "resolved": "https://arxiv.org/html/2505.21444"
+  },
+  "arxiv:2505.15134": {
+    "resolved": "https://arxiv.org/html/2505.15134"
+  },
+  "arxiv:2505.13763": {
+    "resolved": "https://arxiv.org/html/2505.13763"
+  },
+  "arxiv:2504.20571": {
+    "resolved": "https://arxiv.org/html/2504.20571"
+  },
+  "arxiv:2503.21676": {
+    "resolved": "https://arxiv.org/html/2503.21676"
+  },
+  "arxiv:2502.19981": {
+    "resolved": "https://arxiv.org/html/2502.19981"
+  },
+  "arxiv:2502.06807": {
+    "resolved": "https://arxiv.org/html/2502.06807"
+  },
+  "arxiv:2502.05171": {
+    "resolved": "https://arxiv.org/html/2502.05171"
+  },
+  "arxiv:2502.00873": {
+    "resolved": "https://arxiv.org/html/2502.00873"
+  },
+  "arxiv:2501.04519": {
+    "resolved": "https://arxiv.org/html/2501.04519"
+  },
+  "arxiv:2412.14135": {
+    "resolved": "https://arxiv.org/html/2412.14135"
+  },
+  "arxiv:2412.06769": {
+    "resolved": "https://arxiv.org/html/2412.06769"
+  },
+  "arxiv:2410.21272": {
+    "resolved": "https://arxiv.org/html/2410.21272"
+  },
+  "arxiv:2305.13673": {
+    "resolved": "https://arxiv.org/html/2305.13673"
+  },
+  "arxiv:2407.20311": {
+    "resolved": "https://arxiv.org/html/2407.20311"
+  },
+  "arxiv:2309.14316": {
+    "resolved": "https://arxiv.org/html/2309.14316"
+  },
+  "arxiv:2309.14402": {
+    "resolved": "https://arxiv.org/html/2309.14402"
+  },
+  "arxiv:2404.05405": {
+    "resolved": "https://arxiv.org/html/2404.05405"
+  },
+  "arxiv:2407.15017": {
+    "resolved": "https://arxiv.org/html/2407.15017"
+  },
+  "arxiv:2406.11813": {
+    "resolved": "https://arxiv.org/html/2406.11813"
+  },
+  "arxiv:2406.11741": {
+    "resolved": "https://arxiv.org/html/2406.11741"
+  },
+  "arxiv:2406.03689": {
+    "resolved": "https://arxiv.org/html/2406.03689"
+  },
+  "arxiv:2406.03445": {
+    "resolved": "https://arxiv.org/html/2406.03445"
+  },
+  "arxiv:2405.15071": {
+    "resolved": "https://arxiv.org/html/2405.15071"
+  },
+  "arxiv:2405.14838": {
+    "resolved": "https://arxiv.org/html/2405.14838"
+  },
+  "arxiv:2402.01817": {
+    "resolved": "https://arxiv.org/html/2402.01817"
+  },
+  "arxiv:2312.13558": {
+    "resolved": "https://arxiv.org/html/2312.13558"
+  },
+  "arxiv:2309.12288": {
+    "resolved": "https://arxiv.org/html/2309.12288"
+  },
+  "arxiv:2304.15004": {
+    "resolved": "https://arxiv.org/html/2304.15004"
+  },
+  "arxiv:2302.00923": {
+    "resolved": "https://arxiv.org/html/2302.00923"
+  },
+  "arxiv:2301.06627": {
+    "resolved": "https://arxiv.org/html/2301.06627"
+  },
+  "arxiv:2301.05217": {
+    "resolved": "https://arxiv.org/html/2301.05217"
+  },
+  "arxiv:2212.09196": {
+    "resolved": "https://arxiv.org/html/2212.09196"
+  },
+  "arxiv:2608.05136": {
+    "resolved": "https://arxiv.org/html/2608.05136"
+  },
+  "arxiv:2607.27372": {
+    "resolved": "https://arxiv.org/html/2607.27372"
+  },
+  "arxiv:2510.05491": {
+    "resolved": "https://arxiv.org/html/2510.05491"
+  },
+  "arxiv:2508.11408": {
+    "resolved": "https://arxiv.org/html/2508.11408"
+  },
+  "arxiv:2507.12856": {
+    "resolved": "https://arxiv.org/html/2507.12856"
+  },
+  "arxiv:2506.08007": {
+    "resolved": "https://arxiv.org/html/2506.08007"
+  },
+  "arxiv:2505.24832": {
+    "resolved": "https://arxiv.org/html/2505.24832"
+  },
+  "arxiv:2410.07041": {
+    "resolved": "https://arxiv.org/html/2410.07041"
+  },
+  "arxiv:2409.03137": {
+    "resolved": "https://arxiv.org/html/2409.03137"
+  },
+  "arxiv:2405.20541": {
+    "resolved": "https://arxiv.org/html/2405.20541"
+  },
+  "arxiv:2405.20233": {
+    "resolved": "https://arxiv.org/html/2405.20233"
+  },
+  "arxiv:2405.18392": {
+    "resolved": "https://arxiv.org/html/2405.18392"
+  },
+  "arxiv:2405.16684": {
+    "resolved": "https://arxiv.org/html/2405.16684"
+  },
+  "arxiv:2405.15682": {
+    "resolved": "https://arxiv.org/html/2405.15682"
+  },
+  "arxiv:2403.05175": {
+    "resolved": "https://arxiv.org/html/2403.05175"
+  },
+  "arxiv:2402.02342": {
+    "resolved": "https://arxiv.org/html/2402.02342"
+  },
+  "arxiv:2401.17401": {
+    "resolved": "https://arxiv.org/html/2401.17401"
+  },
+  "arxiv:2312.17742": {
+    "resolved": "https://arxiv.org/html/2312.17742"
+  },
+  "arxiv:2312.10549": {
+    "resolved": "https://arxiv.org/html/2312.10549"
+  },
+  "arxiv:2307.06440": {
+    "resolved": "https://arxiv.org/html/2307.06440"
+  },
+  "arxiv:2305.14342": {
+    "resolved": "https://arxiv.org/html/2305.14342"
+  },
+  "arxiv:2302.06675": {
+    "resolved": "https://arxiv.org/html/2302.06675"
+  },
+  "arxiv:2212.14034": {
+    "resolved": "https://arxiv.org/html/2212.14034"
+  },
+  "arxiv:2210.10760": {
+    "resolved": "https://arxiv.org/html/2210.10760"
+  },
+  "arxiv:2110.09485": {
+    "resolved": "https://arxiv.org/html/2110.09485"
+  },
+  "arxiv:2108.06325": {
+    "resolved": "https://arxiv.org/html/2108.06325"
+  },
+  "arxiv:2010.01412": {
+    "resolved": "https://arxiv.org/html/2010.01412"
+  },
+  "arxiv:2009.11848": {
+    "resolved": "https://arxiv.org/html/2009.11848"
+  },
+  "arxiv:2009.11243": {
+    "resolved": "https://arxiv.org/html/2009.11243"
+  },
+  "arxiv:2001.08361": {
+    "resolved": "https://arxiv.org/html/2001.08361"
+  },
+  "arxiv:1904.00962": {
+    "resolved": "https://arxiv.org/html/1904.00962"
+  },
+  "arxiv:1803.03635": {
+    "resolved": "https://arxiv.org/html/1803.03635"
+  },
+  "arxiv:1708.07120": {
+    "resolved": "https://arxiv.org/html/1708.07120"
+  },
+  "arxiv:1708.02072": {
+    "resolved": "https://arxiv.org/html/1708.02072"
+  },
+  "arxiv:1506.01186": {
+    "resolved": "https://arxiv.org/html/1506.01186"
+  },
+  "arxiv:2606.02572": {
+    "resolved": "https://arxiv.org/html/2606.02572"
+  },
+  "arxiv:2605.26379": {
+    "resolved": "https://arxiv.org/html/2605.26379"
+  },
+  "arxiv:2511.08544": {
+    "resolved": "https://arxiv.org/html/2511.08544"
+  },
+  "arxiv:2501.05441": {
+    "resolved": "https://arxiv.org/html/2501.05441"
+  },
+  "arxiv:2310.04378": {
+    "resolved": "https://arxiv.org/html/2310.04378"
+  },
+  "arxiv:2309.15807": {
+    "resolved": "https://arxiv.org/html/2309.15807"
+  },
+  "arxiv:2304.12210": {
+    "resolved": "https://arxiv.org/html/2304.12210"
+  },
+  "arxiv:2304.09355": {
+    "resolved": "https://arxiv.org/html/2304.09355"
+  },
+  "arxiv:2304.07193": {
+    "resolved": "https://arxiv.org/html/2304.07193"
+  },
+  "arxiv:2304.05977": {
+    "resolved": "https://arxiv.org/html/2304.05977"
+  },
+  "arxiv:2302.10174": {
+    "resolved": "https://arxiv.org/html/2302.10174"
+  },
+  "arxiv:2301.08243": {
+    "resolved": "https://arxiv.org/html/2301.08243"
+  },
+  "arxiv:2212.11565": {
+    "resolved": "https://arxiv.org/html/2212.11565"
+  },
+  "arxiv:2208.10442": {
+    "resolved": "https://arxiv.org/html/2208.10442"
+  },
+  "arxiv:2111.07832": {
+    "resolved": "https://arxiv.org/html/2111.07832"
+  },
+  "arxiv:2105.04906": {
+    "resolved": "https://arxiv.org/html/2105.04906"
+  },
+  "arxiv:2104.14294": {
+    "resolved": "https://arxiv.org/html/2104.14294"
+  },
+  "arxiv:2006.09882": {
+    "resolved": "https://arxiv.org/html/2006.09882"
+  },
+  "arxiv:2606.18543": {
+    "resolved": "https://arxiv.org/html/2606.18543"
+  },
+  "arxiv:2410.07095": {
+    "resolved": "https://arxiv.org/html/2410.07095"
+  },
+  "arxiv:2405.08007": {
+    "resolved": "https://arxiv.org/html/2405.08007"
+  },
+  "arxiv:2402.16822": {
+    "resolved": "https://arxiv.org/html/2402.16822"
+  },
+  "arxiv:2402.12483": {
+    "resolved": "https://arxiv.org/html/2402.12483"
+  },
+  "arxiv:2311.16452": {
+    "resolved": "https://arxiv.org/html/2311.16452"
+  },
+  "arxiv:2309.16797": {
+    "resolved": "https://arxiv.org/html/2309.16797"
+  },
+  "arxiv:2304.08467": {
+    "resolved": "https://arxiv.org/html/2304.08467"
+  },
+  "arxiv:2212.14024": {
+    "resolved": "https://arxiv.org/html/2212.14024"
+  },
+  "arxiv:2212.09741": {
+    "resolved": "https://arxiv.org/html/2212.09741"
+  },
+  "arxiv:2206.04615": {
+    "resolved": "https://arxiv.org/html/2206.04615"
+  },
+  "arxiv:2205.13147": {
+    "resolved": "https://arxiv.org/html/2205.13147"
+  },
+  "arxiv:2112.07899": {
+    "resolved": "https://arxiv.org/html/2112.07899"
+  },
+  "arxiv:2101.02235": {
+    "resolved": "https://arxiv.org/html/2101.02235"
+  },
+  "arxiv:2608.19197": {
+    "resolved": "https://arxiv.org/html/2608.19197"
+  },
+  "arxiv:2608.08311": {
+    "resolved": "https://arxiv.org/html/2608.08311"
+  },
+  "arxiv:2607.13104": {
+    "resolved": "https://arxiv.org/html/2607.13104"
+  },
+  "arxiv:2605.13821": {
+    "resolved": "https://arxiv.org/html/2605.13821"
+  },
+  "arxiv:2603.19461": {
+    "resolved": "https://arxiv.org/html/2603.19461"
+  },
+  "arxiv:2601.07055": {
+    "resolved": "https://arxiv.org/html/2601.07055"
+  },
+  "arxiv:2601.03192": {
+    "resolved": "https://arxiv.org/html/2601.03192"
+  },
+  "arxiv:2512.18552": {
+    "resolved": "https://arxiv.org/html/2512.18552"
+  },
+  "arxiv:2512.18160": {
+    "resolved": "https://arxiv.org/html/2512.18160"
+  },
+  "arxiv:2511.15593": {
+    "resolved": "https://arxiv.org/html/2511.15593"
+  },
+  "arxiv:2508.16204": {
+    "resolved": "https://arxiv.org/html/2508.16204"
+  },
+  "arxiv:2507.18074": {
+    "resolved": "https://arxiv.org/html/2507.18074"
+  },
+  "arxiv:2505.22954": {
+    "resolved": "https://arxiv.org/html/2505.22954"
+  },
+  "arxiv:2407.00695": {
+    "resolved": "https://arxiv.org/html/2407.00695"
+  },
+  "arxiv:2406.04268": {
+    "resolved": "https://arxiv.org/html/2406.04268"
+  },
+  "arxiv:2311.02462": {
+    "resolved": "https://arxiv.org/html/2311.02462"
+  },
+  "arxiv:2311.00344": {
+    "resolved": "https://arxiv.org/html/2311.00344"
+  },
+  "arxiv:1905.10985": {
+    "resolved": "https://arxiv.org/html/1905.10985"
+  },
+  "url:schema-harness.github.io": {
+    "resolved": "https://schema-harness.github.io/"
+  },
+  "arxiv:2604.19341": {
+    "resolved": "https://arxiv.org/html/2604.19341"
+  },
+  "arxiv:2604.08224": {
+    "resolved": "https://arxiv.org/html/2604.08224"
+  },
+  "arxiv:2603.28052": {
+    "resolved": "https://arxiv.org/html/2603.28052"
+  },
+  "arxiv:2607.23379": {
+    "resolved": "https://arxiv.org/html/2607.23379"
+  },
+  "arxiv:2603.19426": {
+    "resolved": "https://arxiv.org/html/2603.19426"
+  },
+  "arxiv:2503.16348": {
+    "resolved": "https://arxiv.org/html/2503.16348"
+  },
+  "arxiv:2502.03407": {
+    "resolved": "https://arxiv.org/html/2502.03407"
+  },
+  "arxiv:2501.18837": {
+    "resolved": "https://arxiv.org/html/2501.18837"
+  },
+  "arxiv:2309.08600": {
+    "resolved": "https://arxiv.org/html/2309.08600"
+  },
+  "arxiv:2308.08708": {
+    "resolved": "https://arxiv.org/html/2308.08708"
+  },
+  "arxiv:2304.06528": {
+    "resolved": "https://arxiv.org/html/2304.06528"
+  },
+  "arxiv:2303.07103": {
+    "resolved": "https://ar5iv.labs.arxiv.org/html/2303.07103"
+  },
+  "arxiv:2206.13477": {
+    "resolved": "https://arxiv.org/html/2206.13477"
+  },
+  "arxiv:2206.13353": {
+    "resolved": "https://arxiv.org/html/2206.13353"
+  },
+  "arxiv:1912.01683": {
+    "resolved": "https://arxiv.org/html/1912.01683"
+  },
+  "arxiv:2403.07815": {
+    "resolved": "https://arxiv.org/html/2403.07815"
+  },
+  "arxiv:2401.13912": {
+    "resolved": "https://arxiv.org/html/2401.13912"
+  },
+  "arxiv:2310.10688": {
+    "resolved": "https://arxiv.org/html/2310.10688"
+  },
+  "arxiv:2310.08278": {
+    "resolved": "https://arxiv.org/html/2310.08278"
+  },
+  "arxiv:2310.07820": {
+    "resolved": "https://arxiv.org/html/2310.07820"
+  },
+  "arxiv:2310.01728": {
+    "resolved": "https://arxiv.org/html/2310.01728"
+  },
+  "arxiv:2210.08964": {
+    "resolved": "https://arxiv.org/html/2210.08964"
+  },
+  "arxiv:2012.07436": {
+    "resolved": "https://arxiv.org/html/2012.07436"
+  },
+  "arxiv:1809.04356": {
+    "resolved": "https://arxiv.org/html/1809.04356"
+  },
+  "arxiv:1611.06455": {
+    "resolved": "https://arxiv.org/html/1611.06455"
+  },
+  "arxiv:2505.17117": {
+    "resolved": "https://arxiv.org/html/2505.17117"
+  },
+  "arxiv:2112.04035": {
+    "resolved": "https://arxiv.org/html/2112.04035"
+  },
+  "arxiv:2602.14486": {
+    "resolved": "https://arxiv.org/html/2602.14486"
+  },
+  "arxiv:2507.01098": {
+    "resolved": "https://arxiv.org/html/2507.01098"
+  },
+  "arxiv:2502.15104": {
+    "resolved": "https://arxiv.org/html/2502.15104"
+  },
+  "arxiv:2405.07987": {
+    "resolved": "https://arxiv.org/html/2405.07987"
+  },
+  "arxiv:2405.01012": {
+    "resolved": "https://arxiv.org/html/2405.01012"
+  },
+  "arxiv:2007.02789": {
+    "resolved": "https://arxiv.org/html/2007.02789"
+  },
+  "arxiv:2003.01859": {
+    "resolved": "https://arxiv.org/html/2003.01859"
+  },
+  "arxiv:1807.02787": {
+    "resolved": "https://arxiv.org/html/1807.02787"
+  },
+  "arxiv:1706.10059": {
+    "resolved": "https://arxiv.org/html/1706.10059"
+  },
+  "arxiv:2201.09746": {
+    "resolved": "https://arxiv.org/html/2201.09746"
+  },
+  "arxiv:2309.10232": {
+    "resolved": "https://arxiv.org/html/2309.10232"
+  },
+  "arxiv:2605.22074": {
+    "resolved": "https://arxiv.org/html/2605.22074"
+  },
+  "arxiv:2511.07317": {
+    "resolved": "https://arxiv.org/html/2511.07317"
+  },
+  "arxiv:2506.06632": {
+    "resolved": "https://arxiv.org/html/2506.06632"
+  },
+  "arxiv:2501.00656": {
+    "resolved": "https://arxiv.org/html/2501.00656"
+  },
+  "arxiv:2407.21783": {
+    "resolved": "https://arxiv.org/html/2407.21783"
+  },
+  "arxiv:2604.01754": {
+    "resolved": "https://arxiv.org/html/2604.01754"
+  },
+  "arxiv:2512.24695": {
+    "resolved": "https://arxiv.org/html/2512.24695"
+  }
+}

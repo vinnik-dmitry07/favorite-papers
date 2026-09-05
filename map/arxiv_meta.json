@@ -1,0 +1,1208 @@
+{
+  "2506.13585": {
+    "title": "MiniMax-M1: Scaling Test-Time Compute Efficiently with Lightning Attention",
+    "published": "2025-06-16",
+    "authors": [
+      " MiniMax",
+      " :",
+      "Aili Chen",
+      "Aonian Li"
+    ]
+  },
+  "2604.02288": {
+    "title": "Unifying Group-Relative and Self-Distillation Policy Optimization via Sample Routing",
+    "published": "2026-04-02",
+    "authors": [
+      "Gengsheng Li",
+      "Tianyu Yang",
+      "Junfeng Fang",
+      "Mingyang Song"
+    ]
+  },
+  "2508.07629": {
+    "title": "Klear-Reasoner: Advancing Reasoning Capability via Gradient-Preserving Clipping Policy Optimization",
+    "published": "2025-08-11",
+    "authors": [
+      "Zhenpeng Su",
+      "Leiyu Pan",
+      "Xue Bai",
+      "Dening Liu"
+    ]
+  },
+  "2601.18734": {
+    "title": "Self-Distilled Reasoner: On-Policy Self-Distillation for Large Language Models",
+    "published": "2026-01-26",
+    "authors": [
+      "Siyan Zhao",
+      "Zhihui Xie",
+      "Mengchen Liu",
+      "Jing Huang"
+    ]
+  },
+  "2405.12250": {
+    "title": "Your Transformer is Secretly Linear",
+    "published": "2024-05-19",
+    "authors": [
+      "Anton Razzhigaev",
+      "Matvey Mikhalchuk",
+      "Elizaveta Goncharova",
+      "Nikolai Gerasimenko"
+    ]
+  },
+  "2511.20347": {
+    "title": "Soft Adaptive Policy Optimization",
+    "published": "2025-11-25",
+    "authors": [
+      "Chang Gao",
+      "Chujie Zheng",
+      "Xiong-Hui Chen",
+      "Kai Dang"
+    ]
+  },
+  "2509.25123": {
+    "title": "From $f(x)$ and $g(x)$ to $f(g(x))$: LLMs Learn New Skills in RL by Composing Old Ones",
+    "published": "2025-09-29",
+    "authors": [
+      "Lifan Yuan",
+      "Weize Chen",
+      "Yuchen Zhang",
+      "Ganqu Cui"
+    ]
+  },
+  "2608.00146": {
+    "title": "DiffusionGemma Technical Report",
+    "published": "2026-07-31",
+    "authors": [
+      " DiffusionGemma Team",
+      "Adrien Ali Taïga",
+      "James Assiene",
+      "Daniele Calandriello"
+    ]
+  },
+  "2606.03982": {
+    "title": "Language Models Compare Quantities Using Number-specific and Unit-specific Heuristics",
+    "published": "2026-06-02",
+    "authors": [
+      "Mutsumi Sasaki",
+      "Go kamoda",
+      "Ryosuke Takahashi",
+      "Kosuke Sato"
+    ]
+  },
+  "2605.12969": {
+    "title": "Revisiting Reinforcement Learning with Verifiable Rewards from a Contrastive Perspective",
+    "published": "2026-05-13",
+    "authors": [
+      "Feng Zhang",
+      "Xinhong Ma",
+      "Ziqiang Dong",
+      "Xi Leng"
+    ]
+  },
+  "2402.03300": {
+    "title": "DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models",
+    "published": "2024-02-05",
+    "authors": [
+      "Zhihong Shao",
+      "Peiyi Wang",
+      "Qihao Zhu",
+      "Runxin Xu"
+    ]
+  },
+  "2303.17651": {
+    "title": "Self-Refine: Iterative Refinement with Self-Feedback",
+    "published": "2023-03-30",
+    "authors": [
+      "Aman Madaan",
+      "Niket Tandon",
+      "Prakhar Gupta",
+      "Skyler Hallinan"
+    ]
+  },
+  "2504.06225": {
+    "title": "Encoder-Decoder Gemma: Improving the Quality-Efficiency Trade-Off via Adaptation",
+    "published": "2025-04-08",
+    "authors": [
+      "Biao Zhang",
+      "Fedor Moiseev",
+      "Joshua Ainslie",
+      "Paul Suganthan"
+    ]
+  },
+  "2503.20783": {
+    "title": "Understanding R1-Zero-Like Training: A Critical Perspective",
+    "published": "2025-03-26",
+    "authors": [
+      "Zichen Liu",
+      "Changyu Chen",
+      "Wenjun Li",
+      "Penghui Qi"
+    ]
+  },
+  "2603.25562": {
+    "title": "Revisiting On-Policy Distillation: Empirical Failure Modes and Simple Fixes",
+    "published": "2026-03-26",
+    "authors": [
+      "Yuqian Fu",
+      "Haohuan Huang",
+      "Kaiwen Jiang",
+      "Jiacai Liu"
+    ]
+  },
+  "2507.19457": {
+    "title": "GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning",
+    "published": "2025-07-25",
+    "authors": [
+      "Lakshya A Agrawal",
+      "Shangyin Tan",
+      "Dilara Soylu",
+      "Noah Ziems"
+    ]
+  },
+  "2604.08690": {
+    "title": "Skip-Connected Policy Optimization for Implicit Advantage",
+    "published": "2026-04-09",
+    "authors": [
+      "Fengwei Teng",
+      "Jinyi Bai",
+      "Xinhao Yao",
+      "Demi Ruohan Wang"
+    ]
+  },
+  "2606.06574": {
+    "title": "Skip a Layer or Loop It? Learning Program-of-Layers in LLMs",
+    "published": "2026-06-04",
+    "authors": [
+      "Ziyue Li",
+      "Yang Li",
+      "Tianyi Zhou"
+    ]
+  },
+  "2503.14476": {
+    "title": "DAPO: An Open-Source LLM Reinforcement Learning System at Scale",
+    "published": "2025-03-18",
+    "authors": [
+      "Qiying Yu",
+      "Zheng Zhang",
+      "Ruofei Zhu",
+      "Yufeng Yuan"
+    ]
+  },
+  "2402.13669": {
+    "title": "Self-Distillation Bridges Distribution Gap in Language Model Fine-Tuning",
+    "published": "2024-02-21",
+    "authors": [
+      "Zhaorui Yang",
+      "Tianyu Pang",
+      "Haozhe Feng",
+      "Han Wang"
+    ]
+  },
+  "2503.14858": {
+    "title": "1000 Layer Networks for Self-Supervised RL: Scaling Depth Can Enable New Goal-Reaching Capabilities",
+    "published": "2025-03-19",
+    "authors": [
+      "Kevin Wang",
+      "Ishaan Javali",
+      "Michał Bortkiewicz",
+      "Tomasz Trzciński"
+    ]
+  },
+  "2601.20861": {
+    "title": "Evolutionary Strategies lead to Catastrophic Forgetting in LLMs",
+    "published": "2026-01-28",
+    "authors": [
+      "Immanuel Abdi",
+      "Akshat Gupta",
+      "Micah Mok",
+      "Alexander Lu"
+    ]
+  },
+  "2509.13232": {
+    "title": "Single-stream Policy Optimization",
+    "published": "2025-09-16",
+    "authors": [
+      "Zhongwen Xu",
+      "Zihan Ding"
+    ]
+  },
+  "2510.14901": {
+    "title": "Reasoning with Sampling: Your Base Model is Smarter Than You Think",
+    "published": "2025-10-16",
+    "authors": [
+      "Aayush Karan",
+      "Yilun Du"
+    ]
+  },
+  "2604.20659": {
+    "title": "GRPO-VPS: Enhancing Group Relative Policy Optimization with Verifiable Process Supervision for Effective Reasoning",
+    "published": "2026-04-22",
+    "authors": [
+      "Jingyi Wang",
+      "Lei Zhu",
+      "Tengjin Weng",
+      "Song-Li Wu"
+    ]
+  },
+  "2512.24601": {
+    "title": "Recursive Language Models",
+    "published": "2025-12-31",
+    "authors": [
+      "Alex L. Zhang",
+      "Tim Kraska",
+      "Omar Khattab"
+    ]
+  },
+  "2601.19897": {
+    "title": "Self-Distillation Enables Continual Learning",
+    "published": "2026-01-27",
+    "authors": [
+      "Idan Shenfeld",
+      "Mehul Damani",
+      "Jonas Hübotter",
+      "Pulkit Agrawal"
+    ]
+  },
+  "2608.17163": {
+    "title": "Q-Learning With World Models",
+    "published": "2026-08-17",
+    "authors": [
+      "Perry Dong",
+      "Yueru Jia",
+      "Chelsea Finn",
+      "Dorsa Sadigh"
+    ]
+  },
+  "2603.24472": {
+    "title": "Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?",
+    "published": "2026-03-25",
+    "authors": [
+      "Jeonghye Kim",
+      "Xufang Luo",
+      "Minbeom Kim",
+      "Sangmook Lee"
+    ]
+  },
+  "2504.13837": {
+    "title": "Does Reinforcement Learning Really Incentivize Reasoning Capacity in LLMs Beyond the Base Model?",
+    "published": "2025-04-18",
+    "authors": [
+      "Yang Yue",
+      "Zhiqi Chen",
+      "Rui Lu",
+      "Andrew Zhao"
+    ]
+  },
+  "2505.10978": {
+    "title": "Group-in-Group Policy Optimization for LLM Agent Training",
+    "published": "2025-05-16",
+    "authors": [
+      "Lang Feng",
+      "Zhenghai Xue",
+      "Tingcong Liu",
+      "Bo An"
+    ]
+  },
+  "2507.18071": {
+    "title": "Group Sequence Policy Optimization",
+    "published": "2025-07-24",
+    "authors": [
+      "Chujie Zheng",
+      "Shixuan Liu",
+      "Mingze Li",
+      "Xiong-Hui Chen"
+    ]
+  },
+  "2506.03106": {
+    "title": "Critique-GRPO: Advancing LLM Reasoning with Natural Language and Numerical Feedback",
+    "published": "2025-06-03",
+    "authors": [
+      "Xiaoying Zhang",
+      "Yipeng Zhang",
+      "Hao Sun",
+      "Kaituo Feng"
+    ]
+  },
+  "2606.18810": {
+    "title": "Learning from Own Solutions: Self-Conditioned Credit Assignment for Reinforcement Learning with Verifiable Rewards",
+    "published": "2026-06-17",
+    "authors": [
+      "Yingyu Shan",
+      "Yuhang Guo",
+      "Zihao Cheng",
+      "Zeming Liu"
+    ]
+  },
+  "2601.11061": {
+    "title": "Spurious Rewards Paradox: Mechanistically Understanding How RLVR Activates Memorization Shortcuts in LLMs",
+    "published": "2026-01-16",
+    "authors": [
+      "Lecheng Yan",
+      "Ruizhe Li",
+      "Guanhua Chen",
+      "Qing Li"
+    ]
+  },
+  "2505.19590": {
+    "title": "Learning to Reason without External Rewards",
+    "published": "2025-05-26",
+    "authors": [
+      "Xuandong Zhao",
+      "Zhewei Kang",
+      "Aosong Feng",
+      "Sergey Levine"
+    ]
+  },
+  "2604.13016": {
+    "title": "Rethinking On-Policy Distillation of Large Language Models: Phenomenology, Mechanism, and Recipe",
+    "published": "2026-04-14",
+    "authors": [
+      "Yaxuan Li",
+      "Yuxin Zuo",
+      "Bingxiang He",
+      "Jinqian Zhang"
+    ]
+  },
+  "2512.00499": {
+    "title": "ESPO: Entropy Importance Sampling Policy Optimization",
+    "published": "2025-11-29",
+    "authors": [
+      "Yuepeng Sheng",
+      "Yuwei Huang",
+      "Shuman Liu",
+      "Anxiang Zeng"
+    ]
+  },
+  "2604.01375": {
+    "title": "RIFT: A RubrIc Failure Mode Taxonomy and Automated Diagnostics",
+    "published": "2026-04-01",
+    "authors": [
+      "Zhengyang Qi",
+      "Charles Dickens",
+      "Derek Pham",
+      "Amanda Dsouza"
+    ]
+  },
+  "2512.14856": {
+    "title": "T5Gemma 2: Seeing, Reading, and Understanding Longer",
+    "published": "2025-12-16",
+    "authors": [
+      "Biao Zhang",
+      "Paul Suganthan",
+      "Gaël Liu",
+      "Ilya Philippov"
+    ]
+  },
+  "2108.06325": {
+    "title": "Continual Backprop: Stochastic Gradient Descent with Persistent Randomness",
+    "published": "2021-08-13",
+    "authors": [
+      "Shibhansh Dohare",
+      "Richard S. Sutton",
+      "A. Rupam Mahmood"
+    ]
+  },
+  "2406.03445": {
+    "title": "Pre-trained Large Language Models Use Fourier Features to Compute Addition",
+    "published": "2024-06-05",
+    "authors": [
+      "Tianyi Zhou",
+      "Deqing Fu",
+      "Vatsal Sharan",
+      "Robin Jia"
+    ]
+  },
+  "2402.02342": {
+    "title": "MetaOptimize: A Framework for Optimizing Step Sizes and Other Meta-parameters",
+    "published": "2024-02-04",
+    "authors": [
+      "Arsalan Sharifnassab",
+      "Saber Salehkaleybar",
+      "Richard Sutton"
+    ]
+  },
+  "2605.26379": {
+    "title": "When Does LeJEPA Learn a World Model?",
+    "published": "2026-05-25",
+    "authors": [
+      "David Klindt",
+      "Yann LeCun",
+      "Randall Balestriero"
+    ]
+  },
+  "2604.11791": {
+    "title": "A Mechanistic Analysis of Looped Reasoning Language Models",
+    "published": "2026-04-13",
+    "authors": [
+      "Hugh Blayney",
+      "Álvaro Arroyo",
+      "Johan Obando-Ceron",
+      "Pablo Samuel Castro"
+    ]
+  },
+  "2205.13147": {
+    "title": "Matryoshka Representation Learning",
+    "published": "2022-05-26",
+    "authors": [
+      "Aditya Kusupati",
+      "Gantavya Bhatt",
+      "Aniket Rege",
+      "Matthew Wallingford"
+    ]
+  },
+  "2604.19341": {
+    "title": "Structured Scaling of AI Discovery Across Diverse Scientific Domains",
+    "published": "2026-04-21",
+    "authors": [
+      "Haotian Ye",
+      "Haowei Lin",
+      "Jingyi Tang",
+      "Yizhen Luo"
+    ]
+  },
+  "2608.05136": {
+    "title": "The Loss Does Not See the Basis, but Adam Does",
+    "published": "2026-08-05",
+    "authors": [
+      "Devender Singh"
+    ]
+  },
+  "2608.19197": {
+    "title": "SPADE: Self-Play in Adaptive Synthetic Executable Environments",
+    "published": "2026-08-19",
+    "authors": [
+      "Bo Liu",
+      "Simon Yu",
+      "Yiding Jiang",
+      "Ao Qu"
+    ]
+  },
+  "2009.11848": {
+    "title": "How Neural Networks Extrapolate: From Feedforward to Graph Neural Networks",
+    "published": "2020-09-24",
+    "authors": [
+      "Keyulu Xu",
+      "Mozhi Zhang",
+      "Jingling Li",
+      "Simon S. Du"
+    ]
+  },
+  "2401.17401": {
+    "title": "Step-size Optimization for Continual Learning",
+    "published": "2024-01-30",
+    "authors": [
+      "Thomas Degris",
+      "Khurram Javed",
+      "Arsalan Sharifnassab",
+      "Yuxin Liu"
+    ]
+  },
+  "2603.19426": {
+    "title": "Is Evaluation Awareness Just Format Sensitivity? Limitations of Probe-Based Evidence under Controlled Prompt Structure",
+    "published": "2026-03-19",
+    "authors": [
+      "Viliana Devbunova"
+    ]
+  },
+  "2508.02513": {
+    "title": "Modular Arithmetic: Language Models Solve Math Digit by Digit",
+    "published": "2025-08-04",
+    "authors": [
+      "Tanja Baeumel",
+      "Daniil Gurgurov",
+      "Yusser al Ghussin",
+      "Josef van Genabith"
+    ]
+  },
+  "2603.28052": {
+    "title": "Meta-Harness: End-to-End Optimization of Model Harnesses",
+    "published": "2026-03-30",
+    "authors": [
+      "Yoonho Lee",
+      "Roshen Nair",
+      "Qizheng Zhang",
+      "Kangwook Lee"
+    ]
+  },
+  "2511.08544": {
+    "title": "LeJEPA: Provable and Scalable Self-Supervised Learning Without the Heuristics",
+    "published": "2025-11-11",
+    "authors": [
+      "Randall Balestriero",
+      "Yann LeCun"
+    ]
+  },
+  "2010.01412": {
+    "title": "Sharpness-Aware Minimization for Efficiently Improving Generalization",
+    "published": "2020-10-03",
+    "authors": [
+      "Pierre Foret",
+      "Ariel Kleiner",
+      "Hossein Mobahi",
+      "Behnam Neyshabur"
+    ]
+  },
+  "1904.00962": {
+    "title": "Large Batch Optimization for Deep Learning: Training BERT in 76 minutes",
+    "published": "2019-04-01",
+    "authors": [
+      "Yang You",
+      "Jing Li",
+      "Sashank Reddi",
+      "Jonathan Hseu"
+    ]
+  },
+  "2305.14342": {
+    "title": "Sophia: A Scalable Stochastic Second-order Optimizer for Language Model Pre-training",
+    "published": "2023-05-23",
+    "authors": [
+      "Hong Liu",
+      "Zhiyuan Li",
+      "David Hall",
+      "Percy Liang"
+    ]
+  },
+  "1708.02072": {
+    "title": "Measuring Catastrophic Forgetting in Neural Networks",
+    "published": "2017-08-07",
+    "authors": [
+      "Ronald Kemker",
+      "Marc McClure",
+      "Angelina Abitino",
+      "Tyler Hayes"
+    ]
+  },
+  "2405.18392": {
+    "title": "Scaling Laws and Compute-Optimal Training Beyond Fixed Training Durations",
+    "published": "2024-05-28",
+    "authors": [
+      "Alexander Hägele",
+      "Elie Bakouch",
+      "Atli Kosson",
+      "Loubna Ben Allal"
+    ]
+  },
+  "2604.08224": {
+    "title": "Externalization in LLM Agents: A Unified Review of Memory, Skills, Protocols and Harness Engineering",
+    "published": "2026-04-09",
+    "authors": [
+      "Chenyu Zhou",
+      "Huacan Chai",
+      "Wenteng Chen",
+      "Zihan Guo"
+    ]
+  },
+  "2512.18552": {
+    "title": "Toward Training Superintelligent Software Agents through Self-Play SWE-RL",
+    "published": "2025-12-21",
+    "authors": [
+      "Yuxiang Wei",
+      "Zhiqing Sun",
+      "Emily McMilin",
+      "Jonas Gehring"
+    ]
+  },
+  "2509.25239": {
+    "title": "A Formal Comparison Between Chain of Thought and Latent Thought",
+    "published": "2025-09-25",
+    "authors": [
+      "Kevin Xu",
+      "Issei Sato"
+    ]
+  },
+  "2512.18160": {
+    "title": "Propose, Solve, Verify: Self-Play Through Formal Verification",
+    "published": "2025-12-20",
+    "authors": [
+      "Alex Wilf",
+      "Pranjal Aggarwal",
+      "Bryan Parno",
+      "Daniel Fried"
+    ]
+  },
+  "2501.04519": {
+    "title": "rStar-Math: Small LLMs Can Master Math Reasoning with Self-Evolved Deep Thinking",
+    "published": "2025-01-08",
+    "authors": [
+      "Xinyu Guan",
+      "Li Lyna Zhang",
+      "Yifei Liu",
+      "Ning Shang"
+    ]
+  },
+  "2512.16902": {
+    "title": "In-Context Algebra",
+    "published": "2025-12-18",
+    "authors": [
+      "Eric Todd",
+      "Jannik Brinkmann",
+      "Rohit Gandikota",
+      "David Bau"
+    ]
+  },
+  "2601.03192": {
+    "title": "MemRL: Self-Evolving Agents via Runtime Reinforcement Learning on Episodic Memory",
+    "published": "2026-01-06",
+    "authors": [
+      "Shengtao Zhang",
+      "Jiaqian Wang",
+      "Ruiwen Zhou",
+      "Junwei Liao"
+    ]
+  },
+  "2602.10416": {
+    "title": "AI-rithmetic",
+    "published": "2026-02-11",
+    "authors": [
+      "Alex Bie",
+      "Travis Dick",
+      "Alex Kulesza",
+      "Prabhakar Raghavan"
+    ]
+  },
+  "2601.07055": {
+    "title": "Dr. Zero: Self-Evolving Search Agents without Training Data",
+    "published": "2026-01-11",
+    "authors": [
+      "Zhenrui Yue",
+      "Kartikeya Upasani",
+      "Xianjun Yang",
+      "Suyu Ge"
+    ]
+  },
+  "2312.10549": {
+    "title": "Catastrophic Forgetting in Deep Learning: A Comprehensive Taxonomy",
+    "published": "2023-12-16",
+    "authors": [
+      "Everton L. Aleixo",
+      "Juan G. Colonna",
+      "Marco Cristo",
+      "Everlandio Fernandes"
+    ]
+  },
+  "2301.05217": {
+    "title": "Progress measures for grokking via mechanistic interpretability",
+    "published": "2023-01-12",
+    "authors": [
+      "Neel Nanda",
+      "Lawrence Chan",
+      "Tom Lieberum",
+      "Jess Smith"
+    ]
+  },
+  "2307.06440": {
+    "title": "No Train No Gain: Revisiting Efficient Training Algorithms For Transformer-based Language Models",
+    "published": "2023-07-12",
+    "authors": [
+      "Jean Kaddour",
+      "Oscar Key",
+      "Piotr Nawrot",
+      "Pasquale Minervini"
+    ]
+  },
+  "2105.04906": {
+    "title": "VICReg: Variance-Invariance-Covariance Regularization for Self-Supervised Learning",
+    "published": "2021-05-11",
+    "authors": [
+      "Adrien Bardes",
+      "Jean Ponce",
+      "Yann LeCun"
+    ]
+  },
+  "2501.05441": {
+    "title": "The GAN is dead; long live the GAN! A Modern GAN Baseline",
+    "published": "2025-01-09",
+    "authors": [
+      "Yiwen Huang",
+      "Aaron Gokaslan",
+      "Volodymyr Kuleshov",
+      "James Tompkin"
+    ]
+  },
+  "2502.05171": {
+    "title": "Scaling up Test-Time Compute with Latent Reasoning: A Recurrent Depth Approach",
+    "published": "2025-02-07",
+    "authors": [
+      "Jonas Geiping",
+      "Sean McLeish",
+      "Neel Jain",
+      "John Kirchenbauer"
+    ]
+  },
+  "2502.19981": {
+    "title": "The Lookahead Limitation: Why Multi-Operand Addition is Hard for LLMs",
+    "published": "2025-02-27",
+    "authors": [
+      "Tanja Baeumel",
+      "Josef van Genabith",
+      "Simon Ostermann"
+    ]
+  },
+  "2510.00184": {
+    "title": "Why Can't Transformers Learn Multiplication? Reverse-Engineering Reveals Long-Range Dependency Pitfalls",
+    "published": "2025-09-30",
+    "authors": [
+      "Xiaoyan Bai",
+      "Itamar Pres",
+      "Yuntian Deng",
+      "Chenhao Tan"
+    ]
+  },
+  "2212.14034": {
+    "title": "Cramming: Training a Language Model on a Single GPU in One Day",
+    "published": "2022-12-28",
+    "authors": [
+      "Jonas Geiping",
+      "Tom Goldstein"
+    ]
+  },
+  "2403.05175": {
+    "title": "Continual Learning and Catastrophic Forgetting",
+    "published": "2024-03-08",
+    "authors": [
+      "Gido M. van de Ven",
+      "Nicholas Soures",
+      "Dhireesha Kudithipudi"
+    ]
+  },
+  "2510.05491": {
+    "title": "NorMuon: Making Muon more efficient and scalable",
+    "published": "2025-10-07",
+    "authors": [
+      "Zichong Li",
+      "Liming Liu",
+      "Chen Liang",
+      "Weizhu Chen"
+    ]
+  },
+  "2502.03407": {
+    "title": "Detecting Strategic Deception Using Linear Probes",
+    "published": "2025-02-05",
+    "authors": [
+      "Nicholas Goldowsky-Dill",
+      "Bilal Chughtai",
+      "Stefan Heimersheim",
+      "Marius Hobbhahn"
+    ]
+  },
+  "2501.18837": {
+    "title": "Constitutional Classifiers: Defending against Universal Jailbreaks across Thousands of Hours of Red Teaming",
+    "published": "2025-01-31",
+    "authors": [
+      "Mrinank Sharma",
+      "Meg Tong",
+      "Jesse Mu",
+      "Jerry Wei"
+    ]
+  },
+  "2405.07987": {
+    "title": "The Platonic Representation Hypothesis",
+    "published": "2024-05-13",
+    "authors": [
+      "Minyoung Huh",
+      "Brian Cheung",
+      "Tongzhou Wang",
+      "Phillip Isola"
+    ]
+  },
+  "2602.14486": {
+    "title": "Revisiting the Platonic Representation Hypothesis: An Aristotelian View",
+    "published": "2026-02-16",
+    "authors": [
+      "Fabian Gröger",
+      "Shuo Wen",
+      "Maria Brbić"
+    ]
+  },
+  "2405.01012": {
+    "title": "Correcting Biased Centered Kernel Alignment Measures in Biological and Artificial Neural Networks",
+    "published": "2024-05-02",
+    "authors": [
+      "Alex Murphy",
+      "Joel Zylberberg",
+      "Alona Fyshe"
+    ]
+  },
+  "2007.02789": {
+    "title": "Comparing representational geometries using whitened unbiased-distance-matrix similarity",
+    "published": "2020-07-06",
+    "authors": [
+      "Jörn Diedrichsen",
+      "Eva Berlot",
+      "Marieke Mur",
+      "Heiko H. Schütt"
+    ]
+  },
+  "2201.00650": {
+    "title": "Deep Learning Interviews: Hundreds of fully solved job interview questions from a wide range of key topics in AI",
+    "published": "2021-12-30",
+    "authors": [
+      "Shlomo Kashani",
+      "Amir Ivry"
+    ]
+  },
+  "2309.08600": {
+    "title": "Sparse Autoencoders Find Highly Interpretable Features in Language Models",
+    "published": "2023-09-15",
+    "authors": [
+      "Hoagy Cunningham",
+      "Aidan Ewart",
+      "Logan Riggs",
+      "Robert Huben"
+    ]
+  },
+  "2502.15104": {
+    "title": "Estimating Neural Representation Alignment from Sparsely Sampled Inputs and Features",
+    "published": "2025-02-20",
+    "authors": [
+      "Chanwoo Chun",
+      "Abdulkadir Canatar",
+      "SueYeon Chung",
+      "Daniel D. Lee"
+    ]
+  },
+  "1905.10437": {
+    "title": "N-BEATS: Neural basis expansion analysis for interpretable time series forecasting",
+    "published": "2019-05-24",
+    "authors": [
+      "Boris N. Oreshkin",
+      "Dmitri Carpov",
+      "Nicolas Chapados",
+      "Yoshua Bengio"
+    ]
+  },
+  "1911.02590": {
+    "title": "Optimizing Millions of Hyperparameters by Implicit Differentiation",
+    "published": "2019-11-06",
+    "authors": [
+      "Jonathan Lorraine",
+      "Paul Vicol",
+      "David Duvenaud"
+    ]
+  },
+  "2210.00350": {
+    "title": "Zero-Shot Policy Transfer with Disentangled Task Representation of Meta-Reinforcement Learning",
+    "published": "2022-10-01",
+    "authors": [
+      "Zheng Wu",
+      "Yichen Xie",
+      "Wenzhao Lian",
+      "Changhao Wang"
+    ]
+  },
+  "2308.12950": {
+    "title": "Code Llama: Open Foundation Models for Code",
+    "published": "2023-08-24",
+    "authors": [
+      "Baptiste Rozière",
+      "Jonas Gehring",
+      "Fabian Gloeckle",
+      "Sten Sootla"
+    ]
+  },
+  "2206.08853": {
+    "title": "MineDojo: Building Open-Ended Embodied Agents with Internet-Scale Knowledge",
+    "published": "2022-06-17",
+    "authors": [
+      "Linxi Fan",
+      "Guanzhi Wang",
+      "Yunfan Jiang",
+      "Ajay Mandlekar"
+    ]
+  },
+  "2206.10498": {
+    "title": "PlanBench: An Extensible Benchmark for Evaluating Large Language Models on Planning and Reasoning about Change",
+    "published": "2022-06-21",
+    "authors": [
+      "Karthik Valmeekam",
+      "Matthew Marquez",
+      "Alberto Olmo",
+      "Sarath Sreedharan"
+    ]
+  },
+  "1902.07892": {
+    "title": "Deep Adaptive Input Normalization for Time Series Forecasting",
+    "published": "2019-02-21",
+    "authors": [
+      "Nikolaos Passalis",
+      "Anastasios Tefas",
+      "Juho Kanniainen",
+      "Moncef Gabbouj"
+    ]
+  },
+  "2306.12925": {
+    "title": "AudioPaLM: A Large Language Model That Can Speak and Listen",
+    "published": "2023-06-22",
+    "authors": [
+      "Paul K. Rubenstein",
+      "Chulayuth Asawaroengchai",
+      "Duc Dung Nguyen",
+      "Ankur Bapna"
+    ]
+  },
+  "2505.05410": {
+    "title": "Reasoning Models Don't Always Say What They Think",
+    "published": "2025-05-08",
+    "authors": [
+      "Yanda Chen",
+      "Joe Benton",
+      "Ansh Radhakrishnan",
+      "Jonathan Uesato"
+    ]
+  },
+  "2405.12399": {
+    "title": "Diffusion for World Modeling: Visual Details Matter in Atari",
+    "published": "2024-05-20",
+    "authors": [
+      "Eloi Alonso",
+      "Adam Jelley",
+      "Vincent Micheli",
+      "Anssi Kanervisto"
+    ]
+  },
+  "2312.06581": {
+    "title": "Grokking Group Multiplication with Cosets",
+    "published": "2023-12-11",
+    "authors": [
+      "Dashiell Stander",
+      "Qinan Yu",
+      "Honglu Fan",
+      "Stella Biderman"
+    ]
+  },
+  "2305.01644": {
+    "title": "Key-Locked Rank One Editing for Text-to-Image Personalization",
+    "published": "2023-05-02",
+    "authors": [
+      "Yoad Tewel",
+      "Rinon Gal",
+      "Gal Chechik",
+      "Yuval Atzmon"
+    ]
+  },
+  "2307.06949": {
+    "title": "HyperDreamBooth: HyperNetworks for Fast Personalization of Text-to-Image Models",
+    "published": "2023-07-13",
+    "authors": [
+      "Nataniel Ruiz",
+      "Yuanzhen Li",
+      "Varun Jampani",
+      "Wei Wei"
+    ]
+  },
+  "1704.04110": {
+    "title": "DeepAR: Probabilistic Forecasting with Autoregressive Recurrent Networks",
+    "published": "2017-04-13",
+    "authors": [
+      "David Salinas",
+      "Valentin Flunkert",
+      "Jan Gasthaus"
+    ]
+  },
+  "2505.05522": {
+    "title": "Continuous Thought Machines",
+    "published": "2025-05-08",
+    "authors": [
+      "Luke Darlow",
+      "Ciaran Regan",
+      "Sebastian Risi",
+      "Jeffrey Seely"
+    ]
+  },
+  "1907.03665": {
+    "title": "An intelligent financial portfolio trading strategy using deep Q-learning",
+    "published": "2019-07-08",
+    "authors": [
+      "Hyungjun Park",
+      "Min Kyu Sim",
+      "Dong Gu Choi"
+    ]
+  },
+  "2311.10709": {
+    "title": "Emu Video: Factorizing Text-to-Video Generation by Explicit Image Conditioning",
+    "published": "2023-11-17",
+    "authors": [
+      "Rohit Girdhar",
+      "Mannat Singh",
+      "Andrew Brown",
+      "Quentin Duval"
+    ]
+  },
+  "2412.08821": {
+    "title": "Large Concept Models: Language Modeling in a Sentence Representation Space",
+    "published": "2024-12-11",
+    "authors": [
+      " LCM team",
+      "Loïc Barrault",
+      "Paul-Ambroise Duquenne",
+      "Maha Elbayad"
+    ]
+  },
+  "2310.11511": {
+    "title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection",
+    "published": "2023-10-17",
+    "authors": [
+      "Akari Asai",
+      "Zeqiu Wu",
+      "Yizhong Wang",
+      "Avirup Sil"
+    ]
+  },
+  "2306.15687": {
+    "title": "Voicebox: Text-Guided Multilingual Universal Speech Generation at Scale",
+    "published": "2023-06-23",
+    "authors": [
+      "Matthew Le",
+      "Apoorv Vyas",
+      "Bowen Shi",
+      "Brian Karrer"
+    ]
+  },
+  "2607.20064": {
+    "title": "PRO-LONG: Programmatic Memory Enables Long-Horizon Reasoning",
+    "published": "2026-07-22",
+    "authors": [
+      "Alexis Fox",
+      "Junlin Wang",
+      "Paul Rosu",
+      "Bhuwan Dhingra"
+    ]
+  },
+  "2509.19349": {
+    "title": "ShinkaEvolve: Towards Open-Ended And Sample-Efficient Program Evolution",
+    "published": "2025-09-17",
+    "authors": [
+      "Robert Tjarko Lange",
+      "Yuki Imajuku",
+      "Edoardo Cetin"
+    ]
+  },
+  "2312.09390": {
+    "title": "Weak-to-Strong Generalization: Eliciting Strong Capabilities With Weak Supervision",
+    "published": "2023-12-14",
+    "authors": [
+      "Collin Burns",
+      "Pavel Izmailov",
+      "Jan Hendrik Kirchner",
+      "Bowen Baker"
+    ]
+  },
+  "2310.10062": {
+    "title": "A Comprehensive Evaluation of Tool-Assisted Generation Strategies",
+    "published": "2023-10-16",
+    "authors": [
+      "Alon Jacovi",
+      "Avi Caciularu",
+      "Jonathan Herzig",
+      "Roee Aharoni"
+    ]
+  },
+  "2110.08499": {
+    "title": "PRIMERA: Pyramid-based Masked Sentence Pre-training for Multi-document Summarization",
+    "published": "2021-10-16",
+    "authors": [
+      "Wen Xiao",
+      "Iz Beltagy",
+      "Giuseppe Carenini",
+      "Arman Cohan"
+    ]
+  },
+  "2306.13812": {
+    "title": "Maintaining Plasticity in Deep Continual Learning",
+    "published": "2023-06-23",
+    "authors": [
+      "Shibhansh Dohare",
+      "J. Fernando Hernandez-Garcia",
+      "Parash Rahman",
+      "A. Rupam Mahmood"
+    ]
+  },
+  "2402.10877": {
+    "title": "Robust agents learn causal world models",
+    "published": "2024-02-16",
+    "authors": [
+      "Jonathan Richens",
+      "Tom Everitt"
+    ]
+  },
+  "2204.07705": {
+    "title": "Super-NaturalInstructions: Generalization via Declarative Instructions on 1600+ NLP Tasks",
+    "published": "2022-04-16",
+    "authors": [
+      "Yizhong Wang",
+      "Swaroop Mishra",
+      "Pegah Alipoormolabashi",
+      "Yeganeh Kordi"
+    ]
+  },
+  "2605.22074": {
+    "title": "From Reasoning Chains to Verifiable Subproblems: Curriculum Reinforcement Learning Enables Credit Assignment for LLM Reasoning",
+    "published": "2026-05-21",
+    "authors": [
+      "Xitai Jiang",
+      "Zihan Tang",
+      "Wenze Lin",
+      "Yang Yue"
+    ]
+  },
+  "2512.24695": {
+    "title": "Nested Learning: The Illusion of Deep Learning Architectures",
+    "published": "2025-12-31",
+    "authors": [
+      "Ali Behrouz",
+      "Meisam Razaviyayn",
+      "Peilin Zhong",
+      "Vahab Mirrokni"
+    ]
+  },
+  "2407.21783": {
+    "title": "The Llama 3 Herd of Models",
+    "published": "2024-07-31",
+    "authors": [
+      "Aaron Grattafiori",
+      "Abhimanyu Dubey",
+      "Abhinav Jauhri",
+      "Abhinav Pandey"
+    ]
+  },
+  "2501.00656": {
+    "title": "2 OLMo 2 Furious",
+    "published": "2024-12-31",
+    "authors": [
+      "Team OLMo",
+      "Pete Walsh",
+      "Luca Soldaini",
+      "Dirk Groeneveld"
+    ]
+  },
+  "2506.06632": {
+    "title": "Curriculum Reinforcement Learning from Easy to Hard Tasks Improves LLM Reasoning",
+    "published": "2025-06-07",
+    "authors": [
+      "Shubham Parashar",
+      "Shurui Gui",
+      "Xiner Li",
+      "Hongyi Ling"
+    ]
+  },
+  "2511.07317": {
+    "title": "RLVE: Scaling Up Reinforcement Learning for Language Models with Adaptive Verifiable Environments",
+    "published": "2025-11-10",
+    "authors": [
+      "Zhiyuan Zeng",
+      "Hamish Ivison",
+      "Yiping Wang",
+      "Lifan Yuan"
+    ]
+  },
+  "2604.01754": {
+    "title": "LiveMathematicianBench: A Live Benchmark for Mathematician-Level Reasoning with Proof Sketches",
+    "published": "2026-04-02",
+    "authors": [
+      "Linyang He",
+      "Qiyao Yu",
+      "Hanze Dong",
+      "Baohao Liao"
+    ]
+  }
+}

@@ -14,6 +14,10 @@ credentials.json
 *.pem
 *.key
 
+# Citation map: raw fetched documents and verification screenshots
+map/cache/
+map/shots/
+
 # Python
 __pycache__/
 *.py[cod]

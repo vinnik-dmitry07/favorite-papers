@@ -4,6 +4,10 @@
 
 Litmaps — [https://app.litmaps.com/shared/5bb436d0-a026-493a-a765-f48fda77ad0c](https://app.litmaps.com/shared/5bb436d0-a026-493a-a765-f48fda77ad0c)
 
+Own version of the same map, with the links parsed straight out of the papers (arXiv/ar5iv HTML, page HTML, Crossref) instead of a hosted service: open [map/index.html](map/index.html) in a browser. Rebuild with `python map/parse_readme.py`, then `python map/fetch_refs.py`, then `python map/build_graph.py`.
+
+![Own citation map](map/preview.png)
+
 ## Reinforcement learning
 
 - Q-Learning With World Models (QWM) — [https://arxiv.org/abs/2608.17163](https://arxiv.org/abs/2608.17163)
@@ -42,6 +46,7 @@ Litmaps — [https://app.litmaps.com/shared/5bb436d0-a026-493a-a765-f48fda77ad0c
 - When Does Continual Learning Require Learning — [https://arxiv.org/abs/2607.07847](https://arxiv.org/abs/2607.07847) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5812?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - Weight-Space Geometry of Offline Reasoning Training (ICML 2026 workshop) — [https://arxiv.org/abs/2606.23740](https://arxiv.org/abs/2606.23740)
 - Learning from Own Solutions: Self-Conditioned Credit Assignment (SC-GRPO) — [https://arxiv.org/abs/2606.18810](https://arxiv.org/abs/2606.18810)
+- From Reasoning Chains to Verifiable Subproblems: Curriculum RL for Credit Assignment — [https://arxiv.org/abs/2605.22074](https://arxiv.org/abs/2605.22074)
 - Revisiting Reinforcement Learning with Verifiable Rewards from a Contrastive Perspective — [https://arxiv.org/abs/2605.12969](https://arxiv.org/abs/2605.12969)
 - Rethinking RL for LLM Reasoning: It's Sparse Policy Selection, Not Capability Learning — [https://arxiv.org/abs/2605.06241](https://arxiv.org/abs/2605.06241)
 - GRPO-VPS: Verifiable Process Supervision — [https://arxiv.org/abs/2604.20659](https://arxiv.org/abs/2604.20659)
@@ -63,6 +68,7 @@ Litmaps — [https://app.litmaps.com/shared/5bb436d0-a026-493a-a765-f48fda77ad0c
 - SR-GRPO: Stable Rank as an Intrinsic Geometric Reward — [https://arxiv.org/abs/2512.02807](https://arxiv.org/abs/2512.02807) [⌲ tg](https://t-me.translate.goog/s/tech_priestess/2494?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - ESPO: Entropy Importance Sampling Policy Optimization — [https://arxiv.org/abs/2512.00499](https://arxiv.org/abs/2512.00499)
 - Soft Adaptive Policy Optimization (SAPO) — [https://arxiv.org/abs/2511.20347](https://arxiv.org/abs/2511.20347)
+- RLVE: Adaptive Verifiable Environments for LLM RL — [https://arxiv.org/abs/2511.07317](https://arxiv.org/abs/2511.07317)
 - Reasoning with Sampling: Your Base Model is Smarter Than You Think — [https://arxiv.org/abs/2510.14901](https://arxiv.org/abs/2510.14901)
 - The Art of Scaling Reinforcement Learning Compute for LLMs — [https://arxiv.org/abs/2510.13786](https://arxiv.org/abs/2510.13786)
 - It Takes Two: Your GRPO Is Secretly DPO — [https://arxiv.org/abs/2510.00977](https://arxiv.org/abs/2510.00977) [⌲ tg](https://t-me.translate.goog/s/dealerAI/1092?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
@@ -74,6 +80,7 @@ Litmaps — [https://app.litmaps.com/shared/5bb436d0-a026-493a-a765-f48fda77ad0c
 - GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning — [https://arxiv.org/abs/2507.19457](https://arxiv.org/abs/2507.19457)
 - Group Sequence Policy Optimization (GSPO) — [https://arxiv.org/abs/2507.18071](https://arxiv.org/abs/2507.18071) [⌲ tg](https://t-me.translate.goog/s/data_secrets/7470?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - MiniMax-M1: Scaling Test-Time Compute Efficiently with Lightning Attention — [https://arxiv.org/abs/2506.13585](https://arxiv.org/abs/2506.13585)
+- Curriculum Reinforcement Learning from Easy to Hard Tasks — [https://arxiv.org/abs/2506.06632](https://arxiv.org/abs/2506.06632)
 - Critique-GRPO: Advancing LLM Reasoning with Natural Language and Numerical Feedback — [https://arxiv.org/abs/2506.03106](https://arxiv.org/abs/2506.03106)
 - Beyond the 80/20 Rule: High-Entropy Minority Tokens Drive Effective RL — [https://arxiv.org/abs/2506.01939](https://arxiv.org/abs/2506.01939)
 - Learning to Reason without External Rewards (Intuitor / RLIF) — [https://arxiv.org/abs/2505.19590](https://arxiv.org/abs/2505.19590) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML_podcasts/375?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
@@ -96,7 +103,9 @@ Litmaps — [https://app.litmaps.com/shared/5bb436d0-a026-493a-a765-f48fda77ad0c
 - T5Gemma 2: Seeing, Reading, and Understanding Longer — [https://arxiv.org/abs/2512.14856](https://arxiv.org/abs/2512.14856) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/4421?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - Continuous Thought Machines (Sakana AI) — [https://pub.sakana.ai/ctm/](https://pub.sakana.ai/ctm/) [⌲ tg](https://t-me.translate.goog/s/data_secrets/6895?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - Encoder-Decoder Gemma: Improving the Quality-Efficiency Trade-Off via Adaptation — [https://arxiv.org/abs/2504.06225](https://arxiv.org/abs/2504.06225)
+- OLMo 2 Furious — [https://arxiv.org/abs/2501.00656](https://arxiv.org/abs/2501.00656)
 - ModernBERT — [https://arxiv.org/abs/2412.13663](https://arxiv.org/abs/2412.13663)
+- The Llama 3 Herd of Models — [https://arxiv.org/abs/2407.21783](https://arxiv.org/abs/2407.21783)
 - Large Concept Models (Meta) — [https://ai.meta.com/research/publications/large-concept-models-language-modeling-in-a-sentence-representation-space/](https://ai.meta.com/research/publications/large-concept-models-language-modeling-in-a-sentence-representation-space/) [⌲ tg](https://t-me.translate.goog/s/data_secrets/5799?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - Your Transformer is Secretly Linear (ACL 2024, AIRI) — [https://arxiv.org/abs/2405.12250](https://arxiv.org/abs/2405.12250) [⌲ tg](https://t-me.translate.goog/s/abstractDL/247?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) · [https://www.lesswrong.com/posts/JSWF2ZLt6YahyAauE/../deep-learning-models-might-be-secretly-almost-linear](https://www.lesswrong.com/posts/JSWF2ZLt6YahyAauE/../deep-learning-models-might-be-secretly-almost-linear)
 - xLSTM: Extended Long Short-Term Memory — [https://arxiv.org/abs/2405.04517](https://arxiv.org/abs/2405.04517) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/2624?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
@@ -122,6 +131,7 @@ Litmaps — [https://app.litmaps.com/shared/5bb436d0-a026-493a-a765-f48fda77ad0c
 - Emergent Capabilities Arise Randomly from Sparse Attention Patterns — [https://arxiv.org/abs/2606.25010](https://arxiv.org/abs/2606.25010) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5867?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) · [https://arxiviq.substack.com/p/emergent-capabilities-arise-randomly](https://arxiviq.substack.com/p/emergent-capabilities-arise-randomly)
 - Language Models Compare Quantities Using Number-specific and Unit-specific Heuristics — [https://arxiv.org/abs/2606.03982](https://arxiv.org/abs/2606.03982)
 - A Mechanistic Analysis of Looped Reasoning Language Models — [https://arxiv.org/abs/2604.11791](https://arxiv.org/abs/2604.11791) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5206?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- LiveMathematicianBench: a live benchmark for mathematician-level reasoning — [https://arxiv.org/abs/2604.01754](https://arxiv.org/abs/2604.01754)
 - AI-rithmetic — [https://arxiv.org/abs/2602.10416](https://arxiv.org/abs/2602.10416)
 - In-Context Algebra — [https://arxiv.org/abs/2512.16902](https://arxiv.org/abs/2512.16902)
 - Why Can't Transformers Learn Multiplication? — [https://arxiv.org/abs/2510.00184](https://arxiv.org/abs/2510.00184)
@@ -172,7 +182,7 @@ Litmaps — [https://app.litmaps.com/shared/5bb436d0-a026-493a-a765-f48fda77ad0c
 
 - The Loss Does Not See the Basis, but Adam Does — [https://arxiv.org/abs/2608.05136](https://arxiv.org/abs/2608.05136) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5956?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - Explorative Modeling: Unlocking a Third Pretraining Axis — [https://arxiv.org/abs/2607.27372](https://arxiv.org/abs/2607.27372) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5858?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⌲ tg](https://t-me.translate.goog/s/boris_again/4060?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) · [https://explorative-modeling.github.io/](https://explorative-modeling.github.io/) · [https://arxiviq.substack.com/p/explorative-modeling-unlocking-a](https://arxiviq.substack.com/p/explorative-modeling-unlocking-a)
-- Nested Learning (Google, NeurIPS 2025) — [https://abehrouz.github.io/files/NL.pdf](https://abehrouz.github.io/files/NL.pdf) [⌲ tg](https://t-me.translate.goog/s/data_secrets/5900?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) · [https://research.google/blog/introducing-nested-learning-a-new-ml-paradigm-for-continual-learning/](https://research.google/blog/introducing-nested-learning-a-new-ml-paradigm-for-continual-learning/) [⌲ tg](https://t-me.translate.goog/s/data_secrets/5900?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_pto=wapp)
+- Nested Learning (Google, NeurIPS 2025) — [https://arxiv.org/abs/2512.24695](https://arxiv.org/abs/2512.24695) · [https://abehrouz.github.io/files/NL.pdf](https://abehrouz.github.io/files/NL.pdf) [⌲ tg](https://t-me.translate.goog/s/data_secrets/5900?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) · [https://research.google/blog/introducing-nested-learning-a-new-ml-paradigm-for-continual-learning/](https://research.google/blog/introducing-nested-learning-a-new-ml-paradigm-for-continual-learning/) [⌲ tg](https://t-me.translate.goog/s/data_secrets/5900?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_pto=wapp)
 - NorMuon: Making Muon more efficient and scalable — [https://arxiv.org/abs/2510.05491](https://arxiv.org/abs/2510.05491)
 - On-Policy RL Meets Off-Policy Experts (SFT+RL dynamic weighting) — [https://arxiv.org/abs/2508.11408](https://arxiv.org/abs/2508.11408)
 - Supervised Fine Tuning on Curated Data is Reinforcement Learning — [https://arxiv.org/abs/2507.12856](https://arxiv.org/abs/2507.12856)
@@ -348,7 +358,7 @@ Litmaps — [https://app.litmaps.com/shared/5bb436d0-a026-493a-a765-f48fda77ad0c
 
 - This is how the Neocortex Learns (O'Reilly) — [https://arxiv.org/abs/2606.08720](https://arxiv.org/abs/2606.08720) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5565?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - CogPGT: a genetic predictor of IQ — [https://herasight-project.webflow.io/technical-paper/cogpgt-1](https://herasight-project.webflow.io/technical-paper/cogpgt-1)
-- Is my red your red? Evaluating structural correspondences of color qualia (iScience 2025) — [https://www.cell.com/iscience/fulltext/S2589-0042(25)00289-5](https://www.cell.com/iscience/fulltext/S2589-0042(25)00289-5)
+- Is my red your red? Evaluating structural correspondences of color qualia (iScience 2025) — [https://www.cell.com/iscience/fulltext/S2589-0042(25)00289-5](https://www.cell.com/iscience/fulltext/S2589-0042(25)00289-5) · [https://doi.org/10.1016/j.isci.2025.112029](https://doi.org/10.1016/j.isci.2025.112029)
 - From Tokens to Thoughts: How LLMs and Humans Trade Compression for Meaning — [https://arxiv.org/abs/2505.17117](https://arxiv.org/abs/2505.17117)
 - MetaWorm: an integrative model of the C. elegans brain and body (bioRxiv) — [https://doi.org/10.1101/2024.02.22.581686](https://doi.org/10.1101/2024.02.22.581686)
 - Neural spiking for causal inference and learning (PLOS Comp Biol 2023) — [https://doi.org/10.1371/journal.pcbi.1011005](https://doi.org/10.1371/journal.pcbi.1011005)

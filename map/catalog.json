@@ -1,0 +1,6365 @@
+[
+  {
+    "id": "arxiv:2608.17163",
+    "kind": "arxiv",
+    "label": "Q-Learning With World Models (QWM)",
+    "title": "Q-Learning With World Models",
+    "section": "Reinforcement learning",
+    "urls": [
+      "https://arxiv.org/abs/2608.17163"
+    ],
+    "order": 0,
+    "authors": [
+      "Perry Dong",
+      "Yueru Jia",
+      "Chelsea Finn",
+      "Dorsa Sadigh"
+    ],
+    "date": "2026-08-17",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2509.09675",
+    "kind": "arxiv",
+    "label": "CDE: Curiosity-Driven Exploration for RL in LLMs",
+    "title": "CDE: Curiosity-Driven Exploration for Efficient Reinforcement Learning in Large Language Models",
+    "section": "Reinforcement learning",
+    "urls": [
+      "https://arxiv.org/abs/2509.09675"
+    ],
+    "order": 1,
+    "authors": [
+      "Runpeng Dai",
+      "Linfeng Song",
+      "Haolin Liu",
+      "Zhenwen Liang"
+    ],
+    "date": "2025-09-11",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2503.14858",
+    "kind": "arxiv",
+    "label": "1000 Layer Networks for Self-Supervised RL (NeurIPS 2025 Best Paper)",
+    "title": "1000 Layer Networks for Self-Supervised RL: Scaling Depth Can Enable New Goal-Reaching Capabilities",
+    "section": "Reinforcement learning",
+    "urls": [
+      "https://arxiv.org/abs/2503.14858",
+      "https://openreview.net/forum?id=s0JVsx3bx1",
+      "https://arxiviq.substack.com/p/neurips-2025-1000-layer-networks"
+    ],
+    "order": 2,
+    "authors": [
+      "Kevin Wang",
+      "Ishaan Javali",
+      "Michał Bortkiewicz",
+      "Tomasz Trzciński"
+    ],
+    "date": "2025-03-19",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2501.16142",
+    "kind": "arxiv",
+    "label": "Towards General-Purpose Model-Free RL (MR.Q)",
+    "title": "Towards General-Purpose Model-Free Reinforcement Learning",
+    "section": "Reinforcement learning",
+    "urls": [
+      "https://arxiv.org/abs/2501.16142"
+    ],
+    "order": 3,
+    "authors": [
+      "Scott Fujimoto",
+      "Pierluca D'Oro",
+      "Amy Zhang",
+      "Yuandong Tian"
+    ],
+    "date": "2025-01-27",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2411.03820",
+    "kind": "arxiv",
+    "label": "Beyond The Rainbow: High Performance Deep RL on a Desktop PC",
+    "title": "Beyond The Rainbow: High Performance Deep Reinforcement Learning on a Desktop PC",
+    "section": "Reinforcement learning",
+    "urls": [
+      "https://arxiv.org/abs/2411.03820"
+    ],
+    "order": 4,
+    "authors": [
+      "Tyler Clark",
+      "Mark Towers",
+      "Christine Evers",
+      "Jonathon Hare"
+    ],
+    "date": "2024-11-06",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:diamond-wm.github.io",
+    "kind": "web",
+    "label": "DIAMOND: a diffusion world model that plays CS:GO",
+    "title": "DIAMOND: a diffusion world model that plays CS:GO",
+    "section": "Reinforcement learning",
+    "urls": [
+      "https://diamond-wm.github.io/"
+    ],
+    "order": 5,
+    "authors": [
+      "Eloi Alonso",
+      "Adam Jelley",
+      "Vincent Micheli",
+      "Anssi Kanervisto"
+    ],
+    "date": "2024-05-20",
+    "date_source": "arxiv-api",
+    "fetched_title": "Diffusion for World Modeling: Visual Details Matter in Atari"
+  },
+  {
+    "id": "openreview:XyGJJ4FPoX",
+    "kind": "openreview",
+    "label": "Meta-Reinforcement Learning with Zero-Shot RL",
+    "title": "Meta-Reinforcement Learning with Zero-Shot RL",
+    "section": "Reinforcement learning",
+    "urls": [
+      "https://openreview.net/forum?id=XyGJJ4FPoX"
+    ],
+    "order": 6,
+    "authors": [
+      "Zheng Wu",
+      "Yichen Xie",
+      "Wenzhao Lian",
+      "Changhao Wang"
+    ],
+    "date": "2022-10-01",
+    "date_source": "arxiv-api",
+    "fetched_title": "Zero-Shot Policy Transfer with Disentangled Task Representation of Meta-Reinforcement Learning"
+  },
+  {
+    "id": "arxiv:2312.13327",
+    "kind": "arxiv",
+    "label": "In-Context RL for Variable Action Spaces",
+    "title": "In-Context Reinforcement Learning for Variable Action Spaces",
+    "section": "Reinforcement learning",
+    "urls": [
+      "https://arxiv.org/abs/2312.13327"
+    ],
+    "order": 7,
+    "authors": [
+      "Viacheslav Sinii",
+      "Alexander Nikulin",
+      "Vladislav Kurenkov",
+      "Ilya Zisman"
+    ],
+    "date": "2023-12-20",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2312.00276",
+    "kind": "arxiv",
+    "label": "Metalearning Continual Learning Algorithms",
+    "title": "Metalearning Continual Learning Algorithms",
+    "section": "Reinforcement learning",
+    "urls": [
+      "https://arxiv.org/abs/2312.00276"
+    ],
+    "order": 8,
+    "authors": [
+      "Kazuki Irie",
+      "Róbert Csordás",
+      "Jürgen Schmidhuber"
+    ],
+    "date": "2023-12-01",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2306.02451",
+    "kind": "arxiv",
+    "label": "For SALE: State-Action Representation Learning",
+    "title": "For SALE: State-Action Representation Learning for Deep Reinforcement Learning",
+    "section": "Reinforcement learning",
+    "urls": [
+      "https://arxiv.org/abs/2306.02451"
+    ],
+    "order": 9,
+    "authors": [
+      "Scott Fujimoto",
+      "Wei-Di Chang",
+      "Edward J. Smith",
+      "Shixiang Shane Gu"
+    ],
+    "date": "2023-06-04",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2305.19452",
+    "kind": "arxiv",
+    "label": "BBF: Bigger, Better, Faster — Human-level Atari with human-level efficiency",
+    "title": "Bigger, Better, Faster: Human-level Atari with human-level efficiency",
+    "section": "Reinforcement learning",
+    "urls": [
+      "https://arxiv.org/abs/2305.19452"
+    ],
+    "order": 10,
+    "authors": [
+      "Max Schwarzer",
+      "Johan Obando-Ceron",
+      "Aaron Courville",
+      "Marc Bellemare"
+    ],
+    "date": "2023-05-30",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "openreview:OpC-9aBBVJe",
+    "kind": "openreview",
+    "label": "Sample-Efficient RL by Breaking the Replay Ratio Barrier (ICLR 2023, precursor of BBF)",
+    "title": "Sample-Efficient RL by Breaking the Replay Ratio Barrier (ICLR 2023, precursor of BBF)",
+    "section": "Reinforcement learning",
+    "urls": [
+      "https://openreview.net/forum?id=OpC-9aBBVJe"
+    ],
+    "order": 11,
+    "authors": [],
+    "date": "2022-09-28",
+    "date_source": "known"
+  },
+  {
+    "id": "arxiv:2301.04104",
+    "kind": "arxiv",
+    "label": "DreamerV3: Mastering Diverse Domains through World Models",
+    "title": "Mastering Diverse Domains through World Models",
+    "section": "Reinforcement learning",
+    "urls": [
+      "https://arxiv.org/abs/2301.04104"
+    ],
+    "order": 12,
+    "authors": [
+      "Danijar Hafner",
+      "Jurgis Pasukonis",
+      "Jimmy Ba",
+      "Timothy Lillicrap"
+    ],
+    "date": "2023-01-10",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2205.07802",
+    "kind": "arxiv",
+    "label": "The Primacy Bias in Deep RL",
+    "title": "The Primacy Bias in Deep Reinforcement Learning",
+    "section": "Reinforcement learning",
+    "urls": [
+      "https://arxiv.org/abs/2205.07802"
+    ],
+    "order": 13,
+    "authors": [
+      "Evgenii Nikishin",
+      "Max Schwarzer",
+      "Pierluca D'Oro",
+      "Pierre-Luc Bacon"
+    ],
+    "date": "2022-05-16",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2106.06860",
+    "kind": "arxiv",
+    "label": "A Minimalist Approach to Offline RL (TD3+BC)",
+    "title": "A Minimalist Approach to Offline Reinforcement Learning",
+    "section": "Reinforcement learning",
+    "urls": [
+      "https://arxiv.org/abs/2106.06860"
+    ],
+    "order": 14,
+    "authors": [
+      "Scott Fujimoto",
+      "Shixiang Shane Gu"
+    ],
+    "date": "2021-06-12",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2011.14826",
+    "kind": "arxiv",
+    "label": "Revisiting Rainbow",
+    "title": "Revisiting Rainbow: Promoting more Insightful and Inclusive Deep Reinforcement Learning Research",
+    "section": "Reinforcement learning",
+    "urls": [
+      "https://arxiv.org/abs/2011.14826"
+    ],
+    "order": 15,
+    "authors": [
+      "Johan S. Obando-Ceron",
+      "Pablo Samuel Castro"
+    ],
+    "date": "2020-11-20",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2005.01643",
+    "kind": "arxiv",
+    "label": "Offline RL: Tutorial, Review, and Perspectives",
+    "title": "Offline Reinforcement Learning: Tutorial, Review, and Perspectives on Open Problems",
+    "section": "Reinforcement learning",
+    "urls": [
+      "https://arxiv.org/abs/2005.01643"
+    ],
+    "order": 16,
+    "authors": [
+      "Sergey Levine",
+      "Aviral Kumar",
+      "George Tucker",
+      "Justin Fu"
+    ],
+    "date": "2020-05-04",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2004.12919",
+    "kind": "arxiv",
+    "label": "First return, then explore (Go-Explore, Nature)",
+    "title": "First return, then explore",
+    "section": "Reinforcement learning",
+    "urls": [
+      "https://arxiv.org/abs/2004.12919"
+    ],
+    "order": 17,
+    "authors": [
+      "Adrien Ecoffet",
+      "Joost Huizinga",
+      "Joel Lehman",
+      "Kenneth O. Stanley"
+    ],
+    "date": "2020-04-27",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:1910.01708",
+    "kind": "arxiv",
+    "label": "Benchmarking Batch Deep RL Algorithms",
+    "title": "Benchmarking Batch Deep Reinforcement Learning Algorithms",
+    "section": "Reinforcement learning",
+    "urls": [
+      "https://arxiv.org/abs/1910.01708"
+    ],
+    "order": 18,
+    "authors": [
+      "Scott Fujimoto",
+      "Edoardo Conti",
+      "Mohammad Ghavamzadeh",
+      "Joelle Pineau"
+    ],
+    "date": "2019-10-03",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:1802.09477",
+    "kind": "arxiv",
+    "label": "Addressing Function Approximation Error in Actor-Critic (TD3)",
+    "title": "Addressing Function Approximation Error in Actor-Critic Methods",
+    "section": "Reinforcement learning",
+    "urls": [
+      "https://arxiv.org/abs/1802.09477"
+    ],
+    "order": 19,
+    "authors": [
+      "Scott Fujimoto",
+      "Herke van Hoof",
+      "David Meger"
+    ],
+    "date": "2018-02-26",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:lilianweng.github.io/lil-log/2018/01/23/the-multi-armed-bandit-problem-and-its-solutions.html",
+    "kind": "web",
+    "label": "The Multi-Armed Bandit Problem and Its Solutions (Lilian Weng)",
+    "title": "The Multi-Armed Bandit Problem and Its Solutions (Lilian Weng)",
+    "section": "Reinforcement learning",
+    "urls": [
+      "https://lilianweng.github.io/lil-log/2018/01/23/the-multi-armed-bandit-problem-and-its-solutions.html"
+    ],
+    "order": 20,
+    "authors": [
+      "Lilian Weng"
+    ],
+    "date": "2018-01-23",
+    "date_source": "page"
+  },
+  {
+    "id": "arxiv:1801.01290",
+    "kind": "arxiv",
+    "label": "Soft Actor-Critic (SAC)",
+    "title": "Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor",
+    "section": "Reinforcement learning",
+    "urls": [
+      "https://arxiv.org/abs/1801.01290"
+    ],
+    "order": 21,
+    "authors": [
+      "Tuomas Haarnoja",
+      "Aurick Zhou",
+      "Pieter Abbeel",
+      "Sergey Levine"
+    ],
+    "date": "2018-01-04",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:1712.06567",
+    "kind": "arxiv",
+    "label": "Deep Neuroevolution: GAs as an alternative to training RL networks",
+    "title": "Deep Neuroevolution: Genetic Algorithms Are a Competitive Alternative for Training Deep Neural Networks for Reinforcement Learning",
+    "section": "Reinforcement learning",
+    "urls": [
+      "https://arxiv.org/abs/1712.06567"
+    ],
+    "order": 22,
+    "authors": [
+      "Felipe Petroski Such",
+      "Vashisht Madhavan",
+      "Edoardo Conti",
+      "Joel Lehman"
+    ],
+    "date": "2017-12-18",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:1710.02298",
+    "kind": "arxiv",
+    "label": "Rainbow: Combining Improvements in Deep RL",
+    "title": "Rainbow: Combining Improvements in Deep Reinforcement Learning",
+    "section": "Reinforcement learning",
+    "urls": [
+      "https://arxiv.org/abs/1710.02298"
+    ],
+    "order": 23,
+    "authors": [
+      "Matteo Hessel",
+      "Joseph Modayil",
+      "Hado van Hasselt",
+      "Tom Schaul"
+    ],
+    "date": "2017-10-06",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:1707.06887",
+    "kind": "arxiv",
+    "label": "A Distributional Perspective on RL (C51)",
+    "title": "A Distributional Perspective on Reinforcement Learning",
+    "section": "Reinforcement learning",
+    "urls": [
+      "https://arxiv.org/abs/1707.06887"
+    ],
+    "order": 24,
+    "authors": [
+      "Marc G. Bellemare",
+      "Will Dabney",
+      "Rémi Munos"
+    ],
+    "date": "2017-07-21",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:1511.06581",
+    "kind": "arxiv",
+    "label": "Dueling Network Architectures for Deep RL",
+    "title": "Dueling Network Architectures for Deep Reinforcement Learning",
+    "section": "Reinforcement learning",
+    "urls": [
+      "https://arxiv.org/abs/1511.06581"
+    ],
+    "order": 25,
+    "authors": [
+      "Ziyu Wang",
+      "Tom Schaul",
+      "Matteo Hessel",
+      "Hado van Hasselt"
+    ],
+    "date": "2015-11-20",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:1511.05952",
+    "kind": "arxiv",
+    "label": "Prioritized Experience Replay",
+    "title": "Prioritized Experience Replay",
+    "section": "Reinforcement learning",
+    "urls": [
+      "https://arxiv.org/abs/1511.05952"
+    ],
+    "order": 26,
+    "authors": [
+      "Tom Schaul",
+      "John Quan",
+      "Ioannis Antonoglou",
+      "David Silver"
+    ],
+    "date": "2015-11-18",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:1509.06461",
+    "kind": "arxiv",
+    "label": "Deep Reinforcement Learning with Double Q-learning",
+    "title": "Deep Reinforcement Learning with Double Q-learning",
+    "section": "Reinforcement learning",
+    "urls": [
+      "https://arxiv.org/abs/1509.06461"
+    ],
+    "order": 27,
+    "authors": [
+      "Hado van Hasselt",
+      "Arthur Guez",
+      "David Silver"
+    ],
+    "date": "2015-09-22",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2608.09888",
+    "kind": "arxiv",
+    "label": "BDH-CQ: In-Context Learning with Recurrent Latent Reasoning",
+    "title": "BDH-CQ: In-Context Learning with Recurrent Latent Reasoning",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2608.09888"
+    ],
+    "order": 28,
+    "authors": [
+      "Björn Engdahl",
+      "Adrian Kosowski",
+      "Jan Chorowski"
+    ],
+    "date": "2026-08-10",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2607.07847",
+    "kind": "arxiv",
+    "label": "When Does Continual Learning Require Learning",
+    "title": "When Does Continual Learning Require Learning",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2607.07847"
+    ],
+    "order": 29,
+    "authors": [
+      "Anne Harrington",
+      "Nayan Saxena",
+      "Michael Murphy"
+    ],
+    "date": "2026-07-08",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2606.23740",
+    "kind": "arxiv",
+    "label": "Weight-Space Geometry of Offline Reasoning Training (ICML 2026 workshop)",
+    "title": "Weight-Space Geometry of Offline Reasoning Training",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2606.23740"
+    ],
+    "order": 30,
+    "authors": [
+      "Aleksandr Nikolich",
+      "Igor Kiselev",
+      "Vladimir Platonov",
+      "Karina Romanova"
+    ],
+    "date": "2026-06-26",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2606.18810",
+    "kind": "arxiv",
+    "label": "Learning from Own Solutions: Self-Conditioned Credit Assignment (SC-GRPO)",
+    "title": "Learning from Own Solutions: Self-Conditioned Credit Assignment for Reinforcement Learning with Verifiable Rewards",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2606.18810"
+    ],
+    "order": 31,
+    "authors": [
+      "Yingyu Shan",
+      "Yuhang Guo",
+      "Zihao Cheng",
+      "Zeming Liu"
+    ],
+    "date": "2026-06-17",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2605.22074",
+    "kind": "arxiv",
+    "label": "From Reasoning Chains to Verifiable Subproblems: Curriculum RL for Credit Assignment",
+    "title": "From Reasoning Chains to Verifiable Subproblems: Curriculum Reinforcement Learning Enables Credit Assignment for LLM Reasoning",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2605.22074"
+    ],
+    "order": 32,
+    "authors": [
+      "Xitai Jiang",
+      "Zihan Tang",
+      "Wenze Lin",
+      "Yang Yue"
+    ],
+    "date": "2026-05-21",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2605.12969",
+    "kind": "arxiv",
+    "label": "Revisiting Reinforcement Learning with Verifiable Rewards from a Contrastive Perspective",
+    "title": "Revisiting Reinforcement Learning with Verifiable Rewards from a Contrastive Perspective",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2605.12969"
+    ],
+    "order": 33,
+    "authors": [
+      "Feng Zhang",
+      "Xinhong Ma",
+      "Ziqiang Dong",
+      "Xi Leng"
+    ],
+    "date": "2026-05-13",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2605.06241",
+    "kind": "arxiv",
+    "label": "Rethinking RL for LLM Reasoning: It's Sparse Policy Selection, Not Capability Learning",
+    "title": "Rethinking RL for LLM Reasoning: It's Sparse Policy Selection, Not Capability Learning",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2605.06241"
+    ],
+    "order": 34,
+    "authors": [
+      "Ömer Faruk Akgül",
+      "Rajgopal Kannan",
+      "Willie Neiswanger"
+    ],
+    "date": "2026-05-07",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2604.20659",
+    "kind": "arxiv",
+    "label": "GRPO-VPS: Verifiable Process Supervision",
+    "title": "GRPO-VPS: Enhancing Group Relative Policy Optimization with Verifiable Process Supervision for Effective Reasoning",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2604.20659"
+    ],
+    "order": 35,
+    "authors": [
+      "Jingyi Wang",
+      "Lei Zhu",
+      "Tengjin Weng",
+      "Song-Li Wu"
+    ],
+    "date": "2026-04-22",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2604.13016",
+    "kind": "arxiv",
+    "label": "Rethinking On-Policy Distillation of Large Language Models",
+    "title": "Rethinking On-Policy Distillation of Large Language Models: Phenomenology, Mechanism, and Recipe",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2604.13016"
+    ],
+    "order": 36,
+    "authors": [
+      "Yaxuan Li",
+      "Yuxin Zuo",
+      "Bingxiang He",
+      "Jinqian Zhang"
+    ],
+    "date": "2026-04-14",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2604.08690",
+    "kind": "arxiv",
+    "label": "Skip-Connected Policy Optimization (SKPO)",
+    "title": "Skip-Connected Policy Optimization for Implicit Advantage",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2604.08690"
+    ],
+    "order": 37,
+    "authors": [
+      "Fengwei Teng",
+      "Jinyi Bai",
+      "Xinhao Yao",
+      "Demi Ruohan Wang"
+    ],
+    "date": "2026-04-09",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2604.02288",
+    "kind": "arxiv",
+    "label": "Unifying Group-Relative and Self-Distillation Policy Optimization via Sample Routing",
+    "title": "Unifying Group-Relative and Self-Distillation Policy Optimization via Sample Routing",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2604.02288"
+    ],
+    "order": 38,
+    "authors": [
+      "Gengsheng Li",
+      "Tianyu Yang",
+      "Junfeng Fang",
+      "Mingyang Song"
+    ],
+    "date": "2026-04-02",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2604.01375",
+    "kind": "arxiv",
+    "label": "RIFT: A RubrIc Failure Mode Taxonomy and Automated Diagnostics",
+    "title": "RIFT: A RubrIc Failure Mode Taxonomy and Automated Diagnostics",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2604.01375"
+    ],
+    "order": 39,
+    "authors": [
+      "Zhengyang Qi",
+      "Charles Dickens",
+      "Derek Pham",
+      "Amanda Dsouza"
+    ],
+    "date": "2026-04-01",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2603.25562",
+    "kind": "arxiv",
+    "label": "Revisiting On-Policy Distillation: Empirical Failure Modes and Simple Fixes",
+    "title": "Revisiting On-Policy Distillation: Empirical Failure Modes and Simple Fixes",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2603.25562"
+    ],
+    "order": 40,
+    "authors": [
+      "Yuqian Fu",
+      "Haohuan Huang",
+      "Kaiwen Jiang",
+      "Jiacai Liu"
+    ],
+    "date": "2026-03-26",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2603.24472",
+    "kind": "arxiv",
+    "label": "Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?",
+    "title": "Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2603.24472"
+    ],
+    "order": 41,
+    "authors": [
+      "Jeonghye Kim",
+      "Xufang Luo",
+      "Minbeom Kim",
+      "Sangmook Lee"
+    ],
+    "date": "2026-03-25",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2602.18037",
+    "kind": "arxiv",
+    "label": "Gradient Regularization Mitigates Reward Hacking in RLHF and RLVR",
+    "title": "Gradient Regularization Mitigates Reward Hacking in Reinforcement Learning from Human Feedback and Verifiable Rewards",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2602.18037"
+    ],
+    "order": 42,
+    "authors": [
+      "Johannes Ackermann",
+      "Michael Noukhovitch",
+      "Takashi Ishida"
+    ],
+    "date": "2026-02-20",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2601.20861",
+    "kind": "arxiv",
+    "label": "Evolutionary Strategies lead to Catastrophic Forgetting in LLMs",
+    "title": "Evolutionary Strategies lead to Catastrophic Forgetting in LLMs",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2601.20861"
+    ],
+    "order": 43,
+    "authors": [
+      "Immanuel Abdi",
+      "Akshat Gupta",
+      "Micah Mok",
+      "Alexander Lu"
+    ],
+    "date": "2026-01-28",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2601.20802",
+    "kind": "arxiv",
+    "label": "Reinforcement Learning via Self-Distillation",
+    "title": "Reinforcement Learning via Self-Distillation",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2601.20802"
+    ],
+    "order": 44,
+    "authors": [
+      "Jonas Hübotter",
+      "Frederike Lübeck",
+      "Lejs Behric"
+    ],
+    "date": "2026-01-28",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2601.19897",
+    "kind": "arxiv",
+    "label": "Self-Distillation Enables Continual Learning",
+    "title": "Self-Distillation Enables Continual Learning",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2601.19897"
+    ],
+    "order": 45,
+    "authors": [
+      "Idan Shenfeld",
+      "Mehul Damani",
+      "Jonas Hübotter",
+      "Pulkit Agrawal"
+    ],
+    "date": "2026-01-27",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2601.18734",
+    "kind": "arxiv",
+    "label": "Self-Distilled Reasoner: On-Policy Self-Distillation for LLMs",
+    "title": "Self-Distilled Reasoner: On-Policy Self-Distillation for Large Language Models",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2601.18734"
+    ],
+    "order": 46,
+    "authors": [
+      "Siyan Zhao",
+      "Zhihui Xie",
+      "Mengchen Liu",
+      "Jing Huang"
+    ],
+    "date": "2026-01-26",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2601.16175",
+    "kind": "arxiv",
+    "label": "Learning to Discover at Test Time (TTT-Discover)",
+    "title": "Learning to Discover at Test Time",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2601.16175"
+    ],
+    "order": 47,
+    "authors": [
+      "Mert Yuksekgonul",
+      "Daniel Koceja",
+      "Xinhao Li"
+    ],
+    "date": "2026-01-22",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2601.14525",
+    "kind": "arxiv",
+    "label": "Towards Execution-Grounded Automated AI Research",
+    "title": "Towards Execution-Grounded Automated AI Research",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2601.14525"
+    ],
+    "order": 48,
+    "authors": [
+      "Chenglei Si",
+      "Zitong Yang",
+      "Yejin Choi"
+    ],
+    "date": "2026-01-20",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2601.11061",
+    "kind": "arxiv",
+    "label": "Spurious Rewards Paradox: How RLVR Activates Memorization Shortcuts",
+    "title": "Spurious Rewards Paradox: Mechanistically Understanding How RLVR Activates Memorization Shortcuts in LLMs",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2601.11061"
+    ],
+    "order": 49,
+    "authors": [
+      "Lecheng Yan",
+      "Ruizhe Li",
+      "Guanhua Chen",
+      "Qing Li"
+    ],
+    "date": "2026-01-16",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:cameronrwolfe.substack.com/p/grpo-tricks",
+    "kind": "web",
+    "label": "GRPO++: Tricks for Making RL Actually Work (Cameron Wolfe)",
+    "title": "GRPO++: Tricks for Making RL Actually Work (Cameron Wolfe)",
+    "section": "Post-training",
+    "urls": [
+      "https://cameronrwolfe.substack.com/p/grpo-tricks"
+    ],
+    "order": 50,
+    "authors": [
+      "Cameron R. Wolfe"
+    ],
+    "date": "2026-01-05",
+    "date_source": "page"
+  },
+  {
+    "id": "arxiv:2512.02807",
+    "kind": "arxiv",
+    "label": "SR-GRPO: Stable Rank as an Intrinsic Geometric Reward",
+    "title": "SR-GRPO: Stable Rank as an Intrinsic Geometric Reward for Large Language Model Alignment",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2512.02807"
+    ],
+    "order": 51,
+    "authors": [
+      "Yixuan Tang",
+      "Yi Yang"
+    ],
+    "date": "2025-12-02",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2512.00499",
+    "kind": "arxiv",
+    "label": "ESPO: Entropy Importance Sampling Policy Optimization",
+    "title": "ESPO: Entropy Importance Sampling Policy Optimization",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2512.00499"
+    ],
+    "order": 52,
+    "authors": [
+      "Yuepeng Sheng",
+      "Yuwei Huang",
+      "Shuman Liu",
+      "Anxiang Zeng"
+    ],
+    "date": "2025-11-29",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2511.20347",
+    "kind": "arxiv",
+    "label": "Soft Adaptive Policy Optimization (SAPO)",
+    "title": "Soft Adaptive Policy Optimization",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2511.20347"
+    ],
+    "order": 53,
+    "authors": [
+      "Chang Gao",
+      "Chujie Zheng",
+      "Xiong-Hui Chen",
+      "Kai Dang"
+    ],
+    "date": "2025-11-25",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2511.07317",
+    "kind": "arxiv",
+    "label": "RLVE: Adaptive Verifiable Environments for LLM RL",
+    "title": "RLVE: Scaling Up Reinforcement Learning for Language Models with Adaptive Verifiable Environments",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2511.07317"
+    ],
+    "order": 54,
+    "authors": [
+      "Zhiyuan Zeng",
+      "Hamish Ivison",
+      "Yiping Wang",
+      "Lifan Yuan"
+    ],
+    "date": "2025-11-10",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2510.14901",
+    "kind": "arxiv",
+    "label": "Reasoning with Sampling: Your Base Model is Smarter Than You Think",
+    "title": "Reasoning with Sampling: Your Base Model is Smarter Than You Think",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2510.14901"
+    ],
+    "order": 55,
+    "authors": [
+      "Aayush Karan",
+      "Yilun Du"
+    ],
+    "date": "2025-10-16",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2510.13786",
+    "kind": "arxiv",
+    "label": "The Art of Scaling Reinforcement Learning Compute for LLMs",
+    "title": "The Art of Scaling Reinforcement Learning Compute for LLMs",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2510.13786"
+    ],
+    "order": 56,
+    "authors": [
+      "Devvrit Khatri",
+      "Lovish Madaan",
+      "Rishabh Tiwari"
+    ],
+    "date": "2025-10-15",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2510.00977",
+    "kind": "arxiv",
+    "label": "It Takes Two: Your GRPO Is Secretly DPO",
+    "title": "It Takes Two: Your GRPO Is Secretly DPO",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2510.00977"
+    ],
+    "order": 57,
+    "authors": [
+      "Yihong Wu",
+      "Liheng Ma",
+      "Lei Ding"
+    ],
+    "date": "2025-10-01",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2509.25123",
+    "kind": "arxiv",
+    "label": "From f(x) and g(x) to f(g(x)): LLMs Learn New Skills in RL by Composing Old Ones",
+    "title": "From $f(x)$ and $g(x)$ to $f(g(x))$: LLMs Learn New Skills in RL by Composing Old Ones",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2509.25123",
+      "https://husky-morocco-f72.notion.site/From-f-x-and-g-x-to-f-g-x-LLMs-Learn-New-Skills-in-RL-by-Composing-Old-Ones-2499aba4486f802c8108e76a12af3020"
+    ],
+    "order": 58,
+    "authors": [
+      "Lifan Yuan",
+      "Weize Chen",
+      "Yuchen Zhang",
+      "Ganqu Cui"
+    ],
+    "date": "2025-09-29",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2509.13232",
+    "kind": "arxiv",
+    "label": "Single-stream Policy Optimization",
+    "title": "Single-stream Policy Optimization",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2509.13232"
+    ],
+    "order": 59,
+    "authors": [
+      "Zhongwen Xu",
+      "Zihan Ding"
+    ],
+    "date": "2025-09-16",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2509.03646",
+    "kind": "arxiv",
+    "label": "Emergent Hierarchical Reasoning in LLMs through Reinforcement Learning",
+    "title": "Emergent Hierarchical Reasoning in LLMs through Reinforcement Learning",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2509.03646"
+    ],
+    "order": 60,
+    "authors": [
+      "Haozhe Wang",
+      "Qixin Xu",
+      "Che Liu"
+    ],
+    "date": "2025-09-03",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2508.07629",
+    "kind": "arxiv",
+    "label": "Klear-Reasoner: Gradient-Preserving Clipping Policy Optimization (GPPO)",
+    "title": "Klear-Reasoner: Advancing Reasoning Capability via Gradient-Preserving Clipping Policy Optimization",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2508.07629"
+    ],
+    "order": 61,
+    "authors": [
+      "Zhenpeng Su",
+      "Leiyu Pan",
+      "Xue Bai",
+      "Dening Liu"
+    ],
+    "date": "2025-08-11",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2508.05629",
+    "kind": "arxiv",
+    "label": "On the Generalization of SFT: Reward Rectification (DFT)",
+    "title": "On the Generalization of SFT: A Reinforcement Learning Perspective with Reward Rectification",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2508.05629"
+    ],
+    "order": 62,
+    "authors": [
+      "Yongliang Wu",
+      "Yizhou Zhou",
+      "Zhou Ziheng"
+    ],
+    "date": "2025-08-07",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2507.19457",
+    "kind": "arxiv",
+    "label": "GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning",
+    "title": "GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2507.19457"
+    ],
+    "order": 63,
+    "authors": [
+      "Lakshya A Agrawal",
+      "Shangyin Tan",
+      "Dilara Soylu",
+      "Noah Ziems"
+    ],
+    "date": "2025-07-25",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2507.18071",
+    "kind": "arxiv",
+    "label": "Group Sequence Policy Optimization (GSPO)",
+    "title": "Group Sequence Policy Optimization",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2507.18071"
+    ],
+    "order": 64,
+    "authors": [
+      "Chujie Zheng",
+      "Shixuan Liu",
+      "Mingze Li",
+      "Xiong-Hui Chen"
+    ],
+    "date": "2025-07-24",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2506.13585",
+    "kind": "arxiv",
+    "label": "MiniMax-M1: Scaling Test-Time Compute Efficiently with Lightning Attention",
+    "title": "MiniMax-M1: Scaling Test-Time Compute Efficiently with Lightning Attention",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2506.13585"
+    ],
+    "order": 65,
+    "authors": [
+      " MiniMax",
+      " :",
+      "Aili Chen",
+      "Aonian Li"
+    ],
+    "date": "2025-06-16",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2506.06632",
+    "kind": "arxiv",
+    "label": "Curriculum Reinforcement Learning from Easy to Hard Tasks",
+    "title": "Curriculum Reinforcement Learning from Easy to Hard Tasks Improves LLM Reasoning",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2506.06632"
+    ],
+    "order": 66,
+    "authors": [
+      "Shubham Parashar",
+      "Shurui Gui",
+      "Xiner Li",
+      "Hongyi Ling"
+    ],
+    "date": "2025-06-07",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2506.03106",
+    "kind": "arxiv",
+    "label": "Critique-GRPO: Advancing LLM Reasoning with Natural Language and Numerical Feedback",
+    "title": "Critique-GRPO: Advancing LLM Reasoning with Natural Language and Numerical Feedback",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2506.03106"
+    ],
+    "order": 67,
+    "authors": [
+      "Xiaoying Zhang",
+      "Yipeng Zhang",
+      "Hao Sun",
+      "Kaituo Feng"
+    ],
+    "date": "2025-06-03",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2506.01939",
+    "kind": "arxiv",
+    "label": "Beyond the 80/20 Rule: High-Entropy Minority Tokens Drive Effective RL",
+    "title": "Beyond the 80/20 Rule: High-Entropy Minority Tokens Drive Effective Reinforcement Learning for LLM Reasoning",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2506.01939"
+    ],
+    "order": 68,
+    "authors": [
+      "Shenzhi Wang",
+      "Le Yu",
+      "Chang Gao"
+    ],
+    "date": "2025-06-02",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2505.19590",
+    "kind": "arxiv",
+    "label": "Learning to Reason without External Rewards (Intuitor / RLIF)",
+    "title": "Learning to Reason without External Rewards",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2505.19590"
+    ],
+    "order": 69,
+    "authors": [
+      "Xuandong Zhao",
+      "Zhewei Kang",
+      "Aosong Feng",
+      "Sergey Levine"
+    ],
+    "date": "2025-05-26",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2505.10978",
+    "kind": "arxiv",
+    "label": "Group-in-Group Policy Optimization (GiGPO)",
+    "title": "Group-in-Group Policy Optimization for LLM Agent Training",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2505.10978"
+    ],
+    "order": 70,
+    "authors": [
+      "Lang Feng",
+      "Zhenghai Xue",
+      "Tingcong Liu",
+      "Bo An"
+    ],
+    "date": "2025-05-16",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2504.16084",
+    "kind": "arxiv",
+    "label": "TTRL: Test-Time Reinforcement Learning",
+    "title": "TTRL: Test-Time Reinforcement Learning",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2504.16084"
+    ],
+    "order": 71,
+    "authors": [
+      "Yuxin Zuo",
+      "Kaiyan Zhang",
+      "Li Sheng"
+    ],
+    "date": "2025-04-22",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2504.13837",
+    "kind": "arxiv",
+    "label": "Does Reinforcement Learning Really Incentivize Reasoning Capacity Beyond the Base Model?",
+    "title": "Does Reinforcement Learning Really Incentivize Reasoning Capacity in LLMs Beyond the Base Model?",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2504.13837"
+    ],
+    "order": 72,
+    "authors": [
+      "Yang Yue",
+      "Zhiqi Chen",
+      "Rui Lu",
+      "Andrew Zhao"
+    ],
+    "date": "2025-04-18",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2503.20783",
+    "kind": "arxiv",
+    "label": "Understanding R1-Zero-Like Training: Dr. GRPO",
+    "title": "Understanding R1-Zero-Like Training: A Critical Perspective",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2503.20783"
+    ],
+    "order": 73,
+    "authors": [
+      "Zichen Liu",
+      "Changyu Chen",
+      "Wenjun Li",
+      "Penghui Qi"
+    ],
+    "date": "2025-03-26",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2503.14476",
+    "kind": "arxiv",
+    "label": "DAPO: Decoupled Clip and Dynamic Sampling Policy Optimization",
+    "title": "DAPO: An Open-Source LLM Reinforcement Learning System at Scale",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2503.14476"
+    ],
+    "order": 74,
+    "authors": [
+      "Qiying Yu",
+      "Zheng Zhang",
+      "Ruofei Zhu",
+      "Yufeng Yuan"
+    ],
+    "date": "2025-03-18",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2503.00735",
+    "kind": "arxiv",
+    "label": "LADDER: Self-Improving LLMs Through Recursive Problem Decomposition",
+    "title": "LADDER: Self-Improving LLMs Through Recursive Problem Decomposition",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2503.00735"
+    ],
+    "order": 75,
+    "authors": [
+      "Toby Simonds",
+      "Akira Yoshiyama"
+    ],
+    "date": "2025-03-02",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:oatllm.notion.site/oat-zero",
+    "kind": "web",
+    "label": "Oat-Zero: reproducing R1-Zero and analyzing self-reflection",
+    "title": "Oat-Zero: reproducing R1-Zero and analyzing self-reflection",
+    "section": "Post-training",
+    "urls": [
+      "https://oatllm.notion.site/oat-zero"
+    ],
+    "order": 76,
+    "authors": [],
+    "date": "2025-03-21",
+    "date_source": "known"
+  },
+  {
+    "id": "arxiv:2402.13669",
+    "kind": "arxiv",
+    "label": "Self-Distillation Bridges Distribution Gap in Language Model Fine-Tuning",
+    "title": "Self-Distillation Bridges Distribution Gap in Language Model Fine-Tuning",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2402.13669"
+    ],
+    "order": 77,
+    "authors": [
+      "Zhaorui Yang",
+      "Tianyu Pang",
+      "Haozhe Feng",
+      "Han Wang"
+    ],
+    "date": "2024-02-21",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2402.03300",
+    "kind": "arxiv",
+    "label": "DeepSeekMath: introducing Group Relative Policy Optimization (GRPO)",
+    "title": "DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2402.03300"
+    ],
+    "order": 78,
+    "authors": [
+      "Zhihong Shao",
+      "Peiyi Wang",
+      "Qihao Zhu",
+      "Runxin Xu"
+    ],
+    "date": "2024-02-05",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2303.17651",
+    "kind": "arxiv",
+    "label": "Self-Refine: Iterative Refinement with Self-Feedback",
+    "title": "Self-Refine: Iterative Refinement with Self-Feedback",
+    "section": "Post-training",
+    "urls": [
+      "https://arxiv.org/abs/2303.17651"
+    ],
+    "order": 79,
+    "authors": [
+      "Aman Madaan",
+      "Niket Tandon",
+      "Prakhar Gupta",
+      "Skyler Hallinan"
+    ],
+    "date": "2023-03-30",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2608.00146",
+    "kind": "arxiv",
+    "label": "DiffusionGemma Technical Report",
+    "title": "DiffusionGemma Technical Report",
+    "section": "LLMs: architectures, context, training",
+    "urls": [
+      "https://arxiv.org/abs/2608.00146"
+    ],
+    "order": 80,
+    "authors": [
+      " DiffusionGemma Team",
+      "Adrien Ali Taïga",
+      "James Assiene",
+      "Daniele Calandriello"
+    ],
+    "date": "2026-07-31",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2606.06574",
+    "kind": "arxiv",
+    "label": "Skip a Layer or Loop It? Learning Program-of-Layers in LLMs",
+    "title": "Skip a Layer or Loop It? Learning Program-of-Layers in LLMs",
+    "section": "LLMs: architectures, context, training",
+    "urls": [
+      "https://arxiv.org/abs/2606.06574"
+    ],
+    "order": 81,
+    "authors": [
+      "Ziyue Li",
+      "Yang Li",
+      "Tianyi Zhou"
+    ],
+    "date": "2026-06-04",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2512.24601",
+    "kind": "arxiv",
+    "label": "Recursive Language Models",
+    "title": "Recursive Language Models",
+    "section": "LLMs: architectures, context, training",
+    "urls": [
+      "https://arxiv.org/abs/2512.24601",
+      "https://alexzhang13.github.io/blog/2025/rlm/"
+    ],
+    "order": 82,
+    "authors": [
+      "Alex L. Zhang",
+      "Tim Kraska",
+      "Omar Khattab"
+    ],
+    "date": "2025-12-31",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2512.14856",
+    "kind": "arxiv",
+    "label": "T5Gemma 2: Seeing, Reading, and Understanding Longer",
+    "title": "T5Gemma 2: Seeing, Reading, and Understanding Longer",
+    "section": "LLMs: architectures, context, training",
+    "urls": [
+      "https://arxiv.org/abs/2512.14856"
+    ],
+    "order": 83,
+    "authors": [
+      "Biao Zhang",
+      "Paul Suganthan",
+      "Gaël Liu",
+      "Ilya Philippov"
+    ],
+    "date": "2025-12-16",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:pub.sakana.ai/ctm",
+    "kind": "web",
+    "label": "Continuous Thought Machines (Sakana AI)",
+    "title": "Continuous Thought Machines (Sakana AI)",
+    "section": "LLMs: architectures, context, training",
+    "urls": [
+      "https://pub.sakana.ai/ctm/"
+    ],
+    "order": 84,
+    "authors": [
+      "Luke Darlow",
+      "Ciaran Regan",
+      "Sebastian Risi",
+      "Jeffrey Seely"
+    ],
+    "date": "2025-05-08",
+    "date_source": "arxiv-api",
+    "fetched_title": "Continuous Thought Machines"
+  },
+  {
+    "id": "arxiv:2504.06225",
+    "kind": "arxiv",
+    "label": "Encoder-Decoder Gemma: Improving the Quality-Efficiency Trade-Off via Adaptation",
+    "title": "Encoder-Decoder Gemma: Improving the Quality-Efficiency Trade-Off via Adaptation",
+    "section": "LLMs: architectures, context, training",
+    "urls": [
+      "https://arxiv.org/abs/2504.06225"
+    ],
+    "order": 85,
+    "authors": [
+      "Biao Zhang",
+      "Fedor Moiseev",
+      "Joshua Ainslie",
+      "Paul Suganthan"
+    ],
+    "date": "2025-04-08",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2501.00656",
+    "kind": "arxiv",
+    "label": "OLMo 2 Furious",
+    "title": "2 OLMo 2 Furious",
+    "section": "LLMs: architectures, context, training",
+    "urls": [
+      "https://arxiv.org/abs/2501.00656"
+    ],
+    "order": 86,
+    "authors": [
+      "Team OLMo",
+      "Pete Walsh",
+      "Luca Soldaini",
+      "Dirk Groeneveld"
+    ],
+    "date": "2024-12-31",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2412.13663",
+    "kind": "arxiv",
+    "label": "ModernBERT",
+    "title": "Smarter, Better, Faster, Longer: A Modern Bidirectional Encoder for Fast, Memory Efficient, and Long Context Finetuning and Inference",
+    "section": "LLMs: architectures, context, training",
+    "urls": [
+      "https://arxiv.org/abs/2412.13663"
+    ],
+    "order": 87,
+    "authors": [
+      "Benjamin Warner",
+      "Antoine Chaffin",
+      "Benjamin Clavié",
+      "Orion Weller"
+    ],
+    "date": "2024-12-18",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2407.21783",
+    "kind": "arxiv",
+    "label": "The Llama 3 Herd of Models",
+    "title": "The Llama 3 Herd of Models",
+    "section": "LLMs: architectures, context, training",
+    "urls": [
+      "https://arxiv.org/abs/2407.21783"
+    ],
+    "order": 88,
+    "authors": [
+      "Aaron Grattafiori",
+      "Abhimanyu Dubey",
+      "Abhinav Jauhri",
+      "Abhinav Pandey"
+    ],
+    "date": "2024-07-31",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:ai.meta.com/research/publications/large-concept-models-language-modeling-in-a-sentence-representation-space",
+    "kind": "web",
+    "label": "Large Concept Models (Meta)",
+    "title": "Large Concept Models (Meta)",
+    "section": "LLMs: architectures, context, training",
+    "urls": [
+      "https://ai.meta.com/research/publications/large-concept-models-language-modeling-in-a-sentence-representation-space/"
+    ],
+    "order": 89,
+    "authors": [
+      " LCM team",
+      "Loïc Barrault",
+      "Paul-Ambroise Duquenne",
+      "Maha Elbayad"
+    ],
+    "date": "2024-12-11",
+    "date_source": "arxiv-api",
+    "fetched_title": "Large Concept Models: Language Modeling in a Sentence Representation Space"
+  },
+  {
+    "id": "arxiv:2405.12250",
+    "kind": "arxiv",
+    "label": "Your Transformer is Secretly Linear (ACL 2024, AIRI)",
+    "title": "Your Transformer is Secretly Linear",
+    "section": "LLMs: architectures, context, training",
+    "urls": [
+      "https://arxiv.org/abs/2405.12250",
+      "https://www.lesswrong.com/posts/JSWF2ZLt6YahyAauE/../deep-learning-models-might-be-secretly-almost-linear"
+    ],
+    "order": 90,
+    "authors": [
+      "Anton Razzhigaev",
+      "Matvey Mikhalchuk",
+      "Elizaveta Goncharova",
+      "Nikolai Gerasimenko"
+    ],
+    "date": "2024-05-19",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2405.04517",
+    "kind": "arxiv",
+    "label": "xLSTM: Extended Long Short-Term Memory",
+    "title": "xLSTM: Extended Long Short-Term Memory",
+    "section": "LLMs: architectures, context, training",
+    "urls": [
+      "https://arxiv.org/abs/2405.04517"
+    ],
+    "order": 91,
+    "authors": [
+      "Maximilian Beck",
+      "Korbinian Pöppel",
+      "Markus Spanring",
+      "Andreas Auer"
+    ],
+    "date": "2024-05-07",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2404.09173",
+    "kind": "arxiv",
+    "label": "TransformerFAM: Feedback attention is working memory",
+    "title": "TransformerFAM: Feedback attention is working memory",
+    "section": "LLMs: architectures, context, training",
+    "urls": [
+      "https://arxiv.org/abs/2404.09173"
+    ],
+    "order": 92,
+    "authors": [
+      "Dongseong Hwang",
+      "Weiran Wang",
+      "Zhuoyuan Huo",
+      "Khe Chai Sim"
+    ],
+    "date": "2024-04-14",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2404.07143",
+    "kind": "arxiv",
+    "label": "Infini-attention: Leave No Context Behind",
+    "title": "Leave No Context Behind: Efficient Infinite Context Transformers with Infini-attention",
+    "section": "LLMs: architectures, context, training",
+    "urls": [
+      "https://arxiv.org/abs/2404.07143"
+    ],
+    "order": 93,
+    "authors": [
+      "Tsendsuren Munkhdalai",
+      "Manaal Faruqui",
+      "Siddharth Gopal"
+    ],
+    "date": "2024-04-10",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2311.06242",
+    "kind": "arxiv",
+    "label": "Florence-2",
+    "title": "Florence-2: Advancing a Unified Representation for a Variety of Vision Tasks",
+    "section": "LLMs: architectures, context, training",
+    "urls": [
+      "https://arxiv.org/abs/2311.06242"
+    ],
+    "order": 94,
+    "authors": [
+      "Bin Xiao",
+      "Haiping Wu",
+      "Weijian Xu",
+      "Xiyang Dai"
+    ],
+    "date": "2023-11-10",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:ai.meta.com/research/publications/code-llama-open-foundation-models-for-code",
+    "kind": "web",
+    "label": "Code Llama (Meta)",
+    "title": "Code Llama (Meta)",
+    "section": "LLMs: architectures, context, training",
+    "urls": [
+      "https://ai.meta.com/research/publications/code-llama-open-foundation-models-for-code/"
+    ],
+    "order": 95,
+    "authors": [
+      "Baptiste Rozière",
+      "Jonas Gehring",
+      "Fabian Gloeckle",
+      "Sten Sootla"
+    ],
+    "date": "2023-08-24",
+    "date_source": "arxiv-api",
+    "fetched_title": "Code Llama: Open Foundation Models for Code"
+  },
+  {
+    "id": "arxiv:2306.13575",
+    "kind": "arxiv",
+    "label": "Scaling MLPs: A Tale of Inductive Bias",
+    "title": "Scaling MLPs: A Tale of Inductive Bias",
+    "section": "LLMs: architectures, context, training",
+    "urls": [
+      "https://arxiv.org/abs/2306.13575"
+    ],
+    "order": 96,
+    "authors": [
+      "Gregor Bachmann",
+      "Sotiris Anagnostidis",
+      "Thomas Hofmann"
+    ],
+    "date": "2023-06-23",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:google-research.github.io/seanet/audiopalm/examples",
+    "kind": "web",
+    "label": "AudioPaLM: an LLM that can speak and listen",
+    "title": "AudioPaLM: an LLM that can speak and listen",
+    "section": "LLMs: architectures, context, training",
+    "urls": [
+      "https://google-research.github.io/seanet/audiopalm/examples/"
+    ],
+    "order": 97,
+    "authors": [
+      "Paul K. Rubenstein",
+      "Chulayuth Asawaroengchai",
+      "Duc Dung Nguyen",
+      "Ankur Bapna"
+    ],
+    "date": "2023-06-22",
+    "date_source": "arxiv-api",
+    "fetched_title": "AudioPaLM: A Large Language Model That Can Speak and Listen"
+  },
+  {
+    "id": "arxiv:2305.01625",
+    "kind": "arxiv",
+    "label": "Unlimiformer: Long-Range Transformers with Unlimited Length Input",
+    "title": "Unlimiformer: Long-Range Transformers with Unlimited Length Input",
+    "section": "LLMs: architectures, context, training",
+    "urls": [
+      "https://arxiv.org/abs/2305.01625"
+    ],
+    "order": 98,
+    "authors": [
+      "Amanda Bertsch",
+      "Uri Alon",
+      "Graham Neubig",
+      "Matthew R. Gormley"
+    ],
+    "date": "2023-05-02",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2302.14045",
+    "kind": "arxiv",
+    "label": "Kosmos-1: Language Is Not All You Need",
+    "title": "Language Is Not All You Need: Aligning Perception with Language Models",
+    "section": "LLMs: architectures, context, training",
+    "urls": [
+      "https://arxiv.org/abs/2302.14045"
+    ],
+    "order": 99,
+    "authors": [
+      "Shaohan Huang",
+      "Li Dong",
+      "Wenhui Wang",
+      "Yaru Hao"
+    ],
+    "date": "2023-02-27",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2302.10866",
+    "kind": "arxiv",
+    "label": "Hyena Hierarchy",
+    "title": "Hyena Hierarchy: Towards Larger Convolutional Language Models",
+    "section": "LLMs: architectures, context, training",
+    "urls": [
+      "https://arxiv.org/abs/2302.10866"
+    ],
+    "order": 100,
+    "authors": [
+      "Michael Poli",
+      "Stefano Massaroli",
+      "Eric Nguyen",
+      "Daniel Y. Fu"
+    ],
+    "date": "2023-02-21",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2302.07253",
+    "kind": "arxiv",
+    "label": "Energy Transformer",
+    "title": "Energy Transformer",
+    "section": "LLMs: architectures, context, training",
+    "urls": [
+      "https://arxiv.org/abs/2302.07253"
+    ],
+    "order": 101,
+    "authors": [
+      "Benjamin Hoover",
+      "Yuchen Liang",
+      "Bao Pham",
+      "Rameswar Panda"
+    ],
+    "date": "2023-02-14",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2207.02098",
+    "kind": "arxiv",
+    "label": "Neural Networks and the Chomsky Hierarchy",
+    "title": "Neural Networks and the Chomsky Hierarchy",
+    "section": "LLMs: architectures, context, training",
+    "urls": [
+      "https://arxiv.org/abs/2207.02098"
+    ],
+    "order": 102,
+    "authors": [
+      "Grégoire Delétang",
+      "Anian Ruoss",
+      "Jordi Grau-Moya",
+      "Tim Genewein"
+    ],
+    "date": "2022-07-05",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2203.08913",
+    "kind": "arxiv",
+    "label": "Memorizing Transformers",
+    "title": "Memorizing Transformers",
+    "section": "LLMs: architectures, context, training",
+    "urls": [
+      "https://arxiv.org/abs/2203.08913"
+    ],
+    "order": 103,
+    "authors": [
+      "Yuhuai Wu",
+      "Markus N. Rabe",
+      "DeLesley Hutchins",
+      "Christian Szegedy"
+    ],
+    "date": "2022-03-16",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:people.idsia.ch/~juergen/most-cited-neural-nets.html",
+    "kind": "web",
+    "label": "The most cited neural nets of the 20th century (Schmidhuber)",
+    "title": "The most cited neural nets of the 20th century (Schmidhuber)",
+    "section": "LLMs: architectures, context, training",
+    "urls": [
+      "https://people.idsia.ch/~juergen/most-cited-neural-nets.html"
+    ],
+    "order": 104,
+    "authors": [],
+    "date": "2021-12-01",
+    "date_source": "known"
+  },
+  {
+    "id": "arxiv:2002.05202",
+    "kind": "arxiv",
+    "label": "GLU Variants Improve Transformer (SwiGLU)",
+    "title": "GLU Variants Improve Transformer",
+    "section": "LLMs: architectures, context, training",
+    "urls": [
+      "https://arxiv.org/abs/2002.05202"
+    ],
+    "order": 105,
+    "authors": [
+      "Noam Shazeer"
+    ],
+    "date": "2020-02-12",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:1710.05941",
+    "kind": "arxiv",
+    "label": "Searching for Activation Functions (Swish)",
+    "title": "Searching for Activation Functions",
+    "section": "LLMs: architectures, context, training",
+    "urls": [
+      "https://arxiv.org/abs/1710.05941"
+    ],
+    "order": 106,
+    "authors": [
+      "Prajit Ramachandran",
+      "Barret Zoph",
+      "Quoc V. Le"
+    ],
+    "date": "2017-10-16",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "openreview:klU4737opt",
+    "kind": "openreview",
+    "label": "Position: LLMs can't jump",
+    "title": "Position: LLMs can't jump",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://openreview.net/pdf?id=klU4737opt"
+    ],
+    "order": 107,
+    "authors": [],
+    "date": "2026-01-27",
+    "date_source": "known"
+  },
+  {
+    "id": "arxiv:2606.25010",
+    "kind": "arxiv",
+    "label": "Emergent Capabilities Arise Randomly from Sparse Attention Patterns",
+    "title": "Emergent Capabilities Arise Randomly from Learning Sparse Attention Patterns",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2606.25010",
+      "https://arxiviq.substack.com/p/emergent-capabilities-arise-randomly"
+    ],
+    "order": 108,
+    "authors": [
+      "Vatsal Baherwani",
+      "Zixi Chen",
+      "Shikai Qiu",
+      "Andrew Gordon Wilson"
+    ],
+    "date": "2026-06-23",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2606.03982",
+    "kind": "arxiv",
+    "label": "Language Models Compare Quantities Using Number-specific and Unit-specific Heuristics",
+    "title": "Language Models Compare Quantities Using Number-specific and Unit-specific Heuristics",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2606.03982"
+    ],
+    "order": 109,
+    "authors": [
+      "Mutsumi Sasaki",
+      "Go kamoda",
+      "Ryosuke Takahashi",
+      "Kosuke Sato"
+    ],
+    "date": "2026-06-02",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2604.11791",
+    "kind": "arxiv",
+    "label": "A Mechanistic Analysis of Looped Reasoning Language Models",
+    "title": "A Mechanistic Analysis of Looped Reasoning Language Models",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2604.11791"
+    ],
+    "order": 110,
+    "authors": [
+      "Hugh Blayney",
+      "Álvaro Arroyo",
+      "Johan Obando-Ceron",
+      "Pablo Samuel Castro"
+    ],
+    "date": "2026-04-13",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2604.01754",
+    "kind": "arxiv",
+    "label": "LiveMathematicianBench: a live benchmark for mathematician-level reasoning",
+    "title": "LiveMathematicianBench: A Live Benchmark for Mathematician-Level Reasoning with Proof Sketches",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2604.01754"
+    ],
+    "order": 111,
+    "authors": [
+      "Linyang He",
+      "Qiyao Yu",
+      "Hanze Dong",
+      "Baohao Liao"
+    ],
+    "date": "2026-04-02",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2602.10416",
+    "kind": "arxiv",
+    "label": "AI-rithmetic",
+    "title": "AI-rithmetic",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2602.10416"
+    ],
+    "order": 112,
+    "authors": [
+      "Alex Bie",
+      "Travis Dick",
+      "Alex Kulesza",
+      "Prabhakar Raghavan"
+    ],
+    "date": "2026-02-11",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2512.16902",
+    "kind": "arxiv",
+    "label": "In-Context Algebra",
+    "title": "In-Context Algebra",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2512.16902"
+    ],
+    "order": 113,
+    "authors": [
+      "Eric Todd",
+      "Jannik Brinkmann",
+      "Rohit Gandikota",
+      "David Bau"
+    ],
+    "date": "2025-12-18",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2510.00184",
+    "kind": "arxiv",
+    "label": "Why Can't Transformers Learn Multiplication?",
+    "title": "Why Can't Transformers Learn Multiplication? Reverse-Engineering Reveals Long-Range Dependency Pitfalls",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2510.00184"
+    ],
+    "order": 114,
+    "authors": [
+      "Xiaoyan Bai",
+      "Itamar Pres",
+      "Yuntian Deng",
+      "Chenhao Tan"
+    ],
+    "date": "2025-09-30",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2509.25239",
+    "kind": "arxiv",
+    "label": "A Formal Comparison Between Chain-of-Thought and Latent Thought",
+    "title": "A Formal Comparison Between Chain of Thought and Latent Thought",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2509.25239"
+    ],
+    "order": 115,
+    "authors": [
+      "Kevin Xu",
+      "Issei Sato"
+    ],
+    "date": "2025-09-25",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2509.20317",
+    "kind": "arxiv",
+    "label": "SIM-CoT: Supervised Implicit Chain-of-Thought",
+    "title": "SIM-CoT: Supervised Implicit Chain-of-Thought",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2509.20317"
+    ],
+    "order": 116,
+    "authors": [
+      "Xilin Wei",
+      "Xiaoran Liu",
+      "Yuhang Zang",
+      "Xiaoyi Dong"
+    ],
+    "date": "2025-09-24",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2508.02513",
+    "kind": "arxiv",
+    "label": "Modular Arithmetic: Language Models Solve Math Digit by Digit",
+    "title": "Modular Arithmetic: Language Models Solve Math Digit by Digit",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2508.02513"
+    ],
+    "order": 117,
+    "authors": [
+      "Tanja Baeumel",
+      "Daniil Gurgurov",
+      "Yusser al Ghussin",
+      "Josef van Genabith"
+    ],
+    "date": "2025-08-04",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2506.10947",
+    "kind": "arxiv",
+    "label": "Spurious Rewards: Rethinking Training Signals in RLVR",
+    "title": "Spurious Rewards: Rethinking Training Signals in RLVR",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2506.10947"
+    ],
+    "order": 118,
+    "authors": [
+      "Rulin Shao",
+      "Shuyue Stella Li",
+      "Rui Xin"
+    ],
+    "date": "2025-06-12",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2505.21493",
+    "kind": "arxiv",
+    "label": "Reinforcing General Reasoning without Verifiers",
+    "title": "Reinforcing General Reasoning without Verifiers",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2505.21493"
+    ],
+    "order": 119,
+    "authors": [
+      "Xiangxin Zhou",
+      "Zichen Liu",
+      "Anya Sims"
+    ],
+    "date": "2025-05-27",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2505.21444",
+    "kind": "arxiv",
+    "label": "Can Large Reasoning Models Self-Train?",
+    "title": "Can Large Reasoning Models Self-Train?",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2505.21444"
+    ],
+    "order": 120,
+    "authors": [
+      "Sheikh Shafayat",
+      "Fahim Tajwar",
+      "Ruslan Salakhutdinov"
+    ],
+    "date": "2025-05-27",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2505.15134",
+    "kind": "arxiv",
+    "label": "The Unreasonable Effectiveness of Entropy Minimization in LLM Reasoning",
+    "title": "The Unreasonable Effectiveness of Entropy Minimization in LLM Reasoning",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2505.15134"
+    ],
+    "order": 121,
+    "authors": [
+      "Shivam Agarwal",
+      "Zimin Zhang",
+      "Lifan Yuan"
+    ],
+    "date": "2025-05-21",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2505.13763",
+    "kind": "arxiv",
+    "label": "Language Models Are Capable of Metacognitive Monitoring and Control of Their Internal Activations",
+    "title": "Language Models Are Capable of Metacognitive Monitoring and Control of Their Internal Activations",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2505.13763"
+    ],
+    "order": 122,
+    "authors": [
+      "Li Ji-An",
+      "Hua-Dong Xiong",
+      "Robert C. Wilson"
+    ],
+    "date": "2025-05-19",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:safe-lip-9a8.notion.site/incorrect-baseline-evaluations-call-into-question-recent-llm-rl-claims-2012f1fbf0ee8094ab8ded1953c15a37",
+    "kind": "web",
+    "label": "Incorrect Baseline Evaluations Call into Question Recent LLM-RL Claims",
+    "title": "Incorrect Baseline Evaluations Call into Question Recent LLM-RL Claims",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://safe-lip-9a8.notion.site/Incorrect-Baseline-Evaluations-Call-into-Question-Recent-LLM-RL-Claims-2012f1fbf0ee8094ab8ded1953c15a37"
+    ],
+    "order": 123,
+    "authors": [],
+    "date": "2025-05-29",
+    "date_source": "known"
+  },
+  {
+    "id": "arxiv:2504.20571",
+    "kind": "arxiv",
+    "label": "Reinforcement Learning for Reasoning with One Training Example",
+    "title": "Reinforcement Learning for Reasoning in Large Language Models with One Training Example",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2504.20571"
+    ],
+    "order": 124,
+    "authors": [
+      "Yiping Wang",
+      "Qing Yang",
+      "Zhiyuan Zeng"
+    ],
+    "date": "2025-04-29",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2503.21676",
+    "kind": "arxiv",
+    "label": "How do language models learn facts? (DeepMind)",
+    "title": "How do language models learn facts? Dynamics, curricula and hallucinations",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2503.21676"
+    ],
+    "order": 125,
+    "authors": [
+      "Nicolas Zucchet",
+      "Jörg Bornschein",
+      "Stephanie Chan",
+      "Andrew Lampinen"
+    ],
+    "date": "2025-03-27",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2502.19981",
+    "kind": "arxiv",
+    "label": "The Lookahead Limitation: Why Multi-Operand Addition is Hard for LLMs",
+    "title": "The Lookahead Limitation: Why Multi-Operand Addition is Hard for LLMs",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2502.19981"
+    ],
+    "order": 126,
+    "authors": [
+      "Tanja Baeumel",
+      "Josef van Genabith",
+      "Simon Ostermann"
+    ],
+    "date": "2025-02-27",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2502.06807",
+    "kind": "arxiv",
+    "label": "Competitive Programming with Large Reasoning Models (OpenAI o-series)",
+    "title": "Competitive Programming with Large Reasoning Models",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2502.06807"
+    ],
+    "order": 127,
+    "authors": [
+      " OpenAI",
+      " :",
+      "Ahmed El-Kishky",
+      "Alexander Wei"
+    ],
+    "date": "2025-02-03",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2502.05171",
+    "kind": "arxiv",
+    "label": "Scaling up Test-Time Compute with Latent Reasoning (recurrent depth)",
+    "title": "Scaling up Test-Time Compute with Latent Reasoning: A Recurrent Depth Approach",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2502.05171"
+    ],
+    "order": 128,
+    "authors": [
+      "Jonas Geiping",
+      "Sean McLeish",
+      "Neel Jain",
+      "John Kirchenbauer"
+    ],
+    "date": "2025-02-07",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2502.00873",
+    "kind": "arxiv",
+    "label": "Language Models Use Trigonometry to Do Addition (Kantamneni & Tegmark)",
+    "title": "Language Models Use Trigonometry to Do Addition",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2502.00873"
+    ],
+    "order": 129,
+    "authors": [
+      "Subhash Kantamneni",
+      "Max Tegmark"
+    ],
+    "date": "2025-02-02",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2501.04519",
+    "kind": "arxiv",
+    "label": "rStar-Math: Small LLMs Can Master Math Reasoning",
+    "title": "rStar-Math: Small LLMs Can Master Math Reasoning with Self-Evolved Deep Thinking",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2501.04519"
+    ],
+    "order": 130,
+    "authors": [
+      "Xinyu Guan",
+      "Li Lyna Zhang",
+      "Yifei Liu",
+      "Ning Shang"
+    ],
+    "date": "2025-01-08",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2412.14135",
+    "kind": "arxiv",
+    "label": "Scaling of Search and Learning: A Roadmap to Reproduce o1",
+    "title": "Scaling of Search and Learning: A Roadmap to Reproduce o1 from Reinforcement Learning Perspective",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2412.14135"
+    ],
+    "order": 131,
+    "authors": [
+      "Zhiyuan Zeng",
+      "Qinyuan Cheng",
+      "Zhangyue Yin",
+      "Bo Wang"
+    ],
+    "date": "2024-12-18",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2412.06769",
+    "kind": "arxiv",
+    "label": "Coconut: Reasoning in a Continuous Latent Space",
+    "title": "Training Large Language Models to Reason in a Continuous Latent Space",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2412.06769"
+    ],
+    "order": 132,
+    "authors": [
+      "Shibo Hao",
+      "Sainbayar Sukhbaatar",
+      "DiJia Su",
+      "Xian Li"
+    ],
+    "date": "2024-12-09",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2410.21272",
+    "kind": "arxiv",
+    "label": "Arithmetic Without Algorithms: Bag of Heuristics",
+    "title": "Arithmetic Without Algorithms: Language Models Solve Math With a Bag of Heuristics",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2410.21272"
+    ],
+    "order": 133,
+    "authors": [
+      "Yaniv Nikankin",
+      "Anja Reusch",
+      "Aaron Mueller",
+      "Yonatan Belinkov"
+    ],
+    "date": "2024-10-28",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "openreview:wUU-7XTL5XO",
+    "kind": "openreview",
+    "label": "Large Language Models Still Can't Plan / PlanBench (Kambhampati)",
+    "title": "Large Language Models Still Can't Plan / PlanBench (Kambhampati)",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://openreview.net/forum?id=wUU-7XTL5XO"
+    ],
+    "order": 134,
+    "authors": [
+      "Karthik Valmeekam",
+      "Matthew Marquez",
+      "Alberto Olmo",
+      "Sarath Sreedharan"
+    ],
+    "date": "2022-06-21",
+    "date_source": "arxiv-api",
+    "fetched_title": "PlanBench: An Extensible Benchmark for Evaluating Large Language Models on Planning and Reasoning about Change"
+  },
+  {
+    "id": "arxiv:2305.13673",
+    "kind": "arxiv",
+    "label": "Physics of Language Models (series): 1",
+    "title": "Physics of Language Models: Part 1, Learning Hierarchical Language Structures",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2305.13673"
+    ],
+    "order": 135,
+    "authors": [
+      "Zeyuan Allen-Zhu",
+      "Yuanzhi Li"
+    ],
+    "date": "2023-05-23",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2407.20311",
+    "kind": "arxiv",
+    "label": "2.1",
+    "title": "Physics of Language Models: Part 2.1, Grade-School Math and the Hidden Reasoning Process",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2407.20311"
+    ],
+    "order": 136,
+    "authors": [
+      "Tian Ye",
+      "Zicheng Xu",
+      "Yuanzhi Li",
+      "Zeyuan Allen-Zhu"
+    ],
+    "date": "2024-07-29",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2309.14316",
+    "kind": "arxiv",
+    "label": "3.1",
+    "title": "Physics of Language Models: Part 3.1, Knowledge Storage and Extraction",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2309.14316"
+    ],
+    "order": 137,
+    "authors": [
+      "Zeyuan Allen-Zhu",
+      "Yuanzhi Li"
+    ],
+    "date": "2023-09-25",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2309.14402",
+    "kind": "arxiv",
+    "label": "3.2",
+    "title": "Physics of Language Models: Part 3.2, Knowledge Manipulation",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2309.14402"
+    ],
+    "order": 138,
+    "authors": [
+      "Zeyuan Allen-Zhu",
+      "Yuanzhi Li"
+    ],
+    "date": "2023-09-25",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2404.05405",
+    "kind": "arxiv",
+    "label": "3.3 (Knowledge Capacity Scaling Laws)",
+    "title": "Physics of Language Models: Part 3.3, Knowledge Capacity Scaling Laws",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2404.05405"
+    ],
+    "order": 139,
+    "authors": [
+      "Zeyuan Allen-Zhu",
+      "Yuanzhi Li"
+    ],
+    "date": "2024-04-08",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2407.15017",
+    "kind": "arxiv",
+    "label": "Knowledge Mechanisms in LLMs: A Survey",
+    "title": "Knowledge Mechanisms in Large Language Models: A Survey and Perspective",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2407.15017"
+    ],
+    "order": 140,
+    "authors": [
+      "Mengru Wang",
+      "Yunzhi Yao",
+      "Ziwen Xu",
+      "Shuofei Qiao"
+    ],
+    "date": "2024-07-22",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2406.11813",
+    "kind": "arxiv",
+    "label": "How Do LLMs Acquire Factual Knowledge During Pretraining?",
+    "title": "How Do Large Language Models Acquire Factual Knowledge During Pretraining?",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2406.11813"
+    ],
+    "order": 141,
+    "authors": [
+      "Hoyeon Chang",
+      "Jinho Park",
+      "Seonghyeon Ye",
+      "Sohee Yang"
+    ],
+    "date": "2024-06-17",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2406.11741",
+    "kind": "arxiv",
+    "label": "Transcendence: Generative Models Can Outperform The Experts That Train Them",
+    "title": "Transcendence: Generative Models Can Outperform The Experts That Train Them",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2406.11741"
+    ],
+    "order": 142,
+    "authors": [
+      "Edwin Zhang",
+      "Vincent Zhu",
+      "Naomi Saphra",
+      "Anat Kleiman"
+    ],
+    "date": "2024-06-17",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2406.03689",
+    "kind": "arxiv",
+    "label": "Evaluating the World Model Implicit in a Generative Model",
+    "title": "Evaluating the World Model Implicit in a Generative Model",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2406.03689"
+    ],
+    "order": 143,
+    "authors": [
+      "Keyon Vafa",
+      "Justin Y. Chen",
+      "Ashesh Rambachan",
+      "Jon Kleinberg"
+    ],
+    "date": "2024-06-06",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2406.03445",
+    "kind": "arxiv",
+    "label": "Pre-trained Large Language Models Use Fourier Features to Compute Addition",
+    "title": "Pre-trained Large Language Models Use Fourier Features to Compute Addition",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2406.03445"
+    ],
+    "order": 144,
+    "authors": [
+      "Tianyi Zhou",
+      "Deqing Fu",
+      "Vatsal Sharan",
+      "Robin Jia"
+    ],
+    "date": "2024-06-05",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "doi:10.1073/pnas.2520095123",
+    "kind": "doi",
+    "label": "Formal logical reasoning suggests the language of thought is not natural language (Kean et al., PNAS 2026)",
+    "title": "Formal logical reasoning suggests the language of thought is not natural language (Kean et al., PNAS 2026)",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://doi.org/10.1073/pnas.2520095123",
+      "https://www.biorxiv.org/content/10.1101/2025.07.26.666979v3",
+      "https://joshrule.com/files/kean2025evidence.pdf"
+    ],
+    "order": 145,
+    "authors": [],
+    "date": null,
+    "date_source": null
+  },
+  {
+    "id": "doi:10.1038/s41586-024-07522-w",
+    "kind": "doi",
+    "label": "Language is primarily a tool for communication rather than thought (Fedorenko et al., Nature 2024)",
+    "title": "Language is primarily a tool for communication rather than thought (Fedorenko et al., Nature 2024)",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://doi.org/10.1038/s41586-024-07522-w"
+    ],
+    "order": 146,
+    "authors": [],
+    "date": null,
+    "date_source": null
+  },
+  {
+    "id": "doi:10.1038/d41586-024-01413-w",
+    "kind": "doi",
+    "label": "Why mathematics is set to be revolutionized by AI (Nature 2024)",
+    "title": "Why mathematics is set to be revolutionized by AI (Nature 2024)",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://doi.org/10.1038/d41586-024-01413-w"
+    ],
+    "order": 147,
+    "authors": [],
+    "date": null,
+    "date_source": null
+  },
+  {
+    "id": "arxiv:2405.15071",
+    "kind": "arxiv",
+    "label": "Grokked Transformers are Implicit Reasoners",
+    "title": "Grokked Transformers are Implicit Reasoners: A Mechanistic Journey to the Edge of Generalization",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2405.15071"
+    ],
+    "order": 148,
+    "authors": [
+      "Boshi Wang",
+      "Xiang Yue",
+      "Yu Su"
+    ],
+    "date": "2024-05-23",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2405.14838",
+    "kind": "arxiv",
+    "label": "From Explicit CoT to Implicit CoT",
+    "title": "From Explicit CoT to Implicit CoT: Learning to Internalize CoT Step by Step",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2405.14838"
+    ],
+    "order": 149,
+    "authors": [
+      "Yuntian Deng",
+      "Yejin Choi",
+      "Stuart Shieber"
+    ],
+    "date": "2024-05-23",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2402.01817",
+    "kind": "arxiv",
+    "label": "LLMs Can't Plan, But Can Help Planning (LLM-Modulo)",
+    "title": "LLMs Can't Plan, But Can Help Planning in LLM-Modulo Frameworks",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2402.01817"
+    ],
+    "order": 150,
+    "authors": [
+      "Subbarao Kambhampati",
+      "Karthik Valmeekam",
+      "Lin Guan",
+      "Mudit Verma"
+    ],
+    "date": "2024-02-02",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2312.13558",
+    "kind": "arxiv",
+    "label": "The Truth is in There: Layer-Selective Rank Reduction (LASER)",
+    "title": "The Truth is in There: Improving Reasoning in Language Models with Layer-Selective Rank Reduction",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2312.13558"
+    ],
+    "order": 151,
+    "authors": [
+      "Pratyusha Sharma",
+      "Jordan T. Ash",
+      "Dipendra Misra"
+    ],
+    "date": "2023-12-21",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "openreview:hcQfTsVnBo",
+    "kind": "openreview",
+    "label": "Grokking Group Multiplication with Cosets",
+    "title": "Grokking Group Multiplication with Cosets",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://openreview.net/forum?id=hcQfTsVnBo"
+    ],
+    "order": 152,
+    "authors": [
+      "Dashiell Stander",
+      "Qinan Yu",
+      "Honglu Fan",
+      "Stella Biderman"
+    ],
+    "date": "2023-12-11",
+    "date_source": "arxiv-api",
+    "fetched_title": "Grokking Group Multiplication with Cosets"
+  },
+  {
+    "id": "arxiv:2309.12288",
+    "kind": "arxiv",
+    "label": "The Reversal Curse",
+    "title": "The Reversal Curse: LLMs trained on \"A is B\" fail to learn \"B is A\"",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2309.12288"
+    ],
+    "order": 153,
+    "authors": [
+      "Lukas Berglund",
+      "Meg Tong",
+      "Max Kaufmann",
+      "Mikita Balesni"
+    ],
+    "date": "2023-09-21",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2304.15004",
+    "kind": "arxiv",
+    "label": "Are Emergent Abilities of LLMs a Mirage? (NeurIPS best paper)",
+    "title": "Are Emergent Abilities of Large Language Models a Mirage?",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2304.15004"
+    ],
+    "order": 154,
+    "authors": [
+      "Rylan Schaeffer",
+      "Brando Miranda",
+      "Sanmi Koyejo"
+    ],
+    "date": "2023-04-28",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2302.00923",
+    "kind": "arxiv",
+    "label": "Multimodal Chain-of-Thought Reasoning",
+    "title": "Multimodal Chain-of-Thought Reasoning in Language Models",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2302.00923"
+    ],
+    "order": 155,
+    "authors": [
+      "Zhuosheng Zhang",
+      "Aston Zhang",
+      "Mu Li",
+      "Hai Zhao"
+    ],
+    "date": "2023-02-02",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2301.06627",
+    "kind": "arxiv",
+    "label": "Dissociating language and thought in LLMs",
+    "title": "Dissociating language and thought in large language models",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2301.06627"
+    ],
+    "order": 156,
+    "authors": [
+      "Kyle Mahowald",
+      "Anna A. Ivanova",
+      "Idan A. Blank",
+      "Nancy Kanwisher"
+    ],
+    "date": "2023-01-16",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2301.05217",
+    "kind": "arxiv",
+    "label": "Progress measures for grokking via mechanistic interpretability",
+    "title": "Progress measures for grokking via mechanistic interpretability",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2301.05217"
+    ],
+    "order": 157,
+    "authors": [
+      "Neel Nanda",
+      "Lawrence Chan",
+      "Tom Lieberum",
+      "Jess Smith"
+    ],
+    "date": "2023-01-12",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2212.09196",
+    "kind": "arxiv",
+    "label": "Emergent Analogical Reasoning in LLMs",
+    "title": "Emergent Analogical Reasoning in Large Language Models",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2212.09196"
+    ],
+    "order": 158,
+    "authors": [
+      "Taylor Webb",
+      "Keith J. Holyoak",
+      "Hongjing Lu"
+    ],
+    "date": "2022-12-19",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:ai.googleblog.com/2022/11/characterizing-emergent-phenomena-in.html",
+    "kind": "web",
+    "label": "Characterizing emergent phenomena in LLMs (Google Research)",
+    "title": "Characterizing emergent phenomena in LLMs (Google Research)",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://ai.googleblog.com/2022/11/characterizing-emergent-phenomena-in.html"
+    ],
+    "order": 159,
+    "authors": [],
+    "date": "2022-11-10",
+    "date_source": "page"
+  },
+  {
+    "id": "arxiv:2608.05136",
+    "kind": "arxiv",
+    "label": "The Loss Does Not See the Basis, but Adam Does",
+    "title": "The Loss Does Not See the Basis, but Adam Does",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2608.05136"
+    ],
+    "order": 160,
+    "authors": [
+      "Devender Singh"
+    ],
+    "date": "2026-08-05",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2607.27372",
+    "kind": "arxiv",
+    "label": "Explorative Modeling: Unlocking a Third Pretraining Axis",
+    "title": "Explorative Modeling: Unlocking a Third Pretraining Axis and End-to-End Generation",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2607.27372",
+      "https://explorative-modeling.github.io/",
+      "https://arxiviq.substack.com/p/explorative-modeling-unlocking-a"
+    ],
+    "order": 161,
+    "authors": [
+      "Alexi Gladstone",
+      "Heng Ji",
+      "Yilun Du"
+    ],
+    "date": "2026-07-29",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2512.24695",
+    "kind": "arxiv",
+    "label": "Nested Learning (Google, NeurIPS 2025)",
+    "title": "Nested Learning: The Illusion of Deep Learning Architectures",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2512.24695",
+      "https://abehrouz.github.io/files/NL.pdf",
+      "https://research.google/blog/introducing-nested-learning-a-new-ml-paradigm-for-continual-learning/"
+    ],
+    "order": 162,
+    "authors": [
+      "Ali Behrouz",
+      "Meisam Razaviyayn",
+      "Peilin Zhong",
+      "Vahab Mirrokni"
+    ],
+    "date": "2025-12-31",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2510.05491",
+    "kind": "arxiv",
+    "label": "NorMuon: Making Muon more efficient and scalable",
+    "title": "NorMuon: Making Muon more efficient and scalable",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2510.05491"
+    ],
+    "order": 163,
+    "authors": [
+      "Zichong Li",
+      "Liming Liu",
+      "Chen Liang",
+      "Weizhu Chen"
+    ],
+    "date": "2025-10-07",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2508.11408",
+    "kind": "arxiv",
+    "label": "On-Policy RL Meets Off-Policy Experts (SFT+RL dynamic weighting)",
+    "title": "On-Policy RL Meets Off-Policy Experts: Harmonizing Supervised Fine-Tuning and Reinforcement Learning via Dynamic Weighting",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2508.11408"
+    ],
+    "order": 164,
+    "authors": [
+      "Wenhao Zhang",
+      "Yuexiang Xie",
+      "Yuchang Sun"
+    ],
+    "date": "2025-08-15",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2507.12856",
+    "kind": "arxiv",
+    "label": "Supervised Fine Tuning on Curated Data is Reinforcement Learning",
+    "title": "Supervised Fine Tuning on Curated Data is Reinforcement Learning (and can be improved)",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2507.12856"
+    ],
+    "order": 165,
+    "authors": [
+      "Chongli Qin",
+      "Jost Tobias Springenberg"
+    ],
+    "date": "2025-07-17",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2506.08007",
+    "kind": "arxiv",
+    "label": "Reinforcement Pre-Training (RPT)",
+    "title": "Reinforcement Pre-Training",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2506.08007"
+    ],
+    "order": 166,
+    "authors": [
+      "Qingxiu Dong",
+      "Li Dong",
+      "Yao Tang"
+    ],
+    "date": "2025-06-09",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2505.24832",
+    "kind": "arxiv",
+    "label": "How much do language models memorize?",
+    "title": "How much do language models memorize?",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2505.24832",
+      "https://arxiviq.substack.com/p/the-measure-of-memory",
+      "https://openreview.net/forum?id=bA6BgSbaUi",
+      "https://openreview.net/forum?id=NhU661EZ9C"
+    ],
+    "order": 167,
+    "authors": [
+      "John X. Morris",
+      "Chawin Sitawarin",
+      "Chuan Guo",
+      "Narine Kokhlikyan"
+    ],
+    "date": "2025-05-30",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:iclr.cc/virtual/2025/poster/30565",
+    "kind": "web",
+    "label": "ADAM Optimization with Adaptive Batch Selection / AdamCB",
+    "title": "ADAM Optimization with Adaptive Batch Selection / AdamCB",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://iclr.cc/virtual/2025/poster/30565"
+    ],
+    "order": 168,
+    "authors": [],
+    "date": "2024-10-01",
+    "date_source": "known"
+  },
+  {
+    "id": "arxiv:2410.07041",
+    "kind": "arxiv",
+    "label": "Emergent properties with repeated examples (FAIR)",
+    "title": "Emergent properties with repeated examples",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2410.07041"
+    ],
+    "order": 169,
+    "authors": [
+      "François Charton",
+      "Julia Kempe"
+    ],
+    "date": "2024-10-09",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2409.03137",
+    "kind": "arxiv",
+    "label": "The AdEMAMix Optimizer",
+    "title": "The AdEMAMix Optimizer: Better, Faster, Older",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2409.03137"
+    ],
+    "order": 170,
+    "authors": [
+      "Matteo Pagliardini",
+      "Pierre Ablin",
+      "David Grangier"
+    ],
+    "date": "2024-09-05",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "doi:10.1038/s41586-024-07711-7",
+    "kind": "doi",
+    "label": "Loss of plasticity in deep continual learning (Sutton et al., Nature 2024)",
+    "title": "Loss of plasticity in deep continual learning (Sutton et al., Nature 2024)",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://doi.org/10.1038/s41586-024-07711-7"
+    ],
+    "order": 171,
+    "authors": [
+      "Shibhansh Dohare",
+      "J. Fernando Hernandez-Garcia",
+      "Parash Rahman",
+      "A. Rupam Mahmood"
+    ],
+    "date": "2023-06-23",
+    "date_source": "arxiv-api",
+    "fetched_title": "Maintaining Plasticity in Deep Continual Learning"
+  },
+  {
+    "id": "url:educatingsilicon.com/2024/05/09/how-much-llm-training-data-is-there-in-the-limit",
+    "kind": "web",
+    "label": "How much LLM training data is there, in the limit?",
+    "title": "How much LLM training data is there, in the limit?",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://www.educatingsilicon.com/2024/05/09/how-much-llm-training-data-is-there-in-the-limit/"
+    ],
+    "order": 172,
+    "authors": [],
+    "date": "2024-05-09",
+    "date_source": "url"
+  },
+  {
+    "id": "arxiv:2405.20541",
+    "kind": "arxiv",
+    "label": "Perplexed by Perplexity: Data Pruning With Small Reference Models",
+    "title": "Perplexed by Perplexity: Perplexity-Based Data Pruning With Small Reference Models",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2405.20541"
+    ],
+    "order": 173,
+    "authors": [
+      "Zachary Ankner",
+      "Cody Blakeney",
+      "Kartik Sreenivasan",
+      "Max Marion"
+    ],
+    "date": "2024-05-30",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2405.20233",
+    "kind": "arxiv",
+    "label": "Grokfast: Accelerated Grokking",
+    "title": "Grokfast: Accelerated Grokking by Amplifying Slow Gradients",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2405.20233"
+    ],
+    "order": 174,
+    "authors": [
+      "Jaerin Lee",
+      "Bong Gyun Kang",
+      "Kihoon Kim",
+      "Kyoung Mu Lee"
+    ],
+    "date": "2024-05-30",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2405.18392",
+    "kind": "arxiv",
+    "label": "Scaling Laws and Compute-Optimal Training Beyond Fixed Training Durations",
+    "title": "Scaling Laws and Compute-Optimal Training Beyond Fixed Training Durations",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2405.18392"
+    ],
+    "order": 175,
+    "authors": [
+      "Alexander Hägele",
+      "Elie Bakouch",
+      "Atli Kosson",
+      "Loubna Ben Allal"
+    ],
+    "date": "2024-05-28",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2405.16684",
+    "kind": "arxiv",
+    "label": "gzip Predicts Data-dependent Scaling Laws",
+    "title": "gzip Predicts Data-dependent Scaling Laws",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2405.16684"
+    ],
+    "order": 176,
+    "authors": [
+      "Rohan Pandey"
+    ],
+    "date": "2024-05-26",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2405.15682",
+    "kind": "arxiv",
+    "label": "The Road Less Scheduled (Schedule-Free)",
+    "title": "The Road Less Scheduled",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2405.15682"
+    ],
+    "order": 177,
+    "authors": [
+      "Aaron Defazio",
+      "Xingyu Alice Yang",
+      "Harsh Mehta",
+      "Konstantin Mishchenko"
+    ],
+    "date": "2024-05-24",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:epochai.org/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year",
+    "kind": "web",
+    "label": "Training compute of frontier models grows 4–5x/year (Epoch AI)",
+    "title": "Training compute of frontier models grows 4–5x/year (Epoch AI)",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://epochai.org/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year"
+    ],
+    "order": 178,
+    "authors": [],
+    "date": "2024-05-28",
+    "date_source": "known"
+  },
+  {
+    "id": "arxiv:2403.05175",
+    "kind": "arxiv",
+    "label": "Continual Learning and Catastrophic Forgetting",
+    "title": "Continual Learning and Catastrophic Forgetting",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2403.05175"
+    ],
+    "order": 179,
+    "authors": [
+      "Gido M. van de Ven",
+      "Nicholas Soures",
+      "Dhireesha Kudithipudi"
+    ],
+    "date": "2024-03-08",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2402.02342",
+    "kind": "arxiv",
+    "label": "MetaOptimize: A Framework for Optimizing Step Sizes and Other Meta-parameters",
+    "title": "MetaOptimize: A Framework for Optimizing Step Sizes and Other Meta-parameters",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2402.02342"
+    ],
+    "order": 180,
+    "authors": [
+      "Arsalan Sharifnassab",
+      "Saber Salehkaleybar",
+      "Richard Sutton"
+    ],
+    "date": "2024-02-04",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2401.17401",
+    "kind": "arxiv",
+    "label": "Step-size Optimization for Continual Learning",
+    "title": "Step-size Optimization for Continual Learning",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2401.17401"
+    ],
+    "order": 181,
+    "authors": [
+      "Thomas Degris",
+      "Khurram Javed",
+      "Arsalan Sharifnassab",
+      "Yuxin Liu"
+    ],
+    "date": "2024-01-30",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2312.17742",
+    "kind": "arxiv",
+    "label": "Learning Vision from Models Rivals Learning Vision from Data",
+    "title": "Learning Vision from Models Rivals Learning Vision from Data",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2312.17742"
+    ],
+    "order": 182,
+    "authors": [
+      "Yonglong Tian",
+      "Lijie Fan",
+      "Kaifeng Chen",
+      "Dina Katabi"
+    ],
+    "date": "2023-12-28",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2312.10549",
+    "kind": "arxiv",
+    "label": "Catastrophic Forgetting in Deep Learning: A Comprehensive Taxonomy",
+    "title": "Catastrophic Forgetting in Deep Learning: A Comprehensive Taxonomy",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2312.10549"
+    ],
+    "order": 183,
+    "authors": [
+      "Everton L. Aleixo",
+      "Juan G. Colonna",
+      "Marco Cristo",
+      "Everlandio Fernandes"
+    ],
+    "date": "2023-12-16",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2307.06440",
+    "kind": "arxiv",
+    "label": "No Train No Gain: Revisiting Efficient Training Algorithms for Transformer LMs",
+    "title": "No Train No Gain: Revisiting Efficient Training Algorithms For Transformer-based Language Models",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2307.06440"
+    ],
+    "order": 184,
+    "authors": [
+      "Jean Kaddour",
+      "Oscar Key",
+      "Piotr Nawrot",
+      "Pasquale Minervini"
+    ],
+    "date": "2023-07-12",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2305.14342",
+    "kind": "arxiv",
+    "label": "Sophia: A Scalable Stochastic Second-order Optimizer for LM Pre-training",
+    "title": "Sophia: A Scalable Stochastic Second-order Optimizer for Language Model Pre-training",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2305.14342"
+    ],
+    "order": 185,
+    "authors": [
+      "Hong Liu",
+      "Zhiyuan Li",
+      "David Hall",
+      "Percy Liang"
+    ],
+    "date": "2023-05-23",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2302.06675",
+    "kind": "arxiv",
+    "label": "Lion: Symbolic Discovery of Optimization Algorithms",
+    "title": "Symbolic Discovery of Optimization Algorithms",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2302.06675"
+    ],
+    "order": 186,
+    "authors": [
+      "Xiangning Chen",
+      "Chen Liang",
+      "Da Huang",
+      "Esteban Real"
+    ],
+    "date": "2023-02-13",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2212.14034",
+    "kind": "arxiv",
+    "label": "Cramming: Training a Language Model on a Single GPU in One Day",
+    "title": "Cramming: Training a Language Model on a Single GPU in One Day",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2212.14034"
+    ],
+    "order": 187,
+    "authors": [
+      "Jonas Geiping",
+      "Tom Goldstein"
+    ],
+    "date": "2022-12-28",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2210.10760",
+    "kind": "arxiv",
+    "label": "Scaling Laws for Reward Model Overoptimization",
+    "title": "Scaling Laws for Reward Model Overoptimization",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2210.10760"
+    ],
+    "order": 188,
+    "authors": [
+      "Leo Gao",
+      "John Schulman",
+      "Jacob Hilton"
+    ],
+    "date": "2022-10-19",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2110.09485",
+    "kind": "arxiv",
+    "label": "Learning in High Dimension Always Amounts to Extrapolation",
+    "title": "Learning in High Dimension Always Amounts to Extrapolation",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2110.09485"
+    ],
+    "order": 189,
+    "authors": [
+      "Randall Balestriero",
+      "Jerome Pesenti",
+      "Yann LeCun"
+    ],
+    "date": "2021-10-18",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2108.06325",
+    "kind": "arxiv",
+    "label": "Continual Backprop: SGD with Persistent Randomness",
+    "title": "Continual Backprop: Stochastic Gradient Descent with Persistent Randomness",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2108.06325"
+    ],
+    "order": 190,
+    "authors": [
+      "Shibhansh Dohare",
+      "Richard S. Sutton",
+      "A. Rupam Mahmood"
+    ],
+    "date": "2021-08-13",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2010.01412",
+    "kind": "arxiv",
+    "label": "Sharpness-Aware Minimization (SAM)",
+    "title": "Sharpness-Aware Minimization for Efficiently Improving Generalization",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2010.01412"
+    ],
+    "order": 191,
+    "authors": [
+      "Pierre Foret",
+      "Ariel Kleiner",
+      "Hossein Mobahi",
+      "Behnam Neyshabur"
+    ],
+    "date": "2020-10-03",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2009.11848",
+    "kind": "arxiv",
+    "label": "How Neural Networks Extrapolate: From Feedforward to Graph Neural Networks",
+    "title": "How Neural Networks Extrapolate: From Feedforward to Graph Neural Networks",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2009.11848"
+    ],
+    "order": 192,
+    "authors": [
+      "Keyulu Xu",
+      "Mozhi Zhang",
+      "Jingling Li",
+      "Simon S. Du"
+    ],
+    "date": "2020-09-24",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2009.11243",
+    "kind": "arxiv",
+    "label": "Learned optimizers: training an optimizer with itself",
+    "title": "Tasks, stability, architecture, and compute: Training more effective learned optimizers, and using them to train themselves",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2009.11243",
+      "https://arxiv.org/abs/2002.11887"
+    ],
+    "order": 193,
+    "authors": [
+      "Luke Metz",
+      "Niru Maheswaranathan",
+      "C. Daniel Freeman",
+      "Ben Poole"
+    ],
+    "date": "2020-09-23",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2001.08361",
+    "kind": "arxiv",
+    "label": "Scaling Laws for Neural Language Models",
+    "title": "Scaling Laws for Neural Language Models",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/2001.08361"
+    ],
+    "order": 194,
+    "authors": [
+      "Jared Kaplan",
+      "Sam McCandlish",
+      "Tom Henighan",
+      "Tom B. Brown"
+    ],
+    "date": "2020-01-23",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:openai.com/index/deep-double-descent",
+    "kind": "web",
+    "label": "Deep Double Descent (OpenAI)",
+    "title": "Deep Double Descent (OpenAI)",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://openai.com/index/deep-double-descent/"
+    ],
+    "order": 195,
+    "authors": [],
+    "date": null,
+    "date_source": null
+  },
+  {
+    "id": "url:paperswithcode.com/paper/optimizing-millions-of-hyperparameters-by",
+    "kind": "web",
+    "label": "Optimizing Millions of Hyperparameters by Implicit Differentiation",
+    "title": "Optimizing Millions of Hyperparameters by Implicit Differentiation",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://paperswithcode.com/paper/optimizing-millions-of-hyperparameters-by"
+    ],
+    "order": 196,
+    "authors": [],
+    "date": null,
+    "date_source": null
+  },
+  {
+    "id": "openreview:ry_WPG-A-",
+    "kind": "openreview",
+    "label": "On the Information Bottleneck Theory of Deep Learning (Saxe et al.)",
+    "title": "On the Information Bottleneck Theory of Deep Learning (Saxe et al.)",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://openreview.net/forum?id=ry_WPG-A-"
+    ],
+    "order": 197,
+    "authors": [],
+    "date": "2017-10-27",
+    "date_source": "known"
+  },
+  {
+    "id": "arxiv:1904.00962",
+    "kind": "arxiv",
+    "label": "LAMB: Training BERT in 76 minutes",
+    "title": "Large Batch Optimization for Deep Learning: Training BERT in 76 minutes",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/1904.00962"
+    ],
+    "order": 198,
+    "authors": [
+      "Yang You",
+      "Jing Li",
+      "Sashank Reddi",
+      "Jonathan Hseu"
+    ],
+    "date": "2019-04-01",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:1803.03635",
+    "kind": "arxiv",
+    "label": "The Lottery Ticket Hypothesis",
+    "title": "The Lottery Ticket Hypothesis: Finding Sparse, Trainable Neural Networks",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/1803.03635"
+    ],
+    "order": 199,
+    "authors": [
+      "Jonathan Frankle",
+      "Michael Carbin"
+    ],
+    "date": "2018-03-09",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:1708.07120",
+    "kind": "arxiv",
+    "label": "Super-Convergence (one-cycle)",
+    "title": "Super-Convergence: Very Fast Training of Neural Networks Using Large Learning Rates",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/1708.07120"
+    ],
+    "order": 200,
+    "authors": [
+      "Leslie N. Smith",
+      "Nicholay Topin"
+    ],
+    "date": "2017-08-23",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:1708.02072",
+    "kind": "arxiv",
+    "label": "Measuring Catastrophic Forgetting in Neural Networks",
+    "title": "Measuring Catastrophic Forgetting in Neural Networks",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/1708.02072"
+    ],
+    "order": 201,
+    "authors": [
+      "Ronald Kemker",
+      "Marc McClure",
+      "Angelina Abitino",
+      "Tyler Hayes"
+    ],
+    "date": "2017-08-07",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "doi:10.1073/pnas.1611835114",
+    "kind": "doi",
+    "label": "Overcoming catastrophic forgetting in neural networks (EWC, Kirkpatrick et al., PNAS 2017)",
+    "title": "Overcoming catastrophic forgetting in neural networks (EWC, Kirkpatrick et al., PNAS 2017)",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://doi.org/10.1073/pnas.1611835114"
+    ],
+    "order": 202,
+    "authors": [],
+    "date": null,
+    "date_source": null
+  },
+  {
+    "id": "arxiv:1506.01186",
+    "kind": "arxiv",
+    "label": "Cyclical Learning Rates",
+    "title": "Cyclical Learning Rates for Training Neural Networks",
+    "section": "Data, training, optimization",
+    "urls": [
+      "https://arxiv.org/abs/1506.01186"
+    ],
+    "order": 203,
+    "authors": [
+      "Leslie N. Smith"
+    ],
+    "date": "2015-06-03",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2606.02572",
+    "kind": "arxiv",
+    "label": "VISReg: Variance-Invariance-Sketching Regularization for JEPA",
+    "title": "VISReg: Variance-Invariance-Sketching Regularization for JEPA training",
+    "section": "Self-supervised learning and vision",
+    "urls": [
+      "https://arxiv.org/abs/2606.02572",
+      "https://haiyuwu.github.io/visreg",
+      "https://arxiviq.substack.com/p/visreg-variance-invariance-sketching"
+    ],
+    "order": 204,
+    "authors": [
+      "Haiyu Wu",
+      "Randall Balestriero",
+      "Morgan Levine"
+    ],
+    "date": "2026-06-01",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2605.26379",
+    "kind": "arxiv",
+    "label": "When Does LeJEPA Learn a World Model?",
+    "title": "When Does LeJEPA Learn a World Model?",
+    "section": "Self-supervised learning and vision",
+    "urls": [
+      "https://arxiv.org/abs/2605.26379"
+    ],
+    "order": 205,
+    "authors": [
+      "David Klindt",
+      "Yann LeCun",
+      "Randall Balestriero"
+    ],
+    "date": "2026-05-25",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2511.08544",
+    "kind": "arxiv",
+    "label": "LeJEPA: Provable and Scalable Self-Supervised Learning Without the Heuristics",
+    "title": "LeJEPA: Provable and Scalable Self-Supervised Learning Without the Heuristics",
+    "section": "Self-supervised learning and vision",
+    "urls": [
+      "https://arxiv.org/abs/2511.08544"
+    ],
+    "order": 206,
+    "authors": [
+      "Randall Balestriero",
+      "Yann LeCun"
+    ],
+    "date": "2025-11-11",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2501.05441",
+    "kind": "arxiv",
+    "label": "The GAN is dead; long live the GAN! (R3GAN)",
+    "title": "The GAN is dead; long live the GAN! A Modern GAN Baseline",
+    "section": "Self-supervised learning and vision",
+    "urls": [
+      "https://arxiv.org/abs/2501.05441"
+    ],
+    "order": 207,
+    "authors": [
+      "Yiwen Huang",
+      "Aaron Gokaslan",
+      "Volodymyr Kuleshov",
+      "James Tompkin"
+    ],
+    "date": "2025-01-09",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:ai.meta.com/blog/emu-text-to-video-generation-image-editing-research",
+    "kind": "web",
+    "label": "EMU Video: Factorizing Text-to-Video Generation (Meta)",
+    "title": "EMU Video: Factorizing Text-to-Video Generation (Meta)",
+    "section": "Self-supervised learning and vision",
+    "urls": [
+      "https://ai.meta.com/blog/emu-text-to-video-generation-image-editing-research/"
+    ],
+    "order": 208,
+    "authors": [
+      "Rohit Girdhar",
+      "Mannat Singh",
+      "Andrew Brown",
+      "Quentin Duval"
+    ],
+    "date": "2023-11-17",
+    "date_source": "arxiv-api",
+    "fetched_title": "Emu Video: Factorizing Text-to-Video Generation by Explicit Image Conditioning"
+  },
+  {
+    "id": "arxiv:2310.04378",
+    "kind": "arxiv",
+    "label": "Latent Consistency Models",
+    "title": "Latent Consistency Models: Synthesizing High-Resolution Images with Few-Step Inference",
+    "section": "Self-supervised learning and vision",
+    "urls": [
+      "https://arxiv.org/abs/2310.04378"
+    ],
+    "order": 209,
+    "authors": [
+      "Simian Luo",
+      "Yiqin Tan",
+      "Longbo Huang",
+      "Jian Li"
+    ],
+    "date": "2023-10-06",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2309.15807",
+    "kind": "arxiv",
+    "label": "Emu: Enhancing Image Generation with Photogenic Needles",
+    "title": "Emu: Enhancing Image Generation Models Using Photogenic Needles in a Haystack",
+    "section": "Self-supervised learning and vision",
+    "urls": [
+      "https://arxiv.org/abs/2309.15807"
+    ],
+    "order": 210,
+    "authors": [
+      "Xiaoliang Dai",
+      "Ji Hou",
+      "Chih-Yao Ma",
+      "Sam Tsai"
+    ],
+    "date": "2023-09-27",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:research.nvidia.com/labs/par/perfusion",
+    "kind": "web",
+    "label": "Perfusion (NVIDIA)",
+    "title": "Perfusion (NVIDIA)",
+    "section": "Self-supervised learning and vision",
+    "urls": [
+      "https://research.nvidia.com/labs/par/Perfusion/"
+    ],
+    "order": 211,
+    "authors": [
+      "Yoad Tewel",
+      "Rinon Gal",
+      "Gal Chechik",
+      "Yuval Atzmon"
+    ],
+    "date": "2023-05-02",
+    "date_source": "arxiv-api",
+    "fetched_title": "Key-Locked Rank One Editing for Text-to-Image Personalization"
+  },
+  {
+    "id": "url:hyperdreambooth.github.io",
+    "kind": "web",
+    "label": "HyperDreamBooth",
+    "title": "HyperDreamBooth",
+    "section": "Self-supervised learning and vision",
+    "urls": [
+      "https://hyperdreambooth.github.io/"
+    ],
+    "order": 212,
+    "authors": [
+      "Nataniel Ruiz",
+      "Yuanzhen Li",
+      "Varun Jampani",
+      "Wei Wei"
+    ],
+    "date": "2023-07-13",
+    "date_source": "arxiv-api",
+    "fetched_title": "HyperDreamBooth: HyperNetworks for Fast Personalization of Text-to-Image Models"
+  },
+  {
+    "id": "url:ai.facebook.com/blog/voicebox-generative-ai-model-speech",
+    "kind": "web",
+    "label": "Voicebox (Meta, speech generation)",
+    "title": "Voicebox (Meta, speech generation)",
+    "section": "Self-supervised learning and vision",
+    "urls": [
+      "https://ai.facebook.com/blog/voicebox-generative-ai-model-speech/"
+    ],
+    "order": 213,
+    "authors": [
+      "Matthew Le",
+      "Apoorv Vyas",
+      "Bowen Shi",
+      "Brian Karrer"
+    ],
+    "date": "2023-06-23",
+    "date_source": "arxiv-api",
+    "fetched_title": "Voicebox: Text-Guided Multilingual Universal Speech Generation at Scale"
+  },
+  {
+    "id": "arxiv:2304.12210",
+    "kind": "arxiv",
+    "label": "A Cookbook of Self-Supervised Learning",
+    "title": "A Cookbook of Self-Supervised Learning",
+    "section": "Self-supervised learning and vision",
+    "urls": [
+      "https://arxiv.org/abs/2304.12210"
+    ],
+    "order": 214,
+    "authors": [
+      "Randall Balestriero",
+      "Mark Ibrahim",
+      "Vlad Sobal",
+      "Ari Morcos"
+    ],
+    "date": "2023-04-24",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2304.09355",
+    "kind": "arxiv",
+    "label": "To Compress or Not to Compress: SSL and Information Theory",
+    "title": "To Compress or Not to Compress- Self-Supervised Learning and Information Theory: A Review",
+    "section": "Self-supervised learning and vision",
+    "urls": [
+      "https://arxiv.org/abs/2304.09355"
+    ],
+    "order": 215,
+    "authors": [
+      "Ravid Shwartz-Ziv",
+      "Yann LeCun"
+    ],
+    "date": "2023-04-19",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2304.07193",
+    "kind": "arxiv",
+    "label": "DINOv2",
+    "title": "DINOv2: Learning Robust Visual Features without Supervision",
+    "section": "Self-supervised learning and vision",
+    "urls": [
+      "https://arxiv.org/abs/2304.07193"
+    ],
+    "order": 216,
+    "authors": [
+      "Maxime Oquab",
+      "Timothée Darcet",
+      "Théo Moutakanni",
+      "Huy Vo"
+    ],
+    "date": "2023-04-14",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2304.05977",
+    "kind": "arxiv",
+    "label": "ImageReward",
+    "title": "ImageReward: Learning and Evaluating Human Preferences for Text-to-Image Generation",
+    "section": "Self-supervised learning and vision",
+    "urls": [
+      "https://arxiv.org/abs/2304.05977"
+    ],
+    "order": 217,
+    "authors": [
+      "Jiazheng Xu",
+      "Xiao Liu",
+      "Yuchen Wu",
+      "Yuxuan Tong"
+    ],
+    "date": "2023-04-12",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2302.10174",
+    "kind": "arxiv",
+    "label": "Towards Universal Fake Image Detectors",
+    "title": "Towards Universal Fake Image Detectors that Generalize Across Generative Models",
+    "section": "Self-supervised learning and vision",
+    "urls": [
+      "https://arxiv.org/abs/2302.10174"
+    ],
+    "order": 218,
+    "authors": [
+      "Utkarsh Ojha",
+      "Yuheng Li",
+      "Yong Jae Lee"
+    ],
+    "date": "2023-02-20",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2301.08243",
+    "kind": "arxiv",
+    "label": "I-JEPA (Self-Supervised Learning from Images with JEPA)",
+    "title": "Self-Supervised Learning from Images with a Joint-Embedding Predictive Architecture",
+    "section": "Self-supervised learning and vision",
+    "urls": [
+      "https://arxiv.org/abs/2301.08243"
+    ],
+    "order": 219,
+    "authors": [
+      "Mahmoud Assran",
+      "Quentin Duval",
+      "Ishan Misra",
+      "Piotr Bojanowski"
+    ],
+    "date": "2023-01-19",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2212.11565",
+    "kind": "arxiv",
+    "label": "Tune-A-Video",
+    "title": "Tune-A-Video: One-Shot Tuning of Image Diffusion Models for Text-to-Video Generation",
+    "section": "Self-supervised learning and vision",
+    "urls": [
+      "https://arxiv.org/abs/2212.11565"
+    ],
+    "order": 220,
+    "authors": [
+      "Jay Zhangjie Wu",
+      "Yixiao Ge",
+      "Xintao Wang",
+      "Weixian Lei"
+    ],
+    "date": "2022-12-22",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2208.10442",
+    "kind": "arxiv",
+    "label": "BEiT-3: Image as a Foreign Language",
+    "title": "Image as a Foreign Language: BEiT Pretraining for All Vision and Vision-Language Tasks",
+    "section": "Self-supervised learning and vision",
+    "urls": [
+      "https://arxiv.org/abs/2208.10442"
+    ],
+    "order": 221,
+    "authors": [
+      "Wenhui Wang",
+      "Hangbo Bao",
+      "Li Dong",
+      "Johan Bjorck"
+    ],
+    "date": "2022-08-22",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "openreview:BZ5a1r-kVsf",
+    "kind": "openreview",
+    "label": "A Path Towards Autonomous Machine Intelligence (LeCun, 2022)",
+    "title": "A Path Towards Autonomous Machine Intelligence (LeCun, 2022)",
+    "section": "Self-supervised learning and vision",
+    "urls": [
+      "https://openreview.net/forum?id=BZ5a1r-kVsf"
+    ],
+    "order": 222,
+    "authors": [],
+    "date": "2022-06-27",
+    "date_source": "known"
+  },
+  {
+    "id": "arxiv:2111.07832",
+    "kind": "arxiv",
+    "label": "iBOT: Image BERT Pre-Training with Online Tokenizer",
+    "title": "iBOT: Image BERT Pre-Training with Online Tokenizer",
+    "section": "Self-supervised learning and vision",
+    "urls": [
+      "https://arxiv.org/abs/2111.07832"
+    ],
+    "order": 223,
+    "authors": [
+      "Jinghao Zhou",
+      "Chen Wei",
+      "Huiyu Wang",
+      "Wei Shen"
+    ],
+    "date": "2021-11-15",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2105.04906",
+    "kind": "arxiv",
+    "label": "VICReg: Variance-Invariance-Covariance Regularization",
+    "title": "VICReg: Variance-Invariance-Covariance Regularization for Self-Supervised Learning",
+    "section": "Self-supervised learning and vision",
+    "urls": [
+      "https://arxiv.org/abs/2105.04906"
+    ],
+    "order": 224,
+    "authors": [
+      "Adrien Bardes",
+      "Jean Ponce",
+      "Yann LeCun"
+    ],
+    "date": "2021-05-11",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2104.14294",
+    "kind": "arxiv",
+    "label": "DINO: Emerging Properties in Self-Supervised ViT",
+    "title": "Emerging Properties in Self-Supervised Vision Transformers",
+    "section": "Self-supervised learning and vision",
+    "urls": [
+      "https://arxiv.org/abs/2104.14294"
+    ],
+    "order": 225,
+    "authors": [
+      "Mathilde Caron",
+      "Hugo Touvron",
+      "Ishan Misra",
+      "Hervé Jégou"
+    ],
+    "date": "2021-04-29",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2006.09882",
+    "kind": "arxiv",
+    "label": "SwAV: Unsupervised Learning by Contrasting Cluster Assignments",
+    "title": "Unsupervised Learning of Visual Features by Contrasting Cluster Assignments",
+    "section": "Self-supervised learning and vision",
+    "urls": [
+      "https://arxiv.org/abs/2006.09882"
+    ],
+    "order": 226,
+    "authors": [
+      "Mathilde Caron",
+      "Ishan Misra",
+      "Julien Mairal",
+      "Priya Goyal"
+    ],
+    "date": "2020-06-17",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2606.18543",
+    "kind": "arxiv",
+    "label": "CEO-Bench: Can Agents Play the Long Game?",
+    "title": "CEO-Bench: Can Agents Play the Long Game?",
+    "section": "Retrieval, embeddings, benchmarks",
+    "urls": [
+      "https://arxiv.org/abs/2606.18543"
+    ],
+    "order": 227,
+    "authors": [
+      "Haozhe Chen",
+      "Karthik Narasimhan",
+      "Zhuang Liu"
+    ],
+    "date": "2026-06-16",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2410.07095",
+    "kind": "arxiv",
+    "label": "MLE-bench: Evaluating ML Agents on ML Engineering",
+    "title": "MLE-bench: Evaluating Machine Learning Agents on Machine Learning Engineering",
+    "section": "Retrieval, embeddings, benchmarks",
+    "urls": [
+      "https://arxiv.org/abs/2410.07095"
+    ],
+    "order": 228,
+    "authors": [
+      "Jun Shern Chan",
+      "Neil Chowdhury",
+      "Oliver Jaffe",
+      "James Aung"
+    ],
+    "date": "2024-10-09",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2405.08007",
+    "kind": "arxiv",
+    "label": "People cannot distinguish GPT-4 from a human in a Turing test",
+    "title": "People cannot distinguish GPT-4 from a human in a Turing test",
+    "section": "Retrieval, embeddings, benchmarks",
+    "urls": [
+      "https://arxiv.org/abs/2405.08007"
+    ],
+    "order": 229,
+    "authors": [
+      "Cameron R. Jones",
+      "Benjamin K. Bergen"
+    ],
+    "date": "2024-05-09",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2402.16822",
+    "kind": "arxiv",
+    "label": "Rainbow Teaming",
+    "title": "Rainbow Teaming: Open-Ended Generation of Diverse Adversarial Prompts",
+    "section": "Retrieval, embeddings, benchmarks",
+    "urls": [
+      "https://arxiv.org/abs/2402.16822"
+    ],
+    "order": 230,
+    "authors": [
+      "Mikayel Samvelyan",
+      "Sharath Chandra Raparthy",
+      "Andrei Lupu",
+      "Eric Hambro"
+    ],
+    "date": "2024-02-26",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2402.12483",
+    "kind": "arxiv",
+    "label": "Artifacts or Abduction: multiple-choice questions without the question",
+    "title": "Artifacts or Abduction: How Do LLMs Answer Multiple-Choice Questions Without the Question?",
+    "section": "Retrieval, embeddings, benchmarks",
+    "urls": [
+      "https://arxiv.org/abs/2402.12483"
+    ],
+    "order": 231,
+    "authors": [
+      "Nishant Balepur",
+      "Abhilasha Ravichander",
+      "Rachel Rudinger"
+    ],
+    "date": "2024-02-19",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2311.16452",
+    "kind": "arxiv",
+    "label": "Medprompt: Can Generalist Foundation Models Outcompete Special-Purpose Tuning?",
+    "title": "Can Generalist Foundation Models Outcompete Special-Purpose Tuning? Case Study in Medicine",
+    "section": "Retrieval, embeddings, benchmarks",
+    "urls": [
+      "https://arxiv.org/abs/2311.16452"
+    ],
+    "order": 232,
+    "authors": [
+      "Harsha Nori",
+      "Yin Tat Lee",
+      "Sheng Zhang",
+      "Dean Carignan"
+    ],
+    "date": "2023-11-28",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:selfrag.github.io",
+    "kind": "web",
+    "label": "Self-RAG",
+    "title": "Self-RAG",
+    "section": "Retrieval, embeddings, benchmarks",
+    "urls": [
+      "https://selfrag.github.io/"
+    ],
+    "order": 233,
+    "authors": [
+      "Akari Asai",
+      "Zeqiu Wu",
+      "Yizhong Wang",
+      "Avirup Sil"
+    ],
+    "date": "2023-10-17",
+    "date_source": "arxiv-api",
+    "fetched_title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection"
+  },
+  {
+    "id": "arxiv:2309.16797",
+    "kind": "arxiv",
+    "label": "Promptbreeder: Self-Referential Self-Improvement",
+    "title": "Promptbreeder: Self-Referential Self-Improvement Via Prompt Evolution",
+    "section": "Retrieval, embeddings, benchmarks",
+    "urls": [
+      "https://arxiv.org/abs/2309.16797"
+    ],
+    "order": 234,
+    "authors": [
+      "Chrisantha Fernando",
+      "Dylan Banarse",
+      "Henryk Michalewski",
+      "Simon Osindero"
+    ],
+    "date": "2023-09-28",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "acl:2023.acl-demo.51",
+    "kind": "acl",
+    "label": "A System for Answering Simple Questions in Multiple Languages",
+    "title": "A System for Answering Simple Questions in Multiple Languages",
+    "section": "Retrieval, embeddings, benchmarks",
+    "urls": [
+      "https://aclanthology.org/2023.acl-demo.51/"
+    ],
+    "order": 235,
+    "authors": [],
+    "date": "2023-07-01",
+    "date_source": "page"
+  },
+  {
+    "id": "arxiv:2304.08467",
+    "kind": "arxiv",
+    "label": "Gist Tokens: Learning to Compress Prompts",
+    "title": "Learning to Compress Prompts with Gist Tokens",
+    "section": "Retrieval, embeddings, benchmarks",
+    "urls": [
+      "https://arxiv.org/abs/2304.08467"
+    ],
+    "order": 236,
+    "authors": [
+      "Jesse Mu",
+      "Xiang Lisa Li",
+      "Noah Goodman"
+    ],
+    "date": "2023-04-17",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2212.14024",
+    "kind": "arxiv",
+    "label": "DSP: Demonstrate-Search-Predict (precursor of DSPy)",
+    "title": "Demonstrate-Search-Predict: Composing retrieval and language models for knowledge-intensive NLP",
+    "section": "Retrieval, embeddings, benchmarks",
+    "urls": [
+      "https://arxiv.org/abs/2212.14024"
+    ],
+    "order": 237,
+    "authors": [
+      "Omar Khattab",
+      "Keshav Santhanam",
+      "Xiang Lisa Li",
+      "David Hall"
+    ],
+    "date": "2022-12-28",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2212.09741",
+    "kind": "arxiv",
+    "label": "INSTRUCTOR: One Embedder, Any Task",
+    "title": "One Embedder, Any Task: Instruction-Finetuned Text Embeddings",
+    "section": "Retrieval, embeddings, benchmarks",
+    "urls": [
+      "https://arxiv.org/abs/2212.09741"
+    ],
+    "order": 238,
+    "authors": [
+      "Hongjin Su",
+      "Weijia Shi",
+      "Jungo Kasai",
+      "Yizhong Wang"
+    ],
+    "date": "2022-12-19",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "acl:2022.emnlp-main.340",
+    "kind": "acl",
+    "label": "Super-NaturalInstructions (1600+ NLP tasks)",
+    "title": "Super-NaturalInstructions (1600+ NLP tasks)",
+    "section": "Retrieval, embeddings, benchmarks",
+    "urls": [
+      "https://aclanthology.org/2022.emnlp-main.340/"
+    ],
+    "order": 239,
+    "authors": [
+      "Yizhong Wang",
+      "Swaroop Mishra",
+      "Pegah Alipoormolabashi",
+      "Yeganeh Kordi"
+    ],
+    "date": "2022-04-16",
+    "date_source": "arxiv-api",
+    "fetched_title": "Super-NaturalInstructions: Generalization via Declarative Instructions on 1600+ NLP Tasks"
+  },
+  {
+    "id": "acl:2022.acl-long.360",
+    "kind": "acl",
+    "label": "PRIMERA: Pyramid-based Masked Sentence Pre-training",
+    "title": "PRIMERA: Pyramid-based Masked Sentence Pre-training",
+    "section": "Retrieval, embeddings, benchmarks",
+    "urls": [
+      "https://aclanthology.org/2022.acl-long.360/"
+    ],
+    "order": 240,
+    "authors": [
+      "Wen Xiao",
+      "Iz Beltagy",
+      "Giuseppe Carenini",
+      "Arman Cohan"
+    ],
+    "date": "2021-10-16",
+    "date_source": "arxiv-api",
+    "fetched_title": "PRIMERA: Pyramid-based Masked Sentence Pre-training for Multi-document Summarization"
+  },
+  {
+    "id": "arxiv:2206.04615",
+    "kind": "arxiv",
+    "label": "BIG-bench: Beyond the Imitation Game",
+    "title": "Beyond the Imitation Game: Quantifying and extrapolating the capabilities of language models",
+    "section": "Retrieval, embeddings, benchmarks",
+    "urls": [
+      "https://arxiv.org/abs/2206.04615"
+    ],
+    "order": 241,
+    "authors": [
+      "Aarohi Srivastava",
+      "Abhinav Rastogi",
+      "Abhishek Rao",
+      "Abu Awal Md Shoeb"
+    ],
+    "date": "2022-06-09",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2205.13147",
+    "kind": "arxiv",
+    "label": "Matryoshka Representation Learning",
+    "title": "Matryoshka Representation Learning",
+    "section": "Retrieval, embeddings, benchmarks",
+    "urls": [
+      "https://arxiv.org/abs/2205.13147"
+    ],
+    "order": 242,
+    "authors": [
+      "Aditya Kusupati",
+      "Gantavya Bhatt",
+      "Aniket Rege",
+      "Matthew Wallingford"
+    ],
+    "date": "2022-05-26",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2112.07899",
+    "kind": "arxiv",
+    "label": "Large Dual Encoders Are Generalizable Retrievers (GTR)",
+    "title": "Large Dual Encoders Are Generalizable Retrievers",
+    "section": "Retrieval, embeddings, benchmarks",
+    "urls": [
+      "https://arxiv.org/abs/2112.07899"
+    ],
+    "order": 243,
+    "authors": [
+      "Jianmo Ni",
+      "Chen Qu",
+      "Jing Lu",
+      "Zhuyun Dai"
+    ],
+    "date": "2021-12-15",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2101.02235",
+    "kind": "arxiv",
+    "label": "StrategyQA: Did Aristotle Use a Laptop?",
+    "title": "Did Aristotle Use a Laptop? A Question Answering Benchmark with Implicit Reasoning Strategies",
+    "section": "Retrieval, embeddings, benchmarks",
+    "urls": [
+      "https://arxiv.org/abs/2101.02235"
+    ],
+    "order": 244,
+    "authors": [
+      "Mor Geva",
+      "Daniel Khashabi",
+      "Elad Segal",
+      "Tushar Khot"
+    ],
+    "date": "2021-01-06",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:lilianweng.github.io/posts/2020-10-29-odqa",
+    "kind": "web",
+    "label": "Open Domain Question Answering (Lilian Weng)",
+    "title": "Open Domain Question Answering (Lilian Weng)",
+    "section": "Retrieval, embeddings, benchmarks",
+    "urls": [
+      "https://lilianweng.github.io/posts/2020-10-29-odqa/"
+    ],
+    "order": 245,
+    "authors": [],
+    "date": "2020-10-29",
+    "date_source": "url"
+  },
+  {
+    "id": "arxiv:2608.19197",
+    "kind": "arxiv",
+    "label": "SPADE: Self-Play in Adaptive Synthetic Executable Environments",
+    "title": "SPADE: Self-Play in Adaptive Synthetic Executable Environments",
+    "section": "Agents, open-endedness, AGI",
+    "urls": [
+      "https://arxiv.org/abs/2608.19197"
+    ],
+    "order": 246,
+    "authors": [
+      "Bo Liu",
+      "Simon Yu",
+      "Yiding Jiang",
+      "Ao Qu"
+    ],
+    "date": "2026-08-19",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2608.08311",
+    "kind": "arxiv",
+    "label": "Ouroboros: A Self-Developing Frontier Coding Agent",
+    "title": "Ouroboros: A Self-Developing Frontier Coding Agent with Reviewed Core Evolution",
+    "section": "Agents, open-endedness, AGI",
+    "urls": [
+      "https://arxiv.org/abs/2608.08311",
+      "https://razzant.github.io/ouroboros/"
+    ],
+    "order": 247,
+    "authors": [
+      "Anton Razzhigaev",
+      "Andrei Gritsaev",
+      "Andrei Kaznacheev"
+    ],
+    "date": "2026-08-08",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2607.13104",
+    "kind": "arxiv",
+    "label": "Self-Improvements in Modern Agentic Systems: A Survey (Schmidhuber)",
+    "title": "Self-Improvements in Modern Agentic Systems: A Survey",
+    "section": "Agents, open-endedness, AGI",
+    "urls": [
+      "https://arxiv.org/abs/2607.13104"
+    ],
+    "order": 248,
+    "authors": [
+      "Zhe Ren",
+      "Yimeng Chen",
+      "Dandan Guo",
+      "Guowei Rong"
+    ],
+    "date": "2026-07-14",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2605.13821",
+    "kind": "arxiv",
+    "label": "Harnessing Agentic Evolution",
+    "title": "Harnessing Agentic Evolution",
+    "section": "Agents, open-endedness, AGI",
+    "urls": [
+      "https://arxiv.org/abs/2605.13821"
+    ],
+    "order": 249,
+    "authors": [
+      "Jiayi Zhang",
+      "Yongfeng Gu",
+      "Jianhao Ruan",
+      "Maojia Song"
+    ],
+    "date": "2026-05-13",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2603.19461",
+    "kind": "arxiv",
+    "label": "Hyperagents",
+    "title": "Hyperagents",
+    "section": "Agents, open-endedness, AGI",
+    "urls": [
+      "https://arxiv.org/abs/2603.19461"
+    ],
+    "order": 250,
+    "authors": [
+      "Jenny Zhang",
+      "Bingchen Zhao",
+      "Wannan Yang",
+      "Jakob Foerster"
+    ],
+    "date": "2026-03-19",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2601.07055",
+    "kind": "arxiv",
+    "label": "Dr. Zero: Self-Evolving Search Agents without Training Data",
+    "title": "Dr. Zero: Self-Evolving Search Agents without Training Data",
+    "section": "Agents, open-endedness, AGI",
+    "urls": [
+      "https://arxiv.org/abs/2601.07055"
+    ],
+    "order": 251,
+    "authors": [
+      "Zhenrui Yue",
+      "Kartikeya Upasani",
+      "Xianjun Yang",
+      "Suyu Ge"
+    ],
+    "date": "2026-01-11",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2601.03192",
+    "kind": "arxiv",
+    "label": "MemRL: Self-Evolving Agents via Runtime RL on Episodic Memory",
+    "title": "MemRL: Self-Evolving Agents via Runtime Reinforcement Learning on Episodic Memory",
+    "section": "Agents, open-endedness, AGI",
+    "urls": [
+      "https://arxiv.org/abs/2601.03192"
+    ],
+    "order": 252,
+    "authors": [
+      "Shengtao Zhang",
+      "Jiaqian Wang",
+      "Ruiwen Zhou",
+      "Junwei Liao"
+    ],
+    "date": "2026-01-06",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2512.18552",
+    "kind": "arxiv",
+    "label": "Toward Training Superintelligent Software Agents through Self-Play SWE-RL",
+    "title": "Toward Training Superintelligent Software Agents through Self-Play SWE-RL",
+    "section": "Agents, open-endedness, AGI",
+    "urls": [
+      "https://arxiv.org/abs/2512.18552"
+    ],
+    "order": 253,
+    "authors": [
+      "Yuxiang Wei",
+      "Zhiqing Sun",
+      "Emily McMilin",
+      "Jonas Gehring"
+    ],
+    "date": "2025-12-21",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2512.18160",
+    "kind": "arxiv",
+    "label": "Propose, Solve, Verify: Self-Play Through Formal Verification",
+    "title": "Propose, Solve, Verify: Self-Play Through Formal Verification",
+    "section": "Agents, open-endedness, AGI",
+    "urls": [
+      "https://arxiv.org/abs/2512.18160"
+    ],
+    "order": 254,
+    "authors": [
+      "Alex Wilf",
+      "Pranjal Aggarwal",
+      "Bryan Parno",
+      "Daniel Fried"
+    ],
+    "date": "2025-12-20",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2511.15593",
+    "kind": "arxiv",
+    "label": "What Does It Take to Be a Good AI Research Agent?",
+    "title": "What Does It Take to Be a Good AI Research Agent? Studying the Role of Ideation Diversity",
+    "section": "Agents, open-endedness, AGI",
+    "urls": [
+      "https://arxiv.org/abs/2511.15593"
+    ],
+    "order": 255,
+    "authors": [
+      "Alexis Audran-Reiss",
+      "Jordi Armengol-Estapé",
+      "Karen Hambardzumyan",
+      "Amar Budhiraja"
+    ],
+    "date": "2025-11-19",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:sakana.ai/shinka-evolve",
+    "kind": "web",
+    "label": "ShinkaEvolve (Sakana AI)",
+    "title": "ShinkaEvolve (Sakana AI)",
+    "section": "Agents, open-endedness, AGI",
+    "urls": [
+      "https://sakana.ai/shinka-evolve/"
+    ],
+    "order": 256,
+    "authors": [
+      "Robert Tjarko Lange",
+      "Yuki Imajuku",
+      "Edoardo Cetin"
+    ],
+    "date": "2025-09-17",
+    "date_source": "arxiv-api",
+    "fetched_title": "ShinkaEvolve: Towards Open-Ended And Sample-Efficient Program Evolution"
+  },
+  {
+    "id": "arxiv:2508.16204",
+    "kind": "arxiv",
+    "label": "Competition and Attraction Improve Model Fusion (Sakana AI)",
+    "title": "Competition and Attraction Improve Model Fusion",
+    "section": "Agents, open-endedness, AGI",
+    "urls": [
+      "https://arxiv.org/abs/2508.16204"
+    ],
+    "order": 257,
+    "authors": [
+      "João Abrantes",
+      "Robert Tjarko Lange",
+      "Yujin Tang"
+    ],
+    "date": "2025-08-22",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2507.18074",
+    "kind": "arxiv",
+    "label": "AlphaGo Moment for Model Architecture Discovery",
+    "title": "AlphaGo Moment for Model Architecture Discovery",
+    "section": "Agents, open-endedness, AGI",
+    "urls": [
+      "https://arxiv.org/abs/2507.18074"
+    ],
+    "order": 258,
+    "authors": [
+      "Yixiu Liu",
+      "Yang Nan",
+      "Weixian Xu",
+      "Xiangkun Hu"
+    ],
+    "date": "2025-07-24",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "doi:10.21203/rs.3.rs-6688473/v1",
+    "kind": "doi",
+    "label": "Self-Programming AI: Code-Learning Agents",
+    "title": "Self-Programming AI: Code-Learning Agents",
+    "section": "Agents, open-endedness, AGI",
+    "urls": [
+      "https://doi.org/10.21203/rs.3.rs-6688473/v1"
+    ],
+    "order": 259,
+    "authors": [],
+    "date": null,
+    "date_source": null
+  },
+  {
+    "id": "arxiv:2505.22954",
+    "kind": "arxiv",
+    "label": "Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents",
+    "title": "Darwin Godel Machine: Open-Ended Evolution of Self-Improving Agents",
+    "section": "Agents, open-endedness, AGI",
+    "urls": [
+      "https://arxiv.org/abs/2505.22954"
+    ],
+    "order": 260,
+    "authors": [
+      "Jenny Zhang",
+      "Shengran Hu",
+      "Cong Lu"
+    ],
+    "date": "2025-05-29",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2407.00695",
+    "kind": "arxiv",
+    "label": "Learning Formal Mathematics From Intrinsic Motivation",
+    "title": "Learning Formal Mathematics From Intrinsic Motivation",
+    "section": "Agents, open-endedness, AGI",
+    "urls": [
+      "https://arxiv.org/abs/2407.00695"
+    ],
+    "order": 261,
+    "authors": [
+      "Gabriel Poesia",
+      "David Broman",
+      "Nick Haber",
+      "Noah D. Goodman"
+    ],
+    "date": "2024-06-30",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2406.04268",
+    "kind": "arxiv",
+    "label": "Open-Endedness is Essential for Artificial Superhuman Intelligence",
+    "title": "Open-Endedness is Essential for Artificial Superhuman Intelligence",
+    "section": "Agents, open-endedness, AGI",
+    "urls": [
+      "https://arxiv.org/abs/2406.04268"
+    ],
+    "order": 262,
+    "authors": [
+      "Edward Hughes",
+      "Michael Dennis",
+      "Jack Parker-Holder",
+      "Feryal Behbahani"
+    ],
+    "date": "2024-06-06",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "openreview:pOoKI3ouv1",
+    "kind": "openreview",
+    "label": "Robust agents learn causal world models (ICLR 2024 best paper)",
+    "title": "Robust agents learn causal world models (ICLR 2024 best paper)",
+    "section": "Agents, open-endedness, AGI",
+    "urls": [
+      "https://openreview.net/forum?id=pOoKI3ouv1"
+    ],
+    "order": 263,
+    "authors": [
+      "Jonathan Richens",
+      "Tom Everitt"
+    ],
+    "date": "2024-02-16",
+    "date_source": "arxiv-api",
+    "fetched_title": "Robust agents learn causal world models"
+  },
+  {
+    "id": "url:research.google/blog/few-shot-tool-use-doesnt-really-work-yet",
+    "kind": "web",
+    "label": "Few-shot tool use doesn't really work yet (Google Research)",
+    "title": "Few-shot tool use doesn't really work yet (Google Research)",
+    "section": "Agents, open-endedness, AGI",
+    "urls": [
+      "https://research.google/blog/few-shot-tool-use-doesnt-really-work-yet/"
+    ],
+    "order": 264,
+    "authors": [
+      "Alon Jacovi",
+      "Avi Caciularu",
+      "Jonathan Herzig",
+      "Roee Aharoni"
+    ],
+    "date": "2024-05-30",
+    "date_source": "known",
+    "fetched_title": "A Comprehensive Evaluation of Tool-Assisted Generation Strategies"
+  },
+  {
+    "id": "arxiv:2311.02462",
+    "kind": "arxiv",
+    "label": "Levels of AGI (DeepMind)",
+    "title": "Levels of AGI for Operationalizing Progress on the Path to AGI",
+    "section": "Agents, open-endedness, AGI",
+    "urls": [
+      "https://arxiv.org/abs/2311.02462"
+    ],
+    "order": 265,
+    "authors": [
+      "Meredith Ringel Morris",
+      "Jascha Sohl-Dickstein",
+      "Noah Fiedel",
+      "Tris Warkentin"
+    ],
+    "date": "2023-11-04",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2311.00344",
+    "kind": "arxiv",
+    "label": "A Definition of Open-Ended Learning Problems",
+    "title": "A Definition of Open-Ended Learning Problems for Goal-Conditioned Agents",
+    "section": "Agents, open-endedness, AGI",
+    "urls": [
+      "https://arxiv.org/abs/2311.00344"
+    ],
+    "order": 266,
+    "authors": [
+      "Olivier Sigaud",
+      "Gianluca Baldassarre",
+      "Cedric Colas",
+      "Stephane Doncieux"
+    ],
+    "date": "2023-11-01",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:lilianweng.github.io/posts/2023-06-23-agent",
+    "kind": "web",
+    "label": "LLM Powered Autonomous Agents (Lilian Weng)",
+    "title": "LLM Powered Autonomous Agents (Lilian Weng)",
+    "section": "Agents, open-endedness, AGI",
+    "urls": [
+      "https://lilianweng.github.io/posts/2023-06-23-agent/"
+    ],
+    "order": 267,
+    "authors": [],
+    "date": "2023-06-23",
+    "date_source": "url"
+  },
+  {
+    "id": "doi:10.1038/s42256-023-00754-x",
+    "kind": "doi",
+    "label": "A social path to human-like artificial intelligence (Nat Mach Intell 2023)",
+    "title": "A social path to human-like artificial intelligence (Nat Mach Intell 2023)",
+    "section": "Agents, open-endedness, AGI",
+    "urls": [
+      "https://doi.org/10.1038/s42256-023-00754-x"
+    ],
+    "order": 268,
+    "authors": [],
+    "date": null,
+    "date_source": null
+  },
+  {
+    "id": "url:minedojo.org",
+    "kind": "web",
+    "label": "MineDojo",
+    "title": "MineDojo",
+    "section": "Agents, open-endedness, AGI",
+    "urls": [
+      "https://minedojo.org/"
+    ],
+    "order": 269,
+    "authors": [
+      "Linxi Fan",
+      "Guanzhi Wang",
+      "Yunfan Jiang",
+      "Ajay Mandlekar"
+    ],
+    "date": "2022-06-17",
+    "date_source": "arxiv-api",
+    "fetched_title": "MineDojo: Building Open-Ended Embodied Agents with Internet-Scale Knowledge"
+  },
+  {
+    "id": "arxiv:1905.10985",
+    "kind": "arxiv",
+    "label": "AI-GAs: AI-generating algorithms, an alternate paradigm for producing general AI (Clune)",
+    "title": "AI-GAs: AI-generating algorithms, an alternate paradigm for producing general artificial intelligence",
+    "section": "Agents, open-endedness, AGI",
+    "urls": [
+      "https://arxiv.org/abs/1905.10985"
+    ],
+    "order": 270,
+    "authors": [
+      "Jeff Clune"
+    ],
+    "date": "2019-05-27",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:github.com/deepseek-ai/deepseek-harness",
+    "kind": "repo",
+    "label": "DeepSeek Harness",
+    "title": "DeepSeek Harness",
+    "section": "Harness",
+    "urls": [
+      "https://github.com/deepseek-ai/deepseek-harness"
+    ],
+    "order": 271,
+    "authors": [],
+    "date": "2026-08-13",
+    "date_source": "github"
+  },
+  {
+    "id": "url:github.com/primeintellect-ai/prime-agent",
+    "kind": "repo",
+    "label": "Prime Agent: a self-improving RLM agent (Prime Intellect)",
+    "title": "Prime Agent: a self-improving RLM agent (Prime Intellect)",
+    "section": "Harness",
+    "urls": [
+      "https://github.com/PrimeIntellect-ai/prime-agent"
+    ],
+    "order": 272,
+    "authors": [],
+    "date": "2026-05-08",
+    "date_source": "github"
+  },
+  {
+    "id": "url:lilianweng.github.io/posts/2026-07-04-harness",
+    "kind": "web",
+    "label": "Harnesses for models (Lilian Weng, 2026)",
+    "title": "Harnesses for models (Lilian Weng, 2026)",
+    "section": "Harness",
+    "urls": [
+      "https://lilianweng.github.io/posts/2026-07-04-harness/"
+    ],
+    "order": 273,
+    "authors": [],
+    "date": "2026-07-04",
+    "date_source": "url"
+  },
+  {
+    "id": "url:github.com/alexisfox7/rgb-agent",
+    "kind": "repo",
+    "label": "PRO-LONG: Programmatic Memory Enables Long-Horizon Reasoning",
+    "title": "PRO-LONG: Programmatic Memory Enables Long-Horizon Reasoning",
+    "section": "Harness",
+    "urls": [
+      "https://github.com/alexisfox7/RGB-Agent",
+      "https://arxiv.org/abs/2607.20064"
+    ],
+    "order": 274,
+    "authors": [
+      "Alexis Fox",
+      "Junlin Wang",
+      "Paul Rosu",
+      "Bhuwan Dhingra"
+    ],
+    "date": "2026-07-22",
+    "date_source": "arxiv-api",
+    "fetched_title": "PRO-LONG: Programmatic Memory Enables Long-Horizon Reasoning"
+  },
+  {
+    "id": "url:weco.ai/blog/first-evidence-of-recursive-self-improvement",
+    "kind": "web",
+    "label": "First evidence of recursive self-improvement (AIDE2, Weco)",
+    "title": "First evidence of recursive self-improvement (AIDE2, Weco)",
+    "section": "Harness",
+    "urls": [
+      "https://www.weco.ai/blog/first-evidence-of-recursive-self-improvement"
+    ],
+    "order": 275,
+    "authors": [],
+    "date": null,
+    "date_source": null
+  },
+  {
+    "id": "url:schema-harness.github.io",
+    "kind": "web",
+    "label": "Schema: a symbolic world model for ARC-AGI-3",
+    "title": "Schema: a symbolic world model for ARC-AGI-3",
+    "section": "Harness",
+    "urls": [
+      "http://schema-harness.github.io",
+      "https://huggingface.co/datasets/schema-harness/arc-agi-3-schema-traces"
+    ],
+    "order": 276,
+    "authors": [],
+    "date": "2026-07-17",
+    "date_source": "known"
+  },
+  {
+    "id": "url:alexzhang13.github.io/blog/2026/harness",
+    "kind": "web",
+    "label": "Language model harnesses are compositional generalizers (Alex Zhang)",
+    "title": "Language model harnesses are compositional generalizers (Alex Zhang)",
+    "section": "Harness",
+    "urls": [
+      "https://alexzhang13.github.io/blog/2026/harness/"
+    ],
+    "order": 277,
+    "authors": [],
+    "date": "2026-07-20",
+    "date_source": "page"
+  },
+  {
+    "id": "url:tufalabs.ai/research/duck-harness",
+    "kind": "web",
+    "label": "Duck Harness: Winning Solution for ARC-AGI-3 Milestone 1 (Tufa Labs)",
+    "title": "Duck Harness: Winning Solution for ARC-AGI-3 Milestone 1 (Tufa Labs)",
+    "section": "Harness",
+    "urls": [
+      "https://tufalabs.ai/research/duck-harness/"
+    ],
+    "order": 278,
+    "authors": [],
+    "date": null,
+    "date_source": null
+  },
+  {
+    "id": "arxiv:2604.19341",
+    "kind": "arxiv",
+    "label": "SimpleTES: Structured Scaling of AI Discovery",
+    "title": "Structured Scaling of AI Discovery Across Diverse Scientific Domains",
+    "section": "Harness",
+    "urls": [
+      "https://arxiv.org/abs/2604.19341",
+      "https://haotianye.com/blog/simpletes/"
+    ],
+    "order": 279,
+    "authors": [
+      "Haotian Ye",
+      "Haowei Lin",
+      "Jingyi Tang",
+      "Yizhen Luo"
+    ],
+    "date": "2026-04-21",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2604.08224",
+    "kind": "arxiv",
+    "label": "Externalization in LLM Agents: A Unified Review of Memory, Skills, Protocols and Harness Engineering",
+    "title": "Externalization in LLM Agents: A Unified Review of Memory, Skills, Protocols and Harness Engineering",
+    "section": "Harness",
+    "urls": [
+      "https://arxiv.org/abs/2604.08224"
+    ],
+    "order": 280,
+    "authors": [
+      "Chenyu Zhou",
+      "Huacan Chai",
+      "Wenteng Chen",
+      "Zihan Guo"
+    ],
+    "date": "2026-04-09",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2603.28052",
+    "kind": "arxiv",
+    "label": "Meta-Harness: End-to-End Optimization of Model Harnesses",
+    "title": "Meta-Harness: End-to-End Optimization of Model Harnesses",
+    "section": "Harness",
+    "urls": [
+      "https://arxiv.org/abs/2603.28052",
+      "https://yoonholee.com/meta-harness/"
+    ],
+    "order": 281,
+    "authors": [
+      "Yoonho Lee",
+      "Roshen Nair",
+      "Qizheng Zhang",
+      "Kangwook Lee"
+    ],
+    "date": "2026-03-30",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:openai.com/index/harness-engineering",
+    "kind": "web",
+    "label": "Harness Engineering (OpenAI)",
+    "title": "Harness Engineering (OpenAI)",
+    "section": "Harness",
+    "urls": [
+      "https://openai.com/index/harness-engineering/"
+    ],
+    "order": 282,
+    "authors": [],
+    "date": null,
+    "date_source": null
+  },
+  {
+    "id": "arxiv:2607.23379",
+    "kind": "arxiv",
+    "label": "When Activation Oracles Learn Not to Read",
+    "title": "When Activation Oracles Learn Not to Read: Concept-Specific Blind Spots in Fine-Tuned Oracles",
+    "section": "AI safety and consciousness",
+    "urls": [
+      "https://arxiv.org/abs/2607.23379"
+    ],
+    "order": 283,
+    "authors": [
+      "Tobias Bersia",
+      "Tatiana Gaintseva"
+    ],
+    "date": "2026-07-25",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2603.19426",
+    "kind": "arxiv",
+    "label": "Is Evaluation Awareness Just Format Sensitivity? Limitations of Probe-Based Evidence under Controlled Prompt Structure",
+    "title": "Is Evaluation Awareness Just Format Sensitivity? Limitations of Probe-Based Evidence under Controlled Prompt Structure",
+    "section": "AI safety and consciousness",
+    "urls": [
+      "https://arxiv.org/abs/2603.19426"
+    ],
+    "order": 284,
+    "authors": [
+      "Viliana Devbunova"
+    ],
+    "date": "2026-03-19",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:transformer-circuits.pub/2025/introspection",
+    "kind": "web",
+    "label": "Emergent Introspective Awareness in Large Language Models (Anthropic, October 2025)",
+    "title": "Emergent Introspective Awareness in Large Language Models (Anthropic, October 2025)",
+    "section": "AI safety and consciousness",
+    "urls": [
+      "https://transformer-circuits.pub/2025/introspection/index.html"
+    ],
+    "order": 285,
+    "authors": [
+      "Jack Lindsey"
+    ],
+    "date": "2025-10-29",
+    "date_source": "known"
+  },
+  {
+    "id": "url:anthropic.com/research/reasoning-models-dont-say-think",
+    "kind": "web",
+    "label": "Reasoning Models Don't Always Say What They Think (Anthropic)",
+    "title": "Reasoning Models Don't Always Say What They Think (Anthropic)",
+    "section": "AI safety and consciousness",
+    "urls": [
+      "https://www.anthropic.com/research/reasoning-models-dont-say-think"
+    ],
+    "order": 286,
+    "authors": [
+      "Yanda Chen",
+      "Joe Benton",
+      "Ansh Radhakrishnan",
+      "Jonathan Uesato"
+    ],
+    "date": "2025-05-08",
+    "date_source": "arxiv-api",
+    "fetched_title": "Reasoning Models Don't Always Say What They Think"
+  },
+  {
+    "id": "url:ai-2027.com",
+    "kind": "web",
+    "label": "AI 2027 (Kokotajlo)",
+    "title": "AI 2027 (Kokotajlo)",
+    "section": "AI safety and consciousness",
+    "urls": [
+      "https://ai-2027.com/"
+    ],
+    "order": 287,
+    "authors": [],
+    "date": "2025-04-03",
+    "date_source": "page"
+  },
+  {
+    "id": "arxiv:2503.16348",
+    "kind": "arxiv",
+    "label": "Palatable Conceptions of Disembodied Being (Shanahan)",
+    "title": "Palatable Conceptions of Disembodied Being",
+    "section": "AI safety and consciousness",
+    "urls": [
+      "https://arxiv.org/abs/2503.16348"
+    ],
+    "order": 288,
+    "authors": [
+      "Murray Shanahan"
+    ],
+    "date": "2025-03-20",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2502.03407",
+    "kind": "arxiv",
+    "label": "Detecting Strategic Deception Using Linear Probes",
+    "title": "Detecting Strategic Deception Using Linear Probes",
+    "section": "AI safety and consciousness",
+    "urls": [
+      "https://arxiv.org/abs/2502.03407"
+    ],
+    "order": 289,
+    "authors": [
+      "Nicholas Goldowsky-Dill",
+      "Bilal Chughtai",
+      "Stefan Heimersheim",
+      "Marius Hobbhahn"
+    ],
+    "date": "2025-02-05",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2501.18837",
+    "kind": "arxiv",
+    "label": "Constitutional Classifiers: Defending against Universal Jailbreaks",
+    "title": "Constitutional Classifiers: Defending against Universal Jailbreaks across Thousands of Hours of Red Teaming",
+    "section": "AI safety and consciousness",
+    "urls": [
+      "https://arxiv.org/abs/2501.18837"
+    ],
+    "order": 290,
+    "authors": [
+      "Mrinank Sharma",
+      "Meg Tong",
+      "Jesse Mu",
+      "Jerry Wei"
+    ],
+    "date": "2025-01-31",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:anthropic.com/research/tracing-thoughts-language-model",
+    "kind": "web",
+    "label": "Tracing thoughts of a language model / Circuit tracing (Anthropic)",
+    "title": "Tracing thoughts of a language model / Circuit tracing (Anthropic)",
+    "section": "AI safety and consciousness",
+    "urls": [
+      "https://www.anthropic.com/research/tracing-thoughts-language-model"
+    ],
+    "order": 291,
+    "authors": [],
+    "date": "2025-03-27",
+    "date_source": "known"
+  },
+  {
+    "id": "url:transformer-circuits.pub/2025/attribution-graphs/methods.html",
+    "kind": "web",
+    "label": "Circuit tracing / attribution graphs (methods)",
+    "title": "Circuit tracing / attribution graphs (methods)",
+    "section": "AI safety and consciousness",
+    "urls": [
+      "https://transformer-circuits.pub/2025/attribution-graphs/methods.html"
+    ],
+    "order": 292,
+    "authors": [],
+    "date": "2025-03-27",
+    "date_source": "page"
+  },
+  {
+    "id": "url:transformer-circuits.pub/2025/attribution-graphs/biology.html",
+    "kind": "web",
+    "label": "Attribution graphs, the biology of the model",
+    "title": "Attribution graphs, the biology of the model",
+    "section": "AI safety and consciousness",
+    "urls": [
+      "https://transformer-circuits.pub/2025/attribution-graphs/biology.html"
+    ],
+    "order": 293,
+    "authors": [],
+    "date": "2025-03-27",
+    "date_source": "page"
+  },
+  {
+    "id": "url:alignmentforum.org/posts/nffst5mio7bcaqhpa/an-extremely-opinionated-annotated-list-of-my-favourite-1",
+    "kind": "web",
+    "label": "An Extremely Opinionated Annotated List of My Favourite Mechanistic Interpretability Papers v2 (Alignment Forum)",
+    "title": "An Extremely Opinionated Annotated List of My Favourite Mechanistic Interpretability Papers v2 (Alignment Forum)",
+    "section": "AI safety and consciousness",
+    "urls": [
+      "https://www.alignmentforum.org/posts/NfFST5Mio7BCAQHPA/an-extremely-opinionated-annotated-list-of-my-favourite-1"
+    ],
+    "order": 294,
+    "authors": [],
+    "date": null,
+    "date_source": null
+  },
+  {
+    "id": "url:situational-awareness.ai",
+    "kind": "web",
+    "label": "Situational Awareness (Aschenbrenner)",
+    "title": "Situational Awareness (Aschenbrenner)",
+    "section": "AI safety and consciousness",
+    "urls": [
+      "https://situational-awareness.ai"
+    ],
+    "order": 295,
+    "authors": [],
+    "date": null,
+    "date_source": null
+  },
+  {
+    "id": "url:anthropic.com/news/mapping-mind-language-model",
+    "kind": "web",
+    "label": "Mapping the mind of a large language model (Anthropic)",
+    "title": "Mapping the mind of a large language model (Anthropic)",
+    "section": "AI safety and consciousness",
+    "urls": [
+      "https://www.anthropic.com/news/mapping-mind-language-model"
+    ],
+    "order": 296,
+    "authors": [],
+    "date": "2024-05-21",
+    "date_source": "known"
+  },
+  {
+    "id": "url:openai.com/research/weak-to-strong-generalization",
+    "kind": "web",
+    "label": "Weak-to-strong generalization (OpenAI SuperAlignment)",
+    "title": "Weak-to-strong generalization (OpenAI SuperAlignment)",
+    "section": "AI safety and consciousness",
+    "urls": [
+      "https://openai.com/research/weak-to-strong-generalization"
+    ],
+    "order": 297,
+    "authors": [
+      "Collin Burns",
+      "Pavel Izmailov",
+      "Jan Hendrik Kirchner",
+      "Bowen Baker"
+    ],
+    "date": "2023-12-14",
+    "date_source": "arxiv-api",
+    "fetched_title": "Weak-to-Strong Generalization: Eliciting Strong Capabilities With Weak Supervision"
+  },
+  {
+    "id": "arxiv:2309.08600",
+    "kind": "arxiv",
+    "label": "Sparse Autoencoders Find Highly Interpretable Features in Language Models",
+    "title": "Sparse Autoencoders Find Highly Interpretable Features in Language Models",
+    "section": "AI safety and consciousness",
+    "urls": [
+      "https://arxiv.org/abs/2309.08600"
+    ],
+    "order": 298,
+    "authors": [
+      "Hoagy Cunningham",
+      "Aidan Ewart",
+      "Logan Riggs",
+      "Robert Huben"
+    ],
+    "date": "2023-09-15",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2308.08708",
+    "kind": "arxiv",
+    "label": "Consciousness in AI: Insights from the Science of Consciousness",
+    "title": "Consciousness in Artificial Intelligence: Insights from the Science of Consciousness",
+    "section": "AI safety and consciousness",
+    "urls": [
+      "https://arxiv.org/abs/2308.08708"
+    ],
+    "order": 299,
+    "authors": [
+      "Patrick Butlin",
+      "Robert Long",
+      "Eric Elmoznino",
+      "Yoshua Bengio"
+    ],
+    "date": "2023-08-17",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2304.06528",
+    "kind": "arxiv",
+    "label": "Power-seeking can be probable and predictive for trained agents",
+    "title": "Power-seeking can be probable and predictive for trained agents",
+    "section": "AI safety and consciousness",
+    "urls": [
+      "https://arxiv.org/abs/2304.06528"
+    ],
+    "order": 300,
+    "authors": [
+      "Victoria Krakovna",
+      "Janos Kramar"
+    ],
+    "date": "2023-04-13",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2303.07103",
+    "kind": "arxiv",
+    "label": "Could a Large Language Model be Conscious? (Chalmers)",
+    "title": "Could a Large Language Model be Conscious?",
+    "section": "AI safety and consciousness",
+    "urls": [
+      "https://arxiv.org/abs/2303.07103"
+    ],
+    "order": 301,
+    "authors": [
+      "David J. Chalmers"
+    ],
+    "date": "2023-03-04",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2206.13477",
+    "kind": "arxiv",
+    "label": "Parametrically Retargetable Decision-Makers Tend To Seek Power",
+    "title": "Parametrically Retargetable Decision-Makers Tend To Seek Power",
+    "section": "AI safety and consciousness",
+    "urls": [
+      "https://arxiv.org/abs/2206.13477"
+    ],
+    "order": 302,
+    "authors": [
+      "Alexander Matt Turner",
+      "Prasad Tadepalli"
+    ],
+    "date": "2022-06-27",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2206.13353",
+    "kind": "arxiv",
+    "label": "Is Power-Seeking AI an Existential Risk?",
+    "title": "Is Power-Seeking AI an Existential Risk?",
+    "section": "AI safety and consciousness",
+    "urls": [
+      "https://arxiv.org/abs/2206.13353"
+    ],
+    "order": 303,
+    "authors": [
+      "Joseph Carlsmith"
+    ],
+    "date": "2022-06-16",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:1912.01683",
+    "kind": "arxiv",
+    "label": "Optimal Policies Tend to Seek Power",
+    "title": "Optimal Policies Tend to Seek Power",
+    "section": "AI safety and consciousness",
+    "urls": [
+      "https://arxiv.org/abs/1912.01683"
+    ],
+    "order": 304,
+    "authors": [
+      "Alexander Matt Turner",
+      "Logan Smith",
+      "Rohin Shah",
+      "Andrew Critch"
+    ],
+    "date": "2019-12-03",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:research.google/blog/timesfm-3-a-zero-shot-foundation-model-for-multivariate-forecasting",
+    "kind": "web",
+    "label": "TimesFM-3: A zero-shot foundation model for multivariate forecasting",
+    "title": "TimesFM-3: A zero-shot foundation model for multivariate forecasting",
+    "section": "Time series",
+    "urls": [
+      "https://research.google/blog/timesfm-3-a-zero-shot-foundation-model-for-multivariate-forecasting/"
+    ],
+    "order": 305,
+    "authors": [],
+    "date": "2026-08-31",
+    "date_source": "known"
+  },
+  {
+    "id": "arxiv:2403.07815",
+    "kind": "arxiv",
+    "label": "Chronos: Learning the Language of Time Series",
+    "title": "Chronos: Learning the Language of Time Series",
+    "section": "Time series",
+    "urls": [
+      "https://arxiv.org/abs/2403.07815"
+    ],
+    "order": 306,
+    "authors": [
+      "Abdul Fatir Ansari",
+      "Lorenzo Stella",
+      "Caner Turkmen",
+      "Xiyuan Zhang"
+    ],
+    "date": "2024-03-12",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2401.13912",
+    "kind": "arxiv",
+    "label": "Survey of Deep Learning and Foundation Models for TS Forecasting",
+    "title": "A Survey of Deep Learning and Foundation Models for Time Series Forecasting",
+    "section": "Time series",
+    "urls": [
+      "https://arxiv.org/abs/2401.13912"
+    ],
+    "order": 307,
+    "authors": [
+      "John A. Miller",
+      "Mohammed Aldosari",
+      "Farah Saeed",
+      "Nasid Habib Barna"
+    ],
+    "date": "2024-01-25",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2310.10688",
+    "kind": "arxiv",
+    "label": "TimesFM: A decoder-only foundation model for time-series forecasting",
+    "title": "A decoder-only foundation model for time-series forecasting",
+    "section": "Time series",
+    "urls": [
+      "https://arxiv.org/abs/2310.10688"
+    ],
+    "order": 308,
+    "authors": [
+      "Abhimanyu Das",
+      "Weihao Kong",
+      "Rajat Sen",
+      "Yichen Zhou"
+    ],
+    "date": "2023-10-14",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2310.08278",
+    "kind": "arxiv",
+    "label": "Lag-Llama",
+    "title": "Lag-Llama: Towards Foundation Models for Probabilistic Time Series Forecasting",
+    "section": "Time series",
+    "urls": [
+      "https://arxiv.org/abs/2310.08278"
+    ],
+    "order": 309,
+    "authors": [
+      "Kashif Rasul",
+      "Arjun Ashok",
+      "Andrew Robert Williams",
+      "Hena Ghonia"
+    ],
+    "date": "2023-10-12",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2310.07820",
+    "kind": "arxiv",
+    "label": "LLMTime: LLMs Are Zero-Shot Time Series Forecasters",
+    "title": "Large Language Models Are Zero-Shot Time Series Forecasters",
+    "section": "Time series",
+    "urls": [
+      "https://arxiv.org/abs/2310.07820"
+    ],
+    "order": 310,
+    "authors": [
+      "Nate Gruver",
+      "Marc Finzi",
+      "Shikai Qiu",
+      "Andrew Gordon Wilson"
+    ],
+    "date": "2023-10-11",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2310.01728",
+    "kind": "arxiv",
+    "label": "Time-LLM",
+    "title": "Time-LLM: Time Series Forecasting by Reprogramming Large Language Models",
+    "section": "Time series",
+    "urls": [
+      "https://arxiv.org/abs/2310.01728"
+    ],
+    "order": 311,
+    "authors": [
+      "Ming Jin",
+      "Shiyu Wang",
+      "Lintao Ma",
+      "Zhixuan Chu"
+    ],
+    "date": "2023-10-03",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2210.08964",
+    "kind": "arxiv",
+    "label": "PromptCast",
+    "title": "PromptCast: A New Prompt-based Learning Paradigm for Time Series Forecasting",
+    "section": "Time series",
+    "urls": [
+      "https://arxiv.org/abs/2210.08964"
+    ],
+    "order": 312,
+    "authors": [
+      "Hao Xue",
+      "Flora D. Salim"
+    ],
+    "date": "2022-09-20",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2012.07436",
+    "kind": "arxiv",
+    "label": "Informer",
+    "title": "Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting",
+    "section": "Time series",
+    "urls": [
+      "https://arxiv.org/abs/2012.07436"
+    ],
+    "order": 313,
+    "authors": [
+      "Haoyi Zhou",
+      "Shanghang Zhang",
+      "Jieqi Peng",
+      "Shuai Zhang"
+    ],
+    "date": "2020-12-14",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:paperswithcode.com/paper/n-beats-neural-basis-expansion-analysis-for",
+    "kind": "web",
+    "label": "N-BEATS",
+    "title": "N-BEATS",
+    "section": "Time series",
+    "urls": [
+      "https://paperswithcode.com/paper/n-beats-neural-basis-expansion-analysis-for"
+    ],
+    "order": 314,
+    "authors": [
+      "Boris N. Oreshkin",
+      "Dmitri Carpov",
+      "Nicolas Chapados",
+      "Yoshua Bengio"
+    ],
+    "date": "2019-05-24",
+    "date_source": "arxiv-api",
+    "fetched_title": "N-BEATS: Neural basis expansion analysis for interpretable time series forecasting"
+  },
+  {
+    "id": "url:paperswithcode.com/paper/deepar-probabilistic-forecasting-with",
+    "kind": "web",
+    "label": "DeepAR",
+    "title": "DeepAR",
+    "section": "Time series",
+    "urls": [
+      "https://paperswithcode.com/paper/deepar-probabilistic-forecasting-with"
+    ],
+    "order": 315,
+    "authors": [
+      "David Salinas",
+      "Valentin Flunkert",
+      "Jan Gasthaus"
+    ],
+    "date": "2017-04-13",
+    "date_source": "arxiv-api",
+    "fetched_title": "DeepAR: Probabilistic Forecasting with Autoregressive Recurrent Networks"
+  },
+  {
+    "id": "arxiv:1809.04356",
+    "kind": "arxiv",
+    "label": "Deep learning for time series classification: a review",
+    "title": "Deep learning for time series classification: a review",
+    "section": "Time series",
+    "urls": [
+      "https://arxiv.org/abs/1809.04356"
+    ],
+    "order": 316,
+    "authors": [
+      "Hassan Ismail Fawaz",
+      "Germain Forestier",
+      "Jonathan Weber",
+      "Lhassane Idoumghar"
+    ],
+    "date": "2018-09-12",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:1611.06455",
+    "kind": "arxiv",
+    "label": "Time Series Classification from Scratch (strong baseline)",
+    "title": "Time Series Classification from Scratch with Deep Neural Networks: A Strong Baseline",
+    "section": "Time series",
+    "urls": [
+      "https://arxiv.org/abs/1611.06455"
+    ],
+    "order": 317,
+    "authors": [
+      "Zhiguang Wang",
+      "Weizhong Yan",
+      "Tim Oates"
+    ],
+    "date": "2016-11-20",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2606.08720",
+    "kind": "arxiv",
+    "label": "This is how the Neocortex Learns (O'Reilly)",
+    "title": "This is how the Neocortex Learns",
+    "section": "NeuroAI",
+    "urls": [
+      "https://arxiv.org/abs/2606.08720"
+    ],
+    "order": 318,
+    "authors": [
+      "Randall C. O'Reilly"
+    ],
+    "date": "2026-06-07",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:herasight-project.webflow.io/technical-paper/cogpgt-1",
+    "kind": "web",
+    "label": "CogPGT: a genetic predictor of IQ",
+    "title": "CogPGT: a genetic predictor of IQ",
+    "section": "NeuroAI",
+    "urls": [
+      "https://herasight-project.webflow.io/technical-paper/cogpgt-1"
+    ],
+    "order": 319,
+    "authors": [],
+    "date": "2025-10-21",
+    "date_source": "known"
+  },
+  {
+    "id": "url:cell.com/iscience/fulltext/s2589-0042(25)00289-5",
+    "kind": "web",
+    "label": "Is my red your red? Evaluating structural correspondences of color qualia (iScience 2025)",
+    "title": "Is my red your red? Evaluating structural correspondences of color qualia (iScience 2025)",
+    "section": "NeuroAI",
+    "urls": [
+      "https://www.cell.com/iscience/fulltext/S2589-0042(25)00289-5",
+      "https://doi.org/10.1016/j.isci.2025.112029"
+    ],
+    "order": 320,
+    "authors": [],
+    "date": "2024-08-14",
+    "date_source": "known"
+  },
+  {
+    "id": "arxiv:2505.17117",
+    "kind": "arxiv",
+    "label": "From Tokens to Thoughts: How LLMs and Humans Trade Compression for Meaning",
+    "title": "From Tokens to Thoughts: How LLMs and Humans Trade Compression for Meaning",
+    "section": "NeuroAI",
+    "urls": [
+      "https://arxiv.org/abs/2505.17117"
+    ],
+    "order": 321,
+    "authors": [
+      "Chen Shani",
+      "Liron Soffer",
+      "Dan Jurafsky",
+      "Yann LeCun"
+    ],
+    "date": "2025-05-21",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "doi:10.1101/2024.02.22.581686",
+    "kind": "doi",
+    "label": "MetaWorm: an integrative model of the C. elegans brain and body (bioRxiv)",
+    "title": "MetaWorm: an integrative model of the C. elegans brain and body (bioRxiv)",
+    "section": "NeuroAI",
+    "urls": [
+      "https://doi.org/10.1101/2024.02.22.581686"
+    ],
+    "order": 322,
+    "authors": [],
+    "date": null,
+    "date_source": null
+  },
+  {
+    "id": "doi:10.1371/journal.pcbi.1011005",
+    "kind": "doi",
+    "label": "Neural spiking for causal inference and learning (PLOS Comp Biol 2023)",
+    "title": "Neural spiking for causal inference and learning (PLOS Comp Biol 2023)",
+    "section": "NeuroAI",
+    "urls": [
+      "https://doi.org/10.1371/journal.pcbi.1011005"
+    ],
+    "order": 323,
+    "authors": [],
+    "date": null,
+    "date_source": null
+  },
+  {
+    "id": "doi:10.1101/2023.04.04.535512",
+    "kind": "doi",
+    "label": "Emergence of belief-like representations through RL (bioRxiv)",
+    "title": "Emergence of belief-like representations through RL (bioRxiv)",
+    "section": "NeuroAI",
+    "urls": [
+      "https://doi.org/10.1101/2023.04.04.535512"
+    ],
+    "order": 324,
+    "authors": [],
+    "date": null,
+    "date_source": null
+  },
+  {
+    "id": "doi:10.1371/journal.pcbi.1010628",
+    "kind": "doi",
+    "label": "Sleep prevents catastrophic forgetting in spiking neural networks (PLOS Comp Biol 2022)",
+    "title": "Sleep prevents catastrophic forgetting in spiking neural networks (PLOS Comp Biol 2022)",
+    "section": "NeuroAI",
+    "urls": [
+      "https://doi.org/10.1371/journal.pcbi.1010628",
+      "https://www.biorxiv.org/content/10.1101/688622v2.full"
+    ],
+    "order": 325,
+    "authors": [],
+    "date": null,
+    "date_source": null
+  },
+  {
+    "id": "arxiv:2210.08340",
+    "kind": "arxiv",
+    "label": "Toward Next-Generation AI: Catalyzing the NeuroAI Revolution",
+    "title": "Toward Next-Generation Artificial Intelligence: Catalyzing the NeuroAI Revolution",
+    "section": "NeuroAI",
+    "urls": [
+      "https://arxiv.org/abs/2210.08340"
+    ],
+    "order": 326,
+    "authors": [
+      "Anthony Zador",
+      "Sean Escola",
+      "Blake Richards",
+      "Bence Ölveczky"
+    ],
+    "date": "2022-10-15",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2112.04035",
+    "kind": "arxiv",
+    "label": "Relating transformers to models and neural representations of the hippocampal formation (Whittington et al.)",
+    "title": "Relating transformers to models and neural representations of the hippocampal formation",
+    "section": "NeuroAI",
+    "urls": [
+      "https://arxiv.org/abs/2112.04035"
+    ],
+    "order": 327,
+    "authors": [
+      "James C. R. Whittington",
+      "Joseph Warren",
+      "Timothy E. J. Behrens"
+    ],
+    "date": "2021-12-07",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2112.03978",
+    "kind": "arxiv",
+    "label": "Attractor and integrator networks in the brain",
+    "title": "Attractor and integrator networks in the brain",
+    "section": "NeuroAI",
+    "urls": [
+      "https://arxiv.org/abs/2112.03978",
+      "https://doi.org/10.1038/s41583-022-00642-0"
+    ],
+    "order": 328,
+    "authors": [
+      "Mikail Khona",
+      "Ila R. Fiete"
+    ],
+    "date": "2021-12-07",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "doi:10.1038/s41467-021-26568-2",
+    "kind": "doi",
+    "label": "Correspondence between neuroevolution and gradient descent (Nat Commun 2021)",
+    "title": "Correspondence between neuroevolution and gradient descent (Nat Commun 2021)",
+    "section": "NeuroAI",
+    "urls": [
+      "https://doi.org/10.1038/s41467-021-26568-2"
+    ],
+    "order": 329,
+    "authors": [],
+    "date": null,
+    "date_source": null
+  },
+  {
+    "id": "url:transformer-circuits.pub/2026/workspace",
+    "kind": "web",
+    "label": "Verbalizable Representations Form a Global Workspace in Language Models (Anthropic, July 2026)",
+    "title": "Verbalizable Representations Form a Global Workspace in Language Models (Anthropic, July 2026)",
+    "section": "Representation alignment",
+    "urls": [
+      "https://transformer-circuits.pub/2026/workspace/"
+    ],
+    "order": 330,
+    "authors": [],
+    "date": "2026-07-06",
+    "date_source": "page"
+  },
+  {
+    "id": "arxiv:2602.14486",
+    "kind": "arxiv",
+    "label": "Revisiting the Platonic Representation Hypothesis: An Aristotelian View",
+    "title": "Revisiting the Platonic Representation Hypothesis: An Aristotelian View",
+    "section": "Representation alignment",
+    "urls": [
+      "https://arxiv.org/abs/2602.14486"
+    ],
+    "order": 331,
+    "authors": [
+      "Fabian Gröger",
+      "Shuo Wen",
+      "Maria Brbić"
+    ],
+    "date": "2026-02-16",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2507.01098",
+    "kind": "arxiv",
+    "label": "Proof of a perfect platonic representation hypothesis",
+    "title": "Proof of a perfect platonic representation hypothesis",
+    "section": "Representation alignment",
+    "urls": [
+      "https://arxiv.org/abs/2507.01098"
+    ],
+    "order": 332,
+    "authors": [
+      "Liu Ziyin",
+      "Isaac Chuang"
+    ],
+    "date": "2025-07-01",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2502.15104",
+    "kind": "arxiv",
+    "label": "Estimating Neural Representation Alignment from Sparsely Sampled Inputs",
+    "title": "Estimating Neural Representation Alignment from Sparsely Sampled Inputs and Features",
+    "section": "Representation alignment",
+    "urls": [
+      "https://arxiv.org/abs/2502.15104"
+    ],
+    "order": 333,
+    "authors": [
+      "Chanwoo Chun",
+      "Abdulkadir Canatar",
+      "SueYeon Chung",
+      "Daniel D. Lee"
+    ],
+    "date": "2025-02-20",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2405.07987",
+    "kind": "arxiv",
+    "label": "The Platonic Representation Hypothesis",
+    "title": "The Platonic Representation Hypothesis",
+    "section": "Representation alignment",
+    "urls": [
+      "https://arxiv.org/abs/2405.07987"
+    ],
+    "order": 334,
+    "authors": [
+      "Minyoung Huh",
+      "Brian Cheung",
+      "Tongzhou Wang",
+      "Phillip Isola"
+    ],
+    "date": "2024-05-13",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2405.01012",
+    "kind": "arxiv",
+    "label": "Correcting Biased Centered Kernel Alignment Measures",
+    "title": "Correcting Biased Centered Kernel Alignment Measures in Biological and Artificial Neural Networks",
+    "section": "Representation alignment",
+    "urls": [
+      "https://arxiv.org/abs/2405.01012"
+    ],
+    "order": 335,
+    "authors": [
+      "Alex Murphy",
+      "Joel Zylberberg",
+      "Alona Fyshe"
+    ],
+    "date": "2024-05-02",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2007.02789",
+    "kind": "arxiv",
+    "label": "Comparing representational geometries using whitened unbiased-distance-matrix similarity",
+    "title": "Comparing representational geometries using whitened unbiased-distance-matrix similarity",
+    "section": "Representation alignment",
+    "urls": [
+      "https://arxiv.org/abs/2007.02789"
+    ],
+    "order": 336,
+    "authors": [
+      "Jörn Diedrichsen",
+      "Eva Berlot",
+      "Marieke Mur",
+      "Heiko H. Schütt"
+    ],
+    "date": "2020-07-06",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:thinkingmachines.ai/news/learning-to-replicate-expert-judgment-in-financial-tasks",
+    "kind": "web",
+    "label": "Learning to Replicate Expert Judgment in Financial Tasks (Thinking Machines)",
+    "title": "Learning to Replicate Expert Judgment in Financial Tasks (Thinking Machines)",
+    "section": "Finance",
+    "urls": [
+      "https://thinkingmachines.ai/news/learning-to-replicate-expert-judgment-in-financial-tasks/"
+    ],
+    "order": 337,
+    "authors": [],
+    "date": null,
+    "date_source": null
+  },
+  {
+    "id": "url:papers.ssrn.com/sol3/papers.cfm?abstract_id=5239006",
+    "kind": "web",
+    "label": "The Virtue of Complexity debate (Kelly, Malamud & Zhou versus Nagel)",
+    "title": "The Virtue of Complexity debate (Kelly, Malamud & Zhou versus Nagel)",
+    "section": "Finance",
+    "urls": [
+      "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5239006",
+      "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5346842",
+      "https://voices.uchicago.edu/stefannagel/files/2025/07/Complexity_2.pdf",
+      "https://bfi.uchicago.edu/wp-content/uploads/2025/08/BFI_WP_2025-104.pdf"
+    ],
+    "order": 338,
+    "authors": [],
+    "date": "2025-05-07",
+    "date_source": "page"
+  },
+  {
+    "id": "acl:2025.acl-long.126",
+    "kind": "acl",
+    "label": "INVESTORBENCH: a financial benchmark for LLM agents",
+    "title": "INVESTORBENCH: a financial benchmark for LLM agents",
+    "section": "Finance",
+    "urls": [
+      "https://aclanthology.org/2025.acl-long.126/"
+    ],
+    "order": 339,
+    "authors": [],
+    "date": "2025-07-01",
+    "date_source": "page"
+  },
+  {
+    "id": "arxiv:2003.01859",
+    "kind": "arxiv",
+    "label": "Deep Learning for Financial Applications: A Survey",
+    "title": "Applications of deep learning in stock market prediction: recent progress",
+    "section": "Finance",
+    "urls": [
+      "https://arxiv.org/abs/2003.01859"
+    ],
+    "order": 340,
+    "authors": [
+      "Weiwei Jiang"
+    ],
+    "date": "2020-02-29",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:groundai.com/project/an-intelligent-financial-portfolio-trading-strategy-using-deep-q-learning8432/3",
+    "kind": "web",
+    "label": "An Intelligent Financial Portfolio Trading Strategy using Deep Q-Learning",
+    "title": "An Intelligent Financial Portfolio Trading Strategy using Deep Q-Learning",
+    "section": "Finance",
+    "urls": [
+      "https://www.groundai.com/project/an-intelligent-financial-portfolio-trading-strategy-using-deep-q-learning8432/3"
+    ],
+    "order": 341,
+    "authors": [
+      "Hyungjun Park",
+      "Min Kyu Sim",
+      "Dong Gu Choi"
+    ],
+    "date": "2019-07-08",
+    "date_source": "arxiv-api",
+    "fetched_title": "An intelligent financial portfolio trading strategy using deep Q-learning"
+  },
+  {
+    "id": "url:researchgate.net/publication/331273826",
+    "kind": "web",
+    "label": "Deep Adaptive Input Normalization for price forecasting from Limit Order Book data",
+    "title": "Deep Adaptive Input Normalization for price forecasting from Limit Order Book data",
+    "section": "Finance",
+    "urls": [
+      "https://www.researchgate.net/publication/331273826"
+    ],
+    "order": 342,
+    "authors": [
+      "Nikolaos Passalis",
+      "Anastasios Tefas",
+      "Juho Kanniainen",
+      "Moncef Gabbouj"
+    ],
+    "date": "2019-02-21",
+    "date_source": "arxiv-api",
+    "fetched_title": "Deep Adaptive Input Normalization for Time Series Forecasting"
+  },
+  {
+    "id": "arxiv:1807.02787",
+    "kind": "arxiv",
+    "label": "Financial Trading as a Game: A Deep Reinforcement Learning Approach",
+    "title": "Financial Trading as a Game: A Deep Reinforcement Learning Approach",
+    "section": "Finance",
+    "urls": [
+      "https://arxiv.org/abs/1807.02787"
+    ],
+    "order": 343,
+    "authors": [
+      "Chien Yi Huang"
+    ],
+    "date": "2018-07-08",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:1706.10059",
+    "kind": "arxiv",
+    "label": "A Deep Reinforcement Learning Framework for the Financial Portfolio Management Problem",
+    "title": "A Deep Reinforcement Learning Framework for the Financial Portfolio Management Problem",
+    "section": "Finance",
+    "urls": [
+      "https://arxiv.org/abs/1706.10059"
+    ],
+    "order": 344,
+    "authors": [
+      "Zhengyao Jiang",
+      "Dixing Xu",
+      "Jinjun Liang"
+    ],
+    "date": "2017-06-30",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:rlhfbook.com",
+    "kind": "web",
+    "label": "RLHF book",
+    "title": "RLHF book",
+    "section": "Books",
+    "urls": [
+      "https://rlhfbook.com/"
+    ],
+    "order": 345,
+    "authors": [
+      "Nathan Lambert"
+    ],
+    "date": "2024-05-24",
+    "date_source": "github"
+  },
+  {
+    "id": "url:neuroevolutionbook.com",
+    "kind": "web",
+    "label": "Neuroevolution book",
+    "title": "Neuroevolution book",
+    "section": "Books",
+    "urls": [
+      "https://neuroevolutionbook.com/"
+    ],
+    "order": 346,
+    "authors": [],
+    "date": null,
+    "date_source": null
+  },
+  {
+    "id": "url:link.springer.com/book/10.1007/978-3-031-45468-4",
+    "kind": "web",
+    "label": "Deep Learning: Foundations and Concepts (Bishop & Bishop)",
+    "title": "Deep Learning: Foundations and Concepts (Bishop & Bishop)",
+    "section": "Books",
+    "urls": [
+      "https://link.springer.com/book/10.1007/978-3-031-45468-4"
+    ],
+    "order": 347,
+    "authors": [],
+    "date": "2023-11-01",
+    "date_source": "page"
+  },
+  {
+    "id": "arxiv:2201.09746",
+    "kind": "arxiv",
+    "label": "Reinforcement Learning Textbook (Sergey Ivanov)",
+    "title": "Reinforcement Learning Textbook",
+    "section": "Books",
+    "urls": [
+      "https://arxiv.org/abs/2201.09746"
+    ],
+    "order": 348,
+    "authors": [
+      "Sergey Ivanov"
+    ],
+    "date": "2022-01-19",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2201.00650",
+    "kind": "arxiv",
+    "label": "Deep Learning Interviews (problem collection)",
+    "title": "Deep Learning Interviews: Hundreds of fully solved job interview questions from a wide range of key topics in AI",
+    "section": "Books",
+    "urls": [
+      "https://arxiv.org/abs/2201.00650"
+    ],
+    "order": 349,
+    "authors": [
+      "Shlomo Kashani",
+      "Amir Ivry"
+    ],
+    "date": "2021-12-30",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "doi:10.1038/s41566-024-01394-2",
+    "kind": "doi",
+    "label": "Photonic computing",
+    "title": "Photonic computing",
+    "section": "Other",
+    "urls": [
+      "https://doi.org/10.1038/s41566-024-01394-2",
+      "https://doi.org/10.1038/s41377-022-00717-8"
+    ],
+    "order": 350,
+    "authors": [],
+    "date": null,
+    "date_source": null
+  },
+  {
+    "id": "url:direct.mit.edu/coli/article/doi/10.1162/coli_a_00481/116160",
+    "kind": "web",
+    "label": "Machine Learning for Ancient Languages: A Survey",
+    "title": "Machine Learning for Ancient Languages: A Survey",
+    "section": "Other",
+    "urls": [
+      "https://direct.mit.edu/coli/article/doi/10.1162/coli_a_00481/116160/"
+    ],
+    "order": 351,
+    "authors": [],
+    "date": "2023-09-01",
+    "date_source": "known"
+  },
+  {
+    "id": "arxiv:2309.10232",
+    "kind": "arxiv",
+    "label": "Optical matrix multiplication",
+    "title": "Fully parallel optical matrix-matrix multiplication",
+    "section": "Other",
+    "urls": [
+      "https://arxiv.org/abs/2309.10232"
+    ],
+    "order": 352,
+    "authors": [
+      "Yufeng Zhang",
+      "Hao Yan",
+      "Kaizhi Wang"
+    ],
+    "date": "2023-09-19",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2304.01433",
+    "kind": "arxiv",
+    "label": "TPU v4",
+    "title": "TPU v4: An Optically Reconfigurable Supercomputer for Machine Learning with Hardware Support for Embeddings",
+    "section": "Other",
+    "urls": [
+      "https://arxiv.org/abs/2304.01433"
+    ],
+    "order": 353,
+    "authors": [
+      "Norman P. Jouppi",
+      "George Kurian",
+      "Sheng Li",
+      "Peter Ma"
+    ],
+    "date": "2023-04-04",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "url:semanticscholar.org/paper/4165542ba777ea63facc7ea9866f43ba63f054ae",
+    "kind": "web",
+    "label": "Orbifold Tutte embeddings (geometry processing)",
+    "title": "Orbifold Tutte embeddings (geometry processing)",
+    "section": "Other",
+    "urls": [
+      "https://www.semanticscholar.org/paper/4165542ba777ea63facc7ea9866f43ba63f054ae"
+    ],
+    "order": 354,
+    "authors": [],
+    "date": "2015-08-01",
+    "date_source": "known"
+  }
+]

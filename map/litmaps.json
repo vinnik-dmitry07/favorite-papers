@@ -1,0 +1,1425 @@
+{
+  "papers": [
+    {
+      "title": "The Llama 3 Herd of Models",
+      "author": "Dubey",
+      "year": "2024",
+      "lit_cites": 22281,
+      "lit_refs": 0,
+      "tags": []
+    },
+    {
+      "title": "Overcoming catastrophic forgetting in neural networks",
+      "author": "Kirkpatrick",
+      "year": "2017",
+      "lit_cites": 14109,
+      "lit_refs": 75,
+      "tags": [
+        "Forgetting"
+      ]
+    },
+    {
+      "title": "DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models",
+      "author": "Shao",
+      "year": "2024",
+      "lit_cites": 10134,
+      "lit_refs": 86,
+      "tags": [
+        "Math reasoning"
+      ]
+    },
+    {
+      "title": "Beyond the Imitation Game: Quantifying and extrapolating the capabilities of language models",
+      "author": "Srivastava",
+      "year": "2023",
+      "lit_cites": 3615,
+      "lit_refs": 0,
+      "tags": [
+        "Interp"
+      ]
+    },
+    {
+      "title": "DAPO: An Open-Source LLM Reinforcement Learning System at Scale",
+      "author": "Yu",
+      "year": "2025",
+      "lit_cites": 2958,
+      "lit_refs": 41,
+      "tags": [
+        "Scaling",
+        "RL"
+      ]
+    },
+    {
+      "title": "Sharpness-Aware Minimization for Efficiently Improving Generalization",
+      "author": "Foret",
+      "year": "2020",
+      "lit_cites": 2612,
+      "lit_refs": 107,
+      "tags": [
+        "Optimizers",
+        "Generalization",
+        "Architecture",
+        "Prompts"
+      ]
+    },
+    {
+      "title": "Sparse Autoencoders Find Highly Interpretable Features in Language Models",
+      "author": "Cunningham",
+      "year": "2023",
+      "lit_cites": 1801,
+      "lit_refs": 35,
+      "tags": [
+        "Interp"
+      ]
+    },
+    {
+      "title": "VICReg: Variance-Invariance-Covariance Regularization for Self-Supervised Learning",
+      "author": "Bardes",
+      "year": "2022",
+      "lit_cites": 1695,
+      "lit_refs": 93,
+      "tags": [
+        "JEPA"
+      ]
+    },
+    {
+      "title": "Large Batch Optimization for Deep Learning: Training BERT in 76 minutes",
+      "author": "You",
+      "year": "2020",
+      "lit_cites": 1647,
+      "lit_refs": 53,
+      "tags": [
+        "Optimizers"
+      ]
+    },
+    {
+      "title": "Understanding R1-Zero-Like Training: A Critical Perspective",
+      "author": "Liu",
+      "year": "2025",
+      "lit_cites": 1535,
+      "lit_refs": 34,
+      "tags": [
+        "Math reasoning",
+        "RL"
+      ]
+    },
+    {
+      "title": "Progress measures for grokking via mechanistic interpretability",
+      "author": "Nanda",
+      "year": "2023",
+      "lit_cites": 1227,
+      "lit_refs": 32,
+      "tags": [
+        "Math reasoning"
+      ]
+    },
+    {
+      "title": "Does Reinforcement Learning Really Incentivize Reasoning Capacity in LLMs Beyond the Base Model?",
+      "author": "Yue",
+      "year": "2025",
+      "lit_cites": 1200,
+      "lit_refs": 71,
+      "tags": [
+        "Scaling",
+        "Math reasoning",
+        "RL"
+      ]
+    },
+    {
+      "title": "Measuring Catastrophic Forgetting in Neural Networks",
+      "author": "Kemker",
+      "year": "2018",
+      "lit_cites": 1147,
+      "lit_refs": 65,
+      "tags": [
+        "Forgetting"
+      ]
+    },
+    {
+      "title": "Deep Neuroevolution: Genetic Algorithms Are a Competitive Alternative for Training Deep Neural Networks for Reinforcement Learning",
+      "author": "Such",
+      "year": "2017",
+      "lit_cites": 1018,
+      "lit_refs": 98,
+      "tags": [
+        "Scaling",
+        "Evolution"
+      ]
+    },
+    {
+      "title": "Group Sequence Policy Optimization",
+      "author": "Zheng",
+      "year": "2025",
+      "lit_cites": 862,
+      "lit_refs": 6,
+      "tags": [
+        "Scaling",
+        "RL"
+      ]
+    },
+    {
+      "title": "Symbolic Discovery of Optimization Algorithms",
+      "author": "Chen",
+      "year": "2023",
+      "lit_cites": 849,
+      "lit_refs": 190,
+      "tags": [
+        "Scaling",
+        "Optimizers",
+        "Self-improve",
+        "Prompts"
+      ]
+    },
+    {
+      "title": "Training Large Language Models to Reason in a Continuous Latent Space",
+      "author": "Hao",
+      "year": "2024",
+      "lit_cites": 814,
+      "lit_refs": 79,
+      "tags": [
+        "Recurrent"
+      ]
+    },
+    {
+      "title": "Promptbreeder: Self-Referential Self-Improvement Via Prompt Evolution",
+      "author": "Fernando",
+      "year": "2023",
+      "lit_cites": 719,
+      "lit_refs": 97,
+      "tags": [
+        "Self-improve",
+        "Generalization",
+        "Prompts"
+      ]
+    },
+    {
+      "title": "Beyond the 80/20 Rule: High-Entropy Minority Tokens Drive Effective Reinforcement Learning for LLM Reasoning",
+      "author": "Wang",
+      "year": "2025",
+      "lit_cites": 705,
+      "lit_refs": 51,
+      "tags": [
+        "Math reasoning",
+        "Feedback",
+        "RL"
+      ]
+    },
+    {
+      "title": "How Neural Networks Extrapolate: From Feedforward to Graph Neural Networks",
+      "author": "Xu",
+      "year": "2021",
+      "lit_cites": 488,
+      "lit_refs": 185,
+      "tags": [
+        "Generalization"
+      ]
+    },
+    {
+      "title": "Attractor and integrator networks in the brain",
+      "author": "Khona",
+      "year": "2022",
+      "lit_cites": 486,
+      "lit_refs": 354,
+      "tags": [
+        "Architecture"
+      ]
+    },
+    {
+      "title": "Loss of plasticity in deep continual learning",
+      "author": "Dohare",
+      "year": "2024",
+      "lit_cites": 453,
+      "lit_refs": 207,
+      "tags": [
+        "Evolution",
+        "Continual"
+      ]
+    },
+    {
+      "title": "Group-in-Group Policy Optimization for LLM Agent Training",
+      "author": "Feng",
+      "year": "2025",
+      "lit_cites": 434,
+      "lit_refs": 99,
+      "tags": [
+        "RL"
+      ]
+    },
+    {
+      "title": "Sophia: A Scalable Stochastic Second-order Optimizer for Language Model Pre-training",
+      "author": "Liu",
+      "year": "2023",
+      "lit_cites": 377,
+      "lit_refs": 120,
+      "tags": [
+        "Optimizers"
+      ]
+    },
+    {
+      "title": "Scaling up Test-Time Compute with Latent Reasoning: A Recurrent Depth Approach",
+      "author": "Geiping",
+      "year": "2025",
+      "lit_cites": 353,
+      "lit_refs": 0,
+      "tags": [
+        "Recurrent"
+      ]
+    },
+    {
+      "title": "GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning",
+      "author": "Agrawal",
+      "year": "2025",
+      "lit_cites": 344,
+      "lit_refs": 0,
+      "tags": [
+        "Self-refine"
+      ]
+    },
+    {
+      "title": "2 OLMo 2 Furious",
+      "author": "OLMo",
+      "year": "2024",
+      "lit_cites": 312,
+      "lit_refs": 0,
+      "tags": []
+    },
+    {
+      "title": "TTRL: Test-Time Reinforcement Learning",
+      "author": "Zuo",
+      "year": "2025",
+      "lit_cites": 298,
+      "lit_refs": 84,
+      "tags": [
+        "Stepping stone",
+        "Self-improve",
+        "RL"
+      ]
+    },
+    {
+      "title": "MiniMax-M1: Scaling Test-Time Compute Efficiently with Lightning Attention",
+      "author": "Chen",
+      "year": "2025",
+      "lit_cites": 284,
+      "lit_refs": 98,
+      "tags": [
+        "Architecture"
+      ]
+    },
+    {
+      "title": "Learning to Reason without External Rewards",
+      "author": "Zhao",
+      "year": "2025",
+      "lit_cites": 258,
+      "lit_refs": 66,
+      "tags": [
+        "Math reasoning",
+        "Feedback",
+        "RL"
+      ]
+    },
+    {
+      "title": "Spurious Rewards: Rethinking Training Signals in RLVR",
+      "author": "Shao",
+      "year": "2025",
+      "lit_cites": 258,
+      "lit_refs": 51,
+      "tags": [
+        "Stepping stone",
+        "Math reasoning",
+        "Feedback",
+        "RL"
+      ]
+    },
+    {
+      "title": "Self-Distilled Reasoner: On-Policy Self-Distillation for Large Language Models",
+      "author": "Zhao",
+      "year": "2026",
+      "lit_cites": 255,
+      "lit_refs": 47,
+      "tags": [
+        "Self-distill"
+      ]
+    },
+    {
+      "title": "Reinforcement Learning via Self-Distillation",
+      "author": "Hübotter",
+      "year": "2026",
+      "lit_cites": 241,
+      "lit_refs": 185,
+      "tags": [
+        "Self-distill",
+        "Scaling",
+        "Self-improve",
+        "RL"
+      ]
+    },
+    {
+      "title": "Constitutional Classifiers: Defending against Universal Jailbreaks across Thousands of Hours of Red Teaming",
+      "author": "Sharma",
+      "year": "2025",
+      "lit_cites": 222,
+      "lit_refs": 0,
+      "tags": [
+        "Interp",
+        "Scaling",
+        "Generalization",
+        "Prompts"
+      ]
+    },
+    {
+      "title": "AI-GAs: AI-generating algorithms, an alternate paradigm for producing general artificial intelligence.",
+      "author": "Clune",
+      "year": "2019",
+      "lit_cites": 193,
+      "lit_refs": 367,
+      "tags": [
+        "Scaling",
+        "Evolution"
+      ]
+    },
+    {
+      "title": "Self-Distillation Enables Continual Learning",
+      "author": "Shenfeld",
+      "year": "2026",
+      "lit_cites": 178,
+      "lit_refs": 73,
+      "tags": [
+        "Self-distill"
+      ]
+    },
+    {
+      "title": "Continual Learning and Catastrophic Forgetting",
+      "author": "van de Ven",
+      "year": "2024",
+      "lit_cites": 171,
+      "lit_refs": 286,
+      "tags": [
+        "Forgetting"
+      ]
+    },
+    {
+      "title": "Self-Refine: Iterative Refinement with Self-Feedback",
+      "author": "Alon",
+      "year": "2023",
+      "lit_cites": 170,
+      "lit_refs": 0,
+      "tags": [
+        "Self-refine"
+      ]
+    },
+    {
+      "title": "Learning in High Dimension Always Amounts to Extrapolation",
+      "author": "Balestriero",
+      "year": "2021",
+      "lit_cites": 153,
+      "lit_refs": 50,
+      "tags": [
+        "Generalization"
+      ]
+    },
+    {
+      "title": "Cramming: Training a Language Model on a Single GPU in One Day",
+      "author": "Geiping",
+      "year": "2022",
+      "lit_cites": 152,
+      "lit_refs": 209,
+      "tags": [
+        "Scaling"
+      ]
+    },
+    {
+      "title": "LeJEPA: Provable and Scalable Self-Supervised Learning Without the Heuristics",
+      "author": "Balestriero",
+      "year": "2025",
+      "lit_cites": 151,
+      "lit_refs": 169,
+      "tags": [
+        "JEPA"
+      ]
+    },
+    {
+      "title": "On the Generalization of SFT: A Reinforcement Learning Perspective with Reward Rectification",
+      "author": "Wu",
+      "year": "2025",
+      "lit_cites": 151,
+      "lit_refs": 122,
+      "tags": [
+        "Scaling",
+        "Self-improve",
+        "Generalization",
+        "Prompts"
+      ]
+    },
+    {
+      "title": "Self-Distillation Bridges Distribution Gap in Language Model Fine-Tuning",
+      "author": "Yang",
+      "year": "2024",
+      "lit_cites": 148,
+      "lit_refs": 59,
+      "tags": [
+        "Self-distill"
+      ]
+    },
+    {
+      "title": "The Art of Scaling Reinforcement Learning Compute for LLMs",
+      "author": "Khatri",
+      "year": "2025",
+      "lit_cites": 135,
+      "lit_refs": 52,
+      "tags": [
+        "Scaling"
+      ]
+    },
+    {
+      "title": "Arithmetic Without Algorithms: Language Models Solve Math With a Bag of Heuristics",
+      "author": "Nikankin",
+      "year": "2024",
+      "lit_cites": 130,
+      "lit_refs": 49,
+      "tags": [
+        "Interp",
+        "Heuristics",
+        "Math reasoning"
+      ]
+    },
+    {
+      "title": "Rethinking On-Policy Distillation of Large Language Models: Phenomenology, Mechanism, and Recipe",
+      "author": "Li",
+      "year": "2026",
+      "lit_cites": 117,
+      "lit_refs": 71,
+      "tags": [
+        "Self-distill"
+      ]
+    },
+    {
+      "title": "Meta-Harness: End-to-End Optimization of Model Harnesses",
+      "author": "Lee",
+      "year": "2026",
+      "lit_cites": 115,
+      "lit_refs": 59,
+      "tags": [
+        "Scaling",
+        "Architecture"
+      ]
+    },
+    {
+      "title": "Emergent Introspective Awareness in Large Language Models",
+      "author": "Lindsey",
+      "year": "2026",
+      "lit_cites": 109,
+      "lit_refs": 0,
+      "tags": [
+        "Interp"
+      ]
+    },
+    {
+      "title": "Reasoning with Sampling: Your Base Model is Smarter Than You Think",
+      "author": "Karan",
+      "year": "2025",
+      "lit_cites": 109,
+      "lit_refs": 57,
+      "tags": [
+        "Scaling",
+        "Math reasoning",
+        "Feedback",
+        "RL"
+      ]
+    },
+    {
+      "title": "Critique-GRPO: Advancing LLM Reasoning with Natural Language and Numerical Feedback",
+      "author": "Zhang",
+      "year": "2025",
+      "lit_cites": 105,
+      "lit_refs": 53,
+      "tags": [
+        "Math reasoning",
+        "Feedback",
+        "RL"
+      ]
+    },
+    {
+      "title": "Curriculum Reinforcement Learning from Easy to Hard Tasks Improves LLM Reasoning",
+      "author": "Parashar",
+      "year": "2025",
+      "lit_cites": 103,
+      "lit_refs": 73,
+      "tags": [
+        "Environments"
+      ]
+    },
+    {
+      "title": "Soft Adaptive Policy Optimization",
+      "author": "Chang",
+      "year": "2025",
+      "lit_cites": 101,
+      "lit_refs": 12,
+      "tags": [
+        "Scaling",
+        "Math reasoning",
+        "RL"
+      ]
+    },
+    {
+      "title": "Learning to Discover at Test Time",
+      "author": "Yuksekgonul",
+      "year": "2026",
+      "lit_cites": 100,
+      "lit_refs": 0,
+      "tags": [
+        "Scaling",
+        "Discovery"
+      ]
+    },
+    {
+      "title": "Language Models Use Trigonometry to Do Addition",
+      "author": "Kantamneni",
+      "year": "2025",
+      "lit_cites": 95,
+      "lit_refs": 0,
+      "tags": [
+        "Math reasoning"
+      ]
+    },
+    {
+      "title": "Nested Learning: The Illusion of Deep Learning Architectures",
+      "author": "Behrouz",
+      "year": "2025",
+      "lit_cites": 95,
+      "lit_refs": 155,
+      "tags": [
+        "Architecture"
+      ]
+    },
+    {
+      "title": "MemRL: Self-Evolving Agents via Runtime Reinforcement Learning on Episodic Memory",
+      "author": "Zhang",
+      "year": "2026",
+      "lit_cites": 91,
+      "lit_refs": 97,
+      "tags": [
+        "Environments"
+      ]
+    },
+    {
+      "title": "Detecting Strategic Deception Using Linear Probes",
+      "author": "Goldowsky-Dill",
+      "year": "2025",
+      "lit_cites": 89,
+      "lit_refs": 0,
+      "tags": [
+        "Interp",
+        "Generalization"
+      ]
+    },
+    {
+      "title": "Recursive Language Models",
+      "author": "Zhang",
+      "year": "2025",
+      "lit_cites": 87,
+      "lit_refs": 46,
+      "tags": [
+        "Recursive"
+      ]
+    },
+    {
+      "title": "Revisiting On-Policy Distillation: Empirical Failure Modes and Simple Fixes",
+      "author": "Fu",
+      "year": "2026",
+      "lit_cites": 78,
+      "lit_refs": 57,
+      "tags": [
+        "Self-distill"
+      ]
+    },
+    {
+      "title": "Catastrophic Forgetting in Deep Learning: A Comprehensive Taxonomy",
+      "author": "Aleixo",
+      "year": "2023",
+      "lit_cites": 73,
+      "lit_refs": 303,
+      "tags": [
+        "Forgetting"
+      ]
+    },
+    {
+      "title": "Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?",
+      "author": "Kim",
+      "year": "2026",
+      "lit_cites": 70,
+      "lit_refs": 34,
+      "tags": [
+        "Self-distill"
+      ]
+    },
+    {
+      "title": "NorMuon: Making Muon more efficient and scalable",
+      "author": "Li",
+      "year": "2025",
+      "lit_cites": 67,
+      "lit_refs": 38,
+      "tags": [
+        "Optimizers"
+      ]
+    },
+    {
+      "title": "No Train No Gain: Revisiting Efficient Training Algorithms For Transformer-based Language Models",
+      "author": "Kaddour",
+      "year": "2023",
+      "lit_cites": 63,
+      "lit_refs": 160,
+      "tags": [
+        "Optimizers"
+      ]
+    },
+    {
+      "title": "Pre-trained Large Language Models Use Fourier Features to Compute Addition",
+      "author": "Zhou",
+      "year": "2024",
+      "lit_cites": 60,
+      "lit_refs": 54,
+      "tags": [
+        "Math reasoning"
+      ]
+    },
+    {
+      "title": "A social path to human-like artificial intelligence",
+      "author": "Duéñez-Guzmán",
+      "year": "2023",
+      "lit_cites": 59,
+      "lit_refs": 187,
+      "tags": [
+        "Self-improve",
+        "Evolution"
+      ]
+    },
+    {
+      "title": "Klear-Reasoner: Advancing Reasoning Capability via Gradient-Preserving Clipping Policy Optimization",
+      "author": "Su",
+      "year": "2025",
+      "lit_cites": 54,
+      "lit_refs": 24,
+      "tags": [
+        "Math reasoning",
+        "Feedback"
+      ]
+    },
+    {
+      "title": "Emergent Hierarchical Reasoning in LLMs through Reinforcement Learning",
+      "author": "Wang",
+      "year": "2025",
+      "lit_cites": 54,
+      "lit_refs": 55,
+      "tags": [
+        "Math reasoning",
+        "Feedback",
+        "RL"
+      ]
+    },
+    {
+      "title": "Unifying Group-Relative and Self-Distillation Policy Optimization via Sample Routing",
+      "author": "Li",
+      "year": "2026",
+      "lit_cites": 52,
+      "lit_refs": 60,
+      "tags": [
+        "Self-distill"
+      ]
+    },
+    {
+      "title": "From and to : LLMs Learn New Skills in RL by Composing Old Ones",
+      "author": "Yuan",
+      "year": "2025",
+      "lit_cites": 52,
+      "lit_refs": 48,
+      "tags": [
+        "Stepping stone",
+        "Generalization",
+        "RL"
+      ]
+    },
+    {
+      "title": "Toward Training Superintelligent Software Agents through Self-Play SWE-RL",
+      "author": "Wei",
+      "year": "2025",
+      "lit_cites": 47,
+      "lit_refs": 0,
+      "tags": [
+        "Environments"
+      ]
+    },
+    {
+      "title": "Dr. Zero: Self-Evolving Search Agents without Training Data",
+      "author": "Yue",
+      "year": "2026",
+      "lit_cites": 44,
+      "lit_refs": 61,
+      "tags": [
+        "Environments"
+      ]
+    },
+    {
+      "title": "Correspondence between neuroevolution and gradient descent",
+      "author": "Whitelam",
+      "year": "2021",
+      "lit_cites": 44,
+      "lit_refs": 76,
+      "tags": [
+        "Scaling",
+        "Evolution"
+      ]
+    },
+    {
+      "title": "RLVE: Scaling Up Reinforcement Learning for Language Models with Adaptive Verifiable Environments",
+      "author": "Zeng",
+      "year": "2025",
+      "lit_cites": 37,
+      "lit_refs": 73,
+      "tags": [
+        "Environments"
+      ]
+    },
+    {
+      "title": "Sleep prevents catastrophic forgetting in spiking neural networks by forming a joint synaptic weight representation",
+      "author": "Golden",
+      "year": "2022",
+      "lit_cites": 34,
+      "lit_refs": 107,
+      "tags": [
+        "Forgetting"
+      ]
+    },
+    {
+      "title": "A Definition of Open-Ended Learning Problems for Goal-Conditioned Agents",
+      "author": "Sigaud",
+      "year": "2023",
+      "lit_cites": 33,
+      "lit_refs": 82,
+      "tags": [
+        "Continual"
+      ]
+    },
+    {
+      "title": "Single-stream Policy Optimization",
+      "author": "Xu",
+      "year": "2025",
+      "lit_cites": 31,
+      "lit_refs": 50,
+      "tags": [
+        "Scaling",
+        "Self-improve",
+        "Generalization",
+        "RL"
+      ]
+    },
+    {
+      "title": "It Takes Two: Your GRPO Is Secretly DPO",
+      "author": "Wu",
+      "year": "2025",
+      "lit_cites": 29,
+      "lit_refs": 73,
+      "tags": [
+        "Math reasoning",
+        "Feedback",
+        "RL"
+      ]
+    },
+    {
+      "title": "Super-Convergence: Very Fast Training of Neural Networks Using Large Learning Rates",
+      "author": "Smith",
+      "year": "2017",
+      "lit_cites": 26,
+      "lit_refs": 0,
+      "tags": [
+        "Optimizers"
+      ]
+    },
+    {
+      "title": "Encoder-Decoder Gemma: Improving the Quality-Efficiency Trade-Off via Adaptation",
+      "author": "Zhang",
+      "year": "2025",
+      "lit_cites": 24,
+      "lit_refs": 85,
+      "tags": [
+        "Enc-dec"
+      ]
+    },
+    {
+      "title": "Continuous Thought Machines",
+      "author": "Darlow",
+      "year": "2025",
+      "lit_cites": 23,
+      "lit_refs": 101,
+      "tags": [
+        "Recurrent",
+        "Architecture"
+      ]
+    },
+    {
+      "title": "A Mechanistic Analysis of Looped Reasoning Language Models",
+      "author": "Blayney",
+      "year": "2026",
+      "lit_cites": 19,
+      "lit_refs": 59,
+      "tags": [
+        "Recurrent"
+      ]
+    },
+    {
+      "title": "LADDER: Self-Improving LLMs Through Recursive Problem Decomposition",
+      "author": "Simonds",
+      "year": "2025",
+      "lit_cites": 19,
+      "lit_refs": 0,
+      "tags": [
+        "Scaling",
+        "Self-improve",
+        "Math reasoning"
+      ]
+    },
+    {
+      "title": "The Lookahead Limitation: Why Multi-Operand Addition is Hard for LLMs",
+      "author": "Baeumel",
+      "year": "2025",
+      "lit_cites": 18,
+      "lit_refs": 28,
+      "tags": [
+        "Heuristics",
+        "Math reasoning"
+      ]
+    },
+    {
+      "title": "Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents",
+      "author": "Zhang",
+      "year": "2025",
+      "lit_cites": 15,
+      "lit_refs": 0,
+      "tags": [
+        "Self-improve",
+        "Evolution"
+      ]
+    },
+    {
+      "title": "Towards Execution-Grounded Automated AI Research",
+      "author": "Si",
+      "year": "2026",
+      "lit_cites": 14,
+      "lit_refs": 71,
+      "tags": [
+        "Scaling",
+        "Discovery"
+      ]
+    },
+    {
+      "title": "Metalearning Continual Learning Algorithms",
+      "author": "Irie",
+      "year": "2023",
+      "lit_cites": 13,
+      "lit_refs": 167,
+      "tags": [
+        "Continual"
+      ]
+    },
+    {
+      "title": "Hyperagents",
+      "author": "Zhang",
+      "year": "2026",
+      "lit_cites": 13,
+      "lit_refs": 0,
+      "tags": [
+        "Self-improve"
+      ]
+    },
+    {
+      "title": "ESPO: Entropy Importance Sampling Policy Optimization",
+      "author": "Sheng",
+      "year": "2025",
+      "lit_cites": 12,
+      "lit_refs": 25,
+      "tags": [
+        "Scaling",
+        "Math reasoning",
+        "Feedback",
+        "RL"
+      ]
+    },
+    {
+      "title": "A Formal Comparison Between Chain-of-Thought and Latent Thought",
+      "author": "Xu",
+      "year": "2025",
+      "lit_cites": 12,
+      "lit_refs": 77,
+      "tags": [
+        "Recurrent"
+      ]
+    },
+    {
+      "title": "T5Gemma 2: Seeing, Reading, and Understanding Longer",
+      "author": "Zhang",
+      "year": "2025",
+      "lit_cites": 11,
+      "lit_refs": 109,
+      "tags": [
+        "Enc-dec"
+      ]
+    },
+    {
+      "title": "Step-size Optimization for Continual Learning",
+      "author": "Degris",
+      "year": "2024",
+      "lit_cites": 10,
+      "lit_refs": 32,
+      "tags": [
+        "Optimizers",
+        "Continual"
+      ]
+    },
+    {
+      "title": "Why Can't Transformers Learn Multiplication? Reverse-Engineering Reveals Long-Range Dependency Pitfalls",
+      "author": "Xiao-yan",
+      "year": "2025",
+      "lit_cites": 10,
+      "lit_refs": 24,
+      "tags": [
+        "Heuristics",
+        "Math reasoning"
+      ]
+    },
+    {
+      "title": "The Road Less Scheduled",
+      "author": "Cutkosky",
+      "year": "2024",
+      "lit_cites": 9,
+      "lit_refs": 0,
+      "tags": [
+        "Generalization"
+      ]
+    },
+    {
+      "title": "Structured Scaling of AI Discovery Across Diverse Scientific Domains",
+      "author": "Ye",
+      "year": "2026",
+      "lit_cites": 9,
+      "lit_refs": 0,
+      "tags": [
+        "Discovery",
+        "RL"
+      ]
+    },
+    {
+      "title": "Spurious Rewards Paradox: Mechanistically Understanding How RLVR Activates Memorization Shortcuts in LLMs",
+      "author": "Yan",
+      "year": "2026",
+      "lit_cites": 8,
+      "lit_refs": 33,
+      "tags": [
+        "Stepping stone",
+        "Math reasoning",
+        "Feedback"
+      ]
+    },
+    {
+      "title": "MetaOptimize: A Framework for Optimizing Step Sizes and Other Meta-parameters",
+      "author": "Sharifnassab",
+      "year": "2024",
+      "lit_cites": 8,
+      "lit_refs": 76,
+      "tags": [
+        "Architecture"
+      ]
+    },
+    {
+      "title": "Competition and Attraction Improve Model Fusion",
+      "author": "Abrantes",
+      "year": "2025",
+      "lit_cites": 7,
+      "lit_refs": 37,
+      "tags": [
+        "Continual"
+      ]
+    },
+    {
+      "title": "Modular Arithmetic: Language Models Solve Math Digit by Digit",
+      "author": "Baeumel",
+      "year": "2025",
+      "lit_cites": 7,
+      "lit_refs": 27,
+      "tags": [
+        "Generalization",
+        "RL"
+      ]
+    },
+    {
+      "title": "Knowledge Mechanisms in Large Language Models: A Survey and Perspective",
+      "author": "Wang",
+      "year": "2024",
+      "lit_cites": 6,
+      "lit_refs": 0,
+      "tags": [
+        "Interp"
+      ]
+    },
+    {
+      "title": "Propose, Solve, Verify: Self-Play Through Formal Verification",
+      "author": "Wilf",
+      "year": "2025",
+      "lit_cites": 6,
+      "lit_refs": 48,
+      "tags": [
+        "Environments"
+      ]
+    },
+    {
+      "title": "Gradient Regularization Prevents Reward Hacking in Reinforcement Learning from Human Feedback and Verifiable Rewards",
+      "author": "Ackermann",
+      "year": "2026",
+      "lit_cites": 5,
+      "lit_refs": 45,
+      "tags": [
+        "Optimizers",
+        "Feedback"
+      ]
+    },
+    {
+      "title": "Harnessing Agentic Evolution",
+      "author": "Zhang",
+      "year": "2026",
+      "lit_cites": 4,
+      "lit_refs": 48,
+      "tags": [
+        "Self-improve",
+        "Evolution"
+      ]
+    },
+    {
+      "title": "LiveMathematicianBench: A Live Benchmark for Mathematician-Level Reasoning with Proof Sketches",
+      "author": "He",
+      "year": "2026",
+      "lit_cites": 3,
+      "lit_refs": 0,
+      "tags": []
+    },
+    {
+      "title": "Energy Transformer",
+      "author": "Chau",
+      "year": "2023",
+      "lit_cites": 2,
+      "lit_refs": 0,
+      "tags": [
+        "Self-improve"
+      ]
+    },
+    {
+      "title": "In-Context Algebra",
+      "author": "Todd",
+      "year": "2025",
+      "lit_cites": 2,
+      "lit_refs": 111,
+      "tags": [
+        "Math reasoning"
+      ]
+    },
+    {
+      "title": "Is Evaluation Awareness Just Format Sensitivity? Limitations of Probe-Based Evidence under Controlled Prompt Structure",
+      "author": "Devbunova",
+      "year": "2026",
+      "lit_cites": 2,
+      "lit_refs": 10,
+      "tags": [
+        "Interp"
+      ]
+    },
+    {
+      "title": "Skip-Connected Policy Optimization for Implicit Advantage",
+      "author": "Teng",
+      "year": "2026",
+      "lit_cites": 2,
+      "lit_refs": 72,
+      "tags": [
+        "Scaling"
+      ]
+    },
+    {
+      "title": "Continual Backprop: Stochastic Gradient Descent with Persistent Randomness",
+      "author": "Dohare",
+      "year": "2021",
+      "lit_cites": 2,
+      "lit_refs": 0,
+      "tags": [
+        "Scaling"
+      ]
+    },
+    {
+      "title": "When Does LeJEPA Learn a World Model?",
+      "author": "Klindt",
+      "year": "2026",
+      "lit_cites": 2,
+      "lit_refs": 139,
+      "tags": [
+        "JEPA"
+      ]
+    },
+    {
+      "title": "Skip a Layer or Loop It? Learning Program-of-Layers in LLMs",
+      "author": "Li",
+      "year": "2026",
+      "lit_cites": 2,
+      "lit_refs": 42,
+      "tags": [
+        "Recurrent"
+      ]
+    },
+    {
+      "title": "GRPO-VPS: Enhancing Group Relative Policy Optimization with Verifiable Process Supervision for Effective Reasoning",
+      "author": "Wang",
+      "year": "2026",
+      "lit_cites": 1,
+      "lit_refs": 41,
+      "tags": [
+        "Stepping stone",
+        "Feedback",
+        "RL"
+      ]
+    },
+    {
+      "title": "Self-Programming AI: Code-Learning Agents for Autonomous Refactoring and Architectural Evolution",
+      "author": "Khemani",
+      "year": "2025",
+      "lit_cites": 1,
+      "lit_refs": 3,
+      "tags": [
+        "Self-refine"
+      ]
+    },
+    {
+      "title": "SR-GRPO: Stable Rank as an Intrinsic Geometric Reward for Large Language Model Alignment",
+      "author": "Tang",
+      "year": "2025",
+      "lit_cites": 0,
+      "lit_refs": 57,
+      "tags": [
+        "Generalization"
+      ]
+    },
+    {
+      "title": "Revisiting Reinforcement Learning with Verifiable Rewards from a Contrastive Perspective",
+      "author": "Zhang",
+      "year": "2026",
+      "lit_cites": 0,
+      "lit_refs": 54,
+      "tags": [
+        "RL"
+      ]
+    },
+    {
+      "title": "From Reasoning Chains to Verifiable Subproblems: Curriculum Reinforcement Learning Enables Credit Assignment for LLM Reasoning",
+      "author": "Jiang",
+      "year": "2026",
+      "lit_cites": 0,
+      "lit_refs": 54,
+      "tags": [
+        "Environments"
+      ]
+    },
+    {
+      "title": "VISReg: Variance-Invariance-Sketching Regularization for JEPA training",
+      "author": "Wu",
+      "year": "2026",
+      "lit_cites": 0,
+      "lit_refs": 83,
+      "tags": [
+        "JEPA"
+      ]
+    },
+    {
+      "title": "SPADE: Self-Play in Adaptive Synthetic Executable Environments",
+      "author": "Liu",
+      "year": "2026",
+      "lit_cites": 0,
+      "lit_refs": 0,
+      "tags": [
+        "Environments",
+        "Stepping stone"
+      ]
+    },
+    {
+      "title": "Q-Learning With World Models",
+      "author": "Dong",
+      "year": "2026",
+      "lit_cites": 0,
+      "lit_refs": 0,
+      "tags": [
+        "RL"
+      ]
+    },
+    {
+      "title": "Language Models Compare Quantities Using Number-specific and Unit-specific Heuristics",
+      "author": "Sasaki",
+      "year": "2026",
+      "lit_cites": 0,
+      "lit_refs": 28,
+      "tags": [
+        "Heuristics",
+        "Math reasoning"
+      ]
+    },
+    {
+      "title": "Learning from Own Solutions: Self-Conditioned Credit Assignment for Reinforcement Learning with Verifiable Rewards",
+      "author": "Shan",
+      "year": "2026",
+      "lit_cites": 0,
+      "lit_refs": 0,
+      "tags": [
+        "Stepping stone",
+        "Self-improve",
+        "RL"
+      ]
+    },
+    {
+      "title": "Weight-Space Geometry of Offline Reasoning Training",
+      "author": "Nikolich",
+      "year": "2026",
+      "lit_cites": 0,
+      "lit_refs": 0,
+      "tags": [
+        "Feedback"
+      ]
+    },
+    {
+      "title": "BDH-CQ: In-Context Learning with Recurrent Latent Reasoning",
+      "author": "Engdahl",
+      "year": "2026",
+      "lit_cites": 0,
+      "lit_refs": 0,
+      "tags": [
+        "Recurrent",
+        "Discovery"
+      ]
+    },
+    {
+      "title": "Self-Improvements in Modern Agentic Systems: A Survey",
+      "author": "Ren",
+      "year": "2026",
+      "lit_cites": 0,
+      "lit_refs": 0,
+      "tags": [
+        "Self-improve"
+      ]
+    },
+    {
+      "title": "Verbalizable Representations Form a Global Workspace in Language Models",
+      "author": "Gurnee",
+      "year": "2026",
+      "lit_cites": 0,
+      "lit_refs": 0,
+      "tags": [
+        "Interp"
+      ]
+    },
+    {
+      "title": "Explorative Modeling: Unlocking a Third Pretraining Axis and End-to-End Generation",
+      "author": "Gladstone",
+      "year": "2026",
+      "lit_cites": 0,
+      "lit_refs": 0,
+      "tags": [
+        "Scaling"
+      ]
+    },
+    {
+      "title": "When Activation Oracles Learn Not to Read: Concept-Specific Blind Spots in Fine-Tuned Oracles",
+      "author": "Bersia",
+      "year": "2026",
+      "lit_cites": 0,
+      "lit_refs": 0,
+      "tags": [
+        "Interp"
+      ]
+    },
+    {
+      "title": "Scaling Laws and Compute-Optimal Training Beyond Fixed Training Durations",
+      "author": "Allal",
+      "year": "2024",
+      "lit_cites": 0,
+      "lit_refs": 0,
+      "tags": [
+        "Scaling",
+        "Architecture",
+        "RL"
+      ]
+    },
+    {
+      "title": "DiffusionGemma Technical Report",
+      "author": "Taïga",
+      "year": "2026",
+      "lit_cites": 0,
+      "lit_refs": 0,
+      "tags": [
+        "Enc-dec"
+      ]
+    },
+    {
+      "title": "The Loss Does Not See the Basis, but Adam Does",
+      "author": "Singh",
+      "year": "2026",
+      "lit_cites": 0,
+      "lit_refs": 0,
+      "tags": [
+        "Optimizers"
+      ]
+    },
+    {
+      "title": "AI-rithmetic",
+      "author": "Bie",
+      "year": "2026",
+      "lit_cites": 0,
+      "lit_refs": 46,
+      "tags": [
+        "Math reasoning"
+      ]
+    },
+    {
+      "title": "RIFT: A RubrIc Failure Mode Taxonomy and Automated Diagnostics",
+      "author": "Qi",
+      "year": "2026",
+      "lit_cites": 0,
+      "lit_refs": 36,
+      "tags": [
+        "Scaling"
+      ]
+    },
+    {
+      "title": "Ouroboros: A Self-Developing Frontier Coding Agent with Reviewed Core Evolution",
+      "author": "Razzhigaev",
+      "year": "2026",
+      "lit_cites": 0,
+      "lit_refs": 0,
+      "tags": [
+        "Self-improve"
+      ]
+    },
+    {
+      "title": "When Does Continual Learning Require Learning",
+      "author": "Harrington",
+      "year": "2026",
+      "lit_cites": 0,
+      "lit_refs": 0,
+      "tags": [
+        "Self-improve",
+        "RL"
+      ]
+    },
+    {
+      "title": "Rethinking RL for LLM Reasoning: It's Sparse Policy Selection, Not Capability Learning",
+      "author": "Akgül",
+      "year": "2026",
+      "lit_cites": 0,
+      "lit_refs": 40,
+      "tags": [
+        "Stepping stone",
+        "Scaling",
+        "RL"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Key papers - citation map</title>
+<style>
+  :root {
+    --bg: #fbfbfa;
+    --ink: #1d2529;
+    --muted: #74838c;
+    --rule: #dfe3e5;
+    --node: #2f7d8f;
+    --edge: #9aa5ad;
+    --in: #c2603f;
+    --out: #2f6f9f;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font: 13px/1.45 -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    overflow: hidden;
+  }
+  header {
+    position: absolute; top: 0; left: 0; right: 0; z-index: 3;
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    padding: 10px 16px;
+    background: linear-gradient(var(--bg) 70%, rgba(251, 251, 250, 0));
+  }
+  h1 { font-size: 14px; font-weight: 600; margin: 0; letter-spacing: .2px; }
+  h1 small { color: var(--muted); font-weight: 400; margin-left: 8px; }
+  .controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  input[type=search], select {
+    font: inherit; color: var(--ink); background: #fff;
+    border: 1px solid var(--rule); border-radius: 5px; padding: 4px 7px;
+  }
+  input[type=search] { width: 210px; }
+  label.check { color: var(--muted); display: flex; align-items: center; gap: 5px; }
+  button {
+    font: inherit; background: #fff; color: var(--ink); cursor: pointer;
+    border: 1px solid var(--rule); border-radius: 5px; padding: 4px 9px;
+  }
+  button:hover { border-color: var(--muted); }
+  .key { color: var(--muted); display: flex; align-items: center; gap: 12px; }
+  .key i { display: inline-block; width: 16px; height: 2px; margin-right: 4px;
+           vertical-align: middle; }
+  .key .i-in { background: var(--in); }
+  .key .i-out { background: var(--out); }
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 5px 11px; width: 100%;
+    color: var(--muted); font-size: 11.5px;
+  }
+  .legend span { display: flex; align-items: center; gap: 5px; cursor: pointer;
+                 user-select: none; }
+  .legend span.off { opacity: .38; }
+  .legend span.on { color: var(--ink); }
+  .legend .swatch {
+    display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+    margin-right: 0;
+  }
+  svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .axis text { fill: var(--muted); font-size: 11px; }
+  .axis line, .axis path { stroke: var(--rule); }
+  .grid line { stroke: var(--rule); stroke-dasharray: 2 4; }
+  .caption { fill: var(--muted); font-size: 10.5px; letter-spacing: 1.1px;
+             text-transform: uppercase; }
+  .gutter-rule { stroke: var(--rule); stroke-dasharray: 4 4; }
+  /* stroke is set per element so hover/search highlighting can override it */
+  .edge { fill: none; }
+  .node circle { cursor: pointer; }
+  .node.dim { opacity: .12; }
+  .node.held circle { stroke: var(--in); }
+  /* font-size and stroke-width are attributes: map.js keeps them at a constant
+     on-screen size while the geometry zooms */
+  .label { fill: var(--ink); paint-order: stroke;
+           stroke: rgba(251,251,250,.95); pointer-events: none; }
+  .label.dim { opacity: .1; }
+  #tip {
+    position: absolute; z-index: 4; max-width: 330px; pointer-events: none;
+    background: #fff; border: 1px solid var(--rule); border-radius: 6px;
+    padding: 9px 11px; box-shadow: 0 4px 14px rgba(20, 30, 40, .12);
+    opacity: 0; transition: opacity .1s;
+  }
+  #tip b { display: block; font-size: 12.5px; margin-bottom: 3px; }
+  #tip .meta { color: var(--muted); font-size: 11.5px; }
+  #tip .counts { margin-top: 5px; font-size: 11.5px; }
+  #tip .counts span { margin-right: 10px; }
+  #tip .in { color: var(--in); }
+  #tip .out { color: var(--out); }
+  footer {
+    position: absolute; left: 16px; bottom: 8px; z-index: 3;
+    color: var(--muted); font-size: 11px;
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Key papers citation map
+    <small id="stats"></small>
+  </h1>
+  <div class="controls">
+    <input type="search" id="search" placeholder="search title, author, section, tag">
+    <select id="labels">
+      <option value="key">labels: key papers</option>
+      <option value="all">labels: as many as fit</option>
+      <option value="none">labels: none</option>
+    </select>
+    <select id="yaxis">
+      <option value="cited">y: cited by</option>
+      <option value="cites">y: cites</option>
+      <option value="parents">y: cites (parents)</option>
+      <option value="children">y: cites (nested)</option>
+      <option value="bonus">y: cites (bonus)</option>
+      <option value="both">y: cited+cites</option>
+      <option value="citations">y: citation count</option>
+    </select>
+    <label class="check"><input type="checkbox" id="edges" checked> citation links</label>
+    <label class="check" title="Llama 3, OLMo 2, Spurious Rewards, Spurious Rewards Paradox, LiveMathematicianBench"><input type="checkbox" id="citefilter"> cites LLaMA / OLMo / Spurious Rewards / LiveMath</label>
+    <button id="reset">reset view</button>
+  </div>
+  <div class="key">
+    <span><i class="i-out"></i>cites (held paper &rarr; older work)</span>
+    <span><i class="i-in"></i>cited by (newer work &rarr; held paper)</span>
+    <span>click to hold &middot; double-click to open</span>
+  </div>
+  <div id="legend" class="legend"></div>
+</header>
+<div id="tip"></div>
+<svg id="map"></svg>
+<footer id="note"></footer>
+<script src="vendor/d3.v7.min.js"></script>
+<script src="graph_data.js"></script>
+<script src="map.js"></script>
+</body>
+</html>
