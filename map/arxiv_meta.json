@@ -1204,5 +1204,116 @@
       "Hanze Dong",
       "Baohao Liao"
     ]
+  },
+  "2607.05609": {
+    "title": "To Retain or to Adapt? Generalizing Continual Learning",
+    "published": "2026-07-06",
+    "authors": [
+      "Giulia Lanzillotta",
+      "Mandana Samiei",
+      "Doina Precup",
+      "Razvan Pascanu"
+    ]
+  },
+  "2510.03215": {
+    "title": "Cache-to-Cache: Direct Semantic Communication Between Large Language Models",
+    "published": "2025-10-03",
+    "authors": [
+      "Tianyu Fu",
+      "Zihan Min",
+      "Hanling Zhang",
+      "Jichao Yan"
+    ]
+  },
+  "2504.12501": {
+    "title": "Reinforcement Learning from Human Feedback",
+    "published": "2025-04-16",
+    "authors": [
+      "Nathan Lambert"
+    ]
+  },
+  "2512.06795": {
+    "title": "ADAM Optimization with Adaptive Batch Selection",
+    "published": "2025-12-07",
+    "authors": [
+      "Gyu Yeol Kim",
+      "Min-hwan Oh"
+    ]
+  },
+  "2606.31779": {
+    "title": "Bridging the Gap Between Latent and Explicit Reasoning with Looped Transformers",
+    "published": "2026-06-30",
+    "authors": [
+      "Ying Fan",
+      "Anej Svete",
+      "Kangwook Lee"
+    ]
+  },
+  "2507.10524": {
+    "title": "Mixture-of-Recursions: Learning Dynamic Recursive Depths for Adaptive Token-Level Computation",
+    "published": "2025-07-14",
+    "authors": [
+      "Sangmin Bae",
+      "Yujin Kim",
+      "Reza Bayat",
+      "Sungnyun Kim"
+    ]
+  },
+  "2608.11676": {
+    "title": "XBridge: Entity-Grounded Latent Bridge for Heterogeneous LLM Communication",
+    "published": "2026-08-12",
+    "authors": [
+      "Wooseong Yang",
+      "Wei-Chieh Huang",
+      "Weizhi Zhang",
+      "Yu Wang"
+    ]
+  },
+  "2608.03893": {
+    "title": "Cross-Model KV Cache Transfer in LLM Families: A Closed-Form Linear Mapping for Prefill Reuse",
+    "published": "2026-08-04",
+    "authors": [
+      "Taekyung Heo",
+      "Rasoul Shafipour",
+      "Ritchie Zhao",
+      "Maximilian Golub"
+    ]
+  },
+  "2605.22863": {
+    "title": "Latent Cache Flow: Model-to-Model Communication Without Text",
+    "published": "2026-05-19",
+    "authors": [
+      "Maximillian Rossi",
+      "Prajwal Raghunath",
+      "Eugene Wu"
+    ]
+  },
+  "2511.09149": {
+    "title": "Enabling Agents to Communicate Entirely in Latent Space",
+    "published": "2025-11-12",
+    "authors": [
+      "Zhuoyun Du",
+      "Runze Wang",
+      "Huiyu Bai",
+      "Zouying Cao"
+    ]
+  },
+  "2501.14082": {
+    "title": "Communicating Activations Between Language Model Agents",
+    "published": "2025-01-23",
+    "authors": [
+      "Vignav Ramesh",
+      "Kenneth Li"
+    ]
+  },
+  "2604.09168": {
+    "title": "ELT: Elastic Looped Transformers for Visual Generation",
+    "published": "2026-04-10",
+    "authors": [
+      "Sahil Goyal",
+      "Swayam Agrawal",
+      "Gautham Govind Anil",
+      "Prateek Jain"
+    ]
   }
 }

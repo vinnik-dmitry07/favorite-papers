@@ -44,6 +44,7 @@ Own version of the same map, with the links parsed straight out of the papers (a
 - Litmaps — [https://app.litmaps.com/shared/9f68a972-570d-48c9-9895-8d4979d52df0](https://app.litmaps.com/shared/9f68a972-570d-48c9-9895-8d4979d52df0)
 - BDH-CQ: In-Context Learning with Recurrent Latent Reasoning — [https://arxiv.org/abs/2608.09888](https://arxiv.org/abs/2608.09888)
 - When Does Continual Learning Require Learning — [https://arxiv.org/abs/2607.07847](https://arxiv.org/abs/2607.07847) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5812?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- To Retain or to Adapt? Generalizing Continual Learning — [https://arxiv.org/abs/2607.05609](https://arxiv.org/abs/2607.05609) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5817?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - Weight-Space Geometry of Offline Reasoning Training (ICML 2026 workshop) — [https://arxiv.org/abs/2606.23740](https://arxiv.org/abs/2606.23740)
 - Learning from Own Solutions: Self-Conditioned Credit Assignment (SC-GRPO) — [https://arxiv.org/abs/2606.18810](https://arxiv.org/abs/2606.18810)
 - From Reasoning Chains to Verifiable Subproblems: Curriculum RL for Credit Assignment — [https://arxiv.org/abs/2605.22074](https://arxiv.org/abs/2605.22074)
@@ -97,12 +98,19 @@ Own version of the same map, with the links parsed straight out of the papers (a
 
 ## LLMs: architectures, context, training
 
+- XBridge: Entity-Grounded Latent Bridge for Heterogeneous LLM Communication — [https://arxiv.org/abs/2608.11676](https://arxiv.org/abs/2608.11676)
+- Cross-Model KV Cache Transfer in LLM Families — [https://arxiv.org/abs/2608.03893](https://arxiv.org/abs/2608.03893) [⌲ tg](https://t-me.translate.goog/s/lovedeathtransformers/10993?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - DiffusionGemma Technical Report — [https://arxiv.org/abs/2608.00146](https://arxiv.org/abs/2608.00146) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5942?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - Skip a Layer or Loop It? Learning Program-of-Layers in LLMs — [https://arxiv.org/abs/2606.06574](https://arxiv.org/abs/2606.06574) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5950?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Latent Cache Flow: Model-to-Model Communication Without Text — [https://arxiv.org/abs/2605.22863](https://arxiv.org/abs/2605.22863)
 - Recursive Language Models — [https://arxiv.org/abs/2512.24601](https://arxiv.org/abs/2512.24601) · [https://alexzhang13.github.io/blog/2025/rlm/](https://alexzhang13.github.io/blog/2025/rlm/)
 - T5Gemma 2: Seeing, Reading, and Understanding Longer — [https://arxiv.org/abs/2512.14856](https://arxiv.org/abs/2512.14856) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/4421?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Enabling Agents to Communicate Entirely in Latent Space (Interlat) — [https://arxiv.org/abs/2511.09149](https://arxiv.org/abs/2511.09149) · [https://aclanthology.org/2026.acl-long.1248/](https://aclanthology.org/2026.acl-long.1248/)
+- Cache-to-Cache (Fu et al., ICLR 2026) — [https://arxiv.org/abs/2510.03215](https://arxiv.org/abs/2510.03215) [⌲ tg](https://t-me.translate.goog/s/boris_again/4044?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Mixture-of-Recursions: Learning Dynamic Recursive Depths for Adaptive Token-Level Computation — [https://arxiv.org/abs/2507.10524](https://arxiv.org/abs/2507.10524) [⌲ tg](https://t-me.translate.goog/s/data_secrets/7388?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - Continuous Thought Machines (Sakana AI) — [https://pub.sakana.ai/ctm/](https://pub.sakana.ai/ctm/) [⌲ tg](https://t-me.translate.goog/s/data_secrets/6895?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - Encoder-Decoder Gemma: Improving the Quality-Efficiency Trade-Off via Adaptation — [https://arxiv.org/abs/2504.06225](https://arxiv.org/abs/2504.06225)
+- Communicating Activations Between Language Model Agents — [https://arxiv.org/abs/2501.14082](https://arxiv.org/abs/2501.14082)
 - OLMo 2 Furious — [https://arxiv.org/abs/2501.00656](https://arxiv.org/abs/2501.00656)
 - ModernBERT — [https://arxiv.org/abs/2412.13663](https://arxiv.org/abs/2412.13663)
 - The Llama 3 Herd of Models — [https://arxiv.org/abs/2407.21783](https://arxiv.org/abs/2407.21783)
@@ -128,6 +136,7 @@ Own version of the same map, with the links parsed straight out of the papers (a
 ## Reasoning and the "physics" of language models
 
 - Position: LLMs can't jump — [https://openreview.net/pdf?id=klU4737opt](https://openreview.net/pdf?id=klU4737opt)
+- Bridging the Gap Between Latent and Explicit Reasoning with Looped Transformers — [https://arxiv.org/abs/2606.31779](https://arxiv.org/abs/2606.31779) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5761?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - Emergent Capabilities Arise Randomly from Sparse Attention Patterns — [https://arxiv.org/abs/2606.25010](https://arxiv.org/abs/2606.25010) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5867?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) · [https://arxiviq.substack.com/p/emergent-capabilities-arise-randomly](https://arxiviq.substack.com/p/emergent-capabilities-arise-randomly)
 - Language Models Compare Quantities Using Number-specific and Unit-specific Heuristics — [https://arxiv.org/abs/2606.03982](https://arxiv.org/abs/2606.03982)
 - A Mechanistic Analysis of Looped Reasoning Language Models — [https://arxiv.org/abs/2604.11791](https://arxiv.org/abs/2604.11791) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5206?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
@@ -229,6 +238,7 @@ Own version of the same map, with the links parsed straight out of the papers (a
 
 - VISReg: Variance-Invariance-Sketching Regularization for JEPA — [https://arxiv.org/abs/2606.02572](https://arxiv.org/abs/2606.02572) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5832?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) · [https://haiyuwu.github.io/visreg](https://haiyuwu.github.io/visreg) · [https://arxiviq.substack.com/p/visreg-variance-invariance-sketching](https://arxiviq.substack.com/p/visreg-variance-invariance-sketching)
 - When Does LeJEPA Learn a World Model? — [https://arxiv.org/abs/2605.26379](https://arxiv.org/abs/2605.26379) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5489?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- ELT: Elastic Looped Transformers for Visual Generation — [https://arxiv.org/abs/2604.09168](https://arxiv.org/abs/2604.09168) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5303?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - LeJEPA: Provable and Scalable Self-Supervised Learning Without the Heuristics — [https://arxiv.org/abs/2511.08544](https://arxiv.org/abs/2511.08544) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/4212?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⌲ tg](https://t-me.translate.goog/s/data_secrets/8254?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - The GAN is dead; long live the GAN! (R3GAN) — [https://arxiv.org/abs/2501.05441](https://arxiv.org/abs/2501.05441) [⌲ tg](https://t-me.translate.goog/s/data_secrets/5891?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - EMU Video: Factorizing Text-to-Video Generation (Meta) — [https://ai.meta.com/blog/emu-text-to-video-generation-image-editing-research/](https://ai.meta.com/blog/emu-text-to-video-generation-image-editing-research/)
