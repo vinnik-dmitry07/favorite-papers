@@ -103,8 +103,11 @@ Own version of the same map, with the links parsed straight out of the papers (a
 - DiffusionGemma Technical Report — [https://arxiv.org/abs/2608.00146](https://arxiv.org/abs/2608.00146) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5942?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - Skip a Layer or Loop It? Learning Program-of-Layers in LLMs — [https://arxiv.org/abs/2606.06574](https://arxiv.org/abs/2606.06574) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5950?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - Latent Cache Flow: Model-to-Model Communication Without Text — [https://arxiv.org/abs/2605.22863](https://arxiv.org/abs/2605.22863)
+- DMax: Aggressive Parallel Decoding for dLLMs — [https://arxiv.org/abs/2604.08302](https://arxiv.org/abs/2604.08302) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5420?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- LSP Scheduler: Beyond Scattered Acceptance (ICLR 2026) — [https://arxiv.org/abs/2603.05454](https://arxiv.org/abs/2603.05454)
 - Recursive Language Models — [https://arxiv.org/abs/2512.24601](https://arxiv.org/abs/2512.24601) · [https://alexzhang13.github.io/blog/2025/rlm/](https://alexzhang13.github.io/blog/2025/rlm/)
 - T5Gemma 2: Seeing, Reading, and Understanding Longer — [https://arxiv.org/abs/2512.14856](https://arxiv.org/abs/2512.14856) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/4421?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- OLMo 3 — [https://arxiv.org/abs/2512.13961](https://arxiv.org/abs/2512.13961) [⌲ tg](https://t-me.translate.goog/s/abstractDL/356?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - Enabling Agents to Communicate Entirely in Latent Space (Interlat) — [https://arxiv.org/abs/2511.09149](https://arxiv.org/abs/2511.09149) · [https://aclanthology.org/2026.acl-long.1248/](https://aclanthology.org/2026.acl-long.1248/)
 - Cache-to-Cache (Fu et al., ICLR 2026) — [https://arxiv.org/abs/2510.03215](https://arxiv.org/abs/2510.03215) [⌲ tg](https://t-me.translate.goog/s/boris_again/4044?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - Mixture-of-Recursions: Learning Dynamic Recursive Depths for Adaptive Token-Level Computation — [https://arxiv.org/abs/2507.10524](https://arxiv.org/abs/2507.10524) [⌲ tg](https://t-me.translate.goog/s/data_secrets/7388?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
@@ -139,6 +142,7 @@ Own version of the same map, with the links parsed straight out of the papers (a
 - Bridging the Gap Between Latent and Explicit Reasoning with Looped Transformers — [https://arxiv.org/abs/2606.31779](https://arxiv.org/abs/2606.31779) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5761?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - Emergent Capabilities Arise Randomly from Sparse Attention Patterns — [https://arxiv.org/abs/2606.25010](https://arxiv.org/abs/2606.25010) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5867?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) · [https://arxiviq.substack.com/p/emergent-capabilities-arise-randomly](https://arxiviq.substack.com/p/emergent-capabilities-arise-randomly)
 - Language Models Compare Quantities Using Number-specific and Unit-specific Heuristics — [https://arxiv.org/abs/2606.03982](https://arxiv.org/abs/2606.03982)
+- Reliable Chain-of-Thought via Prefix Consistency — [https://arxiv.org/abs/2605.07654](https://arxiv.org/abs/2605.07654)
 - A Mechanistic Analysis of Looped Reasoning Language Models — [https://arxiv.org/abs/2604.11791](https://arxiv.org/abs/2604.11791) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5206?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - LiveMathematicianBench: a live benchmark for mathematician-level reasoning — [https://arxiv.org/abs/2604.01754](https://arxiv.org/abs/2604.01754)
 - AI-rithmetic — [https://arxiv.org/abs/2602.10416](https://arxiv.org/abs/2602.10416)
@@ -186,6 +190,7 @@ Own version of the same map, with the links parsed straight out of the papers (a
 - Emergent Analogical Reasoning in LLMs — [https://arxiv.org/abs/2212.09196](https://arxiv.org/abs/2212.09196)
 - Characterizing emergent phenomena in LLMs (Google Research) — [https://ai.googleblog.com/2022/11/characterizing-emergent-phenomena-in.html](https://ai.googleblog.com/2022/11/characterizing-emergent-phenomena-in.html)
 - Large Language Models Still Can't Plan / PlanBench (Kambhampati) — [https://openreview.net/forum?id=wUU-7XTL5XO](https://openreview.net/forum?id=wUU-7XTL5XO) [⌲ tg](https://t-me.translate.goog/s/data_secrets/5225?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Self-Consistency Improves Chain of Thought Reasoning in Language Models (ICLR 2023) — [https://arxiv.org/abs/2203.11171](https://arxiv.org/abs/2203.11171) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/1885?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 
 ## Data, training, optimization
 

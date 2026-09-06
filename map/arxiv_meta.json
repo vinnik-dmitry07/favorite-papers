@@ -89,6 +89,16 @@
       "Kosuke Sato"
     ]
   },
+  "2605.07654": {
+    "title": "Reliable Chain-of-Thought via Prefix Consistency",
+    "published": "2026-05-08",
+    "authors": [
+      "Naoto Iwase",
+      "Yuki Ichihara",
+      "Mohammad Atif Quamar",
+      "Junpei Komiyama"
+    ]
+  },
   "2605.12969": {
     "title": "Revisiting Reinforcement Learning with Verifiable Rewards from a Contrastive Perspective",
     "published": "2026-05-13",
@@ -391,6 +401,16 @@
       "Paul Suganthan",
       "Gaël Liu",
       "Ilya Philippov"
+    ]
+  },
+  "2512.13961": {
+    "title": "Olmo 3",
+    "published": "2025-12-15",
+    "authors": [
+      "Olmo Team",
+      "Allyson Ettinger",
+      "Amanda Bertsch",
+      "Bailey Kuehl"
     ]
   },
   "2108.06325": {
@@ -1286,6 +1306,36 @@
       "Maximillian Rossi",
       "Prajwal Raghunath",
       "Eugene Wu"
+    ]
+  },
+  "2604.08302": {
+    "title": "DMax: Aggressive Parallel Decoding for dLLMs",
+    "published": "2026-04-09",
+    "authors": [
+      "Zigeng Chen",
+      "Gongfan Fang",
+      "Xinyin Ma",
+      "Ruonan Yu"
+    ]
+  },
+  "2603.05454": {
+    "title": "Beyond Scattered Acceptance: Fast and Coherent Inference for DLMs via Longest Stable Prefixes",
+    "published": "2026-03-05",
+    "authors": [
+      "Pengxiang Li",
+      "Joey Tsai",
+      "Hongwei Xue",
+      "Kunyu Shi"
+    ]
+  },
+  "2203.11171": {
+    "title": "Self-Consistency Improves Chain of Thought Reasoning in Language Models",
+    "published": "2022-03-21",
+    "authors": [
+      "Xuezhi Wang",
+      "Jason Wei",
+      "Dale Schuurmans",
+      "Quoc Le"
     ]
   },
   "2511.09149": {

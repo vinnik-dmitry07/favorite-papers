@@ -44,23 +44,22 @@
   },
   "doi:10.1038/s41586-024-07522-w": {
     "title": "Language is primarily a tool for communication rather than thought",
-    "date": "2024-06-19",
+    "date": "2024-06-01",
     "authors": [
-      "Evelina Fedorenko",
-      "Steven T. Piantadosi",
-      "Edward A. F. Gibson"
+      "Fedorenko, Evelina",
+      "Piantadosi, Steven T.",
+      "Gibson, Edward A. F."
     ]
   },
   "doi:10.1038/d41586-024-01413-w": {
     "title": "Why mathematics is set to be revolutionized by AI",
     "date": "2024-05-14",
     "authors": [
-      "Thomas Fink"
+      "Fink, Thomas"
     ]
   },
   "url:ai.googleblog.com/2022/11/characterizing-emergent-phenomena-in.html": {
-    "title": "Characterizing Emergent Phenomena in Large Language Models",
-    "resolved": "https://research.google/blog/characterizing-emergent-phenomena-in-large-language-models/"
+    "title": "Characterizing Emergent Phenomena in Large Language Models"
   },
   "url:abehrouz.github.io/files/nl.pdf": {
     "title": "Introducing Nested Learning: A new ML paradigm for continual learning"
@@ -80,8 +79,7 @@
     "authors": [
       "Jaime Sevilla",
       "Edu RoldÃ¡n"
-    ],
-    "resolved": "https://epoch.ai/publications/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year"
+    ]
   },
   "url:openai.com/index/deep-double-descent": {
     "title": "Deep double descent",
@@ -151,12 +149,12 @@
   },
   "doi:10.1038/s42256-023-00754-x": {
     "title": "A social path to human-like artificial intelligence",
-    "date": "2023-11-17",
+    "date": "2023-11-01",
     "authors": [
-      "Edgar A. Duéñez-Guzmán",
-      "Suzanne Sadedin",
-      "Jane X. Wang",
-      "Kevin R. McKee"
+      "Duéñez-Guzmán, Edgar A.",
+      "Sadedin, Suzanne",
+      "Wang, Jane X.",
+      "McKee, Kevin R."
     ]
   },
   "url:github.com/deepseek-ai/deepseek-harness": {
@@ -221,8 +219,7 @@
   },
   "url:situational-awareness.ai": {
     "title": "Introduction - SITUATIONAL AWARENESS: The Decade Ahead",
-    "date": "2024-05-29",
-    "resolved": "https://situational-awareness.ai/"
+    "date": "2024-05-29"
   },
   "url:anthropic.com/news/mapping-mind-language-model": {
     "title": "Mapping the mind of a large language model"
@@ -251,7 +248,7 @@
   },
   "doi:10.1371/journal.pcbi.1011005": {
     "title": "Neural spiking for causal inference and learning",
-    "date": "2023-04-04",
+    "date": "2023-01-01",
     "authors": [
       "Benjamin James Lansdell",
       "Konrad Paul Kording"
@@ -259,7 +256,7 @@
   },
   "doi:10.1101/2023.04.04.535512": {
     "title": "Emergence of belief-like representations through reinforcement learning",
-    "date": "2023-04-07",
+    "date": "2023-01-01",
     "authors": [
       "Jay A. Hennig",
       "Sandra A. Romero Pinto",
@@ -268,8 +265,8 @@
     ]
   },
   "doi:10.1371/journal.pcbi.1010628": {
-    "title": "Sleep prevents catastrophic forgetting in spiking neural networks by forming a joint synaptic weight representation",
-    "date": "2022-11-18",
+    "title": "Sleep prevents catastrophic forgetting in spiking neural networks by forming joint synaptic weight representations",
+    "date": "2020-01-01",
     "authors": [
       "Ryan Golden",
       "Jean Erik Delanois",
@@ -281,10 +278,10 @@
     "title": "Correspondence between neuroevolution and gradient descent",
     "date": "2021-11-02",
     "authors": [
-      "Stephen Whitelam",
-      "Viktor Selin",
-      "Sang-Won Park",
-      "Isaac Tamblyn"
+      "Whitelam, Stephen",
+      "Selin, Viktor",
+      "Park, Sang-Won",
+      "Tamblyn, Isaac"
     ]
   },
   "url:thinkingmachines.ai/news/learning-to-replicate-expert-judgment-in-financial-tasks": {
@@ -312,13 +309,13 @@
     "title": "Deep Learning"
   },
   "doi:10.1038/s41566-024-01394-2": {
-    "title": "Inverse-designed low-index-contrast structures on a silicon photonics platform for vector–matrix multiplication",
-    "date": "2024-02-16",
+    "title": "Photonic matrix multiplication lights up photonic accelerator and beyond",
+    "date": "2022-02-03",
     "authors": [
-      "Vahid Nikkhah",
-      "Ali Pirmoradi",
-      "Farshid Ashtiani",
-      "Brian Edwards"
+      "Zhou, Hailong",
+      "Dong, Jianji",
+      "Cheng, Junwei",
+      "Dong, Wenchan"
     ]
   },
   "url:iclr.cc/virtual/2025/poster/30565": {
@@ -985,7 +982,7 @@
     "resolved": "https://arxiv.org/html/1905.10985"
   },
   "url:schema-harness.github.io": {
-    "resolved": "https://schema-harness.github.io/"
+    "title": "schema-harness/arc-agi-3-schema-traces · Datasets at Hugging Face"
   },
   "arxiv:2604.19341": {
     "resolved": "https://arxiv.org/html/2604.19341"
@@ -1151,5 +1148,23 @@
   },
   "arxiv:2604.09168": {
     "resolved": "https://arxiv.org/html/2604.09168"
+  },
+  "arxiv:2512.13961": {
+    "resolved": "https://arxiv.org/html/2512.13961"
+  },
+  "arxiv:2605.07654": {
+    "resolved": "https://arxiv.org/html/2605.07654"
+  },
+  "arxiv:2604.08302": {
+    "resolved": "https://arxiv.org/html/2604.08302"
+  },
+  "arxiv:2603.05454": {
+    "resolved": "https://arxiv.org/html/2603.05454"
+  },
+  "arxiv:2203.11171": {
+    "resolved": "https://arxiv.org/html/2203.11171"
+  },
+  "openreview:klU4737opt": {
+    "resolved": "https://openreview.net/forum?id=klU4737opt"
   }
 }
