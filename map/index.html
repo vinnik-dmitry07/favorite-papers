@@ -112,9 +112,12 @@
       <option value="parents">y: cites (parents)</option>
       <option value="children">y: cites (nested)</option>
       <option value="bonus">y: cites (bonus)</option>
-      <option value="both">y: cited+cites</option>
       <option value="citations">y: citation count</option>
     </select>
+    <label class="check" id="addcited-wrap" hidden
+           title="Add the in-list cited-by count on top of the selected cites axis">
+      <input type="checkbox" id="addcited"> + cited
+    </label>
     <label class="check"><input type="checkbox" id="edges" checked> citation links</label>
     <label class="check" title="Llama 3, OLMo 2, Spurious Rewards, Spurious Rewards Paradox, LiveMathematicianBench"><input type="checkbox" id="citefilter"> cites LLaMA / OLMo / Spurious Rewards / LiveMath</label>
     <button id="reset">reset view</button>

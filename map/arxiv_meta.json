@@ -1,4 +1,11 @@
 {
+  "2607.02303": {
+    "title": "A Hippocampus for Linear Attention: An Exact Memory for What the Recurrent State Forgets",
+    "published": "2026-07-02",
+    "authors": [
+      "Wanyun Cui"
+    ]
+  },
   "2506.13585": {
     "title": "MiniMax-M1: Scaling Test-Time Compute Efficiently with Lightning Attention",
     "published": "2025-06-16",
@@ -196,6 +203,16 @@
       "Zheng Zhang",
       "Ruofei Zhu",
       "Yufeng Yuan"
+    ]
+  },
+  "2503.02875": {
+    "title": "The First Few Tokens Are All You Need: An Efficient and Effective Unsupervised Prefix Fine-Tuning Method for Reasoning Models",
+    "published": "2025-03-04",
+    "authors": [
+      "Ke Ji",
+      "Jiahao Xu",
+      "Tian Liang",
+      "Qiuzhi Liu"
     ]
   },
   "2402.13669": {
@@ -1364,6 +1381,84 @@
       "Swayam Agrawal",
       "Gautham Govind Anil",
       "Prateek Jain"
+    ]
+  },
+  "2608.13040": {
+    "title": "Latent On-Policy Self-Distillation",
+    "published": "2026-08-13",
+    "authors": [
+      "Guibin Zhang",
+      "Jiayang Lyu",
+      "Ran Sun",
+      "Xinlei Yu"
+    ]
+  },
+  "2606.06021": {
+    "title": "OPRD: On-Policy Representation Distillation",
+    "published": "2026-06-04",
+    "authors": [
+      "Shenzhi Yang",
+      "Guangcheng Zhu",
+      "Bowen Song",
+      "Haobo Wang"
+    ]
+  },
+  "2602.09000": {
+    "title": "iGRPO: Self-Feedback-Driven LLM Reasoning",
+    "published": "2026-02-09",
+    "authors": [
+      "Ali Hatamizadeh",
+      "Shrimai Prabhumoye",
+      "Igor Gitman",
+      "Ximing Lu"
+    ]
+  },
+  "2602.08676": {
+    "title": "LLaDA2.1: Speeding Up Text Diffusion via Token Editing",
+    "published": "2026-02-09",
+    "authors": [
+      "Tiwei Bie",
+      "Maosong Cao",
+      "Xiang Cao",
+      "Bingsen Chen"
+    ]
+  },
+  "2512.15745": {
+    "title": "LLaDA2.0: Scaling Up Diffusion Language Models to 100B",
+    "published": "2025-12-10",
+    "authors": [
+      "Tiwei Bie",
+      "Maosong Cao",
+      "Kun Chen",
+      "Lun Du"
+    ]
+  },
+  "2510.26622": {
+    "title": "Encoder-Decoder or Decoder-Only? Revisiting Encoder-Decoder Large Language Model",
+    "published": "2025-10-30",
+    "authors": [
+      "Biao Zhang",
+      "Yong Cheng",
+      "Siamak Shakeri",
+      "Xinyi Wang"
+    ]
+  },
+  "2502.15840": {
+    "title": "Vending-Bench: A Benchmark for Long-Term Coherence of Autonomous Agents",
+    "published": "2025-02-21",
+    "authors": [
+      "Axel Backlund",
+      "Lukas Petersson"
+    ]
+  },
+  "2502.09992": {
+    "title": "Large Language Diffusion Models",
+    "published": "2025-02-14",
+    "authors": [
+      "Shen Nie",
+      "Fengqi Zhu",
+      "Zebin You",
+      "Xiaolu Zhang"
     ]
   }
 }

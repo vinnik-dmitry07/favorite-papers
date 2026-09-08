@@ -1,8 +1,8 @@
 /* Litmaps-style layout for the key-papers corpus.
    x = publication date, y = cited-by, outgoing cites, parent-only outgoing
    cites, unique nested outgoing cites, outgoing cites plus
-   a 1/cited bonus per outgoing target, their sum, or the
-   Litmaps citation count (toggle). Curved links =
+   a 1/cited bonus per outgoing target, any of those cites modes plus
+   cited-by, or the Litmaps citation count (toggle). Curved links =
    "this paper cites that one". Positions are data-driven; a collision pass
    only nudges overlapping nodes apart. */
 (function () {
@@ -163,49 +163,90 @@
     var el = document.getElementById('yaxis');
     var value = el ? el.value : 'cited';
     if (value === 'cites' || value === 'parents' || value === 'children'
-        || value === 'bonus' || value === 'both' || value === 'citations') {
+        || value === 'bonus' || value === 'citations') {
       return value;
     }
     return 'cited';
   }
 
-  function yCount(d) {
+  function citeModeOn() {
+    var mode = yMode();
+    return mode === 'cites' || mode === 'parents'
+      || mode === 'children' || mode === 'bonus';
+  }
+
+  function addCitedOn() {
+    var el = document.getElementById('addcited');
+    return citeModeOn() && Boolean(el && el.checked);
+  }
+
+  function syncAddCited() {
+    var wrap = document.getElementById('addcited-wrap');
+    if (wrap) wrap.hidden = !citeModeOn();
+  }
+
+  function baseYCount(d) {
     if (yMode() === 'cites') return d.refs;
     if (yMode() === 'parents') return d.parentRefs;
     if (yMode() === 'children') return d.childRefs;
     if (yMode() === 'bonus') return d.bonusRefs;
-    if (yMode() === 'both') return d.cites + d.refs;
     if (yMode() === 'citations') return d.lit_cites || 0;
     return d.cites;
   }
 
+  function yCount(d) {
+    var n = baseYCount(d);
+    if (addCitedOn()) n += d.cites;
+    return n;
+  }
+
   function yAxisCaption() {
-    if (yMode() === 'cites') return '\u2192 cites more papers on this list';
-    if (yMode() === 'parents') return '\u2192 cites more parent papers on this list';
+    if (yMode() === 'cites') {
+      return addCitedOn()
+        ? '\u2192 more cited-by + cites on this list'
+        : '\u2192 cites more papers on this list';
+    }
+    if (yMode() === 'parents') {
+      return addCitedOn()
+        ? '\u2192 more cited-by + parent cites on this list'
+        : '\u2192 cites more parent papers on this list';
+    }
     if (yMode() === 'children') {
-      return '\u2192 more nested outgoing cites on this list';
+      return addCitedOn()
+        ? '\u2192 more cited-by + nested outgoing cites on this list'
+        : '\u2192 more nested outgoing cites on this list';
     }
     if (yMode() === 'bonus') {
-      return '\u2192 more cites, with a larger bonus for less-cited targets';
+      return addCitedOn()
+        ? '\u2192 more cited-by + cites, with a larger bonus for less-cited targets'
+        : '\u2192 more cites, with a larger bonus for less-cited targets';
     }
-    if (yMode() === 'both') return '\u2192 more cited-by + cites on this list';
     if (yMode() === 'citations') return '\u2192 more citations';
     return '\u2192 cited by more papers on this list';
   }
 
   function yNote() {
-    if (yMode() === 'cites') return 'y: outgoing cites to other entries on this list';
+    if (yMode() === 'cites') {
+      return addCitedOn()
+        ? 'y: cited by plus outgoing cites on this list'
+        : 'y: outgoing cites to other entries on this list';
+    }
     if (yMode() === 'parents') {
-      return 'y: outgoing parent cites on this list '
+      return (addCitedOn()
+        ? 'y: cited by plus outgoing parent cites on this list '
+        : 'y: outgoing parent cites on this list ')
         + '(child cite dropped when its parent is also cited)';
     }
     if (yMode() === 'children') {
-      return 'y: unique nested outgoing cites on this list';
+      return addCitedOn()
+        ? 'y: cited by plus unique nested outgoing cites on this list'
+        : 'y: unique nested outgoing cites on this list';
     }
     if (yMode() === 'bonus') {
-      return 'y: outgoing cites plus a 1/cited bonus for each target';
+      return addCitedOn()
+        ? 'y: cited by plus outgoing cites plus a 1/cited bonus for each target'
+        : 'y: outgoing cites plus a 1/cited bonus for each target';
     }
-    if (yMode() === 'both') return 'y: cited by plus outgoing cites on this list';
     if (yMode() === 'citations') return 'y: Litmaps citation count';
     return 'y: cited by other entries on this list';
   }
@@ -797,12 +838,15 @@
   }
 
   document.getElementById('labels').addEventListener('change', scheduleLabels);
-  document.getElementById('yaxis').addEventListener('change', function () {
+  function applyYAxis() {
+    syncAddCited();
     document.getElementById('note').textContent = note(
       matches ? matches.length : null);
     svg.call(zoom.transform, d3.zoomIdentity);
     redraw();
-  });
+  }
+  document.getElementById('yaxis').addEventListener('change', applyYAxis);
+  document.getElementById('addcited').addEventListener('change', applyYAxis);
   document.getElementById('edges').addEventListener('change', function (e) {
     gEdges.attr('display', e.target.checked ? null : 'none');
   });
@@ -835,6 +879,7 @@
   });
 
   buildLegend();
+  syncAddCited();
   document.getElementById('stats').textContent = stats();
   document.getElementById('note').textContent = note(null);
   redraw();

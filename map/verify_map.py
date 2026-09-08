@@ -212,6 +212,10 @@ def main() -> None:
             '''() => document.querySelector('.edges').getAttribute('display')'''))
         page.check('#edges')
 
+        if not page.evaluate(
+            '''() => document.getElementById('addcited-wrap').hidden'''
+        ):
+            errors.append('+ cited should be hidden on cited-by axis')
         cited_axis = page.evaluate('''() => {
             const captions = [...document.querySelectorAll('.caption')]
                 .map(t => t.textContent);
@@ -340,20 +344,62 @@ def main() -> None:
             errors.append(
                 f'bonus-cites y-axis barely moved vs cites ({moved_bo})'
             )
-        page.select_option('#yaxis', 'both')
+        if page.evaluate(
+            '''() => document.getElementById('addcited-wrap').hidden'''
+        ):
+            errors.append('+ cited should be shown on bonus axis')
+        page.select_option('#yaxis', 'cites')
+        page.wait_for_timeout(200)
+        if page.evaluate(
+            '''() => document.getElementById('addcited-wrap').hidden'''
+        ):
+            errors.append('+ cited should be shown on cites axis')
+        page.check('#addcited')
         page.wait_for_timeout(900)
         both_axis = page.evaluate('''() => ({
             captions: [...document.querySelectorAll('.caption')]
                 .map(t => t.textContent),
             note: document.getElementById('note').textContent,
+            ys: [...document.querySelectorAll('.nodes g')].map(g => {
+                const m = /translate\\(([^,]+),([^)]+)\\)/.exec(
+                    g.getAttribute('transform'));
+                return +m[2];
+            }),
         })''')
-        print('yaxis both:', both_axis['captions'], both_axis['note'][:80])
+        print('yaxis cites + cited:', both_axis['captions'], both_axis['note'][:80])
         if not any('cited-by + cites' in c for c in both_axis['captions']):
             errors.append('cited+cites axis caption missing')
         if 'cited by plus outgoing' not in both_axis['note']:
             errors.append('cited+cites footer missing')
+        moved_add = sum(
+            1 for a, b in zip(cites_axis['ys'], both_axis['ys'])
+            if abs(a - b) > 8
+        )
+        print('yaxis cites + cited: moved vs cites', moved_add)
+        if moved_add < 20:
+            errors.append(
+                f'+ cited barely moved nodes vs cites-only ({moved_add})'
+            )
+        page.select_option('#yaxis', 'parents')
+        page.wait_for_timeout(900)
+        cited_par = page.evaluate('''() => ({
+            captions: [...document.querySelectorAll('.caption')]
+                .map(t => t.textContent),
+            note: document.getElementById('note').textContent,
+        })''')
+        print('yaxis parents + cited:', cited_par['captions'],
+              cited_par['note'][:80])
+        if not any('cited-by + parent cites' in c for c in cited_par['captions']):
+            errors.append('cited+parents axis caption missing')
+        if 'cited by plus outgoing parent' not in cited_par['note']:
+            errors.append('cited+parents footer missing')
+        page.uncheck('#addcited')
         page.select_option('#yaxis', 'citations')
         page.wait_for_timeout(900)
+        if not page.evaluate(
+            '''() => document.getElementById('addcited-wrap').hidden'''
+        ):
+            errors.append('+ cited should be hidden on citation-count axis')
         cites_num = page.evaluate('''() => {
             const captions = [...document.querySelectorAll('.caption')]
                 .map(t => t.textContent);
