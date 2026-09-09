@@ -1,4 +1,4 @@
-# Key ML papers from result.json
+# Key papers of AI/AGI/ASI 
 
 ![Litmaps](map.png)
 
@@ -205,6 +205,7 @@ Own version of the same map, with the links parsed straight out of the papers (a
 
 - The Loss Does Not See the Basis, but Adam Does — [https://arxiv.org/abs/2608.05136](https://arxiv.org/abs/2608.05136) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5956?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - Explorative Modeling: Unlocking a Third Pretraining Axis — [https://arxiv.org/abs/2607.27372](https://arxiv.org/abs/2607.27372) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5858?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⌲ tg](https://t-me.translate.goog/s/boris_again/4060?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) · [https://explorative-modeling.github.io/](https://explorative-modeling.github.io/) · [https://arxiviq.substack.com/p/explorative-modeling-unlocking-a](https://arxiviq.substack.com/p/explorative-modeling-unlocking-a)
+- Self-Improving Pretraining: using post-trained models to pretrain better models — [https://arxiv.org/abs/2601.21343](https://arxiv.org/abs/2601.21343) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/4691?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - Nested Learning (Google, NeurIPS 2025) — [https://arxiv.org/abs/2512.24695](https://arxiv.org/abs/2512.24695) · [https://abehrouz.github.io/files/NL.pdf](https://abehrouz.github.io/files/NL.pdf) [⌲ tg](https://t-me.translate.goog/s/data_secrets/5900?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) · [https://research.google/blog/introducing-nested-learning-a-new-ml-paradigm-for-continual-learning/](https://research.google/blog/introducing-nested-learning-a-new-ml-paradigm-for-continual-learning/) [⌲ tg](https://t-me.translate.goog/s/data_secrets/5900?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_pto=wapp)
 - NorMuon: Making Muon more efficient and scalable — [https://arxiv.org/abs/2510.05491](https://arxiv.org/abs/2510.05491)
 - On-Policy RL Meets Off-Policy Experts (SFT+RL dynamic weighting) — [https://arxiv.org/abs/2508.11408](https://arxiv.org/abs/2508.11408)
@@ -298,6 +299,7 @@ Own version of the same map, with the links parsed straight out of the papers (a
 
 ## Agents, open-endedness, AGI
 
+- AI Finds A Way — [https://arxiv.org/abs/2608.23875](https://arxiv.org/abs/2608.23875) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5974?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - SPADE: Self-Play in Adaptive Synthetic Executable Environments — [https://arxiv.org/abs/2608.19197](https://arxiv.org/abs/2608.19197) [⌲ tg](https://t-me.translate.goog/s/axisofordinary/9061?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - Ouroboros: A Self-Developing Frontier Coding Agent — [https://arxiv.org/abs/2608.08311](https://arxiv.org/abs/2608.08311) · [https://razzant.github.io/ouroboros/](https://razzant.github.io/ouroboros/)
 - Self-Improvements in Modern Agentic Systems: A Survey (Schmidhuber) — [https://arxiv.org/abs/2607.13104](https://arxiv.org/abs/2607.13104) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5772?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)

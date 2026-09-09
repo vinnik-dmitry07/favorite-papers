@@ -1460,5 +1460,25 @@
       "Zebin You",
       "Xiaolu Zhang"
     ]
+  },
+  "2601.21343": {
+    "title": "Self-Improving Pretraining: using post-trained models to pretrain better models",
+    "published": "2026-01-29",
+    "authors": [
+      "Ellen Xiaoqing Tan",
+      "Jack Lanchantin",
+      "Shehzaad Dhuliawala",
+      "Danwei Li"
+    ]
+  },
+  "2608.23875": {
+    "title": "AI Finds A Way",
+    "published": "2026-08-26",
+    "authors": [
+      "Aaron Dharna",
+      "Cong Lu",
+      "Ryan Sullivan",
+      "Joel Lehman"
+    ]
   }
 }
