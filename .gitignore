@@ -14,19 +14,25 @@ credentials.json
 *.pem
 *.key
 
-# Telegram folder export index
+# Telegram folder export index (account session + full channel text)
 tg/*.sqlite
-tg/*.sqlite-journal
-tg/*.sqlite-wal
-tg/*.sqlite-shm
-assets/tg/*.sqlite
-assets/tg/*.sqlite-journal
-assets/tg/*.sqlite-wal
-assets/tg/*.sqlite-shm
+tg/*.sqlite-*
+tg/*.session
+tg/*.session-journal
+assets/tg/
+*.sqlite.bak
 
 # Citation map: raw fetched documents and verification screenshots
 cache/
 shots/
+
+# Paper filter pipeline intermediates (scripts + scores.csv + report.md are committed)
+filter/*.jsonl
+filter/fulltext/
+filter/fulltext.zip
+filter/reviews/
+filter/logs/
+filter/cache/
 
 # Python
 __pycache__/
