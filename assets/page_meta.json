@@ -1223,5 +1223,36 @@
   },
   "arxiv:2609.01437": {
     "resolved": "https://arxiv.org/html/2609.01437"
+  },
+  "arxiv:2509.14234": {
+    "resolved": "https://arxiv.org/html/2509.14234"
+  },
+  "arxiv:2312.04927": {
+    "resolved": "https://arxiv.org/html/2312.04927"
+  },
+  "arxiv:2006.16236": {
+    "resolved": "https://arxiv.org/html/2006.16236"
+  },
+  "arxiv:2410.04444": {
+    "resolved": "https://arxiv.org/html/2410.04444"
+  },
+  "arxiv:2402.16823": {
+    "resolved": "https://arxiv.org/html/2402.16823"
+  },
+  "arxiv:2308.16117": {
+    "resolved": "https://ar5iv.labs.arxiv.org/html/2308.16117"
+  },
+  "arxiv:1901.01753": {
+    "resolved": "https://arxiv.org/html/1901.01753"
+  },
+  "doi:10.1038/s41586-023-06924-6": {
+    "title": "Mathematical discoveries from program search with large language models",
+    "date": "2023-12-14",
+    "authors": [
+      "Bernardino Romera-Paredes",
+      "Mohammadamin Barekatain",
+      "Alexander Novikov",
+      "Matej Balog"
+    ]
   }
 }

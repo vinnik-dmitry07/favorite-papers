@@ -1548,5 +1548,74 @@
       "Jiajun Shi",
       "Xinping Lei"
     ]
+  },
+  "2006.16236": {
+    "title": "Transformers are RNNs: Fast Autoregressive Transformers with Linear Attention",
+    "published": "2020-06-29",
+    "authors": [
+      "Angelos Katharopoulos",
+      "Apoorv Vyas",
+      "Nikolaos Pappas",
+      "François Fleuret"
+    ]
+  },
+  "2312.04927": {
+    "title": "Zoology: Measuring and Improving Recall in Efficient Language Models",
+    "published": "2023-12-08",
+    "authors": [
+      "Simran Arora",
+      "Sabri Eyuboglu",
+      "Aman Timalsina",
+      "Isys Johnson"
+    ]
+  },
+  "2509.14234": {
+    "title": "Compute as Teacher: Turning Inference Compute Into Reference-Free Supervision",
+    "published": "2025-09-17",
+    "authors": [
+      "Dulhan Jayalath",
+      "Shashwat Goel",
+      "Thomas Foster",
+      "Parag Jain"
+    ]
+  },
+  "1901.01753": {
+    "title": "Paired Open-Ended Trailblazer (POET): Endlessly Generating Increasingly Complex and Diverse Learning Environments and Their Solutions",
+    "published": "2019-01-07",
+    "authors": [
+      "Rui Wang",
+      "Joel Lehman",
+      "Jeff Clune",
+      "Kenneth O. Stanley"
+    ]
+  },
+  "2308.16117": {
+    "title": "Strengthening from dislocation restructuring and local climb at platelet linear complexions in Al-Cu alloys",
+    "published": "2023-08-30",
+    "authors": [
+      "Pulkit Garg",
+      "Daniel S. Gianola",
+      "Timothy J. Rupert"
+    ]
+  },
+  "2402.16823": {
+    "title": "Language Agents as Optimizable Graphs",
+    "published": "2024-02-26",
+    "authors": [
+      "Mingchen Zhuge",
+      "Wenyi Wang",
+      "Louis Kirsch",
+      "Francesco Faccio"
+    ]
+  },
+  "2410.04444": {
+    "title": "Gödel Agent: A Self-Referential Agent Framework for Recursive Self-Improvement",
+    "published": "2024-10-06",
+    "authors": [
+      "Xunjian Yin",
+      "Xinyi Wang",
+      "Liangming Pan",
+      "Li Lin"
+    ]
   }
 }

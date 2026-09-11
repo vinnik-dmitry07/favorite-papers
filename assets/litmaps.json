@@ -4,7 +4,7 @@
       "title": "The Llama 3 Herd of Models",
       "author": "Dubey",
       "year": "2024",
-      "lit_cites": 22281,
+      "lit_cites": 22308,
       "lit_refs": 0,
       "tags": []
     },
@@ -12,7 +12,7 @@
       "title": "Overcoming catastrophic forgetting in neural networks",
       "author": "Kirkpatrick",
       "year": "2017",
-      "lit_cites": 14109,
+      "lit_cites": 14150,
       "lit_refs": 75,
       "tags": [
         "Forgetting"
@@ -22,7 +22,7 @@
       "title": "DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models",
       "author": "Shao",
       "year": "2024",
-      "lit_cites": 10134,
+      "lit_cites": 10145,
       "lit_refs": 86,
       "tags": [
         "Math reasoning"
@@ -32,7 +32,7 @@
       "title": "Beyond the Imitation Game: Quantifying and extrapolating the capabilities of language models",
       "author": "Srivastava",
       "year": "2023",
-      "lit_cites": 3615,
+      "lit_cites": 3617,
       "lit_refs": 0,
       "tags": [
         "Interp"
@@ -42,7 +42,7 @@
       "title": "DAPO: An Open-Source LLM Reinforcement Learning System at Scale",
       "author": "Yu",
       "year": "2025",
-      "lit_cites": 2958,
+      "lit_cites": 2961,
       "lit_refs": 41,
       "tags": [
         "Scaling",
@@ -53,7 +53,7 @@
       "title": "Sharpness-Aware Minimization for Efficiently Improving Generalization",
       "author": "Foret",
       "year": "2020",
-      "lit_cites": 2612,
+      "lit_cites": 2614,
       "lit_refs": 107,
       "tags": [
         "Optimizers",
@@ -66,7 +66,7 @@
       "title": "Sparse Autoencoders Find Highly Interpretable Features in Language Models",
       "author": "Cunningham",
       "year": "2023",
-      "lit_cites": 1801,
+      "lit_cites": 1802,
       "lit_refs": 35,
       "tags": [
         "Interp"
@@ -76,7 +76,7 @@
       "title": "VICReg: Variance-Invariance-Covariance Regularization for Self-Supervised Learning",
       "author": "Bardes",
       "year": "2022",
-      "lit_cites": 1695,
+      "lit_cites": 1697,
       "lit_refs": 93,
       "tags": [
         "JEPA"
@@ -86,7 +86,7 @@
       "title": "Large Batch Optimization for Deep Learning: Training BERT in 76 minutes",
       "author": "You",
       "year": "2020",
-      "lit_cites": 1647,
+      "lit_cites": 1649,
       "lit_refs": 53,
       "tags": [
         "Optimizers"
@@ -96,7 +96,7 @@
       "title": "Understanding R1-Zero-Like Training: A Critical Perspective",
       "author": "Liu",
       "year": "2025",
-      "lit_cites": 1535,
+      "lit_cites": 1536,
       "lit_refs": 34,
       "tags": [
         "Math reasoning",
@@ -117,7 +117,7 @@
       "title": "Does Reinforcement Learning Really Incentivize Reasoning Capacity in LLMs Beyond the Base Model?",
       "author": "Yue",
       "year": "2025",
-      "lit_cites": 1200,
+      "lit_cites": 1202,
       "lit_refs": 71,
       "tags": [
         "Scaling",
@@ -161,7 +161,7 @@
       "title": "Symbolic Discovery of Optimization Algorithms",
       "author": "Chen",
       "year": "2023",
-      "lit_cites": 849,
+      "lit_cites": 851,
       "lit_refs": 190,
       "tags": [
         "Scaling",
@@ -196,7 +196,7 @@
       "title": "Beyond the 80/20 Rule: High-Entropy Minority Tokens Drive Effective Reinforcement Learning for LLM Reasoning",
       "author": "Wang",
       "year": "2025",
-      "lit_cites": 705,
+      "lit_cites": 706,
       "lit_refs": 51,
       "tags": [
         "Math reasoning",
@@ -218,7 +218,7 @@
       "title": "Attractor and integrator networks in the brain",
       "author": "Khona",
       "year": "2022",
-      "lit_cites": 486,
+      "lit_cites": 488,
       "lit_refs": 354,
       "tags": [
         "Architecture"
@@ -228,7 +228,7 @@
       "title": "Loss of plasticity in deep continual learning",
       "author": "Dohare",
       "year": "2024",
-      "lit_cites": 453,
+      "lit_cites": 457,
       "lit_refs": 207,
       "tags": [
         "Evolution",
@@ -249,7 +249,7 @@
       "title": "Sophia: A Scalable Stochastic Second-order Optimizer for Language Model Pre-training",
       "author": "Liu",
       "year": "2023",
-      "lit_cites": 377,
+      "lit_cites": 378,
       "lit_refs": 120,
       "tags": [
         "Optimizers"
@@ -287,7 +287,7 @@
       "title": "TTRL: Test-Time Reinforcement Learning",
       "author": "Zuo",
       "year": "2025",
-      "lit_cites": 298,
+      "lit_cites": 299,
       "lit_refs": 84,
       "tags": [
         "Stepping stone",
@@ -299,7 +299,7 @@
       "title": "MiniMax-M1: Scaling Test-Time Compute Efficiently with Lightning Attention",
       "author": "Chen",
       "year": "2025",
-      "lit_cites": 284,
+      "lit_cites": 285,
       "lit_refs": 98,
       "tags": [
         "Architecture"
@@ -309,7 +309,7 @@
       "title": "Learning to Reason without External Rewards",
       "author": "Zhao",
       "year": "2025",
-      "lit_cites": 258,
+      "lit_cites": 259,
       "lit_refs": 66,
       "tags": [
         "Math reasoning",
@@ -391,7 +391,7 @@
       "title": "Continual Learning and Catastrophic Forgetting",
       "author": "van de Ven",
       "year": "2024",
-      "lit_cites": 171,
+      "lit_cites": 172,
       "lit_refs": 286,
       "tags": [
         "Forgetting"
@@ -401,7 +401,7 @@
       "title": "Self-Refine: Iterative Refinement with Self-Feedback",
       "author": "Alon",
       "year": "2023",
-      "lit_cites": 170,
+      "lit_cites": 179,
       "lit_refs": 0,
       "tags": [
         "Self-refine"
@@ -431,7 +431,7 @@
       "title": "LeJEPA: Provable and Scalable Self-Supervised Learning Without the Heuristics",
       "author": "Balestriero",
       "year": "2025",
-      "lit_cites": 151,
+      "lit_cites": 153,
       "lit_refs": 169,
       "tags": [
         "JEPA"
@@ -441,7 +441,7 @@
       "title": "On the Generalization of SFT: A Reinforcement Learning Perspective with Reward Rectification",
       "author": "Wu",
       "year": "2025",
-      "lit_cites": 151,
+      "lit_cites": 152,
       "lit_refs": 122,
       "tags": [
         "Scaling",
@@ -454,7 +454,7 @@
       "title": "Self-Distillation Bridges Distribution Gap in Language Model Fine-Tuning",
       "author": "Yang",
       "year": "2024",
-      "lit_cites": 148,
+      "lit_cites": 149,
       "lit_refs": 59,
       "tags": [
         "Self-distill"
@@ -497,7 +497,7 @@
       "author": "Lee",
       "year": "2026",
       "lit_cites": 115,
-      "lit_refs": 59,
+      "lit_refs": 60,
       "tags": [
         "Scaling",
         "Architecture"
@@ -507,7 +507,7 @@
       "title": "Emergent Introspective Awareness in Large Language Models",
       "author": "Lindsey",
       "year": "2026",
-      "lit_cites": 109,
+      "lit_cites": 110,
       "lit_refs": 0,
       "tags": [
         "Interp"
@@ -517,7 +517,7 @@
       "title": "Reasoning with Sampling: Your Base Model is Smarter Than You Think",
       "author": "Karan",
       "year": "2025",
-      "lit_cites": 109,
+      "lit_cites": 111,
       "lit_refs": 57,
       "tags": [
         "Scaling",
@@ -762,7 +762,7 @@
       "title": "Correspondence between neuroevolution and gradient descent",
       "author": "Whitelam",
       "year": "2021",
-      "lit_cites": 44,
+      "lit_cites": 45,
       "lit_refs": 76,
       "tags": [
         "Scaling",
@@ -774,7 +774,7 @@
       "author": "Zeng",
       "year": "2025",
       "lit_cites": 37,
-      "lit_refs": 73,
+      "lit_refs": 74,
       "tags": [
         "Environments"
       ]
@@ -892,7 +892,7 @@
       "title": "Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents",
       "author": "Zhang",
       "year": "2025",
-      "lit_cites": 15,
+      "lit_cites": 16,
       "lit_refs": 0,
       "tags": [
         "Self-improve",

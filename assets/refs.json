@@ -393,6 +393,7 @@
     "doi": [],
     "urls": [],
     "titles": [
+      "arxiv:2006.16236",
       "doi:10.1073/pnas.1611835114"
     ],
     "bib_items": 114,
@@ -1039,6 +1040,7 @@
       "https://arxiv.org/abs/2510.25741"
     ],
     "titles": [
+      "arxiv:2006.16236",
       "arxiv:2412.06769",
       "arxiv:2502.05171",
       "arxiv:2509.25239"
@@ -1104,6 +1106,7 @@
       "arxiv:2601.18734",
       "arxiv:2601.19897",
       "arxiv:2601.20802",
+      "arxiv:2601.21557",
       "arxiv:2603.28052",
       "doi:10.1038/s41586-024-07711-7"
     ],
@@ -2144,6 +2147,7 @@
     "titles": [
       "arxiv:2302.06675",
       "arxiv:2402.03300",
+      "arxiv:2408.08435",
       "arxiv:2410.07095",
       "arxiv:2504.13837",
       "arxiv:2504.20571",
@@ -3050,6 +3054,7 @@
       "https://www.anthropic.com/news/claude-3-7-sonnet"
     ],
     "titles": [
+      "arxiv:2006.16236",
       "arxiv:2503.14476",
       "arxiv:2503.20783",
       "arxiv:2506.01939"
@@ -4364,8 +4369,10 @@
     ],
     "titles": [
       "arxiv:2001.08361",
+      "arxiv:2006.16236",
       "arxiv:2207.02098",
-      "arxiv:2302.10866"
+      "arxiv:2302.10866",
+      "arxiv:2312.04927"
     ],
     "bib_items": 127,
     "has_bibliography": true,
@@ -4381,6 +4388,7 @@
     ],
     "titles": [
       "arxiv:2001.08361",
+      "arxiv:2006.16236",
       "arxiv:2203.08913",
       "arxiv:2304.01433",
       "arxiv:2304.08467",
@@ -4433,6 +4441,7 @@
     "urls": [],
     "titles": [
       "acl:2022.acl-long.360",
+      "arxiv:2006.16236",
       "arxiv:2203.08913",
       "arxiv:2304.08467",
       "arxiv:2305.01625",
@@ -4621,6 +4630,7 @@
     ],
     "titles": [
       "acl:2022.acl-long.360",
+      "arxiv:2006.16236",
       "arxiv:2203.08913"
     ],
     "bib_items": 53,
@@ -4834,6 +4844,7 @@
       "https://arxiv.org/pdf/1811.06621.pdf"
     ],
     "titles": [
+      "arxiv:2006.16236",
       "arxiv:2312.00276"
     ],
     "bib_items": 0,
@@ -5998,6 +6009,7 @@
       "arxiv:2301.05217",
       "arxiv:2304.15004",
       "arxiv:2309.14316",
+      "arxiv:2312.04927",
       "arxiv:2404.05405",
       "arxiv:2406.11813",
       "arxiv:2410.07041",
@@ -6419,6 +6431,7 @@
     "titles": [
       "arxiv:2001.08361",
       "arxiv:2002.05202",
+      "arxiv:2006.16236",
       "arxiv:2203.08913",
       "arxiv:2212.14034",
       "arxiv:2301.05217",
@@ -13857,6 +13870,7 @@
       "https://research.nvidia.com/labs/nemotron/files/NVIDIA-Nemotron-3-Ultra-Technical-Report.pdf"
     ],
     "titles": [
+      "arxiv:1901.01753",
       "arxiv:1905.10985",
       "arxiv:2402.03300",
       "arxiv:2406.04268",
@@ -13865,6 +13879,7 @@
       "arxiv:2511.07317",
       "arxiv:2512.18552",
       "arxiv:2601.03192",
+      "arxiv:2602.07755",
       "arxiv:2603.19461"
     ],
     "bib_items": 141,
@@ -13949,6 +13964,8 @@
     ],
     "titles": [
       "arxiv:2303.17651",
+      "arxiv:2408.08435",
+      "arxiv:2410.04444",
       "arxiv:2505.22954"
     ],
     "bib_items": 38,
@@ -14438,6 +14455,8 @@
       "arxiv:2303.17651",
       "arxiv:2309.16797",
       "arxiv:2312.00276",
+      "arxiv:2402.16823",
+      "arxiv:2408.08435",
       "arxiv:2503.00735",
       "arxiv:2504.16084",
       "arxiv:2505.19590",
@@ -14497,9 +14516,12 @@
       "https://openai.com/index/introducing-codex/"
     ],
     "titles": [
+      "arxiv:2408.08435",
       "arxiv:2505.22954",
       "arxiv:2507.19457",
+      "arxiv:2512.18746",
       "arxiv:2601.16175",
+      "arxiv:2602.07755",
       "arxiv:2603.19461"
     ],
     "bib_items": 42,
@@ -14571,11 +14593,15 @@
       "arxiv:1905.10985",
       "arxiv:2309.16797",
       "arxiv:2402.16822",
+      "arxiv:2402.16823",
       "arxiv:2406.04268",
+      "arxiv:2408.08435",
       "arxiv:2505.22954",
       "arxiv:2511.15593",
       "arxiv:2512.18552",
-      "arxiv:2512.24601"
+      "arxiv:2512.24601",
+      "arxiv:2601.21557",
+      "arxiv:2602.07755"
     ],
     "bib_items": 101,
     "has_bibliography": true,
@@ -15070,6 +15096,7 @@
       "https://doi.org/10.1038/s41586-023-06747-5"
     ],
     "titles": [
+      "arxiv:2006.16236",
       "arxiv:2505.22954",
       "arxiv:2506.13585"
     ],
@@ -15176,13 +15203,16 @@
       "https://www.anthropic.com/news/tool-use-ga"
     ],
     "titles": [
+      "arxiv:1901.01753",
       "arxiv:1905.10985",
       "arxiv:2004.12919",
       "arxiv:2303.17651",
       "arxiv:2309.16797",
       "arxiv:2312.00276",
       "arxiv:2402.16822",
-      "arxiv:2406.04268"
+      "arxiv:2402.16823",
+      "arxiv:2406.04268",
+      "arxiv:2408.08435"
     ],
     "bib_items": 184,
     "has_bibliography": true,
@@ -15290,6 +15320,7 @@
       "https://openreview.net/forum?id=rmiwIL98uQ"
     ],
     "titles": [
+      "arxiv:1901.01753",
       "arxiv:1905.10985",
       "arxiv:2309.16797",
       "arxiv:2311.00344",
@@ -15668,6 +15699,7 @@
       "https://link.springer.com/doi/10.1007/s11721-012-0075-2"
     ],
     "titles": [
+      "arxiv:1901.01753",
       "arxiv:1905.10985",
       "arxiv:2001.08361",
       "doi:10.1038/s42256-023-00754-x"
@@ -15767,6 +15799,7 @@
     "titles": [
       "arxiv:1710.02298",
       "arxiv:1712.06567",
+      "arxiv:1901.01753",
       "doi:10.1073/pnas.1611835114"
     ],
     "bib_items": 203,
@@ -16010,12 +16043,15 @@
     "titles": [
       "arxiv:2303.17651",
       "arxiv:2309.16797",
+      "arxiv:2408.08435",
       "arxiv:2410.07095",
       "arxiv:2505.22954",
       "arxiv:2507.19457",
       "arxiv:2601.16175",
+      "arxiv:2601.21557",
       "arxiv:2603.19461",
       "arxiv:2603.28052",
+      "arxiv:2604.25850",
       "url:sakana.ai/shinka-evolve"
     ],
     "bib_items": 0,
@@ -16624,6 +16660,7 @@
       "arxiv:2001.08361",
       "arxiv:2203.11171",
       "arxiv:2303.17651",
+      "arxiv:2512.18746",
       "arxiv:2601.03192",
       "url:rlhfbook.com"
     ],
@@ -16698,9 +16735,13 @@
     ],
     "titles": [
       "arxiv:2303.17651",
+      "arxiv:2408.08435",
       "arxiv:2507.19457",
+      "arxiv:2512.18746",
       "arxiv:2512.24601",
       "arxiv:2601.16175",
+      "arxiv:2601.21557",
+      "arxiv:2602.07755",
       "url:openai.com/index/harness-engineering"
     ],
     "bib_items": 60,
@@ -19610,6 +19651,7 @@
     "urls": [],
     "titles": [
       "acl:2022.emnlp-main.340",
+      "arxiv:1901.01753",
       "arxiv:2212.09741",
       "arxiv:2402.03300",
       "arxiv:2503.14476",
@@ -20257,6 +20299,7 @@
     "titles": [
       "arxiv:2001.08361",
       "arxiv:2002.05202",
+      "arxiv:2006.16236",
       "arxiv:2302.06675",
       "arxiv:2302.10866",
       "arxiv:2304.15004",
@@ -21597,7 +21640,9 @@
     "doi": [],
     "urls": [],
     "titles": [
-      "arxiv:2203.08913"
+      "arxiv:2006.16236",
+      "arxiv:2203.08913",
+      "arxiv:2312.04927"
     ],
     "bib_items": 42,
     "has_bibliography": true,
@@ -21742,7 +21787,7 @@
     "bib_items": 44,
     "has_bibliography": true,
     "search_chars": 12480,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2608.13040"
   },
   "arxiv:2606.06021": {
@@ -21798,7 +21843,7 @@
     "bib_items": 49,
     "has_bibliography": true,
     "search_chars": 10221,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2606.06021"
   },
   "arxiv:2602.09000": {
@@ -21868,7 +21913,7 @@
     "bib_items": 42,
     "has_bibliography": true,
     "search_chars": 10648,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2602.09000"
   },
   "arxiv:2602.08676": {
@@ -21925,7 +21970,7 @@
     "bib_items": 49,
     "has_bibliography": true,
     "search_chars": 11333,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2602.08676"
   },
   "arxiv:2512.15745": {
@@ -21999,7 +22044,7 @@
     "bib_items": 77,
     "has_bibliography": true,
     "search_chars": 17044,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2512.15745"
   },
   "arxiv:2510.26622": {
@@ -22055,7 +22100,7 @@
     "bib_items": 59,
     "has_bibliography": true,
     "search_chars": 19049,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2510.26622"
   },
   "arxiv:2502.09992": {
@@ -22162,7 +22207,7 @@
     "bib_items": 125,
     "has_bibliography": true,
     "search_chars": 26654,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2502.09992"
   },
   "arxiv:2502.15840": {
@@ -22173,7 +22218,7 @@
     "bib_items": 9,
     "has_bibliography": true,
     "search_chars": 2223,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2502.15840"
   },
   "arxiv:2601.21343": {
@@ -22267,7 +22312,7 @@
     "bib_items": 90,
     "has_bibliography": true,
     "search_chars": 20593,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2601.21343"
   },
   "arxiv:2608.23875": {
@@ -22610,6 +22655,7 @@
       "arxiv:2301.05217",
       "arxiv:2402.16822",
       "arxiv:2407.21783",
+      "arxiv:2408.08435",
       "arxiv:2505.22954",
       "arxiv:2603.19461",
       "url:minedojo.org",
@@ -22619,7 +22665,7 @@
     "bib_items": 256,
     "has_bibliography": true,
     "search_chars": 77884,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2608.23875"
   },
   "arxiv:2408.08435": {
@@ -22680,12 +22726,13 @@
       "arxiv:1905.10985",
       "arxiv:2203.11171",
       "arxiv:2303.17651",
-      "arxiv:2309.16797"
+      "arxiv:2309.16797",
+      "arxiv:2402.16823"
     ],
     "bib_items": 114,
     "has_bibliography": true,
     "search_chars": 26502,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2408.08435"
   },
   "arxiv:2512.18746": {
@@ -22715,7 +22762,7 @@
     "bib_items": 67,
     "has_bibliography": true,
     "search_chars": 20716,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2512.18746"
   },
   "arxiv:2601.21557": {
@@ -22783,7 +22830,7 @@
     "bib_items": 70,
     "has_bibliography": true,
     "search_chars": 16570,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2601.21557"
   },
   "arxiv:2602.07755": {
@@ -22906,6 +22953,7 @@
     "titles": [
       "arxiv:1905.10985",
       "arxiv:2004.12919",
+      "arxiv:2402.16823",
       "arxiv:2408.08435",
       "arxiv:2505.22954",
       "arxiv:2512.18746"
@@ -22913,7 +22961,7 @@
     "bib_items": 88,
     "has_bibliography": true,
     "search_chars": 26289,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2602.07755"
   },
   "arxiv:2604.25850": {
@@ -23007,7 +23055,7 @@
     "bib_items": 53,
     "has_bibliography": true,
     "search_chars": 16496,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2604.25850"
   },
   "arxiv:2606.01770": {
@@ -23040,7 +23088,7 @@
     "bib_items": 27,
     "has_bibliography": true,
     "search_chars": 5967,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2606.01770"
   },
   "arxiv:2609.01437": {
@@ -23140,7 +23188,421 @@
     "bib_items": 61,
     "has_bibliography": true,
     "search_chars": 13586,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2609.01437"
+  },
+  "arxiv:2509.14234": {
+    "arxiv": [
+      "1503.02531",
+      "1707.06347",
+      "2006.12442",
+      "2212.08073",
+      "2312.06281",
+      "2402.03300",
+      "2407.21783",
+      "2410.21276",
+      "2503.19786",
+      "2505.08775",
+      "2505.09388",
+      "2505.20282",
+      "2505.22660",
+      "2506.06395",
+      "2506.10139",
+      "2506.18254",
+      "2507.14843",
+      "2509.06941"
+    ],
+    "doi": [
+      "10.1109/sc41405.2020.00024",
+      "10.1145/3689031.3696075",
+      "10.18653/v1/2023.acl-long.754"
+    ],
+    "urls": [
+      "https://doi.org/10.1109/SC41405.2020.00024",
+      "https://doi.org/10.1145/3689031.3696075",
+      "https://doi.org/10.18653/V1/2023.ACL-LONG.754",
+      "https://doi.org/10.18653/v1/2023.acl-long.754",
+      "https://openreview.net/forum?id=1PL1NIMMrw",
+      "https://openreview.net/forum?id=4OsgYD7em5",
+      "https://openreview.net/forum?id=Bkg6RiCqY7",
+      "https://openreview.net/forum?id=OU9nFEYR2M",
+      "https://openreview.net/forum?id=UfFTBEsLgI",
+      "https://openreview.net/forum?id=VuVhgEiu20",
+      "https://openreview.net/forum?id=c1bTcrDmt4",
+      "https://openreview.net/forum?id=dYur3yabMj",
+      "https://openreview.net/forum?id=dp4KWuSDzj",
+      "https://openreview.net/forum?id=gEZrGCozdqR",
+      "https://openreview.net/forum?id=i1uGbfHHpH",
+      "https://openreview.net/forum?id=mtJSMcF3ek",
+      "https://openreview.net/forum?id=nZeVKeeFYf9",
+      "https://openreview.net/forum?id=neZSGqhxDa",
+      "https://openreview.net/forum?id=nnwvwge40d",
+      "https://openreview.net/forum?id=oRXPiSOGH9",
+      "https://openreview.net/forum?id=pc6M9h3T9m"
+    ],
+    "titles": [
+      "arxiv:2203.11171",
+      "arxiv:2402.03300",
+      "arxiv:2407.21783",
+      "arxiv:2504.13837",
+      "arxiv:2504.16084",
+      "arxiv:2505.15134",
+      "arxiv:2505.19590",
+      "arxiv:2505.21493"
+    ],
+    "bib_items": 46,
+    "has_bibliography": true,
+    "search_chars": 14242,
+    "status": "cached",
+    "source": "https://arxiv.org/html/2509.14234"
+  },
+  "arxiv:2312.04927": {
+    "arxiv": [
+      "1410.5401",
+      "1709.06493",
+      "1903.06400",
+      "1904.10509",
+      "1911.02972",
+      "2001.04451",
+      "2004.05150",
+      "2006.16236",
+      "2012.14966",
+      "2101.00027",
+      "2105.14103",
+      "2106.01044",
+      "2108.12409",
+      "2111.00396",
+      "2111.02080",
+      "2201.02177",
+      "2209.10655",
+      "2209.11895",
+      "2209.12951",
+      "2212.10544",
+      "2302.06646",
+      "2302.10866",
+      "2305.13048",
+      "2305.13673",
+      "2307.09288"
+    ],
+    "doi": [],
+    "urls": [
+      "https://arxiv.org/abs/2006.16236",
+      "https://github.com/togethercomputer/RedPajama-Data",
+      "https://openreview.net/forum?id=AL1fq05o7H",
+      "https://openreview.net/pdf?id=02Ug9N8DCI",
+      "https://transformer-circuits.pub/2022/mech-interp-essay/index.html",
+      "https://www.github.com/eleutherai/gpt-neox"
+    ],
+    "titles": [
+      "arxiv:2006.16236",
+      "arxiv:2302.10866"
+    ],
+    "bib_items": 79,
+    "has_bibliography": true,
+    "search_chars": 16117,
+    "status": "cached",
+    "source": "https://arxiv.org/html/2312.04927"
+  },
+  "arxiv:2006.16236": {
+    "arxiv": [
+      "1412.6980",
+      "1511.07289",
+      "1701.05517",
+      "1712.00527",
+      "1807.03819",
+      "1812.01243",
+      "1904.10509",
+      "1908.03265",
+      "2001.04451"
+    ],
+    "doi": [],
+    "urls": [],
+    "titles": [],
+    "bib_items": 39,
+    "has_bibliography": true,
+    "search_chars": 8740,
+    "status": "cached",
+    "source": "https://arxiv.org/html/2006.16236"
+  },
+  "arxiv:2410.04444": {
+    "arxiv": [
+      "1805.06610",
+      "1903.00161",
+      "2009.03300",
+      "2112.09332",
+      "2203.11171",
+      "2210.03057",
+      "2210.03629",
+      "2303.08774",
+      "2304.05128",
+      "2305.10601",
+      "2305.14325",
+      "2305.14688",
+      "2305.16291",
+      "2306.03901",
+      "2307.07924",
+      "2308.00352",
+      "2308.08155",
+      "2310.02304",
+      "2310.03714",
+      "2310.06117",
+      "2310.14735",
+      "2311.08719",
+      "2311.12022",
+      "2401.13996",
+      "2402.10963",
+      "2402.17574",
+      "2404.13501",
+      "2405.17935",
+      "2406.06608",
+      "2406.18532",
+      "2407.16741",
+      "2407.18219",
+      "2407.21783",
+      "2408.06292",
+      "2408.08435",
+      "2409.12917",
+      "2501.06590"
+    ],
+    "doi": [
+      "10.1007/s11704-024-40231-1"
+    ],
+    "urls": [
+      "https://arxiv.org/abs/1805.06610",
+      "https://arxiv.org/abs/1903.00161",
+      "https://arxiv.org/abs/2009.03300",
+      "https://arxiv.org/abs/2203.11171",
+      "https://arxiv.org/abs/2210.03057",
+      "https://arxiv.org/abs/2303.08774",
+      "https://arxiv.org/abs/2304.05128",
+      "https://arxiv.org/abs/2305.10601",
+      "https://arxiv.org/abs/2305.14325",
+      "https://arxiv.org/abs/2305.14688",
+      "https://arxiv.org/abs/2310.06117",
+      "https://arxiv.org/abs/2311.12022",
+      "https://arxiv.org/abs/2401.13996",
+      "https://arxiv.org/abs/2402.10963",
+      "https://arxiv.org/abs/2407.16741",
+      "https://arxiv.org/abs/2407.18219",
+      "https://arxiv.org/abs/2407.21783",
+      "https://arxiv.org/abs/2408.06292",
+      "https://arxiv.org/abs/2409.12917",
+      "https://arxiv.org/abs/2501.06590",
+      "https://doi.org/10.1007/s11704-024-40231-1",
+      "https://github.com/openai/simple-evals",
+      "https://openai.com/index/chatgpt/"
+    ],
+    "titles": [
+      "arxiv:2203.11171",
+      "arxiv:2303.17651",
+      "arxiv:2407.21783",
+      "arxiv:2408.08435"
+    ],
+    "bib_items": 54,
+    "has_bibliography": true,
+    "search_chars": 12695,
+    "status": "cached",
+    "source": "https://arxiv.org/html/2410.04444"
+  },
+  "arxiv:2402.16823": {
+    "arxiv": [
+      "1412.6980",
+      "2107.03374",
+      "2203.11171",
+      "2204.00598",
+      "2205.12548",
+      "2210.03629",
+      "2212.04458",
+      "2212.14392",
+      "2303.08774",
+      "2303.11366",
+      "2303.17760",
+      "2305.03495",
+      "2305.14325",
+      "2305.17066",
+      "2307.07924",
+      "2308.00352",
+      "2308.08155",
+      "2308.09687",
+      "2308.10379",
+      "2308.10848",
+      "2308.11432",
+      "2309.03409",
+      "2309.07864",
+      "2309.16797",
+      "2309.17288",
+      "2310.02170",
+      "2310.02304",
+      "2310.03714",
+      "2310.10634",
+      "2311.12983"
+    ],
+    "doi": [],
+    "urls": [
+      "https://github.com/Significant-Gravitas/Auto-GPT",
+      "https://github.com/hwchase17/langchain",
+      "https://github.com/jerryjliu/llama_index",
+      "https://github.com/langchain-ai/langgraph",
+      "https://openreview.net/forum?id=5Xc1ecxO1h"
+    ],
+    "titles": [
+      "arxiv:2203.11171",
+      "arxiv:2309.16797"
+    ],
+    "bib_items": 60,
+    "has_bibliography": true,
+    "search_chars": 11858,
+    "status": "cached",
+    "source": "https://arxiv.org/html/2402.16823"
+  },
+  "arxiv:2308.16117": {
+    "arxiv": [
+      "2308.16117"
+    ],
+    "doi": [],
+    "urls": [
+      "https://arxiv.org/abs/2308.16117",
+      "https://arxiv.org/help/license",
+      "https://arxiv.org/help/policies/privacy_policy",
+      "https://github.com/dginev/ar5iv/issues/new?template=improve-article--arxiv-id-.md&title=Improve+article+2308.16117"
+    ],
+    "titles": [],
+    "bib_items": 0,
+    "has_bibliography": false,
+    "search_chars": 222,
+    "status": "fetched",
+    "source": "https://ar5iv.labs.arxiv.org/html/2308.16117"
+  },
+  "arxiv:1901.01753": {
+    "arxiv": [
+      "1409.0575",
+      "1412.6980",
+      "1502.01852",
+      "1504.04909",
+      "1512.03385",
+      "1703.03864",
+      "1707.00183",
+      "1707.02286",
+      "1707.06347",
+      "1708.02190",
+      "1710.03748",
+      "1712.06564",
+      "1802.01561",
+      "1802.06070",
+      "1803.00933",
+      "1804.04187",
+      "1806.04640",
+      "1806.10729",
+      "1807.03392",
+      "1809.04474",
+      "1810.0227",
+      "1810.03779"
+    ],
+    "doi": [
+      "10.1007/978-3-540-92910-9_31",
+      "10.1038/nature14422",
+      "10.1145/1830483.1830503",
+      "10.1145/3205455.3205474",
+      "10.1162/evco_a_00025"
+    ],
+    "urls": [
+      "http://arxiv.org/abs/1707.02286",
+      "http://arxiv.org/abs/1804.04187",
+      "http://arxiv.org/abs/1806.04640",
+      "https://openreview.net/forum?id=r1lyTjAqYX"
+    ],
+    "titles": [
+      "arxiv:1511.05952"
+    ],
+    "bib_items": 82,
+    "has_bibliography": true,
+    "search_chars": 17458,
+    "status": "cached",
+    "source": "https://arxiv.org/html/1901.01753"
+  },
+  "doi:10.1038/s41586-023-06924-6": {
+    "arxiv": [
+      "2009.03393",
+      "2106.04516",
+      "2107.03374",
+      "2108.07732",
+      "2109.10862",
+      "2212.09248",
+      "2212.10561",
+      "2302.03494",
+      "2302.04023",
+      "2302.04761",
+      "2302.06675",
+      "2302.07867",
+      "2302.12170",
+      "2302.14838",
+      "2303.08774",
+      "2304.05128",
+      "2304.10423",
+      "2304.10970",
+      "2305.06161",
+      "2305.10403",
+      "2305.16291",
+      "2306.01102"
+    ],
+    "doi": [
+      "10.1007/11844297_87",
+      "10.1007/978-0-387-49820-1",
+      "10.1007/978-1-4419-7997-1_35",
+      "10.1007/978-3-642-33558-7_17",
+      "10.1007/978-3-7091-4338-4_3",
+      "10.1007/978-981-99-3814-8_11",
+      "10.1007/bf00175355",
+      "10.1007/bf01388452",
+      "10.1007/s10710-010-9113-2",
+      "10.1016/0166-218x(90)90094-s",
+      "10.1016/0196-6774(89)90031-x",
+      "10.1016/s0019-9958(64)90223-2",
+      "10.1017/cbo9780511623714",
+      "10.1017/cbo9780511755149",
+      "10.1017/fms.2017.12",
+      "10.1023/a:1011216716700",
+      "10.1023/a:1027365901231",
+      "10.1038/s41586-022-05172-4",
+      "10.1038/s41586-023-06004-9",
+      "10.1038/sj/jors/0411109",
+      "10.1057/jors.2013.71",
+      "10.1090/bull/1648",
+      "10.1109/cec.2007.4424789",
+      "10.1109/cec.2009.4983077",
+      "10.1109/cec.2010.5586388",
+      "10.1109/tevc.2005.863127",
+      "10.1109/tevc.2014.2362729",
+      "10.1126/sciadv.abq0279",
+      "10.1126/science.1165893",
+      "10.1126/science.abq1158",
+      "10.1137/1.9781611973730.94",
+      "10.1145/1276958.1277273",
+      "10.1145/2490301.2451150",
+      "10.1145/321356.321363",
+      "10.1145/3583131.3590481",
+      "10.1145/3586183.3606763",
+      "10.1145/3638529.3654017",
+      "10.1145/3694791",
+      "10.1145/3828.3833",
+      "10.1145/585265.585269",
+      "10.1155/2021/6593438",
+      "10.1162/evco.1997.5.2.123",
+      "10.19086/da.91076",
+      "10.21203/rs.3.rs-2895792/v1",
+      "10.24963/ijcai.2022/635",
+      "10.3389/frobt.2016.00040",
+      "10.4007/annals.2017.185.1.7",
+      "10.4007/annals.2017.185.1.8"
+    ],
+    "urls": [],
+    "titles": [
+      "arxiv:2302.06675"
+    ],
+    "bib_items": 91,
+    "has_bibliography": true,
+    "search_chars": 12445,
+    "status": "fetched",
+    "source": "https://api.crossref.org/works/10.1038/s41586-023-06924-6"
   }
 }
