@@ -734,7 +734,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/2.5) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [AGI_and_RL/1351](https://t.me/AGI_and_RL/1351), [boris_again/4075](https://t.me/boris_again/4075)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The main weakness of the paper is that the authors do not provide a theoretical analysis of their method. While the authors do provide some experimental results, the results are limited to a few tasks and do not provide a comprehensive evaluation of the method. In particular, the authors do not provide a comparison with other model-based RL methods or other methods that use world model deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2608.17163.md#weaknesses): The main weakness of the paper is that the authors do not provide a theoretical analysis of their method. While the authors do provide some experimental results, the results are limited to a few tasks and do not provide a comprehensive evaluation of the method. In particular, the authors do not provide a comparison with other model-based RL methods or other methods that use world models.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2608.17163.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. First, while the paper demonstrates that QWM improves performance, it does not provide a detailed explanation of *why* this improvement occurs.…
 
 <a id="arxiv-2509.09675"></a>
 ### CDE: Curiosity-Driven Exploration for Efficient Reinforcement Learning in Large Language Models
@@ -748,7 +750,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.8` Accept (S/P/C 2.6/2.6/2.4) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/7659](https://t.me/axisofordinary/7659)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The novelty of the paper is limited. The idea of using perplexity as a curiosity signal is not new. There are many papers that use perplexity as a curiosity signal for exploration. For example, (1) uses perplexity as a curiosity signal for exploration in RL. The idea of using the variance of value estimates as a curiosity signal is also not new. There are many papers that use the va cyclereviewer-8b.seed1: Weaknesses  1. The experiments are not convincing. The au
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2509.09675.md#weaknesses): 1. The novelty of the paper is limited. The idea of using perplexity as a curiosity signal is not new. There are many papers that use perplexity as a curiosity signal for exploration. For example, (1) uses perplexity as a curiosity signal for exploration in RL. The idea of using the variance of value estimates as a curiosity signal is also not new.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2509.09675.md#weaknesses): While the paper presents a compelling approach, I have identified several weaknesses that warrant further consideration. First, the paper lacks a thorough discussion of the limitations of the proposed CDE method.…
 
 <a id="arxiv-2503.14858"></a>
 ### 1000 Layer Networks for Self-Supervised RL: Scaling Depth Can Enable New Goal-Reaching Capabilities
@@ -762,7 +766,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.5` Reject · 7B Fast `5.7` Accept (S/P/C 2.67/3.0/2.67) · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/7998](https://t.me/axisofordinary/7998)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The contribution of this paper is limited. The authors only show that increasing the depth of the model can improve the performance of self-supervised RL. However, the authors do not provide any theoretical analysis or explanation for the improvement. 2. The authors only show the results of contrastive RL. It is unclear whether the improvement also applies to other self-supervised R deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2503.14858.md#weaknesses): 1. The contribution of this paper is limited. The authors only show that increasing the depth of the model can improve the performance of self-supervised RL. However, the authors do not provide any theoretical analysis or explanation for the improvement. 2. The authors only show the results of contrastive RL. It is unclear whether the improvement also applies to other self-supervised RL methods.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2503.14858.md#weaknesses): While this paper presents compelling evidence for the benefits of depth scaling in contrastive RL, several limitations warrant careful consideration. First, the paper's primary focus on contrastive RL (CRL) limits the generalizability of its findings to other RL algorithms.…
 
 <a id="arxiv-2501.16142"></a>
 ### Towards General-Purpose Model-Free Reinforcement Learning
@@ -776,7 +782,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `4.8` Reject (S/P/C 2.25/2.5/2.5) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/6926](https://t.me/axisofordinary/6926), [AGI_and_RL/988](https://t.me/AGI_and_RL/988)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The novelty is limited. The idea of learning a representation that captures a linear relationship between state-action pairs and value is not new, and has been explored in previous works such as TD7 and many other representation learning methods. The main difference is that the proposed method learns the representation using a model-based approach, but the model is not used for plan deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2501.16142.md#weaknesses): 1. The novelty is limited. The idea of learning a representation that captures a linear relationship between state-action pairs and value is not new, and has been explored in previous works such as TD7 and many other representation learning methods.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2501.16142.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. First, while the paper claims to be a general-purpose model-free algorithm, it lacks a detailed comparison with other general-purpose methods, particularly model-based approaches like DreamerV3 and TD-MPC2.…
 
 <a id="arxiv-2411.03820"></a>
 ### Beyond The Rainbow: High Performance Deep Reinforcement Learning on a Desktop PC
@@ -790,7 +798,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `5.8` Reject (S/P/C 3.0/3.25/2.75) · 14B Fast `5.0` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/2.0) · SEA-E `7.0` Accept
 - Telegram: [j_links/7764](https://t.me/j_links/7764)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper does not provide a detailed analysis of the computational resources required to train the agent. It would be helpful to provide a more detailed breakdown of the computational resources required, such as the number of GPUs, CPU cores, and memory required to train the agent. 2. The paper does not provide a detailed analysis of the hyperparameters used to train the agent. It  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2411.03820.md#weaknesses): 1. The paper does not provide a detailed analysis of the computational resources required to train the agent. It would be helpful to provide a more detailed breakdown of the computational resources required, such as the number of GPUs, CPU cores, and memory required to train the agent. 2. The paper does not provide a detailed analysis of the hyperparameters used to train the agent.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2411.03820.md#weaknesses): While the paper presents a compelling case for the effectiveness and accessibility of BTR, several weaknesses warrant careful consideration. First, the paper's novelty is limited, as it primarily involves combining existing techniques rather than introducing fundamentally new methods.…
 
 <a id="arxiv-2312.13327"></a>
 ### In-Context Reinforcement Learning for Variable Action Spaces
@@ -804,7 +814,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.0` Reject · 7B Fast `6.0` Accept (S/P/C 2.5/3.0/2.75) · 14B Fast `5.8` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [data_secrets/4591](https://t.me/data_secrets/4591), [boris_again/2678](https://t.me/boris_again/2678), [knowledge_accumulator/204](https://t.me/knowledge_accumulator/204), [ai_newz/3059](https://t.me/ai_newz/3059)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The novelty of the proposed method is limited. The main idea of using random embeddings for actions is not new and has been used in previous work (1). The contrastive loss is also not new. - The experiments are not sufficient. The paper only evaluates the proposed method on simple environments such as Bernoulli bandit and Darkroom. More complex environments are needed to show the eff deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2312.13327.md#weaknesses): The novelty of the proposed method is limited. The main idea of using random embeddings for actions is not new and has been used in previous work (1). The contrastive loss is also not new. - The experiments are not sufficient. The paper only evaluates the proposed method on simple environments such as Bernoulli bandit and Darkroom.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2312.13327.md#weaknesses): Despite the strengths of the proposed method, I have identified several weaknesses that need to be addressed. First, the paper's experimental evaluation, while demonstrating the core idea, is limited in scope and lacks comparisons to relevant baselines. The experiments are primarily conducted on relatively simple bandit problems and a basic gridworld environment.…
 
 <a id="arxiv-2312.00276"></a>
 ### Metalearning Continual Learning Algorithms
@@ -818,7 +830,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `5.7` Reject (S/P/C 2.67/2.67/2.67) · 14B Fast `5.8` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [knowledge_accumulator/145](https://t.me/knowledge_accumulator/145)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The proposed method is not novel. The authors claim that their method is novel because it is the first to meta-learn a learning algorithm for continual learning. However, there are many prior works that have done the same thing. For example, see (1, 2, 3).  (1) Learning to Learn for Continual Learning  (2) Meta-Continual Learning: A Continual Learning Framework Using Meta-Learning  (3) cyclereviewer-8b.seed1: Weaknesses  - The method seems to be a straightforward ap
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2312.00276.md#weaknesses): The proposed method is not novel. The authors claim that their method is novel because it is the first to meta-learn a learning algorithm for continual learning. However, there are many prior works that have done the same thing. For example, see (1, 2, 3).
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2312.00276.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, while the paper introduces the concept of self-referential weight matrices (SRWMs), the explanation of their inner workings is not sufficiently detailed for a reader unfamiliar with the concept.…
 
 <a id="arxiv-2306.02451"></a>
 ### For SALE: State-Action Representation Learning for Deep Reinforcement Learning
@@ -832,7 +846,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `6.2` Accept (S/P/C 2.75/2.5/2.5) · 14B Fast `4.7` Reject
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [AGI_and_RL/988](https://t.me/AGI_and_RL/988)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The proposed method is an extension of OFENet, and the main difference is the clipping of the target value function. However, the authors do not provide a theoretical justification for the clipping operation, and it is unclear why this is necessary. - The authors do not provide a clear explanation of how the state-action representation is used in the RL algorithm. It is unclear how t deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2306.02451.md#weaknesses): The proposed method is an extension of OFENet, and the main difference is the clipping of the target value function. However, the authors do not provide a theoretical justification for the clipping operation, and it is unclear why this is necessary. - The authors do not provide a clear explanation of how the state-action representation is used in the RL algorithm.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2306.02451.md#weaknesses): One of the most significant weaknesses of this paper is the lack of clarity in the presentation of the SALE method. The paper introduces several components, such as normalized embeddings, fixed embeddings, and clipped values, but the motivation for these design choices is not well-explained.…
 
 <a id="arxiv-2305.19452"></a>
 ### Bigger, Better, Faster: Human-level Atari with human-level efficiency
@@ -846,7 +862,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.0` Reject (S/P/C 3.0/3.25/2.5) · 14B Fast `6.2` Accept
 - OpenReviewer `5.0` Reject (S/P/C 2.0/3.0/2.0) · SEA-E `7.0` Accept
 - Telegram: [axisofordinary/5007](https://t.me/axisofordinary/5007), [knowledge_accumulator/194](https://t.me/knowledge_accumulator/194)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide any new algorithmic contributions. The proposed method is a combination of existing techniques, including SR-SPR, Impala-CNN, and other design choices. - The paper does not provide any theoretical analysis of the proposed method. - The paper does not provide any experimental results on other benchmarks, such as the Atari 500K benchmark or the Atari 1M bench deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2305.19452.md#weaknesses): The paper does not provide any new algorithmic contributions. The proposed method is a combination of existing techniques, including SR-SPR, Impala-CNN, and other design choices. - The paper does not provide any theoretical analysis of the proposed method. - The paper does not provide any experimental results on other benchmarks, such as the Atari 500K benchmark or the Atari 1M benchmark.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2305.19452.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, the paper's novelty is limited, as it primarily combines and modifies existing techniques rather than introducing fundamentally new algorithmic components.…
 
 <a id="arxiv-2301.04104"></a>
 ### Mastering Diverse Domains through World Models
@@ -860,7 +878,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `7.0` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [knowledge_accumulator/155](https://t.me/knowledge_accumulator/155), [j_links/6396](https://t.me/j_links/6396), [ai_newz/1700](https://t.me/ai_newz/1700), [gonzo_ML/4175](https://t.me/gonzo_ML/4175), [gonzo_ML/1791](https://t.me/gonzo_ML/1791), [AGI_and_RL/988](https://t.me/AGI_and_RL/988)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks a detailed comparison with previous work, particularly in terms of the specific hyperparameters used and the computational resources required. 2. The paper does not provide a clear explanation of the intuition behind the proposed algorithm and how it addresses the challenges of reinforcement learning. 3. The paper does not provide a detailed analysis of the computati cyclereviewer-8b.seed1: Weaknesses  The paper presents a new algorithm for reinfo
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2301.04104.md#weaknesses): 1. The paper lacks a detailed comparison with previous work, particularly in terms of the specific hyperparameters used and the computational resources required. 2. The paper does not provide a clear explanation of the intuition behind the proposed algorithm and how it addresses the challenges of reinforcement learning. 3.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2301.04104.md#weaknesses): While the paper presents a compelling case for DreamerV3, I have identified several weaknesses that warrant further discussion. Firstly, the paper's claim of novelty is somewhat diminished by the fact that many of the introduced techniques, such as symlog transformations, free bits, and return normalization, have been explored in prior work.…
 
 <a id="openreview-XyGJJ4FPoX"></a>
 ### Meta-Reinforcement Learning with Zero-Shot RL
@@ -874,7 +894,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `5.7` Reject (S/P/C 2.67/2.33/2.33) · 14B Fast `4.2` Reject
 - OpenReviewer `5.0` Reject (S/P/C 2.0/3.0/2.0) · SEA-E `4.0` Reject
 - Telegram: [j_links/8463](https://t.me/j_links/8463)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The proposed method is a combination of existing methods and the novelty is limited. The experiments are not convincing enough. The proposed method does not show significant improvement over existing methods.  ### Questions  1. The proposed method is a combination of existing methods. What is the main contribution of this paper? 2. The experiments are not convincing enough. The propose deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/openreview_XyGJJ4FPoX.md#weaknesses): The proposed method is a combination of existing methods and the novelty is limited. The experiments are not convincing enough. The proposed method does not show significant improvement over existing methods.
+  - [DR-14B Fast](reviews/deepreviewer-14b/openreview_XyGJJ4FPoX.md#weaknesses): and fully realize the potential of this approach. The paper's exploration of the intersection between meta-learning and foundation models is timely and relevant, and the proposed method, despite its limitations, represents a significant step towards more versatile and adaptable reinforcement learning agents.…
 
 <a id="openreview-OpC-9aBBVJe"></a>
 ### Sample-Efficient RL by Breaking the Replay Ratio Barrier (ICLR 2023, precursor of BBF)
@@ -888,7 +910,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.8` Accept · 7B Fast `5.8` Accept (S/P/C 2.75/2.75/2.25) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/4.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [knowledge_accumulator/194](https://t.me/knowledge_accumulator/194)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The main weakness of the paper is the novelty of the approach. The idea of resetting the parameters periodically has been proposed in previous works (e.g., Nikishin et al., 2022). The authors do not provide a theoretical analysis of the proposed approach. The results are only evaluated on two benchmarks and the baselines are not up-to-date. For example, the authors only compare with RE deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/openreview_OpC-9aBBVJe.md#weaknesses): The main weakness of the paper is the novelty of the approach. The idea of resetting the parameters periodically has been proposed in previous works (e.g., Nikishin et al., 2022). The authors do not provide a theoretical analysis of the proposed approach. The results are only evaluated on two benchmarks and the baselines are not up-to-date.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/openreview_OpC-9aBBVJe.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, while the paper introduces parameter resetting as a key component of its method, it does not provide a detailed analysis of the impact of different reset frequencies on the learning process.…
 
 <a id="arxiv-2205.07802"></a>
 ### The Primacy Bias in Deep Reinforcement Learning
@@ -902,7 +926,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.5` Accept (S/P/C 3.0/3.5/2.75) · 14B Fast `6.2` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [knowledge_accumulator/188](https://t.me/knowledge_accumulator/188), [j_links/5862](https://t.me/j_links/5862)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The proposed method is not novel. The idea of resetting part of the network has been explored in the supervised learning literature (e.g., (1, 2, 3)). The authors should discuss the difference between their method and the existing work. - The authors only consider discrete and continuous control tasks. The authors should also consider more complex tasks, such as robotics manipulation deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2205.07802.md#weaknesses): The proposed method is not novel. The idea of resetting part of the network has been explored in the supervised learning literature (e.g., (1, 2, 3)). The authors should discuss the difference between their method and the existing work. - The authors only consider discrete and continuous control tasks. The authors should also consider more complex tasks, such as robotics manipulation tasks.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2205.07802.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. First, while the paper introduces the concept of 'primacy bias' and provides empirical evidence of its existence, the definition remains somewhat informal and lacks a rigorous theoretical grounding.…
 
 <a id="arxiv-2106.06860"></a>
 ### A Minimalist Approach to Offline Reinforcement Learning
@@ -916,7 +942,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `3.5` Reject · 7B Fast `4.2` Reject (S/P/C 2.25/2.25/2.0) · 14B Fast `5.0` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [AGI_and_RL/988](https://t.me/AGI_and_RL/988)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The main weakness of the paper is that the proposed method is not novel. The idea of adding a behavior cloning term to the policy update is not new and has been explored in several previous works (see the related work section). The only novelty of this paper is the specific formulation of the behavior cloning loss, which is not very well motivated. The authors do not provide any theore deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2106.06860.md#weaknesses): The main weakness of the paper is that the proposed method is not novel. The idea of adding a behavior cloning term to the policy update is not new and has been explored in several previous works (see the related work section). The only novelty of this paper is the specific formulation of the behavior cloning loss, which is not very well motivated.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2106.06860.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, while the paper introduces a dynamic weighting scheme for the behavior cloning (BC) term, it lacks a detailed analysis of its impact.…
 
 <a id="arxiv-2011.14826"></a>
 ### Revisiting Rainbow: Promoting more Insightful and Inclusive Deep Reinforcement Learning Research
@@ -930,7 +958,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `5.2` Reject (S/P/C 2.25/2.75/2.25) · 14B Fast `4.8` Reject
 - OpenReviewer `3.0` Reject (S/P/C 3.0/2.0/2.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper lacks novelty in terms of the experiments performed. The authors have not introduced any new algorithms or techniques, but rather have performed experiments on existing ones. The paper would benefit from more in-depth analysis and insights from the experiments.  ### Questions  1. What are the limitations of the paper? How can they be addressed in future work? 2. What are the  cyclereviewer-8b.seed1: Weaknesses  1. The contribution of this paper is limited.
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2011.14826.md#weaknesses): The paper lacks novelty in terms of the experiments performed. The authors have not introduced any new algorithms or techniques, but rather have performed experiments on existing ones. The paper would benefit from more in-depth analysis and insights from the experiments.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2011.14826.md#weaknesses): of these different parameterizations. Furthermore, the paper's finding that the MSE loss can outperform the Huber loss when used with the Adam optimizer is a significant result that challenges conventional wisdom in the field. This finding highlights the importance of re-evaluating empirical choices that have become "folk wisdom" in RL research.…
 
 <a id="arxiv-2005.01643"></a>
 ### Offline Reinforcement Learning: Tutorial, Review, and Perspectives on Open Problems
@@ -944,7 +974,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.0` Reject · 7B Fast `5.7` Reject (S/P/C 3.0/3.0/2.0) · 14B Fast `4.3` Reject
 - OpenReviewer `5.0` Reject (S/P/C 3.0/2.0/2.0) · SEA-E `3.0` Reject
 - Telegram: [gonzo_ML/722](https://t.me/gonzo_ML/722), [j_links/3476](https://t.me/j_links/3476)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper is a tutorial paper and does not present any new results or contributions to the field of offline reinforcement learning. The paper does not provide any new insights or perspectives on the field, and it does not discuss any of the recent advances or developments in the field. The paper also does not provide any empirical evaluations or comparisons of the different algorithms  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2005.01643.md#weaknesses): The paper is a tutorial paper and does not present any new results or contributions to the field of offline reinforcement learning. The paper does not provide any new insights or perspectives on the field, and it does not discuss any of the recent advances or developments in the field.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2005.01643.md#weaknesses): Despite its strengths, the paper has several limitations that could be addressed to enhance its value and impact. One significant weakness is the lack of specific technical contributions. While the paper provides a comprehensive overview of existing methods, it does not introduce any novel algorithms, theoretical insights, or empirical findings.…
 
 <a id="arxiv-2004.12919"></a>
 ### First return, then explore
@@ -958,7 +990,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `7.3` Accept (S/P/C 3.67/3.33/3.33) · 14B Fast `6.2` Accept
 - OpenReviewer `8.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [j_links/3440](https://t.me/j_links/3440)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper's novelty is limited, as the idea of exploring promising states and returning to them is not a new concept in the field of reinforcement learning. The paper does not provide a clear justification for why this approach is necessary or how it differs from existing methods. 2. The paper lacks a thorough comparison with existing exploration algorithms, making it difficult to a deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2004.12919.md#weaknesses): 1. The paper's novelty is limited, as the idea of exploring promising states and returning to them is not a new concept in the field of reinforcement learning. The paper does not provide a clear justification for why this approach is necessary or how it differs from existing methods. 2.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2004.12919.md#weaknesses): While the Go-Explore algorithm demonstrates impressive empirical results, several limitations warrant careful consideration. One significant weakness is the algorithm's reliance on domain-specific knowledge to effectively partition the state space into cells.…
 
 <a id="arxiv-1910.01708"></a>
 ### Benchmarking Batch Deep Reinforcement Learning Algorithms
@@ -972,7 +1006,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast `3.5` Reject (S/P/C 2.25/2.25/2.0) · 14B Fast `3.5` Reject
 - OpenReviewer `5.0` Reject (S/P/C 2.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [AGI_and_RL/988](https://t.me/AGI_and_RL/988)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper only considers a single partially-trained behavioral policy for data generation, which may not be representative of real-world scenarios where data is generated by multiple policies. It would be interesting to see how the algorithms perform with data generated by multiple policies. 2. The paper only considers a single batch size of 10 million transitions, which may not be  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_1910.01708.md#weaknesses): 1. The paper only considers a single partially-trained behavioral policy for data generation, which may not be representative of real-world scenarios where data is generated by multiple policies. It would be interesting to see how the algorithms perform with data generated by multiple policies. 2.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_1910.01708.md#weaknesses): Despite its strengths, this paper suffers from several significant weaknesses that undermine its overall impact. First and foremost, the paper's core contribution, the discrete adaptation of BCQ, is not particularly novel. As the authors themselves acknowledge, the method is primarily an adaptation of the existing BCQ algorithm to a discrete action setting.…
 
 <a id="arxiv-1802.09477"></a>
 ### Addressing Function Approximation Error in Actor-Critic Methods
@@ -986,7 +1022,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `` 
 - OpenReviewer `3.0` Reject (S/P/C 2.0/2.0/2.0) · SEA-E `5.0` Reject
 - Telegram: [AGI_and_RL/988](https://t.me/AGI_and_RL/988)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The proposed method is not novel enough. The idea of learning a contrastive model to detect adversarial examples has been explored in previous works (1, 2, 3). The authors should compare their method with these works and discuss the differences and advantages of their method. - The evaluation is not comprehensive enough. The authors only evaluate their method on a limited number of d deepreviewer-7b: weaknesses, pushing for rigor and detail.     * **Reviewer 4 (St
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_1802.09477.md#weaknesses): The proposed method is not novel enough. The idea of learning a contrastive model to detect adversarial examples has been explored in previous works (1, 2, 3). The authors should compare their method with these works and discuss the differences and advantages of their method. - The evaluation is not comprehensive enough.…
+  - [OR-8B](reviews/openreviewer-8b/arxiv_1802.09477.md#weaknesses): 1. The novelty of the proposed method is limited. The method is based on contrastive learning, which has been extensively studied in the context of domain adaptation. The authors should clarify the novelty of the proposed method and how it differs from existing methods. 2. The evaluation is not comprehensive. The method is only evaluated on one dataset (Office-Home) and one model (CLIP).…
 
 <a id="arxiv-1801.01290"></a>
 ### Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor
@@ -1000,7 +1038,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `7.5` Accept (S/P/C 3.25/3.25/3.25) · 14B Fast `5.7` Accept
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/2.0) · SEA-E `8.0` Accept
 - Telegram: [gonzo_ML/4277](https://t.me/gonzo_ML/4277)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The proposed algorithm is similar to the soft Q-learning algorithm proposed by Haarnoja et al. (2017). The main difference is that the proposed algorithm uses a separate critic network to estimate the state value function, while the soft Q-learning algorithm does not. The authors should compare the proposed algorithm with the soft Q-learning algorithm more clearly. - The proposed alg deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_1801.01290.md#weaknesses): The proposed algorithm is similar to the soft Q-learning algorithm proposed by Haarnoja et al. (2017). The main difference is that the proposed algorithm uses a separate critic network to estimate the state value function, while the soft Q-learning algorithm does not. The authors should compare the proposed algorithm with the soft Q-learning algorithm more clearly.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_1801.01290.md#weaknesses): While the paper presents a compelling algorithm and strong empirical results, there are several weaknesses that warrant attention. Firstly, the paper lacks a detailed analysis of the computational cost associated with SAC.…
 
 <a id="arxiv-1712.06567"></a>
 ### Deep Neuroevolution: Genetic Algorithms Are a Competitive Alternative for Training Deep Neural Networks for Reinforcement Learning
@@ -1014,7 +1054,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `5.8` Accept (S/P/C 2.75/3.0/2.75) · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper only compares the GA with other deep RL methods, but does not provide a comparison with other evolutionary algorithms. - The paper only considers a limited set of tasks, and it is unclear how the GA would perform on other tasks. - The paper does not provide a detailed analysis of the computational resources required to train the GA.  ### Questions  - How does the GA compare deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_1712.06567.md#weaknesses): The paper only compares the GA with other deep RL methods, but does not provide a comparison with other evolutionary algorithms. - The paper only considers a limited set of tasks, and it is unclear how the GA would perform on other tasks. - The paper does not provide a detailed analysis of the computational resources required to train the GA.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_1712.06567.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. First, the paper lacks a thorough analysis of the Deep GA's performance on the Atari suite.…
 
 <a id="arxiv-1710.02298"></a>
 ### Rainbow: Combining Improvements in Deep Reinforcement Learning
@@ -1028,7 +1070,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `5.5` Reject (S/P/C 2.75/3.0/2.25) · 14B Fast `5.0` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [j_links/520](https://t.me/j_links/520), [knowledge_accumulator/194](https://t.me/knowledge_accumulator/194)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a clear motivation for combining all these extensions. It would be helpful to provide a more detailed explanation of why these extensions are complementary and how they work together to improve performance. - The paper does not provide a detailed analysis of the hyperparameters used in the experiments. It would be helpful to provide a more detailed discussi cyclereviewer-8b.seed1: Weaknesses  The paper is a combination of existing method
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_1710.02298.md#weaknesses): The paper does not provide a clear motivation for combining all these extensions. It would be helpful to provide a more detailed explanation of why these extensions are complementary and how they work together to improve performance. - The paper does not provide a detailed analysis of the hyperparameters used in the experiments.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_1710.02298.md#weaknesses): While the paper presents a compelling case for the effectiveness of the Rainbow agent, several weaknesses warrant careful consideration. First, the paper's novelty is somewhat limited, as it primarily focuses on the integration of existing techniques rather than introducing fundamentally new algorithms or insights.…
 
 <a id="arxiv-1707.06887"></a>
 ### A Distributional Perspective on Reinforcement Learning
@@ -1042,7 +1086,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.5` Accept · 7B Fast `5.8` Accept (S/P/C 2.5/2.75/2.5) · 14B Fast `6.7` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [j_links/332](https://t.me/j_links/332), [knowledge_accumulator/194](https://t.me/knowledge_accumulator/194)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The theoretical results are not very surprising. The distributional Bellman operator is a contraction in Wasserstein distance, which has been shown in previous work. The authors only show that the distributional Bellman operator is a contraction in Wasserstein distance, but do not show that the proposed algorithm converges to the optimal solution.   2. The proposed algorithm is a si deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_1707.06887.md#weaknesses): 1. The theoretical results are not very surprising. The distributional Bellman operator is a contraction in Wasserstein distance, which has been shown in previous work. The authors only show that the distributional Bellman operator is a contraction in Wasserstein distance, but do not show that the proposed algorithm converges to the optimal solution.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_1707.06887.md#weaknesses): While this paper presents a compelling distributional perspective on reinforcement learning, several weaknesses warrant careful consideration. Firstly, the paper's discussion of the relationship between the proposed distributional approach and risk-sensitive reinforcement learning is insufficient.…
 
 <a id="arxiv-1511.06581"></a>
 ### Dueling Network Architectures for Deep Reinforcement Learning
@@ -1056,7 +1102,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.7` Accept (S/P/C 3.0/3.0/2.33) · 14B Fast `5.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [knowledge_accumulator/194](https://t.me/knowledge_accumulator/194)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The main weakness of the paper is the lack of novelty. The proposed architecture is a simple modification of the standard Q-network architecture, and the idea of separating the value and advantage functions has been explored in previous work. The paper also lacks a thorough theoretical analysis of the proposed architecture. The empirical evaluation is limited to a single benchmark (Ata deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_1511.06581.md#weaknesses): The main weakness of the paper is the lack of novelty. The proposed architecture is a simple modification of the standard Q-network architecture, and the idea of separating the value and advantage functions has been explored in previous work. The paper also lacks a thorough theoretical analysis of the proposed architecture.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_1511.06581.md#weaknesses): While the paper introduces a powerful architectural innovation, several limitations warrant careful consideration. One significant weakness is the paper's limited exploration of the dueling network's performance in continuous action spaces.…
 
 <a id="arxiv-1511.05952"></a>
 ### Prioritized Experience Replay
@@ -1070,7 +1118,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.8` Reject · 7B Fast `4.8` Reject (S/P/C 2.5/3.0/2.25) · 14B Fast `5.0` Accept
 - OpenReviewer `8.0` Accept (S/P/C 4.0/4.0/4.0) · SEA-E `6.0` Accept
 - Telegram: [AGI_and_RL/189](https://t.me/AGI_and_RL/189), [knowledge_accumulator/194](https://t.me/knowledge_accumulator/194)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The proposed algorithm is not novel.  - The experimental results are not convincing.  - The proposed algorithm is not well-motivated.   The proposed algorithm is not novel. The idea of prioritizing transitions based on TD error is not new. The authors should cite prior work (1) that also proposes prioritized experience replay for deep Q-learning.   The experimental results are not co deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_1511.05952.md#weaknesses): The proposed algorithm is not novel. - The experimental results are not convincing. - The proposed algorithm is not well-motivated.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_1511.05952.md#weaknesses): While I find the paper to be a strong contribution, there are several weaknesses that I have identified through my analysis. First, while the paper introduces the concept of TD-error as a measure of surprise, it lacks a deeper theoretical analysis of why this particular measure is effective for prioritization.…
 
 <a id="arxiv-1509.06461"></a>
 ### Deep Reinforcement Learning with Double Q-learning
@@ -1084,7 +1134,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Reject (S/P/C 2.75/3.0/2.75) · 14B Fast `4.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [knowledge_accumulator/194](https://t.me/knowledge_accumulator/194)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper lacks a comprehensive discussion of the limitations and potential drawbacks of the proposed approach. The authors should provide a more detailed analysis of the computational complexity and scalability of the proposed algorithm, as well as its potential limitations in terms of generalizability and applicability to different types of problems.  ### Questions  The paper present deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_1509.06461.md#weaknesses): The paper lacks a comprehensive discussion of the limitations and potential drawbacks of the proposed approach. The authors should provide a more detailed analysis of the computational complexity and scalability of the proposed algorithm, as well as its potential limitations in terms of generalizability and applicability to different types of problems.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_1509.06461.md#weaknesses): While the paper presents a valuable contribution, I have identified several weaknesses that warrant further discussion. Firstly, the paper's comparison of Double DQN is primarily against the original DQN algorithm.…
 
 <a id="arxiv-2608.13040"></a>
 ### Latent On-Policy Self-Distillation
@@ -1098,7 +1150,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `7.0` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/4.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper is not well written and it is hard to follow. The notations are not well defined and the description of the method is not clear. The evaluation is not sufficient. The authors should provide more details about the baselines, the hyper-parameters, and the training and evaluation settings.  ### Questions  1. What is the difference between the proposed method and the existing OPS deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2608.13040.md#weaknesses): The paper is not well written and it is hard to follow. The notations are not well defined and the description of the method is not clear. The evaluation is not sufficient. The authors should provide more details about the baselines, the hyper-parameters, and the training and evaluation settings.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2608.13040.md#weaknesses): Despite the paper's strengths, several aspects of the proposed method and its evaluation could be improved. One of the primary concerns is the clarity of the method's description. The introduction of the learnable composer and the privileged-margin objective, while innovative, is not sufficiently detailed.…
 
 <a id="arxiv-2608.09888"></a>
 ### BDH-CQ: In-Context Learning with Recurrent Latent Reasoning
@@ -1112,7 +1166,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `4.2` Reject (S/P/C 2.5/2.75/2.5) · 14B Fast `5.7` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/8994](https://t.me/axisofordinary/8994)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks a detailed description of the model architecture and its training procedure. The authors only provide a high-level overview of the model and its components, without providing specific details on how it is trained or how the recurrent memory is updated. This makes it difficult to understand the specific design choices and how they contribute to the model's performance deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2608.09888.md#weaknesses): 1. The paper lacks a detailed description of the model architecture and its training procedure. The authors only provide a high-level overview of the model and its components, without providing specific details on how it is trained or how the recurrent memory is updated. This makes it difficult to understand the specific design choices and how they contribute to the model's performance.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2608.09888.md#weaknesses): , providing a nuanced understanding of its capabilities. The paper also provides a clear and concise description of the BDH-CQ system, making it easy to understand the core ideas and contributions. The authors have clearly articulated the motivation behind their work and the significance of their findings.…
 
 <a id="arxiv-2607.07847"></a>
 ### When Does Continual Learning Require Learning
@@ -1126,7 +1182,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.8` Reject · 7B Fast `6.0` Accept (S/P/C 3.0/3.25/3.0) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/5812](https://t.me/gonzo_ML/5812)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper only evaluates eight methods across four families, which may not be representative of all possible approaches to continual learning in LLMs. - The paper only uses a single model, Qwen3-8B, for all evaluations, which may not generalize to other models or model sizes. - The paper only considers a limited set of realistic environmental changes, such as domain shifts, agentic s deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2607.07847.md#weaknesses): The paper only evaluates eight methods across four families, which may not be representative of all possible approaches to continual learning in LLMs. - The paper only uses a single model, Qwen3-8B, for all evaluations, which may not generalize to other models or model sizes.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2607.07847.md#weaknesses): of different approaches. Fourth, the paper's empirical findings are valuable. The study reveals important trade-offs between different methods, highlighting the fact that no single method is universally superior. This is a crucial insight for researchers and practitioners working in this field.…
 
 <a id="arxiv-2607.05609"></a>
 ### To Retain or to Adapt? Generalizing Continual Learning
@@ -1140,7 +1198,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `6.0` Reject (S/P/C 2.75/3.0/2.5) · 14B Fast `6.5` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/5817](https://t.me/gonzo_ML/5817)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The authors do not provide an experimental evaluation of the proposed algorithm, Window. It would be interesting to see how the Window algorithm compares to other continual learning algorithms in terms of Transfer Efficiency.  ### Questions  How does the Window algorithm compare to other continual learning algorithms in terms of Transfer Efficiency?  ### Flag For Ethics Review  No ethi cyclereviewer-8b.seed1: Weaknesses  1. The authors claim that the paper challenge
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2607.05609.md#weaknesses): The authors do not provide an experimental evaluation of the proposed algorithm, Window. It would be interesting to see how the Window algorithm compares to other continual learning algorithms in terms of Transfer Efficiency.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2607.05609.md#weaknesses): While I appreciate the contributions of this paper, I have identified several weaknesses that warrant careful consideration. First, the paper's theoretical analysis relies heavily on the assumption of quadratic loss functions, which significantly limits the applicability of the derived analytical expressions.…
 
 <a id="arxiv-2606.23740"></a>
 ### Weight-Space Geometry of Offline Reasoning Training
@@ -1154,7 +1214,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `4.8` Reject (S/P/C 2.5/2.5/2.5) · 14B Fast `6.5` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [lovedeathtransformers/10841](https://t.me/lovedeathtransformers/10841), [lovedeathtransformers/10825](https://t.me/lovedeathtransformers/10825)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper only considers a single domain and checkpoint, which may limit the generalizability of the findings.  2. The analysis is limited to attention-only LoRA, which may not be representative of the full range of LoRA configurations.  3. The paper does not consider other contrastive methods such as IPO, KTO, SimPO, which may provide additional insights into the weight-space geome deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2606.23740.md#weaknesses): 1. The paper only considers a single domain and checkpoint, which may limit the generalizability of the findings. 2. The analysis is limited to attention-only LoRA, which may not be representative of the full range of LoRA configurations. 3.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2606.23740.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, the paper's scope is limited by its focus on a single model (Qwen3-4B), a single dataset domain (math problems), and a specific training technique (attention-only LoRA).…
 
 <a id="arxiv-2606.18810"></a>
 ### Learning from Own Solutions: Self-Conditioned Credit Assignment for Reinforcement Learning with Verifiable Rewards
@@ -1168,7 +1230,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Reject · 7B Fast `6.5` Accept (S/P/C 3.0/3.25/2.5) · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The novelty of the paper is limited. The idea of using KL divergence as a multiplicative weight on gradients is not new and has been explored in other contexts. The novelty of the paper lies in the application of this idea to RLVR and the observation that conditioning the model on its own verified trajectories induces a measurable per-token KL divergence between the original and cond deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2606.18810.md#weaknesses): The novelty of the paper is limited. The idea of using KL divergence as a multiplicative weight on gradients is not new and has been explored in other contexts.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2606.18810.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, while the paper demonstrates that SC-GRPO outperforms the GRPO baseline, it does not provide a detailed analysis of the computational cost associated with the proposed method.…
 
 <a id="arxiv-2606.06021"></a>
 ### OPRD: On-Policy Representation Distillation
@@ -1182,7 +1246,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.8` Accept · 7B Fast `6.0` Reject (S/P/C 3.0/3.0/3.0) · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper proposes a new approach to on-policy distillation, which is to distill the model in the hidden-state space. However, the paper does not provide a thorough analysis of the proposed method. For example, it is not clear how the proposed method compares to other distillation methods, such as knowledge distillation and distillation with reinforcement learning. It would be helpful  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2606.06021.md#weaknesses): The paper proposes a new approach to on-policy distillation, which is to distill the model in the hidden-state space. However, the paper does not provide a thorough analysis of the proposed method. For example, it is not clear how the proposed method compares to other distillation methods, such as knowledge distillation and distillation with reinforcement learning.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2606.06021.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, the paper's evaluation is limited to mathematical reasoning benchmarks (AIME 2024, AIME 2025, AIMO). While these are important benchmarks, they do not fully capture the generalizability of the proposed method.…
 
 <a id="arxiv-2605.22074"></a>
 ### From Reasoning Chains to Verifiable Subproblems: Curriculum Reinforcement Learning Enables Credit Assignment for LLM Reasoning
@@ -1196,7 +1262,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `7.0` Accept (S/P/C 3.0/3.25/3.25) · 14B Fast `5.8` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  I am not an expert in this area, but I am not sure if the method is novel enough. It seems that the method is a combination of existing ideas, such as curriculum learning and subproblem decomposition. The paper does not provide a clear comparison with other methods, and it is not clear how the proposed method compares to other methods in terms of novelty and effectiveness.  ### Questio deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2605.22074.md#weaknesses): I am not an expert in this area, but I am not sure if the method is novel enough. It seems that the method is a combination of existing ideas, such as curriculum learning and subproblem decomposition. The paper does not provide a clear comparison with other methods, and it is not clear how the proposed method compares to other methods in terms of novelty and effectiveness.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2605.22074.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. First, the paper's reliance on a fixed number of subproblems, denoted as 'K', is a significant limitation.…
 
 <a id="arxiv-2605.12969"></a>
 ### Revisiting Reinforcement Learning with Verifiable Rewards from a Contrastive Perspective
@@ -1210,7 +1278,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `7.0` Accept (S/P/C 3.0/2.75/3.0) · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The novelty of this paper is limited. The proposed method is based on a contrastive view of RLVR optimization, which is a common approach in the field of RL. The proposed method also uses a group-wise InfoNCE-style objective, which is a widely used contrastive loss function.   2. The proposed method is only evaluated on math reasoning tasks. It is unclear how the proposed method per deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2605.12969.md#weaknesses): 1. The novelty of this paper is limited. The proposed method is based on a contrastive view of RLVR optimization, which is a common approach in the field of RL. The proposed method also uses a group-wise InfoNCE-style objective, which is a widely used contrastive loss function.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2605.12969.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, while the paper demonstrates empirical improvements over GRPO, it lacks a theoretical analysis of the convergence properties of the proposed ConSPO algorithm.…
 
 <a id="arxiv-2605.06241"></a>
 ### Rethinking RL for LLM Reasoning: It's Sparse Policy Selection, Not Capability Learning
@@ -1224,7 +1294,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `7.5` Accept (S/P/C 3.25/3.25/3.0) · 14B Fast `7.5` Accept
 - OpenReviewer `8.0` Accept (S/P/C 3.0/4.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [j_links/8484](https://t.me/j_links/8484)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The proposed method is a simple baseline and has been proposed before in (1). The authors should compare the proposed method with more advanced RL-free methods.   (1) Zelikman, Michael, et al. "Self-training large language models for reasoning." International Conference on Learning Representations. 2022.  ### Questions  See above  ### Flag For Ethics Review  No ethics review needed.  # deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2605.06241.md#weaknesses): The proposed method is a simple baseline and has been proposed before in (1). The authors should compare the proposed method with more advanced RL-free methods.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2605.06241.md#weaknesses): While I found the paper to be generally strong, there are several weaknesses that I believe warrant further discussion. First, the paper's analysis is primarily focused on mathematical reasoning tasks, and it remains unclear how well the findings generalize to other types of reasoning.…
 
 <a id="arxiv-2604.20659"></a>
 ### GRPO-VPS: Enhancing Group Relative Policy Optimization with Verifiable Process Supervision for Effective Reasoning
@@ -1238,7 +1310,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `5.8` Reject (S/P/C 2.75/2.75/2.5) · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The proposed method is an extension of GRPO, and the novelty is limited. - The proposed method relies on the model's confidence in the correct answer, which may not be reliable in all cases. For example, if the model is uncertain about the correct answer, it may not provide a reliable confidence score. - The proposed method is only evaluated on math and general reasoning benchmarks,  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2604.20659.md#weaknesses): The proposed method is an extension of GRPO, and the novelty is limited. - The proposed method relies on the model's confidence in the correct answer, which may not be reliable in all cases. For example, if the model is uncertain about the correct answer, it may not provide a reliable confidence score.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2604.20659.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, the method's reliance on ground truth answers for calculating the progress signal is a significant limitation.…
 
 <a id="arxiv-2604.13016"></a>
 ### Rethinking On-Policy Distillation of Large Language Models: Phenomenology, Mechanism, and Recipe
@@ -1252,7 +1326,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `7.5` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `6.0` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper focuses on mathematical benchmarks, which may not be representative of other domains such as code and open-ended settings. It would be interesting to see if the same conditions and token-level mechanisms govern OPD in these other domains.  2. The paper does not isolate the impact of pre-training on OPD. It would be helpful to understand how differences in pre-training corp deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2604.13016.md#weaknesses): 1. The paper focuses on mathematical benchmarks, which may not be representative of other domains such as code and open-ended settings. It would be interesting to see if the same conditions and token-level mechanisms govern OPD in these other domains.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2604.13016.md#weaknesses): While this paper offers valuable insights into on-policy distillation (OPD), several limitations warrant careful consideration. First, the paper's analysis of the 'thinking-pattern consistency' condition, while insightful, lacks a precise definition and quantitative measure.…
 
 <a id="arxiv-2604.08690"></a>
 ### Skip-Connected Policy Optimization for Implicit Advantage
@@ -1266,7 +1342,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `7.5` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The proposed method is very similar to the existing method, DAPO (Yu et al., 2025b). The main difference is that DAPO uses a self-critic, while the proposed method uses a separate upstream and downstream phase. I think the authors should discuss more about the difference between the proposed method and DAPO.  - The proposed method is not very efficient. It requires generating two sep deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2604.08690.md#weaknesses): The proposed method is very similar to the existing method, DAPO (Yu et al., 2025b). The main difference is that DAPO uses a self-critic, while the proposed method uses a separate upstream and downstream phase. I think the authors should discuss more about the difference between the proposed method and DAPO. - The proposed method is not very efficient.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2604.08690.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, while the paper demonstrates improvements on both Qwen2.5-Math-7B and Llama-3.2-3B models, the gains on the Llama-3.2-3B model are less pronounced compared to the Qwen2.5-Math-7B model.…
 
 <a id="arxiv-2604.02288"></a>
 ### Unifying Group-Relative and Self-Distillation Policy Optimization via Sample Routing
@@ -1280,7 +1358,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `6.0` Accept (S/P/C 2.5/3.0/2.75) · 14B Fast `6.5` Accept
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper only compares SRPO with GRPO and SDPO. It would be interesting to see how SRPO compares to other methods for post-hoc training of LLMs, such as RLHF. - The paper only evaluates SRPO on five benchmarks and two model scales. It would be interesting to see how SRPO performs on a wider range of benchmarks and model scales. - The paper does not provide any analysis of the limita deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2604.02288.md#weaknesses): The paper only compares SRPO with GRPO and SDPO. It would be interesting to see how SRPO compares to other methods for post-hoc training of LLMs, such as RLHF. - The paper only evaluates SRPO on five benchmarks and two model scales. It would be interesting to see how SRPO performs on a wider range of benchmarks and model scales. - The paper does not provide any analysis of the limitations of SRPO.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2604.02288.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, while the paper demonstrates that SRPO achieves both early efficiency and long-term stability, the explanation of *how* the proposed modifications lead to these improvements could be more detailed.…
 
 <a id="arxiv-2604.01375"></a>
 ### RIFT: A RubrIc Failure Mode Taxonomy and Automated Diagnostics
@@ -1294,7 +1374,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.2` Reject (S/P/C 2.75/3.0/3.0) · 14B Fast `5.8` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper focuses on the evaluation of rubrics, but does not discuss how to construct good rubrics. This is an important limitation, as the quality of the rubric is critical to the effectiveness of the evaluation. The paper should discuss how to construct good rubrics and how to evaluate their quality.  2. The paper does not provide a clear definition of the failure modes in the tax deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2604.01375.md#weaknesses): 1. The paper focuses on the evaluation of rubrics, but does not discuss how to construct good rubrics. This is an important limitation, as the quality of the rubric is critical to the effectiveness of the evaluation. The paper should discuss how to construct good rubrics and how to evaluate their quality.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2604.01375.md#weaknesses): of each approach, highlighting the need for human-in-the-loop rubric creation pipelines. The paper is also well-written and clearly structured, making it accessible to a broad audience. The authors provide sufficient detail about their methodology, allowing for reproducibility and further research.…
 
 <a id="arxiv-2603.25562"></a>
 ### Revisiting On-Policy Distillation: Empirical Failure Modes and Simple Fixes
@@ -1308,7 +1390,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `5.8` Accept (S/P/C 2.5/3.0/2.5) · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The proposed method is not novel. The idea of using top-K local support matching has been studied in the RL community for a long time. See, for example, (1,2). It is unclear why the authors did not cite these papers. - The empirical results are not convincing. The proposed method is only evaluated on two small datasets, which are not sufficient to demonstrate its effectiveness. The a deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2603.25562.md#weaknesses): The proposed method is not novel. The idea of using top-K local support matching has been studied in the RL community for a long time. See, for example, (1,2). It is unclear why the authors did not cite these papers. - The empirical results are not convincing. The proposed method is only evaluated on two small datasets, which are not sufficient to demonstrate its effectiveness.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2603.25562.md#weaknesses): While this paper presents a strong contribution to the field, there are several limitations that warrant further discussion. One significant weakness lies in the limited exploration of the trade-offs between the proposed method and alternative approaches, particularly in the context of multi-task learning.…
 
 <a id="arxiv-2603.24472"></a>
 ### Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?
@@ -1322,7 +1406,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `5.8` Reject (S/P/C 2.75/2.75/2.75) · 14B Fast `5.8` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The authors only consider the math reasoning tasks, which is a very narrow scope. It is not clear whether the findings can be generalized to other reasoning tasks, such as commonsense reasoning, natural language inference, and so on. - The authors only consider the self-distillation methods, which is not a comprehensive study. It is not clear whether the findings can be generalized t deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2603.24472.md#weaknesses): The authors only consider the math reasoning tasks, which is a very narrow scope. It is not clear whether the findings can be generalized to other reasoning tasks, such as commonsense reasoning, natural language inference, and so on. - The authors only consider the self-distillation methods, which is not a comprehensive study.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2603.24472.md#weaknesses): While I appreciate the strengths of this paper, I have identified several weaknesses that warrant further consideration. First, the paper's reliance on a predefined set of epistemic markers is a significant limitation. The authors define epistemic verbalization using a set of 10 specific tokens, such as "wait" and "perhaps," as stated in Section 3.…
 
 <a id="arxiv-2602.18037"></a>
 ### Gradient Regularization Mitigates Reward Hacking in Reinforcement Learning from Human Feedback and Verifiable Rewards
@@ -1336,7 +1422,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `6.5` Reject (S/P/C 2.75/2.75/2.75) · 14B Fast `6.5` Accept
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [j_links/8317](https://t.me/j_links/8317)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks a comprehensive evaluation of the proposed method, with only a few experiments conducted on small-scale datasets. 2. The paper does not provide a detailed analysis of the computational cost of the proposed method. 3. The paper does not discuss the limitations of the proposed method and potential future research directions.  ## Questions  1. How does the proposed meth deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2602.18037.md#weaknesses): 1. The paper lacks a comprehensive evaluation of the proposed method, with only a few experiments conducted on small-scale datasets. 2. The paper does not provide a detailed analysis of the computational cost of the proposed method. 3. The paper does not discuss the limitations of the proposed method and potential future research directions.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2602.18037.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. First, while the paper provides a theoretical connection between flatness and reward model inaccuracy, the practical application of this theory in the context of discrete action spaces, such as those used with large language models (LLMs), is not fully addressed.…
 
 <a id="arxiv-2602.09000"></a>
 ### iGRPO: Self-Feedback-Driven LLM Reasoning
@@ -1350,7 +1438,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `5.5` Reject (S/P/C 2.5/2.75/2.75) · 14B Fast `6.5` Accept
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/8164](https://t.me/axisofordinary/8164)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The proposed method is a simple extension of GRPO, and the authors do not provide a clear motivation for why the proposed method should work better than GRPO.  - The authors do not provide a clear analysis of why the proposed method outperforms other self-improvement baselines.  - The authors do not provide a clear analysis of the computational cost of the proposed method compared to deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2602.09000.md#weaknesses): The proposed method is a simple extension of GRPO, and the authors do not provide a clear motivation for why the proposed method should work better than GRPO. - The authors do not provide a clear analysis of why the proposed method outperforms other self-improvement baselines.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2602.09000.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, while the paper introduces iGRPO as an extension of GRPO, it lacks a comprehensive comparison with other state-of-the-art RL algorithms, such as PPO or reward-weighted regression (RWR).…
 
 <a id="arxiv-2601.20861"></a>
 ### Evolutionary Strategies lead to Catastrophic Forgetting in LLMs
@@ -1364,7 +1454,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `5.7` Accept (S/P/C 2.67/2.67/2.67) · 14B Fast `4.0` Reject
 - OpenReviewer `5.0` Reject (S/P/C 2.0/3.0/2.0) · SEA-E `5.0` Accept
 - Telegram: [gonzo_ML/4709](https://t.me/gonzo_ML/4709)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper only evaluates ES on a limited set of tasks and models, which may not be representative of the broader LLM landscape. - The paper only considers a single type of ES implementation, which may not be representative of all ES variants. - The paper does not provide any insights into how to mitigate catastrophic forgetting in ES.  ### Questions  - How do the results generalize t deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2601.20861.md#weaknesses): The paper only evaluates ES on a limited set of tasks and models, which may not be representative of the broader LLM landscape. - The paper only considers a single type of ES implementation, which may not be representative of all ES variants. - The paper does not provide any insights into how to mitigate catastrophic forgetting in ES.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2601.20861.md#weaknesses): of ES: its propensity for catastrophic forgetting when applied to continual learning. While ES achieves comparable performance to GRPO on individual tasks, the study reveals that ES leads to substantial model degradation and forgetting of previously learned abilities when sequentially trained on new tasks.…
 
 <a id="arxiv-2601.20802"></a>
 ### Reinforcement Learning via Self-Distillation
@@ -1378,7 +1470,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.5` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/4681](https://t.me/gonzo_ML/4681)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper does not provide a clear motivation for the proposed method. The paper states that the key limitation is not RL per se, but the information bottleneck imposed by scalar outcome rewards. However, it is not clear why this is the case or how the proposed method addresses this limitation. 2. The paper does not provide a clear explanation of the proposed method. The paper state deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2601.20802.md#weaknesses): 1. The paper does not provide a clear motivation for the proposed method. The paper states that the key limitation is not RL per se, but the information bottleneck imposed by scalar outcome rewards. However, it is not clear why this is the case or how the proposed method addresses this limitation. 2. The paper does not provide a clear explanation of the proposed method.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2601.20802.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. First, the paper's reliance on specific types of feedback, particularly error messages and LeetCode-style feedback, raises concerns about its generalizability.…
 
 <a id="arxiv-2601.19897"></a>
 ### Self-Distillation Enables Continual Learning
@@ -1392,7 +1486,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `6.2` Accept (S/P/C 2.75/3.0/2.75) · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/4687](https://t.me/gonzo_ML/4687), [axisofordinary/8164](https://t.me/axisofordinary/8164)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks a theoretical analysis of the proposed method. It would be helpful to have a theoretical analysis of the method's performance and its limitations. 2. The paper only evaluates the proposed method on a limited number of tasks. It would be helpful to evaluate the method on a larger number of tasks to demonstrate its generalizability. 3. The paper does not provide a deta deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2601.19897.md#weaknesses): 1. The paper lacks a theoretical analysis of the proposed method. It would be helpful to have a theoretical analysis of the method's performance and its limitations. 2. The paper only evaluates the proposed method on a limited number of tasks. It would be helpful to evaluate the method on a larger number of tasks to demonstrate its generalizability. 3.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2601.19897.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, while the paper introduces SDFT as a method for continual learning, it lacks a clear definition of what constitutes a 'task' within its framework. The paper uses the term 'task' extensively, but it does not explicitly define what constitutes a 'task' in the context of their method.…
 
 <a id="arxiv-2601.18734"></a>
 ### Self-Distilled Reasoner: On-Policy Self-Distillation for Large Language Models
@@ -1406,7 +1502,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.2` Reject · 7B Fast `6.7` Accept (S/P/C 3.0/3.0/2.67) · 14B Fast `6.0` Accept
 - OpenReviewer `8.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  The main weakness of the paper is that it lacks novelty. The idea of using a teacher-student framework for knowledge distillation is not new, and the use of ground-truth solutions as privileged information is also not novel. Additionally, the experimental results are not particularly surprising, and the authors do not provide any new insights into the problem of knowledge distillation. deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2601.18734.md#weaknesses): The main weakness of the paper is that it lacks novelty. The idea of using a teacher-student framework for knowledge distillation is not new, and the use of ground-truth solutions as privileged information is also not novel. Additionally, the experimental results are not particularly surprising, and the authors do not provide any new insights into the problem of knowledge distillation.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2601.18734.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, the paper suffers from a lack of clarity in its method description, particularly regarding the teacher's role and the training process.…
 
 <a id="arxiv-2601.16175"></a>
 ### Learning to Discover at Test Time
@@ -1420,7 +1518,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `5.8` Accept (S/P/C 2.75/2.5/2.5) · 14B Fast `8.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [gonzo_ML/4643](https://t.me/gonzo_ML/4643), [j_links/8337](https://t.me/j_links/8337)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper only evaluates the method on a limited set of problems and does not provide a comprehensive evaluation of its performance. The paper also does not provide a detailed analysis of the method's performance on different types of problems.  ### Questions  The paper mentions that the method can only be applied to problems with continuous rewards. Can the method be extended to probl deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2601.16175.md#weaknesses): The paper only evaluates the method on a limited set of problems and does not provide a comprehensive evaluation of its performance. The paper also does not provide a detailed analysis of the method's performance on different types of problems.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2601.16175.md#weaknesses): While I find the paper to be a strong contribution, there are several verified limitations that I believe should be addressed. First, the paper lacks a detailed analysis of the computational efficiency of the discovered algorithms, particularly in the context of GPU kernel engineering.…
 
 <a id="arxiv-2601.14525"></a>
 ### Towards Execution-Grounded Automated AI Research
@@ -1434,7 +1534,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/3.0) · 14B Fast `6.5` Accept
 - OpenReviewer `8.0` Accept (S/P/C 3.0/4.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/4660](https://t.me/gonzo_ML/4660)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The novelty of this paper is limited. The proposed executor is a simple combination of existing ideas. The authors use the Tinker API to generate code from LLMs, and the scheduler and worker are also standard components. The authors also use evolutionary search and reinforcement learning to learn from execution feedback, which are both existing methods. 2. The idea of using LLMs to  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2601.14525.md#weaknesses): 1. The novelty of this paper is limited. The proposed executor is a simple combination of existing ideas. The authors use the Tinker API to generate code from LLMs, and the scheduler and worker are also standard components. The authors also use evolutionary search and reinforcement learning to learn from execution feedback, which are both existing methods. 2.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2601.14525.md#weaknesses): While I appreciate the novelty of this work, I have identified several weaknesses that warrant careful consideration. First, the paper's reliance on a single, potentially flawed, implementation of the GRPO algorithm as a baseline is a significant concern.…
 
 <a id="arxiv-2601.11061"></a>
 ### Spurious Rewards Paradox: Mechanistically Understanding How RLVR Activates Memorization Shortcuts in LLMs
@@ -1448,7 +1550,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `7.0` Accept (S/P/C 3.0/3.25/3.25) · 14B Fast `6.5` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [buckwheat_thoughts/308](https://t.me/buckwheat_thoughts/308), [j_links/8281](https://t.me/j_links/8281), [gonzo_ML/4704](https://t.me/gonzo_ML/4704)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper only studies the Qwen2.5 model, which is a specific model architecture. It is unclear whether the findings can be generalized to other model architectures. - The paper only studies the spurious rewards paradox in RLVR, which is a specific phenomenon. It is unclear whether the findings can be generalized to other phenomena in RLVR. - The paper does not provide a comprehensiv deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2601.11061.md#weaknesses): The paper only studies the Qwen2.5 model, which is a specific model architecture. It is unclear whether the findings can be generalized to other model architectures. - The paper only studies the spurious rewards paradox in RLVR, which is a specific phenomenon. It is unclear whether the findings can be generalized to other phenomena in RLVR.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2601.11061.md#weaknesses): While this paper presents significant contributions to our understanding of memorization in RLVR-tuned models, several limitations warrant careful consideration. First, the paper's reliance on a specific model architecture, the Qwen2.5-Math-7B, raises concerns about the generalizability of the findings.…
 
 <a id="arxiv-2512.02807"></a>
 ### SR-GRPO: Stable Rank as an Intrinsic Geometric Reward for Large Language Model Alignment
@@ -1462,7 +1566,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.5` Accept (S/P/C 2.75/2.75/2.75) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [tech_priestess/2494](https://t.me/tech_priestess/2494)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide any theoretical motivation for the proposed reward signal. It is not clear why stable rank is a good proxy for human preference. - The paper does not provide any analysis of the robustness of the proposed reward signal to different LLM architectures and training settings. - The paper does not provide any analysis of the computational cost of computing the p deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2512.02807.md#weaknesses): The paper does not provide any theoretical motivation for the proposed reward signal. It is not clear why stable rank is a good proxy for human preference. - The paper does not provide any analysis of the robustness of the proposed reward signal to different LLM architectures and training settings.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2512.02807.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. One significant limitation is the lack of a comprehensive theoretical analysis explaining why stable rank correlates with response quality.…
 
 <a id="arxiv-2512.00499"></a>
 ### ESPO: Entropy Importance Sampling Policy Optimization
@@ -1476,7 +1582,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `7.5` Accept (S/P/C 3.0/3.25/3.25) · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  The novelty of the proposed method seems limited. The idea of using entropy to group tokens has been explored in prior works such as (1), and the proposed entropy adaptive clipping is similar to dynamic clipping in DCPO (2). The proposed method is also very similar to SPO (3), which also decomposes sequences into groups based on entropy. The main difference is that the proposed method  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2512.00499.md#weaknesses): The novelty of the proposed method seems limited. The idea of using entropy to group tokens has been explored in prior works such as (1), and the proposed entropy adaptive clipping is similar to dynamic clipping in DCPO (2). The proposed method is also very similar to SPO (3), which also decomposes sequences into groups based on entropy.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2512.00499.md#weaknesses): While the paper presents a compelling approach, I have identified several weaknesses that warrant further consideration. First, the paper's experimental evaluation is primarily focused on mathematical reasoning tasks, specifically AIME 2024/2025, HMMT, and MATH500, all of which are administered in English. This narrow focus limits the generalizability of the findings.…
 
 <a id="arxiv-2511.20347"></a>
 ### Soft Adaptive Policy Optimization
@@ -1490,7 +1598,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Reject (S/P/C 2.5/3.0/2.5) · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  The main weakness of the paper is the lack of novelty. The proposed algorithm is based on existing techniques, such as group-based policy optimization and soft clipping, and does not introduce any new ideas or techniques. The experimental results are also not very convincing, as the proposed algorithm only shows a small improvement over the existing algorithms.  ### Questions  1. What  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2511.20347.md#weaknesses): The main weakness of the paper is the lack of novelty. The proposed algorithm is based on existing techniques, such as group-based policy optimization and soft clipping, and does not introduce any new ideas or techniques. The experimental results are also not very convincing, as the proposed algorithm only shows a small improvement over the existing algorithms.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2511.20347.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. Firstly, the paper's experimental evaluation is primarily focused on mathematical reasoning benchmarks and the training of the Qwen3-VL model series.…
 
 <a id="arxiv-2511.07317"></a>
 ### RLVE: Scaling Up Reinforcement Learning for Language Models with Adaptive Verifiable Environments
@@ -1504,7 +1614,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.2` Reject · 7B Fast `6.8` Accept (S/P/C 3.25/3.25/3.0) · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a clear comparison with other RL training frameworks. The authors should compare RLVE with other RL training frameworks, such as RLVR and ProRL, and show how RLVE improves upon them. - The paper does not provide a clear analysis of the performance of RLVE on different types of reasoning benchmarks. The authors should analyze the performance of RLVE on diffe deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2511.07317.md#weaknesses): The paper does not provide a clear comparison with other RL training frameworks. The authors should compare RLVE with other RL training frameworks, such as RLVR and ProRL, and show how RLVE improves upon them. - The paper does not provide a clear analysis of the performance of RLVE on different types of reasoning benchmarks.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2511.07317.md#weaknesses): While I am impressed with the contributions of this paper, I have identified several weaknesses that warrant further discussion. First, the paper's reliance on a manually curated suite of verifiable environments raises concerns about scalability and generalizability. As the authors themselves acknowledge, the construction of RLVE-Gym required substantial human effort and expert knowledge.…
 
 <a id="arxiv-2510.14901"></a>
 ### Reasoning with Sampling: Your Base Model is Smarter Than You Think
@@ -1518,7 +1630,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `7.0` Accept (S/P/C 3.0/3.25/3.0) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper claims that the proposed method is training-free, but it requires additional inference-time computation. The paper should discuss the trade-off between training time and inference time. 2. The paper only compares the proposed method with GRPO, which is a specific RL-based method. It would be better to compare it with other RL-based methods as well. 3. The paper only evalua deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2510.14901.md#weaknesses): 1. The paper claims that the proposed method is training-free, but it requires additional inference-time computation. The paper should discuss the trade-off between training time and inference time. 2. The paper only compares the proposed method with GRPO, which is a specific RL-based method. It would be better to compare it with other RL-based methods as well. 3.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2510.14901.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, while the paper demonstrates impressive performance on the chosen benchmarks, it lacks a thorough analysis of the computational cost associated with the proposed power sampling method.…
 
 <a id="arxiv-2510.13786"></a>
 ### The Art of Scaling Reinforcement Learning Compute for LLMs
@@ -1532,7 +1646,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `6.8` Accept (S/P/C 3.25/3.25/3.25) · 14B Fast `6.0` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [lovedeathtransformers/9883](https://t.me/lovedeathtransformers/9883), [axisofordinary/7787](https://t.me/axisofordinary/7787)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The authors only study the scaling law of RL for LLMs, but do not discuss the scaling law of RL for other tasks, such as robotics and game playing. 2. The authors do not provide a theoretical analysis of the scaling law of RL for LLMs. 3. The authors do not discuss the limitations of the proposed method.  ### Questions  1. Can you provide a theoretical analysis of the scaling law of deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2510.13786.md#weaknesses): 1. The authors only study the scaling law of RL for LLMs, but do not discuss the scaling law of RL for other tasks, such as robotics and game playing. 2. The authors do not provide a theoretical analysis of the scaling law of RL for LLMs. 3. The authors do not discuss the limitations of the proposed method.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2510.13786.md#weaknesses): While this paper makes significant contributions, several weaknesses warrant attention. First, the paper's focus on a single task, verifiable math, limits the generalizability of the findings. Although the authors include a multi-task experiment with math and code, the primary analysis and the ScaleRL recipe are centered around verifiable math.…
 
 <a id="arxiv-2510.00977"></a>
 ### It Takes Two: Your GRPO Is Secretly DPO
@@ -1546,7 +1662,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `4.8` Reject (S/P/C 2.5/2.75/2.25) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [dealerAI/1498](https://t.me/dealerAI/1498)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The authors only provide a theoretical analysis of 2-GRPO and empirical results on a single dataset. The authors should provide more empirical results on other datasets to validate the effectiveness of 2-GRPO. 2. The authors should provide more details about the implementation of 2-GRPO and the hyperparameters used in the experiments. 3. The authors should provide more discussion on deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2510.00977.md#weaknesses): 1. The authors only provide a theoretical analysis of 2-GRPO and empirical results on a single dataset. The authors should provide more empirical results on other datasets to validate the effectiveness of 2-GRPO. 2. The authors should provide more details about the implementation of 2-GRPO and the hyperparameters used in the experiments. 3.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2510.00977.md#weaknesses): While this paper presents valuable insights and a promising new approach, several weaknesses warrant careful consideration. First, the paper's experimental evaluation, while demonstrating the efficiency of 2-GRPO, lacks a comprehensive comparison with other reinforcement learning algorithms, particularly those used in similar settings.…
 
 <a id="arxiv-2509.25123"></a>
 ### From $f(x)$ and $g(x)$ to $f(g(x))$: LLMs Learn New Skills in RL by Composing Old Ones
@@ -1560,7 +1678,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `4.2` Reject (S/P/C 2.25/2.25/2.25) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/7729](https://t.me/axisofordinary/7729)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper's focus on synthetic tasks may limit its generalizability to real-world applications. - The paper does not provide a clear answer to the question of how to incentivize skill acquisition in RL. - The paper does not provide a clear answer to the question of whether the skills learned by LLMs during RL are transferable to other tasks.  ### Questions  - How do the authors think deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2509.25123.md#weaknesses): The paper's focus on synthetic tasks may limit its generalizability to real-world applications. - The paper does not provide a clear answer to the question of how to incentivize skill acquisition in RL. - The paper does not provide a clear answer to the question of whether the skills learned by LLMs during RL are transferable to other tasks.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2509.25123.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, the paper's definition of 'new skills' as the ability to perform compositional reasoning, while central to the argument, is not entirely novel. As the authors themselves acknowledge, the idea that compositional reasoning can be learned through appropriate training is not new.…
 
 <a id="arxiv-2509.14234"></a>
 ### Compute as Teacher: Turning Inference Compute Into Reference-Free Supervision
@@ -1574,7 +1694,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `6.2` Accept (S/P/C 2.75/3.0/2.5) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [gonzo_ML/4151](https://t.me/gonzo_ML/4151), [axisofordinary/7681](https://t.me/axisofordinary/7681)
-- Weaknesses: openreviewer-8b: Weaknesses 1. The paper does not provide a detailed analysis of the computational overhead introduced by the CaT framework. While it claims to reduce inference-time compute requirements, it is important to quantify the additional compute needed for tasks such as rubric generation and synthesis. A more comprehensive analysis of the computational trade-offs would strengthen the paper. 2. The paper l
+- Weaknesses:
+  - [OR-8B](reviews/openreviewer-8b/arxiv_2509.14234.md#weaknesses): 1. The paper does not provide a detailed analysis of the computational overhead introduced by the CaT framework. While it claims to reduce inference-time compute requirements, it is important to quantify the additional compute needed for tasks such as rubric generation and synthesis. A more comprehensive analysis of the computational trade-offs would strengthen the paper. 2.…
 
 <a id="arxiv-2509.13232"></a>
 ### Single-stream Policy Optimization
@@ -1588,7 +1709,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.0` Reject · 7B Fast `7.0` Accept (S/P/C 3.0/3.25/2.75) · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks a theoretical analysis of the proposed method. 2. The experiments are not comprehensive. The authors only compare with GRPO, but there are other baselines such as A*-PO (1), RLOO (2), and Lite PPO (3). 3. The paper does not discuss the limitations of the proposed method. 4. The paper does not provide any insights into why SPO outperforms GRPO.  (1) Brantley, J., Chen deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2509.13232.md#weaknesses): 1. The paper lacks a theoretical analysis of the proposed method. 2. The experiments are not comprehensive. The authors only compare with GRPO, but there are other baselines such as A*-PO (1), RLOO (2), and Lite PPO (3). 3. The paper does not discuss the limitations of the proposed method. 4. The paper does not provide any insights into why SPO outperforms GRPO.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2509.13232.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, while the paper introduces a Bayesian tabular tracker, it lacks a detailed explanation of its implementation within a distributed training context.…
 
 <a id="arxiv-2509.03646"></a>
 ### Emergent Hierarchical Reasoning in LLMs through Reinforcement Learning
@@ -1602,7 +1725,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.2` Reject · 7B Fast `5.5` Reject (S/P/C 2.75/2.75/2.5) · 14B Fast `6.0` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [axisofordinary/7653](https://t.me/axisofordinary/7653), [tech_priestess/2386](https://t.me/tech_priestess/2386)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper assumes that the reasoning process can be decomposed into high-level planning and low-level execution. This assumption is not always valid. For example, in the case of mathematical problem-solving, the high-level plan and low-level execution are often intertwined. The authors should provide more evidence to support their assumption.  2. The authors use a heuristic to ident deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2509.03646.md#weaknesses): 1. The paper assumes that the reasoning process can be decomposed into high-level planning and low-level execution. This assumption is not always valid. For example, in the case of mathematical problem-solving, the high-level plan and low-level execution are often intertwined. The authors should provide more evidence to support their assumption.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2509.03646.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, the paper lacks a thorough analysis of the hyperparameter α, which controls the amplification intensity of planning token rewards in HICRA.…
 
 <a id="arxiv-2508.07629"></a>
 ### Klear-Reasoner: Advancing Reasoning Capability via Gradient-Preserving Clipping Policy Optimization
@@ -1616,7 +1741,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std ``  · 7B Fast `5.2` Reject (S/P/C 2.75/3.0/2.5) · 14B Fast `6.0` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper focuses on a specific problem of clipping in RL, which may limit its generalizability to other areas of research. - The paper does not provide a detailed comparison with other state-of-the-art models, making it difficult to evaluate the effectiveness of the proposed method. - The paper does not discuss potential limitations or drawbacks of the proposed method.  ### Question deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2508.07629.md#weaknesses): The paper focuses on a specific problem of clipping in RL, which may limit its generalizability to other areas of research. - The paper does not provide a detailed comparison with other state-of-the-art models, making it difficult to evaluate the effectiveness of the proposed method. - The paper does not discuss potential limitations or drawbacks of the proposed method.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2508.07629.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, while the paper introduces GPPO as a novel approach to address limitations of standard PPO, the motivation for the specific design choices in GPPO could be more thoroughly explained.…
 
 <a id="arxiv-2508.05629"></a>
 ### On the Generalization of SFT: A Reinforcement Learning Perspective with Reward Rectification
@@ -1630,7 +1757,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.4` Accept · 7B Fast `7.0` Accept (S/P/C 3.25/3.25/3.25) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [buckwheat_thoughts/297](https://t.me/buckwheat_thoughts/297), [abstractDL/345](https://t.me/abstractDL/345)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The theoretical analysis in Section 3.2 is not very convincing. The authors claim that SFT can be viewed as a form of policy gradient with a sparse reward function, which is inversely proportional to the model's probability of expert actions. However, this is not a new observation. The authors should provide a more rigorous proof of this claim. - The proposed method is only evaluated deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2508.05629.md#weaknesses): The theoretical analysis in Section 3.2 is not very convincing. The authors claim that SFT can be viewed as a form of policy gradient with a sparse reward function, which is inversely proportional to the model's probability of expert actions. However, this is not a new observation. The authors should provide a more rigorous proof of this claim.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2508.05629.md#weaknesses): . Finally, the paper's focus on improving SFT, a widely used technique, is highly relevant and timely in the context of large language models. The proposed method has the potential to significantly impact the way these models are fine-tuned for various downstream tasks.
 
 <a id="arxiv-2507.19457"></a>
 ### GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning
@@ -1644,7 +1773,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.5` Accept (S/P/C 2.75/3.0/2.5) · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [gonzo_ML/3879](https://t.me/gonzo_ML/3879), [axisofordinary/7502](https://t.me/axisofordinary/7502)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The proposed method is not novel. The idea of using a genetic algorithm to search for better prompts has been explored in previous work, such as EvoPrompt (1). The authors should provide a more detailed comparison with existing methods. - The evaluation of the proposed method is not comprehensive. The authors only evaluate the method on a few benchmarks and do not compare it with a w deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2507.19457.md#weaknesses): The proposed method is not novel. The idea of using a genetic algorithm to search for better prompts has been explored in previous work, such as EvoPrompt (1). The authors should provide a more detailed comparison with existing methods. - The evaluation of the proposed method is not comprehensive.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2507.19457.md#weaknesses): While I find the paper to be generally strong, there are several weaknesses that I believe warrant further discussion. First, while the paper introduces GEPA as a method that leverages natural language reflection, it lacks a detailed comparison with other methods that also use LLMs for reflection and self-improvement.…
 
 <a id="arxiv-2507.18071"></a>
 ### Group Sequence Policy Optimization
@@ -1658,7 +1789,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `4.8` Reject (S/P/C 2.5/2.75/2.25) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [data_secrets/7470](https://t.me/data_secrets/7470), [dealerAI/1474](https://t.me/dealerAI/1474)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks a detailed theoretical analysis of the proposed algorithm, GSPO. While the authors provide some intuition behind the algorithm, a more rigorous theoretical analysis would strengthen the paper. 2. The paper only compares GSPO with GRPO, and it would be beneficial to include comparisons with other state-of-the-art methods for training large language models using RL. 3. deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2507.18071.md#weaknesses): 1. The paper lacks a detailed theoretical analysis of the proposed algorithm, GSPO. While the authors provide some intuition behind the algorithm, a more rigorous theoretical analysis would strengthen the paper. 2. The paper only compares GSPO with GRPO, and it would be beneficial to include comparisons with other state-of-the-art methods for training large language models using RL. 3.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2507.18071.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. First, the paper lacks a thorough discussion of the limitations of GSPO. While the authors present GSPO as a robust and scalable algorithm, they do not explicitly address scenarios where it might struggle or fail.…
 
 <a id="arxiv-2506.13585"></a>
 ### MiniMax-M1: Scaling Test-Time Compute Efficiently with Lightning Attention
@@ -1672,7 +1805,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.5` Reject (S/P/C 3.25/3.25/3.0) · 14B Fast `8.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The authors claim that MiniMax-M1 is the world's first open-weight, large-scale hybrid-attention reasoning model, but there are many other open-source LLMs that use hybrid attention, such as Hunyuan-T1 (https://arxiv.org/abs/2305.14360). The authors should compare MiniMax-M1 with these models and discuss the differences. - The authors claim that MiniMax-M1 is the world's first open-w deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2506.13585.md#weaknesses): The authors claim that MiniMax-M1 is the world's first open-weight, large-scale hybrid-attention reasoning model, but there are many other open-source LLMs that use hybrid attention, such as Hunyuan-T1 (https://arxiv.org/abs/2305.14360). The authors should compare MiniMax-M1 with these models and discuss the differences.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2506.13585.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, the paper's evaluation of the CISPO algorithm is not as comprehensive as it could be.…
 
 <a id="arxiv-2506.06632"></a>
 ### Curriculum Reinforcement Learning from Easy to Hard Tasks Improves LLM Reasoning
@@ -1686,7 +1821,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `6.5` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The proposed method is not novel. There are many previous works on curriculum learning for LLMs, such as (1,2,3). The authors should compare the proposed method with these works. 2. The theoretical analysis is not rigorous. The authors assume that the curriculum is well-designed, but it is not clear how to design a good curriculum. The authors should provide more details on how to d deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2506.06632.md#weaknesses): 1. The proposed method is not novel. There are many previous works on curriculum learning for LLMs, such as (1,2,3). The authors should compare the proposed method with these works. 2. The theoretical analysis is not rigorous. The authors assume that the curriculum is well-designed, but it is not clear how to design a good curriculum.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2506.06632.md#weaknesses): Despite its strengths, the paper exhibits several weaknesses that warrant careful consideration. First, the experimental evaluation, while demonstrating the potential of the E2H Reasoner, is limited in scope. The authors primarily use the Qwen-1.5B-Instruct model for their main experiments, as explicitly stated in Section 4.1.…
 
 <a id="arxiv-2506.03106"></a>
 ### Critique-GRPO: Advancing LLM Reasoning with Natural Language and Numerical Feedback
@@ -1700,7 +1837,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  The main weakness of the paper is the limited novelty. The paper builds on existing work on RL methods for improving the reasoning capabilities of LLMs and combines numerical and natural language feedback. The method is not significantly different from existing methods, and the results are not surprising. The paper also lacks a thorough comparison with existing methods. The authors com deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2506.03106.md#weaknesses): The main weakness of the paper is the limited novelty. The paper builds on existing work on RL methods for improving the reasoning capabilities of LLMs and combines numerical and natural language feedback. The method is not significantly different from existing methods, and the results are not surprising. The paper also lacks a thorough comparison with existing methods.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2506.03106.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. First, while the paper introduces the concept of natural language critiques, it does not delve deeply enough into the nuances of different critique types and their impact on the learning process.…
 
 <a id="arxiv-2506.01939"></a>
 ### Beyond the 80/20 Rule: High-Entropy Minority Tokens Drive Effective Reinforcement Learning for LLM Reasoning
@@ -1714,7 +1853,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `5.8` Reject (S/P/C 2.75/2.75/2.75) · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [axisofordinary/7296](https://t.me/axisofordinary/7296), [tech_priestess/2386](https://t.me/tech_priestess/2386)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The main weakness of the paper is that the results are not very surprising and do not seem to have a significant impact on the field. The paper is essentially showing that high-entropy tokens are important for reasoning, which is already known. The paper also shows that training on high-entropy tokens can achieve comparable performance to training on all tokens, but this is not surpris cyclereviewer-8b.seed1: Weaknesses  I have several concerns about the paper: 1. T
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2506.01939.md#weaknesses): The main weakness of the paper is that the results are not very surprising and do not seem to have a significant impact on the field. The paper is essentially showing that high-entropy tokens are important for reasoning, which is already known.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2506.01939.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. First, the paper's reliance on a single RLVR algorithm, DAPO, limits the generalizability of its findings. While DAPO is a state-of-the-art method, the authors do not explore whether their observations about high-entropy tokens hold true for other RLVR algorithms, such as PPO or GRPO.…
 
 <a id="arxiv-2505.19590"></a>
 ### Learning to Reason without External Rewards
@@ -1728,7 +1869,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.2` Reject · 7B Fast `4.8` Reject (S/P/C 2.5/2.75/2.25) · 14B Fast `6.0` Accept
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/2.0) · SEA-E `7.0` Accept
 - Telegram: [gonzo_ML/3767](https://t.me/gonzo_ML/3767), [axisofordinary/7262](https://t.me/axisofordinary/7262), [axisofordinary/8273](https://t.me/axisofordinary/8273)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks novelty. The proposed method is simple and straightforward. The method is similar to the previous work (1) which uses the self-certainty as the reward signal for RLHF.  2. The paper lacks theoretical analysis. The paper does not provide any theoretical analysis of the proposed method. 3. The paper lacks ablation study. The paper does not provide any ablation study to deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2505.19590.md#weaknesses): 1. The paper lacks novelty. The proposed method is simple and straightforward. The method is similar to the previous work (1) which uses the self-certainty as the reward signal for RLHF. 2. The paper lacks theoretical analysis. The paper does not provide any theoretical analysis of the proposed method. 3. The paper lacks ablation study.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2505.19590.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, the paper's reliance on self-certainty as the sole reward signal raises concerns about the potential for bias and manipulation.…
 
 <a id="arxiv-2505.10978"></a>
 ### Group-in-Group Policy Optimization for LLM Agent Training
@@ -1742,7 +1885,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/2.67) · 14B Fast `6.7` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a theoretical analysis of the proposed method, which could help understand its properties and limitations. - The paper does not discuss the limitations of the proposed method, such as potential issues with scalability or generalizability to other tasks. - The paper does not provide a detailed comparison with prior methods, such as a discussion of the trade- deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2505.10978.md#weaknesses): The paper does not provide a theoretical analysis of the proposed method, which could help understand its properties and limitations. - The paper does not discuss the limitations of the proposed method, such as potential issues with scalability or generalizability to other tasks.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2505.10978.md#weaknesses): Despite the paper's strengths, I have identified several weaknesses that warrant further discussion. Firstly, the paper's reliance on state matching for anchor group construction raises concerns about its applicability in highly complex environments.…
 
 <a id="arxiv-2504.16084"></a>
 ### TTRL: Test-Time Reinforcement Learning
@@ -1756,7 +1901,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/3.0) · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [gonzo_ML/4151](https://t.me/gonzo_ML/4151)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The novelty of this paper is limited. The proposed method is similar to self-play training, which has been widely used in the field of reinforcement learning. The main difference is that the proposed method uses a single model instead of multiple models in self-play training.   2. The paper lacks a theoretical analysis of the proposed method. It is unclear how the method works and w deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2504.16084.md#weaknesses): 1. The novelty of this paper is limited. The proposed method is similar to self-play training, which has been widely used in the field of reinforcement learning. The main difference is that the proposed method uses a single model instead of multiple models in self-play training.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2504.16084.md#weaknesses): While the paper presents a compelling approach to test-time reinforcement learning, several limitations warrant careful consideration. First, the scope of the experimental evaluation, while broad in terms of tasks and models, is somewhat limited in terms of the types of reasoning explored.…
 
 <a id="arxiv-2504.13837"></a>
 ### Does Reinforcement Learning Really Incentivize Reasoning Capacity in LLMs Beyond the Base Model?
@@ -1770,7 +1917,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.5` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `6.5` Accept
 - OpenReviewer `5.0` Reject (S/P/C 2.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [abstractDL/332](https://t.me/abstractDL/332), [data_secrets/8212](https://t.me/data_secrets/8212), [gonzo_ML/4286](https://t.me/gonzo_ML/4286), [lovedeathtransformers/9272](https://t.me/lovedeathtransformers/9272), [boris_again/3157](https://t.me/boris_again/3157), [AGI_and_RL/1058](https://t.me/AGI_and_RL/1058)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper does not provide a clear explanation for the observed phenomenon. 2. The paper does not provide a clear recommendation for future research directions.  ### Questions  1. What are the possible reasons for the observed phenomenon? 2. What are the potential implications of the findings for future research?  ### Flag For Ethics Review  No ethics review needed.  ### Rating  5:  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2504.13837.md#weaknesses): 1. The paper does not provide a clear explanation for the observed phenomenon. 2. The paper does not provide a clear recommendation for future research directions.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2504.13837.md#weaknesses): While this paper presents a compelling analysis of RLVR, several limitations warrant careful consideration. One significant weakness lies in the paper's definition and use of the term "reasoning capacity boundary." While the authors define this boundary using the pass@k metric, the term is somewhat ambiguous and could be interpreted in different ways.…
 
 <a id="arxiv-2503.20783"></a>
 ### Understanding R1-Zero-Like Training: A Critical Perspective
@@ -1784,7 +1933,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.5` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks novelty. The authors have identified two issues in the R1-zero-like training, but the proposed solution is simply removing the normalization terms in the GRPO algorithm, which is a straightforward fix.  2. The paper lacks experiments. The authors have only conducted experiments on a small number of models and datasets, and the results are not convincing.  ### Questio deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2503.20783.md#weaknesses): 1. The paper lacks novelty. The authors have identified two issues in the R1-zero-like training, but the proposed solution is simply removing the normalization terms in the GRPO algorithm, which is a straightforward fix. 2. The paper lacks experiments. The authors have only conducted experiments on a small number of models and datasets, and the results are not convincing.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2503.20783.md#weaknesses): While this paper presents several valuable contributions, there are some limitations that warrant careful consideration. One significant weakness is the lack of a thorough investigation into the sensitivity of Dr. GRPO to different reward functions.…
 
 <a id="arxiv-2503.14476"></a>
 ### DAPO: An Open-Source LLM Reinforcement Learning System at Scale
@@ -1798,7 +1949,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.0` Reject · 7B Fast `5.0` Reject (S/P/C 2.5/2.5/2.5) · 14B Fast `6.0` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [axisofordinary/7039](https://t.me/axisofordinary/7039), [AGI_and_RL/1061](https://t.me/AGI_and_RL/1061)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not include any ablation studies to show the impact of each modification to the GRPO algorithm. This makes it difficult to determine which modifications are most important for the improved performance.  ### Questions  The paper does not include any comparison to other RLHF algorithms, such as PPO or PPO-Clip. It would be helpful to see how the proposed algorithm compares deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2503.14476.md#weaknesses): The paper does not include any ablation studies to show the impact of each modification to the GRPO algorithm. This makes it difficult to determine which modifications are most important for the improved performance.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2503.14476.md#weaknesses): While I appreciate the contributions of this paper, I have identified several weaknesses that warrant further discussion. First, the paper lacks a detailed analysis of the computational resources required by the DAPO algorithm. While the authors mention using the verl framework, they do not provide specific information on GPU memory usage, training time per epoch, or total training time.…
 
 <a id="arxiv-2503.02875"></a>
 ### The First Few Tokens Are All You Need: An Efficient and Effective Unsupervised Prefix Fine-Tuning Method for Reasoning Models
@@ -1812,7 +1965,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `5.8` Reject (S/P/C 2.75/2.75/2.75) · 14B Fast `6.5` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [data_secrets/6419](https://t.me/data_secrets/6419), [axisofordinary/7009](https://t.me/axisofordinary/7009)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The authors claim that the proposed method is "unsupervised" in the sense that it does not require labeled data or rejection sampling. However, the method still requires a dataset of questions and answers, which is not entirely unsupervised. In addition, the authors use a subset of the dataset for full reasoning trace generation, which is still supervised. I would suggest the authors cyclereviewer-8b.seed1: Weaknesses  - The paper does not provide a theoretical an
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2503.02875.md#weaknesses): The authors claim that the proposed method is "unsupervised" in the sense that it does not require labeled data or rejection sampling. However, the method still requires a dataset of questions and answers, which is not entirely unsupervised. In addition, the authors use a subset of the dataset for full reasoning trace generation, which is still supervised.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2503.02875.md#weaknesses): section, there are several limitations that need to be addressed to fully validate the claims made in the paper.
 
 <a id="arxiv-2503.00735"></a>
 ### LADDER: Self-Improving LLMs Through Recursive Problem Decomposition
@@ -1826,7 +1981,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Reject · 7B Fast `6.0` Reject (S/P/C 3.0/3.0/3.0) · 14B Fast `6.0` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [AGI_and_RL/986](https://t.me/AGI_and_RL/986), [axisofordinary/7020](https://t.me/axisofordinary/7020)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper focuses on mathematical integration tasks, which may not be representative of all types of complex tasks that LLMs need to solve. It would be helpful to see if the approach works on other types of tasks as well. - The paper does not provide a detailed analysis of the computational cost of the approach. It would be helpful to understand the trade-off between the potential im deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2503.00735.md#weaknesses): The paper focuses on mathematical integration tasks, which may not be representative of all types of complex tasks that LLMs need to solve. It would be helpful to see if the approach works on other types of tasks as well. - The paper does not provide a detailed analysis of the computational cost of the approach.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2503.00735.md#weaknesses): While the LADDER framework presents a promising approach, several limitations warrant careful consideration. One significant concern is the limited scope of the experimental evaluation. The paper focuses exclusively on mathematical integration, a domain with well-defined rules and a clear verification mechanism.…
 
 <a id="arxiv-2402.13669"></a>
 ### Self-Distillation Bridges Distribution Gap in Language Model Fine-Tuning
@@ -1840,7 +1997,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `6.0` Accept (S/P/C 2.67/3.0/2.67) · 14B Fast `6.7` Accept
 - OpenReviewer `8.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper does not provide a thorough analysis of the limitations of the proposed method. For example, the paper does not discuss the computational cost of generating the distilled dataset, or the potential trade-off between performance and computational cost. 2. The paper does not provide a comparison with other methods for mitigating catastrophic forgetting in LLM fine-tuning. For deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2402.13669.md#weaknesses): 1. The paper does not provide a thorough analysis of the limitations of the proposed method. For example, the paper does not discuss the computational cost of generating the distilled dataset, or the potential trade-off between performance and computational cost. 2. The paper does not provide a comparison with other methods for mitigating catastrophic forgetting in LLM fine-tuning.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2402.13669.md#weaknesses): section, the paper has some limitations in terms of experimental scope and theoretical depth that need to be addressed.
 
 <a id="arxiv-2402.03300"></a>
 ### DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models
@@ -1854,7 +2013,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `5.5` Reject (S/P/C 3.0/3.0/3.0) · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [AGI_and_RL/948](https://t.me/AGI_and_RL/948), [gonzo_ML/3239](https://t.me/gonzo_ML/3239), [buckwheat_thoughts/105](https://t.me/buckwheat_thoughts/105), [gonzo_ML/4555](https://t.me/gonzo_ML/4555), [data_secrets/3942](https://t.me/data_secrets/3942), [buckwheat_thoughts/104](https://t.me/buckwheat_thoughts/104), [gonzo_ML/4303](https://t.me/gonzo_ML/4303), [gonzo_ML/3319](https://t.me/gonzo_ML/3319)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper does not provide a detailed analysis of the data selection pipeline used to construct the DeepSeekMath Corpus. It would be helpful to have a more detailed description of the data selection process, including how the data was filtered and how the quality of the data was assessed.  2. The paper does not provide a detailed analysis of the performance of the model on different cyclereviewer-8b.seed1: Weaknesses  1. The paper is not well-organized, some part
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2402.03300.md#weaknesses): 1. The paper does not provide a detailed analysis of the data selection pipeline used to construct the DeepSeekMath Corpus. It would be helpful to have a more detailed description of the data selection process, including how the data was filtered and how the quality of the data was assessed.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2402.03300.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant attention. First, the paper lacks a detailed analysis of the model's failure cases. While the authors present overall performance metrics, there is no discussion of the types of mathematical problems that DeepSeekMath struggles with.…
 
 <a id="arxiv-2303.17651"></a>
 ### Self-Refine: Iterative Refinement with Self-Feedback
@@ -1868,7 +2029,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `5.8` Accept (S/P/C 3.0/3.0/2.5) · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [gonzo_ML/1467](https://t.me/gonzo_ML/1467)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper evaluates Self-Refine on a limited number of tasks, and it is not clear how well the approach would perform on other tasks or domains. The paper also does not provide a detailed comparison with other approaches that use feedback and refinement to improve LLM outputs.  The paper does not provide a detailed analysis of the computational cost of Self-Refine, including the time a deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2303.17651.md#weaknesses): The paper evaluates Self-Refine on a limited number of tasks, and it is not clear how well the approach would perform on other tasks or domains. The paper also does not provide a detailed comparison with other approaches that use feedback and refinement to improve LLM outputs.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2303.17651.md#weaknesses): While the paper presents a compelling method, several weaknesses warrant careful consideration. First, the paper's evaluation lacks a crucial comparison with a baseline that uses a larger number of samples from the same model.…
 
 <a id="arxiv-2608.11676"></a>
 ### XBridge: Entity-Grounded Latent Bridge for Heterogeneous LLM Communication
@@ -1882,7 +2045,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `5.7` Accept (S/P/C 3.0/3.0/2.33) · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The proposed method is only evaluated on a limited set of benchmarks, and it is unclear how the method will perform on other tasks. 2. The method requires training a separate bridge for each sender-receiver pair, which may be computationally expensive. 3. The method assumes that the sender and receiver have the same vocabulary, which may not always be the case in real-world applicat deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2608.11676.md#weaknesses): 1. The proposed method is only evaluated on a limited set of benchmarks, and it is unclear how the method will perform on other tasks. 2. The method requires training a separate bridge for each sender-receiver pair, which may be computationally expensive. 3. The method assumes that the sender and receiver have the same vocabulary, which may not always be the case in real-world applications.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2608.11676.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. First, while the paper introduces the concept of the 'entity grounding problem' and provides a clear explanation of the 'rare-token compression collapse,' the explanation of *why* this collapse occurs is somewhat superficial.…
 
 <a id="arxiv-2608.03893"></a>
 ### Cross-Model KV Cache Transfer in LLM Families: A Closed-Form Linear Mapping for Prefill Reuse
@@ -1896,7 +2061,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.5` Accept (S/P/C 3.0/3.0/2.5) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [lovedeathtransformers/10993](https://t.me/lovedeathtransformers/10993)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The proposed method is evaluated on 6 matched-KV pairs across 3 model families. The authors claim that the linear structure in cross-model KV cache transfer is a general phenomenon, but the evaluation is not sufficient to support this claim.  - The proposed method is evaluated on 5 accuracy benchmarks. However, the authors did not evaluate the proposed method on more challenging benc deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2608.03893.md#weaknesses): The proposed method is evaluated on 6 matched-KV pairs across 3 model families. The authors claim that the linear structure in cross-model KV cache transfer is a general phenomenon, but the evaluation is not sufficient to support this claim. - The proposed method is evaluated on 5 accuracy benchmarks.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2608.03893.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, the paper's primary focus on 'matched-KV' configurations, where source and target models share the same number of KV heads and dimensions, limits the generalizability of the proposed method.…
 
 <a id="arxiv-2608.00146"></a>
 ### DiffusionGemma Technical Report
@@ -1910,7 +2077,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `5.6` Reject (S/P/C 3.0/3.0/3.0) · 14B Fast `8.0` Accept
 - OpenReviewer `8.0` Accept (S/P/C 4.0/4.0/4.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/5942](https://t.me/gonzo_ML/5942)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper does not provide a detailed comparison with existing methods, making it difficult to assess the novelty and effectiveness of the proposed method. 2. The paper does not provide a detailed analysis of the computational cost of the proposed method, making it difficult to assess its efficiency. 3. The paper does not provide a detailed discussion of the limitations of the propo deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2608.00146.md#weaknesses): 1. The paper does not provide a detailed comparison with existing methods, making it difficult to assess the novelty and effectiveness of the proposed method. 2. The paper does not provide a detailed analysis of the computational cost of the proposed method, making it difficult to assess its efficiency. 3.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2608.00146.md#weaknesses): While the paper presents a compelling approach to fast text generation, I have identified several weaknesses that warrant further discussion. Firstly, the paper's comparison of DiffusionGemma against the base Gemma 4 model, without including a comparison against a Gemma 4 model fine-tuned with the same data, is a significant limitation.…
 
 <a id="arxiv-2607.02303"></a>
 ### A Hippocampus for Linear Attention: An Exact Memory for What the Recurrent State Forgets
@@ -1924,7 +2093,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.8` Accept · 7B Fast `5.8` Accept (S/P/C 2.75/2.75/2.75) · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [gonzo_ML/5675](https://t.me/gonzo_ML/5675)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The main weakness of the paper is that the proposed method is not novel. The idea of using a cache to improve the performance of linear attention models has been proposed in previous works such as LTE and NHA. The novelty of this paper is mainly in the way the cache is filled with the most important key-value pairs.  ### Questions  1. How does the proposed method compare to LTE and NHA cyclereviewer-8b.seed1: Weaknesses  - The paper does not provide a detailed compa
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2607.02303.md#weaknesses): The main weakness of the paper is that the proposed method is not novel. The idea of using a cache to improve the performance of linear attention models has been proposed in previous works such as LTE and NHA. The novelty of this paper is mainly in the way the cache is filled with the most important key-value pairs.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2607.02303.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. First, while the paper demonstrates strong empirical results, the theoretical underpinnings of the proposed method could be further explored.…
 
 <a id="arxiv-2606.06574"></a>
 ### Skip a Layer or Loop It? Learning Program-of-Layers in LLMs
@@ -1938,7 +2109,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.0` Accept (S/P/C 3.25/3.25/3.0) · 14B Fast `6.2` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [gonzo_ML/5950](https://t.me/gonzo_ML/5950)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The authors claim that their method can reduce the inference latency. However, the authors only report the number of layers executed, but not the actual inference latency. I think it is more important to report the actual inference latency, as the number of layers executed may not be a good indicator of the actual inference latency.  2. The authors only evaluate the proposed method  cyclereviewer-8b.seed1: Weaknesses  1. The motivation is not clear. The authors c
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2606.06574.md#weaknesses): 1. The authors claim that their method can reduce the inference latency. However, the authors only report the number of layers executed, but not the actual inference latency. I think it is more important to report the actual inference latency, as the number of layers executed may not be a good indicator of the actual inference latency. 2.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2606.06574.md#weaknesses): While I find the paper to be generally strong, there are several weaknesses that I believe warrant further discussion. First, the paper lacks a detailed analysis of the computational overhead introduced by the proposed method.…
 
 <a id="arxiv-2605.22863"></a>
 ### Latent Cache Flow: Model-to-Model Communication Without Text
@@ -1952,7 +2125,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/3.0) · 14B Fast `5.8` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The novelty of this paper is limited. The idea of compressing the key-value cache into a lower-dimensional latent space is not new. In fact, the authors mentioned that "KV states can be compressed within a model" in the paper. The novelty of this paper lies in the application of this idea to LLM communication. 2. The experiments are not convincing. The authors only conduct experimen cyclereviewer-8b.seed1: Weaknesses  1. The paper is not well written. The present
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2605.22863.md#weaknesses): 1. The novelty of this paper is limited. The idea of compressing the key-value cache into a lower-dimensional latent space is not new. In fact, the authors mentioned that "KV states can be compressed within a model" in the paper. The novelty of this paper lies in the application of this idea to LLM communication. 2. The experiments are not convincing.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2605.22863.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, the paper lacks a comprehensive discussion of related work, particularly concerning alternative methods for model-to-model communication.…
 
 <a id="arxiv-2604.08302"></a>
 ### DMax: Aggressive Parallel Decoding for dLLMs
@@ -1966,7 +2141,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `7.5` Accept (S/P/C 3.25/3.25/3.25) · 14B Fast `6.0` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/5420](https://t.me/gonzo_ML/5420)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The proposed method is not novel enough. The idea of using mask embedding and token embedding to represent the intermediate state in parallel decoding has been explored in previous works such as SM (1) and EvoToken (2). The main difference is that the proposed method uses the mask embedding as a prior to represent the uncertainty of the model. However, this idea is not new and has been deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2604.08302.md#weaknesses): The proposed method is not novel enough. The idea of using mask embedding and token embedding to represent the intermediate state in parallel decoding has been explored in previous works such as SM (1) and EvoToken (2). The main difference is that the proposed method uses the mask embedding as a prior to represent the uncertainty of the model.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2604.08302.md#weaknesses): While the paper presents a compelling approach to parallel decoding in diffusion language models, several limitations warrant careful consideration. First, the evaluation is primarily focused on LLaDA-2.0-mini as the base model. While the paper demonstrates significant improvements on this model, the generalizability of DMax to other diffusion language model architectures remains unclear.…
 
 <a id="arxiv-2603.05454"></a>
 ### Beyond Scattered Acceptance: Fast and Coherent Inference for DLMs via Longest Stable Prefixes
@@ -1980,7 +2157,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `5.8` Reject (S/P/C 2.75/2.75/2.75) · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [derplearning/4956](https://t.me/derplearning/4956)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The proposed method is only evaluated on two DLMs, and it is unclear how the proposed method would perform on other DLMs. - The proposed method is only evaluated on a limited set of benchmarks, and it is unclear how the proposed method would perform on other benchmarks. - The proposed method is only evaluated on the inference speed, and it is unclear how the proposed method would per deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2603.05454.md#weaknesses): The proposed method is only evaluated on two DLMs, and it is unclear how the proposed method would perform on other DLMs. - The proposed method is only evaluated on a limited set of benchmarks, and it is unclear how the proposed method would perform on other benchmarks.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2603.05454.md#weaknesses): section, there are some limitations and areas that require further investigation.
 
 <a id="arxiv-2602.08676"></a>
 ### LLaDA2.1: Speeding Up Text Diffusion via Token Editing
@@ -1994,7 +2173,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `5.5` Reject (S/P/C 2.75/2.25/2.5) · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/8164](https://t.me/axisofordinary/8164)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The proposed decoding algorithm is not new. There have been many previous works that use a mixture of mask-to-token and token-to-token decoding to improve the decoding efficiency. For example, (1) also uses a mixture of mask-to-token and token-to-token decoding to improve the decoding efficiency. The main difference between the proposed method and (1) is that the proposed method use cyclereviewer-8b.seed1: Weaknesses  The paper is not well-written and the experim
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2602.08676.md#weaknesses): 1. The proposed decoding algorithm is not new. There have been many previous works that use a mixture of mask-to-token and token-to-token decoding to improve the decoding efficiency. For example, (1) also uses a mixture of mask-to-token and token-to-token decoding to improve the decoding efficiency.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2602.08676.md#weaknesses): While the paper presents several compelling innovations, there are several weaknesses that warrant careful consideration. Firstly, the paper lacks a detailed analysis of the computational overhead associated with the proposed decoding strategies, particularly Multi-Block Editing (MBE).…
 
 <a id="arxiv-2512.24601"></a>
 ### Recursive Language Models
@@ -2008,7 +2189,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.2` Reject · 7B Fast `5.2` Reject (S/P/C 2.5/2.75/2.25) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [data_secrets/8718](https://t.me/data_secrets/8718), [gonzo_ML/4562](https://t.me/gonzo_ML/4562), [AIHOUSE/1370](https://t.me/AIHOUSE/1370), [axisofordinary/8235](https://t.me/axisofordinary/8235)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks a detailed discussion of the limitations of RLMs. While the authors mention some limitations in the appendix, a more thorough discussion in the main paper would provide a more balanced view of the approach.  2. The paper does not provide a clear comparison with other methods for handling long prompts. While the authors mention some related work in the introduction, a deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2512.24601.md#weaknesses): 1. The paper lacks a detailed discussion of the limitations of RLMs. While the authors mention some limitations in the appendix, a more thorough discussion in the main paper would provide a more balanced view of the approach.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2512.24601.md#weaknesses): While the paper presents a compelling approach, several weaknesses warrant careful consideration. First, the paper's evaluation, while diverse, does not fully explore the potential of RLMs in scenarios that require iterative refinement of information or learning from long-term interactions.…
 
 <a id="arxiv-2512.14856"></a>
 ### T5Gemma 2: Seeing, Reading, and Understanding Longer
@@ -2022,7 +2205,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `5.5` Reject
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/4421](https://t.me/gonzo_ML/4421), [mishin_learning/1867](https://t.me/mishin_learning/1867), [boris_again/3650](https://t.me/boris_again/3650)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a detailed comparison with other existing models in the field, making it difficult to assess its novelty and significance. - The paper does not provide a detailed discussion of the limitations of the proposed methods and potential future research directions. - The paper does not provide a detailed discussion of the ethical considerations related to the use  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2512.14856.md#weaknesses): The paper does not provide a detailed comparison with other existing models in the field, making it difficult to assess its novelty and significance. - The paper does not provide a detailed discussion of the limitations of the proposed methods and potential future research directions.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2512.14856.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, the paper's claim of presenting the first capable long-context encoder-decoder LLM is not fully supported by the evidence. While the authors state that T5Gemma 2 can handle contexts up to 128K, the pre-training is only done on sequences up to 16K.…
 
 <a id="arxiv-2512.13961"></a>
 ### Olmo 3
@@ -2036,7 +2221,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.7` Reject · 7B Fast `6.2` Reject (S/P/C 3.0/3.0/2.75) · 14B Fast `6.5` Accept
 - OpenReviewer `8.0` Accept (S/P/C 4.0/3.0/4.0) · SEA-E `8.0` Accept
 - Telegram: [abstractDL/356](https://t.me/abstractDL/356), [j_links/8236](https://t.me/j_links/8236)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper lacks a clear and concise summary of the main contributions and findings. The introduction is lengthy and does not provide a clear overview of the paper's main contributions. The paper also lacks a clear and concise conclusion that summarizes the main findings and contributions.  The paper does not provide a clear and detailed explanation of the methodology used to train the  cyclereviewer-8b.seed1: Weaknesses  The paper lacks a clear and well-defined rese
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2512.13961.md#weaknesses): The paper lacks a clear and concise summary of the main contributions and findings. The introduction is lengthy and does not provide a clear overview of the paper's main contributions. The paper also lacks a clear and concise conclusion that summarizes the main findings and contributions.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2512.13961.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant attention. First, the paper's organization and writing style present a significant challenge to the reader. The sheer volume of information, often presented with excessive detail, makes it difficult to grasp the core contributions and novel aspects of the work.…
 
 <a id="arxiv-2512.15745"></a>
 ### LLaDA2.0: Scaling Up Diffusion Language Models to 100B
@@ -2050,7 +2237,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `5.5` Accept (S/P/C 2.75/2.75/2.75) · 14B Fast `6.5` Reject
 - OpenReviewer `8.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [gonzo_ML/5420](https://t.me/gonzo_ML/5420)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper lacks a clear motivation for the proposed approach. The authors do not provide a clear explanation of why they chose to use a discrete diffusion model instead of an autoregressive model. - The paper does not provide a detailed analysis of the computational cost of the proposed approach. The authors do not provide a clear comparison of the computational cost of their approac deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2512.15745.md#weaknesses): The paper lacks a clear motivation for the proposed approach. The authors do not provide a clear explanation of why they chose to use a discrete diffusion model instead of an autoregressive model. - The paper does not provide a detailed analysis of the computational cost of the proposed approach.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2512.15745.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant attention. First, the paper lacks a detailed analysis of the Warmup-Stable-Decay (WSD) strategy's impact on model performance. While the authors describe the three phases of WSD, they do not provide specific metrics or visualizations that demonstrate the model's behavior during each phase.…
 
 <a id="arxiv-2511.09149"></a>
 ### Enabling Agents to Communicate Entirely in Latent Space
@@ -2064,7 +2253,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.2` Reject · 7B Fast `6.0` Reject (S/P/C 3.0/3.0/2.67) · 14B Fast `7.5` Accept
 - OpenReviewer `8.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The proposed method is limited to a two-agent setting. It is unclear how it would scale to more complex multi-agent systems. - The method assumes access to internal model representations, which may not be available in all scenarios. - The method is not interpretable and may be difficult to debug or monitor.  ### Questions  - How does the method scale to more complex multi-agent syste cyclereviewer-8b.seed1: Weaknesses  The paper lacks a clear motivation for the pr
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2511.09149.md#weaknesses): The proposed method is limited to a two-agent setting. It is unclear how it would scale to more complex multi-agent systems. - The method assumes access to internal model representations, which may not be available in all scenarios. - The method is not interpretable and may be difficult to debug or monitor.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2511.09149.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. First, the paper's evaluation of generalization capabilities is limited. While the authors evaluate Interlat on both ALFWorld and MATH, these benchmarks primarily assess performance on tasks within the same domain.…
 
 <a id="arxiv-2510.26622"></a>
 ### Encoder-Decoder or Decoder-Only? Revisiting Encoder-Decoder Large Language Model
@@ -2078,7 +2269,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.7` Reject (S/P/C 2.67/2.33/2.67) · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/4220](https://t.me/gonzo_ML/4220), [gonzo_ML/4217](https://t.me/gonzo_ML/4217)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The authors only compare the performance of the encoder-decoder and decoder-only models on a single pretraining dataset (RedPajama V1). It would be interesting to see how the models perform on other pretraining datasets, such as the Common Crawl dataset used by LLaMA.  2. The authors only compare the performance of the encoder-decoder and decoder-only models on a single finetuning d deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2510.26622.md#weaknesses): 1. The authors only compare the performance of the encoder-decoder and decoder-only models on a single pretraining dataset (RedPajama V1). It would be interesting to see how the models perform on other pretraining datasets, such as the Common Crawl dataset used by LLaMA.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2510.26622.md#weaknesses): While this paper presents valuable insights, several limitations warrant careful consideration. First, the paper's central claim that RedLLMs exhibit 'similar scaling exponents' to DecLLMs is not fully supported by the presented evidence.…
 
 <a id="arxiv-2510.03215"></a>
 ### Cache-to-Cache: Direct Semantic Communication Between Large Language Models
@@ -2092,7 +2285,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `6.5` Accept (S/P/C 2.75/3.0/2.75) · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [data_secrets/8179](https://t.me/data_secrets/8179), [axisofordinary/7864](https://t.me/axisofordinary/7864), [boris_again/4044](https://t.me/boris_again/4044), [nn_for_science/2711](https://t.me/nn_for_science/2711)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper lacks a clear motivation for why KV cache is a better communication medium than text. The paper mentions that KV cache is a richer representation than text, but it does not provide any evidence to support this claim. In fact, KV cache is a lower-dimensional representation of the input, whereas text is a higher-dimensional representation. The paper also mentions that KV cach deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2510.03215.md#weaknesses): The paper lacks a clear motivation for why KV cache is a better communication medium than text. The paper mentions that KV cache is a richer representation than text, but it does not provide any evidence to support this claim. In fact, KV cache is a lower-dimensional representation of the input, whereas text is a higher-dimensional representation.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2510.03215.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. First, while the paper demonstrates the effectiveness of C2C, it lacks a detailed analysis of the computational overhead associated with the cache fusion process itself.…
 
 <a id="arxiv-2507.10524"></a>
 ### Mixture-of-Recursions: Learning Dynamic Recursive Depths for Adaptive Token-Level Computation
@@ -2106,7 +2301,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.2` Accept (S/P/C 2.75/3.0/2.75) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [data_secrets/7384](https://t.me/data_secrets/7384), [gonzo_ML/3835](https://t.me/gonzo_ML/3835), [nn_for_science/2498](https://t.me/nn_for_science/2498)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a detailed analysis of the computational cost of the proposed method. - The paper does not provide a detailed analysis of the memory requirements of the proposed method. - The paper does not provide a detailed analysis of the performance of the proposed method on different types of tasks.  ### Questions  - How does the proposed method compare to other metho deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2507.10524.md#weaknesses): The paper does not provide a detailed analysis of the computational cost of the proposed method. - The paper does not provide a detailed analysis of the memory requirements of the proposed method. - The paper does not provide a detailed analysis of the performance of the proposed method on different types of tasks.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2507.10524.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, while the paper introduces the concept of expert-choice and token-choice routing, the explanation of the router's implementation could be more detailed.…
 
 <a id="arxiv-2504.06225"></a>
 ### Encoder-Decoder Gemma: Improving the Quality-Efficiency Trade-Off via Adaptation
@@ -2120,7 +2317,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `5.0` Reject (S/P/C 2.67/3.0/2.67) · 14B Fast `6.8` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `5.0` Accept
 - Telegram: [gonzo_ML/4218](https://t.me/gonzo_ML/4218), [gonzo_ML/4217](https://t.me/gonzo_ML/4217)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper lacks novelty. The idea of adapting a pretrained decoder-only LLM to an encoder-decoder LLM is not new. In fact, the authors mentioned the related work in Section 2, but they did not compare their work with the existing methods. For example, the authors did not compare their method with the method proposed in Wang et al. (2022). Wang et al. (2022) also explored the adaptati deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2504.06225.md#weaknesses): The paper lacks novelty. The idea of adapting a pretrained decoder-only LLM to an encoder-decoder LLM is not new. In fact, the authors mentioned the related work in Section 2, but they did not compare their work with the existing methods. For example, the authors did not compare their method with the method proposed in Wang et al. (2022). Wang et al.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2504.06225.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, the paper's evaluation is limited in scope, primarily focusing on the Gemma-2 family of models.…
 
 <a id="arxiv-2502.09992"></a>
 ### Large Language Diffusion Models
@@ -2134,7 +2333,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/3.0) · 14B Fast `7.5` Accept
 - OpenReviewer `8.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [data_secrets/6190](https://t.me/data_secrets/6190)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks novelty. The proposed method is very similar to MaskGIT. The only difference is the training data and the model size. The authors should compare their method with MaskGIT more comprehensively. 2. The paper lacks experimental results. The authors only provide results on a few datasets. It is hard to evaluate the performance of the proposed method. 3. The paper lacks t deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2502.09992.md#weaknesses): 1. The paper lacks novelty. The proposed method is very similar to MaskGIT. The only difference is the training data and the model size. The authors should compare their method with MaskGIT more comprehensively. 2. The paper lacks experimental results. The authors only provide results on a few datasets. It is hard to evaluate the performance of the proposed method. 3.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2502.09992.md#weaknesses): While I appreciate the novelty of the approach, several weaknesses in the paper warrant careful consideration. First, the paper's comparison of LLaDA with autoregressive models is not always conducted under strictly controlled conditions.…
 
 <a id="arxiv-2501.14082"></a>
 ### Communicating Activations Between Language Model Agents
@@ -2148,7 +2349,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `5.8` Accept (S/P/C 2.75/3.0/2.5) · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/2.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper lacks an ablation study on the hyperparameters. For example, the choice of layer $j$ and $k$ seems to be crucial. However, the authors only provide a single choice for these hyperparameters.  - The paper lacks a discussion of the limitations of the proposed method. For example, the paper does not discuss the limitations of the proposed method in terms of scalability and gen deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2501.14082.md#weaknesses): The paper lacks an ablation study on the hyperparameters. For example, the choice of layer $j$ and $k$ seems to be crucial. However, the authors only provide a single choice for these hyperparameters. - The paper lacks a discussion of the limitations of the proposed method. For example, the paper does not discuss the limitations of the proposed method in terms of scalability and generalizability.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2501.14082.md#weaknesses): While the paper presents a compelling approach to inter-agent communication, several limitations warrant careful consideration. First, the paper's focus on two-agent communication is a significant constraint. The method, as described, is inherently pairwise, requiring a model to communicate with each other agent individually.…
 
 <a id="arxiv-2501.00656"></a>
 ### 2 OLMo 2 Furious
@@ -2162,7 +2365,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept (S/P/C 2.75/2.75/2.75) · 14B Fast `6.5` Accept
 - OpenReviewer `8.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not provide a clear explanation of the model architecture, training data, and training recipe. The evaluation results are not compared to other models, making it difficult to assess the model's performance.  ## Questions  1. What is the motivation behind using a larger tokenizer vocabulary for OLMo 2? 2. How does the larger tokenizer vocabulary impact the model's perform deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2501.00656.md#weaknesses): The paper does not provide a clear explanation of the model architecture, training data, and training recipe. The evaluation results are not compared to other models, making it difficult to assess the model's performance.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2501.00656.md#weaknesses): While the paper presents several strengths, there are also some notable weaknesses that warrant attention. One significant limitation is the lack of a dedicated section explicitly outlining the limitations of the proposed approach.…
 
 <a id="arxiv-2412.13663"></a>
 ### Smarter, Better, Faster, Longer: A Modern Bidirectional Encoder for Fast, Memory Efficient, and Long Context Finetuning and Inference
@@ -2176,7 +2381,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/3.0) · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/3091](https://t.me/gonzo_ML/3091), [dealerAI/1023](https://t.me/dealerAI/1023), [gonzo_ML/3090](https://t.me/gonzo_ML/3090)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a detailed analysis of the performance of ModernBERT on specific tasks, such as long-context retrieval and code retrieval.  - The paper does not provide a detailed analysis of the computational resources required to train and deploy ModernBERT.  - The paper does not provide a detailed analysis of the limitations of ModernBERT, such as its performance on low deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2412.13663.md#weaknesses): The paper does not provide a detailed analysis of the performance of ModernBERT on specific tasks, such as long-context retrieval and code retrieval. - The paper does not provide a detailed analysis of the computational resources required to train and deploy ModernBERT.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2412.13663.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. Firstly, while the paper introduces several architectural modifications, it lacks a detailed analysis of the individual impact of each component.…
 
 <a id="arxiv-2407.21783"></a>
 ### The Llama 3 Herd of Models
@@ -2190,7 +2397,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Reject · 7B Fast `6.8` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `4.0` Reject
 - OpenReviewer `8.0` Accept (S/P/C 4.0/4.0/4.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/3239](https://t.me/gonzo_ML/3239), [knowledge_accumulator/221](https://t.me/knowledge_accumulator/221), [ai_newz/3669](https://t.me/ai_newz/3669), [rybolos_channel/1386](https://t.me/rybolos_channel/1386), [MLResearch/1040](https://t.me/MLResearch/1040), [lovedeathtransformers/8609](https://t.me/lovedeathtransformers/8609), [j_links/7774](https://t.me/j_links/7774)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not provide a detailed description of the data used for pre-training and post-training, making it difficult to assess the quality and diversity of the data. The paper also does not provide a clear explanation of the methodology used for evaluating the performance of Llama 3, making it difficult to assess the validity of the results. The paper does not provide a detailed  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2407.21783.md#weaknesses): The paper does not provide a detailed description of the data used for pre-training and post-training, making it difficult to assess the quality and diversity of the data. The paper also does not provide a clear explanation of the methodology used for evaluating the performance of Llama 3, making it difficult to assess the validity of the results.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2407.21783.md#weaknesses): While the paper provides a detailed account of the development of Llama 3, several weaknesses limit its overall impact and suitability for a top-tier AI conference like ICLR. One significant concern is the lack of novel scientific contributions. The paper primarily focuses on the engineering aspects of scaling up LLMs, rather than presenting new research insights or theoretical advancements.…
 
 <a id="arxiv-2405.12250"></a>
 ### Your Transformer is Secretly Linear
@@ -2204,7 +2413,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `4.0` Reject (S/P/C 2.25/2.25/2.25) · 14B Fast `3.5` Reject
 - OpenReviewer `5.0` Reject (S/P/C 3.0/2.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [abstractDL/281](https://t.me/abstractDL/281), [seeallochnaya/1531](https://t.me/seeallochnaya/1531), [lovedeathtransformers/7691](https://t.me/lovedeathtransformers/7691), [dendi_math_ai/24](https://t.me/dendi_math_ai/24)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper focuses on the linearity of transformer decoders, which is a relatively narrow topic. The paper could benefit from a more thorough discussion of related work on sparsity and pruning in transformers. The paper also could benefit from a more in-depth analysis of the limitations of the proposed method.  ### Questions  1. What are the limitations of the proposed method? How does  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2405.12250.md#weaknesses): The paper focuses on the linearity of transformer decoders, which is a relatively narrow topic. The paper could benefit from a more thorough discussion of related work on sparsity and pruning in transformers. The paper also could benefit from a more in-depth analysis of the limitations of the proposed method.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2405.12250.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, the paper lacks a clear and detailed explanation of the 'depth-pruning algorithm' mentioned in Section 5.…
 
 <a id="arxiv-2405.04517"></a>
 ### xLSTM: Extended Long Short-Term Memory
@@ -2218,7 +2429,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `3.5` Reject (S/P/C 2.0/2.0/1.75) · 14B Fast `6.2` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `4.0` Reject
 - Telegram: [data_secrets/4008](https://t.me/data_secrets/4008), [gonzo_ML/2626](https://t.me/gonzo_ML/2626), [axisofordinary/6294](https://t.me/axisofordinary/6294), [gonzo_ML/2624](https://t.me/gonzo_ML/2624), [lovedeathtransformers/8203](https://t.me/lovedeathtransformers/8203)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper presents a new LSTM architecture that is designed to address the limitations of the original LSTM model. The authors introduce two new components: a scalar memory and a matrix memory, and a new update rule based on covariance. The authors also introduce a new gating mechanism that is designed to improve the performance of the model. The authors evaluate the proposed model on  cyclereviewer-8b.seed1: Weaknesses  The paper does not provide a clear motivation
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2405.04517.md#weaknesses): The paper presents a new LSTM architecture that is designed to address the limitations of the original LSTM model. The authors introduce two new components: a scalar memory and a matrix memory, and a new update rule based on covariance. The authors also introduce a new gating mechanism that is designed to improve the performance of the model.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2405.04517.md#weaknesses): of traditional LSTMs. The authors' approach to enhancing the memory capacity of LSTMs, particularly through the matrix memory in mLSTM, is a notable contribution. The fact that they have managed to scale LSTMs to billions of parameters, a feat previously thought to be challenging, is a significant achievement. Furthermore, the reported empirical results are impressive.…
 
 <a id="arxiv-2404.09173"></a>
 ### TransformerFAM: Feedback attention is working memory
@@ -2232,7 +2445,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `6.0` Reject (S/P/C 2.75/3.0/2.5) · 14B Fast `4.8` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/2586](https://t.me/gonzo_ML/2586), [gonzo_ML/2585](https://t.me/gonzo_ML/2585), [axisofordinary/6257](https://t.me/axisofordinary/6257)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The experiments are not convincing. The authors only evaluate the proposed method on a few datasets, and the results are not significantly better than the baselines. The authors should conduct more experiments to demonstrate the effectiveness of the proposed method.  2. The authors should provide more details about the implementation of the proposed method. For example, how to initi deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2404.09173.md#weaknesses): 1. The experiments are not convincing. The authors only evaluate the proposed method on a few datasets, and the results are not significantly better than the baselines. The authors should conduct more experiments to demonstrate the effectiveness of the proposed method.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2404.09173.md#weaknesses): section, there are some limitations in the evaluation and analysis that need to be addressed to fully validate the claims made in the paper.
 
 <a id="arxiv-2404.07143"></a>
 ### Leave No Context Behind: Efficient Infinite Context Transformers with Infini-attention
@@ -2246,7 +2461,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Reject · 7B Fast `5.8` Accept (S/P/C 2.5/2.5/2.75) · 14B Fast `5.5` Reject
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [lovedeathtransformers/7589](https://t.me/lovedeathtransformers/7589), [chillhousetech/690](https://t.me/chillhousetech/690), [gonzo_ML/2586](https://t.me/gonzo_ML/2586), [gonzo_ML/2585](https://t.me/gonzo_ML/2585), [axisofordinary/6247](https://t.me/axisofordinary/6247)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The proposed method is not as effective as the baseline methods on the long-context language modeling tasks. - The proposed method is not evaluated on the long-context tasks with 8B LLMs.  ### Questions  - The proposed method is not as effective as the baseline methods on the long-context language modeling tasks. For example, the proposed method achieves a perplexity of 2.29 on PG19, deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2404.07143.md#weaknesses): The proposed method is not as effective as the baseline methods on the long-context language modeling tasks. - The proposed method is not evaluated on the long-context tasks with 8B LLMs.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2404.07143.md#weaknesses): While the paper presents a compelling approach to long-context modeling, I have identified several weaknesses that warrant further consideration. Firstly, the paper lacks a thorough analysis of the computational overhead introduced by the memory read and write operations.…
 
 <a id="arxiv-2312.04927"></a>
 ### Zoology: Measuring and Improving Recall in Efficient Language Models
@@ -2260,7 +2477,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.5` Accept (S/P/C 3.0/3.25/3.0) · 14B Fast `7.0` Accept
 - OpenReviewer `8.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/2719](https://t.me/gonzo_ML/2719), [ntr_neural/218](https://t.me/ntr_neural/218), [tech_priestess/1363](https://t.me/tech_priestess/1363)
-- Weaknesses: openreviewer-8b: Weaknesses - The paper does not provide any empirical results on the hybrid convolution-attention model on real-world language modeling tasks, such as WikiText103 or other standard language modeling benchmarks. It would be helpful to see how well the model performs on these tasks and how it compares to other state-of-the-art models.  ## Questions - How does the hybrid convolution-attention model p
+- Weaknesses:
+  - [OR-8B](reviews/openreviewer-8b/arxiv_2312.04927.md#weaknesses): The paper does not provide any empirical results on the hybrid convolution-attention model on real-world language modeling tasks, such as WikiText103 or other standard language modeling benchmarks. It would be helpful to see how well the model performs on these tasks and how it compares to other state-of-the-art models.
 
 <a id="arxiv-2311.06242"></a>
 ### Florence-2: Advancing a Unified Representation for a Variety of Vision Tasks
@@ -2274,7 +2492,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `6.5` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `6.0` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [boris_again/3018](https://t.me/boris_again/3018), [AI_DeepLearning/1076](https://t.me/AI_DeepLearning/1076), [lovedeathtransformers/7855](https://t.me/lovedeathtransformers/7855), [axisofordinary/5811](https://t.me/axisofordinary/5811), [gonzo_ML/3270](https://t.me/gonzo_ML/3270), [lovedeathtransformers/9741](https://t.me/lovedeathtransformers/9741)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not provide a detailed analysis of the model's performance on specific tasks, such as object detection and image captioning. It would be helpful to include more quantitative results and analysis to demonstrate the model's performance on these tasks.  The paper does not provide a detailed analysis of the model's performance on tasks that require more complex reasoning, su deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2311.06242.md#weaknesses): The paper does not provide a detailed analysis of the model's performance on specific tasks, such as object detection and image captioning. It would be helpful to include more quantitative results and analysis to demonstrate the model's performance on these tasks.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2311.06242.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. Firstly, while the paper introduces Florence-2 as a unified model, it lacks a detailed comparison with existing unified models, particularly those employing transformer-based architectures for multi-task learning.…
 
 <a id="arxiv-2306.13575"></a>
 ### Scaling MLPs: A Tale of Inductive Bias
@@ -2288,7 +2508,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `6.0` Reject (S/P/C 2.67/3.0/2.33) · 14B Fast `6.0` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/1674](https://t.me/gonzo_ML/1674)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The novelty of this paper is limited. The authors mainly study the performance of MLPs on vision tasks and show that they can achieve strong performance with sufficient scale. This is not surprising and has been shown in previous works such as (1).  2. The authors do not provide any theoretical analysis for the performance of MLPs.  3. The authors do not compare the performance of M deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2306.13575.md#weaknesses): 1. The novelty of this paper is limited. The authors mainly study the performance of MLPs on vision tasks and show that they can achieve strong performance with sufficient scale. This is not surprising and has been shown in previous works such as (1). 2. The authors do not provide any theoretical analysis for the performance of MLPs. 3.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2306.13575.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, the paper's central claim regarding the role of inductive bias, while interesting, lacks sufficient nuance. The authors state that lack of inductive bias can be compensated by scale, and that MLPs are a good proxy for modern architectures.…
 
 <a id="arxiv-2305.01625"></a>
 ### Unlimiformer: Long-Range Transformers with Unlimited Length Input
@@ -2302,7 +2524,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `5.8` Accept (S/P/C 2.75/2.5/2.5) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/1584](https://t.me/gonzo_ML/1584), [gonzo_ML/1507](https://t.me/gonzo_ML/1507), [axisofordinary/4895](https://t.me/axisofordinary/4895)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The method is only evaluated on summarization tasks. It is unclear how the method will perform on other tasks such as translation. - The method requires a kNN search over the encoder output, which can be slow. This may limit the applicability of the method to long inputs. - The method requires a large amount of memory to store the kNN index, which can be a limitation for very long in deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2305.01625.md#weaknesses): The method is only evaluated on summarization tasks. It is unclear how the method will perform on other tasks such as translation. - The method requires a kNN search over the encoder output, which can be slow. This may limit the applicability of the method to long inputs. - The method requires a large amount of memory to store the kNN index, which can be a limitation for very long inputs.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2305.01625.md#weaknesses): While I find the proposed Unlimiformer approach to be promising, my analysis has identified several weaknesses that warrant further consideration. Firstly, the paper lacks a detailed analysis of the method's robustness to variations in input data quality.…
 
 <a id="arxiv-2302.14045"></a>
 ### Language Is Not All You Need: Aligning Perception with Language Models
@@ -2316,7 +2540,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/2.67) · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [techsparks/3925](https://t.me/techsparks/3925), [gonzo_ML/1339](https://t.me/gonzo_ML/1339), [axisofordinary/4500](https://t.me/axisofordinary/4500), [gonzo_ML/1364](https://t.me/gonzo_ML/1364), [gonzo_ML/2009](https://t.me/gonzo_ML/2009), [scitator_ai/79](https://t.me/scitator_ai/79), [nn_for_science/1346](https://t.me/nn_for_science/1346), [derplearning/2372](https://t.me/derplearning/2372)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper does not provide a detailed analysis of the limitations of the proposed approach. 2. The paper does not provide a comparison with other state-of-the-art models on the same tasks. 3. The paper does not provide a discussion of the potential applications of the proposed approach.  ### Questions  1. Can you provide a detailed analysis of the limitations of the proposed approac deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2302.14045.md#weaknesses): 1. The paper does not provide a detailed analysis of the limitations of the proposed approach. 2. The paper does not provide a comparison with other state-of-the-art models on the same tasks. 3. The paper does not provide a discussion of the potential applications of the proposed approach.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2302.14045.md#weaknesses): Despite the promising results, several weaknesses in the paper's methodology and experimental design need to be addressed. First, the paper lacks a clear and detailed description of the image embedding process.…
 
 <a id="arxiv-2302.10866"></a>
 ### Hyena Hierarchy: Towards Larger Convolutional Language Models
@@ -2330,7 +2556,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.5` Accept (S/P/C 3.0/3.25/2.5) · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [dl_stories/824](https://t.me/dl_stories/824), [ntr_neural/218](https://t.me/ntr_neural/218), [gonzo_ML/1754](https://t.me/gonzo_ML/1754), [axisofordinary/4834](https://t.me/axisofordinary/4834)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a thorough comparison with other attention-free models, such as RWKV and AFT. It would be helpful to include a comparison with these models in the main text. - The paper does not provide a thorough analysis of the computational complexity of Hyena. It would be helpful to include a more detailed analysis of the computational complexity in the main text. - Th deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2302.10866.md#weaknesses): The paper does not provide a thorough comparison with other attention-free models, such as RWKV and AFT. It would be helpful to include a comparison with these models in the main text. - The paper does not provide a thorough analysis of the computational complexity of Hyena. It would be helpful to include a more detailed analysis of the computational complexity in the main text.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2302.10866.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. First, while the paper demonstrates the effectiveness of Hyena on language modeling and image classification tasks, it lacks a thorough evaluation on tasks that require processing extremely long sequences, such as genomic sequence analysis.…
 
 <a id="arxiv-2302.07253"></a>
 ### Energy Transformer
@@ -2344,7 +2572,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/2.5) · 14B Fast `6.0` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `5.0` Accept
 - Telegram: [axisofordinary/4425](https://t.me/axisofordinary/4425)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The main weakness of this paper is that the proposed model is not well motivated. The authors claim that the proposed model is based on a sequence of attention layers that are designed to minimize a specifically engineered energy function. However, it is not clear why this is a good idea. The authors do not provide any theoretical justification for the proposed model, and the experimen deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2302.07253.md#weaknesses): The main weakness of this paper is that the proposed model is not well motivated. The authors claim that the proposed model is based on a sequence of attention layers that are designed to minimize a specifically engineered energy function. However, it is not clear why this is a good idea.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2302.07253.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. One of the most significant concerns is the lack of a thorough comparison with standard transformer architectures, particularly the BERT-style models.…
 
 <a id="arxiv-2207.02098"></a>
 ### Neural Networks and the Chomsky Hierarchy
@@ -2358,7 +2588,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `5.8` Accept (S/P/C 2.75/3.0/2.75) · 14B Fast `6.5` Accept
 - OpenReviewer `8.0` Accept (S/P/C 3.0/4.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/1049](https://t.me/gonzo_ML/1049)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not provide any theoretical analysis of the generalization of neural networks, and the authors only provide empirical results.  ### Questions  1. Why do the authors only consider the Chomsky hierarchy, but not other computational models? For example, the Blum-Shub machine (BSM) is a more general model than the Turing machine, and it has been shown that RNNs are equivalen deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2207.02098.md#weaknesses): The paper does not provide any theoretical analysis of the generalization of neural networks, and the authors only provide empirical results.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2207.02098.md#weaknesses): While this paper presents a compelling empirical study, several limitations warrant careful consideration. One significant weakness is the lack of a dedicated section explicitly outlining the paper's contributions and their implications. While the introduction and conclusion touch upon these aspects, a more focused discussion would greatly enhance the paper's impact and accessibility.…
 
 <a id="arxiv-2203.08913"></a>
 ### Memorizing Transformers
@@ -2372,7 +2604,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.2` Accept (S/P/C 3.25/3.25/2.75) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [abstractDL/198](https://t.me/abstractDL/198), [dl_stories/704](https://t.me/dl_stories/704), [j_links/6549](https://t.me/j_links/6549), [axisofordinary/4642](https://t.me/axisofordinary/4642), [gonzo_ML/1507](https://t.me/gonzo_ML/1507), [lovedeathtransformers/5700](https://t.me/lovedeathtransformers/5700), [dlinnlp/1565](https://t.me/dlinnlp/1565)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a thorough analysis of the proposed method. For example, the authors do not provide an ablation study on the effect of the memory size, the number of heads, or the number of layers. The authors also do not provide a comparison with other long-range attention methods. - The paper does not provide a detailed explanation of the experimental setup. For example, deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2203.08913.md#weaknesses): The paper does not provide a thorough analysis of the proposed method. For example, the authors do not provide an ablation study on the effect of the memory size, the number of heads, or the number of layers. The authors also do not provide a comparison with other long-range attention methods. - The paper does not provide a detailed explanation of the experimental setup.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2203.08913.md#weaknesses): While I find the proposed method to be promising, several limitations warrant further discussion. Firstly, the paper lacks a thorough analysis of the computational overhead introduced by the k-NN search. While the authors mention step time increases with memory size, a more detailed breakdown of the time spent on k-NN search versus other operations is missing.…
 
 <a id="arxiv-2006.16236"></a>
 ### Transformers are RNNs: Fast Autoregressive Transformers with Linear Attention
@@ -2386,7 +2620,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `5.0` Reject (S/P/C 2.5/2.75/2.5) · 14B Fast `6.2` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/2718](https://t.me/gonzo_ML/2718), [dlinnlp/1312](https://t.me/dlinnlp/1312), [gonzo_ML/397](https://t.me/gonzo_ML/397), [gonzo_ML/1754](https://t.me/gonzo_ML/1754), [dlinnlp/1645](https://t.me/dlinnlp/1645)
-- Weaknesses: openreviewer-8b: Weaknesses 1. The idea of linear attention is not new. It has been explored in previous works such as (1, 2, 3). The authors should discuss these works in the paper. 2. The proposed method is not as good as the baselines on some tasks. For example, in the speech recognition task, although the proposed method is much faster than the baselines, it achieves a much higher WER (word error rate) than th
+- Weaknesses:
+  - [OR-8B](reviews/openreviewer-8b/arxiv_2006.16236.md#weaknesses): 1. The idea of linear attention is not new. It has been explored in previous works such as (1, 2, 3). The authors should discuss these works in the paper. 2. The proposed method is not as good as the baselines on some tasks.…
 
 <a id="arxiv-2002.05202"></a>
 ### GLU Variants Improve Transformer
@@ -2400,7 +2635,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast `2.3` Reject (S/P/C 1.67/1.67/1.67) · 14B Fast `4.0` Reject
 - OpenReviewer `3.0` Reject (S/P/C 3.0/3.0/2.0) · SEA-E `5.0` Reject
 - Telegram: [gonzo_ML/4099](https://t.me/gonzo_ML/4099), [dealerAI/1023](https://t.me/dealerAI/1023), [mishin_learning/816](https://t.me/mishin_learning/816), [gonzo_ML/3592](https://t.me/gonzo_ML/3592), [gonzo_ML/2500](https://t.me/gonzo_ML/2500), [gonzo_ML/4071](https://t.me/gonzo_ML/4071), [seeallochnaya/1165](https://t.me/seeallochnaya/1165)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The main concern is the novelty of the proposed method. The GLU unit has been proposed in 2016, and it has been widely used in many NLP tasks. The proposed method is simply replacing the FFN with GLU and its variants. The novelty of the proposed method is limited.  2. The evaluation is limited to T5, and the results on other tasks are missing. It is unclear whether the proposed meth deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2002.05202.md#weaknesses): 1. The main concern is the novelty of the proposed method. The GLU unit has been proposed in 2016, and it has been widely used in many NLP tasks. The proposed method is simply replacing the FFN with GLU and its variants. The novelty of the proposed method is limited.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2002.05202.md#weaknesses): While this paper presents a valuable exploration of GLU variants in Transformers, several weaknesses limit the impact and generalizability of its findings. A primary concern is the lack of a strong theoretical justification for the observed performance improvements.…
 
 <a id="arxiv-1710.05941"></a>
 ### Searching for Activation Functions
@@ -2414,7 +2651,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.0` Accept (S/P/C 3.0/3.25/2.75) · 14B Fast `5.8` Accept
 - OpenReviewer `5.0` Reject (S/P/C 3.0/2.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [j_links/542](https://t.me/j_links/542), [gonzo_ML/364](https://t.me/gonzo_ML/364)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The novelty of the paper is limited. The search space is very similar to the one proposed in Bello et al. (2017). The search method is also similar to the one used in Zoph & Le (2016).  - The experiments are not convincing. The authors only compare their method with a few baselines. The proposed activation function is only evaluated on a few datasets. The authors also do not compare  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_1710.05941.md#weaknesses): The novelty of the paper is limited. The search space is very similar to the one proposed in Bello et al. (2017). The search method is also similar to the one used in Zoph & Le (2016). - The experiments are not convincing. The authors only compare their method with a few baselines. The proposed activation function is only evaluated on a few datasets.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_1710.05941.md#weaknesses): While the paper presents a compelling case for the Swish activation function, there are several weaknesses that warrant further discussion. One significant limitation is the lack of a comprehensive theoretical analysis of why Swish outperforms ReLU.…
 
 <a id="doi-10.1073-pnas.2520095123"></a>
 ### Evidence from formal logical reasoning reveals that the language of thought is not natural language
@@ -2428,7 +2667,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.5` Accept (S/P/C 2.75/2.75/2.75) · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper does not provide a clear hypothesis or research question. The abstract suggests that the paper aims to investigate the relationship between logical reasoning and language, but the specific research question or hypothesis is not stated. This makes it difficult to understand the purpose of the study and evaluate the results in the context of the research question.  2. The pa deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/doi_10.1073_pnas.2520095123.md#weaknesses): 1. The paper does not provide a clear hypothesis or research question. The abstract suggests that the paper aims to investigate the relationship between logical reasoning and language, but the specific research question or hypothesis is not stated. This makes it difficult to understand the purpose of the study and evaluate the results in the context of the research question.
+  - [DR-14B Fast](reviews/deepreviewer-14b/doi_10.1073_pnas.2520095123.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. The most significant limitation, in my view, is the small sample size of the aphasia group. The study relies on the performance of only two individuals with profound aphasia to draw conclusions about the dissociation between language and reasoning.…
 
 <a id="arxiv-2606.31779"></a>
 ### Bridging the Gap Between Latent and Explicit Reasoning with Looped Transformers
@@ -2442,7 +2683,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.5` Accept (S/P/C 3.0/3.0/2.5) · 14B Fast `6.2` Reject
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/5761](https://t.me/gonzo_ML/5761)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The proposed method is only evaluated on math reasoning tasks. It would be interesting to see how it performs on other tasks, such as language translation or question answering. 2. The proposed method is only compared to one previous method. It would be interesting to see how it compares to other methods.  ### Questions  1. How does the proposed method compare to other methods on ot deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2606.31779.md#weaknesses): 1. The proposed method is only evaluated on math reasoning tasks. It would be interesting to see how it performs on other tasks, such as language translation or question answering. 2. The proposed method is only compared to one previous method. It would be interesting to see how it compares to other methods.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2606.31779.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, the method's reliance on gold-CoT for training is a significant limitation. As the authors themselves acknowledge, the training objective directly aligns the latent representations with the gold-CoT tokens.…
 
 <a id="arxiv-2606.25010"></a>
 ### Emergent Capabilities Arise Randomly from Learning Sparse Attention Patterns
@@ -2456,7 +2699,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.2` Reject · 7B Fast `7.0` Accept (S/P/C 2.75/3.0/3.0) · 14B Fast `6.0` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/5867](https://t.me/gonzo_ML/5867)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not seem to have any significant contributions. The authors show that the emergence of capabilities is driven by the learning of task-relevant attention patterns. This is not a new finding. The authors also show that the difficulty of learning attention patterns depends on context length and pattern sparsity. This is also not a new finding. The authors also show that sca cyclereviewer-8b.seed1: Weaknesses  1. The experiments are not very convincing. T
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2606.25010.md#weaknesses): The paper does not seem to have any significant contributions. The authors show that the emergence of capabilities is driven by the learning of task-relevant attention patterns. This is not a new finding. The authors also show that the difficulty of learning attention patterns depends on context length and pattern sparsity. This is also not a new finding.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2606.25010.md#weaknesses): Despite its strengths, this paper has several weaknesses that warrant careful consideration. One significant limitation is the lack of a precise definition of 'emergent capabilities' within the context of this study. While the paper describes how emergence is measured operationally, it does not provide a formal definition of the term itself.…
 
 <a id="arxiv-2606.03982"></a>
 ### Language Models Compare Quantities Using Number-specific and Unit-specific Heuristics
@@ -2470,7 +2715,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/2.5) · 14B Fast `6.0` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/2.0) · SEA-E `7.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks novelty. The authors have conducted a thorough analysis of language models' behavior in comparing quantities with measurement units. However, the results are not surprising, and the conclusions drawn from the analysis are not particularly novel or groundbreaking. The paper could benefit from a more in-depth exploration of the implications of these findings or a more  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2606.03982.md#weaknesses): 1. The paper lacks novelty. The authors have conducted a thorough analysis of language models' behavior in comparing quantities with measurement units. However, the results are not surprising, and the conclusions drawn from the analysis are not particularly novel or groundbreaking.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2606.03982.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. First, while the paper provides a detailed description of the Quantity Margin calculation in Section 2.1, including the formula and an example, the initial presentation of this concept could be improved.…
 
 <a id="arxiv-2605.07654"></a>
 ### Reliable Chain-of-Thought via Prefix Consistency
@@ -2484,7 +2731,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.8` Accept · 7B Fast `7.0` Accept (S/P/C 3.25/3.25/3.0) · 14B Fast `6.8` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks sufficient analysis of the proposed method. For example, the paper does not provide any theoretical analysis of the proposed method. The authors only show that the reproduction rate is higher for correct answers than for incorrect answers. However, it is not clear why this is the case or how it leads to the proposed method. It would be helpful to provide a more detai cyclereviewer-8b.seed1: Weaknesses  1. The paper does not discuss the limitations
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2605.07654.md#weaknesses): 1. The paper lacks sufficient analysis of the proposed method. For example, the paper does not provide any theoretical analysis of the proposed method. The authors only show that the reproduction rate is higher for correct answers than for incorrect answers. However, it is not clear why this is the case or how it leads to the proposed method.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2605.07654.md#weaknesses): Despite the paper's strengths, several limitations and areas for improvement have been identified. First, the evaluation is limited to a few reasoning benchmarks, specifically FrontierScience-Olympiad, HMMT Feb 2026, AIME 2025, and Brumo 2025.…
 
 <a id="arxiv-2604.11791"></a>
 ### A Mechanistic Analysis of Looped Reasoning Language Models
@@ -2498,7 +2747,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.8` Reject (S/P/C 2.75/2.75/2.5) · 14B Fast `6.5` Reject
 - OpenReviewer `8.0` Accept (S/P/C 4.0/4.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/5206](https://t.me/gonzo_ML/5206)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The main weakness of the paper is that it is unclear what the contribution of the paper is. The paper studies the behavior of looped LLMs, but it is not clear what this behavior tells us about how to design better looped LLMs. The authors do not provide any practical guidance on how to design better looped LLMs based on their results.  ### Questions  I would like to see more discussion deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2604.11791.md#weaknesses): The main weakness of the paper is that it is unclear what the contribution of the paper is. The paper studies the behavior of looped LLMs, but it is not clear what this behavior tells us about how to design better looped LLMs. The authors do not provide any practical guidance on how to design better looped LLMs based on their results.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2604.11791.md#weaknesses): Despite the strengths, I have identified several weaknesses that warrant attention. First, the paper lacks a comprehensive explanation for the observed behavior of looped Transformers. While the authors demonstrate that looped models exhibit cyclic behavior and mirroring of feedforward stages of inference, the underlying reasons for these phenomena are not fully explored.…
 
 <a id="arxiv-2604.01754"></a>
 ### LiveMathematicianBench: A Live Benchmark for Mathematician-Level Reasoning with Proof Sketches
@@ -2512,7 +2763,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Reject (S/P/C 3.0/2.5/2.5) · 14B Fast `5.8` Reject
 - OpenReviewer `8.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `8.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: weaknesses of each model.  ### Weaknesses  1. The paper does not provide a detailed description of the dataset used to train the models being evaluated. This makes it difficult to understand the potential biases and limitations of the models and how they may impact the results. 2. The paper does not provide a detailed analysis of the potential sources of error in the benchmark. This makes it diffi deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2604.01754.md#weaknesses): While I appreciate the contributions of this paper, I have identified several weaknesses that warrant attention. First, the paper's reliance on multiple language models throughout the benchmark construction pipeline raises concerns about potential biases and error propagation.…
+  - [DR-7B Fast](reviews/deepreviewer-7b-fast/arxiv_2604.01754.md#weaknesses): Despite its strengths, I have identified several weaknesses in this paper that warrant careful consideration. First, while the authors claim novelty in their approach, the paper lacks a clear and detailed comparison to existing benchmarks, particularly those that also utilize arXiv-derived content.…
 
 <a id="arxiv-2602.10416"></a>
 ### AI-rithmetic
@@ -2526,7 +2779,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `5.2` Accept (S/P/C 2.75/3.0/2.5) · 14B Fast `5.8` Reject
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a clear explanation of why the error rate is periodic with respect to the length of the numbers being added. - The paper does not provide a clear explanation of why the error rate is higher for numbers whose length is not a multiple of 3. - The paper does not provide a clear explanation of why the error rate is higher for numbers whose length is not a multi cyclereviewer-8b.seed1: Weaknesses  - The paper only considers the task of adding
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2602.10416.md#weaknesses): The paper does not provide a clear explanation of why the error rate is periodic with respect to the length of the numbers being added. - The paper does not provide a clear explanation of why the error rate is higher for numbers whose length is not a multiple of 3. - The paper does not provide a clear explanation of why the error rate is higher for numbers whose length is not a multiple of 3.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2602.10416.md#weaknesses): While this paper presents valuable insights into the arithmetic limitations of LLMs, several weaknesses warrant careful consideration. A primary concern is the paper's lack of a detailed explanation of the error categorization process, particularly for misalignment errors.…
 
 <a id="openreview-klU4737opt"></a>
 ### Position: LLMs can't jump
@@ -2540,7 +2795,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `5.0` Reject (S/P/C 2.5/2.25/2.5) · 14B Fast `4.8` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a clear definition of what is meant by "abductive leap" or how it differs from inductive and deductive reasoning. - The paper does not provide a clear explanation of how physically consistent, multimodal world models could enable AI systems to make abductive leaps. - The paper does not provide a clear evaluation of the proposed solution or a plan for how it deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/openreview_klU4737opt.md#weaknesses): The paper does not provide a clear definition of what is meant by "abductive leap" or how it differs from inductive and deductive reasoning. - The paper does not provide a clear explanation of how physically consistent, multimodal world models could enable AI systems to make abductive leaps.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/openreview_klU4737opt.md#weaknesses): While the paper presents a compelling argument, several weaknesses undermine its overall impact. A primary concern is the lack of empirical evidence to support the claim that LLMs are fundamentally incapable of abductive reasoning.…
 
 <a id="arxiv-2512.16902"></a>
 ### In-Context Algebra
@@ -2554,7 +2811,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.8` Accept · 7B Fast `6.2` Accept (S/P/C 3.0/2.75/2.75) · 14B Fast `6.5` Accept
 - OpenReviewer `8.0` Accept (S/P/C 4.0/4.0/4.0) · SEA-E `7.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a comprehensive review of the existing literature on in-context learning and its applications. The authors should provide a more detailed discussion of the current state of the field and how their work contributes to it.  - The paper does not provide a clear explanation of the limitations of the proposed approach. The authors should discuss the potential li deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2512.16902.md#weaknesses): The paper does not provide a comprehensive review of the existing literature on in-context learning and its applications. The authors should provide a more detailed discussion of the current state of the field and how their work contributes to it. - The paper does not provide a clear explanation of the limitations of the proposed approach.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2512.16902.md#weaknesses): While the paper presents compelling results, I have identified several weaknesses that warrant further consideration. First, the paper's presentation of the task description, particularly the token mapping process, is difficult to follow. The description of how variable tokens are mapped to elements of different groups across sequences, as described in Section 2, is dense and hard to parse.…
 
 <a id="arxiv-2510.00184"></a>
 ### Why Can't Transformers Learn Multiplication? Reverse-Engineering Reveals Long-Range Dependency Pitfalls
@@ -2568,7 +2827,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.8` Accept (S/P/C 3.0/3.0/2.5) · 14B Fast `6.7` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/7757](https://t.me/axisofordinary/7757)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper only studies a simple 2-layer model. It would be interesting to see how the findings generalize to larger models. - The paper only considers a single task. It would be interesting to see how the findings generalize to other tasks that require long-range dependencies.  ### Questions  - How do the findings generalize to larger models? - How do the findings generalize to other deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2510.00184.md#weaknesses): The paper only studies a simple 2-layer model. It would be interesting to see how the findings generalize to larger models. - The paper only considers a single task. It would be interesting to see how the findings generalize to other tasks that require long-range dependencies.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2510.00184.md#weaknesses): While this paper offers valuable insights, several limitations warrant careful consideration. First, the paper's primary focus on a 4x4 multiplication task, while providing a controlled environment for analysis, raises concerns about the generalizability of the findings.…
 
 <a id="arxiv-2509.25239"></a>
 ### A Formal Comparison Between Chain of Thought and Latent Thought
@@ -2582,7 +2843,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.0` Reject (S/P/C 3.0/3.0/3.0) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper focuses on theoretical analysis and lacks empirical validation of the theoretical results. The experimental results are limited to a few simple tasks and do not demonstrate the practical applicability of the theoretical findings. 2. The paper does not discuss the limitations of the theoretical analysis, such as the assumptions made and the potential biases introduced. 3. T deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2509.25239.md#weaknesses): 1. The paper focuses on theoretical analysis and lacks empirical validation of the theoretical results. The experimental results are limited to a few simple tasks and do not demonstrate the practical applicability of the theoretical findings. 2. The paper does not discuss the limitations of the theoretical analysis, such as the assumptions made and the potential biases introduced. 3.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2509.25239.md#weaknesses): of these approaches by analyzing their computational power through the lens of circuit complexity. They introduce a formal framework, defining CoT as a sequential computation model akin to Turing machines, while Latent Thought, encompassing methods like Coconut and Looped Transformers, is treated as a parallel computation model similar to Boolean circuits.…
 
 <a id="arxiv-2509.20317"></a>
 ### SIM-CoT: Supervised Implicit Chain-of-Thought
@@ -2596,7 +2859,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `3.8` Reject · 7B Fast `6.3` Accept (S/P/C 3.0/3.0/2.67) · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [abstractDL/348](https://t.me/abstractDL/348), [boris_again/3470](https://t.me/boris_again/3470)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper only evaluates the method on a single dataset, GSM8k-Aug, which is a relatively small dataset. It would be good to see the performance of SIM-CoT on other datasets, such as GSM-Hard, MultiArith, and SVAMP. 2. The paper does not provide a detailed analysis of the computational cost of SIM-CoT. While it is mentioned that the auxiliary decoder is removed at inference, it is n deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2509.20317.md#weaknesses): 1. The paper only evaluates the method on a single dataset, GSM8k-Aug, which is a relatively small dataset. It would be good to see the performance of SIM-CoT on other datasets, such as GSM-Hard, MultiArith, and SVAMP. 2. The paper does not provide a detailed analysis of the computational cost of SIM-CoT.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2509.20317.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, while the paper introduces step-level supervision as a solution to latent instability, it does not fully explore the impact of varying step lengths on the model's performance.…
 
 <a id="arxiv-2508.02513"></a>
 ### Modular Arithmetic: Language Models Solve Math Digit by Digit
@@ -2610,7 +2875,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `5.8` Reject (S/P/C 2.75/2.5/2.5) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The authors only consider addition and subtraction in their experiments. It would be interesting to see if the proposed approach can be extended to more complex arithmetic operations such as multiplication and division. 2. The authors only consider MLP layers in their analysis. It would be interesting to see if the proposed approach can be extended to other components such as attent deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2508.02513.md#weaknesses): 1. The authors only consider addition and subtraction in their experiments. It would be interesting to see if the proposed approach can be extended to more complex arithmetic operations such as multiplication and division. 2. The authors only consider MLP layers in their analysis. It would be interesting to see if the proposed approach can be extended to other components such as attention heads.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2508.02513.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, the scope of the paper is limited to addition and subtraction, and the experiments are primarily conducted on three- digit numbers.…
 
 <a id="arxiv-2506.10947"></a>
 ### Spurious Rewards: Rethinking Training Signals in RLVR
@@ -2624,7 +2891,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast ``  (S/P/C 3.0/3.0/3.0) · 14B Fast `7.5` Accept
 - OpenReviewer `8.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [buckwheat_thoughts/306](https://t.me/buckwheat_thoughts/306), [gonzo_ML/4702](https://t.me/gonzo_ML/4702)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a clear explanation for why spurious rewards can lead to improvements in performance. The authors hypothesize that it is due to the clipping bias in GRPO, but this is not clearly explained. It would be helpful if the authors could provide a more detailed explanation of this phenomenon. - The paper only considers a single type of spurious reward, which is ra deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2506.10947.md#weaknesses): The paper does not provide a clear explanation for why spurious rewards can lead to improvements in performance. The authors hypothesize that it is due to the clipping bias in GRPO, but this is not clearly explained. It would be helpful if the authors could provide a more detailed explanation of this phenomenon. - The paper only considers a single type of spurious reward, which is random rewards.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2506.10947.md#weaknesses): While this paper presents compelling findings, several limitations warrant careful consideration. First, the paper's reliance on the GRPO algorithm, while justified by its popularity in RLVR research, limits the generalizability of the findings.…
 
 <a id="arxiv-2505.21493"></a>
 ### Reinforcing General Reasoning without Verifiers
@@ -2638,7 +2907,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `7.0` Accept (S/P/C 3.25/3.0/3.0) · 14B Fast `6.8` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `8.0` Accept
 - Telegram: [buckwheat_thoughts/306](https://t.me/buckwheat_thoughts/306), [gonzo_ML/4702](https://t.me/gonzo_ML/4702)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The proposed method relies on the assumption that there is a single correct answer for each question. However, this assumption may not hold for many general reasoning tasks, such as open-ended questions or questions with multiple correct answers. The paper does not discuss this limitation. - The proposed method is not novel. The idea of using the probability of the correct answer as  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2505.21493.md#weaknesses): The proposed method relies on the assumption that there is a single correct answer for each question. However, this assumption may not hold for many general reasoning tasks, such as open-ended questions or questions with multiple correct answers. The paper does not discuss this limitation. - The proposed method is not novel.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2505.21493.md#weaknesses): While the paper presents a compelling approach, several weaknesses warrant careful consideration. First, the paper's scope is primarily focused on multiple-choice question answering, which limits the generalizability of its findings.…
 
 <a id="arxiv-2505.21444"></a>
 ### Can Large Reasoning Models Self-Train?
@@ -2652,7 +2923,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `5.5` Reject (S/P/C 2.75/3.0/2.5) · 14B Fast `5.8` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [buckwheat_thoughts/306](https://t.me/buckwheat_thoughts/306), [gonzo_ML/4702](https://t.me/gonzo_ML/4702)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper is a bit incremental, as it is a simple extension of the previous work. The authors should discuss more about the difference between the previous work and the current work.  2. The authors should discuss more about the limitations of the paper.  3. The authors should discuss more about the potential future work.  ### Questions  1. The authors should discuss more about the  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2505.21444.md#weaknesses): 1. The paper is a bit incremental, as it is a simple extension of the previous work. The authors should discuss more about the difference between the previous work and the current work.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2505.21444.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, while the paper introduces SRT as a novel approach, the novelty is somewhat overstated.…
 
 <a id="arxiv-2505.15134"></a>
 ### The Unreasonable Effectiveness of Entropy Minimization in LLM Reasoning
@@ -2666,7 +2939,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `6.5` Accept (S/P/C 3.25/3.25/2.75) · 14B Fast `7.0` Accept
 - OpenReviewer `8.0` Accept (S/P/C 4.0/4.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [buckwheat_thoughts/306](https://t.me/buckwheat_thoughts/306), [gonzo_ML/4702](https://t.me/gonzo_ML/4702)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks novelty. The proposed methods are simple and have been explored in previous works. The main difference is that this paper applies these methods to LLMs. 2. The paper lacks ablation studies. The authors only show the results of the proposed methods without showing the results of the individual components. 3. The paper lacks comparison with other methods. The authors o cyclereviewer-8b.seed1: Weaknesses  - The paper lacks a theoretical analysis of w
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2505.15134.md#weaknesses): 1. The paper lacks novelty. The proposed methods are simple and have been explored in previous works. The main difference is that this paper applies these methods to LLMs. 2. The paper lacks ablation studies. The authors only show the results of the proposed methods without showing the results of the individual components. 3. The paper lacks comparison with other methods.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2505.15134.md#weaknesses): While I find the paper to be generally strong, there are several weaknesses that I have identified through my analysis. First, the paper's reliance on the assumption that high model confidence correlates with correctness is a significant limitation.…
 
 <a id="arxiv-2505.13763"></a>
 ### Language Models Are Capable of Metacognitive Monitoring and Control of Their Internal Activations
@@ -2680,7 +2955,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.8` Reject · 7B Fast `6.2` Reject (S/P/C 2.5/3.0/2.75) · 14B Fast `6.5` Accept
 - OpenReviewer `8.0` Accept (S/P/C 4.0/4.0/4.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/7240](https://t.me/axisofordinary/7240)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks a discussion of the limitations of the proposed neurofeedback paradigm. For example, how do the authors ensure that the LLMs are not just memorizing the relationship between the input and the label, rather than actually understanding the underlying concept? How do the authors ensure that the LLMs are not just exploiting the correlation between the input and the label deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2505.13763.md#weaknesses): 1. The paper lacks a discussion of the limitations of the proposed neurofeedback paradigm. For example, how do the authors ensure that the LLMs are not just memorizing the relationship between the input and the label, rather than actually understanding the underlying concept?…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2505.13763.md#weaknesses): While I find the paper's approach innovative, several weaknesses need to be addressed. Firstly, the paper's claim of novelty, while partially valid, could be more nuanced. The authors state that their paradigm differs from prior methods by quantifying metacognition at the neural level, contrasting it with probing and standard ICL.…
 
 <a id="arxiv-2504.20571"></a>
 ### Reinforcement Learning for Reasoning in Large Language Models with One Training Example
@@ -2694,7 +2971,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `6.5` Accept
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [data_secrets/6880](https://t.me/data_secrets/6880), [axisofordinary/7262](https://t.me/axisofordinary/7262), [tech_priestess/2091](https://t.me/tech_priestess/2091), [buckwheat_thoughts/306](https://t.me/buckwheat_thoughts/306), [axisofordinary/7159](https://t.me/axisofordinary/7159), [boris_again/3219](https://t.me/boris_again/3219), [gonzo_ML/4702](https://t.me/gonzo_ML/4702)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper only investigates the effectiveness of RLVR with a single training example on a base model Qwen2.5-Math-1.5B. It would be interesting to see if the results hold for other base models and RL algorithms.  2. The paper only investigates the effectiveness of RLVR with a single training example on a base model Qwen2.5-Math-1.5B. It would be interesting to see if the results hol deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2504.20571.md#weaknesses): 1. The paper only investigates the effectiveness of RLVR with a single training example on a base model Qwen2.5-Math-1.5B. It would be interesting to see if the results hold for other base models and RL algorithms.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2504.20571.md#weaknesses): While this paper presents a compelling and novel approach to RLVR, several weaknesses warrant careful consideration. First, the paper's claim that one-shot RLVR works across different base models is not fully supported by the experimental results. While the authors demonstrate improvements on Llama-3.2-3B-Instruct, the gains are substantially smaller compared to those observed on the Qwen models.…
 
 <a id="arxiv-2503.21676"></a>
 ### How do language models learn facts? Dynamics, curricula and hallucinations
@@ -2708,7 +2987,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `7.0` Accept (S/P/C 3.0/3.25/2.75) · 14B Fast `6.5` Accept
 - OpenReviewer `8.0` Accept (S/P/C 4.0/4.0/4.0) · SEA-E `7.0` Accept
 - Telegram: [data_secrets/6564](https://t.me/data_secrets/6564)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The authors claim that their findings are generalizable to LLMs, but the experiments are conducted on small models (44M parameters). The authors should conduct experiments on larger models to support their claims. 2. The authors claim that their findings are generalizable to real-world data, but the experiments are conducted on synthetic data. The authors should conduct experiments  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2503.21676.md#weaknesses): 1. The authors claim that their findings are generalizable to LLMs, but the experiments are conducted on small models (44M parameters). The authors should conduct experiments on larger models to support their claims. 2. The authors claim that their findings are generalizable to real-world data, but the experiments are conducted on synthetic data.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2503.21676.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, the paper's reliance on a synthetic dataset, while providing control, raises concerns about the generalizability of the findings to real-world language models trained on diverse, natural data.…
 
 <a id="arxiv-2502.19981"></a>
 ### The Lookahead Limitation: Why Multi-Operand Addition is Hard for LLMs
@@ -2722,7 +3003,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `6.0` Reject (S/P/C 2.5/2.75/2.5) · 14B Fast `4.8` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  The proposed hypothesis is somewhat trivial. The authors show that LLMs use a one-digit lookahead heuristic to solve addition, which is not surprising. This paper does not provide any new insights into the limitations of LLMs.  ### Questions  - Can the authors provide more insights into the limitations of LLMs? For example, what are the implications of this limitation for other tasks t deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2502.19981.md#weaknesses): The proposed hypothesis is somewhat trivial. The authors show that LLMs use a one-digit lookahead heuristic to solve addition, which is not surprising. This paper does not provide any new insights into the limitations of LLMs.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2502.19981.md#weaknesses): Despite its strengths, I have identified several weaknesses that warrant attention. First, the paper's claim that LLMs rely on a one-digit lookahead heuristic, regardless of tokenization, is not fully supported by the experimental evidence.…
 
 <a id="arxiv-2502.05171"></a>
 ### Scaling up Test-Time Compute with Latent Reasoning: A Recurrent Depth Approach
@@ -2736,7 +3019,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.0` Reject (S/P/C 3.25/2.75/2.5) · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [seeallochnaya/3895](https://t.me/seeallochnaya/3895), [axisofordinary/6971](https://t.me/axisofordinary/6971), [gonzo_ML/5334](https://t.me/gonzo_ML/5334), [buckwheat_thoughts/110](https://t.me/buckwheat_thoughts/110), [axisofordinary/7296](https://t.me/axisofordinary/7296)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not include a comparison with existing methods for scaling language models.  ### Questions  How does the proposed approach compare to existing methods for scaling language models?  ### Flag For Ethics Review  No ethics review needed.  ### Rating  6: marginally above the acceptance threshold  ### Confidence  4: You are confident in your assessment, but not absolutely cert deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2502.05171.md#weaknesses): The paper does not include a comparison with existing methods for scaling language models.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2502.05171.md#weaknesses): While I find the core idea of this paper compelling, my analysis has revealed several weaknesses that warrant careful consideration. Firstly, the paper's comparison to existing recurrent models is limited.…
 
 <a id="arxiv-2502.06807"></a>
 ### Competitive Programming with Large Reasoning Models
@@ -2750,7 +3035,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `3.2` Reject · 7B Fast `6.5` Reject (S/P/C 3.25/2.75/2.5) · 14B Fast `5.8` Accept
 - OpenReviewer `8.0` Accept (S/P/C 4.0/4.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [seeallochnaya/2304](https://t.me/seeallochnaya/2304), [data_secrets/6133](https://t.me/data_secrets/6133), [j_links/7875](https://t.me/j_links/7875), [axisofordinary/6978](https://t.me/axisofordinary/6978)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper is not a research paper, but rather a report of the performance of OpenAI's o1, o1-ioi and o3 models on competitive programming tasks. The paper lacks a clear research question, methodology, and results section.  2. The paper does not provide any technical details on the models, including the architecture, training data, and training procedure.   3. The paper does not comp deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2502.06807.md#weaknesses): 1. The paper is not a research paper, but rather a report of the performance of OpenAI's o1, o1-ioi and o3 models on competitive programming tasks. The paper lacks a clear research question, methodology, and results section.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2502.06807.md#weaknesses): While this paper presents valuable findings, several weaknesses warrant careful consideration. Firstly, the paper lacks a detailed explanation of the reinforcement learning training process, which significantly impacts the interpretability of the results.…
 
 <a id="arxiv-2502.00873"></a>
 ### Language Models Use Trigonometry to Do Addition
@@ -2764,7 +3051,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `7.0` Accept (S/P/C 3.25/3.25/3.25) · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [nn_for_science/2360](https://t.me/nn_for_science/2360)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper is not very novel. The authors show that numbers are represented as a helix in LLMs and that LLMs compute addition by manipulating this helix using the "Clock" algorithm. However, this has already been shown by previous works (e.g., Levy & Geva, 2024; Zhu et al., 2025).  ### Questions  1. How is the proposed method different from previous works (e.g., Levy & Geva, 2024; Zhu e deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2502.00873.md#weaknesses): The paper is not very novel. The authors show that numbers are represented as a helix in LLMs and that LLMs compute addition by manipulating this helix using the "Clock" algorithm. However, this has already been shown by previous works (e.g., Levy & Geva, 2024; Zhu et al., 2025).
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2502.00873.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, the paper's claim that the helical representation is the *only* way LLMs perform addition is not fully supported by the evidence.…
 
 <a id="arxiv-2501.04519"></a>
 ### rStar-Math: Small LLMs Can Master Math Reasoning with Self-Evolved Deep Thinking
@@ -2778,7 +3067,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.8` Accept · 7B Fast `7.0` Accept (S/P/C 3.0/3.25/3.25) · 14B Fast `6.2` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [data_secrets/5881](https://t.me/data_secrets/5881), [dealerAI/1054](https://t.me/dealerAI/1054), [axisofordinary/6880](https://t.me/axisofordinary/6880)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The proposed method requires a large amount of compute resources to train the models.  - The proposed method is not generalizable to other tasks.   I am willing to increase my score if the authors can address the above two concerns.  ### Questions  - The proposed method requires a large amount of compute resources to train the models. It is unclear how much compute resources are requ deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2501.04519.md#weaknesses): The proposed method requires a large amount of compute resources to train the models. - The proposed method is not generalizable to other tasks.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2501.04519.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. First, the paper's reliance on Python code execution for verification significantly limits the generalizability of the method.…
 
 <a id="arxiv-2412.14135"></a>
 ### Scaling of Search and Learning: A Roadmap to Reproduce o1 from Reinforcement Learning Perspective
@@ -2792,7 +3083,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `4.8` Reject (S/P/C 2.25/2.75/2.25) · 14B Fast `3.0` Reject
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/2.0) · SEA-E `5.0` Reject
 - Telegram: [AGI_and_RL/881](https://t.me/AGI_and_RL/881)
-- Weaknesses: cyclereviewer-8b: Weaknesses  This paper is a survey paper about the four key components of the o1 model: policy initialization, reward design, search, and learning. The authors first introduce the background of reinforcement learning and its connection to LLM. Then, the authors introduce the four key components of the o1 model. The authors first introduce the policy initialization of the o1 model, which includes p deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2412.14135.md#weaknesses): This paper is a survey paper about the four key components of the o1 model: policy initialization, reward design, search, and learning. The authors first introduce the background of reinforcement learning and its connection to LLM. Then, the authors introduce the four key components of the o1 model.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2412.14135.md#weaknesses): One of the most significant weaknesses of this paper is its lack of empirical validation. While the authors propose a roadmap for reproducing o1 using reinforcement learning, they do not present any experimental results to support their claims.…
 
 <a id="arxiv-2412.06769"></a>
 ### Training Large Language Models to Reason in a Continuous Latent Space
@@ -2806,7 +3099,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.2` Reject (S/P/C 2.5/3.0/2.75) · 14B Fast `6.2` Reject
 - OpenReviewer `6.0` Accept (S/P/C 2.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [seeallochnaya/2541](https://t.me/seeallochnaya/2541), [data_secrets/5672](https://t.me/data_secrets/5672), [gonzo_ML/3567](https://t.me/gonzo_ML/3567), [gonzo_ML/3569](https://t.me/gonzo_ML/3569), [abstractDL/311](https://t.me/abstractDL/311), [gonzo_ML/4210](https://t.me/gonzo_ML/4210), [gonzo_ML/4622](https://t.me/gonzo_ML/4622), [buckwheat_thoughts/110](https://t.me/buckwheat_thoughts/110)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper does not provide a thorough analysis of the limitations of the proposed method. For example, it is unclear how Coconut would perform on tasks that require more complex reasoning, such as multi-hop reasoning or reasoning over long chains of reasoning. 2. The paper does not provide a detailed discussion of the computational efficiency of Coconut compared to CoT. While the pa deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2412.06769.md#weaknesses): 1. The paper does not provide a thorough analysis of the limitations of the proposed method. For example, it is unclear how Coconut would perform on tasks that require more complex reasoning, such as multi-hop reasoning or reasoning over long chains of reasoning. 2. The paper does not provide a detailed discussion of the computational efficiency of Coconut compared to CoT.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2412.06769.md#weaknesses): Despite the strengths of this paper, I have identified several significant weaknesses that need to be addressed. First, the paper's claim that language space may not be optimal for reasoning, while intriguing, is not well-supported by the provided evidence.…
 
 <a id="arxiv-2410.21272"></a>
 ### Arithmetic Without Algorithms: Language Models Solve Math With a Bag of Heuristics
@@ -2820,7 +3115,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.25/3.0) · 14B Fast `8.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [j_links/7782](https://t.me/j_links/7782)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not discuss how the heuristics are learned during training. The paper only shows that the heuristics are present in the final model, but it does not show how they are learned. It would be interesting to see how the heuristics are learned during training and how they change over time.  ### Questions  How are the heuristics learned during training? How do they change over  cyclereviewer-8b.seed1: Weaknesses  - The paper does not provide a detailed expla
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2410.21272.md#weaknesses): The paper does not discuss how the heuristics are learned during training. The paper only shows that the heuristics are present in the final model, but it does not show how they are learned. It would be interesting to see how the heuristics are learned during training and how they change over time.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2410.21272.md#weaknesses): While this paper presents a compelling analysis of LLMs' arithmetic reasoning, several limitations warrant careful consideration. First, the study's focus on basic arithmetic operations (+, -, ×, ÷) with single-token operands and results restricts the generalizability of the findings.…
 
 <a id="arxiv-2305.13673"></a>
 ### Physics of Language Models: Part 1, Learning Hierarchical Language Structures
@@ -2834,7 +3131,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `6.7` Accept (S/P/C 3.0/3.0/2.67) · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [dl_stories/848](https://t.me/dl_stories/848), [lovedeathtransformers/8152](https://t.me/lovedeathtransformers/8152)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper focuses on CFGs, which are a limited class of grammars. It would be interesting to see how the proposed approach generalizes to other types of grammars, such as context-sensitive grammars.  The paper does not provide a comprehensive evaluation of the proposed approach. It would be interesting to see how the approach performs on a wider range of tasks and datasets.  The paper  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2305.13673.md#weaknesses): The paper focuses on CFGs, which are a limited class of grammars. It would be interesting to see how the proposed approach generalizes to other types of grammars, such as context-sensitive grammars.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2305.13673.md#weaknesses): While the paper presents compelling results, I have identified several weaknesses that warrant further discussion. First, the paper's reliance on a single GPT-2 small architecture is a significant limitation. As the authors themselves acknowledge, this limits the generalizability of their findings.…
 
 <a id="arxiv-2407.20311"></a>
 ### Physics of Language Models: Part 2.1, Grade-School Math and the Hidden Reasoning Process
@@ -2848,7 +3147,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.8` Reject · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/2.5) · 14B Fast `7.5` Accept
 - OpenReviewer `8.0` Accept (S/P/C 4.0/4.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [dl_stories/848](https://t.me/dl_stories/848), [lovedeathtransformers/8152](https://t.me/lovedeathtransformers/8152)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper focuses on a very specific domain (grade-school math) and it is unclear how the findings can be generalized to other domains. - The authors only consider a single model architecture (GPT-2) and it is unclear how the findings can be generalized to other model architectures. - The probing task is not well motivated and the authors do not compare their probing task to other ex deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2407.20311.md#weaknesses): The paper focuses on a very specific domain (grade-school math) and it is unclear how the findings can be generalized to other domains. - The authors only consider a single model architecture (GPT-2) and it is unclear how the findings can be generalized to other model architectures.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2407.20311.md#weaknesses): While I found the paper to be generally strong, there are several weaknesses that I believe warrant further discussion. First, the paper's analysis of the model's internal states relies heavily on the V-probing technique, and the interpretation of these probing results could be more subjective than presented.…
 
 <a id="arxiv-2309.14316"></a>
 ### Physics of Language Models: Part 3.1, Knowledge Storage and Extraction
@@ -2862,7 +3163,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `6.5` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [dl_stories/848](https://t.me/dl_stories/848), [rybolos_channel/1195](https://t.me/rybolos_channel/1195), [lovedeathtransformers/8152](https://t.me/lovedeathtransformers/8152)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper lacks novelty. The authors' proposed approach to understanding how LLMs store and extract knowledge from pretraining data has been explored in previous studies. The paper does not provide any new insights or contributions to the field.  ### Questions  N/A  ### Flag For Ethics Review  No ethics review needed.  ### Rating  3: reject, not good enough  ### Confidence  4: You are  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2309.14316.md#weaknesses): The paper lacks novelty. The authors' proposed approach to understanding how LLMs store and extract knowledge from pretraining data has been explored in previous studies. The paper does not provide any new insights or contributions to the field.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2309.14316.md#weaknesses): While I appreciate the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, the paper's experimental setup, while controlled, lacks sufficient justification for its design choices. The authors introduce two training paradigms: pretraining followed by instruction fine-tuning, and 'mixed training'.…
 
 <a id="arxiv-2309.14402"></a>
 ### Physics of Language Models: Part 3.2, Knowledge Manipulation
@@ -2876,7 +3179,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `7.0` Accept
 - OpenReviewer `8.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [dl_stories/848](https://t.me/dl_stories/848), [lovedeathtransformers/8152](https://t.me/lovedeathtransformers/8152)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper only focuses on a specific type of knowledge manipulation tasks, i.e., the tasks that can be solved by simple logical reasoning. It would be interesting to see if the findings hold for more complex knowledge manipulation tasks. 2. The paper only considers a limited number of language models, i.e., GPT-2 and LLaMA. It would be interesting to see if the findings hold for oth deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2309.14402.md#weaknesses): 1. The paper only focuses on a specific type of knowledge manipulation tasks, i.e., the tasks that can be solved by simple logical reasoning. It would be interesting to see if the findings hold for more complex knowledge manipulation tasks. 2. The paper only considers a limited number of language models, i.e., GPT-2 and LLaMA.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2309.14402.md#weaknesses): While the paper presents compelling evidence for the limitations of LLMs in knowledge manipulation, several weaknesses warrant consideration. First, the paper's exclusive use of synthetic biographical data, while providing a controlled environment, limits the generalizability of the findings to real-world scenarios.…
 
 <a id="arxiv-2404.05405"></a>
 ### Physics of Language Models: Part 3.3, Knowledge Capacity Scaling Laws
@@ -2890,7 +3195,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.7` Accept (S/P/C 2.67/2.67/2.67) · 14B Fast `7.5` Accept
 - OpenReviewer `8.0` Accept (S/P/C 4.0/4.0/4.0) · SEA-E `7.0` Accept
 - Telegram: [seeallochnaya/1268](https://t.me/seeallochnaya/1268), [lovedeathtransformers/7555](https://t.me/lovedeathtransformers/7555), [dl_stories/848](https://t.me/dl_stories/848), [lovedeathtransformers/8152](https://t.me/lovedeathtransformers/8152)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper focuses on a synthetic dataset and doesn't study the knowledge storage capacity of real-world language models. The results are not generalizable to real-world models. The paper also doesn't discuss the limitations of the proposed method.  ### Questions  - What are the limitations of the proposed method? How can it be improved? - Can the proposed method be applied to real-worl deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2404.05405.md#weaknesses): The paper focuses on a synthetic dataset and doesn't study the knowledge storage capacity of real-world language models. The results are not generalizable to real-world models. The paper also doesn't discuss the limitations of the proposed method.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2404.05405.md#weaknesses): While this paper presents a compelling framework and significant findings, several limitations warrant careful consideration. A primary concern is the paper's reliance on synthetic datasets for training and evaluation.…
 
 <a id="arxiv-2407.15017"></a>
 ### Knowledge Mechanisms in Large Language Models: A Survey and Perspective
@@ -2904,7 +3211,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `5.8` Reject (S/P/C 2.5/2.75/2.5) · 14B Fast `5.8` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [AGI_and_RL/844](https://t.me/AGI_and_RL/844)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not provide any new insights or contributions to the field of LLMs.  ### Questions  What are the potential applications of knowledge editing and representation editing in LLMs?  ### Flag For Ethics Review  No ethics review needed.  ### Rating  5: marginally below the acceptance threshold  ### Confidence  2: You are willing to defend your assessment, but it is quite likel deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2407.15017.md#weaknesses): The paper does not provide any new insights or contributions to the field of LLMs.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2407.15017.md#weaknesses): Despite the paper's strengths, several limitations are evident. First, the paper's contribution is primarily a survey and perspective, which inherently relies on existing research rather than presenting new empirical findings or formal frameworks. This is a valid concern, as the paper's value is largely in its synthesis and interpretation of current knowledge.…
 
 <a id="doi-10.1038-s41586-024-07522-w"></a>
 ### Language is primarily a tool for communication rather than thought
@@ -2918,7 +3227,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `5.8` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/2797](https://t.me/gonzo_ML/2797)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not provide a detailed analysis of the relationship between language and thought, and it does not fully explore the implications of the authors' argument for our understanding of human cognition and culture.  ### Questions  1. What are the implications of the authors' argument for our understanding of the relationship between language and thought? 2. How does language in deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/doi_10.1038_s41586-024-07522-w.md#weaknesses): The paper does not provide a detailed analysis of the relationship between language and thought, and it does not fully explore the implications of the authors' argument for our understanding of human cognition and culture.
+  - [DR-14B Fast](reviews/deepreviewer-14b/doi_10.1038_s41586-024-07522-w.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, while the authors present evidence for a 'double dissociation' between language and thought, I find that the evidence for the dissociation of language and thought in humans is not as strong as they suggest.…
 
 <a id="arxiv-2406.11813"></a>
 ### How Do Large Language Models Acquire Factual Knowledge During Pretraining?
@@ -2932,7 +3243,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `6.2` Accept (S/P/C 2.75/3.25/2.75) · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/6439](https://t.me/axisofordinary/6439)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper has some limitations. The authors only study the acquisition of factual knowledge in LLMs, and do not study other types of knowledge, such as common sense or world knowledge. The authors also only study the acquisition of knowledge in LLMs during pretraining, and do not study the acquisition of knowledge during fine-tuning or inference. The authors also only study the acquisi deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2406.11813.md#weaknesses): The paper has some limitations. The authors only study the acquisition of factual knowledge in LLMs, and do not study other types of knowledge, such as common sense or world knowledge. The authors also only study the acquisition of knowledge in LLMs during pretraining, and do not study the acquisition of knowledge during fine-tuning or inference.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2406.11813.md#weaknesses): Despite the paper's strengths, I have identified several weaknesses that warrant further discussion. One major concern is the lack of a detailed justification for the choice of OLMo as the primary model for the experiments.…
 
 <a id="arxiv-2406.11741"></a>
 ### Transcendence: Generative Models Can Outperform The Experts That Train Them
@@ -2946,7 +3259,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `5.8` Accept (S/P/C 2.75/2.75/2.5) · 14B Fast `5.2` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/2.0) · SEA-E `7.0` Accept
 - Telegram: [seeallochnaya/1559](https://t.me/seeallochnaya/1559), [axisofordinary/6439](https://t.me/axisofordinary/6439)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper lacks a clear motivation for studying the phenomenon of "transcendence". While the paper provides a theoretical analysis of the conditions under which transcendence can occur, it is not clear why this phenomenon is important or interesting. The paper also lacks a clear discussion of the limitations of the theoretical results, and how they relate to the empirical results. Addi cyclereviewer-8b.seed1: Weaknesses  - The paper only studies the phenomenon of tr
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2406.11741.md#weaknesses): The paper lacks a clear motivation for studying the phenomenon of "transcendence". While the paper provides a theoretical analysis of the conditions under which transcendence can occur, it is not clear why this phenomenon is important or interesting. The paper also lacks a clear discussion of the limitations of the theoretical results, and how they relate to the empirical results.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2406.11741.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, the paper's scope is limited by its focus on a specific setting: autoregressive transformers trained via cross-entropy minimization, primarily in the context of chess.…
 
 <a id="arxiv-2406.03689"></a>
 ### Evaluating the World Model Implicit in a Generative Model
@@ -2960,7 +3275,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Reject · 7B Fast `5.2` Reject (S/P/C 2.5/2.75/2.5) · 14B Fast `6.5` Accept
 - OpenReviewer `8.0` Accept (S/P/C 4.0/4.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [boris_again/2625](https://t.me/boris_again/2625), [j_links/7562](https://t.me/j_links/7562), [axisofordinary/6441](https://t.me/axisofordinary/6441)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper focuses on deterministic finite automata. However, in practice, the world is not deterministic. It would be interesting to see how the proposed metrics can be extended to handle stochasticity. 2. The paper only considers next-token prediction as the generative model. It would be interesting to see how the proposed metrics can be extended to other generative models, such as deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2406.03689.md#weaknesses): 1. The paper focuses on deterministic finite automata. However, in practice, the world is not deterministic. It would be interesting to see how the proposed metrics can be extended to handle stochasticity. 2. The paper only considers next-token prediction as the generative model.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2406.03689.md#weaknesses): Despite the paper's significant contributions, several limitations and concerns are evident. First, the proposed evaluation metrics are heavily dependent on the explicit knowledge of the underlying DFA, which is a significant limitation. The metrics require access to the true states, transitions, and accepting states of the DFA to compute the Myhill-Nerode boundary and interior.…
 
 <a id="arxiv-2406.03445"></a>
 ### Pre-trained Large Language Models Use Fourier Features to Compute Addition
@@ -2974,7 +3291,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `7.5` Accept (S/P/C 3.0/3.25/3.25) · 14B Fast `5.8` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/2.0) · SEA-E `7.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper's contribution is not very significant. The authors only analyzed a single task (addition) and a single model (GPT-2-XL) and did not generalize to other models or tasks. 2. The paper's findings are somewhat limited to the specific model and task analyzed. It would be more impactful if the authors could generalize their findings to other models and tasks. 3. The paper does  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2406.03445.md#weaknesses): 1. The paper's contribution is not very significant. The authors only analyzed a single task (addition) and a single model (GPT-2-XL) and did not generalize to other models or tasks. 2. The paper's findings are somewhat limited to the specific model and task analyzed. It would be more impactful if the authors could generalize their findings to other models and tasks. 3.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2406.03445.md#weaknesses): While this paper presents a compelling analysis of Fourier features in LLMs performing addition, several weaknesses warrant careful consideration. One significant limitation is the lack of a detailed mechanistic explanation of how these Fourier features are formed during pre-training.…
 
 <a id="arxiv-2405.15071"></a>
 ### Grokked Transformers are Implicit Reasoners: A Mechanistic Journey to the Edge of Generalization
@@ -2988,7 +3307,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `7.3` Accept (S/P/C 3.0/3.33/3.0) · 14B Fast `5.8` Accept
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [seeallochnaya/1473](https://t.me/seeallochnaya/1473), [lovedeathtransformers/7720](https://t.me/lovedeathtransformers/7720), [chillhousetech/773](https://t.me/chillhousetech/773), [axisofordinary/6349](https://t.me/axisofordinary/6349)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper is limited in its scope and does not fully explore the implications of its findings. The paper only studies two tasks, composition and comparison, and does not consider other types of reasoning, such as logical reasoning. The paper also does not consider other types of models, such as recurrent neural networks or graph neural networks, and only studies transformers. The paper deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2405.15071.md#weaknesses): The paper is limited in its scope and does not fully explore the implications of its findings. The paper only studies two tasks, composition and comparison, and does not consider other types of reasoning, such as logical reasoning. The paper also does not consider other types of models, such as recurrent neural networks or graph neural networks, and only studies transformers.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2405.15071.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. First, the paper's use of the term 'systematic generalization' to describe OOD generalization in compositional reasoning is not entirely consistent with its typical usage in the literature.…
 
 <a id="arxiv-2405.14838"></a>
 ### From Explicit CoT to Implicit CoT: Learning to Internalize CoT Step by Step
@@ -3002,7 +3323,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.5` Accept (S/P/C 2.75/3.25/2.75) · 14B Fast `5.0` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/3583](https://t.me/gonzo_ML/3583), [gonzo_ML/3568](https://t.me/gonzo_ML/3568), [axisofordinary/6364](https://t.me/axisofordinary/6364), [axisofordinary/6807](https://t.me/axisofordinary/6807), [axisofordinary/6481](https://t.me/axisofordinary/6481)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks novelty. The proposed method is similar to knowledge distillation, which transfers the knowledge from a teacher model to a student model. The difference is that the proposed method removes the intermediate steps and finetunes the model. However, the finetuning process is similar to knowledge distillation. 2. The proposed method is not evaluated on a wide range of tas deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2405.14838.md#weaknesses): 1. The paper lacks novelty. The proposed method is similar to knowledge distillation, which transfers the knowledge from a teacher model to a student model. The difference is that the proposed method removes the intermediate steps and finetunes the model. However, the finetuning process is similar to knowledge distillation. 2. The proposed method is not evaluated on a wide range of tasks.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2405.14838.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, while the paper demonstrates promising results on arithmetic and grade-school math problems, the scope of the evaluation is limited.…
 
 <a id="doi-10.1038-d41586-024-01413-w"></a>
 ### Why mathematics is set to be revolutionized by AI
@@ -3016,7 +3339,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/6315](https://t.me/axisofordinary/6315)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper is not well written. The idea of generating mathematical conjectures using machine learning is interesting, but the paper does not provide enough detail on how the method works and how it is implemented. The paper also does not provide enough evidence that the generated conjectures are actually true or useful.  ### Questions  I have the following questions regarding the paper deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/doi_10.1038_d41586-024-01413-w.md#weaknesses): The paper is not well written. The idea of generating mathematical conjectures using machine learning is interesting, but the paper does not provide enough detail on how the method works and how it is implemented. The paper also does not provide enough evidence that the generated conjectures are actually true or useful.
+  - [DR-14B Fast](reviews/deepreviewer-14b/doi_10.1038_d41586-024-01413-w.md#weaknesses): While the article presents a compelling vision of AI's role in mathematics, several weaknesses warrant attention. Firstly, the article lacks a detailed discussion of the specific AI techniques employed in the case studies it presents.…
 
 <a id="arxiv-2402.01817"></a>
 ### LLMs Can't Plan, But Can Help Planning in LLM-Modulo Frameworks
@@ -3030,7 +3355,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `5.5` Reject (S/P/C 2.75/2.5/2.5) · 14B Fast `5.8` Reject
 - OpenReviewer `8.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [data_secrets/5225](https://t.me/data_secrets/5225), [tech_priestess/1697](https://t.me/tech_priestess/1697)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not provide sufficient evidence to support its claims about the limitations of LLMs in planning and reasoning tasks. The paper relies on previous studies to support its claims, but does not provide any new empirical evidence. The paper also does not provide a clear description of the LLM-Modulo framework, and how it differs from existing approaches.  ### Questions  The p deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2402.01817.md#weaknesses): The paper does not provide sufficient evidence to support its claims about the limitations of LLMs in planning and reasoning tasks. The paper relies on previous studies to support its claims, but does not provide any new empirical evidence. The paper also does not provide a clear description of the LLM-Modulo framework, and how it differs from existing approaches.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2402.01817.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. First, while the paper introduces the LLM-Modulo framework, the technical novelty of the approach is somewhat limited. The core idea of using LLMs as generators and symbolic methods for verification is not entirely new, as the authors themselves acknowledge.…
 
 <a id="arxiv-2312.13558"></a>
 ### The Truth is in There: Improving Reasoning in Language Models with Layer-Selective Rank Reduction
@@ -3044,7 +3371,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.8` Reject · 7B Fast `5.5` Reject (S/P/C 2.5/2.75/2.25) · 14B Fast `6.2` Accept
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [data_secrets/3301](https://t.me/data_secrets/3301), [j_links/7306](https://t.me/j_links/7306), [axisofordinary/5886](https://t.me/axisofordinary/5886), [tech_priestess/1311](https://t.me/tech_priestess/1311)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks a clear explanation of the underlying mechanism of LASER and how it improves the performance of LLMs. While the paper provides some insights into the relationship between the model's training data and the samples that benefit from LASER, it does not provide a comprehensive explanation of how LASER works. 2. The paper does not provide a thorough evaluation of the robu deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2312.13558.md#weaknesses): 1. The paper lacks a clear explanation of the underlying mechanism of LASER and how it improves the performance of LLMs. While the paper provides some insights into the relationship between the model's training data and the samples that benefit from LASER, it does not provide a comprehensive explanation of how LASER works. 2.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2312.13558.md#weaknesses): While the paper presents a compelling approach to improving LLM performance, several weaknesses warrant careful consideration. First, the paper lacks a detailed analysis of the computational cost associated with the proposed LASER method.…
 
 <a id="openreview-hcQfTsVnBo"></a>
 ### Grokking Group Multiplication with Cosets
@@ -3058,7 +3387,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.8` Accept · 7B Fast `7.0` Accept (S/P/C 3.25/3.0/3.0) · 14B Fast `6.8` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [axisofordinary/6435](https://t.me/axisofordinary/6435)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper is more of a case study and I am not sure if it is ready for ICLR. The paper should be expanded to include more details about the experiments, the experimental setup, the data, the models, etc.  ### Questions  What is the experimental setup? What is the data? What are the models? What are the results? How do the results compare to other models?  ### Flag For Ethics Review  No deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/openreview_hcQfTsVnBo.md#weaknesses): The paper is more of a case study and I am not sure if it is ready for ICLR. The paper should be expanded to include more details about the experiments, the experimental setup, the data, the models, etc.
+  - [DR-14B Fast](reviews/deepreviewer-14b/openreview_hcQfTsVnBo.md#weaknesses): Despite its strengths, the paper has several notable weaknesses that I believe should be addressed. One of the primary concerns is the limited generalizability of the findings. The paper focuses on a highly constrained setting: a one-hidden-layer fully connected network trained on the specific task of group multiplication in S5 and S6.…
 
 <a id="arxiv-2309.12288"></a>
 ### The Reversal Curse: LLMs trained on "A is B" fail to learn "B is A"
@@ -3072,7 +3403,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.2` Reject · 7B Fast `6.3` Accept (S/P/C 2.67/2.67/2.67) · 14B Fast `5.8` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [abstractDL/245](https://t.me/abstractDL/245), [gonzo_ML/4618](https://t.me/gonzo_ML/4618), [boris_again/1973](https://t.me/boris_again/1973)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The main weakness of this paper is that the experiments are not convincing. The authors only use a small dataset of 30 facts about celebrities. The authors also only perform finetuning on this dataset. It is unclear whether the Reversal Curse still exists in pretraining. The authors also only use GPT-3 and Llama-1 models. It is unclear whether the Reversal Curse exists in other models. deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2309.12288.md#weaknesses): The main weakness of this paper is that the experiments are not convincing. The authors only use a small dataset of 30 facts about celebrities. The authors also only perform finetuning on this dataset. It is unclear whether the Reversal Curse still exists in pretraining. The authors also only use GPT-3 and Llama-1 models. It is unclear whether the Reversal Curse exists in other models.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2309.12288.md#weaknesses): in current LLM architectures and training methods, and suggest that further work is needed to address this limitation.
 
 <a id="arxiv-2304.15004"></a>
 ### Are Emergent Abilities of Large Language Models a Mirage?
@@ -3086,7 +3419,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.2` Accept (S/P/C 2.75/3.0/3.0) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [dl_stories/794](https://t.me/dl_stories/794), [abstractDL/215](https://t.me/abstractDL/215), [lovedeathtransformers/6780](https://t.me/lovedeathtransformers/6780), [chillhousetech/524](https://t.me/chillhousetech/524), [rybolos_channel/995](https://t.me/rybolos_channel/995), [Victor_Osyka/511](https://t.me/Victor_Osyka/511), [emptyset_of_ideas/429](https://t.me/emptyset_of_ideas/429)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper focuses primarily on LLMs, but the authors do not provide a clear explanation of why emergent abilities are not a fundamental property of other types of models, such as computer vision models. - The paper does not provide a clear explanation of how the choice of metric affects the performance of models on different tasks. - The paper does not provide a clear explanation of  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2304.15004.md#weaknesses): The paper focuses primarily on LLMs, but the authors do not provide a clear explanation of why emergent abilities are not a fundamental property of other types of models, such as computer vision models. - The paper does not provide a clear explanation of how the choice of metric affects the performance of models on different tasks.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2304.15004.md#weaknesses): While I appreciate the paper's contributions, I have identified several weaknesses that warrant careful consideration. First, the paper's critique of 'emergence' is primarily focused on the discontinuity of performance scaling, neglecting other aspects of emergence, such as the unpredictability of *which* abilities will emerge.…
 
 <a id="arxiv-2302.00923"></a>
 ### Multimodal Chain-of-Thought Reasoning in Language Models
@@ -3100,7 +3435,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `5.7` Accept (S/P/C 2.67/3.0/2.67) · 14B Fast `5.8` Reject
 - OpenReviewer `8.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [j_links/6440](https://t.me/j_links/6440), [axisofordinary/4464](https://t.me/axisofordinary/4464), [axisofordinary/4323](https://t.me/axisofordinary/4323)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The method is not novel. The idea of using two stages for CoT reasoning has been proposed in previous works, such as (1). The method of using a single-head attention network to correlate text tokens with image patches has also been proposed in previous works, such as (2). The method of using a gated fusion mechanism to fuse language and vision representations has also been proposed in  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2302.00923.md#weaknesses): The method is not novel. The idea of using two stages for CoT reasoning has been proposed in previous works, such as (1). The method of using a single-head attention network to correlate text tokens with image patches has also been proposed in previous works, such as (2).…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2302.00923.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. First, the paper's reliance on annotated rationales is a significant limitation. As the authors themselves acknowledge, the datasets used in this study, ScienceQA and A-OKVQA, provide ground-truth rationales, which are not always available in real-world scenarios.…
 
 <a id="arxiv-2301.06627"></a>
 ### Dissociating language and thought in large language models
@@ -3114,7 +3451,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `6.5` Reject (S/P/C 2.75/2.75/2.75) · 14B Fast `6.8` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [axisofordinary/4244](https://t.me/axisofordinary/4244)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks a clear and concise abstract that summarizes the main contributions and findings of the paper. 2. The paper lacks a clear and concise introduction that provides background information and sets the stage for the rest of the paper. 3. The paper lacks a clear and concise conclusion that summarizes the main findings and contributions of the paper. 4. The paper lacks a cl cyclereviewer-8b.seed1: Weaknesses  - The paper's evaluation of LLMs on functiona
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2301.06627.md#weaknesses): 1. The paper lacks a clear and concise abstract that summarizes the main contributions and findings of the paper. 2. The paper lacks a clear and concise introduction that provides background information and sets the stage for the rest of the paper. 3. The paper lacks a clear and concise conclusion that summarizes the main findings and contributions of the paper. 4.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2301.06627.md#weaknesses): Despite its strengths, I have identified several weaknesses in this paper that warrant careful consideration. First, the paper's definition of formal linguistic competence, while generally clear, lacks sufficient nuance regarding the role of semantics.…
 
 <a id="arxiv-2301.05217"></a>
 ### Progress measures for grokking via mechanistic interpretability
@@ -3128,7 +3467,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `8.0` Accept (S/P/C 3.5/3.5/3.5) · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [j_links/6406](https://t.me/j_links/6406)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper focuses on a very specific task and model architecture, which limits the generalizability of the findings. It is not clear how the results would extend to other tasks or model architectures. - The paper does not provide a clear explanation for why the model uses the Fourier multiplication algorithm to solve the modular addition task. It would be helpful to have a more in-de deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2301.05217.md#weaknesses): The paper focuses on a very specific task and model architecture, which limits the generalizability of the findings. It is not clear how the results would extend to other tasks or model architectures. - The paper does not provide a clear explanation for why the model uses the Fourier multiplication algorithm to solve the modular addition task.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2301.05217.md#weaknesses): While this paper presents a compelling analysis of grokking in modular addition, several limitations warrant careful consideration. The most significant weakness is the narrow scope of the empirical investigation. The entire experimental analysis focuses on a single model architecture: a one-layer transformer without LayerNorm, trained on a single task, modular addition.…
 
 <a id="arxiv-2212.09196"></a>
 ### Emergent Analogical Reasoning in Large Language Models
@@ -3142,7 +3483,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.2` Reject (S/P/C 2.5/3.0/2.25) · 14B Fast `6.5` Accept
 - OpenReviewer `8.0` Accept (S/P/C 3.0/4.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [dtulinov/501](https://t.me/dtulinov/501), [axisofordinary/4214](https://t.me/axisofordinary/4214), [axisofordinary/4140](https://t.me/axisofordinary/4140)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper would benefit from a more detailed discussion of the limitations of the study. For example, the authors note that GPT-3 was not able to use analogies to solve a transfer problem involving construction and use of simple tools. However, it is not clear why this is the case, or whether it is a limitation of GPT-3 or simply a limitation of the particular task. Additionally, the a deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2212.09196.md#weaknesses): The paper would benefit from a more detailed discussion of the limitations of the study. For example, the authors note that GPT-3 was not able to use analogies to solve a transfer problem involving construction and use of simple tools. However, it is not clear why this is the case, or whether it is a limitation of GPT-3 or simply a limitation of the particular task.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2212.09196.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, the paper's experimental scope is limited to a single LLM, GPT-3. While the authors acknowledge the existence of other LLMs, such as PaLM and Claude, they do not provide any evidence of how these models perform on the same tasks.…
 
 <a id="openreview-wUU-7XTL5XO"></a>
 ### Large Language Models Still Can't Plan / PlanBench (Kambhampati)
@@ -3156,7 +3499,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast `4.2` Reject (S/P/C 2.5/2.25/2.25) · 14B Fast `5.7` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [data_secrets/5225](https://t.me/data_secrets/5225)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper only evaluates the benchmark on GPT-3, Instruct-GPT3 and BLOOM, and does not evaluate other popular LLMs such as Llama-2, Vicuna, etc. - The paper only evaluates the benchmark on simple planning tasks, and does not evaluate the benchmark on more complex planning tasks. - The paper does not provide any analysis of why the LLMs perform poorly on the benchmark. - The paper doe deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/openreview_wUU-7XTL5XO.md#weaknesses): The paper only evaluates the benchmark on GPT-3, Instruct-GPT3 and BLOOM, and does not evaluate other popular LLMs such as Llama-2, Vicuna, etc. - The paper only evaluates the benchmark on simple planning tasks, and does not evaluate the benchmark on more complex planning tasks. - The paper does not provide any analysis of why the LLMs perform poorly on the benchmark.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/openreview_wUU-7XTL5XO.md#weaknesses): After a thorough examination of the paper, I have identified several key weaknesses that warrant discussion. Firstly, the paper's evaluation is limited by the choice of LLMs. The experiments were conducted using GPT-3, Instruct-GPT3, and BLOOM, all of which are now considered outdated.…
 
 <a id="arxiv-2203.11171"></a>
 ### Self-Consistency Improves Chain of Thought Reasoning in Language Models
@@ -3170,7 +3515,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.25/2.75) · 14B Fast `4.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [seeallochnaya/1765](https://t.me/seeallochnaya/1765), [axisofordinary/7585](https://t.me/axisofordinary/7585), [gonzo_ML/1885](https://t.me/gonzo_ML/1885), [axisofordinary/3588](https://t.me/axisofordinary/3588), [axisofordinary/2249](https://t.me/axisofordinary/2249), [rybolos_channel/700](https://t.me/rybolos_channel/700)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper could benefit from a more thorough discussion of the limitations of the proposed method. For example, the authors mention that self-consistency incurs more computation cost, but it would be helpful to provide more details on how much more expensive it is compared to other methods. Additionally, the authors mention that self-consistency can sometimes generate incorrect or nons deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2203.11171.md#weaknesses): The paper could benefit from a more thorough discussion of the limitations of the proposed method. For example, the authors mention that self-consistency incurs more computation cost, but it would be helpful to provide more details on how much more expensive it is compared to other methods.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2203.11171.md#weaknesses): While the paper presents a compelling method with strong empirical results, there are several limitations that warrant further discussion. First, the paper lacks a detailed analysis of the computational cost associated with self-consistency.…
 
 <a id="arxiv-2608.05136"></a>
 ### The Loss Does Not See the Basis, but Adam Does
@@ -3184,7 +3531,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.5` Accept (S/P/C 2.75/3.0/2.75) · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/5956](https://t.me/gonzo_ML/5956)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The main weakness of the paper is that the authors do not provide a clear explanation of why the low-rank bias is present in some non-adaptive methods such as Shampoo and Muon. The authors only provide a partial explanation of why the low-rank bias is present in these methods.  ### Questions  1. Why is the low-rank bias not present in Adam and other adaptive methods? Is it because thes deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2608.05136.md#weaknesses): The main weakness of the paper is that the authors do not provide a clear explanation of why the low-rank bias is present in some non-adaptive methods such as Shampoo and Muon. The authors only provide a partial explanation of why the low-rank bias is present in these methods.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2608.05136.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, while the paper introduces the concept of gauge equivariance and its importance for preserving low-rank solutions, it does not provide a sufficiently intuitive explanation of this concept in the introduction.…
 
 <a id="arxiv-2607.27372"></a>
 ### Explorative Modeling: Unlocking a Third Pretraining Axis and End-to-End Generation
@@ -3198,7 +3547,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/2.67) · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/5858](https://t.me/gonzo_ML/5858)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a detailed explanation of the mathematical formulation of the XM approach. While the authors provide an intuitive explanation of the approach, a more formal mathematical description would be helpful for readers who want to understand the underlying principles of the method. - The paper does not provide a detailed comparison of XM with other existing generat deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2607.27372.md#weaknesses): The paper does not provide a detailed explanation of the mathematical formulation of the XM approach. While the authors provide an intuitive explanation of the approach, a more formal mathematical description would be helpful for readers who want to understand the underlying principles of the method.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2607.27372.md#weaknesses): section, there are several limitations that need to be addressed in future work.
 
 <a id="arxiv-2601.21343"></a>
 ### Self-Improving Pretraining: using post-trained models to pretrain better models
@@ -3212,7 +3563,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `5.5` Reject (S/P/C 2.5/2.5/2.5) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/4691](https://t.me/gonzo_ML/4691), [axisofordinary/8485](https://t.me/axisofordinary/8485)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks a clear comparison with existing methods. The authors should provide a more comprehensive comparison with other approaches to improve the training of LLMs, such as chain-of-thought and reasoning-based pretraining.  2. The paper does not provide a detailed analysis of the limitations of the proposed approach. The authors should discuss the potential limitations of the cyclereviewer-8b.seed1: Weaknesses  1. The paper lacks a detailed discussion of t
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2601.21343.md#weaknesses): 1. The paper lacks a clear comparison with existing methods. The authors should provide a more comprehensive comparison with other approaches to improve the training of LLMs, such as chain-of-thought and reasoning-based pretraining.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2601.21343.md#weaknesses): of each approach. Finally, the paper's focus on addressing the limitations of standard pretraining methods and proposing concrete solutions is a valuable contribution to the field. The authors clearly identify the shortcomings of current approaches and offer a well-thought-out alternative that has the potential to significantly advance the state-of-the-art in language model training.
 
 <a id="arxiv-2512.24695"></a>
 ### Nested Learning: The Illusion of Deep Learning Architectures
@@ -3226,7 +3579,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std ``  · 7B Fast `5.0` Reject (S/P/C 2.5/2.5/2.5) · 14B Fast `4.2` Reject
 - OpenReviewer `5.0` Reject (S/P/C 2.0/2.0/2.0) · SEA-E `3.0` Reject
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper's presentation is not clear enough, and the motivation for the Nested Learning paradigm is not well explained. The authors should provide more clarity on how the Nested Learning paradigm addresses the limitations of current machine learning models and why it is a necessary step forward. Additionally, the paper's organization and structure should be improved to make it easier  cyclereviewer-8b.seed1: Weaknesses  The paper is very hard to follow and understa
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2512.24695.md#weaknesses): The paper's presentation is not clear enough, and the motivation for the Nested Learning paradigm is not well explained. The authors should provide more clarity on how the Nested Learning paradigm addresses the limitations of current machine learning models and why it is a necessary step forward.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2512.24695.md#weaknesses): section, the paper suffers from a lack of clarity and precision in its definitions and experimental setup, which limits the impact of its contributions.
 
 <a id="arxiv-2510.05491"></a>
 ### NorMuon: Making Muon more efficient and scalable
@@ -3240,7 +3595,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `7.0` Accept (S/P/C 3.25/3.25/3.0) · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks novelty. The proposed method is a combination of Muon and Adam, which has been done in previous works (1, 2). The authors should compare NorMuon with these works and explain the differences and advantages of their method.  2. The paper does not provide a theoretical analysis of the proposed method. The authors should provide a theoretical analysis of the convergence  cyclereviewer-8b.seed1: Weaknesses  The paper's novelty is limited, as it builds 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2510.05491.md#weaknesses): 1. The paper lacks novelty. The proposed method is a combination of Muon and Adam, which has been done in previous works (1, 2). The authors should compare NorMuon with these works and explain the differences and advantages of their method.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2510.05491.md#weaknesses): section, there are several areas where the paper could be strengthened to provide a more complete picture of NorMuon's capabilities and limitations.
 
 <a id="arxiv-2508.11408"></a>
 ### On-Policy RL Meets Off-Policy Experts: Harmonizing Supervised Fine-Tuning and Reinforcement Learning via Dynamic Weighting
@@ -3254,7 +3611,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/2.5) · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [abstractDL/345](https://t.me/abstractDL/345)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks a detailed discussion on the potential limitations of the proposed approach. For example, how does the proposed method perform when dealing with large-scale datasets or complex tasks? Are there any potential trade-offs between the performance improvement and computational efficiency?  2. The paper does not provide a clear comparison with existing methods in the liter deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2508.11408.md#weaknesses): 1. The paper lacks a detailed discussion on the potential limitations of the proposed approach. For example, how does the proposed method perform when dealing with large-scale datasets or complex tasks? Are there any potential trade-offs between the performance improvement and computational efficiency?
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2508.11408.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. First, while the paper introduces a token-wise weighting function, ϕ, it lacks a thorough analysis of its impact on the model's learning process beyond the overall performance metrics.…
 
 <a id="arxiv-2507.12856"></a>
 ### Supervised Fine Tuning on Curated Data is Reinforcement Learning (and can be improved)
@@ -3268,7 +3627,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `5.8` Reject (S/P/C 2.5/2.75/2.25) · 14B Fast `6.0` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [abstractDL/345](https://t.me/abstractDL/345)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The novelty of the paper is limited. The connection between SFT and RL is not new. The proposed method is a simple modification of SFT. 2. The experiments are not comprehensive. The authors only evaluate the proposed method on two tasks, one for large language models and one for continuous control tasks. More experiments on different tasks are needed to demonstrate the effectiveness deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2507.12856.md#weaknesses): 1. The novelty of the paper is limited. The connection between SFT and RL is not new. The proposed method is a simple modification of SFT. 2. The experiments are not comprehensive. The authors only evaluate the proposed method on two tasks, one for large language models and one for continuous control tasks.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2507.12856.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, the paper's presentation of the connection between SFT and RL is not as clear as it could be.…
 
 <a id="arxiv-2506.08007"></a>
 ### Reinforcement Pre-Training
@@ -3282,7 +3643,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast `6.0` Reject (S/P/C 2.67/2.67/2.67) · 14B Fast `5.0` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [data_secrets/7130](https://t.me/data_secrets/7130), [dealerAI/1339](https://t.me/dealerAI/1339), [AGI_and_RL/1136](https://t.me/AGI_and_RL/1136), [axisofordinary/7337](https://t.me/axisofordinary/7337)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The authors claim that RPT offers a scalable and general-purpose approach to RL pre-training, but the authors only conduct experiments on a small-scale model (14B) and a specific dataset (mathematical documents). The authors should conduct experiments on large-scale models (e.g., 70B, 130B) and general-domain text. 2. The authors claim that RPT minimizes reward hacking through rule- deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2506.08007.md#weaknesses): 1. The authors claim that RPT offers a scalable and general-purpose approach to RL pre-training, but the authors only conduct experiments on a small-scale model (14B) and a specific dataset (mathematical documents). The authors should conduct experiments on large-scale models (e.g., 70B, 130B) and general-domain text. 2.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2506.08007.md#weaknesses): While I appreciate the novelty of the proposed approach, I have identified several weaknesses that need to be addressed. First, the experimental evaluation is limited in scope. The pre-training is exclusively performed on the OmniMATH dataset, which consists of mathematical problems and solutions. This narrow focus raises concerns about the generalizability of the method to other domains.…
 
 <a id="arxiv-2505.24832"></a>
 ### How much do language models memorize?
@@ -3296,7 +3659,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.5` Accept (S/P/C 3.25/3.25/3.25) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [data_secrets/7050](https://t.me/data_secrets/7050), [nn_for_science/2464](https://t.me/nn_for_science/2464), [gonzo_ML/5721](https://t.me/gonzo_ML/5721), [axisofordinary/7283](https://t.me/axisofordinary/7283), [abstractDL/338](https://t.me/abstractDL/338)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper's main contribution is the proposed definition of memorization based on Kolmogorov complexity. However, this definition is not very practical, as it is difficult to estimate Kolmogorov complexity in practice. The paper also does not provide a clear comparison with existing definitions of memorization, such as those based on perplexity or likelihood.  The paper's experiments a cyclereviewer-8b.seed1: Weaknesses  The paper lacks a clear motivation for the pr
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2505.24832.md#weaknesses): The paper's main contribution is the proposed definition of memorization based on Kolmogorov complexity. However, this definition is not very practical, as it is difficult to estimate Kolmogorov complexity in practice. The paper also does not provide a clear comparison with existing definitions of memorization, such as those based on perplexity or likelihood.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2505.24832.md#weaknesses): While this paper presents a valuable framework for understanding memorization in language models, I have identified several weaknesses that warrant further consideration. First, the paper's reliance on a single reference model, typically a larger model trained on a superset of the training data, raises concerns about the robustness of the memorization metric.…
 
 <a id="arxiv-2410.07041"></a>
 ### Emergent properties with repeated examples
@@ -3310,7 +3675,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.5` Accept (S/P/C 2.75/3.25/2.75) · 14B Fast `6.0` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [abstractDL/300](https://t.me/abstractDL/300), [axisofordinary/6696](https://t.me/axisofordinary/6696)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The main weakness of the paper is that the results are only shown on synthetic datasets. While the authors argue that these datasets are well suited for studying the effect of repeated examples, it would be nice to see some results on real-world datasets. Additionally, the authors only study the effect of repeated examples in the context of transformers, it would be nice to see if the  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2410.07041.md#weaknesses): The main weakness of the paper is that the results are only shown on synthetic datasets. While the authors argue that these datasets are well suited for studying the effect of repeated examples, it would be nice to see some results on real-world datasets.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2410.07041.md#weaknesses): While I appreciate the strengths of this paper, I have identified several weaknesses that warrant careful consideration. Firstly, the paper's reliance on synthetic datasets, while allowing for controlled experiments, limits the generalizability of the findings to real-world scenarios.…
 
 <a id="arxiv-2409.03137"></a>
 ### The AdEMAMix Optimizer: Better, Faster, Older
@@ -3324,7 +3691,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `7.5` Accept (S/P/C 3.25/3.25/3.25) · 14B Fast `6.5` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/6587](https://t.me/axisofordinary/6587)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a theoretical analysis of the proposed optimizer. - The paper does not provide a detailed analysis of the hyperparameters, including how they affect the performance and how to choose them in practice. - The paper does not compare AdEMAMix with other optimizers, such as SGD and AdamW with different hyperparameters.  ### Questions  - Can the authors provide a deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2409.03137.md#weaknesses): The paper does not provide a theoretical analysis of the proposed optimizer. - The paper does not provide a detailed analysis of the hyperparameters, including how they affect the performance and how to choose them in practice. - The paper does not compare AdEMAMix with other optimizers, such as SGD and AdamW with different hyperparameters.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2409.03137.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, while the authors provide an intuitive explanation for why AdEMAMix works, the paper lacks a rigorous theoretical analysis of the proposed method.…
 
 <a id="arxiv-2405.20541"></a>
 ### Perplexed by Perplexity: Perplexity-Based Data Pruning With Small Reference Models
@@ -3338,7 +3707,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `6.0` Accept (S/P/C 3.25/3.0/2.75) · 14B Fast `7.0` Accept
 - OpenReviewer `2.0` Reject (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [data_secrets/4407](https://t.me/data_secrets/4407), [axisofordinary/6387](https://t.me/axisofordinary/6387)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper's main contribution is an empirical investigation of perplexity-based data pruning for LLMs. While the results are promising, the paper lacks a theoretical foundation or a clear explanation of the underlying mechanisms driving the observed effects. The authors acknowledge this limitation and suggest that future work should investigate the predictive theory for how pruning par cyclereviewer-8b.seed1: Weaknesses  - The novelty of the paper is limited. The me
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2405.20541.md#weaknesses): The paper's main contribution is an empirical investigation of perplexity-based data pruning for LLMs. While the results are promising, the paper lacks a theoretical foundation or a clear explanation of the underlying mechanisms driving the observed effects.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2405.20541.md#weaknesses): While this paper presents compelling results, several limitations warrant careful consideration. First, the paper's exploration of optimal pruning strategies is primarily empirical, lacking a theoretical framework to explain why certain perplexity ranges are more effective for different datasets.…
 
 <a id="arxiv-2405.20233"></a>
 ### Grokfast: Accelerated Grokking by Amplifying Slow Gradients
@@ -3352,7 +3723,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.0` Reject (S/P/C 2.75/3.0/2.5) · 14B Fast `5.8` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [axisofordinary/6444](https://t.me/axisofordinary/6444), [axisofordinary/6417](https://t.me/axisofordinary/6417)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper lacks a theoretical analysis of the proposed method. It would be helpful to have a theoretical explanation of why the method works and under what conditions it is effective. - The paper only considers a limited set of tasks and datasets. It would be helpful to see if the method works on a wider range of tasks and datasets.  ### Questions  - Can the method be applied to othe deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2405.20233.md#weaknesses): The paper lacks a theoretical analysis of the proposed method. It would be helpful to have a theoretical explanation of why the method works and under what conditions it is effective. - The paper only considers a limited set of tasks and datasets. It would be helpful to see if the method works on a wider range of tasks and datasets.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2405.20233.md#weaknesses): While this paper presents a compelling approach to accelerating grokking, several weaknesses warrant careful consideration. First, the paper lacks a detailed analysis of the computational overhead introduced by the Grokfast algorithm, particularly concerning the memory requirements of the moving average (MA) filter.…
 
 <a id="arxiv-2405.18392"></a>
 ### Scaling Laws and Compute-Optimal Training Beyond Fixed Training Durations
@@ -3366,7 +3739,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.8` Reject · 7B Fast `5.8` Accept (S/P/C 2.75/3.0/2.5) · 14B Fast `6.8` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [fminxyz/26](https://t.me/fminxyz/26)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper does not provide a thorough theoretical analysis of the proposed approach. It would be helpful to understand the underlying reasons for the effectiveness of the constant learning rate schedule with a cooldown period. 2. The paper does not provide a detailed comparison with other learning rate schedules, such as the inverse square root schedule, which is commonly used for t deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2405.18392.md#weaknesses): 1. The paper does not provide a thorough theoretical analysis of the proposed approach. It would be helpful to understand the underlying reasons for the effectiveness of the constant learning rate schedule with a cooldown period. 2.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2405.18392.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, the paper's central claim that cosine schedules are a primary obstacle in scaling research, while valid, may be overstated.…
 
 <a id="arxiv-2405.16684"></a>
 ### gzip Predicts Data-dependent Scaling Laws
@@ -3380,7 +3755,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `4.8` Reject (S/P/C 2.25/2.5/2.5) · 14B Fast `4.2` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/6364](https://t.me/axisofordinary/6364)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper only considers a synthetic dataset generated by PCFG, which is not very realistic. - The paper does not provide any theoretical analysis or justification for the proposed data-dependent scaling law. - The paper does not evaluate the proposed scaling law on real-world datasets or real-world applications.  ### Questions  - What is the motivation for using gzip-compressibility deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2405.16684.md#weaknesses): The paper only considers a synthetic dataset generated by PCFG, which is not very realistic. - The paper does not provide any theoretical analysis or justification for the proposed data-dependent scaling law. - The paper does not evaluate the proposed scaling law on real-world datasets or real-world applications.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2405.16684.md#weaknesses): While I appreciate the novel approach of this paper, I have identified several weaknesses that warrant careful consideration. First, the paper's reliance on synthetic data generated from PCFGs raises concerns about the generalizability of its findings to real-world language.…
 
 <a id="arxiv-2405.15682"></a>
 ### The Road Less Scheduled
@@ -3394,7 +3771,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/2.67) · 14B Fast `5.8` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/2.0) · SEA-E `7.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper only considers convex problems and does not provide any theoretical results for non-convex problems. - The method requires the stopping time T to be known or set in advance, which may not always be possible in practice. - The method requires the use of a new hyperparameter $\beta$ which may require additional tuning. - The method does not provide any convergence guarantees  cyclereviewer-8b.seed1: Weaknesses  1. The method seems to be a combination of mo
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2405.15682.md#weaknesses): The paper only considers convex problems and does not provide any theoretical results for non-convex problems. - The method requires the stopping time T to be known or set in advance, which may not always be possible in practice. - The method requires the use of a new hyperparameter $\beta$ which may require additional tuning.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2405.15682.md#weaknesses): section, there are some important limitations that need to be addressed.
 
 <a id="arxiv-2403.05175"></a>
 ### Continual Learning and Catastrophic Forgetting
@@ -3408,7 +3787,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast `5.0` Reject (S/P/C None/None/None) · 14B Fast `5.8` Accept
 - OpenReviewer `5.0` Reject (S/P/C 3.0/4.0/2.0) · SEA-E `7.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The chapter does not provide a lot of new insights. The authors do not present any new results or new approaches. The chapter is mostly a summary of the existing literature.  - The chapter does not provide a clear conclusion or future directions for the field of continual learning.  ## Questions  - Why is the field of continual learning so important? What are the main challenges in t deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2403.05175.md#weaknesses): The chapter does not provide a lot of new insights. The authors do not present any new results or new approaches. The chapter is mostly a summary of the existing literature. - The chapter does not provide a clear conclusion or future directions for the field of continual learning.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2403.05175.md#weaknesses): of individual methods, a thorough discussion of the trade-offs between different approaches, and an exploration of the connections to meta-learning and related fields. Additionally, the paper could benefit from a more in-depth analysis of the underlying reasons for catastrophic forgetting and a clearer articulation of its unique contributions to the field.
 
 <a id="arxiv-2402.02342"></a>
 ### MetaOptimize: A Framework for Optimizing Step Sizes and Other Meta-parameters
@@ -3422,7 +3803,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.8` Reject · 7B Fast `4.2` Reject (S/P/C 2.5/2.25/2.25) · 14B Fast `5.8` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/2.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a comprehensive comparison with existing methods for optimizing meta-parameters. - The paper does not provide a detailed analysis of the computational complexity of the proposed framework. - The paper does not provide a detailed analysis of the performance of the proposed framework on a wide range of machine learning tasks.  ### Questions  - Can the framewo deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2402.02342.md#weaknesses): The paper does not provide a comprehensive comparison with existing methods for optimizing meta-parameters. - The paper does not provide a detailed analysis of the computational complexity of the proposed framework. - The paper does not provide a detailed analysis of the performance of the proposed framework on a wide range of machine learning tasks.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2402.02342.md#weaknesses): After a thorough examination of the paper, I've identified several key weaknesses that significantly impact its overall contribution. Firstly, the paper's introduction lacks a comprehensive overview of the existing literature on learning step sizes.…
 
 <a id="arxiv-2401.17401"></a>
 ### Step-size Optimization for Continual Learning
@@ -3436,7 +3819,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast ``  (S/P/C 2.67/2.33/2.0) · 14B Fast `3.0` Reject
 - OpenReviewer `3.0` Reject (S/P/C 2.0/2.0/2.0) · SEA-E `3.0` Reject
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not provide any new results or insights that are not already available in the literature. The authors do not provide any new experiments or analysis that demonstrate the effectiveness of their approach.  ### Questions  The authors should provide more details about the experimental setup and the results. For example, what are the hyperparameters used for each method? What deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2401.17401.md#weaknesses): The paper does not provide any new results or insights that are not already available in the literature. The authors do not provide any new experiments or analysis that demonstrate the effectiveness of their approach.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2401.17401.md#weaknesses): While the paper presents a compelling argument, I have identified several weaknesses that significantly limit its impact. First, the paper's experimental validation is limited to simple, synthetic problems. While these problems effectively illustrate the core concepts, they do not reflect the complexities of real-world continual learning scenarios.…
 
 <a id="arxiv-2312.17742"></a>
 ### Learning Vision from Models Rivals Learning Vision from Data
@@ -3450,7 +3835,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.0` Reject · 7B Fast `6.0` Reject (S/P/C 3.0/3.0/2.5) · 14B Fast `7.0` Accept
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [axisofordinary/5918](https://t.me/axisofordinary/5918)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The authors claim that "learning from models, without training on any real data, can yield representations that match the top-performing representations learnt from real data." However, the results in Table 8 show that the proposed method performs worse than methods that use real data, such as DINO v2. The authors should clarify this point in the paper. - The authors claim that "the  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2312.17742.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. First, while the paper demonstrates strong performance on image classification and semantic segmentation, it lacks a thorough evaluation on object detection tasks.…
+  - [DR-7B Fast](reviews/deepreviewer-7b-fast/arxiv_2312.17742.md#weaknesses): of the proposed approach. The paper is well-written and easy to follow, and the authors have provided sufficient details about their methodology and experimental setup. The inclusion of a comparison with DINO v2 is also a strength, as it provides a direct comparison with a state-of-the-art method.…
 
 <a id="arxiv-2312.10549"></a>
 ### Catastrophic Forgetting in Deep Learning: A Comprehensive Taxonomy
@@ -3464,7 +3851,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `4.5` Reject (S/P/C 2.75/2.75/2.0) · 14B Fast `3.0` Reject
 - OpenReviewer `3.0` Reject (S/P/C 2.0/2.0/2.0) · SEA-E `3.0` Reject
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: weaknesses of each category and provide a discussion of the current state of the field.  ## Soundness  2 fair  ## Presentation  2 fair  ## Contribution  2 fair  ## Strengths  The paper provides a comprehensive review of the literature on catastrophic forgetting in deep learning, including a taxonomy of methods for mitigating catastrophic forgetting. The authors discuss the problem of catastrophic  cyclereviewer-8b.seed1: weaknesses of each category and provide a taxonomy to hel
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2312.10549.md#weaknesses): of each category and provide a discussion of the current state of the field.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2312.10549.md#weaknesses): of each approach. The paper aims to offer a structured overview of the field, identify research gaps, and provide insights into the most suitable application scenarios for each technique.…
 
 <a id="arxiv-2307.06440"></a>
 ### No Train No Gain: Revisiting Efficient Training Algorithms For Transformer-based Language Models
@@ -3478,7 +3867,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `5.2` Reject (S/P/C 2.5/3.0/2.5) · 14B Fast `6.8` Accept
 - OpenReviewer `3.0` Reject (S/P/C 2.0/2.0/1.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not provide any significant contribution. The authors evaluate a number of methods that aim to speed up training of transformer-based language models and find that they do not improve over the baseline models. The paper does not propose any new methods for speeding up training of transformer-based language models.  ### Questions  N/A  ### Flag For Ethics Review  No ethic deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2307.06440.md#weaknesses): The paper does not provide any significant contribution. The authors evaluate a number of methods that aim to speed up training of transformer-based language models and find that they do not improve over the baseline models. The paper does not propose any new methods for speeding up training of transformer-based language models.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2307.06440.md#weaknesses): While this paper makes several valuable contributions, I have identified some weaknesses that warrant further discussion. Firstly, the paper's experimental scope, while comprehensive in some respects, is limited in others. Specifically, the authors focus on BERT and T5 models, which, while widely used, do not represent the full spectrum of modern architectures.…
 
 <a id="doi-10.1038-s41586-024-07711-7"></a>
 ### Loss of plasticity in deep continual learning
@@ -3492,7 +3883,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.8` Accept · 7B Fast `7.0` Accept (S/P/C 3.0/3.25/3.25) · 14B Fast `6.8` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `8.0` Accept
 - Telegram: [knowledge_accumulator/323](https://t.me/knowledge_accumulator/323), [AGI_and_RL/847](https://t.me/AGI_and_RL/847)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The main weakness of the paper is the lack of theoretical analysis. The authors do not provide any theoretical analysis of the proposed algorithm or the loss of plasticity phenomenon. While the experiments are extensive, they do not provide any insights into why the proposed algorithm works or why the loss of plasticity occurs. The authors should provide some theoretical analysis to su deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/doi_10.1038_s41586-024-07711-7.md#weaknesses): The main weakness of the paper is the lack of theoretical analysis. The authors do not provide any theoretical analysis of the proposed algorithm or the loss of plasticity phenomenon. While the experiments are extensive, they do not provide any insights into why the proposed algorithm works or why the loss of plasticity occurs.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/doi_10.1038_s41586-024-07711-7.md#weaknesses): While this paper makes a valuable contribution to the field of continual learning, several weaknesses warrant careful consideration. First, the paper's framing of plasticity loss as a novel problem is somewhat misleading.…
 
 <a id="arxiv-2305.14342"></a>
 ### Sophia: A Scalable Stochastic Second-order Optimizer for Language Model Pre-training
@@ -3506,7 +3899,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.2` Reject (S/P/C 2.75/2.75/2.5) · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [ai_newz/1954](https://t.me/ai_newz/1954), [nn_for_science/1533](https://t.me/nn_for_science/1533), [data_secrets/1518](https://t.me/data_secrets/1518)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The theoretical analysis is not sufficient. The theoretical results are only for convex functions, which is not the case for LLMs. - The proposed method is not compared with other second-order methods.  ### Questions  - The proposed method is not compared with other second-order methods. - The theoretical analysis is not sufficient. The theoretical results are only for convex functio deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2305.14342.md#weaknesses): The theoretical analysis is not sufficient. The theoretical results are only for convex functions, which is not the case for LLMs. - The proposed method is not compared with other second-order methods.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2305.14342.md#weaknesses): While the paper presents a promising new optimization algorithm, several weaknesses warrant careful consideration. A primary concern is the limited scope of the empirical evaluation. The paper focuses exclusively on language modeling tasks using GPT models, with sizes ranging from 125 million to 1.5 billion parameters.…
 
 <a id="arxiv-2302.06675"></a>
 ### Symbolic Discovery of Optimization Algorithms
@@ -3520,7 +3915,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `7.0` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [lovedeathtransformers/5426](https://t.me/lovedeathtransformers/5426), [knowledge_accumulator/139](https://t.me/knowledge_accumulator/139), [gonzo_ML/1674](https://t.me/gonzo_ML/1674), [axisofordinary/4403](https://t.me/axisofordinary/4403), [tech_priestess/1159](https://t.me/tech_priestess/1159), [derplearning/2341](https://t.me/derplearning/2341), [j_links/6478](https://t.me/j_links/6478)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a detailed analysis of the discovered Lion algorithm, such as its convergence properties and theoretical guarantees. - The paper does not compare the proposed method with other existing approaches to discovering optimization algorithms, such as reinforcement learning-based methods. - The paper does not discuss the limitations of the proposed method and the  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2302.06675.md#weaknesses): The paper does not provide a detailed analysis of the discovered Lion algorithm, such as its convergence properties and theoretical guarantees. - The paper does not compare the proposed method with other existing approaches to discovering optimization algorithms, such as reinforcement learning-based methods.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2302.06675.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, while the paper introduces the concept of an infinite and sparse search space, it lacks a detailed analysis of the search space's structure and its impact on the optimization process.…
 
 <a id="arxiv-2212.14034"></a>
 ### Cramming: Training a Language Model on a Single GPU in One Day
@@ -3534,7 +3931,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `5.5` Reject (S/P/C 2.75/3.0/2.5) · 14B Fast `5.8` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/2.0) · SEA-E `7.0` Accept
 - Telegram: [gonzo_ML/1217](https://t.me/gonzo_ML/1217), [j_links/6380](https://t.me/j_links/6380), [axisofordinary/4093](https://t.me/axisofordinary/4093), [scitator_ai/58](https://t.me/scitator_ai/58), [gonzo_ML/1179](https://t.me/gonzo_ML/1179)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The novelty of this paper is limited. The authors mainly investigate the effects of various modifications to the training pipeline and find that most of the improvements are related to the scaling laws. This is not a surprising result and has been known in the literature.   2. The experiments are not convincing. The authors only conduct experiments on a single task, GLUE, and the re deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2212.14034.md#weaknesses): 1. The novelty of this paper is limited. The authors mainly investigate the effects of various modifications to the training pipeline and find that most of the improvements are related to the scaling laws. This is not a surprising result and has been known in the literature.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2212.14034.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, while the paper presents a comprehensive ablation study, it lacks a clear narrative thread connecting the various experiments.…
 
 <a id="arxiv-2210.10760"></a>
 ### Scaling Laws for Reward Model Overoptimization
@@ -3548,7 +3947,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.7` Accept (S/P/C 2.67/2.67/2.67) · 14B Fast `5.8` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [lovedeathtransformers/5297](https://t.me/lovedeathtransformers/5297), [dealerAI/8](https://t.me/dealerAI/8), [lovedeathtransformers/5427](https://t.me/lovedeathtransformers/5427)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper does not provide a clear motivation for why the synthetic setup is a good proxy for real-world RLHF. The authors acknowledge this limitation in the paper, but do not provide any evidence that the synthetic setup is a good approximation of real-world RLHF. 2. The paper does not provide a clear explanation of how the results can be used to improve RLHF. The authors find that deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2210.10760.md#weaknesses): 1. The paper does not provide a clear motivation for why the synthetic setup is a good proxy for real-world RLHF. The authors acknowledge this limitation in the paper, but do not provide any evidence that the synthetic setup is a good approximation of real-world RLHF. 2. The paper does not provide a clear explanation of how the results can be used to improve RLHF.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2210.10760.md#weaknesses): Despite its strengths, this paper has several limitations that warrant careful consideration. One of the most significant weaknesses is the heavy reliance on a synthetic data setup, which, while ingenious, raises concerns about the generalizability of the findings to real-world scenarios.…
 
 <a id="arxiv-2110.09485"></a>
 ### Learning in High Dimension Always Amounts to Extrapolation
@@ -3562,7 +3963,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast `5.5` Reject (S/P/C 3.0/2.75/2.5) · 14B Fast `6.0` Reject
 - OpenReviewer `1.0` Reject (S/P/C 2.0/2.0/1.0) · SEA-E `6.0` Accept
 - Telegram: [j_links/5300](https://t.me/j_links/5300)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper is not well written and the contribution is not clear. The authors do not provide any new theoretical results. They just collect some known results from convex geometry and use them to support their claim. The experiments are not well designed and the results are not clear. The authors do not provide any conclusion or recommendation.  ### Questions  - The authors claim that i deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2110.09485.md#weaknesses): The paper is not well written and the contribution is not clear. The authors do not provide any new theoretical results. They just collect some known results from convex geometry and use them to support their claim. The experiments are not well designed and the results are not clear. The authors do not provide any conclusion or recommendation.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2110.09485.md#weaknesses): While I find the paper's core argument compelling, there are several weaknesses that I believe need to be addressed. First, the paper's reliance on the convex hull as the sole definition of interpolation is a significant limitation.…
 
 <a id="arxiv-2108.06325"></a>
 ### Continual Backprop: Stochastic Gradient Descent with Persistent Randomness
@@ -3576,7 +3979,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `5.2` Reject (S/P/C 2.75/2.25/2.5) · 14B Fast `3.0` Reject
 - OpenReviewer `3.0` Reject (S/P/C 3.0/2.0/2.0) · SEA-E `3.0` Reject
 - Telegram: [nn_for_science/381](https://t.me/nn_for_science/381)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper is poorly written and the results are not convincing. The paper does not cite a large body of work on continual learning. The paper does not compare with other continual learning methods. The paper does not discuss the limitations of the proposed method.  ### Questions  1. What is the main contribution of the paper? The paper claims that it shows that backprop degrades over t deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2108.06325.md#weaknesses): The paper is poorly written and the results are not convincing. The paper does not cite a large body of work on continual learning. The paper does not compare with other continual learning methods. The paper does not discuss the limitations of the proposed method.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2108.06325.md#weaknesses): Despite the strengths of this paper, I have identified several significant weaknesses that warrant careful consideration. First, the paper's framing of the problem as one of 'non-stationarity' rather than 'continual learning' is problematic.…
 
 <a id="arxiv-2010.01412"></a>
 ### Sharpness-Aware Minimization for Efficiently Improving Generalization
@@ -3590,7 +3995,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `7.0` Accept (S/P/C 3.25/3.25/3.0) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [j_links/4264](https://t.me/j_links/4264), [gonzo_ML/2001](https://t.me/gonzo_ML/2001), [lovedeathtransformers/6486](https://t.me/lovedeathtransformers/6486), [tech_priestess/1047](https://t.me/tech_priestess/1047)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The proposed method is not well motivated. The theorem in Section 2 does not provide a clear justification for why minimizing loss sharpness improves generalization. The connection between loss sharpness and generalization is not well established. - The proposed method is not novel. The idea of penalizing sharpness has been explored in previous work, such as (1,2,3). The proposed met deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2010.01412.md#weaknesses): The proposed method is not well motivated. The theorem in Section 2 does not provide a clear justification for why minimizing loss sharpness improves generalization. The connection between loss sharpness and generalization is not well established. - The proposed method is not novel. The idea of penalizing sharpness has been explored in previous work, such as (1,2,3).…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2010.01412.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. First, while the authors demonstrate the effectiveness of SAM on several datasets and architectures, the experimental evaluation is not as comprehensive as it could be.…
 
 <a id="arxiv-2009.11848"></a>
 ### How Neural Networks Extrapolate: From Feedforward to Graph Neural Networks
@@ -3604,7 +4011,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `5.7` Accept (S/P/C 2.67/2.67/2.33) · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [j_links/4183](https://t.me/j_links/4183)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper studies the extrapolation ability of neural networks, but the results are only for ReLU MLPs in the NTK regime. The results are not generalizable to other types of neural networks.  2. The paper only considers the setting of two-layer networks. The results may not be generalizable to deeper networks.  3. The paper only considers the setting of GD with squared loss. The res deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2009.11848.md#weaknesses): 1. The paper studies the extrapolation ability of neural networks, but the results are only for ReLU MLPs in the NTK regime. The results are not generalizable to other types of neural networks.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2009.11848.md#weaknesses): Despite its strengths, the paper has several verified limitations that warrant discussion. One of the primary concerns is the strong assumptions made in the theoretical results, particularly in Theorem 2. The assumption that the training data contains an orthogonal basis, as stated in Lemma 1, is highly artificial and unlikely to hold in real-world scenarios.…
 
 <a id="arxiv-2009.11243"></a>
 ### Tasks, stability, architecture, and compute: Training more effective learned optimizers, and using them to train themselves
@@ -3618,7 +4027,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `8.0` Accept (S/P/C 3.67/3.67/3.67) · 14B Fast `5.8` Reject
 - OpenReviewer `8.0` Accept (S/P/C 3.0/4.0/4.0) · SEA-E `6.0` Accept
 - Telegram: [knowledge_accumulator/110](https://t.me/knowledge_accumulator/110), [j_links/4121](https://t.me/j_links/4121), [gonzo_ML/372](https://t.me/gonzo_ML/372)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The main weakness of the paper is that it does not provide a clear explanation of why the proposed optimizer works better than previous learned optimizers. The authors do not provide any analysis of the learned optimizer's behavior, such as the types of inductive biases it learns or how it adapts to different tasks. This makes it difficult to understand the underlying mechanisms that l deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2009.11243.md#weaknesses): The main weakness of the paper is that it does not provide a clear explanation of why the proposed optimizer works better than previous learned optimizers. The authors do not provide any analysis of the learned optimizer's behavior, such as the types of inductive biases it learns or how it adapts to different tasks.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2009.11243.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, the paper lacks a detailed analysis of the computational overhead associated with the proposed learned optimizer.…
 
 <a id="arxiv-2001.08361"></a>
 ### Scaling Laws for Neural Language Models
@@ -3632,7 +4043,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Reject · 7B Fast `6.0` Reject (S/P/C 2.67/3.33/2.33) · 14B Fast `4.0` Accept
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [gonzo_ML/1856](https://t.me/gonzo_ML/1856), [dlinnlp/736](https://t.me/dlinnlp/736), [data_secrets/5534](https://t.me/data_secrets/5534), [gonzo_ML/1216](https://t.me/gonzo_ML/1216), [AGI_and_RL/612](https://t.me/AGI_and_RL/612), [rybolos_channel/316](https://t.me/rybolos_channel/316), [gonzo_ML/4730](https://t.me/gonzo_ML/4730), [lovedeathtransformers/5878](https://t.me/lovedeathtransformers/5878)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not provide any theoretical analysis of the scaling laws.  ## Questions  1. What are the theoretical implications of the scaling laws? 2. How do the scaling laws depend on the choice of loss function?  ## Flag For Ethics Review  No ethics review needed.  ## Rating  6: marginally above the acceptance threshold  ## Confidence  4: You are confident in your assessment, but n deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2001.08361.md#weaknesses): The paper does not provide any theoretical analysis of the scaling laws.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2001.08361.md#weaknesses): While this paper presents a compelling empirical study of scaling laws, several weaknesses warrant careful consideration. First, the paper's primary focus on cross-entropy loss, while a standard metric for language modeling, limits the generalizability of the findings.…
 
 <a id="arxiv-1904.00962"></a>
 ### Large Batch Optimization for Deep Learning: Training BERT in 76 minutes
@@ -3646,7 +4059,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `7.0` Accept (S/P/C 3.25/3.0/2.75) · 14B Fast `6.0` Reject
 - OpenReviewer `5.0` Reject (S/P/C 2.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [j_links/2316](https://t.me/j_links/2316)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper is not well-organized. The authors present the convergence analysis of Lamb and Lars in Section 3, but do not provide any experimental results in this section. Instead, the experimental results are presented in Section 4. This makes it difficult to understand the significance of the convergence analysis.  2. The paper lacks a clear motivation for the proposed algorithm. Th cyclereviewer-8b.seed1: Weaknesses  1. The paper only provides a limited number o
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_1904.00962.md#weaknesses): 1. The paper is not well-organized. The authors present the convergence analysis of Lamb and Lars in Section 3, but do not provide any experimental results in this section. Instead, the experimental results are presented in Section 4. This makes it difficult to understand the significance of the convergence analysis.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_1904.00962.md#weaknesses): While the paper presents a novel and promising optimization algorithm, several weaknesses warrant careful consideration. Firstly, the paper's claim of being the "first" to achieve certain results on BERT training is inaccurate. As pointed out by Reviewer 1, prior work has already demonstrated training BERT within a similar timeframe, albeit on different hardware.…
 
 <a id="arxiv-1803.03635"></a>
 ### The Lottery Ticket Hypothesis: Finding Sparse, Trainable Neural Networks
@@ -3660,7 +4075,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `5.0` Reject (S/P/C 2.5/2.5/2.5) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [nn_for_science/2452](https://t.me/nn_for_science/2452), [gonzo_ML/21](https://t.me/gonzo_ML/21), [partially_unsupervised/228](https://t.me/partially_unsupervised/228), [gonzo_ML/4350](https://t.me/gonzo_ML/4350), [gonzo_ML/196](https://t.me/gonzo_ML/196), [dlinnlp/956](https://t.me/dlinnlp/956), [gonzo_ML/884](https://t.me/gonzo_ML/884)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper only considers small datasets (MNIST and CIFAR-10), and the proposed method is not efficient to apply to large-scale datasets. It would be better to consider larger datasets and more efficient methods for finding winning tickets. 2. The paper only considers sparse pruning, and it would be better to consider other pruning methods such as structured pruning. 3. The paper onl deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_1803.03635.md#weaknesses): 1. The paper only considers small datasets (MNIST and CIFAR-10), and the proposed method is not efficient to apply to large-scale datasets. It would be better to consider larger datasets and more efficient methods for finding winning tickets. 2. The paper only considers sparse pruning, and it would be better to consider other pruning methods such as structured pruning. 3.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_1803.03635.md#weaknesses): While the paper presents a compelling hypothesis and strong empirical evidence, several limitations warrant careful consideration. First, the paper's experimental scope is primarily limited to smaller datasets, specifically MNIST and CIFAR10.…
 
 <a id="openreview-ry_WPG-A-"></a>
 ### On the Information Bottleneck Theory of Deep Learning (Saxe et al.)
@@ -3674,7 +4091,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast `5.5` Accept (S/P/C 2.25/2.5/2.5) · 14B Fast `5.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [j_links/582](https://t.me/j_links/582), [neuroexistencialism/3399](https://t.me/neuroexistencialism/3399)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper claims that the information bottleneck theory of deep learning is not supported by the experimental results. However, the experiments are limited to small networks and simple datasets. The authors do not provide a comprehensive analysis of the theory and its limitations. The authors also do not provide a clear explanation of the reasons why the compression phase is not observ cyclereviewer-8b.seed1: Weaknesses  The paper could benefit from a more detailed 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/openreview_ry_WPG-A-.md#weaknesses): The paper claims that the information bottleneck theory of deep learning is not supported by the experimental results. However, the experiments are limited to small networks and simple datasets. The authors do not provide a comprehensive analysis of the theory and its limitations.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/openreview_ry_WPG-A-.md#weaknesses): While this paper presents a compelling critique of the information bottleneck theory as applied to deep learning, there are several limitations that warrant careful consideration. Firstly, the paper's primary focus on the specific claims of Shwartz-Ziv and Tishby (2017) limits its scope in addressing the broader information bottleneck principle.…
 
 <a id="arxiv-1708.07120"></a>
 ### Super-Convergence: Very Fast Training of Neural Networks Using Large Learning Rates
@@ -3688,7 +4107,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `5.8` Reject (S/P/C 2.5/2.5/2.5) · 14B Fast `6.7` Accept
 - OpenReviewer `3.0` Reject (S/P/C 2.0/1.0/2.0) · SEA-E `5.0` Accept
 - Telegram: [j_links/420](https://t.me/j_links/420)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper lacks a thorough theoretical analysis of the proposed method. The authors provide some insights into the effect of large learning rates and the balance of regularization, but a more rigorous theoretical framework would strengthen the paper. The experimental results are promising, but more comprehensive experiments and comparisons with other state-of-the-art methods would be b deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_1708.07120.md#weaknesses): The paper lacks a thorough theoretical analysis of the proposed method. The authors provide some insights into the effect of large learning rates and the balance of regularization, but a more rigorous theoretical framework would strengthen the paper. The experimental results are promising, but more comprehensive experiments and comparisons with other state-of-the-art methods would be beneficial.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_1708.07120.md#weaknesses): Despite the promising results, this paper has several weaknesses that warrant careful consideration. A significant limitation is the lack of a comprehensive comparison with other state-of-the-art training techniques.…
 
 <a id="arxiv-1708.02072"></a>
 ### Measuring Catastrophic Forgetting in Neural Networks
@@ -3702,7 +4123,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `4.8` Reject (S/P/C 2.25/2.75/2.25) · 14B Fast `3.5` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/2.0) · SEA-E `3.0` Reject
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide any new insights or contributions to the field. - The paper only provides a review of existing methods and does not propose any new methods to mitigate catastrophic forgetting. - The paper does not provide any experimental results on new datasets or benchmarks.  ### Questions  Please see the weaknesses.  ### Flag For Ethics Review  No ethics review needed.  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_1708.02072.md#weaknesses): The paper does not provide any new insights or contributions to the field. - The paper only provides a review of existing methods and does not propose any new methods to mitigate catastrophic forgetting. - The paper does not provide any experimental results on new datasets or benchmarks.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_1708.02072.md#weaknesses): of each mitigation strategy. Furthermore, the paper's clear and concise writing style makes it accessible to a broad audience. The authors provide sufficient detail about their methodology and experimental setup, which enhances the reproducibility of their work.…
 
 <a id="doi-10.1073-pnas.1611835114"></a>
 ### Overcoming catastrophic forgetting in neural networks
@@ -3716,7 +4139,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.0` Accept (S/P/C 3.0/2.75/2.75) · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  The main weakness of the paper is that the method is not evaluated on a wide range of tasks and datasets. The authors only evaluate their method on MNIST and Atari, which are relatively simple tasks. It would be good to see how the method performs on more complex tasks, such as image classification on CIFAR-10 or CIFAR-100, or language modeling on text datasets. Additionally, the autho deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/doi_10.1073_pnas.1611835114.md#weaknesses): The main weakness of the paper is that the method is not evaluated on a wide range of tasks and datasets. The authors only evaluate their method on MNIST and Atari, which are relatively simple tasks. It would be good to see how the method performs on more complex tasks, such as image classification on CIFAR-10 or CIFAR-100, or language modeling on text datasets.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/doi_10.1073_pnas.1611835114.md#weaknesses): While the paper presents a compelling approach to continual learning, several weaknesses warrant careful consideration. First, the paper lacks a thorough discussion of the limitations of the EWC method.…
 
 <a id="arxiv-1506.01186"></a>
 ### Cyclical Learning Rates for Training Neural Networks
@@ -3730,7 +4155,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `2.5` Reject · 7B Fast `5.2` Reject (S/P/C 2.5/2.75/2.25) · 14B Fast `4.8` Reject
 - OpenReviewer `3.0` Reject (S/P/C 2.0/1.0/1.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The authors only provide experimental results on a limited number of datasets and architectures. It would be better if the authors can provide more experimental results on other datasets and architectures. 2. The authors only provide results on classification tasks. It would be better if the authors can provide results on other tasks such as regression and generative tasks. 3. The a deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_1506.01186.md#weaknesses): 1. The authors only provide experimental results on a limited number of datasets and architectures. It would be better if the authors can provide more experimental results on other datasets and architectures. 2. The authors only provide results on classification tasks. It would be better if the authors can provide results on other tasks such as regression and generative tasks. 3.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_1506.01186.md#weaknesses): While the paper introduces a novel and promising approach to learning rate scheduling, several significant weaknesses limit its overall impact and generalizability. The most prominent concern is the lack of a rigorous theoretical analysis of why CLR works.…
 
 <a id="arxiv-2606.02572"></a>
 ### VISReg: Variance-Invariance-Sketching Regularization for JEPA training
@@ -3744,7 +4171,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `8.0` Accept (S/P/C 3.25/3.25/3.25) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [gonzo_ML/5832](https://t.me/gonzo_ML/5832)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a theoretical analysis of the proposed method. While the authors provide an analysis of the hyperparameter landscape of VISReg and related Cramér-Wold-based methods, it would be helpful to have a more rigorous theoretical analysis of the proposed method. - The paper does not compare with some recent SOTA methods, such as LpJEPA (1) and KerJEPA (2). - The pa deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2606.02572.md#weaknesses): The paper does not provide a theoretical analysis of the proposed method. While the authors provide an analysis of the hyperparameter landscape of VISReg and related Cramér-Wold-based methods, it would be helpful to have a more rigorous theoretical analysis of the proposed method. - The paper does not compare with some recent SOTA methods, such as LpJEPA (1) and KerJEPA (2).…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2606.02572.md#weaknesses): section. Overall, the paper presents a well-motivated and technically sound approach to self-supervised learning, with a focus on addressing the limitations of existing regularization techniques.
 
 <a id="arxiv-2605.26379"></a>
 ### When Does LeJEPA Learn a World Model?
@@ -3758,7 +4187,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `6.5` Accept (S/P/C 3.0/3.0/3.0) · 14B Fast `8.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `8.0` Accept
 - Telegram: [gonzo_ML/5489](https://t.me/gonzo_ML/5489)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper focuses on a specific type of self-supervised learning, LeJEPA, and does not consider other types of self-supervised learning. - The paper assumes that the latent variables are Gaussian, which may not be realistic in many cases. - The paper does not provide a clear explanation of how the theoretical results can be applied in practice.  ### Questions  - What are the limitati deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2605.26379.md#weaknesses): The paper focuses on a specific type of self-supervised learning, LeJEPA, and does not consider other types of self-supervised learning. - The paper assumes that the latent variables are Gaussian, which may not be realistic in many cases. - The paper does not provide a clear explanation of how the theoretical results can be applied in practice.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2605.26379.md#weaknesses): While the paper presents a strong theoretical contribution, several limitations warrant careful consideration. First, the theoretical framework relies on several strong assumptions about the world, which may not hold in many real-world scenarios.…
 
 <a id="arxiv-2604.09168"></a>
 ### ELT: Elastic Looped Transformers for Visual Generation
@@ -3772,7 +4203,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `6.7` Accept (S/P/C 3.0/3.0/2.67) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [gonzo_ML/5303](https://t.me/gonzo_ML/5303)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The novelty of this paper is limited. The idea of using a recurrent transformer architecture for visual generation is not new. The proposed method is a combination of existing techniques, such as looping and distillation. 2. The experiments are not convincing. The authors only compare their method with MaskGIT and MAGVIT, which are not the state-of-the-art methods in visual generati cyclereviewer-8b.seed1: Weaknesses  1. The paper does not provide a thorough comp
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2604.09168.md#weaknesses): 1. The novelty of this paper is limited. The idea of using a recurrent transformer architecture for visual generation is not new. The proposed method is a combination of existing techniques, such as looping and distillation. 2. The experiments are not convincing. The authors only compare their method with MaskGIT and MAGVIT, which are not the state-of-the-art methods in visual generation.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2604.09168.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. Firstly, while the paper introduces the concept of a 'composite block,' the explanation of how this block is implemented and how the parameters are shared across loops could be more detailed.…
 
 <a id="arxiv-2511.08544"></a>
 ### LeJEPA: Provable and Scalable Self-Supervised Learning Without the Heuristics
@@ -3786,7 +4219,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `5.8` Accept (S/P/C 3.0/2.75/2.75) · 14B Fast `7.0` Accept
 - OpenReviewer `8.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [data_secrets/8254](https://t.me/data_secrets/8254), [gonzo_ML/4212](https://t.me/gonzo_ML/4212), [axisofordinary/7894](https://t.me/axisofordinary/7894)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The proposed method is not novel, as it combines two existing methods: JEPA and SIGReg. The authors should provide a more detailed discussion on how their method is different from existing methods. - The theoretical analysis is not convincing. The authors should provide more rigorous proofs and analysis to support their claims. - The experimental results are not convincing. The autho deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2511.08544.md#weaknesses): The proposed method is not novel, as it combines two existing methods: JEPA and SIGReg. The authors should provide a more detailed discussion on how their method is different from existing methods. - The theoretical analysis is not convincing. The authors should provide more rigorous proofs and analysis to support their claims. - The experimental results are not convincing.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2511.08544.md#weaknesses): Despite the paper's strengths, there are several verified limitations that need to be addressed. One of the most significant concerns is the lack of a direct comparison with DINO on ImageNet using the standard linear probing evaluation protocol. The paper primarily uses full fine-tuning results on ImageNet, which is not the standard benchmark for evaluating self-supervised learning methods.…
 
 <a id="arxiv-2501.05441"></a>
 ### The GAN is dead; long live the GAN! A Modern GAN Baseline
@@ -3800,7 +4235,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.2` Reject (S/P/C 3.0/3.0/2.25) · 14B Fast `6.2` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [data_secrets/5891](https://t.me/data_secrets/5891)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The novelty of the paper is limited. The proposed method is a combination of existing methods, and the only novelty is the choice of hyperparameters. 2. The paper does not provide a thorough analysis of the proposed method. For example, the authors do not provide an ablation study of the R1 and R2 regularization terms. 3. The paper does not provide a comparison with other GAN baseli deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2501.05441.md#weaknesses): 1. The novelty of the paper is limited. The proposed method is a combination of existing methods, and the only novelty is the choice of hyperparameters. 2. The paper does not provide a thorough analysis of the proposed method. For example, the authors do not provide an ablation study of the R1 and R2 regularization terms. 3.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2501.05441.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, while the authors present a theoretical analysis of the convergence properties of their proposed loss function, the analysis is limited to local convergence.…
 
 <a id="arxiv-2310.04378"></a>
 ### Latent Consistency Models: Synthesizing High-Resolution Images with Few-Step Inference
@@ -3814,7 +4251,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `5.2` Reject (S/P/C 2.75/2.75/2.75) · 14B Fast `6.5` Accept
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [lovedeathtransformers/6578](https://t.me/lovedeathtransformers/6578)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The proposed method is a direct extension of the consistency model to latent space. The novelty is limited. - The proposed method is not compared with the latest diffusion models, such as (1-3).  - The proposed method is not compared with the latest consistency models, such as (4, 5). - The proposed method is only evaluated on LAION-5B-Aesthetics dataset. It is not clear how the prop deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2310.04378.md#weaknesses): The proposed method is a direct extension of the consistency model to latent space. The novelty is limited. - The proposed method is not compared with the latest diffusion models, such as (1-3). - The proposed method is not compared with the latest consistency models, such as (4, 5). - The proposed method is only evaluated on LAION-5B-Aesthetics dataset.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2310.04378.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, while the paper claims to introduce a novel method, the core idea of applying consistency models in the latent space is not entirely new, as similar approaches have been explored in the context of video generation.…
 
 <a id="arxiv-2309.15807"></a>
 ### Emu: Enhancing Image Generation Models Using Photogenic Needles in a Haystack
@@ -3828,7 +4267,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.5` Reject (S/P/C 3.0/3.0/2.5) · 14B Fast `6.7` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [seeallochnaya/663](https://t.me/seeallochnaya/663), [lovedeathtransformers/9356](https://t.me/lovedeathtransformers/9356)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper has several weaknesses:  1. The paper does not provide a thorough analysis of the limitations of the proposed approach. For example, the paper does not discuss how the approach would perform on a wider range of tasks or datasets.  2. The paper does not provide a thorough analysis of the potential risks and challenges associated with the proposed approach. For example, the pap cyclereviewer-8b.seed1: Weaknesses  The paper lacks novelty. The idea of fine-tun
+- Weaknesses:
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2309.15807.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, while the paper introduces the concept of 'aesthetic alignment,' it does not provide a formal definition of this term.…
+  - [DR-7B Fast](reviews/deepreviewer-7b-fast/arxiv_2309.15807.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, the paper lacks a thorough comparison with other existing methods for improving the aesthetic quality of generated images.…
 
 <a id="arxiv-2304.12210"></a>
 ### A Cookbook of Self-Supervised Learning
@@ -3842,7 +4283,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.0` Reject · 7B Fast `5.5` Reject (S/P/C 3.0/3.0/2.25) · 14B Fast `3.0` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `5.0` Reject
 - Telegram: [ai_newz/1874](https://t.me/ai_newz/1874), [data_secrets/4262](https://t.me/data_secrets/4262), [dl_stories/723](https://t.me/dl_stories/723), [dealerAI/129](https://t.me/dealerAI/129), [nn_for_science/1451](https://t.me/nn_for_science/1451), [data_secrets/1335](https://t.me/data_secrets/1335)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper is a survey paper that discusses the recent advances in self-supervised learning (SSL). The paper does not provide any new contributions or insights into the field of SSL. The paper is well-written and provides a comprehensive overview of the recent advances in SSL. However, the paper does not provide any new insights or contributions to the field of SSL. The paper is well-or deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2304.12210.md#weaknesses): The paper is a survey paper that discusses the recent advances in self-supervised learning (SSL). The paper does not provide any new contributions or insights into the field of SSL. The paper is well-written and provides a comprehensive overview of the recent advances in SSL. However, the paper does not provide any new insights or contributions to the field of SSL.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2304.12210.md#weaknesses): Despite its ambitious goals, the paper suffers from several significant weaknesses that undermine its effectiveness as a comprehensive guide to self-supervised learning (SSL). First, the presentation is often unclear and difficult to follow, which is a major issue for a paper intended to be a practical guide for newcomers.…
 
 <a id="arxiv-2304.09355"></a>
 ### To Compress or Not to Compress- Self-Supervised Learning and Information Theory: A Review
@@ -3856,7 +4299,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast ``  (S/P/C 2.25/2.5/2.5) · 14B Fast `4.0` Reject
 - OpenReviewer `5.0` Reject (S/P/C 3.0/2.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [nn_for_science/1455](https://t.me/nn_for_science/1455)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper lacks a clear research question and does not provide any new insights or contributions to the field. The paper is a review of existing work and does not provide any new results or experiments. The paper is not well-organized and is difficult to follow. The authors do not provide any clear conclusions or recommendations for future research.  ## Questions  See above.  ## Flag F cyclereviewer-8b.seed1: Weaknesses  The paper is not a research paper but a revie
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2304.09355.md#weaknesses): The paper lacks a clear research question and does not provide any new insights or contributions to the field. The paper is a review of existing work and does not provide any new results or experiments. The paper is not well-organized and is difficult to follow. The authors do not provide any clear conclusions or recommendations for future research.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2304.09355.md#weaknesses): Despite its strengths, the paper has several significant limitations that need to be addressed. One major concern is the lack of a detailed discussion on the practical challenges of applying information theory to self-supervised learning.…
 
 <a id="arxiv-2304.07193"></a>
 ### DINOv2: Learning Robust Visual Features without Supervision
@@ -3870,7 +4315,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/2.5) · 14B Fast `6.0` Accept
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [ai_newz/1871](https://t.me/ai_newz/1871), [AI_DeepLearning/1031](https://t.me/AI_DeepLearning/1031), [j_links/6646](https://t.me/j_links/6646), [nn_for_science/1435](https://t.me/nn_for_science/1435)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper proposes a new dataset and training recipe, but the novelty is limited. The authors do not provide a detailed analysis of the proposed dataset and training recipe, and it is not clear how they differ from previous approaches.  The paper also does not provide a detailed analysis of the performance of the proposed features on different tasks and datasets. The authors only provi deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2304.07193.md#weaknesses): The paper proposes a new dataset and training recipe, but the novelty is limited. The authors do not provide a detailed analysis of the proposed dataset and training recipe, and it is not clear how they differ from previous approaches.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2304.07193.md#weaknesses): While this paper presents significant contributions, several weaknesses warrant careful consideration. First, the paper's technical novelty is limited, as it primarily combines existing techniques rather than introducing fundamentally new self-supervised learning methods.…
 
 <a id="arxiv-2304.05977"></a>
 ### ImageReward: Learning and Evaluating Human Preferences for Text-to-Image Generation
@@ -3884,7 +4331,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept (S/P/C 2.75/3.0/2.75) · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [axisofordinary/4834](https://t.me/axisofordinary/4834)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The authors only compared their method with a few existing methods, and it would be better if they could compare with more existing methods in the field.  - The authors only tested their method on a small set of prompts, and it would be better if they could test their method on a larger set of prompts.  - The authors only tested their method on a single diffusion model, and it would  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2304.05977.md#weaknesses): The authors only compared their method with a few existing methods, and it would be better if they could compare with more existing methods in the field. - The authors only tested their method on a small set of prompts, and it would be better if they could test their method on a larger set of prompts.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2304.05977.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. Firstly, the evaluation of ImageReward, as presented in Section 4.1, is not as robust as it could be.…
 
 <a id="arxiv-2302.10174"></a>
 ### Towards Universal Fake Image Detectors that Generalize Across Generative Models
@@ -3898,7 +4347,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.0` Accept (S/P/C 2.67/3.0/2.67) · 14B Fast `6.0` Accept
 - OpenReviewer `8.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [dl_stories/730](https://t.me/dl_stories/730)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks novelty. The authors use the pre-trained CLIP model to extract features and then use the nearest neighbor and linear probing methods to perform the classification task. These methods are commonly used in the field of image classification and have been widely studied. The authors do not provide sufficient theoretical analysis and experimental results to support the ef deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2302.10174.md#weaknesses): 1. The paper lacks novelty. The authors use the pre-trained CLIP model to extract features and then use the nearest neighbor and linear probing methods to perform the classification task. These methods are commonly used in the field of image classification and have been widely studied.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2302.10174.md#weaknesses): While this paper presents a compelling approach to fake image detection, there are several weaknesses that warrant careful consideration. First, the paper lacks a detailed analysis of the computational cost associated with the proposed method, particularly the nearest neighbor approach.…
 
 <a id="arxiv-2301.08243"></a>
 ### Self-Supervised Learning from Images with a Joint-Embedding Predictive Architecture
@@ -3912,7 +4363,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Reject · 7B Fast `7.5` Accept (S/P/C 3.0/3.25/3.0) · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [nn_for_science/1511](https://t.me/nn_for_science/1511), [dl_stories/671](https://t.me/dl_stories/671), [gonzo_ML/3501](https://t.me/gonzo_ML/3501), [j_links/6821](https://t.me/j_links/6821)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper lacks a strong theoretical foundation for the proposed method. While the authors provide some intuition for why the method works, there is no formal analysis or proof of its correctness or optimality. This makes it difficult to understand the underlying principles of the method and its limitations. - The paper does not provide a clear comparison to existing methods. While t cyclereviewer-8b.seed1: Weaknesses  1. The proposed method is not very novel. The
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2301.08243.md#weaknesses): The paper lacks a strong theoretical foundation for the proposed method. While the authors provide some intuition for why the method works, there is no formal analysis or proof of its correctness or optimality. This makes it difficult to understand the underlying principles of the method and its limitations. - The paper does not provide a clear comparison to existing methods.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2301.08243.md#weaknesses): While I find the paper to be generally strong, there are several weaknesses that I believe need to be addressed. First, while the paper claims that I-JEPA learns semantic representations that do not require extensive fine-tuning on downstream tasks, the empirical evidence for this claim is not as robust as it could be.…
 
 <a id="arxiv-2212.11565"></a>
 ### Tune-A-Video: One-Shot Tuning of Image Diffusion Models for Text-to-Video Generation
@@ -3926,7 +4379,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `4.0` Reject (S/P/C 2.5/2.75/2.0) · 14B Fast `5.8` Reject
 - OpenReviewer `5.0` Reject (S/P/C 2.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [monkeyinlaw/1044](https://t.me/monkeyinlaw/1044), [AI_DeepLearning/831](https://t.me/AI_DeepLearning/831), [derplearning/2267](https://t.me/derplearning/2267)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The proposed method is based on the existing T2I model, and the proposed method is not very novel. 2. The proposed method is not very effective. For example, the video generation results in Fig. 7 are not good enough. 3. The proposed method is not very efficient. For example, the training time is 10 minutes for a single video.  ### Questions  1. The proposed method is based on the e deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2212.11565.md#weaknesses): 1. The proposed method is based on the existing T2I model, and the proposed method is not very novel. 2. The proposed method is not very effective. For example, the video generation results in Fig. 7 are not good enough. 3. The proposed method is not very efficient. For example, the training time is 10 minutes for a single video.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2212.11565.md#weaknesses): While the paper presents a compelling approach to text-to-video generation, I have identified several weaknesses that warrant further discussion. Firstly, the paper's reliance on DDIM inversion for structure guidance, while effective, lacks a thorough analysis of its limitations.…
 
 <a id="arxiv-2208.10442"></a>
 ### Image as a Foreign Language: BEiT Pretraining for All Vision and Vision-Language Tasks
@@ -3940,7 +4395,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/3.0) · 14B Fast `6.5` Accept
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [j_links/6062](https://t.me/j_links/6062), [boris_again/1163](https://t.me/boris_again/1163), [abstractDL/157](https://t.me/abstractDL/157), [axisofordinary/3146](https://t.me/axisofordinary/3146), [cats_shredinger/25](https://t.me/cats_shredinger/25)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The novelty of the paper is limited. The proposed method is a straightforward combination of existing methods, i.e., BEiT and Multiway Transformer.  2. The paper does not provide any analysis of the model's performance on low-resource languages, which is an important aspect of a multimodal foundation model. 3. The paper does not provide any analysis of the model's performance on out deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2208.10442.md#weaknesses): 1. The novelty of the paper is limited. The proposed method is a straightforward combination of existing methods, i.e., BEiT and Multiway Transformer. 2. The paper does not provide any analysis of the model's performance on low-resource languages, which is an important aspect of a multimodal foundation model. 3.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2208.10442.md#weaknesses): While the paper presents a compelling case for BEiT-3, several weaknesses warrant careful consideration. Firstly, the paper's claim of introducing a 'general-purpose multimodal foundation model' is somewhat overstated, as the experiments are limited to vision and language tasks.…
 
 <a id="openreview-BZ5a1r-kVsf"></a>
 ### A Path Towards Autonomous Machine Intelligence (LeCun, 2022)
@@ -3954,7 +4411,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast ``  (S/P/C 2.75/2.5/2.5) · 14B Fast `3.5` Reject
 - OpenReviewer `8.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `5.0` Accept
 - Telegram: [dtulinov/508](https://t.me/dtulinov/508), [dl_stories/497](https://t.me/dl_stories/497), [rybolos_channel/249](https://t.me/rybolos_channel/249), [gonzo_ML/3150](https://t.me/gonzo_ML/3150), [rybolos_channel/239](https://t.me/rybolos_channel/239), [emptyset_of_ideas/304](https://t.me/emptyset_of_ideas/304), [chillhousetech/680](https://t.me/chillhousetech/680), [knowledge_accumulator/46](https://t.me/knowledge_accumulator/46)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper lacks concrete implementation details and experimental results to support the proposed architecture and training paradigms. The paper does not provide any code or pseudocode for the proposed architecture, and the experimental results are limited to a few examples and do not provide any quantitative evaluation of the performance of the proposed methods. The paper also does not deepreviewer-14b: Weaknesses:  The most significant weakness of this paper is its
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/openreview_BZ5a1r-kVsf.md#weaknesses): The paper lacks concrete implementation details and experimental results to support the proposed architecture and training paradigms. The paper does not provide any code or pseudocode for the proposed architecture, and the experimental results are limited to a few examples and do not provide any quantitative evaluation of the performance of the proposed methods.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/openreview_BZ5a1r-kVsf.md#weaknesses): The most significant weakness of this paper is its lack of empirical validation. As a position paper, it primarily outlines a proposed architecture and training paradigms without providing concrete experimental results to support its claims. This absence of empirical evidence makes it difficult to assess the practical viability of the proposed approach.…
 
 <a id="arxiv-2111.07832"></a>
 ### iBOT: Image BERT Pre-Training with Online Tokenizer
@@ -3968,7 +4427,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `7.0` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [j_links/5504](https://t.me/j_links/5504), [gonzo_ML/5626](https://t.me/gonzo_ML/5626), [nn_for_science/1435](https://t.me/nn_for_science/1435)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The novelty of the proposed method is limited. The idea of using self-distillation for pre-training has been explored in previous works, such as DINO. 2. The paper lacks a clear motivation for the proposed method. The authors do not provide a clear explanation of why masked image modeling with a self-distillation objective is a good approach for pre-training vision transformers. 3.  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2111.07832.md#weaknesses): 1. The novelty of the proposed method is limited. The idea of using self-distillation for pre-training has been explored in previous works, such as DINO. 2. The paper lacks a clear motivation for the proposed method. The authors do not provide a clear explanation of why masked image modeling with a self-distillation objective is a good approach for pre-training vision transformers. 3.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2111.07832.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. One significant limitation is the lack of a comprehensive analysis of the computational cost associated with iBOT's training process.…
 
 <a id="arxiv-2105.04906"></a>
 ### VICReg: Variance-Invariance-Covariance Regularization for Self-Supervised Learning
@@ -3982,7 +4443,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.0` Reject · 7B Fast `5.8` Reject (S/P/C 2.75/3.0/2.5) · 14B Fast `6.5` Accept
 - OpenReviewer `3.0` Reject (S/P/C 2.0/2.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/590](https://t.me/gonzo_ML/590)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The novelty of the proposed method is limited. The proposed method is based on the principle of preserving the information content of the embeddings. The method is similar to the Barlow Twins method, which also decorrelates the variables of each embedding and prevents an informational collapse in which the variables would vary together or be highly correlated. - The experiments are n deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2105.04906.md#weaknesses): The novelty of the proposed method is limited. The proposed method is based on the principle of preserving the information content of the embeddings. The method is similar to the Barlow Twins method, which also decorrelates the variables of each embedding and prevents an informational collapse in which the variables would vary together or be highly correlated.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2105.04906.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further attention. First, while the paper introduces the variance preservation term as a novel contribution, the in-depth analysis of its behavior is lacking.…
 
 <a id="arxiv-2104.14294"></a>
 ### Emerging Properties in Self-Supervised Vision Transformers
@@ -3996,7 +4459,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.7` Accept (S/P/C 3.0/3.0/2.33) · 14B Fast `7.3` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [dl_stories/722](https://t.me/dl_stories/722), [j_links/4810](https://t.me/j_links/4810), [dl_stories/667](https://t.me/dl_stories/667), [gonzo_ML/5626](https://t.me/gonzo_ML/5626), [gonzo_ML/688](https://t.me/gonzo_ML/688), [nn_for_science/1435](https://t.me/nn_for_science/1435), [tech_priestess/247](https://t.me/tech_priestess/247)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The novelty of the proposed method is limited. The authors mention that their method is similar to BYOL and MoCov2, and the main difference is the use of a momentum encoder and multi-crop training. However, these components have been used in previous works, and the authors do not provide any new insights or analysis on how they contribute to the performance of the method.  2. The ex deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2104.14294.md#weaknesses): 1. The novelty of the proposed method is limited. The authors mention that their method is similar to BYOL and MoCov2, and the main difference is the use of a momentum encoder and multi-crop training. However, these components have been used in previous works, and the authors do not provide any new insights or analysis on how they contribute to the performance of the method.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2104.14294.md#weaknesses): While I find the paper to be generally strong, there are several weaknesses that I believe warrant further attention. First, the paper's focus on Vision Transformers (ViTs) leads to a lack of detailed analysis of how the DINO framework interacts with specific architectural components of ViTs.…
 
 <a id="arxiv-2006.09882"></a>
 ### Unsupervised Learning of Visual Features by Contrasting Cluster Assignments
@@ -4010,7 +4475,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.0` Reject · 7B Fast `7.5` Accept (S/P/C 3.25/3.25/3.25) · 14B Fast `7.0` Accept
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [gonzo_ML/688](https://t.me/gonzo_ML/688), [nn_for_science/1435](https://t.me/nn_for_science/1435)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The proposed method is not novel, as it is a variant of DeepCluster. The main difference is that the proposed method learns the cluster assignments online, while DeepCluster learns them offline. However, the online learning approach requires a more complex optimization process and is not as efficient as the offline learning approach. - The paper does not provide a thorough analysis o deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2006.09882.md#weaknesses): The proposed method is not novel, as it is a variant of DeepCluster. The main difference is that the proposed method learns the cluster assignments online, while DeepCluster learns them offline. However, the online learning approach requires a more complex optimization process and is not as efficient as the offline learning approach.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2006.09882.md#weaknesses): While I find the paper to be strong overall, there are several weaknesses that I believe warrant further discussion. Firstly, while the paper introduces the multi-crop strategy as a key contribution, the analysis of its individual components could be more granular.…
 
 <a id="arxiv-2606.18543"></a>
 ### CEO-Bench: Can Agents Play the Long Game?
@@ -4024,7 +4491,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `6.5` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [dealerAI/1857](https://t.me/dealerAI/1857), [boris_again/3974](https://t.me/boris_again/3974)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a detailed description of the models used in the evaluation, including their architecture, training data, and hyperparameters. This makes it difficult to understand the specific capabilities and limitations of each model and how they relate to the task. - The paper does not provide a detailed analysis of the results, including the performance of each model  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2606.18543.md#weaknesses): The paper does not provide a detailed description of the models used in the evaluation, including their architecture, training data, and hyperparameters. This makes it difficult to understand the specific capabilities and limitations of each model and how they relate to the task.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2606.18543.md#weaknesses): of current language models in long-horizon planning. The ablation studies, which explore the impact of competitor strength and time horizon, are also a valuable addition, providing a more nuanced understanding of the benchmark's challenges.…
 
 <a id="arxiv-2410.07095"></a>
 ### MLE-bench: Evaluating Machine Learning Agents on Machine Learning Engineering
@@ -4038,7 +4507,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept (S/P/C 2.5/3.0/2.75) · 14B Fast `6.2` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/2.0) · SEA-E `7.0` Accept
 - Telegram: [seeallochnaya/1866](https://t.me/seeallochnaya/1866), [data_secrets/5120](https://t.me/data_secrets/5120), [lovedeathtransformers/8445](https://t.me/lovedeathtransformers/8445), [gonzo_ML/4261](https://t.me/gonzo_ML/4261), [rybolos_channel/1270](https://t.me/rybolos_channel/1270)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper does not provide a clear definition of machine learning engineering and how it is distinct from other areas of AI research. It would be helpful to provide a more detailed explanation of the scope and focus of the benchmark.  2. The paper does not provide a clear explanation of how the 75 Kaggle competitions were selected and why they are representative of contemporary ML e deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2410.07095.md#weaknesses): 1. The paper does not provide a clear definition of machine learning engineering and how it is distinct from other areas of AI research. It would be helpful to provide a more detailed explanation of the scope and focus of the benchmark.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2410.07095.md#weaknesses): Despite its strengths, the paper exhibits several weaknesses that warrant careful consideration. One significant limitation is the lack of a deep analysis of the agent's behavior and the factors influencing its performance.…
 
 <a id="arxiv-2405.08007"></a>
 ### People cannot distinguish GPT-4 from a human in a Turing test
@@ -4052,7 +4523,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `3.8` Reject · 7B Fast `4.7` Reject (S/P/C 2.67/3.0/2.33) · 14B Fast `7.5` Accept
 - OpenReviewer `3.0` Reject (S/P/C 3.0/3.0/1.0) · SEA-E `3.0` Reject
 - Telegram: [denissexy/8700](https://t.me/denissexy/8700), [gonzo_ML/2655](https://t.me/gonzo_ML/2655), [axisofordinary/6315](https://t.me/axisofordinary/6315), [tech_priestess/1735](https://t.me/tech_priestess/1735)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper is not written in a way that is easy to understand. The authors seem to be writing for a very specific audience, and the paper is not well-suited for a broader audience.  ### Questions  What is the significance of the results? Why is it important to know that GPT-4 was judged to be human 54% of the time?  ### Flag For Ethics Review  No ethics review needed.  ### Rating  5: ma deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2405.08007.md#weaknesses): The paper is not written in a way that is easy to understand. The authors seem to be writing for a very specific audience, and the paper is not well-suited for a broader audience.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2405.08007.md#weaknesses): While this paper presents a valuable contribution to the field, several weaknesses warrant careful consideration. First, the paper's core contribution, while empirically sound, may be considered somewhat incremental.…
 
 <a id="arxiv-2402.16822"></a>
 ### Rainbow Teaming: Open-Ended Generation of Diverse Adversarial Prompts
@@ -4066,7 +4539,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `6.7` Accept (S/P/C 2.67/3.33/2.67) · 14B Fast `7.5` Accept
 - OpenReviewer `8.0` Accept (S/P/C 3.0/4.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [rybolos_channel/1495](https://t.me/rybolos_channel/1495)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper lacks a clear definition of what constitutes an adversarial prompt and how it is evaluated. The authors use a variety of terms such as "harmful", "incorrect", "toxic", and "unsafe" to describe the outputs of LLMs when prompted with adversarial prompts, but it is not clear how these terms are defined or measured. Additionally, the authors do not provide a clear explanation o deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2402.16822.md#weaknesses): The paper lacks a clear definition of what constitutes an adversarial prompt and how it is evaluated. The authors use a variety of terms such as "harmful", "incorrect", "toxic", and "unsafe" to describe the outputs of LLMs when prompted with adversarial prompts, but it is not clear how these terms are defined or measured.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2402.16822.md#weaknesses): While I find the paper to be a valuable contribution, there are several weaknesses that I have identified through my analysis. First, the paper lacks a thorough comparison with existing adversarial prompt generation techniques. While the authors mention that their method is inspired by Samvelyan et al.…
 
 <a id="arxiv-2402.12483"></a>
 ### Artifacts or Abduction: How Do LLMs Answer Multiple-Choice Questions Without the Question?
@@ -4080,7 +4555,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `6.3` Accept (S/P/C 2.67/3.0/2.67) · 14B Fast `6.0` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [tech_priestess/1699](https://t.me/tech_priestess/1699), [axisofordinary/6146](https://t.me/axisofordinary/6146), [seeallochnaya/1697](https://t.me/seeallochnaya/1697)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a clear conclusion or recommendation for how to improve MCQA benchmarks. The authors state that the LLMs' performance on choices-only prompts is not solely due to memorization, but do not provide a clear explanation of what is causing the performance. The authors also state that abductive question inference is a contributing factor, but do not provide a cle cyclereviewer-8b.seed1: Weaknesses  - The paper does not provide a clear conclusi
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2402.12483.md#weaknesses): The paper does not provide a clear conclusion or recommendation for how to improve MCQA benchmarks. The authors state that the LLMs' performance on choices-only prompts is not solely due to memorization, but do not provide a clear explanation of what is causing the performance.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2402.12483.md#weaknesses): While this paper presents a compelling investigation into LLM behavior on MCQA tasks, several weaknesses warrant careful consideration. First, the paper's reliance on a black-box approach, while practical given the computational constraints, limits the depth of analysis.…
 
 <a id="arxiv-2311.16452"></a>
 ### Can Generalist Foundation Models Outcompete Special-Purpose Tuning? Case Study in Medicine
@@ -4094,7 +4571,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `5.3` Reject (S/P/C 2.67/3.0/2.33) · 14B Fast `6.8` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/5812](https://t.me/axisofordinary/5812), [seeallochnaya/928](https://t.me/seeallochnaya/928)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper lacks a comprehensive evaluation of the proposed method, particularly in real-world scenarios. - The paper does not provide a detailed comparison with existing methods, making it difficult to assess the novelty and effectiveness of the proposed approach. - The paper does not discuss potential risks and limitations of the proposed method, such as bias and hallucinations.  ## deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2311.16452.md#weaknesses): The paper lacks a comprehensive evaluation of the proposed method, particularly in real-world scenarios. - The paper does not provide a detailed comparison with existing methods, making it difficult to assess the novelty and effectiveness of the proposed approach. - The paper does not discuss potential risks and limitations of the proposed method, such as bias and hallucinations.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2311.16452.md#weaknesses): While this paper presents compelling results, I have identified several weaknesses that warrant further consideration. Firstly, the paper lacks a detailed analysis of the computational resources required for Medprompt's preprocessing stage.…
 
 <a id="arxiv-2309.16797"></a>
 ### Promptbreeder: Self-Referential Self-Improvement Via Prompt Evolution
@@ -4108,7 +4587,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/3.0) · 14B Fast `6.7` Accept
 - OpenReviewer `3.0` Reject (S/P/C 2.0/2.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [j_links/7082](https://t.me/j_links/7082), [rybolos_channel/1495](https://t.me/rybolos_channel/1495), [axisofordinary/5574](https://t.me/axisofordinary/5574)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The proposed method is not well-motivated. The authors claim that the proposed method is self-referential, but it is not clear what self-referential means. The authors also claim that the proposed method is an interesting future where larger and more capable LLMs could further amplify the gains of our approach. However, it is not clear how the proposed method can be scaled to larger deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2309.16797.md#weaknesses): 1. The proposed method is not well-motivated. The authors claim that the proposed method is self-referential, but it is not clear what self-referential means. The authors also claim that the proposed method is an interesting future where larger and more capable LLMs could further amplify the gains of our approach. However, it is not clear how the proposed method can be scaled to larger models. 2.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2309.16797.md#weaknesses): While I find the paper's contributions to be significant, there are several weaknesses that I have identified through my analysis. First, the paper lacks a thorough analysis of the computational cost associated with Promptbreeder.…
 
 <a id="acl-2023.acl-demo.51"></a>
 ### A System for Answering Simple Questions in Multiple Languages
@@ -4122,7 +4603,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.0` Reject · 7B Fast `5.0` Reject (S/P/C 2.75/3.0/2.5) · 14B Fast `3.7` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [abstractDL/233](https://t.me/abstractDL/233), [boris_again/2173](https://t.me/boris_again/2173)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The method is limited to simple questions and cannot handle multi-hop questions. - The method is limited to one-hop questions and cannot handle complex questions that require reasoning. - The method is limited to questions that can be answered by a single triple in the knowledge graph and cannot handle questions that require multiple triples to answer. - The method is limited to ques deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/acl_2023.acl-demo.51.md#weaknesses): The method is limited to simple questions and cannot handle multi-hop questions. - The method is limited to one-hop questions and cannot handle complex questions that require reasoning. - The method is limited to questions that can be answered by a single triple in the knowledge graph and cannot handle questions that require multiple triples to answer.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/acl_2023.acl-demo.51.md#weaknesses): After a thorough review of the paper and the provided analyses, several key weaknesses emerge, which I have independently validated. Firstly, the paper's scope is notably narrow, focusing exclusively on simple, one-hop KGQA. As stated in the introduction, the authors explicitly focus on questions like “What is the capital of France?” and acknowledge the opinion that this task is nearly solved.…
 
 <a id="arxiv-2304.08467"></a>
 ### Learning to Compress Prompts with Gist Tokens
@@ -4136,7 +4619,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `4.8` Reject (S/P/C 2.5/2.75/2.5) · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `5.0` Reject
 - Telegram: [axisofordinary/4834](https://t.me/axisofordinary/4834)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper lacks a clear motivation for the proposed method. The authors mention that the goal is to compress prompts into a smaller set of tokens, but it is not clear why this is necessary or what the benefits of doing so are. - The evaluation is limited to a single dataset and a single LM architecture. It would be helpful to see how the method performs on other datasets and architec deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2304.08467.md#weaknesses): The paper lacks a clear motivation for the proposed method. The authors mention that the goal is to compress prompts into a smaller set of tokens, but it is not clear why this is necessary or what the benefits of doing so are. - The evaluation is limited to a single dataset and a single LM architecture. It would be helpful to see how the method performs on other datasets and architectures.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2304.08467.md#weaknesses): While I appreciate the simplicity and potential of the proposed gisting method, my analysis has revealed several weaknesses that warrant careful consideration. First, the paper's evaluation lacks a thorough analysis of the method's robustness to prompt variations.…
 
 <a id="arxiv-2212.14024"></a>
 ### Demonstrate-Search-Predict: Composing retrieval and language models for knowledge-intensive NLP
@@ -4150,7 +4635,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.7` Reject (S/P/C 2.67/2.67/2.67) · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [seeallochnaya/368](https://t.me/seeallochnaya/368), [seeallochnaya/55](https://t.me/seeallochnaya/55), [seeallochnaya/20](https://t.me/seeallochnaya/20)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper lacks a clear motivation for the DSP framework. The authors should provide a more detailed explanation of the limitations of existing retrieval-augmented in-context learning approaches and how DSP addresses these limitations.  The paper does not provide a clear comparison with existing retrieval-augmented in-context learning approaches. The authors should compare DSP with oth deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2212.14024.md#weaknesses): The paper lacks a clear motivation for the DSP framework. The authors should provide a more detailed explanation of the limitations of existing retrieval-augmented in-context learning approaches and how DSP addresses these limitations.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2212.14024.md#weaknesses): Despite the strengths of the proposed DSP framework, I have identified several weaknesses that warrant careful consideration. A primary concern is the limited scope of the experimental evaluation. The authors conduct experiments using only one language model, GPT-3.5, and one retrieval model, ColBERTv2.…
 
 <a id="arxiv-2212.09741"></a>
 ### One Embedder, Any Task: Instruction-Finetuned Text Embeddings
@@ -4164,7 +4651,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.5` Accept (S/P/C 3.0/3.25/3.0) · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [buckwheat_thoughts/15](https://t.me/buckwheat_thoughts/15), [dealerAI/8](https://t.me/dealerAI/8), [lovedeathtransformers/5427](https://t.me/lovedeathtransformers/5427)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The novelty of the paper is limited. The paper only proposes a new dataset and a new method based on the existing GTR model. The proposed method is not novel, as it is a simple extension of the existing GTR model. 2. The paper does not provide a thorough analysis of the proposed method. For example, the paper does not compare the proposed method with other state-of-the-art methods o deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2212.09741.md#weaknesses): 1. The novelty of the paper is limited. The paper only proposes a new dataset and a new method based on the existing GTR model. The proposed method is not novel, as it is a simple extension of the existing GTR model. 2. The paper does not provide a thorough analysis of the proposed method.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2212.09741.md#weaknesses): While I find the paper to be generally strong, there are several weaknesses that I have identified through my analysis. First, the paper lacks a detailed analysis of the model's performance on individual tasks within the MEDI dataset.…
 
 <a id="arxiv-2206.04615"></a>
 ### Beyond the Imitation Game: Quantifying and extrapolating the capabilities of language models
@@ -4178,7 +4667,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [mishin_learning/1023](https://t.me/mishin_learning/1023), [rybolos_channel/157](https://t.me/rybolos_channel/157), [j_links/5901](https://t.me/j_links/5901), [rybolos_channel/705](https://t.me/rybolos_channel/705), [rybolos_channel/641](https://t.me/rybolos_channel/641), [j_links/6786](https://t.me/j_links/6786), [tech_priestess/536](https://t.me/tech_priestess/536)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a clear definition of what is meant by "beyond the imitation game". It would be helpful to have a more explicit definition of what the benchmark is intended to measure and what it is trying to achieve. - The paper does not provide a clear explanation of how the tasks were selected for the benchmark. It would be helpful to have a more detailed description of deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2206.04615.md#weaknesses): The paper does not provide a clear definition of what is meant by "beyond the imitation game". It would be helpful to have a more explicit definition of what the benchmark is intended to measure and what it is trying to achieve. - The paper does not provide a clear explanation of how the tasks were selected for the benchmark.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2206.04615.md#weaknesses): While I appreciate the contributions of this paper, I have identified several weaknesses that warrant discussion. Firstly, the paper's analysis of task characteristics, particularly the categorization of tasks as either 'knowledge-based' or 'composite,' lacks a rigorous, quantifiable approach.…
 
 <a id="arxiv-2205.13147"></a>
 ### Matryoshka Representation Learning
@@ -4192,7 +4683,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `7.0` Accept (S/P/C 3.25/3.0/3.0) · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [rybolos_channel/1037](https://t.me/rybolos_channel/1037), [nn_for_science/1914](https://t.me/nn_for_science/1914), [doomgrad/757](https://t.me/doomgrad/757), [gonzo_ML/2311](https://t.me/gonzo_ML/2311), [gonzo_ML/3368](https://t.me/gonzo_ML/3368), [gonzo_ML/2037](https://t.me/gonzo_ML/2037), [buckwheat_thoughts/8](https://t.me/buckwheat_thoughts/8), [gonzo_ML/3369](https://t.me/gonzo_ML/3369)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper lacks a clear motivation for the proposed method. The authors should provide more details on why learning a single representation that can be used for multiple downstream tasks is important and how it can benefit the community. - The paper lacks a clear explanation of the proposed method. The authors should provide more details on how the proposed method works and how it ca cyclereviewer-8b.seed1: Weaknesses  - The paper does not provide a clear motivati
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2205.13147.md#weaknesses): The paper lacks a clear motivation for the proposed method. The authors should provide more details on why learning a single representation that can be used for multiple downstream tasks is important and how it can benefit the community. - The paper lacks a clear explanation of the proposed method.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2205.13147.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. One significant concern is the lack of a detailed analysis of the computational overhead introduced during the training phase due to the multi-objective optimization.…
 
 <a id="acl-2022.emnlp-main.340"></a>
 ### Super-NaturalInstructions: Generalization via Declarative Instructions on 1600+ NLP Tasks
@@ -4206,7 +4699,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast ``  (S/P/C 2.75/2.75/2.75) · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/1585](https://t.me/gonzo_ML/1585)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a detailed analysis of the limitations of the benchmark and the model. - The paper does not provide a detailed analysis of the potential biases in the benchmark and the model. - The paper does not provide a detailed analysis of the potential ethical implications of using the benchmark and the model. - The paper does not provide a detailed analysis of the po deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/acl_2022.emnlp-main.340.md#weaknesses): The paper does not provide a detailed analysis of the limitations of the benchmark and the model. - The paper does not provide a detailed analysis of the potential biases in the benchmark and the model. - The paper does not provide a detailed analysis of the potential ethical implications of using the benchmark and the model.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/acl_2022.emnlp-main.340.md#weaknesses): . The fact that Tk-INSTRUCT consistently outperforms other generalization-based methods across all task types is a strong indication of its effectiveness.
 
 <a id="arxiv-2112.07899"></a>
 ### Large Dual Encoders Are Generalizable Retrievers
@@ -4220,7 +4715,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `6.2` Reject (S/P/C 2.75/3.0/2.75) · 14B Fast `6.5` Accept
 - OpenReviewer `8.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [dealerAI/8](https://t.me/dealerAI/8), [lovedeathtransformers/5427](https://t.me/lovedeathtransformers/5427)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a clear explanation of why scaling up the model size improves the generalization of dual encoders. The authors should provide more analysis and discussion on this aspect. - The paper does not provide a comparison with other models that use different interaction layers, such as multi-vector encoding models and ColBERT. The authors should provide more discuss deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2112.07899.md#weaknesses): The paper does not provide a clear explanation of why scaling up the model size improves the generalization of dual encoders. The authors should provide more analysis and discussion on this aspect. - The paper does not provide a comparison with other models that use different interaction layers, such as multi-vector encoding models and ColBERT.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2112.07899.md#weaknesses): While this paper presents compelling results, several limitations warrant careful consideration. First, the paper lacks a direct comparison with other similarly scaled dense retrieval models. The authors primarily compare against smaller models like DPR and ANCE, as well as sparse methods like BM25 and DocT5Query.…
 
 <a id="acl-2022.acl-long.360"></a>
 ### PRIMERA: Pyramid-based Masked Sentence Pre-training for Multi-document Summarization
@@ -4234,7 +4731,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `3.8` Reject · 7B Fast `5.7` Reject (S/P/C 2.67/3.0/2.67) · 14B Fast `6.0` Accept
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/1507](https://t.me/gonzo_ML/1507)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not discuss the limitations of the proposed method. It would be helpful to discuss the potential limitations and future work. - The paper does not provide any qualitative analysis of the results. It would be helpful to provide some examples of the generated summaries and compare them with the ground truth summaries. - The paper does not discuss the computational cost o deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/acl_2022.acl-long.360.md#weaknesses): The paper does not discuss the limitations of the proposed method. It would be helpful to discuss the potential limitations and future work. - The paper does not provide any qualitative analysis of the results. It would be helpful to provide some examples of the generated summaries and compare them with the ground truth summaries.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/acl_2022.acl-long.360.md#weaknesses): While the paper presents a compelling approach, I have identified several weaknesses that warrant further consideration. First, the paper lacks a detailed analysis of the computational costs associated with PRIMERA.…
 
 <a id="arxiv-2101.02235"></a>
 ### Did Aristotle Use a Laptop? A Question Answering Benchmark with Implicit Reasoning Strategies
@@ -4248,7 +4747,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `4.8` Reject (S/P/C 2.5/2.5/2.25) · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [gonzo_ML/1585](https://t.me/gonzo_ML/1585)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The authors should provide more details about the baselines and their performance. In particular, it would be helpful to know how the baselines are trained and evaluated, and what types of reasoning they are able to perform.  ### Questions  1. What are the main differences between the proposed dataset and existing multi-hop reasoning datasets? 2. How does the proposed dataset compare t deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2101.02235.md#weaknesses): The authors should provide more details about the baselines and their performance. In particular, it would be helpful to know how the baselines are trained and evaluated, and what types of reasoning they are able to perform.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2101.02235.md#weaknesses): While the paper presents a valuable contribution, several weaknesses warrant careful consideration. First, the paper's definition of 'implicit' questions, while providing examples, lacks a formal definition and clear, objective criteria.…
 
 <a id="arxiv-2608.23875"></a>
 ### AI Finds A Way
@@ -4262,7 +4763,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `4.7` Reject (S/P/C 2.0/2.33/2.0) · 14B Fast `3.8` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [j_links/8501](https://t.me/j_links/8501), [gonzo_ML/5974](https://t.me/gonzo_ML/5974)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper lacks a clear and concise summary of the main contributions and findings. - The paper does not provide a clear and well-defined research question or hypothesis. - The paper does not provide a clear and well-defined methodology for collecting and analyzing the anecdotes. - The paper does not provide a clear and well-defined evaluation or validation of the findings. - The pap deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2608.23875.md#weaknesses): The paper lacks a clear and concise summary of the main contributions and findings. - The paper does not provide a clear and well-defined research question or hypothesis. - The paper does not provide a clear and well-defined methodology for collecting and analyzing the anecdotes. - The paper does not provide a clear and well-defined evaluation or validation of the findings.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2608.23875.md#weaknesses): Despite the paper's strengths, several limitations are evident. Firstly, the paper's reliance on anecdotal evidence without a systematic analysis of the conditions under which these behaviors emerge is a significant weakness.…
 
 <a id="arxiv-2608.19197"></a>
 ### SPADE: Self-Play in Adaptive Synthetic Executable Environments
@@ -4276,7 +4779,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `7.0` Accept (S/P/C 3.0/3.0/3.0) · 14B Fast `7.0` Accept
 - OpenReviewer `8.0` Accept (S/P/C 4.0/4.0/4.0) · SEA-E `7.0` Accept
 - Telegram: [axisofordinary/9061](https://t.me/axisofordinary/9061)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks a clear comparison with existing methods in the field, making it difficult to assess the novelty and significance of the proposed approach.  2. The paper does not provide a detailed explanation of the limitations of the proposed approach, which is important for understanding the potential applications and limitations of the method.  3. The paper does not provide a cl deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2608.19197.md#weaknesses): 1. The paper lacks a clear comparison with existing methods in the field, making it difficult to assess the novelty and significance of the proposed approach.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2608.19197.md#weaknesses): While I am impressed with the overall contribution of this paper, my analysis has identified several weaknesses that warrant further discussion. First, the paper lacks a detailed analysis of the hint generation process. While the paper describes the *use* of hints, it does not delve into the *nature* of these hints, their complexity, or their impact on the learning process.…
 
 <a id="arxiv-2608.08311"></a>
 ### Ouroboros: A Self-Developing Frontier Coding Agent with Reviewed Core Evolution
@@ -4290,7 +4795,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast `7.5` Accept (S/P/C 3.5/3.25/3.75) · 14B Fast `5.8` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `8.0` Accept
 - Telegram: [abstractDL/439](https://t.me/abstractDL/439), [lovedeathtransformers/10949](https://t.me/lovedeathtransformers/10949)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper lacks clarity in explaining the methodology and evaluation of the agent. The paper does not provide enough details on how the agent's performance is evaluated, and how the benchmarks are used to assess the agent's capabilities. The paper also does not provide enough information on the agent's limitations and potential biases. Additionally, the paper does not discuss the poten deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2608.08311.md#weaknesses): The paper lacks clarity in explaining the methodology and evaluation of the agent. The paper does not provide enough details on how the agent's performance is evaluated, and how the benchmarks are used to assess the agent's capabilities. The paper also does not provide enough information on the agent's limitations and potential biases.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2608.08311.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. The most significant issue, in my view, is the lack of detailed technical explanations, which makes it challenging to fully understand the Ouroboros framework and its implementation.…
 
 <a id="arxiv-2607.13104"></a>
 ### Self-Improvements in Modern Agentic Systems: A Survey
@@ -4304,7 +4811,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `7.0` Accept (S/P/C 3.25/3.0/2.75) · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `5.0` Accept
 - Telegram: [gonzo_ML/5772](https://t.me/gonzo_ML/5772)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper is a survey, and it does not present any new research results. The authors do not provide any new insights or perspectives on the field of self-improving agents. The paper is also quite long and dense, which may make it difficult for readers to follow.  ## Questions  The paper does not provide any new insights or perspectives on the field of self-improving agents. The authors deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2607.13104.md#weaknesses): The paper is a survey, and it does not present any new research results. The authors do not provide any new insights or perspectives on the field of self-improving agents. The paper is also quite long and dense, which may make it difficult for readers to follow.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2607.13104.md#weaknesses): While the paper is thorough and well-structured, it has several limitations that could be addressed to enhance its overall quality and impact. One significant weakness is the lack of a detailed discussion on the limitations and scalability of scaffold improvement.…
 
 <a id="arxiv-2605.13821"></a>
 ### Harnessing Agentic Evolution
@@ -4318,7 +4827,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `7.0` Accept (S/P/C 3.0/3.25/3.0) · 14B Fast `6.5` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a detailed discussion of the limitations of the proposed approach. - The paper does not provide a discussion of the potential risks and challenges associated with the proposed approach. - The paper does not provide a discussion of the potential applications of the proposed approach. - The paper does not provide a discussion of the potential future work.  ## deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2605.13821.md#weaknesses): The paper does not provide a detailed discussion of the limitations of the proposed approach. - The paper does not provide a discussion of the potential risks and challenges associated with the proposed approach. - The paper does not provide a discussion of the potential applications of the proposed approach. - The paper does not provide a discussion of the potential future work.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2605.13821.md#weaknesses): Despite the paper's strengths, several limitations and areas for improvement are evident. One of the primary concerns is the clarity and readability of the paper, particularly in the methodology section. The introduction of mathematical notations and the description of the meta-agent's role are dense and challenging to follow.…
 
 <a id="arxiv-2603.19461"></a>
 ### Hyperagents
@@ -4332,7 +4843,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.5` Accept (S/P/C 2.75/2.75/2.5) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [rybolos_channel/1775](https://t.me/rybolos_channel/1775), [gonzo_ML/5042](https://t.me/gonzo_ML/5042), [axisofordinary/8281](https://t.me/axisofordinary/8281), [boris_again/3821](https://t.me/boris_again/3821), [gonzo_ML/5032](https://t.me/gonzo_ML/5032)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper lacks a theoretical analysis of the proposed method. - The paper lacks a comparison with other self-improvement algorithms. - The paper lacks a discussion of the limitations of the proposed method.  ### Questions  1. How does the proposed method compare to other self-improvement algorithms? 2. What are the limitations of the proposed method? 3. Can the proposed method be ap deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2603.19461.md#weaknesses): The paper lacks a theoretical analysis of the proposed method. - The paper lacks a comparison with other self-improvement algorithms. - The paper lacks a discussion of the limitations of the proposed method.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2603.19461.md#weaknesses): Despite the paper's strengths, several weaknesses and areas for improvement are evident. One of the primary concerns is the clarity and precision of the terminology used.…
 
 <a id="arxiv-2602.07755"></a>
 ### Learning to Continually Learn via Meta-learning Agentic Memory Designs
@@ -4346,7 +4859,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.5` Accept (S/P/C 2.75/3.0/2.75) · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/8164](https://t.me/axisofordinary/8164)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper lacks a clear definition of the search space for memory designs. The authors mention that the search space is defined as code, but it is unclear what specific aspects of memory design are being explored. - The paper does not provide a thorough analysis of the limitations of the proposed method. For example, it is not clear how ALMA would perform in more complex or dynamic e deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2602.07755.md#weaknesses): The paper lacks a clear definition of the search space for memory designs. The authors mention that the search space is defined as code, but it is unclear what specific aspects of memory design are being explored. - The paper does not provide a thorough analysis of the limitations of the proposed method. For example, it is not clear how ALMA would perform in more complex or dynamic environments.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2602.07755.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, while the paper claims to minimize human effort, the initial setup of the Meta Agent and the definition of the search space require significant human effort and expertise.…
 
 <a id="arxiv-2601.21557"></a>
 ### Meta Context Engineering via Agentic Skill Evolution
@@ -4360,7 +4875,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/3.0) · 14B Fast `5.8` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper is not well-organized. The authors should consider reorganizing the paper to make it more coherent and easier to follow. 2. The paper lacks sufficient technical details. The authors should provide more technical details about the proposed method and the experimental setup. 3. The paper lacks sufficient experimental results. The authors should provide more experimental resu deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2601.21557.md#weaknesses): 1. The paper is not well-organized. The authors should consider reorganizing the paper to make it more coherent and easier to follow. 2. The paper lacks sufficient technical details. The authors should provide more technical details about the proposed method and the experimental setup. 3. The paper lacks sufficient experimental results.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2601.21557.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. First, while the paper introduces the concept of 'skills' and 'agentic crossover,' it lacks a detailed explanation of how these skills are represented and how the crossover mechanism operates.…
 
 <a id="arxiv-2601.07055"></a>
 ### Dr. Zero: Self-Evolving Search Agents without Training Data
@@ -4374,7 +4891,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `6.5` Accept (S/P/C 2.75/3.0/2.75) · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/8089](https://t.me/axisofordinary/8089), [axisofordinary/9061](https://t.me/axisofordinary/9061)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks a detailed description of the methodology, making it difficult to understand the specific techniques used in the framework. 2. The paper does not provide a clear explanation of the advantages of the proposed framework over existing methods. 3. The paper does not discuss the potential limitations of the proposed framework. 4. The paper does not provide a clear explana deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2601.07055.md#weaknesses): 1. The paper lacks a detailed description of the methodology, making it difficult to understand the specific techniques used in the framework. 2. The paper does not provide a clear explanation of the advantages of the proposed framework over existing methods. 3. The paper does not discuss the potential limitations of the proposed framework. 4.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2601.07055.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, the paper's novelty is somewhat limited. While the authors introduce HRPO as a key contribution, the underlying concept of using structural similarity to optimize training is not entirely new, as it builds upon the existing GRPO method.…
 
 <a id="arxiv-2601.03192"></a>
 ### MemRL: Self-Evolving Agents via Runtime Reinforcement Learning on Episodic Memory
@@ -4388,7 +4907,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `7.5` Accept (S/P/C 3.25/3.25/3.25) · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/8089](https://t.me/axisofordinary/8089), [axisofordinary/9061](https://t.me/axisofordinary/9061)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The novelty is limited. The idea of optimizing the retrieval policy via RL is not new, and the method is quite similar to the existing methods (e.g., (1)). The novelty of this work is mainly the application of the idea to LLM agents. - The evaluation is not sufficient. The method is evaluated on only a few benchmarks, and the results are not convincing enough to support the claim of  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2601.03192.md#weaknesses): The novelty is limited. The idea of optimizing the retrieval policy via RL is not new, and the method is quite similar to the existing methods (e.g., (1)). The novelty of this work is mainly the application of the idea to LLM agents. - The evaluation is not sufficient. The method is evaluated on only a few benchmarks, and the results are not convincing enough to support the claim of the method.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2601.03192.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. First, while the paper introduces a memory bank, it lacks a thorough discussion of the memory's capacity limitations and the mechanisms for memory management.…
 
 <a id="arxiv-2512.18746"></a>
 ### MemEvolve: Meta-Evolution of Agent Memory Systems
@@ -4402,7 +4923,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `7.0` Accept (S/P/C 3.0/3.25/3.25) · 14B Fast `6.2` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper focuses on a specific aspect of LLM-based agents, namely the memory architecture, and does not explore other important aspects such as the LLM itself or the environment interactions. This narrow focus may limit the generalizability of the proposed framework. - The paper does not provide a thorough analysis of the limitations of the proposed framework. For example, it is not deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2512.18746.md#weaknesses): The paper focuses on a specific aspect of LLM-based agents, namely the memory architecture, and does not explore other important aspects such as the LLM itself or the environment interactions. This narrow focus may limit the generalizability of the proposed framework. - The paper does not provide a thorough analysis of the limitations of the proposed framework.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2512.18746.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further attention. First, the paper lacks a detailed explanation of the specific mechanisms used for the 'diagnosis' and 'design' phases within the meta-evolutionary process.…
 
 <a id="arxiv-2512.18552"></a>
 ### Toward Training Superintelligent Software Agents through Self-Play SWE-RL
@@ -4416,7 +4939,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `4.8` Reject (S/P/C 2.25/2.75/2.25) · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [data_secrets/8572](https://t.me/data_secrets/8572), [axisofordinary/8028](https://t.me/axisofordinary/8028), [axisofordinary/9061](https://t.me/axisofordinary/9061)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper lacks a clear explanation of the motivation for the proposed method. What are the benefits of self-play SWE-RL (SSR) compared to existing methods? - The paper does not provide a detailed explanation of the experimental setup, including the data used, the evaluation metrics, and the baselines used for comparison. More details are needed to understand the experimental design  cyclereviewer-8b.seed1: Weaknesses  1. The paper does not provide a clear explana
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2512.18552.md#weaknesses): The paper lacks a clear explanation of the motivation for the proposed method. What are the benefits of self-play SWE-RL (SSR) compared to existing methods? - The paper does not provide a detailed explanation of the experimental setup, including the data used, the evaluation metrics, and the baselines used for comparison.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2512.18552.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, the paper's claim of achieving 'superintelligence' appears to be an overstatement based on the presented evidence.…
 
 <a id="arxiv-2512.18160"></a>
 ### Propose, Solve, Verify: Self-Play Through Formal Verification
@@ -4430,7 +4955,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.5` Accept (S/P/C 2.75/3.25/2.5) · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/8073](https://t.me/axisofordinary/8073), [axisofordinary/9061](https://t.me/axisofordinary/9061)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper lacks a clear explanation of how the proposer model is trained. The authors mention that the proposer is updated using the data pool, but do not provide details on the training process. - The paper does not provide a clear explanation of how the difficulty-aware proposer works. The authors mention that the proposer generates problems in the form of formal specifications, bu deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2512.18160.md#weaknesses): The paper lacks a clear explanation of how the proposer model is trained. The authors mention that the proposer is updated using the data pool, but do not provide details on the training process. - The paper does not provide a clear explanation of how the difficulty-aware proposer works.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2512.18160.md#weaknesses): While I find the paper's contributions to be significant, there are several weaknesses that I have identified through my analysis. First, the paper's reliance on a sound but incomplete verifier introduces a potential bias in the training process. As the authors acknowledge, the Verus verifier may incorrectly reject correct solutions.…
 
 <a id="arxiv-2511.15593"></a>
 ### What Does It Take to Be a Good AI Research Agent? Studying the Role of Ideation Diversity
@@ -4444,7 +4971,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.5` Reject · 7B Fast `5.8` Accept (S/P/C 2.75/3.0/2.75) · 14B Fast `4.8` Reject
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/2.0) · SEA-E `5.0` Accept
 - Telegram: [rybolos_channel/1670](https://t.me/rybolos_channel/1670), [gonzo_ML/4261](https://t.me/gonzo_ML/4261), [rybolos_channel/1703](https://t.me/rybolos_channel/1703)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper only considers a single benchmark (MLE-bench) and a single type of agent (AI research agents). It would be interesting to see if the findings generalize to other benchmarks and types of agents. - The paper does not provide a clear definition of ideation diversity and how it is measured. It would be helpful to provide a more formal definition and description of the methodolo deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2511.15593.md#weaknesses): The paper only considers a single benchmark (MLE-bench) and a single type of agent (AI research agents). It would be interesting to see if the findings generalize to other benchmarks and types of agents. - The paper does not provide a clear definition of ideation diversity and how it is measured.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2511.15593.md#weaknesses): While the paper presents a compelling case for the importance of ideation diversity, several weaknesses warrant attention. First, the paper's definition of ideation diversity is limited to the distribution of model architectures proposed during the initial planning phase.…
 
 <a id="arxiv-2508.16204"></a>
 ### Competition and Attraction Improve Model Fusion
@@ -4458,7 +4987,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.8` Reject · 7B Fast `6.2` Reject (S/P/C 2.75/2.75/2.5) · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [data_secrets/7685](https://t.me/data_secrets/7685), [axisofordinary/7621](https://t.me/axisofordinary/7621)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The novelty of the proposed method is limited. The idea of model merging using evolutionary algorithms has been explored in previous works (1,2). The proposed method is an extension of these works with some modifications. 2. The experiments are not comprehensive. The proposed method is evaluated on three tasks, but the results are not compared to the state-of-the-art methods on thes deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2508.16204.md#weaknesses): 1. The novelty of the proposed method is limited. The idea of model merging using evolutionary algorithms has been explored in previous works (1,2). The proposed method is an extension of these works with some modifications. 2. The experiments are not comprehensive. The proposed method is evaluated on three tasks, but the results are not compared to the state-of-the-art methods on these tasks.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2508.16204.md#weaknesses): While I find the paper to be generally strong, there are several weaknesses that I believe warrant further attention. First, while the paper introduces the concept of dynamically adjusting merging boundaries, the explanation of the split-point parameter, $w_s$, could be more detailed.…
 
 <a id="arxiv-2507.18074"></a>
 ### AlphaGo Moment for Model Architecture Discovery
@@ -4472,7 +5003,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.0` Reject (S/P/C 2.75/2.75/2.5) · 14B Fast `5.5` Reject
 - OpenReviewer `5.0` Reject (S/P/C 2.0/3.0/2.0) · SEA-E `5.0` Accept
 - Telegram: [data_secrets/7461](https://t.me/data_secrets/7461), [gonzo_ML/3874](https://t.me/gonzo_ML/3874), [rybolos_channel/1549](https://t.me/rybolos_channel/1549)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper proposes a framework for neural architecture search using large language models, but it does not provide a detailed evaluation of the framework's performance compared to other neural architecture search methods. The paper also does not provide a detailed analysis of the strengths and weaknesses of the framework, and it does not discuss potential limitations and future work.   deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2507.18074.md#weaknesses): The paper proposes a framework for neural architecture search using large language models, but it does not provide a detailed evaluation of the framework's performance compared to other neural architecture search methods. The paper also does not provide a detailed analysis of the strengths and weaknesses of the framework, and it does not discuss potential limitations and future work.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2507.18074.md#weaknesses): Despite the ambitious vision and novel approach, several significant weaknesses undermine the paper's claims. First, the paper's claim of a 'fully autonomous' multi-agent system is misleading. While the paper describes distinct modules (Researcher, Engineer, Analyst), these are not separate LLMs but rather different 'agents' within a single LLM, orchestrated through prompt engineering.…
 
 <a id="arxiv-2505.22954"></a>
 ### Darwin Godel Machine: Open-Ended Evolution of Self-Improving Agents
@@ -4486,7 +5019,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `5.8` Accept (S/P/C 2.5/2.75/2.25) · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [data_secrets/7012](https://t.me/data_secrets/7012), [lovedeathtransformers/9379](https://t.me/lovedeathtransformers/9379), [axisofordinary/7267](https://t.me/axisofordinary/7267), [data_secrets/7688](https://t.me/data_secrets/7688), [gonzo_ML/3681](https://t.me/gonzo_ML/3681), [gonzo_ML/3678](https://t.me/gonzo_ML/3678)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper proposes a novel approach to self-improving AI systems that uses a combination of evolutionary algorithms and empirical validation to improve its performance on coding benchmarks. However, the paper does not provide a detailed analysis of the limitations of this approach. For example, it is not clear how the DGM would perform on more complex coding tasks or on tasks that requ deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2505.22954.md#weaknesses): The paper proposes a novel approach to self-improving AI systems that uses a combination of evolutionary algorithms and empirical validation to improve its performance on coding benchmarks. However, the paper does not provide a detailed analysis of the limitations of this approach.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2505.22954.md#weaknesses): , is also a strength in that it provides a practical and concrete way to evaluate the performance of the DGM. The use of coding benchmarks allows for a clear and objective assessment of the system's ability to improve itself.…
 
 <a id="doi-10.21203-rs.3.rs-6688473-v1"></a>
 ### Self-Programming AI: Code-Learning Agents for Autonomous Refactoring and Architectural Evolution
@@ -4500,7 +5035,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.0` Reject · 7B Fast `4.0` Reject (S/P/C 2.25/2.75/1.75) · 14B Fast `3.0` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `5.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks a comprehensive literature review. The authors should include more relevant works in the related work section to provide a more thorough background and context for their proposed method. 2. The evaluation is limited to five simple tasks. The authors should consider adding more complex tasks to demonstrate the effectiveness of their method. 3. The paper lacks a discus deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/doi_10.21203_rs.3.rs-6688473_v1.md#weaknesses): 1. The paper lacks a comprehensive literature review. The authors should include more relevant works in the related work section to provide a more thorough background and context for their proposed method. 2. The evaluation is limited to five simple tasks. The authors should consider adding more complex tasks to demonstrate the effectiveness of their method. 3.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/doi_10.21203_rs.3.rs-6688473_v1.md#weaknesses): After a thorough examination of the paper, I have identified several significant weaknesses that warrant careful consideration. First, the paper lacks a direct baseline comparison to a one-shot code generation approach. While the authors do compare their iterative approach to a single attempt by the LLM, this is not the same as a dedicated one-shot generation.…
 
 <a id="arxiv-2502.15840"></a>
 ### Vending-Bench: A Benchmark for Long-Term Coherence of Autonomous Agents
@@ -4514,7 +5051,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.3` Accept (S/P/C 2.67/3.0/2.67) · 14B Fast `4.0` Reject
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [lovedeathtransformers/9266](https://t.me/lovedeathtransformers/9266), [AGI_and_RL/1055](https://t.me/AGI_and_RL/1055)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper lacks a clear and well-defined research question. The authors do not provide a clear motivation for the benchmark or explain why it is important to test the long-term performance of LLMs. Additionally, the paper does not provide a clear definition of what is meant by "long-term coherence" and how it is measured.  The paper lacks a clear and well-defined methodology. The autho deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2502.15840.md#weaknesses): The paper lacks a clear and well-defined research question. The authors do not provide a clear motivation for the benchmark or explain why it is important to test the long-term performance of LLMs. Additionally, the paper does not provide a clear definition of what is meant by "long-term coherence" and how it is measured.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2502.15840.md#weaknesses): Despite its strengths, I have identified several weaknesses in this paper that warrant further discussion. First, while the paper introduces Vending-Bench as a novel benchmark, it lacks a thorough comparison with existing benchmarks for long-term reasoning or agent-based tasks.…
 
 <a id="arxiv-2410.04444"></a>
 ### Gödel Agent: A Self-Referential Agent Framework for Recursive Self-Improvement
@@ -4528,7 +5067,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `5.8` Reject (S/P/C 2.75/2.75/2.5) · 14B Fast `4.2` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [seeallochnaya/1935](https://t.me/seeallochnaya/1935), [gonzo_ML/2964](https://t.me/gonzo_ML/2964), [gonzo_ML/3677](https://t.me/gonzo_ML/3677), [gonzo_ML/2965](https://t.me/gonzo_ML/2965), [knowledge_accumulator/231](https://t.me/knowledge_accumulator/231)
-- Weaknesses: openreviewer-8b: Weaknesses 1. The paper does not provide a detailed comparison with other self-improvement methods, such as self-refine, self-debug, and self-correct. 2. The paper does not provide a detailed analysis of the computational resources required for implementing Gödel Agent and the potential scalability issues that may arise when deploying it in larger, real-world scenarios. 3. The paper does not provi
+- Weaknesses:
+  - [OR-8B](reviews/openreviewer-8b/arxiv_2410.04444.md#weaknesses): 1. The paper does not provide a detailed comparison with other self-improvement methods, such as self-refine, self-debug, and self-correct. 2. The paper does not provide a detailed analysis of the computational resources required for implementing Gödel Agent and the potential scalability issues that may arise when deploying it in larger, real-world scenarios. 3.…
 
 <a id="arxiv-2408.08435"></a>
 ### Automated Design of Agentic Systems
@@ -4542,7 +5082,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `5.5` Reject (S/P/C 2.5/3.0/2.5) · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [knowledge_accumulator/231](https://t.me/knowledge_accumulator/231)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a detailed analysis of the limitations of the proposed approach. - The paper does not discuss the potential risks and challenges of automating the design of agentic systems. - The paper does not provide a detailed comparison with other approaches to automating the design of agentic systems.  ### Questions  - What are the limitations of the proposed approach cyclereviewer-8b.seed1: Weaknesses  - The authors do not provide any analysis of 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2408.08435.md#weaknesses): The paper does not provide a detailed analysis of the limitations of the proposed approach. - The paper does not discuss the potential risks and challenges of automating the design of agentic systems. - The paper does not provide a detailed comparison with other approaches to automating the design of agentic systems.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2408.08435.md#weaknesses): While the paper presents a compelling vision for automating the design of agentic systems, several weaknesses warrant careful consideration. First, the paper's use of the term "agent" is broader than some readers might expect.…
 
 <a id="arxiv-2407.00695"></a>
 ### Learning Formal Mathematics From Intrinsic Motivation
@@ -4556,7 +5098,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Reject · 7B Fast `5.7` Reject (S/P/C 2.67/2.67/2.67) · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/2.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [j_links/7590](https://t.me/j_links/7590), [axisofordinary/6466](https://t.me/axisofordinary/6466)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The authors claim that their method can generate conjectures and prove them without any prior knowledge. However, the method relies on the type-directed synthesis algorithm to generate conjectures, which requires prior knowledge of the mathematical domain. The authors should clarify this point.  The authors claim that their method can generate conjectures and prove them without any hum deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2407.00695.md#weaknesses): The authors claim that their method can generate conjectures and prove them without any prior knowledge. However, the method relies on the type-directed synthesis algorithm to generate conjectures, which requires prior knowledge of the mathematical domain. The authors should clarify this point.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2407.00695.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. Firstly, the paper's approach to conjecture generation, while innovative, appears to be somewhat limited in its exploration of the hypothesis space.…
 
 <a id="arxiv-2406.04268"></a>
 ### Open-Endedness is Essential for Artificial Superhuman Intelligence
@@ -4570,7 +5114,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `4.8` Reject (S/P/C 2.75/2.25/2.25) · 14B Fast `4.8` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/4.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [gonzo_ML/2746](https://t.me/gonzo_ML/2746), [gonzo_ML/2743](https://t.me/gonzo_ML/2743), [axisofordinary/6414](https://t.me/axisofordinary/6414), [rybolos_channel/1195](https://t.me/rybolos_channel/1195)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not provide any new experimental results or empirical evidence to support its claims.  The paper does not provide a clear roadmap or plan for how to achieve open-endedness in AI systems.  The paper does not discuss the potential challenges and limitations of achieving open-endedness in AI systems.  ### Questions  How do you plan to achieve open-endedness in AI systems?   cyclereviewer-8b.seed1: Weaknesses  1. The paper does not provide a clear roadmap
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2406.04268.md#weaknesses): The paper does not provide any new experimental results or empirical evidence to support its claims.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2406.04268.md#weaknesses): While I appreciate the paper's attempt to formalize open-endedness, I have identified several weaknesses that I believe significantly impact its overall contribution. First, the paper's definition of open-endedness, while mathematically precise, does not fully capture the essence of the concept as it is commonly understood.…
 
 <a id="arxiv-2402.16823"></a>
 ### Language Agents as Optimizable Graphs
@@ -4584,7 +5130,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Reject (S/P/C 2.67/2.67/2.67) · 14B Fast `5.8` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [knowledge_accumulator/167](https://t.me/knowledge_accumulator/167), [j_links/7391](https://t.me/j_links/7391), [axisofordinary/6171](https://t.me/axisofordinary/6171), [rybolos_channel/1195](https://t.me/rybolos_channel/1195)
-- Weaknesses: openreviewer-8b: Weaknesses 1. The optimization process may be computationally expensive, especially for larger graphs. The paper does not provide a detailed analysis of the computational complexity or runtime of the proposed methods. 2. The evaluation is limited to relatively simple tasks. It is unclear how well the framework would perform on more complex, real-world tasks that require multiple agents with differ
+- Weaknesses:
+  - [OR-8B](reviews/openreviewer-8b/arxiv_2402.16823.md#weaknesses): 1. The optimization process may be computationally expensive, especially for larger graphs. The paper does not provide a detailed analysis of the computational complexity or runtime of the proposed methods. 2. The evaluation is limited to relatively simple tasks.…
 
 <a id="openreview-pOoKI3ouv1"></a>
 ### Robust agents learn causal world models (ICLR 2024 best paper)
@@ -4598,7 +5145,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `7.0` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/4.0/3.0) · SEA-E `8.0` Accept
 - Telegram: [j_links/7476](https://t.me/j_links/7476)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper could benefit from more examples and illustrations to help readers understand the concepts and results - The paper could also benefit from a more detailed discussion of the limitations of the results  ### Questions  - How do the results of this paper relate to existing work on causal reasoning and generalization? - How do the results of this paper relate to other approaches deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/openreview_pOoKI3ouv1.md#weaknesses): The paper could benefit from more examples and illustrations to help readers understand the concepts and results - The paper could also benefit from a more detailed discussion of the limitations of the results…
+  - [DR-14B Fast](reviews/deepreviewer-14b/openreview_pOoKI3ouv1.md#weaknesses): section, the assumptions and scope of the paper limit its direct applicability to real-world scenarios.
 
 <a id="doi-10.1038-s42256-023-00754-x"></a>
 ### A social path to human-like artificial intelligence
@@ -4612,7 +5161,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `5.0` Reject (S/P/C 2.0/3.0/2.0) · 14B Fast `5.2` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/2.0/3.0) · SEA-E `3.0` Reject
 - Telegram: [dtulinov/647](https://t.me/dtulinov/647)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper is more of a perspective than a research paper, and it is not clear what the main contribution is. - The authors do not provide any concrete examples of how social interactions can be used to improve AI systems. - The paper does not provide a clear roadmap for how to integrate social interactions into AI systems.  ### Questions  - What are the concrete examples of how socia deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/doi_10.1038_s42256-023-00754-x.md#weaknesses): The paper is more of a perspective than a research paper, and it is not clear what the main contribution is. - The authors do not provide any concrete examples of how social interactions can be used to improve AI systems. - The paper does not provide a clear roadmap for how to integrate social interactions into AI systems.
+  - [DR-14B Fast](reviews/deepreviewer-14b/doi_10.1038_s42256-023-00754-x.md#weaknesses): While the paper presents a compelling argument, several weaknesses limit its overall impact. A primary concern, identified by multiple reviewers, is the lack of concrete examples and specific details to support the central thesis.…
 
 <a id="arxiv-2311.02462"></a>
 ### Levels of AGI for Operationalizing Progress on the Path to AGI
@@ -4626,7 +5177,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `4.8` Reject (S/P/C 2.75/2.75/2.25) · 14B Fast `4.8` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [seeallochnaya/802](https://t.me/seeallochnaya/802), [nn_for_science/1725](https://t.me/nn_for_science/1725), [axisofordinary/5714](https://t.me/axisofordinary/5714), [knowledge_accumulator/241](https://t.me/knowledge_accumulator/241), [gonzo_ML/2744](https://t.me/gonzo_ML/2744)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper lacks empirical evaluation of the proposed framework. The authors do not provide any empirical results to support the claims made in the paper. The paper is more of a conceptual paper that proposes a framework for classifying AGI models and their precursors. The framework is based on six principles that a useful ontology for AGI should satisfy. The authors also discuss the ch deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2311.02462.md#weaknesses): The paper lacks empirical evaluation of the proposed framework. The authors do not provide any empirical results to support the claims made in the paper. The paper is more of a conceptual paper that proposes a framework for classifying AGI models and their precursors. The framework is based on six principles that a useful ontology for AGI should satisfy.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2311.02462.md#weaknesses): , and then propose six principles for a clear and operationalizable definition of AGI. These principles emphasize focusing on capabilities rather than processes, considering both generality and performance, and prioritizing potential over deployment.…
 
 <a id="arxiv-2311.00344"></a>
 ### A Definition of Open-Ended Learning Problems for Goal-Conditioned Agents
@@ -4640,7 +5193,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `6.5` Accept (S/P/C 3.0/3.0/3.0) · 14B Fast `4.8` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/2743](https://t.me/gonzo_ML/2743)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper lacks a clear methodology for evaluating open-ended learning agents and comparing their performance. The authors acknowledge this limitation and suggest that future work should focus on characterizing a goal discovery process and introducing performance measures for various capabilities. However, this leaves the paper without a clear evaluation or experimental validation of t deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2311.00344.md#weaknesses): The paper lacks a clear methodology for evaluating open-ended learning agents and comparing their performance. The authors acknowledge this limitation and suggest that future work should focus on characterizing a goal discovery process and introducing performance measures for various capabilities.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2311.00344.md#weaknesses): While this paper makes a valuable contribution to the field, several weaknesses warrant careful consideration. Firstly, the paper's core definition of open-endedness, while novel in its formalization, lacks sufficient justification and comparison to existing definitions.…
 
 <a id="doi-10.1038-s41586-023-06924-6"></a>
 ### Mathematical discoveries from program search with large language models
@@ -4654,7 +5209,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `5.7` Accept (S/P/C 3.0/3.0/2.33) · 14B Fast `8.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [seeallochnaya/936](https://t.me/seeallochnaya/936), [nn_for_science/1841](https://t.me/nn_for_science/1841), [j_links/7285](https://t.me/j_links/7285)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The method relies on a pretrained LLM, which may not be available to all researchers. - The method requires a skeleton program, which may not be available for all problems. - The method requires an efficient evaluator function, which may not be available for all problems. - The method is not applicable to problems that require a proof or a formal verification.  ### Questions  - How d deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/doi_10.1038_s41586-023-06924-6.md#weaknesses): The method relies on a pretrained LLM, which may not be available to all researchers. - The method requires a skeleton program, which may not be available for all problems. - The method requires an efficient evaluator function, which may not be available for all problems. - The method is not applicable to problems that require a proof or a formal verification.
+  - [DR-14B Fast](reviews/deepreviewer-14b/doi_10.1038_s41586-023-06924-6.md#weaknesses): While I am impressed with the results, I have identified several weaknesses that warrant further consideration. First, the paper lacks a thorough analysis of the computational cost associated with FunSearch.…
 
 <a id="arxiv-1905.10985"></a>
 ### AI-GAs: AI-generating algorithms, an alternate paradigm for producing general artificial intelligence
@@ -4668,7 +5225,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.5` Reject (S/P/C 2.75/2.75/2.75) · 14B Fast `3.0` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `5.0` Reject
 - Telegram: [gonzo_ML/450](https://t.me/gonzo_ML/450), [knowledge_accumulator/94](https://t.me/knowledge_accumulator/94), [gonzo_ML/3680](https://t.me/gonzo_ML/3680)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper is more of an opinion piece rather than a research paper. It does not provide a clear research question, methodology, or evaluation criteria. The paper does not provide any concrete examples or experiments to support the proposed ideas. The paper is also not well-organized and lacks a clear structure. The writing is not clear and concise, and the paper contains many typos and deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_1905.10985.md#weaknesses): The paper is more of an opinion piece rather than a research paper. It does not provide a clear research question, methodology, or evaluation criteria. The paper does not provide any concrete examples or experiments to support the proposed ideas. The paper is also not well-organized and lacks a clear structure.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_1905.10985.md#weaknesses): Despite its strengths, the paper suffers from several significant weaknesses that limit its overall impact. Firstly, the paper lacks a clear and detailed explanation of how the proposed AI-GA approach would address the core challenges of AI development.…
 
 <a id="arxiv-1901.01753"></a>
 ### Paired Open-Ended Trailblazer (POET): Endlessly Generating Increasingly Complex and Diverse Learning Environments and Their Solutions
@@ -4682,7 +5241,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.0` Reject · 7B Fast `5.8` Reject (S/P/C 2.75/2.5/2.5) · 14B Fast `5.8` Reject
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [knowledge_accumulator/98](https://t.me/knowledge_accumulator/98), [gonzo_ML/2744](https://t.me/gonzo_ML/2744)
-- Weaknesses: openreviewer-8b: Weaknesses - My main concern is the scalability of the proposed method. It seems that the method is only tested in a simple 2-D bipedal-walking obstacle-course domain, which is not convincing enough to show the effectiveness of the proposed method. I would expect the authors to test the proposed method in more complex environments, such as 3-D environments. - The compared baselines are not strong 
+- Weaknesses:
+  - [OR-8B](reviews/openreviewer-8b/arxiv_1901.01753.md#weaknesses): My main concern is the scalability of the proposed method. It seems that the method is only tested in a simple 2-D bipedal-walking obstacle-course domain, which is not convincing enough to show the effectiveness of the proposed method. I would expect the authors to test the proposed method in more complex environments, such as 3-D environments. - The compared baselines are not strong enough.…
 
 <a id="arxiv-2609.01437"></a>
 ### HarnessDev: Can LLMs Create and Evolve Their Own Agent Harness?
@@ -4696,7 +5256,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `6.0` Accept (S/P/C 2.5/2.75/2.75) · 14B Fast `7.0` Accept
 - OpenReviewer `8.0` Accept (S/P/C 4.0/4.0/4.0) · SEA-E `7.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks novelty. The idea of evaluating the ability of LLMs to develop their own agent harness is not new, and there have been several previous works on this topic. For example, the Meta-Agent Challenge (Lu et al., 2023) directly evaluates the development ability of LLMs. The paper does not clearly explain why the proposed benchmark is better than these previous works.  2. T cyclereviewer-8b.seed1: Weaknesses  - The paper only reports results for six crea
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2609.01437.md#weaknesses): 1. The paper lacks novelty. The idea of evaluating the ability of LLMs to develop their own agent harness is not new, and there have been several previous works on this topic. For example, the Meta-Agent Challenge (Lu et al., 2023) directly evaluates the development ability of LLMs. The paper does not clearly explain why the proposed benchmark is better than these previous works.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2609.01437.md#weaknesses): After a thorough examination of the paper, I have identified several key weaknesses that warrant careful consideration. Firstly, the paper acknowledges the strong coupling between the harness and the executor LLM, a phenomenon often referred to as 'executor-specificity'.…
 
 <a id="arxiv-2606.01770"></a>
 ### Adaptive Auto-Harness: Sustained Self-Improvement for Agentic System Deployment on Open-Ended Task Streams
@@ -4710,7 +5272,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `7.0` Accept (S/P/C 3.25/3.25/3.25) · 14B Fast `6.7` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper is mostly focused on the technical details of the proposed framework, but it would be helpful to provide more context on how this work can be applied in real-world scenarios. For example, how can this framework be used in a real-world deployment setting? What are the practical challenges that need to be addressed?  ### Questions  1. The authors mention that the proposed frame deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2606.01770.md#weaknesses): The paper is mostly focused on the technical details of the proposed framework, but it would be helpful to provide more context on how this work can be applied in real-world scenarios. For example, how can this framework be used in a real-world deployment setting? What are the practical challenges that need to be addressed?
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2606.01770.md#weaknesses): of the system in different contexts. The authors also provide a clear and well-structured presentation of their work, making it easy to follow the logic and understand the key contributions. The use of figures and tables is effective in conveying the experimental results and analyses.…
 
 <a id="arxiv-2604.25850"></a>
 ### Agentic Harness Engineering: Observability-Driven Automatic Evolution of Coding-Agent Harnesses
@@ -4724,7 +5288,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `4.8` Reject (S/P/C 2.75/2.5/2.5) · 14B Fast `6.5` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/2.0) · SEA-E `7.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper lacks a clear motivation for the proposed approach. The authors should explain why the three components of AHE are necessary, and how they address the challenges of harness engineering. - The paper lacks a clear explanation of the experimental setup. The authors should provide more details on the specific models and datasets used in the experiments, as well as the specific  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2604.25850.md#weaknesses): The paper lacks a clear motivation for the proposed approach. The authors should explain why the three components of AHE are necessary, and how they address the challenges of harness engineering. - The paper lacks a clear explanation of the experimental setup.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2604.25850.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. One significant limitation is the lack of detailed information about the specific prompts used for each agent within the AHE framework.…
 
 <a id="arxiv-2604.19341"></a>
 ### Structured Scaling of AI Discovery Across Diverse Scientific Domains
@@ -4738,7 +5304,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `10.0` Accept · 7B Fast `8.0` Accept (S/P/C 3.5/3.5/3.5) · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  I have the following concerns:  1. The paper does not clearly explain how the proposal constructor $\Phi$ is implemented. The authors mention that it is a graph-based variant of the PUCT rule, but they do not provide any details. It would be helpful to include a more detailed description of how $\Phi$ is implemented.  2. The paper does not provide any analysis of the computational effi cyclereviewer-8b.seed1: Weaknesses  1. The novelty of the paper is limited. The p
+- Weaknesses:
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2604.19341.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. One significant limitation is the lack of a detailed analysis of the computational cost associated with SimpleTES.…
+  - [DR-7B Fast](reviews/deepreviewer-7b-fast/arxiv_2604.19341.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, while the paper demonstrates the effectiveness of SimpleTES, it lacks a detailed analysis of the computational cost associated with the method.…
 
 <a id="arxiv-2604.08224"></a>
 ### Externalization in LLM Agents: A Unified Review of Memory, Skills, Protocols and Harness Engineering
@@ -4752,7 +5320,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `5.2` Reject (S/P/C 3.0/3.0/2.25) · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [gonzo_ML/5479](https://t.me/gonzo_ML/5479)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not provide a clear and concise summary of the main contributions of the paper. The abstract and introduction are quite long and do not clearly state the main contributions of the paper.  The paper does not provide a clear and concise summary of the related work. The related work section is quite long and does not clearly summarize the main contributions of other papers  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2604.08224.md#weaknesses): The paper does not provide a clear and concise summary of the main contributions of the paper. The abstract and introduction are quite long and do not clearly state the main contributions of the paper.
+  - [DR-7B Fast](reviews/deepreviewer-7b-fast/arxiv_2604.08224.md#weaknesses): Despite its strengths, I have identified several weaknesses in this paper that warrant careful consideration. First, while the paper provides a good overview of the field, it lacks a deep dive into the technical details of specific methods.…
 
 <a id="arxiv-2603.28052"></a>
 ### Meta-Harness: End-to-End Optimization of Model Harnesses
@@ -4766,7 +5336,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/3.0) · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [lovedeathtransformers/10644](https://t.me/lovedeathtransformers/10644), [gonzo_ML/5093](https://t.me/gonzo_ML/5093)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The proposed method is limited to the LLM-based coding agent. It is not clear whether the proposed method can be generalized to other types of agents. - The proposed method requires a large amount of memory to store the source code, scores, and execution traces of all prior candidates. It is not clear whether the proposed method can be applied to resource-constrained environments. -  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2603.28052.md#weaknesses): The proposed method is limited to the LLM-based coding agent. It is not clear whether the proposed method can be generalized to other types of agents. - The proposed method requires a large amount of memory to store the source code, scores, and execution traces of all prior candidates. It is not clear whether the proposed method can be applied to resource-constrained environments.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2603.28052.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. A primary concern is the limited scope of the experiments regarding the coding agent used for harness optimization.…
 
 <a id="arxiv-2607.23379"></a>
 ### When Activation Oracles Learn Not to Read: Concept-Specific Blind Spots in Fine-Tuned Oracles
@@ -4780,7 +5352,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `7.0` Accept (S/P/C 3.0/3.0/3.0) · 14B Fast `7.0` Accept
 - OpenReviewer `8.0` Accept (S/P/C 3.0/4.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [dl_stories/1036](https://t.me/dl_stories/1036), [tech_priestess/2709](https://t.me/tech_priestess/2709)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper only studies a single model architecture (Qwen3-8B) and a single training setup (Taboo Word Guessing). It would be good to see if the findings generalize to other model architectures and training setups. - The paper only studies a single hidden concept (e.g., "leaf") per subject model. It would be good to see if the findings generalize to multiple hidden concepts per subjec deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2607.23379.md#weaknesses): The paper only studies a single model architecture (Qwen3-8B) and a single training setup (Taboo Word Guessing). It would be good to see if the findings generalize to other model architectures and training setups. - The paper only studies a single hidden concept (e.g., "leaf") per subject model. It would be good to see if the findings generalize to multiple hidden concepts per subject model.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2607.23379.md#weaknesses): While I find the paper to be generally strong, there are several weaknesses that I believe warrant further discussion. First, the paper's central claim regarding the emergence of concept-specific blind spots in fine-tuned AOs, while intriguing, lacks a clear and convincing explanation.…
 
 <a id="arxiv-2603.19426"></a>
 ### Is Evaluation Awareness Just Format Sensitivity? Limitations of Probe-Based Evidence under Controlled Prompt Structure
@@ -4794,7 +5368,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.2` Accept (S/P/C 2.5/3.0/2.5) · 14B Fast `5.8` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [lovedeathtransformers/10549](https://t.me/lovedeathtransformers/10549)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a clear definition of evaluation awareness, making it difficult to understand the specific phenomenon being studied. - The paper does not provide a clear explanation of why probes are sensitive to format rather than context, and how this sensitivity affects the reliability of probe-based analysis. - The paper does not provide a clear discussion of the impli deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2603.19426.md#weaknesses): The paper does not provide a clear definition of evaluation awareness, making it difficult to understand the specific phenomenon being studied. - The paper does not provide a clear explanation of why probes are sensitive to format rather than context, and how this sensitivity affects the reliability of probe-based analysis.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2603.19426.md#weaknesses): While I appreciate the contributions of this paper, I have identified several weaknesses that warrant careful consideration. First, the paper's scope is somewhat limited by its reliance on a single LLM backbone, Llama-3.1-8B-Instruct.…
 
 <a id="arxiv-2503.16348"></a>
 ### Palatable Conceptions of Disembodied Being
@@ -4808,7 +5384,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `3.5` Reject · 7B Fast `4.5` Reject (S/P/C 2.75/2.25/2.25) · 14B Fast `2.5` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/7048](https://t.me/axisofordinary/7048), [gonzo_ML/3491](https://t.me/gonzo_ML/3491)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper's main weakness is its lack of originality and contribution. The authors draw heavily on existing philosophical theories and concepts, such as Wittgenstein's later philosophy and Buddhist thought, without providing a new or original perspective. The paper also lacks empirical evidence or experimental results to support its claims. The authors rely on philosophical argumentati cyclereviewer-8b.seed1: Weaknesses  The paper does not provide a clear or well-de
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2503.16348.md#weaknesses): The paper's main weakness is its lack of originality and contribution. The authors draw heavily on existing philosophical theories and concepts, such as Wittgenstein's later philosophy and Buddhist thought, without providing a new or original perspective. The paper also lacks empirical evidence or experimental results to support its claims.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2503.16348.md#weaknesses): Despite its strengths, the paper suffers from several significant weaknesses that undermine its overall impact. A primary concern is the paper's lack of engagement with contemporary discussions in the philosophy of mind, particularly those related to embodied and extended cognition.…
 
 <a id="arxiv-2502.03407"></a>
 ### Detecting Strategic Deception Using Linear Probes
@@ -4822,7 +5400,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `4.2` Reject (S/P/C 2.25/2.75/2.0) · 14B Fast `5.8` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper lacks novelty. The authors use existing datasets and methods for training and evaluating their probes. The only novelty seems to be the use of a new model (LLaMA-3.3-70B-Instruct) and the evaluation on additional datasets. However, this is not enough to justify the novelty of the paper. - The authors do not provide a thorough analysis of the limitations of their method. Whi deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2502.03407.md#weaknesses): The paper lacks novelty. The authors use existing datasets and methods for training and evaluating their probes. The only novelty seems to be the use of a new model (LLaMA-3.3-70B-Instruct) and the evaluation on additional datasets. However, this is not enough to justify the novelty of the paper. - The authors do not provide a thorough analysis of the limitations of their method.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2502.03407.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, the paper's reliance on GPT-4o for labeling the honesty of responses introduces a potential source of error and bias. As the authors acknowledge, this labeling process is not perfect, and there is a risk that the labels themselves are not entirely accurate.…
 
 <a id="arxiv-2501.18837"></a>
 ### Constitutional Classifiers: Defending against Universal Jailbreaks across Thousands of Hours of Red Teaming
@@ -4836,7 +5416,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `5.7` Reject (S/P/C 2.67/2.67/2.67) · 14B Fast `6.5` Accept
 - OpenReviewer `8.0` Accept (S/P/C 4.0/4.0/4.0) · SEA-E `6.0` Accept
 - Telegram: [data_secrets/6078](https://t.me/data_secrets/6078)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not provide a detailed discussion of the limitations of Constitutional Classifiers. While the paper mentions that the approach is not foolproof and that vulnerabilities may still exist, it does not provide a detailed analysis of the potential limitations and weaknesses of the approach.  The paper does not provide a detailed discussion of the potential risks and challenge deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2501.18837.md#weaknesses): The paper does not provide a detailed discussion of the limitations of Constitutional Classifiers. While the paper mentions that the approach is not foolproof and that vulnerabilities may still exist, it does not provide a detailed analysis of the potential limitations and weaknesses of the approach.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2501.18837.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, the paper lacks a detailed analysis of the computational costs associated with the proposed method.…
 
 <a id="arxiv-2309.08600"></a>
 ### Sparse Autoencoders Find Highly Interpretable Features in Language Models
@@ -4850,7 +5432,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `7.0` Accept (S/P/C 3.25/3.25/3.25) · 14B Fast `6.7` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [nn_for_science/1656](https://t.me/nn_for_science/1656)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper does not provide a clear evaluation of the performance of the learned features compared to other methods. For example, it would be helpful to see a comparison of the interpretability scores of the learned features with those of other methods such as PCA or ICA. It would also be helpful to see a comparison of the performance of the learned features on the indirect object id deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2309.08600.md#weaknesses): 1. The paper does not provide a clear evaluation of the performance of the learned features compared to other methods. For example, it would be helpful to see a comparison of the interpretability scores of the learned features with those of other methods such as PCA or ICA.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2309.08600.md#weaknesses): While I appreciate the contributions of this paper, my analysis has revealed several weaknesses that warrant careful consideration. Firstly, the paper's claim of novelty, while partially valid, is not as strong as it could be. The authors acknowledge prior work by Yun et al. (2021) and Sharkey et al. (2023) that also use sparse autoencoders for feature learning in language models.…
 
 <a id="arxiv-2308.08708"></a>
 ### Consciousness in Artificial Intelligence: Insights from the Science of Consciousness
@@ -4864,7 +5448,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `3.5` Reject · 7B Fast `6.0` Accept (S/P/C 3.0/2.5/2.75) · 14B Fast `6.5` Accept
 - OpenReviewer `8.0` Accept (S/P/C 4.0/4.0/4.0) · SEA-E `6.0` Accept
 - Telegram: [rybolos_channel/873](https://t.me/rybolos_channel/873), [ai_newz/2126](https://t.me/ai_newz/2126), [dtulinov/626](https://t.me/dtulinov/626), [axisofordinary/5356](https://t.me/axisofordinary/5356)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper is a report on the current state of the art in the field of artificial consciousness, and it does not provide any new or original contributions. The paper is a summary of existing knowledge in the field, and it does not provide any new insights or perspectives. The paper also does not provide any new or original ideas for future research in the field.  The paper also does not deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2308.08708.md#weaknesses): The paper is a report on the current state of the art in the field of artificial consciousness, and it does not provide any new or original contributions. The paper is a summary of existing knowledge in the field, and it does not provide any new insights or perspectives. The paper also does not provide any new or original ideas for future research in the field.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2308.08708.md#weaknesses): While this paper offers a valuable framework for assessing AI consciousness, I have identified several weaknesses that warrant careful consideration. First, the paper's reliance on 'indicator properties' derived from human-centric neuroscientific theories raises concerns about the potential for anthropomorphism.…
 
 <a id="arxiv-2304.06528"></a>
 ### Power-seeking can be probable and predictive for trained agents
@@ -4878,7 +5464,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `2.5` Reject · 7B Fast `4.2` Reject (S/P/C 2.5/2.75/2.25) · 14B Fast `6.0` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/1475](https://t.me/gonzo_ML/1475), [axisofordinary/4895](https://t.me/axisofordinary/4895)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper makes several strong assumptions that limit the applicability of the results. For example, it assumes that the agent learns a goal during the training process, and that the learned goal is randomly chosen from the training-compatible goal set. It also assumes that the state and action spaces are finite, and that the rewards are nonnegative. These assumptions may not hold in a cyclereviewer-8b.seed1: Weaknesses  The main weakness of the paper is the lack of
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2304.06528.md#weaknesses): The paper makes several strong assumptions that limit the applicability of the results. For example, it assumes that the agent learns a goal during the training process, and that the learned goal is randomly chosen from the training-compatible goal set. It also assumes that the state and action spaces are finite, and that the rewards are nonnegative.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2304.06528.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, the paper's reliance on a high discount factor is a significant limitation. The authors explicitly state that their results depend on the discount factor being sufficiently high, and they even use the limit case of a discount factor approaching 1 in their proofs.…
 
 <a id="arxiv-2303.07103"></a>
 ### Could a Large Language Model be Conscious?
@@ -4892,7 +5480,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast ``  (S/P/C 2.5/2.5/2.5) · 14B Fast `3.5` Reject
 - OpenReviewer `8.0` Accept (S/P/C 4.0/4.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/1479](https://t.me/gonzo_ML/1479), [dtulinov/554](https://t.me/dtulinov/554)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper is more of a philosophical discussion than a scientific paper, and does not provide any empirical evidence to support the author's claims. - The author does not provide a clear definition of consciousness, which makes it difficult to evaluate the claims made in the paper. - The author does not provide a clear roadmap for how to overcome the challenges identified, making it  cyclereviewer-8b.seed1: Weaknesses  The paper is more of a philosophical discussi
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2303.07103.md#weaknesses): The paper is more of a philosophical discussion than a scientific paper, and does not provide any empirical evidence to support the author's claims. - The author does not provide a clear definition of consciousness, which makes it difficult to evaluate the claims made in the paper.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2303.07103.md#weaknesses): While the paper offers a valuable philosophical perspective, several weaknesses limit its overall impact and suitability for a venue like ICLR. Firstly, the paper's primary focus on the *can* question of LLM consciousness, while acknowledging the *ought* question, does not sufficiently address the ethical implications of creating conscious AI.…
 
 <a id="arxiv-2206.13477"></a>
 ### Parametrically Retargetable Decision-Makers Tend To Seek Power
@@ -4906,7 +5496,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `5.8` Accept (S/P/C 2.5/2.25/2.25) · 14B Fast `4.0` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [gonzo_ML/1475](https://t.me/gonzo_ML/1475)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper has several weaknesses that need to be addressed:  1. The paper is poorly written and difficult to follow. The authors use a lot of technical jargon and do not provide enough background information for readers who are not familiar with the topic. The paper also lacks a clear structure and organization, making it hard to understand the main arguments and results.  2. The paper deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2206.13477.md#weaknesses): The paper has several weaknesses that need to be addressed:…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2206.13477.md#weaknesses): Despite its strengths, the paper faces several significant challenges that undermine its overall impact and clarity. One of the primary concerns is the lack of clear articulation of the paper's novel contributions, particularly in the context of reinforcement learning.…
 
 <a id="arxiv-2206.13353"></a>
 ### Is Power-Seeking AI an Existential Risk?
@@ -4920,7 +5512,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `6.8` Reject (S/P/C 2.75/2.75/2.75) · 14B Fast `4.8` Reject
 - OpenReviewer `8.0` Accept (S/P/C 4.0/4.0/3.0) · SEA-E `5.0` Accept
 - Telegram: [gonzo_ML/1475](https://t.me/gonzo_ML/1475)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not provide a detailed analysis of the six premises and does not provide a clear argument for why they are true. The author assigns subjective probabilities to each premise, but does not provide a clear justification for these probabilities. The paper also does not provide a clear discussion of the potential solutions to the problem of power-seeking AI.  ## Questions  Wh deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2206.13353.md#weaknesses): The paper does not provide a detailed analysis of the six premises and does not provide a clear argument for why they are true. The author assigns subjective probabilities to each premise, but does not provide a clear justification for these probabilities. The paper also does not provide a clear discussion of the potential solutions to the problem of power-seeking AI.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2206.13353.md#weaknesses): Despite its strengths, the paper exhibits several weaknesses that warrant careful consideration. A primary concern, validated by multiple reviewers, is the paper's lack of technical depth and its failure to adequately engage with the practical challenges of AI development.…
 
 <a id="arxiv-1912.01683"></a>
 ### Optimal Policies Tend to Seek Power
@@ -4934,7 +5528,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.8` Reject · 7B Fast `5.2` Reject (S/P/C 2.5/2.75/2.5) · 14B Fast `5.5` Reject
 - OpenReviewer `8.0` Accept (S/P/C 4.0/3.0/4.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/1475](https://t.me/gonzo_ML/1475)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper only considers optimal policies in MDPs and does not discuss the implications for learned policies in real-world environments. The authors also do not provide any empirical results or experiments to support their claims.  ## Questions  1. How do the results in this paper apply to learned policies in real-world environments? 2. Can you provide empirical results or experiments  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_1912.01683.md#weaknesses): The paper only considers optimal policies in MDPs and does not discuss the implications for learned policies in real-world environments. The authors also do not provide any empirical results or experiments to support their claims.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_1912.01683.md#weaknesses): While this paper presents a valuable theoretical framework, several weaknesses limit its impact and practical relevance. A primary concern is the paper's heavy reliance on a simplified, didactic example—a small grid-world environment—to illustrate its core concepts and theorems. As I observed, the paper introduces the environment of Fig.…
 
 <a id="arxiv-2606.08720"></a>
 ### This is how the Neocortex Learns
@@ -4948,7 +5544,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `1.0` Reject · 7B Fast `8.0` Accept (S/P/C 3.67/3.67/3.67) · 14B Fast `3.8` Reject
 - OpenReviewer `8.0` Accept (S/P/C 4.0/4.0/4.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/5565](https://t.me/gonzo_ML/5565)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper is not a research paper, but rather a review paper. It does not present any new results or findings. The authors do not provide any new insights or perspectives on the topic. The paper is more like a summary of the current state of the art in the field.  ## Questions  N/A  ## Flag For Ethics Review  No ethics review needed.  ## Rating  3: reject, not good enough  ## Confidenc deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2606.08720.md#weaknesses): The paper is not a research paper, but rather a review paper. It does not present any new results or findings. The authors do not provide any new insights or perspectives on the topic. The paper is more like a summary of the current state of the art in the field.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2606.08720.md#weaknesses): Despite its strengths, the paper has several verified weaknesses that impact its overall robustness and generalizability. One of the most significant concerns is the paper's reliance on strong conclusions without sufficient empirical evidence. For example, the statement that 'only one current theory ...…
 
 <a id="arxiv-2505.17117"></a>
 ### From Tokens to Thoughts: How LLMs and Humans Trade Compression for Meaning
@@ -4962,7 +5560,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `7.5` Accept (S/P/C 3.0/3.25/3.25) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [neuroexistencialism/3399](https://t.me/neuroexistencialism/3399)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper could benefit from a more detailed discussion of the limitations of the Information Bottleneck framework and how it may not fully capture the complexity of human cognition. 2. The paper could benefit from a more detailed discussion of the implications of the findings for the development of LLMs and their applications. 3. The paper could benefit from a more detailed discuss deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2505.17117.md#weaknesses): 1. The paper could benefit from a more detailed discussion of the limitations of the Information Bottleneck framework and how it may not fully capture the complexity of human cognition. 2. The paper could benefit from a more detailed discussion of the implications of the findings for the development of LLMs and their applications. 3.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2505.17117.md#weaknesses): While this paper presents a compelling analysis, several weaknesses warrant careful consideration. First, the paper's central claim regarding the trade-off between compression and meaning, while intuitively appealing, lacks sufficient empirical grounding.…
 
 <a id="doi-10.1101-2024.02.22.581686"></a>
 ### MetaWorm: An Integrative Data-Driven Model Simulating <i>C. elegans</i> Brain, Body and Environment Interactions
@@ -4976,7 +5576,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.0` Reject (S/P/C 2.75/2.5/2.5) · 14B Fast `7.3` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/6364](https://t.me/axisofordinary/6364)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper is not well written and lacks clarity. The figures are not self-explanatory and the text is not clear. The authors should provide more details about the methods used to build the model and the results obtained. The authors should also provide more details about the limitations of the model and the future directions for improvement.   The authors should also provide more detai deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/doi_10.1101_2024.02.22.581686.md#weaknesses): The paper is not well written and lacks clarity. The figures are not self-explanatory and the text is not clear. The authors should provide more details about the methods used to build the model and the results obtained. The authors should also provide more details about the limitations of the model and the future directions for improvement.
+  - [DR-14B Fast](reviews/deepreviewer-14b/doi_10.1101_2024.02.22.581686.md#weaknesses): Despite the strengths of this work, I have identified several weaknesses that warrant attention. Firstly, the paper lacks a clear and detailed explanation of how the membrane potential of motor neurons is translated into muscle activation signals.…
 
 <a id="doi-10.1101-2023.04.04.535512"></a>
 ### Emergence of belief-like representations through reinforcement learning
@@ -4990,7 +5592,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `3.5` Reject · 7B Fast `6.3` Reject (S/P/C 2.67/2.67/2.67) · 14B Fast `6.8` Accept
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/2.0) · SEA-E `7.0` Accept
 - Telegram: [axisofordinary/4834](https://t.me/axisofordinary/4834)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper is more of a computational neuroscience study, but it does not provide any neuroscience data. The authors should provide experimental data to support their hypothesis.  2. The authors should compare their model with other models that can learn belief states, such as the one in (1).  3. The authors should also compare their model with other RNN models, such as the ones in ( deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/doi_10.1101_2023.04.04.535512.md#weaknesses): 1. The paper is more of a computational neuroscience study, but it does not provide any neuroscience data. The authors should provide experimental data to support their hypothesis.
+  - [DR-14B Fast](reviews/deepreviewer-14b/doi_10.1101_2023.04.04.535512.md#weaknesses): While I found the paper to be generally strong, there are several weaknesses that I believe warrant careful consideration. First, the paper lacks a direct comparison of the RNN model with a standard RL agent that uses explicit belief states as input.…
 
 <a id="doi-10.1371-journal.pcbi.1011005"></a>
 ### Neural spiking for causal inference and learning
@@ -5004,7 +5608,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std ``  · 7B Fast `6.5` Accept (S/P/C 3.0/3.0/3.0) · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [axisofordinary/4763](https://t.me/axisofordinary/4763)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The main weakness of the paper is that the results are not convincing. The authors use a very simple model to test their idea, and the results are not convincing. For example, in Fig 3A, the authors show that the spiking discontinuity estimator is unbiased when p is small, but this is not surprising. In fact, if p is too small, the estimator will be very noisy. In Fig 3B, the authors s cyclereviewer-8b.seed1: Weaknesses  The paper is not well written and the authors
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/doi_10.1371_journal.pcbi.1011005.md#weaknesses): The main weakness of the paper is that the results are not convincing. The authors use a very simple model to test their idea, and the results are not convincing. For example, in Fig 3A, the authors show that the spiking discontinuity estimator is unbiased when p is small, but this is not surprising. In fact, if p is too small, the estimator will be very noisy.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/doi_10.1371_journal.pcbi.1011005.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. One significant limitation is the lack of a detailed explanation of how the proposed learning rule can be implemented at the synaptic level.…
 
 <a id="doi-10.1371-journal.pcbi.1010628"></a>
 ### Sleep prevents catastrophic forgetting in spiking neural networks by forming a joint synaptic weight representation
@@ -5018,7 +5624,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.7` Accept (S/P/C 3.0/3.0/2.67) · 14B Fast `7.5` Accept
 - OpenReviewer `8.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper lacks novelty and the results are not surprising. The idea of using sleep to prevent catastrophic forgetting has been explored in previous works, and the authors do not provide any new insights or contributions to this area. The experimental setup is also too simple and does not reflect the complexity of real-world scenarios. The authors do not provide any discussion on the l deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/doi_10.1371_journal.pcbi.1010628.md#weaknesses): The paper lacks novelty and the results are not surprising. The idea of using sleep to prevent catastrophic forgetting has been explored in previous works, and the authors do not provide any new insights or contributions to this area. The experimental setup is also too simple and does not reflect the complexity of real-world scenarios.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/doi_10.1371_journal.pcbi.1010628.md#weaknesses): Despite the paper's strengths, several limitations and areas for improvement have been identified. One of the most significant concerns is the limited exploration of the sleep mechanism's parameters and its generalizability.…
 
 <a id="arxiv-2210.08340"></a>
 ### Toward Next-Generation Artificial Intelligence: Catalyzing the NeuroAI Revolution
@@ -5032,7 +5640,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast `7.0` Accept (S/P/C 3.0/3.25/3.0) · 14B Fast `5.8` Accept
 - OpenReviewer `5.0` Reject (S/P/C 2.0/2.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [nn_for_science/1135](https://t.me/nn_for_science/1135), [dtulinov/471](https://t.me/dtulinov/471)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper is more of a call for action than a scientific paper. It does not present any new scientific results or findings. It is more of a position paper or an opinion piece. It is not clear what specific scientific questions the authors are trying to address or what specific challenges they are trying to solve. The paper does not provide any concrete examples or case studies to suppo cyclereviewer-8b.seed1: Weaknesses  The paper lacks a clear research question or 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2210.08340.md#weaknesses): The paper is more of a call for action than a scientific paper. It does not present any new scientific results or findings. It is more of a position paper or an opinion piece. It is not clear what specific scientific questions the authors are trying to address or what specific challenges they are trying to solve.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2210.08340.md#weaknesses): While I find the paper's overall vision compelling, several weaknesses need to be addressed. Firstly, the paper's proposal of the 'embodied Turing test' as a replacement for the traditional Turing test, while intriguing, lacks a clear justification for its necessity.…
 
 <a id="arxiv-2112.04035"></a>
 ### Relating transformers to models and neural representations of the hippocampal formation
@@ -5046,7 +5656,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.0` Reject (S/P/C 2.75/2.25/2.5) · 14B Fast `6.5` Accept
 - OpenReviewer `8.0` Accept (S/P/C 4.0/4.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [dl_stories/589](https://t.me/dl_stories/589), [axisofordinary/7740](https://t.me/axisofordinary/7740), [nn_for_science/1099](https://t.me/nn_for_science/1099), [boris_again/1275](https://t.me/boris_again/1275)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper is not well written and the ideas are not well presented. The authors should improve the presentation of their work.   2. The authors should provide more details about the experimental setup.   3. The authors should provide more details about the results.   4. The authors should provide more details about the limitations of their work.  ## Questions  1. What is the signifi cyclereviewer-8b.seed1: Weaknesses  The paper is written in a way that makes it d
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2112.04035.md#weaknesses): 1. The paper is not well written and the ideas are not well presented. The authors should improve the presentation of their work.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2112.04035.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. One significant concern is the lack of a detailed comparison between the proposed transformer model and the original TEM model, particularly regarding the attractor dynamics.…
 
 <a id="arxiv-2112.03978"></a>
 ### Attractor and integrator networks in the brain
@@ -5060,7 +5672,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.8` Accept (S/P/C 3.5/3.5/2.5) · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [dtulinov/468](https://t.me/dtulinov/468)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper is a review and does not present any new experimental or theoretical results. While it provides a comprehensive overview of the role of attractor dynamics in the brain, it does not provide any new insights or perspectives on the topic.  ## Questions  No questions.  ## Flag For Ethics Review  No ethics review needed.  ## Rating  6: marginally above the acceptance threshold  ## deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2112.03978.md#weaknesses): The paper is a review and does not present any new experimental or theoretical results. While it provides a comprehensive overview of the role of attractor dynamics in the brain, it does not provide any new insights or perspectives on the topic.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2112.03978.md#weaknesses): Despite its strengths, the paper has several limitations that could be addressed to enhance its impact and clarity. One of the primary concerns is the lack of a detailed discussion of the limitations of attractor models. While the paper mentions the tradeoff between robustness and capacity, it does not delve into the specific conditions under which attractor networks fail or underperform.…
 
 <a id="doi-10.1038-s41467-021-26568-2"></a>
 ### Correspondence between neuroevolution and gradient descent
@@ -5074,7 +5688,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `4.5` Reject (S/P/C 2.0/2.75/2.0) · 14B Fast `5.8` Reject
 - OpenReviewer `8.0` Accept (S/P/C 4.0/4.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/6807](https://t.me/axisofordinary/6807)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper is missing some important references. For example, there is a line of work studying the connection between gradient descent and evolutionary algorithms, such as (1,2,3). The authors should discuss the relationship between their work and these previous works.  (1) Li, Ji, et al. "A second-order gradient method for composition optimization. " Advances in Neural Information Proc deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/doi_10.1038_s41467-021-26568-2.md#weaknesses): The paper is missing some important references. For example, there is a line of work studying the connection between gradient descent and evolutionary algorithms, such as (1,2,3). The authors should discuss the relationship between their work and these previous works.
+  - [DR-14B Fast](reviews/deepreviewer-14b/doi_10.1038_s41467-021-26568-2.md#weaknesses): Despite its strengths, the paper exhibits several weaknesses that warrant careful consideration. A primary concern, validated by multiple reviewers, is the limited practical applicability of the specific neuroevolution algorithm analyzed.…
 
 <a id="arxiv-2602.14486"></a>
 ### Revisiting the Platonic Representation Hypothesis: An Aristotelian View
@@ -5088,7 +5704,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `6.2` Reject · 7B Fast `6.5` Accept (S/P/C 3.0/3.0/2.5) · 14B Fast `8.0` Accept
 - OpenReviewer `8.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [gonzo_ML/5622](https://t.me/gonzo_ML/5622)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper could benefit from a more thorough discussion of the limitations of the proposed Aristotelian Representation Hypothesis. While the authors acknowledge that representational similarity has no ground-truth scale, they do not provide a clear explanation of how this limitation affects the validity of their findings.  2. The paper could benefit from a more detailed discussion o deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2602.14486.md#weaknesses): 1. The paper could benefit from a more thorough discussion of the limitations of the proposed Aristotelian Representation Hypothesis. While the authors acknowledge that representational similarity has no ground-truth scale, they do not provide a clear explanation of how this limitation affects the validity of their findings.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2602.14486.md#weaknesses): Despite its strengths, the paper has several limitations that need to be addressed. One of the primary concerns is the theoretical gap in the justification for the width confounder correction when applied to neighborhood metrics.…
 
 <a id="arxiv-2507.01098"></a>
 ### Proof of a perfect platonic representation hypothesis
@@ -5102,7 +5720,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `6.2` Reject (S/P/C 2.5/2.5/2.75) · 14B Fast `6.0` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [lovedeathtransformers/10956](https://t.me/lovedeathtransformers/10956)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper's contribution is limited, as it is a note that elaborates on the proof of the PRH for the EDLN model. 2. The paper does not provide any new experimental results or insights that are not already discussed in the original paper by Ziyin et al. (2025). 3. The paper does not discuss the limitations of the EDLN model and how they may affect the validity of the PRH.  ## Questio cyclereviewer-8b.seed1: Weaknesses  The paper is a note that elaborates on the pr
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2507.01098.md#weaknesses): 1. The paper's contribution is limited, as it is a note that elaborates on the proof of the PRH for the EDLN model. 2. The paper does not provide any new experimental results or insights that are not already discussed in the original paper by Ziyin et al. (2025). 3. The paper does not discuss the limitations of the EDLN model and how they may affect the validity of the PRH.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2507.01098.md#weaknesses): Despite its strengths, this paper exhibits several weaknesses that warrant careful consideration. A primary concern is the paper's reliance on a simplified model, the embedded deep linear network (EDLN). While the authors acknowledge that this model is a simplification of real-world neural networks, the extent to which the results generalize to nonlinear networks remains unclear.…
 
 <a id="arxiv-2502.15104"></a>
 ### Estimating Neural Representation Alignment from Sparsely Sampled Inputs and Features
@@ -5116,7 +5736,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `7.0` Accept (S/P/C 3.25/3.0/3.25) · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper only considers the case where the neural representations are centered. In practice, it is often the case that the neural representations are not centered, and it is not clear how the proposed estimator would perform in this case. - The paper does not provide any theoretical results on the convergence rate of the proposed estimator. - The paper does not provide any empirical deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2502.15104.md#weaknesses): The paper only considers the case where the neural representations are centered. In practice, it is often the case that the neural representations are not centered, and it is not clear how the proposed estimator would perform in this case. - The paper does not provide any theoretical results on the convergence rate of the proposed estimator.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2502.15104.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant attention. First, while the paper introduces a novel estimator for CKA that corrects for biases due to finite sampling of neurons and stimuli, it lacks a thorough discussion of the assumptions underlying the estimator's validity.…
 
 <a id="arxiv-2405.07987"></a>
 ### The Platonic Representation Hypothesis
@@ -5130,7 +5752,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std ``  · 7B Fast `5.7` Reject (S/P/C 2.67/2.33/2.67) · 14B Fast `6.5` Accept
 - OpenReviewer `8.0` Accept (S/P/C 4.0/4.0/3.0) · SEA-E `5.0` Accept
 - Telegram: [dl_stories/957](https://t.me/dl_stories/957), [boris_again/3487](https://t.me/boris_again/3487), [boris_again/3151](https://t.me/boris_again/3151), [axisofordinary/6337](https://t.me/axisofordinary/6337), [axisofordinary/7502](https://t.me/axisofordinary/7502), [dealerAI/806](https://t.me/dealerAI/806), [lovedeathtransformers/10318](https://t.me/lovedeathtransformers/10318), [boris_again/2579](https://t.me/boris_again/2579)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper's main weakness is its lack of concrete evidence to support the hypothesis of a shared statistical model of reality. While the authors provide several examples of representation convergence, these examples are largely anecdotal and do not provide a rigorous empirical basis for their hypothesis. Additionally, the paper does not provide a clear definition of what constitutes a  cyclereviewer-8b.seed1: Weaknesses  The paper lacks a clear research question and
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2405.07987.md#weaknesses): The paper's main weakness is its lack of concrete evidence to support the hypothesis of a shared statistical model of reality. While the authors provide several examples of representation convergence, these examples are largely anecdotal and do not provide a rigorous empirical basis for their hypothesis.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2405.07987.md#weaknesses): While I find the paper's central hypothesis compelling, my analysis has revealed several weaknesses that warrant careful consideration. Firstly, the paper's reliance on the assumption of bijective observation functions is a significant limitation.…
 
 <a id="arxiv-2405.01012"></a>
 ### Correcting Biased Centered Kernel Alignment Measures in Biological and Artificial Neural Networks
@@ -5144,7 +5768,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `3.5` Reject (S/P/C 2.0/2.5/2.0) · 14B Fast `4.0` Reject
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper is written in a way that is hard to follow. For example, the abstract and introduction are not clear about the main contributions of the paper. The abstract states that the paper highlights issues with the use of CKA as an alignment metric, but it does not clearly state what these issues are. The introduction mentions that the paper shows that CKA can be sensitive to the r deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2405.01012.md#weaknesses): 1. The paper is written in a way that is hard to follow. For example, the abstract and introduction are not clear about the main contributions of the paper. The abstract states that the paper highlights issues with the use of CKA as an alignment metric, but it does not clearly state what these issues are.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2405.01012.md#weaknesses): While I appreciate the paper's contributions, I have identified several weaknesses that warrant careful consideration. First, the paper's primary limitation is its incremental nature. As the authors acknowledge, the core methods, including CKA, RSA, and the THINGS dataset, are not novel.…
 
 <a id="arxiv-2007.02789"></a>
 ### Comparing representational geometries using whitened unbiased-distance-matrix similarity
@@ -5158,7 +5784,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `7.5` Accept · 7B Fast `6.5` Accept (S/P/C 3.0/3.0/3.25) · 14B Fast `8.0` Accept
 - OpenReviewer `8.0` Accept (S/P/C 4.0/4.0/4.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper is not well written and is difficult to follow. The authors should consider revising the paper to make it more accessible to a broader audience.  - The paper only considers the Euclidean and Mahalanobis distances, and it is not clear how the method would generalize to other dissimilarity measures.  - The paper does not provide a thorough evaluation of the method, and it is  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2007.02789.md#weaknesses): The paper is not well written and is difficult to follow. The authors should consider revising the paper to make it more accessible to a broader audience.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2007.02789.md#weaknesses): While I found the paper to be generally strong, there are several weaknesses that I believe warrant further attention. First, while the paper provides a clear rationale for using unbiased distance estimates, the explanation of when and why to use them could be more explicit.…
 
 <a id="acl-2025.acl-long.126"></a>
 ### INVESTORBENCH: A Benchmark for Financial Decision-Making Tasks with LLM-based Agent
@@ -5172,7 +5800,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.0` Reject (S/P/C 2.5/2.75/2.5) · 14B Fast `4.0` Reject
 - OpenReviewer `6.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [rybolos_channel/1561](https://t.me/rybolos_channel/1561)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks a clear evaluation of the proposed benchmark. The authors only provide a brief description of the benchmark and its components, but do not provide a comprehensive evaluation of its effectiveness or limitations.  2. The paper does not provide a clear comparison of the proposed benchmark with existing benchmarks for evaluating LLMs for financial decision-making tasks.  cyclereviewer-8b.seed1: Weaknesses  The paper lacks a clear motivation for the pr
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/acl_2025.acl-long.126.md#weaknesses): 1. The paper lacks a clear evaluation of the proposed benchmark. The authors only provide a brief description of the benchmark and its components, but do not provide a comprehensive evaluation of its effectiveness or limitations. 2. The paper does not provide a clear comparison of the proposed benchmark with existing benchmarks for evaluating LLMs for financial decision-making tasks.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/acl_2025.acl-long.126.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, the paper lacks a detailed explanation of the memory architecture's implementation.…
 
 <a id="arxiv-2003.01859"></a>
 ### Applications of deep learning in stock market prediction: recent progress
@@ -5186,7 +5816,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `1.0` Reject · 7B Fast `3.0` Reject (S/P/C 2.0/2.0/1.67) · 14B Fast `3.0` Reject
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper is a survey of the literature on deep learning for stock market prediction, and does not provide any new insights or contributions to the field. The paper is also quite long, and could be condensed to make it more concise.  ## Questions  The paper is a survey of the literature on deep learning for stock market prediction, and does not provide any new insights or contributions deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2003.01859.md#weaknesses): The paper is a survey of the literature on deep learning for stock market prediction, and does not provide any new insights or contributions to the field. The paper is also quite long, and could be condensed to make it more concise.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2003.01859.md#weaknesses): . The paper's attempt to provide a comprehensive overview of the field is commendable, but the lack of depth and critical analysis limits its overall impact.
 
 <a id="arxiv-1807.02787"></a>
 ### Financial Trading as a Game: A Deep Reinforcement Learning Approach
@@ -5200,7 +5832,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `2.0` Reject · 7B Fast `4.0` Reject (S/P/C 2.25/2.25/2.25) · 14B Fast `3.0` Reject
 - OpenReviewer `3.0` Reject (S/P/C 2.0/2.0/2.0) · SEA-E `3.0` Reject
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper is poorly written and the results are not convincing. The authors do not provide enough details about the data they used and the evaluation metrics they used to evaluate their method. The authors also do not compare their method with other state-of-the-art methods for trading in the foreign exchange market.  ### Questions  The authors should provide more details about the dat deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_1807.02787.md#weaknesses): The paper is poorly written and the results are not convincing. The authors do not provide enough details about the data they used and the evaluation metrics they used to evaluate their method. The authors also do not compare their method with other state-of-the-art methods for trading in the foreign exchange market.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_1807.02787.md#weaknesses): While this paper presents a promising application of deep reinforcement learning to financial trading, several weaknesses limit its overall impact and generalizability. One of the primary concerns is the lack of a comprehensive related work section.…
 
 <a id="arxiv-1706.10059"></a>
 ### A Deep Reinforcement Learning Framework for the Financial Portfolio Management Problem
@@ -5214,7 +5848,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `1.0` Reject · 7B Fast `4.0` Reject (S/P/C 2.25/2.5/2.5) · 14B Fast `4.0` Reject
 - OpenReviewer `3.0` Reject (S/P/C 2.0/2.0/2.0) · SEA-E `5.0` Reject
 - Telegram: [j_links/374](https://t.me/j_links/374)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper lacks novelty. The proposed framework is a combination of existing techniques and the novelty is limited. The paper also lacks theoretical analysis and the experiments are not convincing.  ## Questions  1. The proposed framework is a combination of existing techniques, such as ensemble of identical independent evaluators, portfolio-vector memory, online stochastic batch learn deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_1706.10059.md#weaknesses): The paper lacks novelty. The proposed framework is a combination of existing techniques and the novelty is limited. The paper also lacks theoretical analysis and the experiments are not convincing.
+  - [DR-7B Fast](reviews/deepreviewer-7b-fast/arxiv_1706.10059.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. Firstly, the paper lacks a comprehensive comparison with existing state-of-the-art reinforcement learning methods for portfolio management. While the authors mention some related works, they do not provide a detailed comparison of their method's performance against these alternatives.…
 
 <a id="arxiv-2201.09746"></a>
 ### Reinforcement Learning Textbook
@@ -5228,7 +5864,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast `5.0` Reject (S/P/C 3.0/3.0/2.0) · 14B Fast `3.8` Reject
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/2.0) · SEA-E `3.0` Reject
 - Telegram: [AGI_and_RL/1168](https://t.me/AGI_and_RL/1168), [AGI_and_RL/734](https://t.me/AGI_and_RL/734), [AGI_and_RL/278](https://t.me/AGI_and_RL/278), [AGI_and_RL/891](https://t.me/AGI_and_RL/891), [MLResearch/870](https://t.me/MLResearch/870)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper is a survey paper, and it does not have any technical contribution.  ### Questions  N/A  ### Flag For Ethics Review  No ethics review needed.  ### Rating  6: marginally above the acceptance threshold  ### Confidence  4: You are confident in your assessment, but not absolutely certain. It is unlikely, but not impossible, that you did not understand some parts of the submission deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2201.09746.md#weaknesses): The paper is a survey paper, and it does not have any technical contribution.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2201.09746.md#weaknesses): in clarity, organization, and writing quality hinder its overall impact and accessibility.
 
 <a id="arxiv-2201.00650"></a>
 ### Deep Learning Interviews: Hundreds of fully solved job interview questions from a wide range of key topics in AI
@@ -5242,7 +5880,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std ``  · 7B Fast `1.0` Reject (S/P/C 1.0/1.0/1.0) · 14B Fast `` 
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/2.0) · SEA-E `5.0` Reject
 - Telegram: [AIHOUSE/260](https://t.me/AIHOUSE/260), [AIHOUSE/19](https://t.me/AIHOUSE/19), [MLResearch/860](https://t.me/MLResearch/860), [tech_priestess/611](https://t.me/tech_priestess/611)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide any insights into the performance of AI models on these questions. - The paper does not provide any insights into the limitations of the dataset or the framework.  ### Questions  - How does the performance of AI models on these questions compare to human performance? - What are the limitations of the dataset or the framework? - How can the dataset or framew deepreviewer-7b: Weaknesses:** What are the limitations or areas for improvement?
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2201.00650.md#weaknesses): The paper does not provide any insights into the performance of AI models on these questions. - The paper does not provide any insights into the limitations of the dataset or the framework.
+  - [DR-7B Fast](reviews/deepreviewer-7b-fast/arxiv_2201.00650.md#weaknesses): . * **Strengths (if any):** Specific positive aspects of the paper. * **Weaknesses (if any):** Specific negative aspects of the paper. * **Suggestions for Improvement:** Concrete recommendations to enhance the paper. * **Conclusion:** A final assessment of the paper's value and impact.
 
 <a id="doi-10.1038-s41566-024-01394-2"></a>
 ### Inverse-designed low-index-contrast structures on a silicon photonics platform for vector–matrix multiplication
@@ -5256,7 +5896,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std ``  · 7B Fast `5.2` Reject (S/P/C 3.0/3.0/2.25) · 14B Fast `6.5` Accept
 - OpenReviewer `5.0` Reject (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/2688](https://t.me/gonzo_ML/2688)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper is a review paper, which is not suitable for ICLR.   2. The paper does not provide any new results or insights. It is a comprehensive review of existing work.  3. The paper does not discuss the challenges and limitations of photonic matrix multiplication and photonic acceleration. It only provides a general discussion of the advantages of photonic matrix multiplication.  # deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/doi_10.1038_s41566-024-01394-2.md#weaknesses): 1. The paper is a review paper, which is not suitable for ICLR.
+  - [DR-14B Fast](reviews/deepreviewer-14b/doi_10.1038_s41566-024-01394-2.md#weaknesses): Despite the paper's strengths, several limitations and gaps in the review are evident. One significant issue is the lack of a detailed discussion on the practical challenges of implementing photonic matrix multiplication, particularly concerning thermal management, fabrication tolerances, and integration with electronic components.…
 
 <a id="arxiv-2309.10232"></a>
 ### Fully parallel optical matrix-matrix multiplication
@@ -5270,7 +5912,9 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `3.5` Reject · 7B Fast `2.5` Reject (S/P/C 1.5/1.5/1.5) · 14B Fast `4.8` Reject
 - OpenReviewer `3.0` Reject (S/P/C 2.0/2.0/2.0) · SEA-E `3.0` Reject
 - Telegram: [gonzo_ML/2688](https://t.me/gonzo_ML/2688)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The authors do not provide any experimental results to support their claims. The paper only provides a theoretical analysis of the proposed method and its potential applications in optical neural networks.  - The authors do not compare their proposed method with existing methods in the field of optical computing.  - The authors do not discuss the potential limitations and challenges  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2309.10232.md#weaknesses): The authors do not provide any experimental results to support their claims. The paper only provides a theoretical analysis of the proposed method and its potential applications in optical neural networks.
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2309.10232.md#weaknesses): After a thorough examination of the paper, I have identified several weaknesses that warrant careful consideration. Firstly, the paper lacks a detailed discussion of the practical limitations of the proposed architecture. While the authors mention the use of spatial light modulators (SLMs), they do not delve into the specific constraints imposed by these devices.…
 
 <a id="arxiv-2304.01433"></a>
 ### TPU v4: An Optically Reconfigurable Supercomputer for Machine Learning with Hardware Support for Embeddings
@@ -5284,5 +5928,7 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `5.2` Reject
 - OpenReviewer `8.0` Accept (S/P/C 4.0/4.0/3.0) · SEA-E `8.0` Accept
 - Telegram: [techsparks/3989](https://t.me/techsparks/3989), [j_links/6618](https://t.me/j_links/6618), [axisofordinary/4738](https://t.me/axisofordinary/4738), [gonzo_ML/2688](https://t.me/gonzo_ML/2688)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper is not well-organized. The authors should focus on the main contributions and highlight the main contributions in the introduction. 2. The paper does not provide enough details about the TPU v4 architecture. The authors should provide more details about the TPU v4 architecture, including the number of cores, the clock speed, the memory bandwidth, and the power consumption. deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses:
+  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2304.01433.md#weaknesses): 1. The paper is not well-organized. The authors should focus on the main contributions and highlight the main contributions in the introduction. 2. The paper does not provide enough details about the TPU v4 architecture. The authors should provide more details about the TPU v4 architecture, including the number of cores, the clock speed, the memory bandwidth, and the power consumption. 3.…
+  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2304.01433.md#weaknesses): While the paper presents a compelling narrative of the TPU v4 system, several weaknesses warrant careful consideration. One significant limitation lies in the lack of detailed analysis regarding the optical circuit switch (OCS).…
 

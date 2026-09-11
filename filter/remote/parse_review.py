@@ -34,6 +34,7 @@ META_HEAD_RE = re.compile(r'^#{1,3}\s*meta\s+review\b', re.I | re.M)
 REVIEW_SEP_RE = re.compile(r'(?m)^\s*\*{8,}\s*$')
 RUBRIC_AFTER = re.compile(r'\s*:\s*(excellent|good|fair|poor)\b', re.I)
 CYCLE_EXPECTED = 4
+WEAK_MAX_CHARS = 2000
 
 
 def _brace_body(text: str, open_idx: int) -> str | None:
@@ -135,7 +136,7 @@ def _cycle_fields(body: str) -> dict:
         'soundness': _avg_field(valid, 'soundness'),
         'presentation': _avg_field(valid, 'presentation'),
         'contribution': _avg_field(valid, 'contribution'),
-        'weaknesses': ' '.join((weak.group(1) if weak else '').split())[:400],
+        'weaknesses': ' '.join((weak.group(1) if weak else '').split())[:WEAK_MAX_CHARS],
         'n_valid': len(valid),
         'expected_n': CYCLE_EXPECTED,
     }
@@ -160,7 +161,7 @@ def _fields_from(body: str, kind: str = '') -> dict:
         'soundness': first_score(body, 'soundness', last=True, lo=1, hi=4),
         'presentation': first_score(body, 'presentation', last=True, lo=1, hi=4),
         'contribution': first_score(body, 'contribution', last=True, lo=1, hi=4),
-        'weaknesses': ' '.join((weak.group(1) if weak else '').split())[:400],
+        'weaknesses': ' '.join((weak.group(1) if weak else '').split())[:WEAK_MAX_CHARS],
     }
 
 

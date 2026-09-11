@@ -18,8 +18,10 @@ sys.path.insert(0, str(FILTER_DIR))
 
 from aggregate import (  # noqa: E402
     AGG_FIELDS,
+    MODELS,
     aggregate,
     load_and_salvage,
+    parse_review,
     report_lines,
     tables_by_file,
 )
@@ -189,23 +191,88 @@ def signed(value, digits: int = 2) -> str:
     return f'{float(value):+.{digits}f}'
 
 
-def weaknesses_for(key: str, fallback: str = '') -> str:
+OUTLINE_WEAK_RE = re.compile(
+    r'i will output|suggestions,\s*and questions|metareview thinking',
+    re.I,
+)
+WEAK_MODELS = (
+    'cyclereviewer-8b',
+    'deepreviewer-14b',
+    'deepreviewer-7b-fast',
+    'openreviewer-8b',
+    'sea-e',
+)
+WEAK_CLIP = 400
+WEAK_MIN_SENTENCE = 120
+MODEL_BY_FILE = {spec['file']: spec for spec in MODELS.values()}
+
+
+def usable_weak_text(text: str) -> str:
+    '''Drop DeepReviewer planning lines that mention Weaknesses but are not one.'''
+    cleaned = ' '.join((text or '').split())
+    if not cleaned:
+        return ''
+    if OUTLINE_WEAK_RE.search(cleaned):
+        return ''
+    if len(cleaned.split()) < 8:
+        return ''
+    return cleaned
+
+
+def clip_sentence(text: str, limit: int = WEAK_CLIP) -> str:
+    '''Keep up to limit chars, breaking only at a sentence or word.'''
+    cleaned = ' '.join((text or '').split()).lstrip('*: -')
+    if not cleaned:
+        return ''
+    if len(cleaned) <= limit:
+        if cleaned[-1] in '.?!':
+            return cleaned
+        return cleaned + '…'
+    window = cleaned[:limit]
+    cut = -1
+    for sep in ('. ', '? ', '! '):
+        pos = window.rfind(sep)
+        if pos > cut:
+            cut = pos
+    if cut >= WEAK_MIN_SENTENCE:
+        return window[:cut + 1] + '…'
+    space = window.rfind(' ')
+    if space >= 1:
+        return window[:space] + '…'
+    return window + '…'
+
+
+def review_href(file_name: str, key: str) -> str:
+    return f'reviews/{file_name}/{safe_key(key)}.md#weaknesses'
+
+
+def weaknesses_for(
+    key: str,
+    fallback: str = '',
+) -> list[tuple[str, str, str]]:
     safe = safe_key(key)
-    chunks = []
-    if REVIEWS_DIR.exists():
-        for path in sorted(REVIEWS_DIR.glob(f'*/{safe}.md')):
-            text = path.read_text(encoding='utf-8', errors='replace')
-            lower = text.lower()
-            mark = lower.find('weakness')
-            if mark == -1:
-                continue
-            snippet = text[mark:mark + 400].replace('\n', ' ')
-            chunks.append(f'{path.parent.name}: {snippet}')
-            if len(chunks) >= 2:
-                break
-    if chunks:
-        return ' '.join(chunks)[:500]
-    return fallback
+    rows = []
+    for name in WEAK_MODELS:
+        spec = MODEL_BY_FILE.get(name)
+        if not spec:
+            continue
+        path = REVIEWS_DIR / spec['file'] / f'{safe}.md'
+        if not path.exists():
+            continue
+        raw = path.read_text(encoding='utf-8', errors='replace')
+        parsed = parse_review(raw, kind=spec.get('parse_kind') or '')
+        text = clip_sentence(usable_weak_text(parsed.get('weaknesses') or ''))
+        if not text:
+            continue
+        rows.append((spec['label'], text, review_href(spec['file'], key)))
+        if len(rows) >= 2:
+            break
+    if rows:
+        return rows
+    text = clip_sentence(usable_weak_text(fallback) or fallback)
+    if text:
+        return [('', text, '')]
+    return []
 
 
 def merge_row(paper: dict, tables: dict[str, dict[str, dict]]) -> dict:
@@ -637,7 +704,7 @@ def write_report(
             f'[{post.get("channel")}/{post.get("msg_id")}]({post.get("url")})'
             for post in posts[:8] if post.get('url')
         ) or '—'
-        weak = weaknesses_for(row['key'], row.get('_weak') or '')
+        weak_rows = weaknesses_for(row['key'], row.get('_weak') or '')
         lines += [
             f'<a id="{report_anchor(row["key"])}"></a>',
             f'### {md_cell(row["title"])}',
@@ -653,9 +720,20 @@ def write_report(
             f'- DeepReviewer 7B Std `{fmt(row["dr7b_rating"], 1)}` {row.get("dr7b_decision") or ""} · 7B Fast `{fmt(row["dr7bf_rating"], 1)}` {row.get("dr7bf_decision") or ""} (S/P/C {row.get("dr7bf_soundness")}/{row.get("dr7bf_presentation")}/{row.get("dr7bf_contribution")}) · 14B Fast `{fmt(row["dr14b_rating"], 1)}` {row.get("dr14b_decision") or ""}',
             f'- OpenReviewer `{fmt(row["or8b_rating"], 1)}` {row.get("or8b_decision") or ""} (S/P/C {row.get("or8b_soundness")}/{row.get("or8b_presentation")}/{row.get("or8b_contribution")}) · SEA-E `{fmt(row["seae_rating"], 1)}` {row.get("seae_decision") or ""}',
             f'- Telegram: {tg}',
-            f'- Weaknesses: {md_cell(weak) or "—"}',
-            '',
         ]
+        if not weak_rows:
+            lines.append('- Weaknesses: —')
+        else:
+            lines.append('- Weaknesses:')
+            for label, text, href in weak_rows:
+                cell = md_cell(text)
+                if label and href:
+                    lines.append(f'  - [{label}]({href}): {cell}')
+                elif label:
+                    lines.append(f'  - {label}: {cell}')
+                else:
+                    lines.append(f'  - {cell}')
+        lines.append('')
     REPORT_MD.write_text('\n'.join(lines) + '\n', encoding='utf-8')
 
 

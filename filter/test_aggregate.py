@@ -20,6 +20,7 @@ from aggregate import (
     reliability_weight,
     vote_pm,
 )
+from build_report import clip_sentence, review_href, usable_weak_text
 from parse_review import parse_review
 from paths import is_score_row, last_valid_by_key
 
@@ -223,6 +224,80 @@ class SalvageVoteTest(unittest.TestCase):
         family_z, extra = family_composites(model_z, model_w)
         self.assertNotIn('only', family_z.get('deep', {}))
         self.assertNotIn('only', extra['family_cov'].get('deep', {}))
+
+
+class WeaknessesSnippetTest(unittest.TestCase):
+    def test_drops_deepreviewer_outline(self):
+        junk = (
+            'Weaknesses, Suggestions, and Questions. Finally, I will output'
+        )
+        self.assertEqual(usable_weak_text(junk), '')
+        long_plan = (
+            '. Then I will output the Finally Review Output. Based on the '
+            'original template, I should write about motivation, methods, '
+            'results, and comparisons. Finally, I will output the metareview '
+            'thinking and the finally revised output.'
+        )
+        self.assertEqual(usable_weak_text(long_plan), '')
+        real = (
+            'The paper lacks a theoretical analysis of the method and only '
+            'evaluates a few tasks.'
+        )
+        self.assertEqual(usable_weak_text(real), real)
+
+
+class ClipSentenceTest(unittest.TestCase):
+    def test_short_text_unchanged(self):
+        text = 'The paper lacks a theoretical analysis of the method.'
+        self.assertEqual(clip_sentence(text), text)
+
+    def test_fragment_gets_ellipsis(self):
+        text = 'The paper could benefit from more examples and illustrations'
+        self.assertEqual(clip_sentence(text), text + '…')
+
+    def test_strips_sea_prefix(self):
+        text = '** - The paper lacks a theoretical analysis of the method and only evaluates a few tasks.'
+        self.assertEqual(
+            clip_sentence(text),
+            'The paper lacks a theoretical analysis of the method and only evaluates a few tasks.',
+        )
+
+    def test_breaks_at_sentence(self):
+        text = (
+            'The main weakness is the limited evaluation on toy worlds. '
+            'The authors do not compare against recent world models. '
+            'A third issue is missing ablations on the action head. '
+            'A fourth issue is that the discussion of related work is incomplete. '
+        ) * 4
+        out = clip_sentence(text)
+        body = out[:-1]
+        self.assertTrue(out.endswith('.…'))
+        self.assertLessEqual(len(body), 400)
+        self.assertGreaterEqual(len(body), 120)
+        self.assertTrue(text.startswith(body))
+
+    def test_breaks_at_question(self):
+        text = (
+            'Is the evaluation broad enough to support the claim? '
+            'Does the paper compare against recent world models? '
+            'Are the ablations complete enough for this setting? '
+        ) * 5
+        out = clip_sentence(text)
+        self.assertTrue(out.endswith('?…'))
+
+    def test_never_ends_mid_word(self):
+        text = ' '.join(['weakness'] * 80)
+        out = clip_sentence(text, limit=80)
+        self.assertTrue(out.endswith('…'))
+        last = out[:-1].rstrip().split()[-1]
+        self.assertEqual(last, 'weakness')
+        self.assertFalse(out[:-1].endswith('weakne'))
+
+    def test_review_href(self):
+        self.assertEqual(
+            review_href('cyclereviewer-8b', 'arxiv:2608.17163'),
+            'reviews/cyclereviewer-8b/arxiv_2608.17163.md#weaknesses',
+        )
 
 
 class LastValidTest(unittest.TestCase):
