@@ -16,6 +16,14 @@ from statistics import mean
 FILTER_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(FILTER_DIR))
 
+from aggregate import (  # noqa: E402
+    AGG_FIELDS,
+    aggregate,
+    load_and_salvage,
+    report_lines,
+    salvage_decision,
+    tables_by_file,
+)
 from paths import (  # noqa: E402
     FILTER_DIR as ROOT,
     REPORT_MD,
@@ -37,10 +45,13 @@ CSV_FIELDS = [
     'cr70b_rating', 'cr70b_decision',
     'dr7b_rating', 'dr7b_decision',
     'dr7bf_rating', 'dr7bf_decision',
+    'dr7bf_soundness', 'dr7bf_presentation', 'dr7bf_contribution',
     'dr14b_rating', 'dr14b_decision',
-    'or8b_rating', 'or8b_soundness', 'or8b_presentation', 'or8b_contribution',
+    'or8b_rating', 'or8b_decision', 'or8b_soundness', 'or8b_presentation', 'or8b_contribution',
     'seae_rating', 'seae_decision',
     'mean_rating10', 'accept_votes', 'n_models', 'rank_avg', 'rank_in_year',
+    'final_score', 'final_conf', 'final_pct', 'impact_z', 'verdict', 'q_hat',
+    'salvage',
 ]
 
 RATING10 = [
@@ -48,7 +59,7 @@ RATING10 = [
     ('cr70b_rating', 'cr70b_decision'),
     ('dr7bf_rating', 'dr7bf_decision'),
     ('dr14b_rating', 'dr14b_decision'),
-    ('or8b_rating', None),
+    ('or8b_rating', 'or8b_decision'),
     ('seae_rating', 'seae_decision'),
 ]
 
@@ -165,6 +176,12 @@ def fmt(value, digits: int = 3) -> str:
     return str(value)
 
 
+def signed(value, digits: int = 2) -> str:
+    if value is None:
+        return ''
+    return f'{float(value):+.{digits}f}'
+
+
 def weaknesses_for(key: str, fallback: str = '') -> str:
     safe = safe_key(key)
     chunks = []
@@ -220,9 +237,13 @@ def merge_row(paper: dict, tables: dict[str, dict[str, dict]]) -> dict:
         'dr7b_decision': decision_of(dr7.get('rating'), dr7.get('decision')),
         'dr7bf_rating': as_float(dr7f.get('rating')),
         'dr7bf_decision': decision_of(dr7f.get('rating'), dr7f.get('decision')),
+        'dr7bf_soundness': dr7f.get('soundness'),
+        'dr7bf_presentation': dr7f.get('presentation'),
+        'dr7bf_contribution': dr7f.get('contribution'),
         'dr14b_rating': as_float(dr14.get('rating')),
         'dr14b_decision': decision_of(dr14.get('rating'), dr14.get('decision')),
         'or8b_rating': as_float(ore.get('rating')),
+        'or8b_decision': decision_of(ore.get('rating'), ore.get('decision')),
         'or8b_soundness': ore.get('soundness'),
         'or8b_presentation': ore.get('presentation'),
         'or8b_contribution': ore.get('contribution'),
@@ -232,6 +253,12 @@ def merge_row(paper: dict, tables: dict[str, dict[str, dict]]) -> dict:
             bool(src.get('partial'))
             for src in (cr8, cr70, dr7, dr7f, dr14, ore, sea)
         ),
+        'salvage': ';'.join(
+            name for src, name in (
+                (cr8, 'cr8b'), (dr7, 'dr7b'), (dr7f, 'dr7bf'),
+                (dr14, 'dr14b'), (ore, 'or8b'), (sea, 'seae'),
+            ) if src.get('salvage')
+        ),
         '_weak': cr8.get('weaknesses') or ore.get('weaknesses') or sea.get('weaknesses') or '',
     }
     ratings = [row[field] for field, _ in RATING10 if row[field] is not None]
@@ -239,6 +266,11 @@ def merge_row(paper: dict, tables: dict[str, dict[str, dict]]) -> dict:
     votes = []
     for field, dec_field in RATING10:
         votes.append(decision_of(row[field], row[dec_field] if dec_field else None))
+    votes.append(decision_of(row['dr7b_rating'], row['dr7b_decision']))
+    for src in (cr8, cr70, dr7, dr7f, dr14, ore, sea):
+        extra = salvage_decision(src)
+        if extra:
+            votes.append(extra)
     if row['dgcbert_p'] is not None:
         votes.append('Accept' if row['dgcbert_p'] >= 0.5 else 'Reject')
     known = [vote for vote in votes if vote]
@@ -285,7 +317,16 @@ def write_csv(rows: list[dict]) -> None:
         writer = csv.DictWriter(handle, fieldnames=CSV_FIELDS, extrasaction='ignore')
         writer.writeheader()
         for row in rows:
-            out = {field: fmt(row.get(field), 4 if 'rank' in field or field.endswith('_p') else 3) for field in CSV_FIELDS}
+            extra_prec = {'final_score', 'final_conf', 'q_hat'}
+            out = {}
+            for field in CSV_FIELDS:
+                if field in extra_prec:
+                    prec = 6
+                elif 'rank' in field or field.endswith('_p') or field == 'final_pct':
+                    prec = 4
+                else:
+                    prec = 3
+                out[field] = fmt(row.get(field), prec)
             out['key'] = row['key']
             out['section'] = row['section']
             out['title'] = row['title']
@@ -294,11 +335,19 @@ def write_csv(rows: list[dict]) -> None:
             out['tg_first_post'] = row['tg_first_post']
             for field in (
                 'cr8b_decision', 'cr70b_decision', 'dr7b_decision',
-                'dr7bf_decision', 'dr14b_decision', 'seae_decision',
+                'dr7bf_decision', 'dr14b_decision', 'or8b_decision',
+                'seae_decision',
             ):
                 out[field] = row.get(field) or ''
             out['accept_votes'] = row['accept_votes']
             out['n_models'] = row['n_models']
+            out['verdict'] = row.get('verdict') or ''
+            out['salvage'] = row.get('salvage') or ''
+            for field in (
+                'dr7bf_soundness', 'dr7bf_presentation', 'dr7bf_contribution',
+            ):
+                value = row.get(field)
+                out[field] = '' if value is None else str(value)
             writer.writerow(out)
 
 
@@ -326,7 +375,7 @@ def accept_label(row: dict, kind: str) -> str | None:
             return None
         return 'Accept' if value >= 0.5 else 'Reject'
     if kind == 'or8b':
-        return decision_of(row.get('or8b_rating'), None)
+        return decision_of(row.get('or8b_rating'), row.get('or8b_decision'))
     mapping = {
         'cr8b': ('cr8b_rating', 'cr8b_decision'),
         'cr70b': ('cr70b_rating', 'cr70b_decision'),
@@ -458,7 +507,11 @@ def self_agreement_section() -> list[str]:
     return rows_out
 
 
-def write_report(rows: list[dict]) -> None:
+def write_report(
+    rows: list[dict],
+    diag: dict | None = None,
+    papers: list[dict] | None = None,
+) -> None:
     n = len(rows)
     scored = sum(1 for row in rows if row['n_models'])
     cov = coverage_table(rows)
@@ -466,13 +519,6 @@ def write_report(rows: list[dict]) -> None:
     by_section: dict[str, list[dict]] = defaultdict(list)
     for row in rows:
         by_section[row['section']].append(row)
-    bottom = sorted(
-        [
-            row for row in rows
-            if row['rank_avg'] is not None and row.get('n_models', 0) >= 2
-        ],
-        key=lambda row: (row['rank_avg'], row['title']),
-    )[:30]
     lines = [
         '# Paper quality scores',
         '',
@@ -506,31 +552,72 @@ def write_report(rows: list[dict]) -> None:
     self_lines = self_agreement_section()
     if self_lines:
         lines += ['', *self_lines]
+    if diag:
+        lines += [''] + report_lines(diag)
     lines += ['', '## Agreement (Spearman)', '', *spear_lines, '', '## Agreement (macro-F1 Accept/Reject)', '', *f1_lines]
     lines += ['', '## Ranking by readme section', '']
     for section, group in by_section.items():
         ordered = sorted(
             group,
-            key=lambda row: (row['rank_avg'] is None, -(row.get('rank_avg') or 0)),
+            key=lambda row: (row.get('final_score') is None, -(row.get('final_score') or 0)),
         )
-        lines += [f'### {section}', '', '| rank | title | year | mean 1–10 | accept | key |', '|---:|---|---|---:|---:|---|']
+        lines += [
+            f'### {section}', '',
+            '| rank | title | year | final | accept | key |',
+            '|---:|---|---|---:|---:|---|',
+        ]
         for index, row in enumerate(ordered, start=1):
             year = year_of(row)
             href = report_anchor(row['key'])
             lines.append(
                 f'| {index} | [{md_cell(row["title"])}](#{href}) | {year} | '
-                f'{fmt(row["mean_rating10"], 1)} | {row["accept_votes"]}/{row["n_models"]} | `{row["key"]}` |'
+                f'{signed(row.get("final_score"))} | {row["accept_votes"]}/{row["n_models"]} | `{row["key"]}` |'
             )
         lines.append('')
-    lines += ['## Bottom 30 (candidates to drop)', '', 'Lowest average percentile rank across models (0 = worst, 100 = best). Decision is yours.', '', '| title | section | year | rank_avg | mean 1–10 | accept |', '|---|---|---|---:|---:|---:|']
-    for row in bottom:
+    drop_rows = sorted(
+        [row for row in rows if row.get('verdict') == 'DROP'],
+        key=lambda row: (row.get('final_score') is None, row.get('final_score') or 0),
+    )
+    watch_rows = sorted(
+        [row for row in rows if row.get('verdict') == 'WATCH'],
+        key=lambda row: (row.get('final_score') is None, row.get('final_score') or 0),
+    )
+    lines += [
+        '## DROP',
+        '',
+        '`final_score` < -0.2 with conf >= 0.5 and impact_z below +0.5. '
+        'Not a raw accept-vote count.',
+        '',
+        '| title | section | year | final | conf | impact | accept |',
+        '|---|---|---|---:|---:|---:|---:|',
+    ]
+    for row in drop_rows:
         href = report_anchor(row['key'])
         lines.append(
             f'| [{md_cell(row["title"])}](#{href}) | {md_cell(row["section"])} | {year_of(row)} | '
-            f'{fmt(row["rank_avg"], 1)} | {fmt(row["mean_rating10"], 1)} | {row["accept_votes"]}/{row["n_models"]} |'
+            f'{signed(row.get("final_score"))} | {fmt(row.get("final_conf"), 2)} | '
+            f'{signed(row.get("impact_z"))} | {row["accept_votes"]}/{row["n_models"]} |'
+        )
+    shown_watch = watch_rows[:40]
+    lines += [
+        '',
+        '## WATCH',
+        '',
+        'Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predicted impact.'
+        + (f' Showing {len(shown_watch)} of {len(watch_rows)}.' if len(watch_rows) > 40 else ''),
+        '',
+        '| title | section | year | final | conf | impact | accept |',
+        '|---|---|---|---:|---:|---:|---:|',
+    ]
+    for row in shown_watch:
+        href = report_anchor(row['key'])
+        lines.append(
+            f'| [{md_cell(row["title"])}](#{href}) | {md_cell(row["section"])} | {year_of(row)} | '
+            f'{signed(row.get("final_score"))} | {fmt(row.get("final_conf"), 2)} | '
+            f'{signed(row.get("impact_z"))} | {row["accept_votes"]}/{row["n_models"]} |'
         )
     lines += ['', '## Per paper', '']
-    paper_index = {row['key']: row for row in load_joined()}
+    paper_index = {row['key']: row for row in (papers or load_joined())}
     for row in rows:
         paper = paper_index.get(row['key'], {})
         posts = paper.get('tg_posts') or []
@@ -545,12 +632,14 @@ def write_report(rows: list[dict]) -> None:
             '',
             f'`{row["key"]}` · {md_cell(row["section"])} · {row.get("published") or year_of(row)}',
             '',
-            f'- mean rating (1–10): **{fmt(row["mean_rating10"], 1) or "n/a"}** · accept votes **{row["accept_votes"]}/{row["n_models"]}** · percentile rank_avg {fmt(row["rank_avg"], 1)} (100=best) · rank in year {fmt(row["rank_in_year"], 1)} (1=best)'
-            + (' · partial fulltext' if row.get('partial') else ''),
+            f'- final **{signed(row.get("final_score")) or "n/a"}** (conf {fmt(row.get("final_conf"), 2)}, pct {fmt(row.get("final_pct"), 0)}) · impact {signed(row.get("impact_z")) or "n/a"} · {row.get("verdict") or "—"}'
+            + (' · partial fulltext' if row.get('partial') else '')
+            + (f' · salvage {row.get("salvage")}' if row.get('salvage') else ''),
+            f'- mean rating (1–10): **{fmt(row["mean_rating10"], 1) or "n/a"}** · accept votes **{row["accept_votes"]}/{row["n_models"]}** · percentile rank_avg {fmt(row["rank_avg"], 1)} (100=best) · rank in year {fmt(row["rank_in_year"], 1)} (1=best)',
             f'- NAIPv2 `{fmt(row["naipv2"])}` · NAIP-v1 `{fmt(row["naipv1"])}` · SciJudge `{fmt(row["scijudge_bt"])}` · DGC-BERT `{fmt(row["dgcbert_p"])}`',
             f'- CycleReviewer 8B `{fmt(row["cr8b_rating"], 1)}` {row.get("cr8b_decision") or ""} · 70B `{fmt(row["cr70b_rating"], 1)}` {row.get("cr70b_decision") or ""}',
-            f'- DeepReviewer 7B Std `{fmt(row["dr7b_rating"], 1)}` {row.get("dr7b_decision") or ""} · 7B Fast `{fmt(row["dr7bf_rating"], 1)}` {row.get("dr7bf_decision") or ""} · 14B Fast `{fmt(row["dr14b_rating"], 1)}` {row.get("dr14b_decision") or ""}',
-            f'- OpenReviewer `{fmt(row["or8b_rating"], 1)}` (S/P/C {row.get("or8b_soundness")}/{row.get("or8b_presentation")}/{row.get("or8b_contribution")}) · SEA-E `{fmt(row["seae_rating"], 1)}` {row.get("seae_decision") or ""}',
+            f'- DeepReviewer 7B Std `{fmt(row["dr7b_rating"], 1)}` {row.get("dr7b_decision") or ""} · 7B Fast `{fmt(row["dr7bf_rating"], 1)}` {row.get("dr7bf_decision") or ""} (S/P/C {row.get("dr7bf_soundness")}/{row.get("dr7bf_presentation")}/{row.get("dr7bf_contribution")}) · 14B Fast `{fmt(row["dr14b_rating"], 1)}` {row.get("dr14b_decision") or ""}',
+            f'- OpenReviewer `{fmt(row["or8b_rating"], 1)}` {row.get("or8b_decision") or ""} (S/P/C {row.get("or8b_soundness")}/{row.get("or8b_presentation")}/{row.get("or8b_contribution")}) · SEA-E `{fmt(row["seae_rating"], 1)}` {row.get("seae_decision") or ""}',
             f'- Telegram: {tg}',
             f'- Weaknesses: {md_cell(weak) or "—"}',
             '',
@@ -559,12 +648,19 @@ def write_report(rows: list[dict]) -> None:
 
 
 def main() -> None:
-    tables = {name: by_key(name) for name in SCORE_FILES}
     papers = load_joined()
+    model_tables, salvage = load_and_salvage()
+    tables = {name: by_key(name) for name in SCORE_FILES}
+    tables.update(tables_by_file(model_tables))
     rows = [merge_row(paper, tables) for paper in papers]
     add_ranks(rows)
+    agg, diag = aggregate(papers, tables=model_tables, salvage=salvage)
+    for row in rows:
+        extra = agg.get(row['key']) or {}
+        for field in AGG_FIELDS:
+            row[field] = extra.get(field)
     write_csv(rows)
-    write_report(rows)
+    write_report(rows, diag, papers)
     print(f'wrote {SCORES_CSV} ({len(rows)} rows) and {REPORT_MD}', flush=True)
 
 

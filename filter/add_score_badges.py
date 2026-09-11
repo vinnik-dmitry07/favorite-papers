@@ -20,18 +20,29 @@ MD_HREF_RE = re.compile(r'\[[^\]]*\]\(([^)]+)\)')
 ARXIV_ID_RE = re.compile(r'(?<![\d.])(\d{4}\.\d{4,5})(?![\d])')
 LEGEND_RE = re.compile(r'^Score badges:.*$', re.M)
 LEGEND = (
-    'Score badges: [⚖ mean · accepts/models](filter/report.md) — mean of full-paper '
-    'reviewer ratings (1–10). Older landmark papers can be inflated (pretrain leakage).'
+    'Score badges: [⚖ final · accepts/models · WATCH|DROP](filter/report.md) — aggregated quality '
+    'in [-1, +1]. 0 is where reviewer Accept/Reject votes split 50/50. '
+    'accepts/models are raw reviewer votes, not the aggregated score. '
+    'WATCH/DROP is appended when the verdict is not KEEP. '
+    'Older landmark papers can be inflated (pretrain leakage).'
 )
 
 
-def badge_text(mean_rating, accepts: int, n_models: int, key: str) -> str | None:
-    if not n_models:
+def badge_text(
+    final_score,
+    accepts: int,
+    n_models: int,
+    key: str,
+    verdict: str | None = None,
+) -> str | None:
+    if final_score in (None, '') and not n_models:
         return None
-    if mean_rating in (None, ''):
+    if final_score in (None, ''):
         label = f'⚖ — · {accepts}/{n_models}'
     else:
-        label = f'⚖ {float(mean_rating):.1f} · {accepts}/{n_models}'
+        label = f'⚖ {float(final_score):+.2f} · {accepts}/{n_models}'
+    if verdict in ('WATCH', 'DROP'):
+        label += f' · {verdict}'
     return f'[{label}](filter/report.md#{report_anchor(key)})'
 
 
@@ -98,10 +109,11 @@ def badge_for(paper: dict, scores: dict[str, dict]) -> str | None:
     if not row:
         return None
     return badge_text(
-        row.get('mean_rating10'),
+        row.get('final_score'),
         as_int(row.get('accept_votes')),
         as_int(row.get('n_models')),
         paper['key'],
+        row.get('verdict'),
     )
 
 
@@ -125,7 +137,9 @@ def main() -> None:
     if original.endswith('\n'):
         text += '\n'
     text = inject_legend(text)
-    README.write_text(text, encoding='utf-8')
+    tmp = README.with_name(README.name + '.tmp')
+    tmp.write_text(text, encoding='utf-8')
+    tmp.replace(README)
     print(f'add_score_badges: updated {changed} lines in {README}', flush=True)
 
 

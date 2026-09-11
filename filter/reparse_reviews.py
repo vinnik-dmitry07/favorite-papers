@@ -21,7 +21,8 @@ from paths import (  # noqa: E402
     safe_key,
     write_jsonl,
 )
-from score_reviewers import parse_review, score_row  # noqa: E402
+from parse_review import parse_review  # noqa: E402
+from score_reviewers import score_row  # noqa: E402
 
 DEEP_MODELS = (
     'deepreviewer-7b',
