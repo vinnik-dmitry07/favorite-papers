@@ -30,12 +30,10 @@ WEAK_RE = re.compile(
 )
 THINK_RE = re.compile(r'<think>.*?</think>', re.I | re.S)
 BOXED_START_RE = re.compile(r'\\?boxed_review\{', re.I)
-HEADING_RATING_RE = re.compile(
-    r'(?:^|\n)#{1,3}\s*rating\b[^\n]*\n+\s*[:\-*]*\s*(\d{1,2}(?:\.\d+)?)',
-    re.I,
-)
 META_HEAD_RE = re.compile(r'^#{1,3}\s*meta\s+review\b', re.I | re.M)
+REVIEW_SEP_RE = re.compile(r'(?m)^\s*\*{8,}\s*$')
 RUBRIC_AFTER = re.compile(r'\s*:\s*(excellent|good|fair|poor)\b', re.I)
+CYCLE_EXPECTED = 4
 
 
 def _brace_body(text: str, open_idx: int) -> str | None:
@@ -108,24 +106,48 @@ def parse_decision(body: str) -> str | None:
     return None
 
 
+def split_cycle_reviews(body: str) -> list[str]:
+    cut = META_HEAD_RE.search(body or '')
+    head = body[:cut.start()] if cut else (body or '')
+    return [chunk.strip() for chunk in REVIEW_SEP_RE.split(head) if chunk.strip()]
+
+
+def _avg_field(rows: list[dict], field: str) -> float | None:
+    vals = [row[field] for row in rows if row.get(field) is not None]
+    if not vals:
+        return None
+    return sum(vals) / len(vals)
+
+
+def _cycle_fields(body: str) -> dict:
+    parsed = [_fields_from(chunk) for chunk in split_cycle_reviews(body)]
+    valid = [row for row in parsed if row.get('rating') is not None]
+    rating = _avg_field(valid, 'rating')
+    if rating is not None:
+        rating = min(10.0, max(1.0, rating))
+    decision = parse_decision(body)
+    if decision is None and rating is not None:
+        decision = 'Accept' if rating >= 6 else 'Reject'
+    weak = WEAK_RE.search(body)
+    return {
+        'rating': rating,
+        'decision': decision,
+        'soundness': _avg_field(valid, 'soundness'),
+        'presentation': _avg_field(valid, 'presentation'),
+        'contribution': _avg_field(valid, 'contribution'),
+        'weaknesses': ' '.join((weak.group(1) if weak else '').split())[:400],
+        'n_valid': len(valid),
+        'expected_n': CYCLE_EXPECTED,
+    }
+
+
 def _fields_from(body: str, kind: str = '') -> dict:
     rating = None
-    if kind == 'cycle':
-        cut = META_HEAD_RE.search(body)
-        head = body[:cut.start()] if cut else body
-        ratings = []
-        for match in HEADING_RATING_RE.finditer(head):
-            value = float(match.group(1))
-            if 1 <= value <= 10:
-                ratings.append(value)
-        if ratings:
-            rating = sum(ratings) / len(ratings)
-    if rating is None:
-        avgs = list(AVG_RE.finditer(body))
-        if avgs:
-            rating = float(avgs[-1].group(1))
-        else:
-            rating = first_score(body, r'(?:overall\s+)?rating', last=True, lo=1, hi=10)
+    avgs = list(AVG_RE.finditer(body or ''))
+    if avgs:
+        rating = float(avgs[-1].group(1))
+    else:
+        rating = first_score(body, r'(?:overall\s+)?rating', last=True, lo=1, hi=10)
     if rating is not None:
         rating = min(10.0, max(1.0, rating))
     decision = parse_decision(body)
@@ -144,6 +166,8 @@ def _fields_from(body: str, kind: str = '') -> dict:
 
 def parse_review(text: str, kind: str = '') -> dict:
     body = text or ''
+    if kind == 'cycle':
+        return _cycle_fields(body)
     if kind == 'deep':
         body = THINK_RE.sub('', body)
         boxed = extract_boxed_review(body)

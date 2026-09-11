@@ -29,6 +29,7 @@ from paths import (  # noqa: E402
     REVIEWS_DIR,
     SCORE_FILES,
     is_score_row,
+    last_valid_by_key,
     load_joined,
     read_jsonl,
     safe_key,
@@ -58,7 +59,6 @@ SUBSCORE_WEIGHTS = {
 DECISION_NUDGE = 0.15
 PARTIAL_MULT = 0.5
 YEAR_SHRINK_K = 10.0
-CORR_SHRINK_K = 10.0
 CAL_VOTE_RANGE = (0.1, 0.9)
 CLUSTER_CUTS = (0.65, 0.75)
 WEIGHT_OVERRIDE: dict[str, float] = {}
@@ -66,7 +66,6 @@ DROP_BELOW = -0.2
 WATCH_ABS = 0.2
 MIN_CONF = 0.5
 HIGH_IMPACT = 0.5
-SALVAGE_CONTRIB_ACCEPT = 3.0
 AGG_FIELDS = (
     'final_score', 'final_conf', 'final_pct', 'impact_z', 'verdict', 'q_hat',
 )
@@ -160,18 +159,10 @@ def year_bucket(year: int | None) -> str:
 
 
 def last_by_key(name: str) -> dict[str, dict]:
-    latest: dict[str, dict] = {}
-    valid: dict[str, dict] = {}
-    for row in read_jsonl(ROOT / SCORE_FILES[name]):
-        key = row.get('key')
-        if not key:
-            continue
-        latest[key] = row
-        if is_score_row(row):
-            valid[key] = row
-    out = dict(latest)
-    out.update(valid)
-    return out
+    return {
+        row['key']: row
+        for row in last_valid_by_key(read_jsonl(ROOT / SCORE_FILES[name]))
+    }
 
 
 def load_tables() -> dict[str, dict[str, dict]]:
@@ -187,7 +178,9 @@ def tables_by_file(model_tables: dict[str, dict[str, dict]]) -> dict[str, dict[s
 
 def load_and_salvage() -> tuple[dict[str, dict[str, dict]], dict[str, int]]:
     tables = load_tables()
-    return tables, salvage_unparsed(tables)
+    salvage = salvage_unparsed(tables)
+    enrich_cycle_reviews(tables)
+    return tables, salvage
 
 
 def usable_row(row: dict | None) -> bool:
@@ -195,7 +188,52 @@ def usable_row(row: dict | None) -> bool:
         return False
     if row.get('salvage'):
         return True
-    return not row.get('error')
+    if row.get('error'):
+        return False
+    return is_score_row(row)
+
+
+CYCLE_OVERLAY = (
+    'rating', 'decision', 'soundness', 'presentation', 'contribution',
+    'weaknesses', 'n_valid', 'expected_n',
+)
+SUB_FIELDS = ('soundness', 'presentation', 'contribution')
+
+
+def has_sub_scores(parsed: dict) -> bool:
+    return any(parsed.get(field) is not None for field in SUB_FIELDS)
+
+
+def recover_unparsed_row(row: dict, parsed: dict) -> tuple[dict, str] | None:
+    '''Promote a full rating to a normal row; S/P/C-only stays salvage.'''
+    if parsed.get('rating') is not None:
+        copy = dict(row)
+        for field in CYCLE_OVERLAY:
+            if field in parsed:
+                copy[field] = parsed[field]
+        copy.pop('error', None)
+        copy.pop('salvage', None)
+        return copy, 'full'
+    if not has_sub_scores(parsed):
+        return None
+    copy = dict(row)
+    for field in SUB_FIELDS:
+        if parsed.get(field) is not None:
+            copy[field] = parsed[field]
+    copy['salvage'] = True
+    copy.pop('error', None)
+    return copy, 'salvage'
+
+
+def apply_cycle_overlay(row: dict, parsed: dict) -> dict:
+    '''Authoritative Cycle parse: None clears stale jsonl fields.'''
+    copy = dict(row)
+    for field in CYCLE_OVERLAY:
+        copy[field] = parsed.get(field)
+    copy.pop('error', None)
+    if parsed.get('rating') is not None:
+        copy.pop('salvage', None)
+    return copy
 
 
 def salvage_unparsed(tables: dict[str, dict[str, dict]]) -> dict[str, int]:
@@ -216,21 +254,43 @@ def salvage_unparsed(tables: dict[str, dict[str, dict]]) -> dict[str, int]:
                 continue
             raw = path.read_text(encoding='utf-8', errors='replace')
             parsed = parse_review(raw, kind=spec.get('parse_kind') or '')
-            has_sub = any(
-                parsed.get(field) is not None
-                for field in ('soundness', 'presentation', 'contribution')
-            )
-            if not has_sub:
+            recovered = recover_unparsed_row(row, parsed)
+            if recovered is None:
                 continue
-            copy = dict(row)
-            for field in ('soundness', 'presentation', 'contribution'):
-                if parsed.get(field) is not None:
-                    copy[field] = parsed[field]
-            copy['salvage'] = True
+            copy, kind = recovered
             tables[model][key] = copy
-            n_salvage += 1
+            if kind == 'salvage':
+                n_salvage += 1
         counts[model] = n_salvage
     return counts
+
+
+def enrich_cycle_reviews(tables: dict[str, dict[str, dict]]) -> int:
+    '''Re-parse CycleReviewer markdown in memory. Does not rewrite jsonl.'''
+    n_done = 0
+    for model, spec in MODELS.items():
+        if spec.get('parse_kind') != 'cycle':
+            continue
+        review_dir = REVIEWS_DIR / spec['file']
+        items = list(tables[model].items())
+        total = len(items)
+        for index, (key, row) in enumerate(items, 1):
+            if index == 1 or index == total or index % 50 == 0:
+                print(
+                    f'  enrich {spec["file"]}: {index}/{total}',
+                    flush=True,
+                )
+            path = review_dir / f'{safe_key(key)}.md'
+            if not path.exists():
+                continue
+            raw = path.read_text(encoding='utf-8', errors='replace')
+            parsed = parse_review(raw, kind='cycle')
+            if parsed.get('rating') is None and not has_sub_scores(parsed):
+                continue
+            tables[model][key] = apply_cycle_overlay(row, parsed)
+            n_done += 1
+    print(f'  enrich cycle reviews: {n_done} rows', flush=True)
+    return n_done
 
 
 def rank_normal(values: dict[str, float]) -> dict[str, float]:
@@ -266,10 +326,14 @@ def group_adjust(
     return {key: value - offset[group_of.get(key, 'unknown')] for key, value in zs.items()}
 
 
-def standardize(values: dict[str, float]) -> dict[str, float]:
-    if len(values) < 2:
+def standardize(
+    values: dict[str, float],
+    refs: dict[str, float] | None = None,
+) -> dict[str, float]:
+    source = refs if refs is not None and len(refs) >= 8 else values
+    if len(source) < 2:
         return {key: 0.0 for key in values}
-    nums = list(values.values())
+    nums = list(source.values())
     mu = mean(nums)
     var = sum((x - mu) ** 2 for x in nums) / (len(nums) - 1)
     if var <= 1e-12:
@@ -325,7 +389,7 @@ def paired_rho(
     return len(keys), spearman([left[k] for k in keys], [right[k] for k in keys])
 
 
-def decision_pm(row: dict, spec: dict) -> float | None:
+def explicit_decision_pm(row: dict, spec: dict) -> float | None:
     if spec.get('has_decision'):
         value = as_float(row.get('p_accept'))
         if value is None:
@@ -336,6 +400,13 @@ def decision_pm(row: dict, spec: dict) -> float | None:
         return -1.0
     if re.search(r'\baccept\b', text, re.I):
         return 1.0
+    return None
+
+
+def decision_pm(row: dict, spec: dict) -> float | None:
+    explicit = explicit_decision_pm(row, spec)
+    if explicit is not None:
+        return explicit
     rating = as_float(row.get('rating'))
     if rating is None:
         return None
@@ -423,14 +494,23 @@ def model_composites(
                     total = 0.0
                     used = False
                 if not salvage:
-                    nudge = decision_pm(row, spec)
-                    if nudge is not None:
-                        total += DECISION_NUDGE * nudge
+                    explicit = explicit_decision_pm(row, spec)
+                    rating = as_float(row.get('rating'))
+                    if explicit is not None and rating is not None:
+                        implied = 1.0 if rating >= 6 else -1.0
+                        if explicit != implied:
+                            total += DECISION_NUDGE * explicit
+                    elif explicit is not None:
+                        total += DECISION_NUDGE * explicit
                         used = True
                 if not used:
                     continue
                 raw[key] = total
             weight = PARTIAL_MULT if (row.get('partial') or salvage) else 1.0
+            n_valid = as_float(row.get('n_valid'))
+            expected_n = as_float(row.get('expected_n'))
+            if n_valid is not None and expected_n and expected_n > 0:
+                weight *= min(1.0, n_valid / expected_n)
             wts[key] = weight
         composites[model] = standardize(raw)
         weights[model] = wts
@@ -494,29 +574,33 @@ def family_composites(
                 model_z[model], quality_temp, family,
             )
     family_z: dict[str, dict[str, float]] = {}
-    family_w: dict[str, dict[str, float]] = {}
+    family_cov: dict[str, dict[str, float]] = {}
     for family, models in members.items():
         rel = {}
-        full_den = 0.0
         for model in models:
             rho = lofo[model]
             rel[model] = 0.01 if rho is None else max(float(rho), 0.01)
-            full_den += rel[model]
+        expected = sum(rel.values())
         bag: dict[str, list[tuple[float, float]]] = defaultdict(list)
         for model in models:
             for key, value in model_z[model].items():
                 weight = rel[model] * model_w[model].get(key, 1.0)
                 bag[key].append((value, weight))
         raw = {}
-        wts = {}
+        cov = {}
         for key, pairs in bag.items():
             num = sum(value * weight for value, weight in pairs)
-            den = sum(weight for _value, weight in pairs)
-            raw[key] = num / den if den else 0.0
-            wts[key] = (den / full_den) if full_den else 1.0
-        family_z[family] = standardize(raw)
-        family_w[family] = wts
-    return family_z, {'model_lofo': lofo, 'family_w': family_w}
+            available = sum(weight for _value, weight in pairs)
+            if available <= 0:
+                continue
+            raw[key] = num / available
+            cov[key] = min(1.0, available / expected) if expected else 1.0
+        covered = [set(model_z[model]) for model in models if model_z.get(model)]
+        full_keys = set.intersection(*covered) if covered else set()
+        refs = {key: raw[key] for key in full_keys if key in raw}
+        family_z[family] = standardize(raw, refs)
+        family_cov[family] = cov
+    return family_z, {'model_lofo': lofo, 'family_cov': family_cov}
 
 
 def corr_matrix(series: dict[str, dict[str, float]], names: list[str]) -> np.ndarray:
@@ -526,17 +610,15 @@ def corr_matrix(series: dict[str, dict[str, float]], names: list[str]) -> np.nda
         for j, b in enumerate(names):
             if j <= i:
                 continue
-            overlap, rho = paired_rho(series[a], series[b])
-            if rho is None:
-                value = 0.0
-            else:
-                value = float(rho) * (overlap / (overlap + CORR_SHRINK_K))
-            mat[i, j] = mat[j, i] = value
+            _overlap, rho = paired_rho(series[a], series[b])
+            mat[i, j] = mat[j, i] = 0.0 if rho is None else float(rho)
     return mat
 
 
 def paf_loadings(corr: np.ndarray) -> np.ndarray:
     n = corr.shape[0]
+    if n == 0:
+        return np.array([])
     h2 = np.array([
         max((abs(corr[i, j]) for j in range(n) if j != i), default=0.0)
         for i in range(n)
@@ -563,6 +645,8 @@ def paf_loadings(corr: np.ndarray) -> np.ndarray:
 
 
 def pc1_loadings(corr: np.ndarray) -> np.ndarray:
+    if corr.size == 0:
+        return np.array([])
     evals, evecs = np.linalg.eigh(corr)
     idx = int(np.argmax(evals))
     vec = evecs[:, idx]
@@ -571,7 +655,27 @@ def pc1_loadings(corr: np.ndarray) -> np.ndarray:
     return vec * math.sqrt(max(float(evals[idx]), 0.0))
 
 
-def family_weights(lambdas: dict[str, float]) -> tuple[dict[str, float], dict[str, float]]:
+def reliability_weight(lam: float) -> float:
+    # intentional reliability weighting; NOT Gaussian one-factor posterior
+    clipped = min(max(abs(lam), 0.05), 0.95)
+    return (clipped ** 2) / (1.0 - clipped ** 2)
+
+
+def reliability_q(zs: list[float], lams: list[float]) -> float:
+    '''q = Σ w z / (1 + Σ w) with w = λ² / (1 − λ²).'''
+    num = 0.0
+    w_present = 0.0
+    for z, lam in zip(zs, lams):
+        w = reliability_weight(lam)
+        sign = 1.0 if lam >= 0 else -1.0
+        num += w * sign * z
+        w_present += w
+    return num / (1.0 + w_present)
+
+
+def family_weights(
+    lambdas: dict[str, float],
+) -> tuple[dict[str, float], dict[str, float]]:
     weights = {}
     signs = {}
     for name, lam in lambdas.items():
@@ -580,126 +684,78 @@ def family_weights(lambdas: dict[str, float]) -> tuple[dict[str, float], dict[st
             weights[name] = abs(raw)
             signs[name] = 1.0 if raw >= 0 else -1.0
             continue
-        clipped = min(max(abs(lam), 0.05), 0.95)
-        weights[name] = (clipped ** 2) / (1.0 - clipped ** 2)
+        weights[name] = reliability_weight(lam)
         signs[name] = 1.0 if lam >= 0 else -1.0
     return weights, signs
 
 
 def posterior(
     family_z: dict[str, dict[str, float]],
-    family_mult: dict[str, dict[str, float]],
+    family_cov: dict[str, dict[str, float]],
     weights: dict[str, float],
     signs: dict[str, float],
     keys: list[str],
     families: list[str],
 ) -> tuple[dict[str, float], dict[str, float]]:
     q_hat, conf = {}, {}
+    w_full = sum(weights.get(family, 0.0) for family in families)
     for key in keys:
         num = 0.0
-        den = 0.0
+        w_present = 0.0
+        w_used = 0.0
         for family in families:
             z = family_z.get(family, {}).get(key)
             if z is None:
                 continue
             sign = signs.get(family, 1.0)
-            w = weights[family] * family_mult.get(family, {}).get(key, 1.0)
+            w = weights[family]
             num += w * sign * z
-            if sign > 0:
-                den += w
-        if den <= 0:
+            w_present += w
+            coverage = family_cov.get(family, {}).get(key, 1.0)
+            w_used += w * coverage
+        if w_present <= 0:
             q_hat[key] = 0.0
             conf[key] = 0.0
         else:
-            q_hat[key] = num / (1.0 + den)
-            conf[key] = den / (1.0 + den)
+            q_hat[key] = num / (1.0 + w_present)
+            conf[key] = min(1.0, w_used / w_full) if w_full else 0.0
     return q_hat, conf
 
 
-def salvage_pm(row: dict) -> float | None:
-    contrib = as_float(row.get('contribution'))
-    if contrib is not None:
-        return 1.0 if contrib >= SALVAGE_CONTRIB_ACCEPT else -1.0
-    nums = [
-        as_float(row.get(field))
-        for field in ('soundness', 'presentation', 'contribution')
-    ]
-    present = [value for value in nums if value is not None]
-    if not present:
+def vote_pm(row: dict | None, spec: dict) -> float | None:
+    if not usable_row(row) or row.get('salvage'):
         return None
-    return 1.0 if mean(present) >= SALVAGE_CONTRIB_ACCEPT else -1.0
-
-
-def salvage_decision(row: dict | None) -> str | None:
-    if not row or not row.get('salvage'):
-        return None
-    pm = salvage_pm(row)
-    if pm is None:
-        return None
-    return 'Accept' if pm > 0 else 'Reject'
-
-
-def value_medians(
-    tables: dict[str, dict[str, dict]],
-    papers: dict[str, dict],
-) -> dict[str, float]:
-    out = {}
-    for model, spec in MODELS.items():
-        if spec['kind'] != 'abstract' or spec.get('has_decision'):
-            continue
-        if spec['family'] in IMPACT_FAMILIES:
-            continue
-        vals = []
-        for key, row in tables[model].items():
-            if key not in papers or not usable_row(row):
-                continue
-            value = as_float(row.get(spec['value']))
-            if value is not None:
-                vals.append(value)
-        if vals:
-            vals.sort()
-            out[model] = vals[len(vals) // 2]
-    return out
-
-
-def vote_pm(
-    row: dict | None,
-    spec: dict,
-    medians: dict[str, float],
-    model: str,
-) -> float | None:
-    if not usable_row(row):
-        return None
-    pm = decision_pm(row, spec)
-    if pm is not None:
-        return pm
-    if row.get('salvage'):
-        return salvage_pm(row)
     if spec['kind'] == 'abstract' and not spec.get('has_decision'):
-        value = as_float(row.get(spec['value']))
-        thresh = medians.get(model)
-        if value is None or thresh is None:
-            return None
-        return 1.0 if value >= thresh else -1.0
-    return None
+        return None
+    return decision_pm(row, spec)
+
+
+def family_paper_vote(
+    tables: dict[str, dict[str, dict]],
+    models: list[str],
+    key: str,
+) -> float | None:
+    votes = []
+    for model in models:
+        pm = vote_pm(tables[model].get(key), MODELS[model])
+        if pm is not None:
+            votes.append(1.0 if pm > 0 else 0.0)
+    return mean(votes) if votes else None
 
 
 def family_vote_rates(
     tables: dict[str, dict[str, dict]],
     keys: list[str],
-    medians: dict[str, float],
 ) -> dict[str, float | None]:
     members = family_members()
     rates = {}
     for family, models in members.items():
         if family in IMPACT_FAMILIES:
             continue
-        votes = []
-        for key in keys:
-            for model in models:
-                pm = vote_pm(tables[model].get(key), MODELS[model], medians, model)
-                if pm is not None:
-                    votes.append(1.0 if pm > 0 else 0.0)
+        votes = [
+            vote for key in keys
+            if (vote := family_paper_vote(tables, models, key)) is not None
+        ]
         rates[family] = mean(votes) if votes else None
     return rates
 
@@ -707,7 +763,6 @@ def family_vote_rates(
 def accept_share(
     tables: dict[str, dict[str, dict]],
     keys: list[str],
-    medians: dict[str, float],
     allowed: set[str],
 ) -> dict[str, float | None]:
     members = family_members()
@@ -718,15 +773,10 @@ def accept_share(
         for family, models in members.items():
             if family in IMPACT_FAMILIES or family not in allowed:
                 continue
-            votes = []
-            for model in models:
-                pm = vote_pm(tables[model].get(key), MODELS[model], medians, model)
-                if pm is None:
-                    continue
-                votes.append(1.0 if pm > 0 else 0.0)
-            if not votes:
+            vote = family_paper_vote(tables, models, key)
+            if vote is None:
                 continue
-            num += mean(votes)
+            num += vote
             den += 1.0
         shares[key] = (num / den) if den else None
     return shares
@@ -771,8 +821,10 @@ def calibrate(
     )
     if not result.success:
         print(f'[warn] calibration did not converge: {result.message}', flush=True)
-        return 1.0, 0.0
     a, b = (float(x) for x in result.x)
+    if not (math.isfinite(a) and math.isfinite(b)):
+        print('[warn] calibration produced non-finite parameters; using a=1 b=0', flush=True)
+        return 1.0, 0.0
     return a, b
 
 
@@ -850,29 +902,30 @@ def unparsed_bias(
     for model, spec in MODELS.items():
         if spec['kind'] != 'reviewer':
             continue
-        parsed, unparsed = [], []
+        parsed, unparsed, salvaged = [], [], []
         for key in papers:
             row = tables[model].get(key) or {}
             z = consensus.get(key)
             if z is None:
                 continue
             error = str(row.get('error') or '')
-            if error.startswith('unparsed'):
+            if row.get('salvage'):
+                salvaged.append(z)
+            elif error.startswith('unparsed'):
                 unparsed.append(z)
             elif as_float(row.get('rating')) is not None:
                 parsed.append(z)
-        rows.append((
-            spec['label'],
-            'parsed',
-            len(parsed),
-            mean(parsed) if parsed else None,
-        ))
-        rows.append((
-            spec['label'],
-            'unparsed',
-            len(unparsed),
-            mean(unparsed) if unparsed else None,
-        ))
+        for kind, nums in (
+            ('parsed', parsed),
+            ('salvage', salvaged),
+            ('unparsed', unparsed),
+        ):
+            rows.append((
+                spec['label'],
+                kind,
+                len(nums),
+                mean(nums) if nums else None,
+            ))
     return rows
 
 
@@ -951,8 +1004,9 @@ def aggregate(
     if tables is None:
         progress(1, 7, f'load {len(keys)} papers')
         tables = load_tables()
-        progress(2, 7, 'salvage unparsed S/P/C')
+        progress(2, 7, 'salvage unparsed S/P/C + cycle reviews')
         salvage = salvage_unparsed(tables)
+        enrich_cycle_reviews(tables)
     else:
         progress(1, 7, f'reuse {len(keys)} papers / tables')
         progress(2, 7, f'salvage counts {salvage or {}}')
@@ -966,28 +1020,39 @@ def aggregate(
     model_names = [name for name, zs in model_z.items() if zs]
     model_corr = corr_matrix(model_z, model_names)
     progress(5, 7, f'PAF on {len(quality_names)} quality families')
-    corr = corr_matrix(family_z, quality_names)
-    paf = paf_loadings(corr)
-    pca = pc1_loadings(corr)
-    lambdas = {name: float(paf[i]) for i, name in enumerate(quality_names)}
-    pc1 = {name: float(pca[i]) for i, name in enumerate(quality_names)}
-    weights, signs = family_weights(lambdas)
-    q_hat, conf = posterior(
-        family_z, extra['family_w'], weights, signs, keys, quality_names,
-    )
-    impact = family_z.get('citation', {})
-    progress(6, 7, 'calibrate accept threshold')
-    medians = value_medians(tables, paper_index)
-    rates = family_vote_rates(tables, keys, medians)
-    allowed = {
-        family for family, rate in rates.items()
-        if rate is not None and CAL_VOTE_RANGE[0] <= rate <= CAL_VOTE_RANGE[1]
-    }
-    if not allowed:
-        allowed = {family for family, rate in rates.items() if rate is not None}
-        print('[warn] CAL_VOTE_RANGE excluded every family; using all', flush=True)
-    shares = accept_share(tables, keys, medians, allowed)
-    a, b = calibrate(q_hat, conf, shares)
+    if not quality_names:
+        print('[warn] no quality families; scores are None / WATCH', flush=True)
+        empty = {key: 0.0 for key in keys}
+        q_hat, conf = empty, empty
+        lambdas, weights, pc1 = {}, {}, {}
+        corr = np.eye(0)
+        impact = family_z.get('citation', {})
+        a, b = 1.0, 0.0
+        rates = family_vote_rates(tables, keys)
+        allowed: set[str] = set()
+        progress(6, 7, 'skip calibrate (no quality families)')
+    else:
+        corr = corr_matrix(family_z, quality_names)
+        paf = paf_loadings(corr)
+        pca = pc1_loadings(corr)
+        lambdas = {name: float(paf[i]) for i, name in enumerate(quality_names)}
+        pc1 = {name: float(pca[i]) for i, name in enumerate(quality_names)}
+        weights, signs = family_weights(lambdas)
+        q_hat, conf = posterior(
+            family_z, extra['family_cov'], weights, signs, keys, quality_names,
+        )
+        impact = family_z.get('citation', {})
+        progress(6, 7, 'calibrate accept threshold')
+        rates = family_vote_rates(tables, keys)
+        allowed = {
+            family for family, rate in rates.items()
+            if rate is not None and CAL_VOTE_RANGE[0] < rate < CAL_VOTE_RANGE[1]
+        }
+        if not allowed:
+            allowed = {family for family, rate in rates.items() if rate is not None}
+            print('[warn] CAL_VOTE_RANGE excluded every family; using all', flush=True)
+        shares = accept_share(tables, keys, allowed)
+        a, b = calibrate(q_hat, conf, shares)
     pct = percentile_of(q_hat)
     rows = {}
     verdicts: dict[str, int] = defaultdict(int)
@@ -1074,7 +1139,10 @@ def report_lines(diag: dict) -> list[str]:
         'reviewer votes, not this score. '
         f'VERDICT: DROP if score < {DROP_BELOW} and conf >= {MIN_CONF} and '
         f'impact_z < {HIGH_IMPACT}; WATCH if missing impact, conf < {MIN_CONF}, '
-        f'or |score| <= {WATCH_ABS}; else KEEP.',
+        f'|score| <= {WATCH_ABS}, or score < {DROP_BELOW} with impact_z >= {HIGH_IMPACT}; '
+        'else KEEP. `final_conf` is coverage `Σ w_used / Σ w_full` '
+        '(no prior +1). A present family keeps mass 1.0 in q; missingness '
+        'only lowers coverage.',
         '',
         f'Calibration `sigmoid({fmt(diag["calibrate_a"])} q + {fmt(diag["calibrate_b"])})`; '
         f'share of papers with final_score > 0: `{fmt(diag["pos_share"])}`. '
@@ -1084,6 +1152,7 @@ def report_lines(diag: dict) -> list[str]:
         + ', '.join(
             f'{FAMILY_LABELS.get(name, name)} {fmt(rate)}'
             for name, rate in sorted((diag.get('family_accept') or {}).items())
+            if rate is not None
         )
         + f'. In target: `{diag.get("cal_families")}`.',
         '',
@@ -1097,12 +1166,13 @@ def report_lines(diag: dict) -> list[str]:
         )
     lines += [
         '',
-        '| model | LOFO rho vs other families | salvage |',
-        '|---|---:|---:|',
+        '| model | LOFO | vs | salvage |',
+        '|---|---:|---|---:|',
     ]
     for model, spec in MODELS.items():
+        vs = 'sibling' if spec['family'] in IMPACT_FAMILIES else 'other families'
         lines.append(
-            f'| {spec["label"]} | {fmt(diag["model_lofo"].get(model))} | '
+            f'| {spec["label"]} | {fmt(diag["model_lofo"].get(model))} | {vs} | '
             f'{diag["salvage"].get(model, 0)} |'
         )
     lines += [

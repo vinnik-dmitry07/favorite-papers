@@ -70,6 +70,23 @@ def is_score_row(row: dict) -> bool:
         return True
     return row.get('rating') is not None or bool(row.get('decision'))
 
+
+def last_valid_by_key(rows: list[dict], key_field: str = 'key') -> list[dict]:
+    '''Same logical key: scan in order, ignore malformed, keep latest valid.'''
+    latest: dict[str, dict] = {}
+    valid: dict[str, dict] = {}
+    for row in rows:
+        key = row.get(key_field)
+        if not key:
+            continue
+        latest[key] = row
+        if is_score_row(row):
+            valid[key] = row
+    out = dict(latest)
+    out.update(valid)
+    return list(out.values())
+
+
 SCORE_FILES = {
     'naipv2': 'scores_naipv2.jsonl',
     'naipv1': 'scores_naipv1.jsonl',

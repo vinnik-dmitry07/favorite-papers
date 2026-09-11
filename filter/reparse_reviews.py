@@ -17,6 +17,7 @@ from paths import (  # noqa: E402
     REVIEWS_DIR,
     SCORE_FILES,
     is_score_row,
+    last_valid_by_key,
     read_jsonl,
     safe_key,
     write_jsonl,
@@ -38,12 +39,9 @@ def reparse_model(name: str) -> tuple[int, int, int]:
     if not old_rows:
         print(f'{name}: no scores', flush=True)
         return 0, 0, 0
-    # Resumed runs can append a key twice; the last row is the freshest.
-    last_by_key: dict[str, dict] = {}
-    for old in old_rows:
-        last_by_key[old.get('key') or id(old)] = old
-    n_dups = len(old_rows) - len(last_by_key)
-    old_rows = list(last_by_key.values())
+    merged = last_valid_by_key(old_rows)
+    n_dups = len(old_rows) - len(merged)
+    old_rows = merged
     new_rows = []
     recovered = 0
     still_bad = 0
@@ -58,6 +56,10 @@ def reparse_model(name: str) -> tuple[int, int, int]:
         raw = path.read_text(encoding='utf-8', errors='replace')
         parsed = parse_review(raw, kind='deep')
         if parsed['rating'] is None and parsed['decision'] is None:
+            if is_score_row(old):
+                new_rows.append(old)
+                kept += 1
+                continue
             new_rows.append({
                 'key': key,
                 'error': old.get('error') or 'unparsed:ok',

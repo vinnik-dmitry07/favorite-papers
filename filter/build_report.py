@@ -21,7 +21,6 @@ from aggregate import (  # noqa: E402
     aggregate,
     load_and_salvage,
     report_lines,
-    salvage_decision,
     tables_by_file,
 )
 from paths import (  # noqa: E402
@@ -31,6 +30,7 @@ from paths import (  # noqa: E402
     SCORE_FILES,
     SCORES_CSV,
     is_score_row,
+    last_valid_by_key,
     load_joined,
     read_jsonl,
     report_anchor,
@@ -54,9 +54,16 @@ CSV_FIELDS = [
     'salvage',
 ]
 
-RATING10 = [
+MEAN_RATING10 = [
     ('cr8b_rating', 'cr8b_decision'),
-    ('cr70b_rating', 'cr70b_decision'),
+    ('dr7bf_rating', 'dr7bf_decision'),
+    ('dr14b_rating', 'dr14b_decision'),
+    ('or8b_rating', 'or8b_decision'),
+    ('seae_rating', 'seae_decision'),
+]
+VOTE_RATING10 = [
+    ('cr8b_rating', 'cr8b_decision'),
+    ('dr7b_rating', 'dr7b_decision'),
     ('dr7bf_rating', 'dr7bf_decision'),
     ('dr14b_rating', 'dr14b_decision'),
     ('or8b_rating', 'or8b_decision'),
@@ -73,7 +80,7 @@ NUMERIC = [
 def by_key(name: str) -> dict[str, dict]:
     return {
         row['key']: row
-        for row in read_jsonl(ROOT / SCORE_FILES[name])
+        for row in last_valid_by_key(read_jsonl(ROOT / SCORE_FILES[name]))
         if is_score_row(row)
     }
 
@@ -261,16 +268,17 @@ def merge_row(paper: dict, tables: dict[str, dict[str, dict]]) -> dict:
         ),
         '_weak': cr8.get('weaknesses') or ore.get('weaknesses') or sea.get('weaknesses') or '',
     }
-    ratings = [row[field] for field, _ in RATING10 if row[field] is not None]
+    ratings = [row[field] for field, _ in MEAN_RATING10 if row[field] is not None]
     row['mean_rating10'] = mean(ratings) if ratings else None
     votes = []
-    for field, dec_field in RATING10:
+    for field, dec_field in VOTE_RATING10:
+        src = {
+            'cr8b_rating': cr8, 'dr7b_rating': dr7, 'dr7bf_rating': dr7f,
+            'dr14b_rating': dr14, 'or8b_rating': ore, 'seae_rating': sea,
+        }.get(field) or {}
+        if src.get('salvage'):
+            continue
         votes.append(decision_of(row[field], row[dec_field] if dec_field else None))
-    votes.append(decision_of(row['dr7b_rating'], row['dr7b_decision']))
-    for src in (cr8, cr70, dr7, dr7f, dr14, ore, sea):
-        extra = salvage_decision(src)
-        if extra:
-            votes.append(extra)
     if row['dgcbert_p'] is not None:
         votes.append('Accept' if row['dgcbert_p'] >= 0.5 else 'Reject')
     known = [vote for vote in votes if vote]
@@ -478,10 +486,14 @@ def self_agreement_section() -> list[str]:
         found = True
         seed0 = {
             row['key']: row
-            for row in read_jsonl(ROOT / SCORE_FILES[name])
+            for row in last_valid_by_key(read_jsonl(ROOT / SCORE_FILES[name]))
             if is_score_row(row)
         }
-        seed1 = {row['key']: row for row in read_jsonl(path) if is_score_row(row)}
+        seed1 = {
+            row['key']: row
+            for row in last_valid_by_key(read_jsonl(path))
+            if is_score_row(row)
+        }
         xs, ys, left, right = [], [], [], []
         for key, row1 in seed1.items():
             row0 = seed0.get(key)
@@ -547,7 +559,7 @@ def write_report(
         '',
         f'Intersection n={n_fast_std}. Spearman `{fmt(rho_fast_std)}`. '
         f'Accept/Reject macro-F1 `{fmt(f1_fast_std)}` (n={len(left)}). '
-        'Standard is a partial run; Fast is the column used in mean_rating10 / rank_avg.',
+        'Standard is a partial run: it counts in accepts/models, not in mean_rating10.',
     ]
     self_lines = self_agreement_section()
     if self_lines:
