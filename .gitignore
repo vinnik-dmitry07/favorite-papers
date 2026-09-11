@@ -26,11 +26,12 @@ assets/tg/
 cache/
 shots/
 
-# Paper filter pipeline intermediates (scripts + scores.csv + report.md are committed)
+# Paper filter pipeline intermediates (scripts + scores.csv + report.md + official reviews are committed)
 filter/*.jsonl
 filter/fulltext/
 filter/fulltext.zip
-filter/reviews/
+filter/reviews/*.seed1/
+filter/reviews/*.bad/
 filter/logs/
 filter/cache/
 

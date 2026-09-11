@@ -1,0 +1,57 @@
+Of course. I will use Fast Mode for quick thinking. As a professional reviewer, I will directly output a detailed evaluation of this paper. Let me think - Fast Mode means I will directly output a Summary, followed by scores for Soundness, Presentation and Contribution, then provide analysis of Strengths, Weaknesses, Suggestions, and Questions. Finally, I will output the Rating, Confidence and Decision:
+
+\boxed_review{
+## Summary:
+
+This paper introduces Latent On-Policy Self-Distillation (LOPD), a novel framework designed to enhance the learnable privileged context in on-policy self-distillation (OPSD). Unlike traditional OPSD methods that rely on hand-designed privileged artifacts, LOPD leverages a learnable composer to transform relevant experiences into continuous latent tokens, which are then used to condition a self-teacher. The student model, in turn, generates trajectories from task and interaction history, receiving dense token-level supervision at every visited prefix. A key component of LOPD is the privileged-margin objective, which ensures that the teacher maintains a verifiable log-probability advantage over the student, thereby stabilizing and regulating the learning of the latent context. The authors demonstrate that LOPD outperforms existing RLVR and OPSD methods, including OPSD, SDPO, and Skill-SD, in both agentic tool use and code generation tasks. Additionally, LOPD achieves these results with high learning efficiency, requiring less than 30% of the rollout budget of methods like GRPO and Skill-SD. Ablation studies further highlight the necessity of making the privileged context learnable for achieving these performance gains. The paper's contributions are significant, as they address the limitations of hand-designed privileged contexts and propose a more scalable and self-directed paradigm for agent evolution. However, the paper could benefit from more detailed explanations and analyses, particularly regarding the practical implementation and the theoretical underpinnings of the privileged-margin constraint.
+
+
+## Soundness:
+
+3.25
+
+
+## Presentation:
+
+2.75
+
+
+## Contribution:
+
+3.0
+
+
+## Strengths:
+
+The paper's core contributions are both novel and significant. LOPD addresses a critical limitation in existing OPSD methods by making the privileged context learnable, which allows the teacher to automatically extract task-relevant supervision signals from prior experience. This is a substantial improvement over hand-designed privileged contexts, as it enables a more scalable and self-directed paradigm for agent evolution. The authors provide a clear and logical motivation for their approach, emphasizing the need for a method that can adaptively learn the most useful experiences for supervision. The experimental results are compelling, showing that LOPD outperforms several strong baselines, including OPSD, SDPO, and Skill-SD, in both agentic tool use and code generation tasks. The method's high learning efficiency, demonstrated by its ability to achieve strong performance with less than 30% of the rollout budget of other methods, is particularly noteworthy. The ablation studies are thorough and provide direct evidence that the learnable privileged context is crucial for the observed performance gains. The paper also includes a detailed appendix with additional information, which is valuable for readers seeking a deeper understanding of the method. Overall, the paper's contributions are well-supported and represent a significant step forward in the field of on-policy self-distillation.
+
+
+## Weaknesses:
+
+Despite the paper's strengths, several aspects of the proposed method and its evaluation could be improved. One of the primary concerns is the clarity of the method's description. The introduction of the learnable composer and the privileged-margin objective, while innovative, is not sufficiently detailed. For instance, the process of transforming experiences into latent tokens is described at a high level, but the specific mechanisms of the composer, such as the architecture of the Q-Former and the initialization of the latent compressor, are not fully elaborated. This lack of detail makes it difficult to understand the inner workings of the method and to reproduce the results. Additionally, the mathematical formulations, particularly the privileged-margin constraint, could benefit from more intuitive explanations. The current description is concise but lacks the step-by-step breakdown and visual aids that would make the method more accessible to a broader audience. The practical implementation of the privileged-margin constraint is also not entirely clear. While the paper provides the update rule for the dual variable, it does not specify how the margin is enforced during training or how sensitive the method is to the choice of the margin parameter. This omission could hinder the practical application of the method and the interpretation of its performance. The experimental evaluation, while comprehensive, could be more robust. The paper reports single values for performance metrics without providing error bars or results from multiple runs with different random seeds. This lack of variability measures makes it challenging to assess the statistical significance of the observed improvements and to determine whether the results are consistent across different initializations. Furthermore, the sensitivity analysis of the margin parameter is limited to a few discrete values, and a more granular analysis would provide a better understanding of its impact on performance. The paper also lacks a detailed discussion of the computational overhead introduced by the learnable privileged context. While the method is described as efficient, the additional components, such as the dense retriever and the composer, likely increase the computational cost. A thorough analysis of the time and memory requirements, especially in comparison to existing methods, would be valuable for assessing the practical feasibility of LOPD. Finally, the paper could benefit from a more in-depth exploration of the limitations of the proposed method. For example, the potential for the learned privileged context to overfit to the training data or to become less effective in novel scenarios is not addressed. A discussion of these limitations and potential strategies for mitigating them would provide a more balanced and realistic view of the method's capabilities. These weaknesses, while not undermining the overall significance of the paper, do highlight areas where the method and its evaluation could be strengthened.
+
+
+## Suggestions:
+
+To address the identified weaknesses, I recommend several concrete and actionable improvements. First, the paper should provide a more detailed and step-by-step explanation of the Latent On-Policy Self-Distillation (LOPD) method. Specifically, the process of transforming experiences into latent tokens should be elaborated, including the specific mechanisms of the composer and the architecture of the Q-Former. A concrete example, perhaps with a simplified scenario, would greatly enhance the reader's understanding of how the method operates in practice. The mathematical formulations, particularly the privileged-margin constraint, should be accompanied by more intuitive explanations and visual aids, such as diagrams, to illustrate the flow of information and the interaction between the student and teacher models. Second, the paper should include a more thorough analysis of the practical implementation of the privileged-margin constraint. This should involve specifying how the margin is enforced during training, how sensitive the method is to the choice of the margin parameter, and the potential trade-offs between the margin size and the learning efficiency. A sensitivity analysis with a wider range of margin values would provide valuable insights into the method's robustness. Third, the experimental evaluation should be strengthened by reporting error bars or results from multiple runs with different random seeds. This would allow for a more robust assessment of the method's performance and the statistical significance of the observed improvements. The paper should also include a detailed analysis of the computational overhead introduced by the learnable privileged context. This should involve a breakdown of the time and memory requirements for each component, such as the dense retriever and the composer, and a comparison with existing methods. Additionally, the paper should explore the potential for optimizing the implementation to reduce the computational cost. Fourth, the paper should delve deeper into the limitations of the proposed method. This should include a discussion of the potential for the learned privileged context to overfit to the training data or to become less effective in novel scenarios. The paper should also explore the sensitivity of the method to the quality of the initial experiences used to train the composer. A more comprehensive analysis of these limitations would provide a more balanced and realistic view of the method's capabilities and guide future research in this area. Finally, the paper should provide a more detailed comparison with existing OPSD methods, focusing on the specific differences in the learned privileged context and the resulting policy behavior. This would help to clarify the unique contributions of LOPD and its advantages over other approaches.
+
+
+## Questions:
+
+1. Could the authors provide a more detailed explanation of the learnable composer, including its architecture and the specific mechanisms by which it transforms experiences into latent tokens? How does the composer handle variable-length input sequences, and what is the role of the Q-Former in this process? 2. How is the privileged-margin constraint practically implemented during training? Could the authors provide a step-by-step breakdown of the optimization process and discuss the sensitivity of the method to the choice of the margin parameter? What are the potential trade-offs between the margin size and the learning efficiency? 3. Could the authors report error bars or results from multiple runs with different random seeds to provide a more robust assessment of the method's performance? How do the results vary across different initializations, and what is the statistical significance of the observed improvements? 4. What is the computational overhead introduced by the learnable privileged context, and how does it compare to existing methods? Could the authors provide a detailed analysis of the time and memory requirements for each component, such as the dense retriever and the composer, and explore potential optimizations to reduce the computational cost? 5. How does the learned privileged context in LOPD differ from the hand-designed privileged contexts used in other OPSD methods? Could the authors provide a more detailed comparison of the specific content of the learned context and its impact on the resulting policy behavior? 6. What are the potential limitations of the proposed method, particularly in terms of overfitting to the training data or becoming less effective in novel scenarios? How sensitive is the method to the quality of the initial experiences used to train the composer, and what strategies could be employed to mitigate these limitations?
+
+
+## Rating:
+
+6.5
+
+
+## Confidence:
+
+3.0
+
+
+## Decision:
+
+Accept
+}

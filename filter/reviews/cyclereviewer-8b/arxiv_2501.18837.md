@@ -1,0 +1,219 @@
+## Reviewer
+
+### Summary
+
+This paper introduces Constitutional Classifiers, a framework that trains classifier safeguards using explicit constitutional rules. The approach involves generating synthetic training examples based on a constitution that delineates categories of permissible and restricted content. The classifiers are fine-tuned LLMs that are trained on synthetic data and can detect and block harmful content. The paper also discusses the importance of practical deployment viability, flexibility, and robustness to universal jailbreaks. The authors conduct extensive human red teaming and automated evaluations to demonstrate the effectiveness of Constitutional Classifiers in defending against universal jailbreaks while maintaining practical deployment viability.
+
+### Soundness
+
+3 good
+
+### Presentation
+
+3 good
+
+### Contribution
+
+3 good
+
+### Strengths
+
+The paper is well-written and easy to follow. The authors have provided detailed explanations of their approach, methodology, and results. The paper is well-structured and organized, making it easy to understand the context and significance of the research.
+
+The paper introduces a novel approach to defending against universal jailbreaks using Constitutional Classifiers. The approach is based on a constitution that delineates categories of permissible and restricted content, which guides the generation of synthetic training examples. The classifiers are fine-tuned LLMs that are trained on synthetic data and can detect and block harmful content. The paper also discusses the importance of practical deployment viability, flexibility, and robustness to universal jailbreaks.
+
+The paper conducts extensive human red teaming and automated evaluations to demonstrate the effectiveness of Constitutional Classifiers in defending against universal jailbreaks while maintaining practical deployment viability. The results show that Constitutional Classifiers can effectively defend against universal jailbreaks and maintain practical deployment viability.
+
+### Weaknesses
+
+The paper does not provide a detailed discussion of the limitations of Constitutional Classifiers. While the paper mentions that the approach is not foolproof and that vulnerabilities may still exist, it does not provide a detailed analysis of the potential limitations and weaknesses of the approach.
+
+The paper does not provide a detailed discussion of the potential risks and challenges associated with deploying Constitutional Classifiers in real-world scenarios. While the paper mentions that the approach is designed to be practical and flexible, it does not provide a detailed analysis of the potential risks and challenges associated with deploying the approach in real-world scenarios.
+
+The paper does not provide a detailed discussion of the potential impact of Constitutional Classifiers on the development of LLMs. While the paper mentions that the approach is designed to be practical and flexible, it does not provide a detailed analysis of the potential impact of the approach on the development of LLMs.
+
+### Questions
+
+I have the following questions regarding the paper:
+
+1. Can you provide a more detailed discussion of the limitations of Constitutional Classifiers? What are the potential weaknesses of the approach, and how can they be addressed?
+2. Can you provide a more detailed discussion of the potential risks and challenges associated with deploying Constitutional Classifiers in real-world scenarios? What are the potential risks and challenges, and how can they be mitigated?
+3. Can you provide a more detailed discussion of the potential impact of Constitutional Classifiers on the development of LLMs? What are the potential implications of the approach, and how can they be addressed?
+4. Can you provide more details on the synthetic data generation process? How is the synthetic data generated, and what are the potential limitations of the approach?
+5. Can you provide more details on the classifier training process? How are the classifiers trained, and what are the potential limitations of the approach?
+6. Can you provide more details on the evaluation methodology? How are the evaluations conducted, and what are the potential limitations of the approach?
+7. Can you provide more details on the results of the evaluations? What are the results, and what do they indicate about the effectiveness of Constitutional Classifiers?
+
+### Flag For Ethics Review
+
+No ethics review needed.
+
+### Rating
+
+6: marginally above the acceptance threshold
+
+### Confidence
+
+3: You are fairly confident in your assessment. It is possible that you did not understand some parts of the submission or that you are unfamiliar with some pieces of related work. Math/other details were not carefully checked.
+
+**********
+
+## Reviewer
+
+### Summary
+
+This paper presents a method for defending against jailbreaks by training a classifier to detect harmful content. The classifier is trained on a dataset of synthetic data generated by prompting LLMs with natural language rules (i.e., a constitution) specifying permitted and restricted content. The paper evaluates the method through human red teaming and automated evaluations, showing that it is effective in defending against universal jailbreaks while maintaining practical deployment viability.
+
+### Soundness
+
+3 good
+
+### Presentation
+
+3 good
+
+### Contribution
+
+3 good
+
+### Strengths
+
+The paper presents a novel approach for defending against jailbreaks by training a classifier to detect harmful content. The paper also evaluates the method through human red teaming and automated evaluations, showing that it is effective in defending against universal jailbreaks while maintaining practical deployment viability.
+
+### Weaknesses
+
+The paper could be improved by providing more details on the synthetic data generation process and the classifier training process. Additionally, the paper could benefit from a more detailed discussion of the limitations of the proposed method and potential future research directions.
+
+### Questions
+
+1. How was the synthetic data generated, and what are the potential limitations of the approach?
+2. How are the classifiers trained, and what are the potential limitations of the approach?
+3. What are the limitations of the proposed method, and what are potential future research directions?
+
+### Flag For Ethics Review
+
+No ethics review needed.
+
+### Rating
+
+6: marginally above the acceptance threshold
+
+### Confidence
+
+3: You are fairly confident in your assessment. It is possible that you did not understand some parts of the submission or that you are unfamiliar with some pieces of related work. Math/other details were not carefully checked.
+
+**********
+
+## Reviewer
+
+### Summary
+
+The paper proposes a method to defend against jailbreaks by training a classifier to detect harmful content. The classifier is trained on a dataset of synthetic data generated by prompting LLMs with natural language rules (i.e., a constitution) specifying permitted and restricted content. The paper evaluates the method through human red teaming and automated evaluations, showing that it is effective in defending against universal jailbreaks while maintaining practical deployment viability.
+
+### Soundness
+
+3 good
+
+### Presentation
+
+3 good
+
+### Contribution
+
+3 good
+
+### Strengths
+
+The paper presents a novel approach for defending against jailbreaks by training a classifier to detect harmful content. The paper also evaluates the method through human red teaming and automated evaluations, showing that it is effective in defending against universal jailbreaks while maintaining practical deployment viability.
+
+### Weaknesses
+
+The paper could be improved by providing more details on the synthetic data generation process and the classifier training process. Additionally, the paper could benefit from a more detailed discussion of the limitations of the proposed method and potential future research directions.
+
+### Questions
+
+1. How was the synthetic data generated, and what are the potential limitations of the approach?
+2. How are the classifiers trained, and what are the potential limitations of the approach?
+3. What are the limitations of the proposed method, and what are potential future research directions?
+
+### Flag For Ethics Review
+
+No ethics review needed.
+
+### Rating
+
+6: marginally above the acceptance threshold
+
+### Confidence
+
+3: You are fairly confident in your assessment. It is possible that you did not understand some parts of the submission or that you are unfamiliar with some pieces of related work. Math/other details were not carefully checked.
+
+**********
+
+## Reviewer
+
+### Summary
+
+The paper introduces Constitutional Classifiers, a method to defend against universal jailbreaks in LLMs. The approach involves training classifier safeguards using synthetic data generated by prompting LLMs with natural language rules (i.e., a constitution) specifying permitted and restricted content. The authors conducted extensive human red teaming and automated evaluations to demonstrate the effectiveness of Constitutional Classifiers in defending against universal jailbreaks while maintaining practical deployment viability.
+
+### Soundness
+
+3 good
+
+### Presentation
+
+3 good
+
+### Contribution
+
+3 good
+
+### Strengths
+
+The paper presents a novel approach to defending against universal jailbreaks in LLMs. The use of synthetic data generated by prompting LLMs with natural language rules (i.e., a constitution) is a creative and effective way to train classifier safeguards. The extensive human red teaming and automated evaluations demonstrate the effectiveness of Constitutional Classifiers in defending against universal jailbreaks while maintaining practical deployment viability.
+
+### Weaknesses
+
+The paper does not provide a detailed discussion of the limitations of Constitutional Classifiers. While the paper mentions that the approach is not foolproof and that vulnerabilities may still exist, it does not provide a detailed analysis of the potential limitations and weaknesses of the approach.
+
+### Questions
+
+1. How does the Constitutional Classifiers approach compare to other methods for defending against universal jailbreaks in LLMs?
+2. What are the potential limitations of the Constitutional Classifiers approach, and how can they be addressed?
+3. How can the Constitutional Classifiers approach be adapted to defend against other types of attacks on LLMs, such as adversarial attacks?
+
+### Flag For Ethics Review
+
+No ethics review needed.
+
+### Rating
+
+6: marginally above the acceptance threshold
+
+### Confidence
+
+3: You are fairly confident in your assessment. It is possible that you did not understand some parts of the submission or that you are unfamiliar with some pieces of related work. Math/other details were not carefully checked.
+
+**********
+
+## Meta Review
+
+This paper presents a method to defend against jailbreaks by training a classifier to detect harmful content. The classifier is trained on a dataset of synthetic data generated by prompting LLMs with natural language rules (i.e., a constitution) specifying permitted and restricted content. The paper evaluates the method through human red teaming and automated evaluations, showing that it is effective in defending against universal jailbreaks while maintaining practical deployment viability.
+
+The paper received four reviews. The reviewers generally found the paper to be well-written and easy to follow, and the method to be novel and effective. However, there were some concerns raised about the limitations of the method and the potential risks and challenges associated with deploying it in real-world scenarios. The authors provided detailed responses to these concerns, and the reviewers generally found them to be satisfactory.
+
+Overall, the reviewers agreed that the paper presents a novel and effective method for defending against jailbreaks in LLMs, and that the paper is well-written and easy to follow. However, there were some concerns raised about the limitations of the method and the potential risks and challenges associated with deploying it in real-world scenarios. The authors provided detailed responses to these concerns, and the reviewers generally found them to be satisfactory.
+
+### justification_for_why_not_higher_score
+
+The paper presents a novel and effective method for defending against jailbreaks in LLMs, and the paper is well-written and easy to follow. However, there were some concerns raised about the limitations of the method and the potential risks and challenges associated with deploying it in real-world scenarios. The authors provided detailed responses to these concerns, and the reviewers generally found them to be satisfactory.
+
+### justification_for_why_not_lower_score
+
+The paper presents a novel and effective method for defending against jailbreaks in LLMs, and the paper is well-written and easy to follow. However, there were some concerns raised about the limitations of the method and the potential risks and challenges associated with deploying it in real-world scenarios. The authors provided detailed responses to these concerns, and the reviewers generally found them to be satisfactory.
+
+**********
+
+## Paper Decision
+
+Accept (poster)

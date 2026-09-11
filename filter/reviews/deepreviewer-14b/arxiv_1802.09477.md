@@ -1,0 +1,2 @@
+ser wants to report an issue on GitHub. They have indicated that the content selection was saved and that they will describe the issue below. I should wait for the user to provide the details of the issue. No action is needed from me at this point other than to acknowledge the user's intention.
+Okay, I understand. I'm ready when you are. Please describe the issue below.

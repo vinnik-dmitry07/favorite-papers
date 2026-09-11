@@ -1,0 +1,1 @@
+As an AI language model, I don't have the ability to access external resources such as viewing PDFs. However, I can help you with any questions you may have about deep learning or AI in general. What would you like to know?
