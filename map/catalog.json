@@ -56,7 +56,8 @@
       "Tomasz Trzciński"
     ],
     "date": "2025-03-19",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2501.16142",
@@ -114,6 +115,7 @@
     ],
     "date": "2024-05-20",
     "date_source": "arxiv-api",
+    "telegram": true,
     "fetched_title": "Diffusion for World Modeling: Visual Details Matter in Atari"
   },
   {
@@ -133,7 +135,8 @@
       "Ilya Zisman"
     ],
     "date": "2023-12-20",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2312.00276",
@@ -151,7 +154,8 @@
       "Jürgen Schmidhuber"
     ],
     "date": "2023-12-01",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2306.02451",
@@ -189,7 +193,8 @@
       "Marc Bellemare"
     ],
     "date": "2023-05-30",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2301.04104",
@@ -242,7 +247,8 @@
     "order": 12,
     "authors": [],
     "date": "2022-09-28",
-    "date_source": "known"
+    "date_source": "known",
+    "telegram": true
   },
   {
     "id": "arxiv:2205.07802",
@@ -443,7 +449,8 @@
       "Tom Schaul"
     ],
     "date": "2017-10-06",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:1707.06887",
@@ -461,7 +468,8 @@
       "Rémi Munos"
     ],
     "date": "2017-07-21",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:1511.06581",
@@ -480,7 +488,8 @@
       "Hado van Hasselt"
     ],
     "date": "2015-11-20",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:1511.05952",
@@ -499,7 +508,8 @@
       "David Silver"
     ],
     "date": "2015-11-18",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:1509.06461",
@@ -517,7 +527,8 @@
       "David Silver"
     ],
     "date": "2015-09-22",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2608.13040",
@@ -572,7 +583,8 @@
       "Michael Murphy"
     ],
     "date": "2026-07-08",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2607.05609",
@@ -591,7 +603,8 @@
       "Razvan Pascanu"
     ],
     "date": "2026-07-06",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2606.23740",
@@ -893,7 +906,8 @@
       "Alexander Lu"
     ],
     "date": "2026-01-28",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2601.20802",
@@ -911,7 +925,8 @@
       "Lejs Behric"
     ],
     "date": "2026-01-28",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2601.19897",
@@ -967,7 +982,8 @@
       "Xinhao Li"
     ],
     "date": "2026-01-22",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2601.14525",
@@ -985,7 +1001,8 @@
       "Yejin Choi"
     ],
     "date": "2026-01-20",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2601.11061",
@@ -1004,7 +1021,8 @@
       "Qing Li"
     ],
     "date": "2026-01-16",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "url:cameronrwolfe.substack.com/p/grpo-tricks",
@@ -1020,7 +1038,8 @@
       "Cameron R. Wolfe"
     ],
     "date": "2026-01-05",
-    "date_source": "page"
+    "date_source": "page",
+    "telegram": true
   },
   {
     "id": "arxiv:2512.02807",
@@ -1037,7 +1056,8 @@
       "Yi Yang"
     ],
     "date": "2025-12-02",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2512.00499",
@@ -1147,7 +1167,8 @@
       "Lei Ding"
     ],
     "date": "2025-10-01",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2509.25123",
@@ -1239,7 +1260,8 @@
       "Zhou Ziheng"
     ],
     "date": "2025-08-07",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2507.19457",
@@ -1277,7 +1299,8 @@
       "Xiong-Hui Chen"
     ],
     "date": "2025-07-24",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2506.13585",
@@ -1371,7 +1394,8 @@
       "Sergey Levine"
     ],
     "date": "2025-05-26",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2505.10978",
@@ -1460,7 +1484,8 @@
     "order": 78,
     "authors": [],
     "date": "2025-03-21",
-    "date_source": "known"
+    "date_source": "known",
+    "telegram": true
   },
   {
     "id": "arxiv:2503.14476",
@@ -1498,7 +1523,8 @@
       "Qiuzhi Liu"
     ],
     "date": "2025-03-04",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2503.00735",
@@ -1515,7 +1541,8 @@
       "Akira Yoshiyama"
     ],
     "date": "2025-03-02",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2402.13669",
@@ -1610,7 +1637,8 @@
       "Maximilian Golub"
     ],
     "date": "2026-08-04",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2608.00146",
@@ -1629,7 +1657,8 @@
       "Daniele Calandriello"
     ],
     "date": "2026-07-31",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2607.02303",
@@ -1645,7 +1674,8 @@
       "Wanyun Cui"
     ],
     "date": "2026-07-02",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2606.06574",
@@ -1663,7 +1693,8 @@
       "Tianyi Zhou"
     ],
     "date": "2026-06-04",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2605.22863",
@@ -1700,7 +1731,8 @@
       "Ruonan Yu"
     ],
     "date": "2026-04-09",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2603.05454",
@@ -1776,7 +1808,8 @@
       "Ilya Philippov"
     ],
     "date": "2025-12-16",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2512.13961",
@@ -1795,7 +1828,8 @@
       "Bailey Kuehl"
     ],
     "date": "2025-12-15",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2512.15745",
@@ -1872,7 +1906,8 @@
       "Jichao Yan"
     ],
     "date": "2025-10-03",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2507.10524",
@@ -1891,7 +1926,8 @@
       "Sungnyun Kim"
     ],
     "date": "2025-07-14",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "url:pub.sakana.ai/ctm",
@@ -1911,6 +1947,7 @@
     ],
     "date": "2025-05-08",
     "date_source": "arxiv-api",
+    "telegram": true,
     "fetched_title": "Continuous Thought Machines"
   },
   {
@@ -2024,6 +2061,7 @@
     ],
     "date": "2024-12-11",
     "date_source": "arxiv-api",
+    "telegram": true,
     "fetched_title": "Large Concept Models: Language Modeling in a Sentence Representation Space"
   },
   {
@@ -2063,7 +2101,8 @@
       "Nikolai Gerasimenko"
     ],
     "date": "2024-05-19",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2405.04517",
@@ -2082,7 +2121,8 @@
       "Andreas Auer"
     ],
     "date": "2024-05-07",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2404.09173",
@@ -2101,7 +2141,8 @@
       "Khe Chai Sim"
     ],
     "date": "2024-04-14",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2404.07143",
@@ -2119,7 +2160,8 @@
       "Siddharth Gopal"
     ],
     "date": "2024-04-10",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2311.06242",
@@ -2158,6 +2200,7 @@
     ],
     "date": "2023-08-24",
     "date_source": "arxiv-api",
+    "telegram": true,
     "fetched_title": "Code Llama: Open Foundation Models for Code"
   },
   {
@@ -2176,7 +2219,8 @@
       "Thomas Hofmann"
     ],
     "date": "2023-06-23",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "url:google-research.github.io/seanet/audiopalm/examples",
@@ -2215,7 +2259,8 @@
       "Matthew R. Gormley"
     ],
     "date": "2023-05-02",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2302.14045",
@@ -2291,7 +2336,8 @@
       "Tim Genewein"
     ],
     "date": "2022-07-05",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2203.08913",
@@ -2310,7 +2356,8 @@
       "Christian Szegedy"
     ],
     "date": "2022-03-16",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "url:people.idsia.ch/~juergen/most-cited-neural-nets.html",
@@ -2392,7 +2439,8 @@
       "Kangwook Lee"
     ],
     "date": "2026-06-30",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2606.25010",
@@ -2412,7 +2460,8 @@
       "Andrew Gordon Wilson"
     ],
     "date": "2026-06-23",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2606.03982",
@@ -2469,7 +2518,8 @@
       "Pablo Samuel Castro"
     ],
     "date": "2026-04-13",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2604.01754",
@@ -2595,7 +2645,8 @@
       "Xiaoyi Dong"
     ],
     "date": "2025-09-24",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2508.02513",
@@ -2632,7 +2683,8 @@
       "Rui Xin"
     ],
     "date": "2025-06-12",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "url:safe-lip-9a8.notion.site/incorrect-baseline-evaluations-call-into-question-recent-llm-rl-claims-2012f1fbf0ee8094ab8ded1953c15a37",
@@ -2646,7 +2698,8 @@
     "order": 142,
     "authors": [],
     "date": "2025-05-29",
-    "date_source": "known"
+    "date_source": "known",
+    "telegram": true
   },
   {
     "id": "arxiv:2505.21493",
@@ -2664,7 +2717,8 @@
       "Anya Sims"
     ],
     "date": "2025-05-27",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2505.21444",
@@ -2682,7 +2736,8 @@
       "Ruslan Salakhutdinov"
     ],
     "date": "2025-05-27",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2505.15134",
@@ -2700,7 +2755,8 @@
       "Lifan Yuan"
     ],
     "date": "2025-05-21",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2505.13763",
@@ -2736,7 +2792,8 @@
       "Zhiyuan Zeng"
     ],
     "date": "2025-04-29",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2503.21676",
@@ -2792,7 +2849,8 @@
       "John Kirchenbauer"
     ],
     "date": "2025-02-07",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2502.06807",
@@ -2811,7 +2869,8 @@
       "Alexander Wei"
     ],
     "date": "2025-02-03",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2502.00873",
@@ -2847,7 +2906,8 @@
       "Ning Shang"
     ],
     "date": "2025-01-08",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2412.14135",
@@ -2866,7 +2926,8 @@
       "Bo Wang"
     ],
     "date": "2024-12-18",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2412.06769",
@@ -2885,7 +2946,8 @@
       "Xian Li"
     ],
     "date": "2024-12-09",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2410.21272",
@@ -2921,7 +2983,8 @@
       "Yuanzhi Li"
     ],
     "date": "2023-05-23",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2407.20311",
@@ -3024,7 +3087,8 @@
     "order": 163,
     "authors": [],
     "date": null,
-    "date_source": null
+    "date_source": null,
+    "telegram": true
   },
   {
     "id": "arxiv:2406.11813",
@@ -3062,7 +3126,8 @@
       "Anat Kleiman"
     ],
     "date": "2024-06-17",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2406.03689",
@@ -3118,7 +3183,8 @@
       "Yu Su"
     ],
     "date": "2024-05-23",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2405.14838",
@@ -3136,7 +3202,8 @@
       "Stuart Shieber"
     ],
     "date": "2024-05-23",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "doi:10.1038/d41586-024-01413-w",
@@ -3187,7 +3254,8 @@
       "Dipendra Misra"
     ],
     "date": "2023-12-21",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "openreview:hcQfTsVnBo",
@@ -3226,7 +3294,8 @@
       "Mikita Balesni"
     ],
     "date": "2023-09-21",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2304.15004",
@@ -3244,7 +3313,8 @@
       "Sanmi Koyejo"
     ],
     "date": "2023-04-28",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2302.00923",
@@ -3353,6 +3423,7 @@
     ],
     "date": "2022-06-21",
     "date_source": "arxiv-api",
+    "telegram": true,
     "fetched_title": "PlanBench: An Extensible Benchmark for Evaluating Large Language Models on Planning and Reasoning about Change"
   },
   {
@@ -3372,7 +3443,8 @@
       "Quoc Le"
     ],
     "date": "2022-03-21",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2608.05136",
@@ -3388,7 +3460,8 @@
       "Devender Singh"
     ],
     "date": "2026-08-05",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2607.27372",
@@ -3408,7 +3481,8 @@
       "Yilun Du"
     ],
     "date": "2026-07-29",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2601.21343",
@@ -3427,7 +3501,8 @@
       "Danwei Li"
     ],
     "date": "2026-01-29",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2512.24695",
@@ -3448,7 +3523,8 @@
       "Vahab Mirrokni"
     ],
     "date": "2025-12-31",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2510.05491",
@@ -3520,7 +3596,8 @@
       "Yao Tang"
     ],
     "date": "2025-06-09",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2505.24832",
@@ -3542,7 +3619,8 @@
       "Narine Kokhlikyan"
     ],
     "date": "2025-05-30",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2410.07041",
@@ -3559,7 +3637,8 @@
       "Julia Kempe"
     ],
     "date": "2024-10-09",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "url:iclr.cc/virtual/2025/poster/30565",
@@ -3666,7 +3745,8 @@
     "order": 198,
     "authors": [],
     "date": "2024-05-28",
-    "date_source": "known"
+    "date_source": "known",
+    "telegram": true
   },
   {
     "id": "arxiv:2405.16684",
@@ -3715,7 +3795,8 @@
     "order": 201,
     "authors": [],
     "date": "2024-05-09",
-    "date_source": "url"
+    "date_source": "url",
+    "telegram": true
   },
   {
     "id": "arxiv:2403.05175",
@@ -3847,6 +3928,7 @@
     ],
     "date": "2023-06-23",
     "date_source": "arxiv-api",
+    "telegram": true,
     "fetched_title": "Maintaining Plasticity in Deep Continual Learning"
   },
   {
@@ -3885,7 +3967,8 @@
       "Esteban Real"
     ],
     "date": "2023-02-13",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2212.14034",
@@ -3920,7 +4003,8 @@
       "Jacob Hilton"
     ],
     "date": "2022-10-19",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2110.09485",
@@ -4014,7 +4098,8 @@
       "Ben Poole"
     ],
     "date": "2020-09-23",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2001.08361",
@@ -4033,7 +4118,8 @@
       "Tom B. Brown"
     ],
     "date": "2020-01-23",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "url:openai.com/index/deep-double-descent",
@@ -4097,7 +4183,8 @@
       "Michael Carbin"
     ],
     "date": "2018-03-09",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "openreview:ry_WPG-A-",
@@ -4197,7 +4284,8 @@
       "Morgan Levine"
     ],
     "date": "2026-06-01",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2605.26379",
@@ -4215,7 +4303,8 @@
       "Randall Balestriero"
     ],
     "date": "2026-05-25",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2604.09168",
@@ -4234,7 +4323,8 @@
       "Prateek Jain"
     ],
     "date": "2026-04-10",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2511.08544",
@@ -4251,7 +4341,8 @@
       "Yann LeCun"
     ],
     "date": "2025-11-11",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2501.05441",
@@ -4270,7 +4361,8 @@
       "James Tompkin"
     ],
     "date": "2025-01-09",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "url:ai.meta.com/blog/emu-text-to-video-generation-image-editing-research",
@@ -4309,7 +4401,8 @@
       "Jian Li"
     ],
     "date": "2023-10-06",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2309.15807",
@@ -4368,6 +4461,7 @@
     ],
     "date": "2023-07-13",
     "date_source": "arxiv-api",
+    "telegram": true,
     "fetched_title": "HyperDreamBooth: HyperNetworks for Fast Personalization of Text-to-Image Models"
   },
   {
@@ -4499,7 +4593,8 @@
       "Piotr Bojanowski"
     ],
     "date": "2023-01-19",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2212.11565",
@@ -4537,7 +4632,8 @@
       "Johan Bjorck"
     ],
     "date": "2022-08-22",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "openreview:BZ5a1r-kVsf",
@@ -4588,7 +4684,8 @@
       "Yann LeCun"
     ],
     "date": "2021-05-11",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2104.14294",
@@ -4663,7 +4760,8 @@
       "James Aung"
     ],
     "date": "2024-10-09",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2405.08007",
@@ -4699,7 +4797,8 @@
       "Eric Hambro"
     ],
     "date": "2024-02-26",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2402.12483",
@@ -4717,7 +4816,8 @@
       "Rachel Rudinger"
     ],
     "date": "2024-02-19",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2311.16452",
@@ -4775,7 +4875,8 @@
       "Simon Osindero"
     ],
     "date": "2023-09-28",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "acl:2023.acl-demo.51",
@@ -4789,7 +4890,8 @@
     "order": 260,
     "authors": [],
     "date": "2023-07-01",
-    "date_source": "page"
+    "date_source": "page",
+    "telegram": true
   },
   {
     "id": "arxiv:2304.08467",
@@ -4826,7 +4928,8 @@
       "David Hall"
     ],
     "date": "2022-12-28",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2212.09741",
@@ -4883,7 +4986,8 @@
       "Matthew Wallingford"
     ],
     "date": "2022-05-26",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "acl:2022.emnlp-main.340",
@@ -4942,6 +5046,7 @@
     ],
     "date": "2021-10-16",
     "date_source": "arxiv-api",
+    "telegram": true,
     "fetched_title": "PRIMERA: Pyramid-based Masked Sentence Pre-training for Multi-document Summarization"
   },
   {
@@ -4994,7 +5099,8 @@
       "Joel Lehman"
     ],
     "date": "2026-08-26",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2608.19197",
@@ -5013,7 +5119,8 @@
       "Ao Qu"
     ],
     "date": "2026-08-19",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2608.08311",
@@ -5051,7 +5158,8 @@
       "Guowei Rong"
     ],
     "date": "2026-07-14",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2605.13821",
@@ -5092,6 +5200,45 @@
     "date_source": "arxiv-api"
   },
   {
+    "id": "arxiv:2602.07755",
+    "kind": "arxiv",
+    "label": "Learning to Continually Learn via Meta-learning Agentic Memory Designs (ALMA)",
+    "title": "Learning to Continually Learn via Meta-learning Agentic Memory Designs",
+    "section": "Agents, open-endedness, AGI",
+    "urls": [
+      "https://arxiv.org/abs/2602.07755",
+      "https://github.com/zksha/alma"
+    ],
+    "order": 277,
+    "authors": [
+      "Yiming Xiong",
+      "Shengran Hu",
+      "Jeff Clune"
+    ],
+    "date": "2026-02-08",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2601.21557",
+    "kind": "arxiv",
+    "label": "Meta Context Engineering via Agentic Skill Evolution",
+    "title": "Meta Context Engineering via Agentic Skill Evolution",
+    "section": "Agents, open-endedness, AGI",
+    "urls": [
+      "https://arxiv.org/abs/2601.21557",
+      "https://github.com/metaevo-ai/meta-context-engineering"
+    ],
+    "order": 278,
+    "authors": [
+      "Haoran Ye",
+      "Xuning He",
+      "Vincent Arak",
+      "Haonan Dong"
+    ],
+    "date": "2026-01-29",
+    "date_source": "arxiv-api"
+  },
+  {
     "id": "arxiv:2601.07055",
     "kind": "arxiv",
     "label": "Dr. Zero: Self-Evolving Search Agents without Training Data",
@@ -5100,7 +5247,7 @@
     "urls": [
       "https://arxiv.org/abs/2601.07055"
     ],
-    "order": 277,
+    "order": 279,
     "authors": [
       "Zhenrui Yue",
       "Kartikeya Upasani",
@@ -5119,7 +5266,7 @@
     "urls": [
       "https://arxiv.org/abs/2601.03192"
     ],
-    "order": 278,
+    "order": 280,
     "authors": [
       "Shengtao Zhang",
       "Jiaqian Wang",
@@ -5127,6 +5274,25 @@
       "Junwei Liao"
     ],
     "date": "2026-01-06",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2512.18746",
+    "kind": "arxiv",
+    "label": "MemEvolve: Meta-Evolution of Agent Memory Systems",
+    "title": "MemEvolve: Meta-Evolution of Agent Memory Systems",
+    "section": "Agents, open-endedness, AGI",
+    "urls": [
+      "https://arxiv.org/abs/2512.18746"
+    ],
+    "order": 281,
+    "authors": [
+      "Guibin Zhang",
+      "Haotian Ren",
+      "Chong Zhan",
+      "Zhenhong Zhou"
+    ],
+    "date": "2025-12-21",
     "date_source": "arxiv-api"
   },
   {
@@ -5138,7 +5304,7 @@
     "urls": [
       "https://arxiv.org/abs/2512.18552"
     ],
-    "order": 279,
+    "order": 282,
     "authors": [
       "Yuxiang Wei",
       "Zhiqing Sun",
@@ -5157,7 +5323,7 @@
     "urls": [
       "https://arxiv.org/abs/2512.18160"
     ],
-    "order": 280,
+    "order": 283,
     "authors": [
       "Alex Wilf",
       "Pranjal Aggarwal",
@@ -5176,7 +5342,7 @@
     "urls": [
       "https://arxiv.org/abs/2511.15593"
     ],
-    "order": 281,
+    "order": 284,
     "authors": [
       "Alexis Audran-Reiss",
       "Jordi Armengol-Estapé",
@@ -5184,7 +5350,8 @@
       "Amar Budhiraja"
     ],
     "date": "2025-11-19",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "url:sakana.ai/shinka-evolve",
@@ -5195,7 +5362,7 @@
     "urls": [
       "https://sakana.ai/shinka-evolve/"
     ],
-    "order": 282,
+    "order": 285,
     "authors": [
       "Robert Tjarko Lange",
       "Yuki Imajuku",
@@ -5203,6 +5370,7 @@
     ],
     "date": "2025-09-17",
     "date_source": "arxiv-api",
+    "telegram": true,
     "fetched_title": "ShinkaEvolve: Towards Open-Ended And Sample-Efficient Program Evolution"
   },
   {
@@ -5214,7 +5382,7 @@
     "urls": [
       "https://arxiv.org/abs/2508.16204"
     ],
-    "order": 283,
+    "order": 286,
     "authors": [
       "João Abrantes",
       "Robert Tjarko Lange",
@@ -5232,7 +5400,7 @@
     "urls": [
       "https://arxiv.org/abs/2507.18074"
     ],
-    "order": 284,
+    "order": 287,
     "authors": [
       "Yixiu Liu",
       "Yang Nan",
@@ -5240,7 +5408,8 @@
       "Xiangkun Hu"
     ],
     "date": "2025-07-24",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2505.22954",
@@ -5251,14 +5420,15 @@
     "urls": [
       "https://arxiv.org/abs/2505.22954"
     ],
-    "order": 285,
+    "order": 288,
     "authors": [
       "Jenny Zhang",
       "Shengran Hu",
       "Cong Lu"
     ],
     "date": "2025-05-29",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "doi:10.21203/rs.3.rs-6688473/v1",
@@ -5269,7 +5439,7 @@
     "urls": [
       "https://doi.org/10.21203/rs.3.rs-6688473/v1"
     ],
-    "order": 286,
+    "order": 289,
     "authors": [],
     "date": null,
     "date_source": null
@@ -5283,12 +5453,31 @@
     "urls": [
       "https://arxiv.org/abs/2502.15840"
     ],
-    "order": 287,
+    "order": 290,
     "authors": [
       "Axel Backlund",
       "Lukas Petersson"
     ],
     "date": "2025-02-21",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2408.08435",
+    "kind": "arxiv",
+    "label": "Automated Design of Agentic Systems (ADAS)",
+    "title": "Automated Design of Agentic Systems",
+    "section": "Agents, open-endedness, AGI",
+    "urls": [
+      "https://arxiv.org/abs/2408.08435",
+      "https://github.com/ShengranHu/ADAS"
+    ],
+    "order": 291,
+    "authors": [
+      "Shengran Hu",
+      "Cong Lu",
+      "Jeff Clune"
+    ],
+    "date": "2024-08-15",
     "date_source": "arxiv-api"
   },
   {
@@ -5300,7 +5489,7 @@
     "urls": [
       "https://arxiv.org/abs/2407.00695"
     ],
-    "order": 288,
+    "order": 292,
     "authors": [
       "Gabriel Poesia",
       "David Broman",
@@ -5319,7 +5508,7 @@
     "urls": [
       "https://arxiv.org/abs/2406.04268"
     ],
-    "order": 289,
+    "order": 293,
     "authors": [
       "Edward Hughes",
       "Michael Dennis",
@@ -5327,7 +5516,8 @@
       "Feryal Behbahani"
     ],
     "date": "2024-06-06",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "url:research.google/blog/few-shot-tool-use-doesnt-really-work-yet",
@@ -5338,7 +5528,7 @@
     "urls": [
       "https://research.google/blog/few-shot-tool-use-doesnt-really-work-yet/"
     ],
-    "order": 290,
+    "order": 294,
     "authors": [
       "Alon Jacovi",
       "Avi Caciularu",
@@ -5358,7 +5548,7 @@
     "urls": [
       "https://openreview.net/forum?id=pOoKI3ouv1"
     ],
-    "order": 291,
+    "order": 295,
     "authors": [
       "Jonathan Richens",
       "Tom Everitt"
@@ -5376,7 +5566,7 @@
     "urls": [
       "https://doi.org/10.1038/s42256-023-00754-x"
     ],
-    "order": 292,
+    "order": 296,
     "authors": [],
     "date": null,
     "date_source": null
@@ -5390,7 +5580,7 @@
     "urls": [
       "https://arxiv.org/abs/2311.02462"
     ],
-    "order": 293,
+    "order": 297,
     "authors": [
       "Meredith Ringel Morris",
       "Jascha Sohl-Dickstein",
@@ -5409,7 +5599,7 @@
     "urls": [
       "https://arxiv.org/abs/2311.00344"
     ],
-    "order": 294,
+    "order": 298,
     "authors": [
       "Olivier Sigaud",
       "Gianluca Baldassarre",
@@ -5417,7 +5607,8 @@
       "Stephane Doncieux"
     ],
     "date": "2023-11-01",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "url:lilianweng.github.io/posts/2023-06-23-agent",
@@ -5428,7 +5619,7 @@
     "urls": [
       "https://lilianweng.github.io/posts/2023-06-23-agent/"
     ],
-    "order": 295,
+    "order": 299,
     "authors": [],
     "date": "2023-06-23",
     "date_source": "url"
@@ -5442,7 +5633,7 @@
     "urls": [
       "https://minedojo.org/"
     ],
-    "order": 296,
+    "order": 300,
     "authors": [
       "Linxi Fan",
       "Guanzhi Wang",
@@ -5462,11 +5653,31 @@
     "urls": [
       "https://arxiv.org/abs/1905.10985"
     ],
-    "order": 297,
+    "order": 301,
     "authors": [
       "Jeff Clune"
     ],
     "date": "2019-05-27",
+    "date_source": "arxiv-api"
+  },
+  {
+    "id": "arxiv:2609.01437",
+    "kind": "arxiv",
+    "label": "HarnessDev: Can LLMs Create and Evolve Their Own Agent Harness?",
+    "title": "HarnessDev: Can LLMs Create and Evolve Their Own Agent Harness?",
+    "section": "Harness",
+    "urls": [
+      "https://arxiv.org/abs/2609.01437",
+      "https://self-developing-agents.github.io/"
+    ],
+    "order": 302,
+    "authors": [
+      "Yuhao Wu",
+      "Jingyuan Zhang",
+      "Jiajun Shi",
+      "Xinping Lei"
+    ],
+    "date": "2026-09-01",
     "date_source": "arxiv-api"
   },
   {
@@ -5478,7 +5689,7 @@
     "urls": [
       "https://openai.com/index/harness-engineering/"
     ],
-    "order": 298,
+    "order": 303,
     "authors": [],
     "date": null,
     "date_source": null
@@ -5492,10 +5703,11 @@
     "urls": [
       "https://github.com/deepseek-ai/deepseek-harness"
     ],
-    "order": 299,
+    "order": 304,
     "authors": [],
     "date": "2026-08-13",
-    "date_source": "github"
+    "date_source": "github",
+    "telegram": true
   },
   {
     "id": "url:github.com/alexisfox7/rgb-agent",
@@ -5507,7 +5719,7 @@
       "https://github.com/alexisfox7/RGB-Agent",
       "https://arxiv.org/abs/2607.20064"
     ],
-    "order": 300,
+    "order": 305,
     "authors": [
       "Alexis Fox",
       "Junlin Wang",
@@ -5527,7 +5739,7 @@
     "urls": [
       "https://alexzhang13.github.io/blog/2026/harness/"
     ],
-    "order": 301,
+    "order": 306,
     "authors": [],
     "date": "2026-07-20",
     "date_source": "page"
@@ -5542,7 +5754,7 @@
       "http://schema-harness.github.io",
       "https://huggingface.co/datasets/schema-harness/arc-agi-3-schema-traces"
     ],
-    "order": 302,
+    "order": 307,
     "authors": [],
     "date": "2026-07-17",
     "date_source": "known"
@@ -5556,7 +5768,7 @@
     "urls": [
       "https://www.weco.ai/blog/first-evidence-of-recursive-self-improvement"
     ],
-    "order": 303,
+    "order": 308,
     "authors": [],
     "date": null,
     "date_source": null
@@ -5570,10 +5782,29 @@
     "urls": [
       "https://lilianweng.github.io/posts/2026-07-04-harness/"
     ],
-    "order": 304,
+    "order": 309,
     "authors": [],
     "date": "2026-07-04",
     "date_source": "url"
+  },
+  {
+    "id": "arxiv:2606.01770",
+    "kind": "arxiv",
+    "label": "Adaptive Auto-Harness: Sustained Self-Improvement for Agentic System Deployment on Open-Ended Task Streams",
+    "title": "Adaptive Auto-Harness: Sustained Self-Improvement for Agentic System Deployment on Open-Ended Task Streams",
+    "section": "Harness",
+    "urls": [
+      "https://arxiv.org/abs/2606.01770"
+    ],
+    "order": 310,
+    "authors": [
+      "Zewen Liu",
+      "Zhan Shi",
+      "Yisi Sang",
+      "Bing He"
+    ],
+    "date": "2026-06-01",
+    "date_source": "arxiv-api"
   },
   {
     "id": "url:tufalabs.ai/research/duck-harness",
@@ -5584,7 +5815,7 @@
     "urls": [
       "https://tufalabs.ai/research/duck-harness/"
     ],
-    "order": 305,
+    "order": 311,
     "authors": [],
     "date": null,
     "date_source": null
@@ -5598,10 +5829,31 @@
     "urls": [
       "https://github.com/PrimeIntellect-ai/prime-agent"
     ],
-    "order": 306,
+    "order": 312,
     "authors": [],
     "date": "2026-05-08",
-    "date_source": "github"
+    "date_source": "github",
+    "telegram": true
+  },
+  {
+    "id": "arxiv:2604.25850",
+    "kind": "arxiv",
+    "label": "Agentic Harness Engineering: Observability-Driven Automatic Evolution of Coding-Agent Harnesses",
+    "title": "Agentic Harness Engineering: Observability-Driven Automatic Evolution of Coding-Agent Harnesses",
+    "section": "Harness",
+    "urls": [
+      "https://arxiv.org/abs/2604.25850",
+      "https://github.com/china-qijizhifeng/agentic-harness-engineering"
+    ],
+    "order": 313,
+    "authors": [
+      "Jiahang Lin",
+      "Shichun Liu",
+      "Chengjun Pan",
+      "Lizhi Lin"
+    ],
+    "date": "2026-04-28",
+    "date_source": "arxiv-api"
   },
   {
     "id": "arxiv:2604.19341",
@@ -5613,7 +5865,7 @@
       "https://arxiv.org/abs/2604.19341",
       "https://haotianye.com/blog/simpletes/"
     ],
-    "order": 307,
+    "order": 314,
     "authors": [
       "Haotian Ye",
       "Haowei Lin",
@@ -5632,7 +5884,7 @@
     "urls": [
       "https://arxiv.org/abs/2604.08224"
     ],
-    "order": 308,
+    "order": 315,
     "authors": [
       "Chenyu Zhou",
       "Huacan Chai",
@@ -5640,7 +5892,8 @@
       "Zihan Guo"
     ],
     "date": "2026-04-09",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2603.28052",
@@ -5652,7 +5905,7 @@
       "https://arxiv.org/abs/2603.28052",
       "https://yoonholee.com/meta-harness/"
     ],
-    "order": 309,
+    "order": 316,
     "authors": [
       "Yoonho Lee",
       "Roshen Nair",
@@ -5660,7 +5913,8 @@
       "Kangwook Lee"
     ],
     "date": "2026-03-30",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2607.23379",
@@ -5671,7 +5925,7 @@
     "urls": [
       "https://arxiv.org/abs/2607.23379"
     ],
-    "order": 310,
+    "order": 317,
     "authors": [
       "Tobias Bersia",
       "Tatiana Gaintseva"
@@ -5688,12 +5942,13 @@
     "urls": [
       "https://arxiv.org/abs/2603.19426"
     ],
-    "order": 311,
+    "order": 318,
     "authors": [
       "Viliana Devbunova"
     ],
     "date": "2026-03-19",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "url:transformer-circuits.pub/2025/introspection",
@@ -5704,12 +5959,13 @@
     "urls": [
       "https://transformer-circuits.pub/2025/introspection/index.html"
     ],
-    "order": 312,
+    "order": 319,
     "authors": [
       "Jack Lindsey"
     ],
     "date": "2025-10-29",
-    "date_source": "known"
+    "date_source": "known",
+    "telegram": true
   },
   {
     "id": "url:anthropic.com/research/reasoning-models-dont-say-think",
@@ -5720,7 +5976,7 @@
     "urls": [
       "https://www.anthropic.com/research/reasoning-models-dont-say-think"
     ],
-    "order": 313,
+    "order": 320,
     "authors": [
       "Yanda Chen",
       "Joe Benton",
@@ -5729,6 +5985,7 @@
     ],
     "date": "2025-05-08",
     "date_source": "arxiv-api",
+    "telegram": true,
     "fetched_title": "Reasoning Models Don't Always Say What They Think"
   },
   {
@@ -5740,7 +5997,7 @@
     "urls": [
       "https://ai-2027.com/"
     ],
-    "order": 314,
+    "order": 321,
     "authors": [],
     "date": "2025-04-03",
     "date_source": "page"
@@ -5754,7 +6011,7 @@
     "urls": [
       "https://www.anthropic.com/research/tracing-thoughts-language-model"
     ],
-    "order": 315,
+    "order": 322,
     "authors": [],
     "date": "2025-03-27",
     "date_source": "known"
@@ -5768,10 +6025,11 @@
     "urls": [
       "https://transformer-circuits.pub/2025/attribution-graphs/methods.html"
     ],
-    "order": 316,
+    "order": 323,
     "authors": [],
     "date": "2025-03-27",
-    "date_source": "page"
+    "date_source": "page",
+    "telegram": true
   },
   {
     "id": "url:transformer-circuits.pub/2025/attribution-graphs/biology.html",
@@ -5782,10 +6040,11 @@
     "urls": [
       "https://transformer-circuits.pub/2025/attribution-graphs/biology.html"
     ],
-    "order": 317,
+    "order": 324,
     "authors": [],
     "date": "2025-03-27",
-    "date_source": "page"
+    "date_source": "page",
+    "telegram": true
   },
   {
     "id": "arxiv:2503.16348",
@@ -5796,7 +6055,7 @@
     "urls": [
       "https://arxiv.org/abs/2503.16348"
     ],
-    "order": 318,
+    "order": 325,
     "authors": [
       "Murray Shanahan"
     ],
@@ -5812,7 +6071,7 @@
     "urls": [
       "https://arxiv.org/abs/2502.03407"
     ],
-    "order": 319,
+    "order": 326,
     "authors": [
       "Nicholas Goldowsky-Dill",
       "Bilal Chughtai",
@@ -5831,7 +6090,7 @@
     "urls": [
       "https://arxiv.org/abs/2501.18837"
     ],
-    "order": 320,
+    "order": 327,
     "authors": [
       "Mrinank Sharma",
       "Meg Tong",
@@ -5850,7 +6109,7 @@
     "urls": [
       "https://www.alignmentforum.org/posts/NfFST5Mio7BCAQHPA/an-extremely-opinionated-annotated-list-of-my-favourite-1"
     ],
-    "order": 321,
+    "order": 328,
     "authors": [],
     "date": null,
     "date_source": null
@@ -5864,10 +6123,11 @@
     "urls": [
       "https://situational-awareness.ai"
     ],
-    "order": 322,
+    "order": 329,
     "authors": [],
     "date": null,
-    "date_source": null
+    "date_source": null,
+    "telegram": true
   },
   {
     "id": "url:anthropic.com/news/mapping-mind-language-model",
@@ -5878,10 +6138,11 @@
     "urls": [
       "https://www.anthropic.com/news/mapping-mind-language-model"
     ],
-    "order": 323,
+    "order": 330,
     "authors": [],
     "date": "2024-05-21",
-    "date_source": "known"
+    "date_source": "known",
+    "telegram": true
   },
   {
     "id": "url:openai.com/research/weak-to-strong-generalization",
@@ -5892,7 +6153,7 @@
     "urls": [
       "https://openai.com/research/weak-to-strong-generalization"
     ],
-    "order": 324,
+    "order": 331,
     "authors": [
       "Collin Burns",
       "Pavel Izmailov",
@@ -5901,6 +6162,7 @@
     ],
     "date": "2023-12-14",
     "date_source": "arxiv-api",
+    "telegram": true,
     "fetched_title": "Weak-to-Strong Generalization: Eliciting Strong Capabilities With Weak Supervision"
   },
   {
@@ -5912,7 +6174,7 @@
     "urls": [
       "https://arxiv.org/abs/2309.08600"
     ],
-    "order": 325,
+    "order": 332,
     "authors": [
       "Hoagy Cunningham",
       "Aidan Ewart",
@@ -5931,7 +6193,7 @@
     "urls": [
       "https://arxiv.org/abs/2308.08708"
     ],
-    "order": 326,
+    "order": 333,
     "authors": [
       "Patrick Butlin",
       "Robert Long",
@@ -5950,13 +6212,14 @@
     "urls": [
       "https://arxiv.org/abs/2304.06528"
     ],
-    "order": 327,
+    "order": 334,
     "authors": [
       "Victoria Krakovna",
       "Janos Kramar"
     ],
     "date": "2023-04-13",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2303.07103",
@@ -5967,12 +6230,13 @@
     "urls": [
       "https://arxiv.org/abs/2303.07103"
     ],
-    "order": 328,
+    "order": 335,
     "authors": [
       "David J. Chalmers"
     ],
     "date": "2023-03-04",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2206.13477",
@@ -5983,13 +6247,14 @@
     "urls": [
       "https://arxiv.org/abs/2206.13477"
     ],
-    "order": 329,
+    "order": 336,
     "authors": [
       "Alexander Matt Turner",
       "Prasad Tadepalli"
     ],
     "date": "2022-06-27",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2206.13353",
@@ -6000,12 +6265,13 @@
     "urls": [
       "https://arxiv.org/abs/2206.13353"
     ],
-    "order": 330,
+    "order": 337,
     "authors": [
       "Joseph Carlsmith"
     ],
     "date": "2022-06-16",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:1912.01683",
@@ -6016,7 +6282,7 @@
     "urls": [
       "https://arxiv.org/abs/1912.01683"
     ],
-    "order": 331,
+    "order": 338,
     "authors": [
       "Alexander Matt Turner",
       "Logan Smith",
@@ -6024,247 +6290,8 @@
       "Andrew Critch"
     ],
     "date": "2019-12-03",
-    "date_source": "arxiv-api"
-  },
-  {
-    "id": "url:research.google/blog/timesfm-3-a-zero-shot-foundation-model-for-multivariate-forecasting",
-    "kind": "web",
-    "label": "TimesFM-3: A zero-shot foundation model for multivariate forecasting",
-    "title": "TimesFM-3: A zero-shot foundation model for multivariate forecasting",
-    "section": "Time series",
-    "urls": [
-      "https://research.google/blog/timesfm-3-a-zero-shot-foundation-model-for-multivariate-forecasting/"
-    ],
-    "order": 332,
-    "authors": [],
-    "date": "2026-08-31",
-    "date_source": "known"
-  },
-  {
-    "id": "arxiv:2403.07815",
-    "kind": "arxiv",
-    "label": "Chronos: Learning the Language of Time Series",
-    "title": "Chronos: Learning the Language of Time Series",
-    "section": "Time series",
-    "urls": [
-      "https://arxiv.org/abs/2403.07815"
-    ],
-    "order": 333,
-    "authors": [
-      "Abdul Fatir Ansari",
-      "Lorenzo Stella",
-      "Caner Turkmen",
-      "Xiyuan Zhang"
-    ],
-    "date": "2024-03-12",
-    "date_source": "arxiv-api"
-  },
-  {
-    "id": "arxiv:2401.13912",
-    "kind": "arxiv",
-    "label": "Survey of Deep Learning and Foundation Models for TS Forecasting",
-    "title": "A Survey of Deep Learning and Foundation Models for Time Series Forecasting",
-    "section": "Time series",
-    "urls": [
-      "https://arxiv.org/abs/2401.13912"
-    ],
-    "order": 334,
-    "authors": [
-      "John A. Miller",
-      "Mohammed Aldosari",
-      "Farah Saeed",
-      "Nasid Habib Barna"
-    ],
-    "date": "2024-01-25",
-    "date_source": "arxiv-api"
-  },
-  {
-    "id": "arxiv:2310.10688",
-    "kind": "arxiv",
-    "label": "TimesFM: A decoder-only foundation model for time-series forecasting",
-    "title": "A decoder-only foundation model for time-series forecasting",
-    "section": "Time series",
-    "urls": [
-      "https://arxiv.org/abs/2310.10688"
-    ],
-    "order": 335,
-    "authors": [
-      "Abhimanyu Das",
-      "Weihao Kong",
-      "Rajat Sen",
-      "Yichen Zhou"
-    ],
-    "date": "2023-10-14",
-    "date_source": "arxiv-api"
-  },
-  {
-    "id": "arxiv:2310.08278",
-    "kind": "arxiv",
-    "label": "Lag-Llama",
-    "title": "Lag-Llama: Towards Foundation Models for Probabilistic Time Series Forecasting",
-    "section": "Time series",
-    "urls": [
-      "https://arxiv.org/abs/2310.08278"
-    ],
-    "order": 336,
-    "authors": [
-      "Kashif Rasul",
-      "Arjun Ashok",
-      "Andrew Robert Williams",
-      "Hena Ghonia"
-    ],
-    "date": "2023-10-12",
-    "date_source": "arxiv-api"
-  },
-  {
-    "id": "arxiv:2310.07820",
-    "kind": "arxiv",
-    "label": "LLMTime: LLMs Are Zero-Shot Time Series Forecasters",
-    "title": "Large Language Models Are Zero-Shot Time Series Forecasters",
-    "section": "Time series",
-    "urls": [
-      "https://arxiv.org/abs/2310.07820"
-    ],
-    "order": 337,
-    "authors": [
-      "Nate Gruver",
-      "Marc Finzi",
-      "Shikai Qiu",
-      "Andrew Gordon Wilson"
-    ],
-    "date": "2023-10-11",
-    "date_source": "arxiv-api"
-  },
-  {
-    "id": "arxiv:2310.01728",
-    "kind": "arxiv",
-    "label": "Time-LLM",
-    "title": "Time-LLM: Time Series Forecasting by Reprogramming Large Language Models",
-    "section": "Time series",
-    "urls": [
-      "https://arxiv.org/abs/2310.01728"
-    ],
-    "order": 338,
-    "authors": [
-      "Ming Jin",
-      "Shiyu Wang",
-      "Lintao Ma",
-      "Zhixuan Chu"
-    ],
-    "date": "2023-10-03",
-    "date_source": "arxiv-api"
-  },
-  {
-    "id": "arxiv:2210.08964",
-    "kind": "arxiv",
-    "label": "PromptCast",
-    "title": "PromptCast: A New Prompt-based Learning Paradigm for Time Series Forecasting",
-    "section": "Time series",
-    "urls": [
-      "https://arxiv.org/abs/2210.08964"
-    ],
-    "order": 339,
-    "authors": [
-      "Hao Xue",
-      "Flora D. Salim"
-    ],
-    "date": "2022-09-20",
-    "date_source": "arxiv-api"
-  },
-  {
-    "id": "arxiv:2012.07436",
-    "kind": "arxiv",
-    "label": "Informer",
-    "title": "Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting",
-    "section": "Time series",
-    "urls": [
-      "https://arxiv.org/abs/2012.07436"
-    ],
-    "order": 340,
-    "authors": [
-      "Haoyi Zhou",
-      "Shanghang Zhang",
-      "Jieqi Peng",
-      "Shuai Zhang"
-    ],
-    "date": "2020-12-14",
-    "date_source": "arxiv-api"
-  },
-  {
-    "id": "url:paperswithcode.com/paper/n-beats-neural-basis-expansion-analysis-for",
-    "kind": "web",
-    "label": "N-BEATS",
-    "title": "N-BEATS",
-    "section": "Time series",
-    "urls": [
-      "https://paperswithcode.com/paper/n-beats-neural-basis-expansion-analysis-for"
-    ],
-    "order": 341,
-    "authors": [
-      "Boris N. Oreshkin",
-      "Dmitri Carpov",
-      "Nicolas Chapados",
-      "Yoshua Bengio"
-    ],
-    "date": "2019-05-24",
     "date_source": "arxiv-api",
-    "fetched_title": "N-BEATS: Neural basis expansion analysis for interpretable time series forecasting"
-  },
-  {
-    "id": "url:paperswithcode.com/paper/deepar-probabilistic-forecasting-with",
-    "kind": "web",
-    "label": "DeepAR",
-    "title": "DeepAR",
-    "section": "Time series",
-    "urls": [
-      "https://paperswithcode.com/paper/deepar-probabilistic-forecasting-with"
-    ],
-    "order": 342,
-    "authors": [
-      "David Salinas",
-      "Valentin Flunkert",
-      "Jan Gasthaus"
-    ],
-    "date": "2017-04-13",
-    "date_source": "arxiv-api",
-    "fetched_title": "DeepAR: Probabilistic Forecasting with Autoregressive Recurrent Networks"
-  },
-  {
-    "id": "arxiv:1809.04356",
-    "kind": "arxiv",
-    "label": "Deep learning for time series classification: a review",
-    "title": "Deep learning for time series classification: a review",
-    "section": "Time series",
-    "urls": [
-      "https://arxiv.org/abs/1809.04356"
-    ],
-    "order": 343,
-    "authors": [
-      "Hassan Ismail Fawaz",
-      "Germain Forestier",
-      "Jonathan Weber",
-      "Lhassane Idoumghar"
-    ],
-    "date": "2018-09-12",
-    "date_source": "arxiv-api"
-  },
-  {
-    "id": "arxiv:1611.06455",
-    "kind": "arxiv",
-    "label": "Time Series Classification from Scratch (strong baseline)",
-    "title": "Time Series Classification from Scratch with Deep Neural Networks: A Strong Baseline",
-    "section": "Time series",
-    "urls": [
-      "https://arxiv.org/abs/1611.06455"
-    ],
-    "order": 344,
-    "authors": [
-      "Zhiguang Wang",
-      "Weizhong Yan",
-      "Tim Oates"
-    ],
-    "date": "2016-11-20",
-    "date_source": "arxiv-api"
+    "telegram": true
   },
   {
     "id": "arxiv:2606.08720",
@@ -6275,12 +6302,13 @@
     "urls": [
       "https://arxiv.org/abs/2606.08720"
     ],
-    "order": 345,
+    "order": 339,
     "authors": [
       "Randall C. O'Reilly"
     ],
     "date": "2026-06-07",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "url:herasight-project.webflow.io/technical-paper/cogpgt-1",
@@ -6291,7 +6319,7 @@
     "urls": [
       "https://herasight-project.webflow.io/technical-paper/cogpgt-1"
     ],
-    "order": 346,
+    "order": 340,
     "authors": [],
     "date": "2025-10-21",
     "date_source": "known"
@@ -6305,7 +6333,7 @@
     "urls": [
       "https://arxiv.org/abs/2505.17117"
     ],
-    "order": 347,
+    "order": 341,
     "authors": [
       "Chen Shani",
       "Liron Soffer",
@@ -6325,7 +6353,7 @@
       "https://www.cell.com/iscience/fulltext/S2589-0042(25)00289-5",
       "https://doi.org/10.1016/j.isci.2025.112029"
     ],
-    "order": 348,
+    "order": 342,
     "authors": [],
     "date": "2024-08-14",
     "date_source": "known"
@@ -6339,7 +6367,7 @@
     "urls": [
       "https://doi.org/10.1101/2024.02.22.581686"
     ],
-    "order": 349,
+    "order": 343,
     "authors": [],
     "date": null,
     "date_source": null
@@ -6353,7 +6381,7 @@
     "urls": [
       "https://doi.org/10.1101/2023.04.04.535512"
     ],
-    "order": 350,
+    "order": 344,
     "authors": [],
     "date": null,
     "date_source": null
@@ -6367,7 +6395,7 @@
     "urls": [
       "https://doi.org/10.1371/journal.pcbi.1011005"
     ],
-    "order": 351,
+    "order": 345,
     "authors": [],
     "date": null,
     "date_source": null
@@ -6382,10 +6410,11 @@
       "https://doi.org/10.1371/journal.pcbi.1010628",
       "https://www.biorxiv.org/content/10.1101/688622v2.full"
     ],
-    "order": 352,
+    "order": 346,
     "authors": [],
     "date": null,
-    "date_source": null
+    "date_source": null,
+    "telegram": true
   },
   {
     "id": "arxiv:2210.08340",
@@ -6396,7 +6425,7 @@
     "urls": [
       "https://arxiv.org/abs/2210.08340"
     ],
-    "order": 353,
+    "order": 347,
     "authors": [
       "Anthony Zador",
       "Sean Escola",
@@ -6415,7 +6444,7 @@
     "urls": [
       "https://arxiv.org/abs/2112.04035"
     ],
-    "order": 354,
+    "order": 348,
     "authors": [
       "James C. R. Whittington",
       "Joseph Warren",
@@ -6434,7 +6463,7 @@
       "https://arxiv.org/abs/2112.03978",
       "https://doi.org/10.1038/s41583-022-00642-0"
     ],
-    "order": 355,
+    "order": 349,
     "authors": [
       "Mikail Khona",
       "Ila R. Fiete"
@@ -6451,7 +6480,7 @@
     "urls": [
       "https://doi.org/10.1038/s41467-021-26568-2"
     ],
-    "order": 356,
+    "order": 350,
     "authors": [],
     "date": null,
     "date_source": null
@@ -6465,7 +6494,7 @@
     "urls": [
       "https://transformer-circuits.pub/2026/workspace/"
     ],
-    "order": 357,
+    "order": 351,
     "authors": [],
     "date": "2026-07-06",
     "date_source": "page"
@@ -6479,14 +6508,15 @@
     "urls": [
       "https://arxiv.org/abs/2602.14486"
     ],
-    "order": 358,
+    "order": 352,
     "authors": [
       "Fabian Gröger",
       "Shuo Wen",
       "Maria Brbić"
     ],
     "date": "2026-02-16",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2507.01098",
@@ -6497,7 +6527,7 @@
     "urls": [
       "https://arxiv.org/abs/2507.01098"
     ],
-    "order": 359,
+    "order": 353,
     "authors": [
       "Liu Ziyin",
       "Isaac Chuang"
@@ -6514,7 +6544,7 @@
     "urls": [
       "https://arxiv.org/abs/2502.15104"
     ],
-    "order": 360,
+    "order": 354,
     "authors": [
       "Chanwoo Chun",
       "Abdulkadir Canatar",
@@ -6533,7 +6563,7 @@
     "urls": [
       "https://arxiv.org/abs/2405.07987"
     ],
-    "order": 361,
+    "order": 355,
     "authors": [
       "Minyoung Huh",
       "Brian Cheung",
@@ -6541,7 +6571,8 @@
       "Phillip Isola"
     ],
     "date": "2024-05-13",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2405.01012",
@@ -6552,7 +6583,7 @@
     "urls": [
       "https://arxiv.org/abs/2405.01012"
     ],
-    "order": 362,
+    "order": 356,
     "authors": [
       "Alex Murphy",
       "Joel Zylberberg",
@@ -6570,7 +6601,7 @@
     "urls": [
       "https://arxiv.org/abs/2007.02789"
     ],
-    "order": 363,
+    "order": 357,
     "authors": [
       "Jörn Diedrichsen",
       "Eva Berlot",
@@ -6589,7 +6620,7 @@
     "urls": [
       "https://thinkingmachines.ai/news/learning-to-replicate-expert-judgment-in-financial-tasks/"
     ],
-    "order": 364,
+    "order": 358,
     "authors": [],
     "date": null,
     "date_source": null
@@ -6603,7 +6634,7 @@
     "urls": [
       "https://aclanthology.org/2025.acl-long.126/"
     ],
-    "order": 365,
+    "order": 359,
     "authors": [],
     "date": "2025-07-01",
     "date_source": "page"
@@ -6620,7 +6651,7 @@
       "https://voices.uchicago.edu/stefannagel/files/2025/07/Complexity_2.pdf",
       "https://bfi.uchicago.edu/wp-content/uploads/2025/08/BFI_WP_2025-104.pdf"
     ],
-    "order": 366,
+    "order": 360,
     "authors": [],
     "date": "2025-05-07",
     "date_source": "page"
@@ -6634,7 +6665,7 @@
     "urls": [
       "https://arxiv.org/abs/2003.01859"
     ],
-    "order": 367,
+    "order": 361,
     "authors": [
       "Weiwei Jiang"
     ],
@@ -6650,7 +6681,7 @@
     "urls": [
       "https://www.groundai.com/project/an-intelligent-financial-portfolio-trading-strategy-using-deep-q-learning8432/3"
     ],
-    "order": 368,
+    "order": 362,
     "authors": [
       "Hyungjun Park",
       "Min Kyu Sim",
@@ -6669,7 +6700,7 @@
     "urls": [
       "https://www.researchgate.net/publication/331273826"
     ],
-    "order": 369,
+    "order": 363,
     "authors": [
       "Nikolaos Passalis",
       "Anastasios Tefas",
@@ -6689,7 +6720,7 @@
     "urls": [
       "https://arxiv.org/abs/1807.02787"
     ],
-    "order": 370,
+    "order": 364,
     "authors": [
       "Chien Yi Huang"
     ],
@@ -6705,7 +6736,7 @@
     "urls": [
       "https://arxiv.org/abs/1706.10059"
     ],
-    "order": 371,
+    "order": 365,
     "authors": [
       "Zhengyao Jiang",
       "Dixing Xu",
@@ -6723,10 +6754,11 @@
     "urls": [
       "https://neuroevolutionbook.com/"
     ],
-    "order": 372,
+    "order": 366,
     "authors": [],
     "date": null,
-    "date_source": null
+    "date_source": null,
+    "telegram": true
   },
   {
     "id": "url:rlhfbook.com",
@@ -6737,7 +6769,7 @@
     "urls": [
       "https://rlhfbook.com/"
     ],
-    "order": 373,
+    "order": 367,
     "authors": [
       "Nathan Lambert"
     ],
@@ -6754,10 +6786,11 @@
     "urls": [
       "https://link.springer.com/book/10.1007/978-3-031-45468-4"
     ],
-    "order": 374,
+    "order": 368,
     "authors": [],
     "date": "2023-11-01",
-    "date_source": "page"
+    "date_source": "page",
+    "telegram": true
   },
   {
     "id": "arxiv:2201.09746",
@@ -6768,12 +6801,13 @@
     "urls": [
       "https://arxiv.org/abs/2201.09746"
     ],
-    "order": 375,
+    "order": 369,
     "authors": [
       "Sergey Ivanov"
     ],
     "date": "2022-01-19",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "arxiv:2201.00650",
@@ -6784,7 +6818,7 @@
     "urls": [
       "https://arxiv.org/abs/2201.00650"
     ],
-    "order": 376,
+    "order": 370,
     "authors": [
       "Shlomo Kashani",
       "Amir Ivry"
@@ -6802,10 +6836,11 @@
       "https://doi.org/10.1038/s41566-024-01394-2",
       "https://doi.org/10.1038/s41377-022-00717-8"
     ],
-    "order": 377,
+    "order": 371,
     "authors": [],
     "date": null,
-    "date_source": null
+    "date_source": null,
+    "telegram": true
   },
   {
     "id": "arxiv:2309.10232",
@@ -6816,14 +6851,15 @@
     "urls": [
       "https://arxiv.org/abs/2309.10232"
     ],
-    "order": 378,
+    "order": 372,
     "authors": [
       "Yufeng Zhang",
       "Hao Yan",
       "Kaizhi Wang"
     ],
     "date": "2023-09-19",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "url:direct.mit.edu/coli/article/doi/10.1162/coli_a_00481/116160",
@@ -6834,7 +6870,7 @@
     "urls": [
       "https://direct.mit.edu/coli/article/doi/10.1162/coli_a_00481/116160/"
     ],
-    "order": 379,
+    "order": 373,
     "authors": [],
     "date": "2023-09-01",
     "date_source": "known"
@@ -6848,7 +6884,7 @@
     "urls": [
       "https://arxiv.org/abs/2304.01433"
     ],
-    "order": 380,
+    "order": 374,
     "authors": [
       "Norman P. Jouppi",
       "George Kurian",
@@ -6856,7 +6892,8 @@
       "Peter Ma"
     ],
     "date": "2023-04-04",
-    "date_source": "arxiv-api"
+    "date_source": "arxiv-api",
+    "telegram": true
   },
   {
     "id": "url:semanticscholar.org/paper/4165542ba777ea63facc7ea9866f43ba63f054ae",
@@ -6867,7 +6904,7 @@
     "urls": [
       "https://www.semanticscholar.org/paper/4165542ba777ea63facc7ea9866f43ba63f054ae"
     ],
-    "order": 381,
+    "order": 375,
     "authors": [],
     "date": "2015-08-01",
     "date_source": "known"

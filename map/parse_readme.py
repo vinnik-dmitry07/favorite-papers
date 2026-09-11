@@ -138,18 +138,21 @@ def build_catalog() -> dict:
     skipped = 0
 
     for section, bullet in iter_bullets(README.read_text(encoding='utf-8')):
-        bullet = TG_BADGE_RE.sub(' ', bullet)
         previous: str | None = None
         for index, segment in enumerate(bullet.split(SEGMENT_SPLIT)):
-            urls = segment_urls(segment)
+            has_tg = bool(TG_BADGE_RE.search(segment))
+            clean = TG_BADGE_RE.sub(' ', segment)
+            urls = segment_urls(clean)
             if not urls:
                 skipped += 1
                 continue
-            label = segment_label(segment)
+            label = segment_label(clean)
             if index and not starts_entry(label) and previous:
                 nodes[previous]['urls'].extend(
                     u for u in urls if u not in nodes[previous]['urls']
                 )
+                if has_tg:
+                    nodes[previous]['telegram'] = True
                 continue
 
             classified = classify(urls[0])
@@ -160,6 +163,8 @@ def build_catalog() -> dict:
             if node_id in nodes:
                 node = nodes[node_id]
                 node['urls'].extend(u for u in urls if u not in node['urls'])
+                if has_tg:
+                    node['telegram'] = True
                 previous = node_id
                 continue
 
@@ -175,6 +180,8 @@ def build_catalog() -> dict:
                 'date': None,
                 'date_source': None,
             }
+            if has_tg:
+                nodes[node_id]['telegram'] = True
             order += 1
             previous = node_id
 

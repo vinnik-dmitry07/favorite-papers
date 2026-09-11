@@ -1,12 +1,12 @@
 # Key papers of AI/AGI/ASI 
 
+![Own citation map](map/preview.png)
+
+Own version of the Litmaps map (preferred), with the links parsed straight out of the papers (arXiv/ar5iv HTML, page HTML, Crossref) instead of a hosted service: [live map](https://vinnik-dmitry07.github.io/favorite-papers/) or open [map/index.html](map/index.html) locally. Rebuild with `python map/parse_readme.py`, then `python map/fetch_refs.py`, then `python map/build_graph.py`.
+
 ![Litmaps](map.png)
 
 Litmaps — [https://app.litmaps.com/shared/5bb436d0-a026-493a-a765-f48fda77ad0c](https://app.litmaps.com/shared/5bb436d0-a026-493a-a765-f48fda77ad0c)
-
-Own version of the same map, with the links parsed straight out of the papers (arXiv/ar5iv HTML, page HTML, Crossref) instead of a hosted service: open [map/index.html](map/index.html) in a browser. Rebuild with `python map/parse_readme.py`, then `python map/fetch_refs.py`, then `python map/build_graph.py`.
-
-![Own citation map](map/preview.png)
 
 ## Reinforcement learning
 
@@ -304,8 +304,11 @@ Own version of the same map, with the links parsed straight out of the papers (a
 - Ouroboros: A Self-Developing Frontier Coding Agent — [https://arxiv.org/abs/2608.08311](https://arxiv.org/abs/2608.08311) · [https://razzant.github.io/ouroboros/](https://razzant.github.io/ouroboros/)
 - Self-Improvements in Modern Agentic Systems: A Survey (Schmidhuber) — [https://arxiv.org/abs/2607.13104](https://arxiv.org/abs/2607.13104) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5772?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - Harnessing Agentic Evolution — [https://arxiv.org/abs/2605.13821](https://arxiv.org/abs/2605.13821) · Hyperagents — [https://arxiv.org/abs/2603.19461](https://arxiv.org/abs/2603.19461)
+- Learning to Continually Learn via Meta-learning Agentic Memory Designs (ALMA) — [https://arxiv.org/abs/2602.07755](https://arxiv.org/abs/2602.07755) · [https://github.com/zksha/alma](https://github.com/zksha/alma)
+- Meta Context Engineering via Agentic Skill Evolution — [https://arxiv.org/abs/2601.21557](https://arxiv.org/abs/2601.21557) · [https://github.com/metaevo-ai/meta-context-engineering](https://github.com/metaevo-ai/meta-context-engineering)
 - Dr. Zero: Self-Evolving Search Agents without Training Data — [https://arxiv.org/abs/2601.07055](https://arxiv.org/abs/2601.07055)
 - MemRL: Self-Evolving Agents via Runtime RL on Episodic Memory — [https://arxiv.org/abs/2601.03192](https://arxiv.org/abs/2601.03192)
+- MemEvolve: Meta-Evolution of Agent Memory Systems — [https://arxiv.org/abs/2512.18746](https://arxiv.org/abs/2512.18746)
 - Toward Training Superintelligent Software Agents through Self-Play SWE-RL — [https://arxiv.org/abs/2512.18552](https://arxiv.org/abs/2512.18552)
 - Propose, Solve, Verify: Self-Play Through Formal Verification — [https://arxiv.org/abs/2512.18160](https://arxiv.org/abs/2512.18160)
 - What Does It Take to Be a Good AI Research Agent? — [https://arxiv.org/abs/2511.15593](https://arxiv.org/abs/2511.15593) [⌲ tg](https://t-me.translate.goog/s/rybolos_channel/1670?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
@@ -315,6 +318,7 @@ Own version of the same map, with the links parsed straight out of the papers (a
 - Darwin Gödel Machine: Open-Ended Evolution of Self-Improving Agents — [https://arxiv.org/abs/2505.22954](https://arxiv.org/abs/2505.22954) [⌲ tg](https://t-me.translate.goog/s/data_secrets/7012?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML_podcasts/203?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - Self-Programming AI: Code-Learning Agents — [https://doi.org/10.21203/rs.3.rs-6688473/v1](https://doi.org/10.21203/rs.3.rs-6688473/v1)
 - Vending-Bench: A Benchmark for Long-Term Coherence of Autonomous Agents — [https://arxiv.org/abs/2502.15840](https://arxiv.org/abs/2502.15840)
+- Automated Design of Agentic Systems (ADAS) — [https://arxiv.org/abs/2408.08435](https://arxiv.org/abs/2408.08435) · [https://github.com/ShengranHu/ADAS](https://github.com/ShengranHu/ADAS)
 - Learning Formal Mathematics From Intrinsic Motivation — [https://arxiv.org/abs/2407.00695](https://arxiv.org/abs/2407.00695)
 - Open-Endedness is Essential for Artificial Superhuman Intelligence — [https://arxiv.org/abs/2406.04268](https://arxiv.org/abs/2406.04268) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/2743?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - Few-shot tool use doesn't really work yet (Google Research) — [https://research.google/blog/few-shot-tool-use-doesnt-really-work-yet/](https://research.google/blog/few-shot-tool-use-doesnt-really-work-yet/)
@@ -328,6 +332,7 @@ Own version of the same map, with the links parsed straight out of the papers (a
 
 ## Harness
 
+- HarnessDev: Can LLMs Create and Evolve Their Own Agent Harness? — [https://arxiv.org/abs/2609.01437](https://arxiv.org/abs/2609.01437) · [https://self-developing-agents.github.io/](https://self-developing-agents.github.io/)
 - Harness Engineering (OpenAI) — [https://openai.com/index/harness-engineering/](https://openai.com/index/harness-engineering/)
 - DeepSeek Harness — [https://github.com/deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) [⌲ tg](https://t-me.translate.goog/s/data_secrets/9722?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - PRO-LONG: Programmatic Memory Enables Long-Horizon Reasoning — [https://github.com/alexisfox7/RGB-Agent](https://github.com/alexisfox7/RGB-Agent) · [https://arxiv.org/abs/2607.20064](https://arxiv.org/abs/2607.20064)
@@ -335,8 +340,10 @@ Own version of the same map, with the links parsed straight out of the papers (a
 - Schema: a symbolic world model for ARC-AGI-3 — [http://schema-harness.github.io](http://schema-harness.github.io) · traces — [https://huggingface.co/datasets/schema-harness/arc-agi-3-schema-traces](https://huggingface.co/datasets/schema-harness/arc-agi-3-schema-traces)
 - First evidence of recursive self-improvement (AIDE2, Weco) — [https://www.weco.ai/blog/first-evidence-of-recursive-self-improvement](https://www.weco.ai/blog/first-evidence-of-recursive-self-improvement)
 - Harnesses for models (Lilian Weng, 2026) — [https://lilianweng.github.io/posts/2026-07-04-harness/](https://lilianweng.github.io/posts/2026-07-04-harness/)
+- Adaptive Auto-Harness: Sustained Self-Improvement for Agentic System Deployment on Open-Ended Task Streams — [https://arxiv.org/abs/2606.01770](https://arxiv.org/abs/2606.01770)
 - Duck Harness: Winning Solution for ARC-AGI-3 Milestone 1 (Tufa Labs) — [https://tufalabs.ai/research/duck-harness/](https://tufalabs.ai/research/duck-harness/)
 - Prime Agent: a self-improving RLM agent (Prime Intellect) — [https://github.com/PrimeIntellect-ai/prime-agent](https://github.com/PrimeIntellect-ai/prime-agent) [⌲ tg](https://t-me.translate.goog/s/lovedeathtransformers/10929?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
+- Agentic Harness Engineering: Observability-Driven Automatic Evolution of Coding-Agent Harnesses — [https://arxiv.org/abs/2604.25850](https://arxiv.org/abs/2604.25850) · [https://github.com/china-qijizhifeng/agentic-harness-engineering](https://github.com/china-qijizhifeng/agentic-harness-engineering)
 - SimpleTES: Structured Scaling of AI Discovery — [https://arxiv.org/abs/2604.19341](https://arxiv.org/abs/2604.19341) · [https://haotianye.com/blog/simpletes/](https://haotianye.com/blog/simpletes/)
 - Externalization in LLM Agents: A Unified Review of Memory, Skills, Protocols and Harness Engineering — [https://arxiv.org/abs/2604.08224](https://arxiv.org/abs/2604.08224) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5479?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - Meta-Harness: End-to-End Optimization of Model Harnesses — [https://arxiv.org/abs/2603.28052](https://arxiv.org/abs/2603.28052) · [https://yoonholee.com/meta-harness/](https://yoonholee.com/meta-harness/) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5093?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
@@ -365,21 +372,6 @@ Own version of the same map, with the links parsed straight out of the papers (a
 - Parametrically Retargetable Decision-Makers Tend To Seek Power — [https://arxiv.org/abs/2206.13477](https://arxiv.org/abs/2206.13477) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/1160?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - Is Power-Seeking AI an Existential Risk? — [https://arxiv.org/abs/2206.13353](https://arxiv.org/abs/2206.13353) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/1160?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - Optimal Policies Tend to Seek Power — [https://arxiv.org/abs/1912.01683](https://arxiv.org/abs/1912.01683) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/1160?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-
-## Time series
-
-- TimesFM-3: A zero-shot foundation model for multivariate forecasting — [https://research.google/blog/timesfm-3-a-zero-shot-foundation-model-for-multivariate-forecasting/](https://research.google/blog/timesfm-3-a-zero-shot-foundation-model-for-multivariate-forecasting/)
-- Chronos: Learning the Language of Time Series — [https://arxiv.org/abs/2403.07815](https://arxiv.org/abs/2403.07815) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/2148?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- Survey of Deep Learning and Foundation Models for TS Forecasting — [https://arxiv.org/abs/2401.13912](https://arxiv.org/abs/2401.13912) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/2148?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- TimesFM: A decoder-only foundation model for time-series forecasting — [https://arxiv.org/abs/2310.10688](https://arxiv.org/abs/2310.10688) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/2148?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- Lag-Llama — [https://arxiv.org/abs/2310.08278](https://arxiv.org/abs/2310.08278) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/2148?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- LLMTime: LLMs Are Zero-Shot Time Series Forecasters — [https://arxiv.org/abs/2310.07820](https://arxiv.org/abs/2310.07820) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/2148?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- Time-LLM — [https://arxiv.org/abs/2310.01728](https://arxiv.org/abs/2310.01728) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/2148?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- PromptCast — [https://arxiv.org/abs/2210.08964](https://arxiv.org/abs/2210.08964) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/2148?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- Informer — [https://arxiv.org/abs/2012.07436](https://arxiv.org/abs/2012.07436) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/2148?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
-- N-BEATS — [https://paperswithcode.com/paper/n-beats-neural-basis-expansion-analysis-for](https://paperswithcode.com/paper/n-beats-neural-basis-expansion-analysis-for) · DeepAR — [https://paperswithcode.com/paper/deepar-probabilistic-forecasting-with](https://paperswithcode.com/paper/deepar-probabilistic-forecasting-with)
-- Deep learning for time series classification: a review — [https://arxiv.org/abs/1809.04356](https://arxiv.org/abs/1809.04356)
-- Time Series Classification from Scratch (strong baseline) — [https://arxiv.org/abs/1611.06455](https://arxiv.org/abs/1611.06455)
 
 ## NeuroAI
 

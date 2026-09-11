@@ -1,5 +1,5 @@
 window.GRAPH_DATA = {
-  "generated": "2026-09-08",
+  "generated": "2026-09-10",
   "source": "readme.md + references parsed from arXiv/ar5iv HTML, page HTML and Crossref",
   "nodes": [
     {
@@ -77,6 +77,7 @@ window.GRAPH_DATA = {
       "refs": 5,
       "doc": true,
       "bib_items": 66,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -155,6 +156,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -181,6 +183,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 56,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -206,6 +209,7 @@ window.GRAPH_DATA = {
       "refs": 1,
       "doc": true,
       "bib_items": 114,
+      "telegram": true,
       "tags": [
         "Continual"
       ],
@@ -260,6 +264,7 @@ window.GRAPH_DATA = {
       "refs": 11,
       "doc": true,
       "bib_items": 72,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -333,6 +338,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -455,7 +461,7 @@ window.GRAPH_DATA = {
       "section": "Reinforcement learning",
       "kind": "arxiv",
       "url": "https://arxiv.org/abs/2004.12919",
-      "cites": 3,
+      "cites": 4,
       "refs": 2,
       "doc": true,
       "bib_items": 182,
@@ -614,6 +620,7 @@ window.GRAPH_DATA = {
       "refs": 4,
       "doc": true,
       "bib_items": 32,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -639,6 +646,7 @@ window.GRAPH_DATA = {
       "refs": 3,
       "doc": true,
       "bib_items": 44,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -665,6 +673,7 @@ window.GRAPH_DATA = {
       "refs": 2,
       "doc": true,
       "bib_items": 26,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -691,6 +700,7 @@ window.GRAPH_DATA = {
       "refs": 2,
       "doc": true,
       "bib_items": 37,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -716,6 +726,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 27,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -792,9 +803,10 @@ window.GRAPH_DATA = {
       "kind": "arxiv",
       "url": "https://arxiv.org/abs/2607.07847",
       "cites": 0,
-      "refs": 10,
+      "refs": 11,
       "doc": true,
       "bib_items": 61,
+      "telegram": true,
       "tags": [
         "Self-improve",
         "RL"
@@ -824,6 +836,7 @@ window.GRAPH_DATA = {
       "refs": 3,
       "doc": true,
       "bib_items": 66,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -1271,6 +1284,7 @@ window.GRAPH_DATA = {
       "refs": 4,
       "doc": true,
       "bib_items": 36,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -1296,6 +1310,7 @@ window.GRAPH_DATA = {
       "refs": 19,
       "doc": true,
       "bib_items": 130,
+      "telegram": true,
       "tags": [
         "Self-distill",
         "Scaling",
@@ -1382,6 +1397,7 @@ window.GRAPH_DATA = {
       "refs": 4,
       "doc": true,
       "bib_items": 88,
+      "telegram": true,
       "tags": [
         "Scaling",
         "Discovery"
@@ -1410,6 +1426,7 @@ window.GRAPH_DATA = {
       "refs": 6,
       "doc": true,
       "bib_items": 55,
+      "telegram": true,
       "tags": [
         "Scaling",
         "Discovery"
@@ -1439,6 +1456,7 @@ window.GRAPH_DATA = {
       "refs": 4,
       "doc": true,
       "bib_items": 30,
+      "telegram": true,
       "tags": [
         "Stepping stone",
         "Math reasoning",
@@ -1466,6 +1484,7 @@ window.GRAPH_DATA = {
       "refs": 6,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -1490,6 +1509,7 @@ window.GRAPH_DATA = {
       "refs": 3,
       "doc": true,
       "bib_items": 51,
+      "telegram": true,
       "tags": [
         "Generalization"
       ],
@@ -1662,6 +1682,7 @@ window.GRAPH_DATA = {
       "refs": 4,
       "doc": true,
       "bib_items": 49,
+      "telegram": true,
       "tags": [
         "Math reasoning",
         "Feedback",
@@ -1808,6 +1829,7 @@ window.GRAPH_DATA = {
       "refs": 6,
       "doc": true,
       "bib_items": 96,
+      "telegram": true,
       "tags": [
         "Scaling",
         "Self-improve",
@@ -1835,7 +1857,7 @@ window.GRAPH_DATA = {
       "section": "Post-training",
       "kind": "arxiv",
       "url": "https://arxiv.org/abs/2507.19457",
-      "cites": 6,
+      "cites": 9,
       "refs": 7,
       "doc": true,
       "bib_items": 80,
@@ -1867,6 +1889,7 @@ window.GRAPH_DATA = {
       "refs": 2,
       "doc": true,
       "bib_items": 8,
+      "telegram": true,
       "tags": [
         "Scaling",
         "RL"
@@ -2011,6 +2034,7 @@ window.GRAPH_DATA = {
       "refs": 11,
       "doc": true,
       "bib_items": 58,
+      "telegram": true,
       "tags": [
         "Math reasoning",
         "Feedback",
@@ -2152,6 +2176,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -2207,6 +2232,7 @@ window.GRAPH_DATA = {
       "refs": 2,
       "doc": true,
       "bib_items": 39,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -2231,6 +2257,7 @@ window.GRAPH_DATA = {
       "refs": 2,
       "doc": true,
       "bib_items": 15,
+      "telegram": true,
       "tags": [
         "Scaling",
         "Self-improve",
@@ -2313,7 +2340,7 @@ window.GRAPH_DATA = {
       "section": "Post-training",
       "kind": "arxiv",
       "url": "https://arxiv.org/abs/2303.17651",
-      "cites": 18,
+      "cites": 20,
       "refs": 1,
       "doc": true,
       "bib_items": 52,
@@ -2371,6 +2398,7 @@ window.GRAPH_DATA = {
       "refs": 3,
       "doc": true,
       "bib_items": 30,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -2397,6 +2425,7 @@ window.GRAPH_DATA = {
       "refs": 3,
       "doc": true,
       "bib_items": 150,
+      "telegram": true,
       "tags": [
         "Enc-dec"
       ],
@@ -2422,6 +2451,7 @@ window.GRAPH_DATA = {
       "refs": 1,
       "doc": true,
       "bib_items": 42,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -2447,6 +2477,7 @@ window.GRAPH_DATA = {
       "refs": 1,
       "doc": true,
       "bib_items": 30,
+      "telegram": true,
       "tags": [
         "Recurrent"
       ],
@@ -2500,6 +2531,7 @@ window.GRAPH_DATA = {
       "refs": 4,
       "doc": true,
       "bib_items": 110,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -2573,7 +2605,7 @@ window.GRAPH_DATA = {
       "section": "LLMs: architectures, context, training",
       "kind": "arxiv",
       "url": "https://arxiv.org/abs/2512.24601",
-      "cites": 4,
+      "cites": 5,
       "refs": 1,
       "doc": true,
       "bib_items": 51,
@@ -2605,6 +2637,7 @@ window.GRAPH_DATA = {
       "refs": 2,
       "doc": true,
       "bib_items": 68,
+      "telegram": true,
       "tags": [
         "Enc-dec"
       ],
@@ -2633,6 +2666,7 @@ window.GRAPH_DATA = {
       "refs": 14,
       "doc": true,
       "bib_items": 257,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -2737,6 +2771,7 @@ window.GRAPH_DATA = {
       "refs": 1,
       "doc": true,
       "bib_items": 55,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -2763,6 +2798,7 @@ window.GRAPH_DATA = {
       "refs": 4,
       "doc": true,
       "bib_items": 111,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -2789,6 +2825,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
       "tags": [
         "Recurrent",
         "Architecture"
@@ -2948,6 +2985,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -2970,7 +3008,7 @@ window.GRAPH_DATA = {
       "section": "LLMs: architectures, context, training",
       "kind": "arxiv",
       "url": "https://arxiv.org/abs/2407.21783",
-      "cites": 55,
+      "cites": 56,
       "refs": 11,
       "doc": true,
       "bib_items": 277,
@@ -3000,6 +3038,7 @@ window.GRAPH_DATA = {
       "refs": 2,
       "doc": true,
       "bib_items": 29,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -3026,6 +3065,7 @@ window.GRAPH_DATA = {
       "refs": 3,
       "doc": true,
       "bib_items": 127,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -3052,6 +3092,7 @@ window.GRAPH_DATA = {
       "refs": 6,
       "doc": true,
       "bib_items": 84,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -3077,6 +3118,7 @@ window.GRAPH_DATA = {
       "refs": 5,
       "doc": true,
       "bib_items": 64,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -3129,6 +3171,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -3154,6 +3197,7 @@ window.GRAPH_DATA = {
       "refs": 3,
       "doc": true,
       "bib_items": 83,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -3206,6 +3250,7 @@ window.GRAPH_DATA = {
       "refs": 2,
       "doc": true,
       "bib_items": 53,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -3312,6 +3357,7 @@ window.GRAPH_DATA = {
       "refs": 1,
       "doc": true,
       "bib_items": 94,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -3338,6 +3384,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 49,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -3378,7 +3425,7 @@ window.GRAPH_DATA = {
       "section": "LLMs: architectures, context, training",
       "kind": "arxiv",
       "url": "https://arxiv.org/abs/2002.05202",
-      "cites": 12,
+      "cites": 11,
       "refs": 1,
       "doc": true,
       "bib_items": 11,
@@ -3458,6 +3505,7 @@ window.GRAPH_DATA = {
       "refs": 7,
       "doc": true,
       "bib_items": 93,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -3484,6 +3532,7 @@ window.GRAPH_DATA = {
       "refs": 4,
       "doc": true,
       "bib_items": 26,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -3565,6 +3614,7 @@ window.GRAPH_DATA = {
       "refs": 3,
       "doc": true,
       "bib_items": 51,
+      "telegram": true,
       "tags": [
         "Recurrent"
       ],
@@ -3751,6 +3801,7 @@ window.GRAPH_DATA = {
       "refs": 5,
       "doc": true,
       "bib_items": 61,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -3805,6 +3856,7 @@ window.GRAPH_DATA = {
       "refs": 10,
       "doc": true,
       "bib_items": 39,
+      "telegram": true,
       "tags": [
         "Stepping stone",
         "Math reasoning",
@@ -3831,6 +3883,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -3856,6 +3909,7 @@ window.GRAPH_DATA = {
       "refs": 7,
       "doc": true,
       "bib_items": 52,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -3881,6 +3935,7 @@ window.GRAPH_DATA = {
       "refs": 12,
       "doc": true,
       "bib_items": 96,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -3906,6 +3961,7 @@ window.GRAPH_DATA = {
       "refs": 8,
       "doc": true,
       "bib_items": 99,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -3956,6 +4012,7 @@ window.GRAPH_DATA = {
       "refs": 7,
       "doc": true,
       "bib_items": 69,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -4036,6 +4093,7 @@ window.GRAPH_DATA = {
       "refs": 11,
       "doc": true,
       "bib_items": 187,
+      "telegram": true,
       "tags": [
         "Recurrent"
       ],
@@ -4064,6 +4122,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 16,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -4116,6 +4175,7 @@ window.GRAPH_DATA = {
       "refs": 2,
       "doc": true,
       "bib_items": 63,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -4142,6 +4202,7 @@ window.GRAPH_DATA = {
       "refs": 12,
       "doc": true,
       "bib_items": 229,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -4168,6 +4229,7 @@ window.GRAPH_DATA = {
       "refs": 6,
       "doc": true,
       "bib_items": 55,
+      "telegram": true,
       "tags": [
         "Recurrent"
       ],
@@ -4220,10 +4282,11 @@ window.GRAPH_DATA = {
       "section": "Reasoning and the \"physics\" of language models",
       "kind": "arxiv",
       "url": "https://arxiv.org/abs/2305.13673",
-      "cites": 5,
+      "cites": 4,
       "refs": 6,
       "doc": true,
       "bib_items": 40,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -4375,6 +4438,7 @@ window.GRAPH_DATA = {
       "refs": 1,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -4427,6 +4491,7 @@ window.GRAPH_DATA = {
       "refs": 2,
       "doc": true,
       "bib_items": 37,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -4506,6 +4571,7 @@ window.GRAPH_DATA = {
       "refs": 3,
       "doc": true,
       "bib_items": 78,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -4531,6 +4597,7 @@ window.GRAPH_DATA = {
       "refs": 1,
       "doc": true,
       "bib_items": 20,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -4605,6 +4672,7 @@ window.GRAPH_DATA = {
       "refs": 1,
       "doc": true,
       "bib_items": 43,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -4657,6 +4725,7 @@ window.GRAPH_DATA = {
       "refs": 1,
       "doc": true,
       "bib_items": 38,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -4682,6 +4751,7 @@ window.GRAPH_DATA = {
       "refs": 2,
       "doc": true,
       "bib_items": 34,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -4834,6 +4904,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": false,
       "bib_items": 0,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -4856,10 +4927,11 @@ window.GRAPH_DATA = {
       "section": "Reasoning and the \"physics\" of language models",
       "kind": "arxiv",
       "url": "https://arxiv.org/abs/2203.11171",
-      "cites": 20,
+      "cites": 21,
       "refs": 1,
       "doc": true,
       "bib_items": 65,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -4883,6 +4955,7 @@ window.GRAPH_DATA = {
       "refs": 1,
       "doc": true,
       "bib_items": 61,
+      "telegram": true,
       "tags": [
         "Optimizers"
       ],
@@ -4910,6 +4983,7 @@ window.GRAPH_DATA = {
       "refs": 3,
       "doc": true,
       "bib_items": 105,
+      "telegram": true,
       "tags": [
         "Scaling"
       ],
@@ -4938,6 +5012,7 @@ window.GRAPH_DATA = {
       "refs": 8,
       "doc": true,
       "bib_items": 90,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -4964,6 +5039,7 @@ window.GRAPH_DATA = {
       "refs": 10,
       "doc": true,
       "bib_items": 180,
+      "telegram": true,
       "tags": [
         "Architecture"
       ],
@@ -5068,6 +5144,7 @@ window.GRAPH_DATA = {
       "refs": 4,
       "doc": true,
       "bib_items": 23,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -5094,6 +5171,7 @@ window.GRAPH_DATA = {
       "refs": 3,
       "doc": true,
       "bib_items": 57,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -5118,6 +5196,7 @@ window.GRAPH_DATA = {
       "refs": 2,
       "doc": true,
       "bib_items": 41,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -5273,6 +5352,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -5345,6 +5425,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -5536,6 +5617,7 @@ window.GRAPH_DATA = {
       "refs": 7,
       "doc": true,
       "bib_items": 126,
+      "telegram": true,
       "tags": [
         "Evolution",
         "Continual"
@@ -5593,6 +5675,7 @@ window.GRAPH_DATA = {
       "refs": 1,
       "doc": true,
       "bib_items": 107,
+      "telegram": true,
       "tags": [
         "Scaling",
         "Optimizers",
@@ -5649,6 +5732,7 @@ window.GRAPH_DATA = {
       "refs": 4,
       "doc": true,
       "bib_items": 56,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -5788,6 +5872,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 77,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -5810,10 +5895,11 @@ window.GRAPH_DATA = {
       "section": "Data, training, optimization",
       "kind": "arxiv",
       "url": "https://arxiv.org/abs/2001.08361",
-      "cites": 41,
+      "cites": 38,
       "refs": 0,
       "doc": true,
       "bib_items": 50,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -5912,6 +5998,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 56,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -6063,6 +6150,7 @@ window.GRAPH_DATA = {
       "refs": 7,
       "doc": true,
       "bib_items": 62,
+      "telegram": true,
       "tags": [
         "JEPA"
       ],
@@ -6090,6 +6178,7 @@ window.GRAPH_DATA = {
       "refs": 5,
       "doc": true,
       "bib_items": 96,
+      "telegram": true,
       "tags": [
         "JEPA"
       ],
@@ -6118,6 +6207,7 @@ window.GRAPH_DATA = {
       "refs": 3,
       "doc": true,
       "bib_items": 84,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -6142,6 +6232,7 @@ window.GRAPH_DATA = {
       "refs": 6,
       "doc": true,
       "bib_items": 121,
+      "telegram": true,
       "tags": [
         "JEPA"
       ],
@@ -6170,6 +6261,7 @@ window.GRAPH_DATA = {
       "refs": 1,
       "doc": true,
       "bib_items": 101,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -6222,6 +6314,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 35,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -6300,6 +6393,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -6479,6 +6573,7 @@ window.GRAPH_DATA = {
       "refs": 4,
       "doc": true,
       "bib_items": 79,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -6527,10 +6622,11 @@ window.GRAPH_DATA = {
       "section": "Self-supervised learning and vision",
       "kind": "arxiv",
       "url": "https://arxiv.org/abs/2208.10442",
-      "cites": 3,
+      "cites": 2,
       "refs": 0,
       "doc": true,
       "bib_items": 68,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -6603,6 +6699,7 @@ window.GRAPH_DATA = {
       "refs": 1,
       "doc": true,
       "bib_items": 57,
+      "telegram": true,
       "tags": [
         "JEPA"
       ],
@@ -6704,10 +6801,11 @@ window.GRAPH_DATA = {
       "section": "Retrieval, embeddings, benchmarks",
       "kind": "arxiv",
       "url": "https://arxiv.org/abs/2410.07095",
-      "cites": 6,
+      "cites": 8,
       "refs": 0,
       "doc": true,
       "bib_items": 32,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -6758,6 +6856,7 @@ window.GRAPH_DATA = {
       "refs": 3,
       "doc": true,
       "bib_items": 74,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -6783,6 +6882,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 63,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -6857,10 +6957,11 @@ window.GRAPH_DATA = {
       "section": "Retrieval, embeddings, benchmarks",
       "kind": "arxiv",
       "url": "https://arxiv.org/abs/2309.16797",
-      "cites": 9,
+      "cites": 10,
       "refs": 3,
       "doc": true,
       "bib_items": 76,
+      "telegram": true,
       "tags": [
         "Self-improve",
         "Generalization",
@@ -6886,6 +6987,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -6937,6 +7039,7 @@ window.GRAPH_DATA = {
       "refs": 2,
       "doc": true,
       "bib_items": 61,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -7017,6 +7120,7 @@ window.GRAPH_DATA = {
       "refs": 1,
       "doc": true,
       "bib_items": 102,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -7095,6 +7199,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -7167,9 +7272,10 @@ window.GRAPH_DATA = {
       "kind": "arxiv",
       "url": "https://arxiv.org/abs/2608.23875",
       "cites": 0,
-      "refs": 11,
+      "refs": 12,
       "doc": true,
       "bib_items": 256,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -7193,9 +7299,10 @@ window.GRAPH_DATA = {
       "kind": "arxiv",
       "url": "https://arxiv.org/abs/2608.19197",
       "cites": 0,
-      "refs": 9,
+      "refs": 10,
       "doc": true,
       "bib_items": 141,
+      "telegram": true,
       "tags": [
         "Environments",
         "Stepping stone"
@@ -7221,7 +7328,7 @@ window.GRAPH_DATA = {
       "kind": "arxiv",
       "url": "https://arxiv.org/abs/2608.08311",
       "cites": 0,
-      "refs": 2,
+      "refs": 3,
       "doc": true,
       "bib_items": 38,
       "tags": [
@@ -7252,6 +7359,7 @@ window.GRAPH_DATA = {
       "refs": 12,
       "doc": true,
       "bib_items": 443,
+      "telegram": true,
       "tags": [
         "Self-improve"
       ],
@@ -7277,7 +7385,7 @@ window.GRAPH_DATA = {
       "kind": "arxiv",
       "url": "https://arxiv.org/abs/2605.13821",
       "cites": 0,
-      "refs": 5,
+      "refs": 8,
       "doc": true,
       "bib_items": 42,
       "tags": [
@@ -7306,7 +7414,7 @@ window.GRAPH_DATA = {
       "kind": "arxiv",
       "url": "https://arxiv.org/abs/2603.19461",
       "cites": 4,
-      "refs": 8,
+      "refs": 10,
       "doc": true,
       "bib_items": 101,
       "tags": [
@@ -7315,6 +7423,57 @@ window.GRAPH_DATA = {
       "topic": "Self-improve",
       "lit_cites": 13,
       "lit_refs": 0
+    },
+    {
+      "id": "arxiv:2602.07755",
+      "label": "Xiong, 2026",
+      "keyword": "ALMA",
+      "title": "Learning to Continually Learn via Meta-learning Agentic Memory Designs",
+      "entry": "Learning to Continually Learn via Meta-learning Agentic Memory Designs (ALMA)",
+      "authors": [
+        "Yiming Xiong",
+        "Shengran Hu",
+        "Jeff Clune"
+      ],
+      "date": "2026-02-08",
+      "date_source": "arxiv-api",
+      "section": "Agents, open-endedness, AGI",
+      "kind": "arxiv",
+      "url": "https://arxiv.org/abs/2602.07755",
+      "cites": 3,
+      "refs": 5,
+      "doc": true,
+      "bib_items": 88,
+      "tags": [],
+      "topic": null,
+      "lit_cites": null,
+      "lit_refs": null
+    },
+    {
+      "id": "arxiv:2601.21557",
+      "label": "Ye, 2026",
+      "keyword": "Meta Context",
+      "title": "Meta Context Engineering via Agentic Skill Evolution",
+      "entry": "Meta Context Engineering via Agentic Skill Evolution",
+      "authors": [
+        "Haoran Ye",
+        "Xuning He",
+        "Vincent Arak",
+        "Haonan Dong"
+      ],
+      "date": "2026-01-29",
+      "date_source": "arxiv-api",
+      "section": "Agents, open-endedness, AGI",
+      "kind": "arxiv",
+      "url": "https://arxiv.org/abs/2601.21557",
+      "cites": 4,
+      "refs": 6,
+      "doc": true,
+      "bib_items": 70,
+      "tags": [],
+      "topic": null,
+      "lit_cites": null,
+      "lit_refs": null
     },
     {
       "id": "arxiv:2601.07055",
@@ -7371,6 +7530,32 @@ window.GRAPH_DATA = {
       "topic": "Environments",
       "lit_cites": 91,
       "lit_refs": 97
+    },
+    {
+      "id": "arxiv:2512.18746",
+      "label": "Zhang, 2025",
+      "keyword": "MemEvolve",
+      "title": "MemEvolve: Meta-Evolution of Agent Memory Systems",
+      "entry": "MemEvolve: Meta-Evolution of Agent Memory Systems",
+      "authors": [
+        "Guibin Zhang",
+        "Haotian Ren",
+        "Chong Zhan",
+        "Zhenhong Zhou"
+      ],
+      "date": "2025-12-21",
+      "date_source": "arxiv-api",
+      "section": "Agents, open-endedness, AGI",
+      "kind": "arxiv",
+      "url": "https://arxiv.org/abs/2512.18746",
+      "cites": 4,
+      "refs": 1,
+      "doc": true,
+      "bib_items": 67,
+      "tags": [],
+      "topic": null,
+      "lit_cites": null,
+      "lit_refs": null
     },
     {
       "id": "arxiv:2512.18552",
@@ -7449,6 +7634,7 @@ window.GRAPH_DATA = {
       "refs": 1,
       "doc": true,
       "bib_items": 66,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -7470,10 +7656,11 @@ window.GRAPH_DATA = {
       "section": "Agents, open-endedness, AGI",
       "kind": "web",
       "url": "https://sakana.ai/shinka-evolve/",
-      "cites": 4,
+      "cites": 5,
       "refs": 0,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -7523,10 +7710,11 @@ window.GRAPH_DATA = {
       "section": "Agents, open-endedness, AGI",
       "kind": "arxiv",
       "url": "https://arxiv.org/abs/2507.18074",
-      "cites": 1,
+      "cites": 2,
       "refs": 2,
       "doc": true,
       "bib_items": 44,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -7548,10 +7736,11 @@ window.GRAPH_DATA = {
       "section": "Agents, open-endedness, AGI",
       "kind": "arxiv",
       "url": "https://arxiv.org/abs/2505.22954",
-      "cites": 9,
+      "cites": 12,
       "refs": 7,
       "doc": true,
       "bib_items": 184,
+      "telegram": true,
       "tags": [
         "Self-improve",
         "Evolution"
@@ -7610,6 +7799,31 @@ window.GRAPH_DATA = {
       "lit_refs": null
     },
     {
+      "id": "arxiv:2408.08435",
+      "label": "Hu, 2024",
+      "keyword": "ADAS",
+      "title": "Automated Design of Agentic Systems",
+      "entry": "Automated Design of Agentic Systems (ADAS)",
+      "authors": [
+        "Shengran Hu",
+        "Cong Lu",
+        "Jeff Clune"
+      ],
+      "date": "2024-08-15",
+      "date_source": "arxiv-api",
+      "section": "Agents, open-endedness, AGI",
+      "kind": "arxiv",
+      "url": "https://arxiv.org/abs/2408.08435",
+      "cites": 7,
+      "refs": 4,
+      "doc": true,
+      "bib_items": 114,
+      "tags": [],
+      "topic": null,
+      "lit_cites": null,
+      "lit_refs": null
+    },
+    {
       "id": "arxiv:2407.00695",
       "label": "Poesia, 2024",
       "keyword": "Mathematics",
@@ -7656,6 +7870,7 @@ window.GRAPH_DATA = {
       "refs": 4,
       "doc": true,
       "bib_items": 152,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -7787,6 +8002,7 @@ window.GRAPH_DATA = {
       "refs": 1,
       "doc": true,
       "bib_items": 64,
+      "telegram": true,
       "tags": [
         "Continual"
       ],
@@ -7857,7 +8073,7 @@ window.GRAPH_DATA = {
       "section": "Agents, open-endedness, AGI",
       "kind": "arxiv",
       "url": "https://arxiv.org/abs/1905.10985",
-      "cites": 5,
+      "cites": 7,
       "refs": 3,
       "doc": true,
       "bib_items": 203,
@@ -7868,6 +8084,32 @@ window.GRAPH_DATA = {
       "topic": "Scaling",
       "lit_cites": 193,
       "lit_refs": 367
+    },
+    {
+      "id": "arxiv:2609.01437",
+      "label": "Wu, 2026",
+      "keyword": "HarnessDev",
+      "title": "HarnessDev: Can LLMs Create and Evolve Their Own Agent Harness?",
+      "entry": "HarnessDev: Can LLMs Create and Evolve Their Own Agent Harness?",
+      "authors": [
+        "Yuhao Wu",
+        "Jingyuan Zhang",
+        "Jiajun Shi",
+        "Xinping Lei"
+      ],
+      "date": "2026-09-01",
+      "date_source": "arxiv-api",
+      "section": "Harness",
+      "kind": "arxiv",
+      "url": "https://arxiv.org/abs/2609.01437",
+      "cites": 0,
+      "refs": 4,
+      "doc": true,
+      "bib_items": 61,
+      "tags": [],
+      "topic": null,
+      "lit_cites": null,
+      "lit_refs": null
     },
     {
       "id": "url:openai.com/index/harness-engineering",
@@ -7906,6 +8148,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -8017,9 +8260,35 @@ window.GRAPH_DATA = {
       "kind": "web",
       "url": "https://lilianweng.github.io/posts/2026-07-04-harness/",
       "cites": 0,
-      "refs": 9,
+      "refs": 12,
       "doc": true,
       "bib_items": 0,
+      "tags": [],
+      "topic": null,
+      "lit_cites": null,
+      "lit_refs": null
+    },
+    {
+      "id": "arxiv:2606.01770",
+      "label": "Liu, 2026",
+      "keyword": "Adaptive Auto-Harness",
+      "title": "Adaptive Auto-Harness: Sustained Self-Improvement for Agentic System Deployment on Open-Ended Task Streams",
+      "entry": "Adaptive Auto-Harness: Sustained Self-Improvement for Agentic System Deployment on Open-Ended Task Streams",
+      "authors": [
+        "Zewen Liu",
+        "Zhan Shi",
+        "Yisi Sang",
+        "Bing He"
+      ],
+      "date": "2026-06-01",
+      "date_source": "arxiv-api",
+      "section": "Harness",
+      "kind": "arxiv",
+      "url": "https://arxiv.org/abs/2606.01770",
+      "cites": 0,
+      "refs": 2,
+      "doc": true,
+      "bib_items": 27,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -8064,6 +8333,33 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
+      "tags": [],
+      "topic": null,
+      "lit_cites": null,
+      "lit_refs": null
+    },
+    {
+      "id": "arxiv:2604.25850",
+      "label": "Lin, 2026",
+      "keyword": "Coding-Agent Harnesses",
+      "title": "Agentic Harness Engineering: Observability-Driven Automatic Evolution of Coding-Agent Harnesses",
+      "entry": "Agentic Harness Engineering: Observability-Driven Automatic Evolution of Coding-Agent Harnesses",
+      "authors": [
+        "Jiahang Lin",
+        "Shichun Liu",
+        "Chengjun Pan",
+        "Lizhi Lin"
+      ],
+      "date": "2026-04-28",
+      "date_source": "arxiv-api",
+      "section": "Harness",
+      "kind": "arxiv",
+      "url": "https://arxiv.org/abs/2604.25850",
+      "cites": 2,
+      "refs": 5,
+      "doc": true,
+      "bib_items": 53,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -8116,9 +8412,10 @@ window.GRAPH_DATA = {
       "kind": "arxiv",
       "url": "https://arxiv.org/abs/2604.08224",
       "cites": 0,
-      "refs": 5,
+      "refs": 6,
       "doc": true,
       "bib_items": 204,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -8141,10 +8438,11 @@ window.GRAPH_DATA = {
       "section": "Harness",
       "kind": "arxiv",
       "url": "https://arxiv.org/abs/2603.28052",
-      "cites": 2,
-      "refs": 5,
+      "cites": 5,
+      "refs": 7,
       "doc": true,
       "bib_items": 60,
+      "telegram": true,
       "tags": [
         "Scaling",
         "Architecture"
@@ -8197,6 +8495,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 8,
+      "telegram": true,
       "tags": [
         "Interp"
       ],
@@ -8222,6 +8521,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
       "tags": [
         "Interp"
       ],
@@ -8250,6 +8550,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -8313,6 +8614,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -8334,6 +8636,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -8461,6 +8764,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -8482,6 +8786,7 @@ window.GRAPH_DATA = {
       "refs": 1,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -8508,6 +8813,7 @@ window.GRAPH_DATA = {
       "refs": 1,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -8586,6 +8892,7 @@ window.GRAPH_DATA = {
       "refs": 3,
       "doc": true,
       "bib_items": 9,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -8609,6 +8916,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -8633,6 +8941,7 @@ window.GRAPH_DATA = {
       "refs": 3,
       "doc": true,
       "bib_items": 15,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -8656,6 +8965,7 @@ window.GRAPH_DATA = {
       "refs": 1,
       "doc": true,
       "bib_items": 96,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -8682,335 +8992,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 39,
-      "tags": [],
-      "topic": null,
-      "lit_cites": null,
-      "lit_refs": null
-    },
-    {
-      "id": "url:research.google/blog/timesfm-3-a-zero-shot-foundation-model-for-multivariate-forecasting",
-      "label": "TimesFM 3 A zero, 2026",
-      "keyword": "TimesFM-3",
-      "title": "TimesFM-3: A zero-shot foundation model for multivariate forecasting",
-      "entry": "TimesFM-3: A zero-shot foundation model for multivariate forecasting",
-      "authors": [],
-      "date": "2026-08-31",
-      "date_source": "known",
-      "section": "Time series",
-      "kind": "web",
-      "url": "https://research.google/blog/timesfm-3-a-zero-shot-foundation-model-for-multivariate-forecasting/",
-      "cites": 0,
-      "refs": 0,
-      "doc": true,
-      "bib_items": 0,
-      "tags": [],
-      "topic": null,
-      "lit_cites": null,
-      "lit_refs": null
-    },
-    {
-      "id": "arxiv:2403.07815",
-      "label": "Ansari, 2024",
-      "keyword": "Chronos",
-      "title": "Chronos: Learning the Language of Time Series",
-      "entry": "Chronos: Learning the Language of Time Series",
-      "authors": [
-        "Abdul Fatir Ansari",
-        "Lorenzo Stella",
-        "Caner Turkmen",
-        "Xiyuan Zhang"
-      ],
-      "date": "2024-03-12",
-      "date_source": "arxiv-api",
-      "section": "Time series",
-      "kind": "arxiv",
-      "url": "https://arxiv.org/abs/2403.07815",
-      "cites": 0,
-      "refs": 8,
-      "doc": true,
-      "bib_items": 104,
-      "tags": [],
-      "topic": null,
-      "lit_cites": null,
-      "lit_refs": null
-    },
-    {
-      "id": "arxiv:2401.13912",
-      "label": "Miller, 2024",
-      "keyword": "Deep Learning",
-      "title": "A Survey of Deep Learning and Foundation Models for Time Series Forecasting",
-      "entry": "Survey of Deep Learning and Foundation Models for TS Forecasting",
-      "authors": [
-        "John A. Miller",
-        "Mohammed Aldosari",
-        "Farah Saeed",
-        "Nasid Habib Barna"
-      ],
-      "date": "2024-01-25",
-      "date_source": "arxiv-api",
-      "section": "Time series",
-      "kind": "arxiv",
-      "url": "https://arxiv.org/abs/2401.13912",
-      "cites": 0,
-      "refs": 9,
-      "doc": true,
-      "bib_items": 155,
-      "tags": [],
-      "topic": null,
-      "lit_cites": null,
-      "lit_refs": null
-    },
-    {
-      "id": "arxiv:2310.10688",
-      "label": "Das, 2023",
-      "keyword": "TimesFM",
-      "title": "A decoder-only foundation model for time-series forecasting",
-      "entry": "TimesFM: A decoder-only foundation model for time-series forecasting",
-      "authors": [
-        "Abhimanyu Das",
-        "Weihao Kong",
-        "Rajat Sen",
-        "Yichen Zhou"
-      ],
-      "date": "2023-10-14",
-      "date_source": "arxiv-api",
-      "section": "Time series",
-      "kind": "arxiv",
-      "url": "https://arxiv.org/abs/2310.10688",
-      "cites": 2,
-      "refs": 5,
-      "doc": true,
-      "bib_items": 44,
-      "tags": [],
-      "topic": null,
-      "lit_cites": null,
-      "lit_refs": null
-    },
-    {
-      "id": "arxiv:2310.08278",
-      "label": "Rasul, 2023",
-      "keyword": "Lag-Llama",
-      "title": "Lag-Llama: Towards Foundation Models for Probabilistic Time Series Forecasting",
-      "entry": "Lag-Llama",
-      "authors": [
-        "Kashif Rasul",
-        "Arjun Ashok",
-        "Andrew Robert Williams",
-        "Hena Ghonia"
-      ],
-      "date": "2023-10-12",
-      "date_source": "arxiv-api",
-      "section": "Time series",
-      "kind": "arxiv",
-      "url": "https://arxiv.org/abs/2310.08278",
-      "cites": 1,
-      "refs": 6,
-      "doc": true,
-      "bib_items": 87,
-      "tags": [],
-      "topic": null,
-      "lit_cites": null,
-      "lit_refs": null
-    },
-    {
-      "id": "arxiv:2310.07820",
-      "label": "Gruver, 2023",
-      "keyword": "LLMTime",
-      "title": "Large Language Models Are Zero-Shot Time Series Forecasters",
-      "entry": "LLMTime: LLMs Are Zero-Shot Time Series Forecasters",
-      "authors": [
-        "Nate Gruver",
-        "Marc Finzi",
-        "Shikai Qiu",
-        "Andrew Gordon Wilson"
-      ],
-      "date": "2023-10-11",
-      "date_source": "arxiv-api",
-      "section": "Time series",
-      "kind": "arxiv",
-      "url": "https://arxiv.org/abs/2310.07820",
-      "cites": 3,
-      "refs": 5,
-      "doc": true,
-      "bib_items": 57,
-      "tags": [],
-      "topic": null,
-      "lit_cites": null,
-      "lit_refs": null
-    },
-    {
-      "id": "arxiv:2310.01728",
-      "label": "Jin, 2023",
-      "keyword": "Time-LLM",
-      "title": "Time-LLM: Time Series Forecasting by Reprogramming Large Language Models",
-      "entry": "Time-LLM",
-      "authors": [
-        "Ming Jin",
-        "Shiyu Wang",
-        "Lintao Ma",
-        "Zhixuan Chu"
-      ],
-      "date": "2023-10-03",
-      "date_source": "arxiv-api",
-      "section": "Time series",
-      "kind": "arxiv",
-      "url": "https://arxiv.org/abs/2310.01728",
-      "cites": 3,
-      "refs": 4,
-      "doc": true,
-      "bib_items": 59,
-      "tags": [],
-      "topic": null,
-      "lit_cites": null,
-      "lit_refs": null
-    },
-    {
-      "id": "arxiv:2210.08964",
-      "label": "Xue, 2022",
-      "keyword": "PromptCast",
-      "title": "PromptCast: A New Prompt-based Learning Paradigm for Time Series Forecasting",
-      "entry": "PromptCast",
-      "authors": [
-        "Hao Xue",
-        "Flora D. Salim"
-      ],
-      "date": "2022-09-20",
-      "date_source": "arxiv-api",
-      "section": "Time series",
-      "kind": "arxiv",
-      "url": "https://arxiv.org/abs/2210.08964",
-      "cites": 4,
-      "refs": 1,
-      "doc": true,
-      "bib_items": 32,
-      "tags": [],
-      "topic": null,
-      "lit_cites": null,
-      "lit_refs": null
-    },
-    {
-      "id": "arxiv:2012.07436",
-      "label": "Zhou, 2020",
-      "keyword": "Informer",
-      "title": "Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting",
-      "entry": "Informer",
-      "authors": [
-        "Haoyi Zhou",
-        "Shanghang Zhang",
-        "Jieqi Peng",
-        "Shuai Zhang"
-      ],
-      "date": "2020-12-14",
-      "date_source": "arxiv-api",
-      "section": "Time series",
-      "kind": "arxiv",
-      "url": "https://arxiv.org/abs/2012.07436",
-      "cites": 7,
-      "refs": 1,
-      "doc": true,
-      "bib_items": 56,
-      "tags": [],
-      "topic": null,
-      "lit_cites": null,
-      "lit_refs": null
-    },
-    {
-      "id": "url:paperswithcode.com/paper/n-beats-neural-basis-expansion-analysis-for",
-      "label": "Oreshkin, 2019",
-      "keyword": "N-BEATS",
-      "title": "N-BEATS: Neural basis expansion analysis for interpretable time series forecasting",
-      "entry": "N-BEATS",
-      "authors": [
-        "Boris N. Oreshkin",
-        "Dmitri Carpov",
-        "Nicolas Chapados",
-        "Yoshua Bengio"
-      ],
-      "date": "2019-05-24",
-      "date_source": "arxiv-api",
-      "section": "Time series",
-      "kind": "web",
-      "url": "https://paperswithcode.com/paper/n-beats-neural-basis-expansion-analysis-for",
-      "cites": 6,
-      "refs": 0,
-      "doc": true,
-      "bib_items": 0,
-      "tags": [],
-      "topic": null,
-      "lit_cites": null,
-      "lit_refs": null
-    },
-    {
-      "id": "url:paperswithcode.com/paper/deepar-probabilistic-forecasting-with",
-      "label": "Salinas, 2017",
-      "keyword": "DeepAR",
-      "title": "DeepAR: Probabilistic Forecasting with Autoregressive Recurrent Networks",
-      "entry": "DeepAR",
-      "authors": [
-        "David Salinas",
-        "Valentin Flunkert",
-        "Jan Gasthaus"
-      ],
-      "date": "2017-04-13",
-      "date_source": "arxiv-api",
-      "section": "Time series",
-      "kind": "web",
-      "url": "https://paperswithcode.com/paper/deepar-probabilistic-forecasting-with",
-      "cites": 6,
-      "refs": 0,
-      "doc": false,
-      "bib_items": 0,
-      "tags": [],
-      "topic": null,
-      "lit_cites": null,
-      "lit_refs": null
-    },
-    {
-      "id": "arxiv:1809.04356",
-      "label": "Fawaz, 2018",
-      "keyword": "Deep learning",
-      "title": "Deep learning for time series classification: a review",
-      "entry": "Deep learning for time series classification: a review",
-      "authors": [
-        "Hassan Ismail Fawaz",
-        "Germain Forestier",
-        "Jonathan Weber",
-        "Lhassane Idoumghar"
-      ],
-      "date": "2018-09-12",
-      "date_source": "arxiv-api",
-      "section": "Time series",
-      "kind": "arxiv",
-      "url": "https://arxiv.org/abs/1809.04356",
-      "cites": 1,
-      "refs": 1,
-      "doc": true,
-      "bib_items": 138,
-      "tags": [],
-      "topic": null,
-      "lit_cites": null,
-      "lit_refs": null
-    },
-    {
-      "id": "arxiv:1611.06455",
-      "label": "Wang, 2016",
-      "keyword": "Time Series",
-      "title": "Time Series Classification from Scratch with Deep Neural Networks: A Strong Baseline",
-      "entry": "Time Series Classification from Scratch (strong baseline)",
-      "authors": [
-        "Zhiguang Wang",
-        "Weizhong Yan",
-        "Tim Oates"
-      ],
-      "date": "2016-11-20",
-      "date_source": "arxiv-api",
-      "section": "Time series",
-      "kind": "arxiv",
-      "url": "https://arxiv.org/abs/1611.06455",
-      "cites": 1,
-      "refs": 0,
-      "doc": true,
-      "bib_items": 23,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -9034,6 +9016,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": false,
       "bib_items": 0,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -9204,6 +9187,7 @@ window.GRAPH_DATA = {
       "refs": 2,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
       "tags": [
         "Forgetting"
       ],
@@ -9360,6 +9344,7 @@ window.GRAPH_DATA = {
       "refs": 4,
       "doc": true,
       "bib_items": 53,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -9436,6 +9421,7 @@ window.GRAPH_DATA = {
       "refs": 5,
       "doc": true,
       "bib_items": 144,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -9695,6 +9681,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -9739,6 +9726,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -9762,6 +9750,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -9812,6 +9801,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 0,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -9837,6 +9827,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": true,
       "bib_items": 37,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -9884,6 +9875,7 @@ window.GRAPH_DATA = {
       "refs": 0,
       "doc": false,
       "bib_items": 0,
+      "telegram": true,
       "tags": [],
       "topic": null,
       "lit_cites": null,
@@ -10079,7 +10071,7 @@ window.GRAPH_DATA = {
     ],
     [
       9,
-      296,
+      300,
       "title"
     ],
     [
@@ -10374,7 +10366,7 @@ window.GRAPH_DATA = {
     ],
     [
       30,
-      285,
+      288,
       "id"
     ],
     [
@@ -10404,7 +10396,12 @@ window.GRAPH_DATA = {
     ],
     [
       30,
-      309,
+      278,
+      "id"
+    ],
+    [
+      30,
+      316,
       "id"
     ],
     [
@@ -10494,7 +10491,7 @@ window.GRAPH_DATA = {
     ],
     [
       34,
-      361,
+      355,
       "id"
     ],
     [
@@ -10654,7 +10651,7 @@ window.GRAPH_DATA = {
     ],
     [
       38,
-      373,
+      367,
       "title"
     ],
     [
@@ -10894,7 +10891,7 @@ window.GRAPH_DATA = {
     ],
     [
       45,
-      373,
+      367,
       "title"
     ],
     [
@@ -11044,7 +11041,7 @@ window.GRAPH_DATA = {
     ],
     [
       48,
-      373,
+      367,
       "title"
     ],
     [
@@ -11134,7 +11131,7 @@ window.GRAPH_DATA = {
     ],
     [
       51,
-      282,
+      285,
       "id"
     ],
     [
@@ -11164,7 +11161,7 @@ window.GRAPH_DATA = {
     ],
     [
       52,
-      284,
+      287,
       "title"
     ],
     [
@@ -11229,7 +11226,7 @@ window.GRAPH_DATA = {
     ],
     [
       55,
-      373,
+      367,
       "title"
     ],
     [
@@ -11499,7 +11496,7 @@ window.GRAPH_DATA = {
     ],
     [
       66,
-      373,
+      367,
       "title"
     ],
     [
@@ -11534,7 +11531,7 @@ window.GRAPH_DATA = {
     ],
     [
       67,
-      373,
+      367,
       "title"
     ],
     [
@@ -11624,12 +11621,12 @@ window.GRAPH_DATA = {
     ],
     [
       71,
-      324,
+      331,
       "id"
     ],
     [
       71,
-      373,
+      367,
       "title"
     ],
     [
@@ -11674,7 +11671,7 @@ window.GRAPH_DATA = {
     ],
     [
       73,
-      288,
+      292,
       "title"
     ],
     [
@@ -11714,7 +11711,7 @@ window.GRAPH_DATA = {
     ],
     [
       73,
-      324,
+      331,
       "id"
     ],
     [
@@ -11869,17 +11866,17 @@ window.GRAPH_DATA = {
     ],
     [
       82,
-      373,
+      367,
       "title"
     ],
     [
       83,
-      324,
+      331,
       "id"
     ],
     [
       84,
-      373,
+      367,
       "title"
     ],
     [
@@ -11899,7 +11896,7 @@ window.GRAPH_DATA = {
     ],
     [
       86,
-      361,
+      355,
       "title"
     ],
     [
@@ -12054,7 +12051,7 @@ window.GRAPH_DATA = {
     ],
     [
       96,
-      373,
+      367,
       "url"
     ],
     [
@@ -12094,7 +12091,7 @@ window.GRAPH_DATA = {
     ],
     [
       98,
-      313,
+      320,
       "id"
     ],
     [
@@ -12184,7 +12181,7 @@ window.GRAPH_DATA = {
     ],
     [
       105,
-      361,
+      355,
       "id"
     ],
     [
@@ -12204,7 +12201,7 @@ window.GRAPH_DATA = {
     ],
     [
       105,
-      324,
+      331,
       "title"
     ],
     [
@@ -12304,7 +12301,7 @@ window.GRAPH_DATA = {
     ],
     [
       109,
-      373,
+      367,
       "title"
     ],
     [
@@ -12314,7 +12311,7 @@ window.GRAPH_DATA = {
     ],
     [
       110,
-      373,
+      367,
       "title"
     ],
     [
@@ -12344,7 +12341,7 @@ window.GRAPH_DATA = {
     ],
     [
       112,
-      380,
+      374,
       "title"
     ],
     [
@@ -12709,7 +12706,7 @@ window.GRAPH_DATA = {
     ],
     [
       140,
-      317,
+      324,
       "url"
     ],
     [
@@ -12904,12 +12901,12 @@ window.GRAPH_DATA = {
     ],
     [
       146,
-      317,
+      324,
       "url"
     ],
     [
       146,
-      316,
+      323,
       "url"
     ],
     [
@@ -13064,7 +13061,7 @@ window.GRAPH_DATA = {
     ],
     [
       152,
-      325,
+      332,
       "title"
     ],
     [
@@ -13144,12 +13141,12 @@ window.GRAPH_DATA = {
     ],
     [
       154,
-      296,
+      300,
       "title"
     ],
     [
       154,
-      373,
+      367,
       "title"
     ],
     [
@@ -13349,7 +13346,7 @@ window.GRAPH_DATA = {
     ],
     [
       162,
-      325,
+      332,
       "title"
     ],
     [
@@ -13374,7 +13371,7 @@ window.GRAPH_DATA = {
     ],
     [
       162,
-      361,
+      355,
       "id"
     ],
     [
@@ -13389,12 +13386,12 @@ window.GRAPH_DATA = {
     ],
     [
       162,
-      324,
+      331,
       "title"
     ],
     [
       162,
-      373,
+      367,
       "title"
     ],
     [
@@ -13429,7 +13426,7 @@ window.GRAPH_DATA = {
     ],
     [
       165,
-      324,
+      331,
       "id"
     ],
     [
@@ -13694,7 +13691,7 @@ window.GRAPH_DATA = {
     ],
     [
       188,
-      373,
+      367,
       "title"
     ],
     [
@@ -13714,7 +13711,7 @@ window.GRAPH_DATA = {
     ],
     [
       189,
-      373,
+      367,
       "title"
     ],
     [
@@ -14014,7 +14011,7 @@ window.GRAPH_DATA = {
     ],
     [
       212,
-      331,
+      338,
       "title"
     ],
     [
@@ -14024,12 +14021,12 @@ window.GRAPH_DATA = {
     ],
     [
       212,
-      330,
+      337,
       "id"
     ],
     [
       212,
-      373,
+      367,
       "title"
     ],
     [
@@ -14254,7 +14251,7 @@ window.GRAPH_DATA = {
     ],
     [
       242,
-      373,
+      367,
       "title"
     ],
     [
@@ -14309,7 +14306,7 @@ window.GRAPH_DATA = {
     ],
     [
       252,
-      287,
+      290,
       "id"
     ],
     [
@@ -14319,7 +14316,7 @@ window.GRAPH_DATA = {
     ],
     [
       255,
-      289,
+      293,
       "title"
     ],
     [
@@ -14434,7 +14431,12 @@ window.GRAPH_DATA = {
     ],
     [
       271,
-      285,
+      291,
+      "id"
+    ],
+    [
+      271,
+      288,
       "id"
     ],
     [
@@ -14444,22 +14446,22 @@ window.GRAPH_DATA = {
     ],
     [
       271,
-      296,
+      300,
       "title"
     ],
     [
       271,
-      324,
+      331,
       "id"
     ],
     [
       271,
-      373,
+      367,
       "url"
     ],
     [
       272,
-      297,
+      301,
       "id"
     ],
     [
@@ -14469,7 +14471,7 @@ window.GRAPH_DATA = {
     ],
     [
       272,
-      289,
+      293,
       "id"
     ],
     [
@@ -14489,12 +14491,17 @@ window.GRAPH_DATA = {
     ],
     [
       272,
-      279,
+      282,
       "id"
     ],
     [
       272,
-      278,
+      280,
+      "id"
+    ],
+    [
+      272,
+      277,
       "id"
     ],
     [
@@ -14509,7 +14516,12 @@ window.GRAPH_DATA = {
     ],
     [
       273,
-      285,
+      291,
+      "id"
+    ],
+    [
+      273,
+      288,
       "id"
     ],
     [
@@ -14549,7 +14561,7 @@ window.GRAPH_DATA = {
     ],
     [
       274,
-      285,
+      288,
       "title"
     ],
     [
@@ -14559,7 +14571,7 @@ window.GRAPH_DATA = {
     ],
     [
       274,
-      278,
+      280,
       "id"
     ],
     [
@@ -14569,12 +14581,17 @@ window.GRAPH_DATA = {
     ],
     [
       274,
-      282,
+      285,
       "title"
     ],
     [
       275,
-      285,
+      291,
+      "id"
+    ],
+    [
+      275,
+      288,
       "id"
     ],
     [
@@ -14584,22 +14601,32 @@ window.GRAPH_DATA = {
     ],
     [
       275,
+      281,
+      "id"
+    ],
+    [
+      275,
       51,
       "id"
     ],
     [
       275,
+      277,
+      "id"
+    ],
+    [
+      275,
       276,
       "id"
     ],
     [
       275,
-      307,
+      314,
       "id"
     ],
     [
       276,
-      297,
+      301,
       "id"
     ],
     [
@@ -14614,22 +14641,22 @@ window.GRAPH_DATA = {
     ],
     [
       276,
-      289,
+      293,
       "id"
     ],
     [
       276,
-      285,
+      288,
       "id"
     ],
     [
       276,
-      281,
+      284,
       "id"
     ],
     [
       276,
-      279,
+      282,
       "id"
     ],
     [
@@ -14638,328 +14665,333 @@ window.GRAPH_DATA = {
       "id"
     ],
     [
-      277,
-      83,
-      "id"
-    ],
-    [
-      277,
-      79,
-      "id"
-    ],
-    [
-      277,
-      75,
-      "id"
-    ],
-    [
-      277,
-      147,
-      "id"
-    ],
-    [
-      277,
-      68,
-      "id"
-    ],
-    [
+      276,
       278,
-      79,
       "id"
     ],
     [
-      278,
-      226,
-      "title"
-    ],
-    [
-      278,
-      258,
+      276,
+      277,
       "id"
     ],
     [
-      279,
-      285,
+      277,
+      301,
       "id"
     ],
     [
-      279,
-      69,
-      "id"
-    ],
-    [
-      279,
-      60,
-      "title"
-    ],
-    [
-      280,
-      83,
-      "id"
-    ],
-    [
-      280,
-      115,
-      "id"
-    ],
-    [
-      281,
-      253,
-      "title"
-    ],
-    [
-      284,
-      285,
-      "title"
-    ],
-    [
-      284,
-      69,
-      "id"
-    ],
-    [
-      285,
-      297,
-      "id"
-    ],
-    [
-      285,
+      277,
       17,
       "title"
     ],
     [
-      285,
-      84,
+      277,
+      291,
       "title"
     ],
     [
-      285,
-      259,
-      "title"
-    ],
-    [
-      285,
-      7,
-      "title"
-    ],
-    [
-      285,
-      255,
-      "title"
-    ],
-    [
-      285,
-      289,
+      277,
+      288,
       "id"
     ],
     [
-      289,
-      297,
-      "title"
-    ],
-    [
-      289,
-      259,
-      "title"
-    ],
-    [
-      289,
-      294,
+      277,
+      281,
       "id"
     ],
     [
-      289,
-      255,
-      "title"
-    ],
-    [
-      292,
-      297,
+      278,
+      109,
       "id"
     ],
     [
-      292,
-      218,
+      278,
+      288,
       "id"
     ],
     [
-      293,
-      264,
+      278,
+      287,
       "id"
     ],
     [
-      293,
-      179,
-      "title"
-    ],
-    [
-      293,
-      326,
-      "id"
-    ],
-    [
-      294,
-      296,
-      "id"
-    ],
-    [
-      297,
-      23,
-      "id"
-    ],
-    [
-      297,
-      22,
-      "id"
-    ],
-    [
-      297,
-      226,
-      "title"
-    ],
-    [
-      301,
-      94,
-      "url"
-    ],
-    [
-      303,
-      253,
-      "id"
-    ],
-    [
-      304,
-      84,
-      "id"
-    ],
-    [
-      304,
-      259,
-      "id"
-    ],
-    [
-      304,
-      253,
-      "id"
-    ],
-    [
-      304,
-      285,
-      "id"
-    ],
-    [
-      304,
+      278,
       67,
       "id"
     ],
     [
-      304,
-      51,
+      278,
+      94,
       "id"
     ],
     [
-      304,
-      276,
+      278,
+      285,
       "id"
     ],
     [
-      304,
-      309,
-      "id"
-    ],
-    [
-      304,
-      282,
-      "id"
-    ],
-    [
-      307,
-      218,
-      "id"
-    ],
-    [
-      307,
-      182,
-      "title"
-    ],
-    [
-      307,
-      212,
-      "title"
-    ],
-    [
-      307,
-      84,
-      "title"
-    ],
-    [
-      307,
+      279,
       83,
       "id"
     ],
     [
-      307,
-      253,
+      279,
+      79,
       "id"
     ],
     [
-      307,
-      144,
+      279,
+      75,
       "id"
     ],
     [
-      307,
-      67,
+      279,
+      147,
       "id"
     ],
     [
-      307,
-      51,
+      279,
+      68,
       "id"
     ],
     [
-      307,
+      280,
+      79,
+      "id"
+    ],
+    [
+      280,
+      226,
+      "title"
+    ],
+    [
+      280,
+      258,
+      "id"
+    ],
+    [
+      281,
+      288,
+      "title"
+    ],
+    [
       282,
+      288,
       "id"
     ],
     [
-      308,
-      218,
+      282,
+      69,
       "id"
     ],
     [
-      308,
+      282,
+      60,
+      "title"
+    ],
+    [
+      283,
+      83,
+      "id"
+    ],
+    [
+      283,
+      115,
+      "id"
+    ],
+    [
+      284,
+      253,
+      "title"
+    ],
+    [
+      287,
+      288,
+      "title"
+    ],
+    [
+      287,
+      69,
+      "id"
+    ],
+    [
+      288,
+      301,
+      "id"
+    ],
+    [
+      288,
+      17,
+      "title"
+    ],
+    [
+      288,
+      84,
+      "title"
+    ],
+    [
+      288,
+      259,
+      "title"
+    ],
+    [
+      288,
+      7,
+      "title"
+    ],
+    [
+      288,
+      255,
+      "title"
+    ],
+    [
+      288,
+      293,
+      "id"
+    ],
+    [
+      291,
+      301,
+      "id"
+    ],
+    [
+      291,
       182,
       "title"
     ],
     [
-      308,
+      291,
       84,
-      "id"
-    ],
-    [
-      308,
-      278,
-      "id"
-    ],
-    [
-      308,
-      373,
       "title"
+    ],
+    [
+      291,
+      259,
+      "title"
+    ],
+    [
+      293,
+      301,
+      "title"
+    ],
+    [
+      293,
+      259,
+      "title"
+    ],
+    [
+      293,
+      298,
+      "id"
+    ],
+    [
+      293,
+      255,
+      "title"
+    ],
+    [
+      296,
+      301,
+      "id"
+    ],
+    [
+      296,
+      218,
+      "id"
+    ],
+    [
+      297,
+      264,
+      "id"
+    ],
+    [
+      297,
+      179,
+      "title"
+    ],
+    [
+      297,
+      333,
+      "id"
+    ],
+    [
+      298,
+      300,
+      "id"
+    ],
+    [
+      301,
+      23,
+      "id"
+    ],
+    [
+      301,
+      22,
+      "id"
+    ],
+    [
+      301,
+      226,
+      "title"
+    ],
+    [
+      302,
+      291,
+      "id"
+    ],
+    [
+      302,
+      253,
+      "id"
+    ],
+    [
+      302,
+      316,
+      "id"
+    ],
+    [
+      302,
+      313,
+      "id"
+    ],
+    [
+      306,
+      94,
+      "url"
+    ],
+    [
+      308,
+      253,
+      "id"
     ],
     [
       309,
       84,
-      "title"
+      "id"
+    ],
+    [
+      309,
+      259,
+      "id"
+    ],
+    [
+      309,
+      291,
+      "id"
+    ],
+    [
+      309,
+      253,
+      "id"
+    ],
+    [
+      309,
+      288,
+      "id"
     ],
     [
       309,
       67,
-      "id"
-    ],
-    [
-      309,
-      94,
       "id"
     ],
     [
@@ -14969,416 +15001,386 @@ window.GRAPH_DATA = {
     ],
     [
       309,
-      298,
-      "url"
-    ],
-    [
-      314,
-      109,
+      278,
       "id"
     ],
     [
-      314,
-      155,
+      309,
+      276,
       "id"
     ],
     [
-      314,
-      315,
-      "url"
-    ],
-    [
-      314,
-      324,
-      "id"
-    ],
-    [
-      314,
-      317,
-      "url"
-    ],
-    [
-      315,
-      317,
-      "url"
-    ],
-    [
-      315,
+      309,
       316,
-      "url"
+      "id"
     ],
     [
-      318,
-      328,
+      309,
+      313,
+      "id"
+    ],
+    [
+      309,
+      285,
+      "id"
+    ],
+    [
+      310,
+      67,
+      "id"
+    ],
+    [
+      310,
+      316,
+      "id"
+    ],
+    [
+      313,
+      84,
       "title"
     ],
     [
-      318,
-      326,
+      313,
+      291,
+      "title"
+    ],
+    [
+      313,
+      253,
+      "title"
+    ],
+    [
+      313,
+      67,
+      "title"
+    ],
+    [
+      313,
+      316,
       "id"
     ],
     [
-      319,
-      109,
+      314,
+      218,
       "id"
     ],
     [
-      320,
-      255,
+      314,
+      182,
+      "title"
+    ],
+    [
+      314,
+      212,
+      "title"
+    ],
+    [
+      314,
+      84,
+      "title"
+    ],
+    [
+      314,
+      83,
       "id"
     ],
     [
-      320,
+      314,
+      253,
+      "id"
+    ],
+    [
+      314,
+      144,
+      "id"
+    ],
+    [
+      314,
+      67,
+      "id"
+    ],
+    [
+      314,
+      51,
+      "id"
+    ],
+    [
+      314,
+      285,
+      "id"
+    ],
+    [
+      315,
+      218,
+      "id"
+    ],
+    [
+      315,
+      182,
+      "title"
+    ],
+    [
+      315,
+      84,
+      "id"
+    ],
+    [
+      315,
+      281,
+      "id"
+    ],
+    [
+      315,
+      280,
+      "id"
+    ],
+    [
+      315,
+      367,
+      "title"
+    ],
+    [
+      316,
+      84,
+      "title"
+    ],
+    [
+      316,
+      67,
+      "id"
+    ],
+    [
+      316,
+      281,
+      "id"
+    ],
+    [
+      316,
+      94,
+      "id"
+    ],
+    [
+      316,
+      51,
+      "id"
+    ],
+    [
+      316,
+      278,
+      "id"
+    ],
+    [
+      316,
+      303,
+      "url"
+    ],
+    [
+      321,
       109,
       "id"
     ],
     [
       321,
-      178,
+      155,
       "id"
     ],
     [
-      323,
-      218,
+      321,
+      322,
+      "url"
+    ],
+    [
+      321,
+      331,
       "id"
     ],
     [
+      321,
       324,
-      373,
+      "url"
+    ],
+    [
+      322,
+      324,
+      "url"
+    ],
+    [
+      322,
+      323,
+      "url"
+    ],
+    [
+      325,
+      335,
       "title"
     ],
     [
       325,
+      333,
+      "id"
+    ],
+    [
+      326,
+      109,
+      "id"
+    ],
+    [
+      327,
+      255,
+      "id"
+    ],
+    [
+      327,
+      109,
+      "id"
+    ],
+    [
+      328,
+      178,
+      "id"
+    ],
+    [
+      330,
+      218,
+      "id"
+    ],
+    [
+      331,
+      367,
+      "title"
+    ],
+    [
+      332,
       222,
       "id"
     ],
     [
-      326,
-      353,
+      333,
+      347,
       "id"
     ],
     [
-      326,
-      328,
+      333,
+      335,
       "title"
     ],
     [
-      327,
-      331,
+      334,
+      338,
       "id"
     ],
     [
-      327,
-      330,
+      334,
+      337,
       "id"
     ],
     [
-      327,
-      329,
+      334,
+      336,
       "id"
     ],
     [
-      329,
-      331,
+      336,
+      338,
       "title"
     ],
     [
-      329,
+      336,
       17,
       "title"
     ],
     [
-      329,
-      330,
-      "title"
-    ],
-    [
-      330,
-      331,
-      "title"
-    ],
-    [
-      333,
-      343,
-      "title"
-    ],
-    [
-      333,
-      340,
-      "title"
-    ],
-    [
-      333,
-      339,
-      "id"
-    ],
-    [
-      333,
-      338,
-      "title"
-    ],
-    [
-      333,
+      336,
       337,
       "title"
     ],
     [
-      333,
-      335,
-      "id"
-    ],
-    [
-      333,
-      342,
+      337,
+      338,
       "title"
     ],
     [
-      333,
       341,
-      "title"
-    ],
-    [
-      334,
-      218,
-      "id"
-    ],
-    [
-      334,
-      125,
-      "id"
-    ],
-    [
-      334,
-      340,
-      "title"
-    ],
-    [
-      334,
-      339,
-      "title"
-    ],
-    [
-      334,
-      338,
-      "id"
-    ],
-    [
-      334,
-      336,
-      "id"
-    ],
-    [
-      334,
-      335,
-      "id"
-    ],
-    [
-      334,
-      342,
-      "title"
-    ],
-    [
-      334,
-      341,
-      "id"
-    ],
-    [
-      335,
-      218,
-      "id"
-    ],
-    [
-      335,
-      340,
-      "title"
-    ],
-    [
-      335,
-      337,
-      "id"
-    ],
-    [
-      335,
-      342,
-      "title"
-    ],
-    [
-      335,
-      341,
-      "title"
-    ],
-    [
-      336,
-      218,
-      "id"
-    ],
-    [
-      336,
-      340,
-      "title"
-    ],
-    [
-      336,
-      246,
-      "title"
-    ],
-    [
-      336,
-      338,
-      "title"
-    ],
-    [
-      336,
-      342,
-      "title"
-    ],
-    [
-      336,
-      341,
-      "title"
-    ],
-    [
-      337,
-      340,
-      "title"
-    ],
-    [
-      337,
-      339,
-      "title"
-    ],
-    [
-      337,
-      157,
-      "id"
-    ],
-    [
-      337,
-      342,
-      "title"
-    ],
-    [
-      337,
-      341,
-      "title"
-    ],
-    [
-      338,
-      340,
-      "title"
-    ],
-    [
-      338,
-      339,
-      "id"
-    ],
-    [
-      338,
-      337,
-      "title"
-    ],
-    [
-      338,
-      341,
-      "title"
-    ],
-    [
-      339,
-      340,
-      "title"
-    ],
-    [
-      340,
-      342,
-      "id"
-    ],
-    [
-      343,
-      344,
-      "title"
-    ],
-    [
-      347,
       109,
       "title"
     ],
     [
-      352,
+      346,
       225,
       "title"
     ],
     [
-      352,
+      346,
       226,
       "id"
     ],
     [
-      356,
+      350,
       22,
       "id"
     ],
     [
-      358,
-      363,
+      352,
+      357,
       "title"
     ],
     [
-      358,
-      362,
+      352,
+      356,
       "id"
     ],
     [
-      358,
-      361,
+      352,
+      355,
       "title"
     ],
     [
-      358,
-      360,
+      352,
+      354,
       "id"
     ],
     [
-      359,
-      361,
+      353,
+      355,
       "id"
     ],
     [
-      360,
-      362,
+      354,
+      356,
       "id"
     ],
     [
-      361,
+      355,
       218,
       "id"
     ],
     [
-      361,
+      355,
       250,
       "title"
     ],
     [
-      361,
+      355,
       264,
       "id"
     ],
     [
-      361,
+      355,
       241,
       "title"
     ],
     [
-      361,
-      291,
+      355,
+      295,
       "title"
     ],
     [
-      364,
+      358,
       60,
       "id"
     ],
     [
-      370,
+      364,
       24,
       "id"
     ]

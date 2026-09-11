@@ -200,6 +200,34 @@ def main() -> None:
         page.uncheck('#citefilter')
         page.wait_for_timeout(300)
 
+        page.check('#tgfilter')
+        page.wait_for_timeout(400)
+        tg_filter = page.evaluate('''() => {
+            const nodes = window.GRAPH_DATA.nodes;
+            const withTg = nodes.filter(n => n.telegram).length;
+            const gs = [...document.querySelectorAll('.nodes g')];
+            const bright = gs.filter(g => !g.classList.contains('dim')).length;
+            return {
+                withTg,
+                bright,
+                dimmed: gs.filter(g => g.classList.contains('dim')).length,
+                note: document.getElementById('note').textContent.slice(0, 36),
+            };
+        }''')
+        print('telegram filter:', tg_filter)
+        if tg_filter['withTg'] < 50:
+            errors.append('too few catalog nodes marked telegram')
+        if tg_filter['bright'] != tg_filter['withTg']:
+            errors.append(
+                f'telegram filter kept {tg_filter["bright"]}, '
+                f'expected {tg_filter["withTg"]}'
+            )
+        if tg_filter['dimmed'] < 50:
+            errors.append('telegram filter did not dim papers without a badge')
+        page.screenshot(path=str(SHOTS / '07-telegram-filter.png'))
+        page.uncheck('#tgfilter')
+        page.wait_for_timeout(300)
+
         page.select_option('#labels', 'all')
         page.wait_for_timeout(500)
         print('labels=all:', page.evaluate(

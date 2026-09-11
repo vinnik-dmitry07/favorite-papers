@@ -1480,5 +1480,73 @@
       "Ryan Sullivan",
       "Joel Lehman"
     ]
+  },
+  "2408.08435": {
+    "title": "Automated Design of Agentic Systems",
+    "published": "2024-08-15",
+    "authors": [
+      "Shengran Hu",
+      "Cong Lu",
+      "Jeff Clune"
+    ]
+  },
+  "2512.18746": {
+    "title": "MemEvolve: Meta-Evolution of Agent Memory Systems",
+    "published": "2025-12-21",
+    "authors": [
+      "Guibin Zhang",
+      "Haotian Ren",
+      "Chong Zhan",
+      "Zhenhong Zhou"
+    ]
+  },
+  "2601.21557": {
+    "title": "Meta Context Engineering via Agentic Skill Evolution",
+    "published": "2026-01-29",
+    "authors": [
+      "Haoran Ye",
+      "Xuning He",
+      "Vincent Arak",
+      "Haonan Dong"
+    ]
+  },
+  "2602.07755": {
+    "title": "Learning to Continually Learn via Meta-learning Agentic Memory Designs",
+    "published": "2026-02-08",
+    "authors": [
+      "Yiming Xiong",
+      "Shengran Hu",
+      "Jeff Clune"
+    ]
+  },
+  "2604.25850": {
+    "title": "Agentic Harness Engineering: Observability-Driven Automatic Evolution of Coding-Agent Harnesses",
+    "published": "2026-04-28",
+    "authors": [
+      "Jiahang Lin",
+      "Shichun Liu",
+      "Chengjun Pan",
+      "Lizhi Lin"
+    ]
+  },
+  "2606.01770": {
+    "title": "Adaptive Auto-Harness: Sustained Self-Improvement for Agentic System Deployment on Open-Ended Task Streams",
+    "published": "2026-06-01",
+    "authors": [
+      "Zewen Liu",
+      "Zhan Shi",
+      "Yisi Sang",
+      "Bing He"
+    ]
+  },
+  "2609.01437": {
+    "title": "HarnessDev: Can LLMs Create and Evolve Their Own Agent Harness?",
+    "published": "2026-09-01",
+    "authors": [
+      "Yuhao Wu",
+      "Jingyuan Zhang",
+      "Jiajun Shi",
+      "Xinping Lei"
+    ]
   }
 }

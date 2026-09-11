@@ -70,7 +70,8 @@
       tag: n.keyword || n.label,
       haystack: [n.keyword, n.label, n.title, n.entry, n.section, n.kind,
                  n.topic || '', (n.tags || []).join(' '),
-                 (n.authors || []).join(' ')].join(' ').toLowerCase()
+                 (n.authors || []).join(' '),
+                 n.telegram ? 'telegram' : ''].join(' ').toLowerCase()
     });
   });
   var edges = data.edges.map(function (e) {
@@ -671,6 +672,7 @@
       + '<div class="meta">' + (authors ? escapeHtml(authors) + ' &middot; ' : '')
       + when + '</div>'
       + '<div class="meta">' + escapeHtml(d.section) + ' &middot; ' + d.kind
+      + (d.telegram ? ' &middot; telegram' : '')
       + (d.doc ? '' : ' &middot; no document retrieved') + '</div>'
       + ((d.tags || []).length
         ? '<div class="meta">' + d.tags.map(escapeHtml).join(' \u00b7 ') + '</div>'
@@ -785,14 +787,21 @@
     return Boolean(el && el.checked);
   }
 
+  function telegramFilterOn() {
+    var el = document.getElementById('tgfilter');
+    return Boolean(el && el.checked);
+  }
+
   function applyFilters() {
     var term = document.getElementById('search').value.trim().toLowerCase();
     var citeOn = citeFilterOn();
-    var filtering = Boolean(term) || Boolean(tagFilter) || citeOn;
+    var tgOn = telegramFilterOn();
+    var filtering = Boolean(term) || Boolean(tagFilter) || citeOn || tgOn;
     matches = null;
     if (filtering) {
       matches = nodes.filter(function (d) {
         if (citeOn && !citesSeed[d.index]) return false;
+        if (tgOn && !d.telegram) return false;
         if (term && d.haystack.indexOf(term) < 0) return false;
         if (tagFilter === 'untagged') return !d.topic;
         if (tagFilter) return (d.tags || []).indexOf(tagFilter) >= 0;
@@ -834,7 +843,9 @@
     layout();
     redrawAxes();
     render();
-    if (matches || tagFilter || citeFilterOn()) applyFilters();
+    if (matches || tagFilter || citeFilterOn() || telegramFilterOn()) {
+      applyFilters();
+    }
   }
 
   document.getElementById('labels').addEventListener('change', scheduleLabels);
@@ -852,6 +863,7 @@
   });
   document.getElementById('search').addEventListener('input', runSearch);
   document.getElementById('citefilter').addEventListener('change', runSearch);
+  document.getElementById('tgfilter').addEventListener('change', runSearch);
   document.getElementById('reset').addEventListener('click', function () {
     unlock();
     svg.transition().duration(350).call(zoom.transform, d3.zoomIdentity);
@@ -867,6 +879,7 @@
     }
     document.getElementById('search').value = '';
     document.getElementById('citefilter').checked = false;
+    document.getElementById('tgfilter').checked = false;
     tagFilter = null;
     markLegend();
     runSearch();

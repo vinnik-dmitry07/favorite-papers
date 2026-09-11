@@ -476,6 +476,8 @@ def main() -> None:
             'doc': refs.get('status') in ('cached', 'fetched'),
             'bib_items': refs.get('bib_items', 0),
         })
+        if node.get('telegram'):
+            nodes_out[-1]['telegram'] = True
     attach_litmaps(nodes_out)
 
     graph = {
