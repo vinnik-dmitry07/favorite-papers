@@ -1,9 +1,8 @@
 import collections
 import json
 import re
-from pathlib import Path
 
-from extract_papers import message_text
+from extract_papers import ROOT, message_text
 
 ML_SOURCES = {
     'gonzo-обзоры ML статей': 'gonzo_ML',
@@ -62,7 +61,8 @@ BARE_ID = re.compile(r'(?<![\d./v])(\d{2}(?:0[1-9]|1[0-2])\.\d{4,5})(?![\d.])')
 
 
 def known_ids() -> set[str]:
-    return set(json.loads(Path('papers_titles.json').read_text(encoding='utf-8')))
+    return set(json.loads(
+        (ROOT / 'assets' / 'papers_titles.json').read_text(encoding='utf-8')))
 
 
 def source_of(msg: dict) -> str | None:
@@ -73,7 +73,7 @@ def source_of(msg: dict) -> str | None:
 
 
 def main() -> None:
-    messages = json.loads(Path('result.json').read_text(encoding='utf-8'))['messages']
+    messages = json.loads((ROOT / 'result.json').read_text(encoding='utf-8'))['messages']
     known = known_ids()
     new_ids: dict[str, str] = {}
     hits: dict[str, list[tuple[str, str]]] = collections.defaultdict(list)

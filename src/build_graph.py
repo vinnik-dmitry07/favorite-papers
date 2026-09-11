@@ -1,10 +1,10 @@
-'''Match retrieved references against the catalog and emit map/graph.json.
+'''Match retrieved references against the catalog and emit assets/graph.json.
 
 An edge `a -> b` means "a cites b"; only pairs where both ends are catalog
 entries survive. Node `cites` is the in-corpus in-degree, which is what the
 map uses as its vertical axis.
 
-Run:  python map/build_graph.py [--report N]
+Run:  python src/build_graph.py [--report N]
 '''
 
 import re
@@ -15,8 +15,9 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from common import (  # noqa: E402
-    ARXIV_META, CATALOG, GRAPH, GRAPH_JS, KNOWN_META, LITMAPS, PAGE_META, REFS,
-    ROOT, apply_date_overrides, classify, clean_arxiv_id, clean_doi, DOI_RE,
+    ARXIV_META, ASSETS, CATALOG, GRAPH, GRAPH_JS, KNOWN_META, LITMAPS,
+    PAGE_META, REFS, ROOT, apply_date_overrides, classify, clean_arxiv_id,
+    clean_doi, DOI_RE,
     dump_json, load_json, node_arxiv_ids, norm_title, url_slug,
 )
 
@@ -60,7 +61,7 @@ def merge_metadata(catalog: list[dict], page_meta: dict) -> None:
     '''Fill gaps in the catalog with whatever the fetch stage discovered.'''
     arxiv_known: dict[str, dict] = {}
     for name in ('papers_titles.json', 'added_titles.json'):
-        arxiv_known.update(load_json(ROOT / name, {}))
+        arxiv_known.update(load_json(ASSETS / name, {}))
     arxiv_known.update(load_json(ARXIV_META, {}))
     overrides = load_json(KNOWN_META, {})
 
@@ -418,7 +419,7 @@ def main() -> None:
     refs_all = load_json(REFS, {})
     page_meta = load_json(PAGE_META, {})
     if not catalog:
-        raise SystemExit('map/catalog.json missing - run map/parse_readme.py')
+        raise SystemExit('assets/catalog.json missing - run src/parse_readme.py')
 
     merge_metadata(catalog, page_meta)
     index = build_indices(catalog, load_json(KNOWN_META, {}), page_meta)

@@ -140,7 +140,7 @@ def main() -> None:
     result['doi'] = crossref_titles(DOIS)
     print('biorxiv...', flush=True)
     result['biorxiv'] = biorxiv_titles(BIORXIV)
-    Path('extra_titles.json').write_text(
+    (Path(__file__).resolve().parent.parent / 'assets' / 'extra_titles.json').write_text(
         json.dumps(result, ensure_ascii=False, indent=2), encoding='utf-8')
     print('saved extra_titles.json')
 

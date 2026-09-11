@@ -1,10 +1,10 @@
 # Key papers of AI/AGI/ASI 
 
-![Own citation map](map/preview.png)
+![Own citation map](assets/preview.png)
 
-Own version of the Litmaps map (preferred), with the links parsed straight out of the papers (arXiv/ar5iv HTML, page HTML, Crossref) instead of a hosted service: [live map](https://vinnik-dmitry07.github.io/favorite-papers/) or open [map/index.html](map/index.html) locally. Rebuild with `python map/parse_readme.py`, then `python map/fetch_refs.py`, then `python map/build_graph.py`.
+Own version of the Litmaps map (preferred), with the links parsed straight out of the papers (arXiv/ar5iv HTML, page HTML, Crossref) instead of a hosted service: [live map](https://vinnik-dmitry07.github.io/favorite-papers/) or open [src/index.html](src/index.html) locally (`python -m http.server` from the repo root). Rebuild with `python src/parse_readme.py`, then `python src/fetch_refs.py`, then `python src/build_graph.py`. Telegram posts: `python src/tg/export.py` syncs the ML folder, then `python src/tg/find.py <url>` prints `t.me` candidates.
 
-![Litmaps](map.png)
+![Litmaps](assets/map.png)
 
 Litmaps — [https://app.litmaps.com/shared/5bb436d0-a026-493a-a765-f48fda77ad0c](https://app.litmaps.com/shared/5bb436d0-a026-493a-a765-f48fda77ad0c)
 

@@ -1,10 +1,9 @@
 import collections
 import json
 import re
-from pathlib import Path
 from urllib.parse import urlparse
 
-from extract_papers import message_text
+from extract_papers import ROOT, message_text
 
 SKIP_DOMAINS = {
     't.me', 'instagram.com', 'open.spotify.com', 'youtu.be', 'youtube.com',
@@ -28,7 +27,7 @@ URL_RE = re.compile(r'https?://[^\s<>"\')\]]+')
 
 
 def main() -> None:
-    messages = json.loads(Path('result.json').read_text(encoding='utf-8'))['messages']
+    messages = json.loads((ROOT / 'result.json').read_text(encoding='utf-8'))['messages']
     by_domain: dict[str, list[str]] = collections.defaultdict(list)
     pdfs: list[str] = []
     for msg in messages:

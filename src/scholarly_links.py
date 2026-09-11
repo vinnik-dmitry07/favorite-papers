@@ -1,9 +1,8 @@
 import json
 import re
-from pathlib import Path
 from urllib.parse import urlparse
 
-from extract_papers import message_text
+from extract_papers import ROOT, message_text
 
 SCHOLARLY = {
     'papers.ssrn.com', 'direct.mit.edu', 'www.researchgate.net',
@@ -37,7 +36,7 @@ URL_RE = re.compile(r'https?://[^\s<>"\')\]]+')
 
 
 def main() -> None:
-    messages = json.loads(Path('result.json').read_text(encoding='utf-8'))['messages']
+    messages = json.loads((ROOT / 'result.json').read_text(encoding='utf-8'))['messages']
     seen = set()
     for msg in messages:
         text = ' '.join(message_text(msg).split())

@@ -1,9 +1,9 @@
-'''Build map/litmaps.json from the Litmaps CSV + the tagged paper list.
+'''Build assets/litmaps.json from the Litmaps CSV + the tagged paper list.
 
 CSV supplies global citation / reference counts. The pasted list supplies tags
 (the CSV Tags column is empty).
 
-Run:  python map/import_litmaps.py [csv] [list.txt]
+Run:  python src/import_litmaps.py [csv] [list.txt]
 '''
 
 from __future__ import annotations
@@ -15,11 +15,11 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from common import MAP_DIR, dump_json, norm_title
+from common import ASSETS, dump_json, norm_title
 
-LITMAPS = MAP_DIR / 'litmaps.json'
+LITMAPS = ASSETS / 'litmaps.json'
 DEFAULT_CSV = Path(r'D:\Downloads\All Papers (5).csv')
-DEFAULT_LIST = MAP_DIR / 'litmaps_list.txt'
+DEFAULT_LIST = ASSETS / 'litmaps_list.txt'
 
 HEAD = re.compile(r'^.+, (?:19|20)\d{2}$')
 VENUE = re.compile(

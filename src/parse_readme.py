@@ -1,10 +1,10 @@
-'''Turn readme.md into map/catalog.json - one node per list entry.
+'''Turn readme.md into assets/catalog.json - one node per list entry.
 
 A bullet may hold several entries separated by ' * ' (middle dot); a segment
 starts a new entry when it carries its own `Label - [url]` prefix, otherwise
 its links become aliases of the previous entry.
 
-Run:  python map/parse_readme.py [--offline]
+Run:  python src/parse_readme.py [--offline]
 '''
 
 import re
@@ -18,7 +18,7 @@ from xml.etree import ElementTree
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from common import (  # noqa: E402
-    ARXIV_META, CATALOG, KNOWN_META, PAGE_META, README, ROOT,
+    ARXIV_META, ASSETS, CATALOG, KNOWN_META, PAGE_META, README, ROOT,
     apply_date_overrides, arxiv_date, classify, dump_json, is_skippable,
     load_json, node_arxiv_ids,
 )
@@ -192,7 +192,7 @@ def build_catalog() -> dict:
 def apply_known_metadata(nodes: dict) -> list[str]:
     known: dict[str, dict] = {}
     for name in TITLE_SOURCES:
-        known.update(load_json(ROOT / name, {}))
+        known.update(load_json(ASSETS / name, {}))
     known.update(load_json(ARXIV_META, {}))
     overrides = load_json(KNOWN_META, {})
 
@@ -289,7 +289,7 @@ def main() -> None:
 
     known_ids = set(load_json(ARXIV_META, {}))
     for name in TITLE_SOURCES:
-        known_ids |= set(load_json(ROOT / name, {}))
+        known_ids |= set(load_json(ASSETS / name, {}))
     missing += [i for i in hinted_arxiv_ids()
                 if i not in known_ids and i not in missing]
 

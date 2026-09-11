@@ -1,8 +1,7 @@
 import json
 import re
-from pathlib import Path
 
-from extract_papers import ARXIV_RE, message_text
+from extract_papers import ARXIV_RE, ROOT, message_text
 
 ML_SOURCES = {
     'gonzo-обзоры ML статей', 'Data Secrets', 'Борис опять', 'Denis Sexy IT 🤖',
@@ -20,7 +19,7 @@ LINK = re.compile(r'https?://\S+')
 
 
 def main() -> None:
-    messages = json.loads(Path('result.json').read_text(encoding='utf-8'))['messages']
+    messages = json.loads((ROOT / 'result.json').read_text(encoding='utf-8'))['messages']
     shown = 0
     for msg in messages:
         text = ' '.join(message_text(msg).split())

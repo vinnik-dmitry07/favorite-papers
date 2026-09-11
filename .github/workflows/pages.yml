@@ -1,4 +1,4 @@
-# Publish map/ as https://vinnik-dmitry07.github.io/favorite-papers/
+# Publish the citation map as https://vinnik-dmitry07.github.io/favorite-papers/
 name: Deploy citation map
 
 on:
@@ -26,9 +26,11 @@ jobs:
         uses: actions/checkout@v4
       - name: Stage static map
         run: |
-          mkdir -p site/vendor
-          cp map/index.html map/map.js map/graph_data.js site/
-          cp map/vendor/d3.v7.min.js site/vendor/
+          mkdir -p site/assets/vendor
+          sed 's|\.\./assets/|assets/|g' src/index.html > site/index.html
+          cp src/map.js site/
+          cp assets/graph_data.js site/assets/
+          cp assets/vendor/d3.v7.min.js site/assets/vendor/
           touch site/.nojekyll
       - name: Setup Pages
         uses: actions/configure-pages@v5

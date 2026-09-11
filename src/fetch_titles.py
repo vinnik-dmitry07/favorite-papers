@@ -6,8 +6,10 @@ import urllib.request
 from pathlib import Path
 from xml.etree import ElementTree
 
-DUMP = Path('arxiv_dump.txt')
-OUT = Path('papers_titles.json')
+ROOT = Path(__file__).resolve().parent.parent
+ASSETS = ROOT / 'assets'
+DUMP = ASSETS / 'arxiv_dump.txt'
+OUT = ASSETS / 'papers_titles.json'
 API = 'http://export.arxiv.org/api/query'
 NS = {'a': 'http://www.w3.org/2005/Atom'}
 

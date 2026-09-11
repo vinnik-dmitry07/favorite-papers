@@ -4,11 +4,11 @@ arXiv entries are read from the arXiv HTML rendering (ar5iv as fallback);
 blogs and other pages are read from their own HTML; DOI entries use Crossref
 metadata and its reference list; OpenReview entries only yield metadata.
 
-Outputs map/refs.json (per-node outgoing references) and map/page_meta.json
+Outputs assets/refs.json (per-node outgoing references) and assets/page_meta.json
 (titles / dates / authors discovered while fetching). Raw responses are cached
-gzipped under map/cache/ so re-runs are offline and resumable.
+gzipped under cache/ so re-runs are offline and resumable.
 
-Run:  python map/fetch_refs.py [--limit N] [--refresh] [--workers N] [--only ID]
+Run:  python src/fetch_refs.py [--limit N] [--refresh] [--workers N] [--only ID]
 '''
 
 import html as html_lib
@@ -444,7 +444,7 @@ def main() -> None:
 
     catalog = load_json(CATALOG, [])
     if not catalog:
-        raise SystemExit('map/catalog.json missing - run map/parse_readme.py')
+        raise SystemExit('assets/catalog.json missing - run src/parse_readme.py')
     nodes = [n for n in catalog if not only or n['id'] == only]
     if limit:
         nodes = nodes[:limit]

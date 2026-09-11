@@ -2,7 +2,7 @@
 
 Always live-fetches (cache is only a fallback). Prints progress per article.
 
-Run:  python map/check_page_dates.py [--apply]
+Run:  python src/check_page_dates.py [--apply]
 '''
 
 from __future__ import annotations
@@ -19,8 +19,8 @@ import requests
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from common import (  # noqa: E402
-    CATALOG, GRAPH, KNOWN_META, cache_path, clean_doi, dump_json, host_of,
-    load_json, read_gz, write_gz,
+    ASSETS, CATALOG, GRAPH, KNOWN_META, cache_path, clean_doi, dump_json,
+    host_of, load_json, read_gz, write_gz,
 )
 from fetch_refs import (  # noqa: E402
     DATE_IN_TEXT_RE, HEADERS, TIMEOUT, http_get, openreview_meta,
@@ -328,7 +328,7 @@ def main() -> None:
             'action': action,
         })
         print(flush=True)
-    out = Path(__file__).resolve().parent / 'date_check.json'
+    out = ASSETS / 'date_check.json'
     dump_json(out, report)
     if apply and updates:
         dump_json(KNOWN_META, overrides)

@@ -5,11 +5,12 @@ from pathlib import Path
 
 from extract_papers import message_text
 
-CHANNELS = Path('channels.txt').read_text(encoding='utf-8').split()
+ROOT = Path(__file__).resolve().parent.parent
+CHANNELS = (ROOT / 'assets' / 'channels.txt').read_text(encoding='utf-8').split()
 
 
 def main() -> None:
-    messages = json.loads(Path('result.json').read_text(encoding='utf-8'))['messages']
+    messages = json.loads((ROOT / 'result.json').read_text(encoding='utf-8'))['messages']
     fwd = collections.Counter()
     for msg in messages:
         src = msg.get('forwarded_from')

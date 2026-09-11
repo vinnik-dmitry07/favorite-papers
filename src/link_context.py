@@ -1,8 +1,7 @@
 import json
 import re
-from pathlib import Path
 
-from extract_papers import message_text
+from extract_papers import ROOT, message_text
 
 TARGETS = [
     'openreview.net', 'aclanthology.org', 'proceedings.neurips.cc',
@@ -11,7 +10,7 @@ TARGETS = [
 
 
 def main() -> None:
-    messages = json.loads(Path('result.json').read_text(encoding='utf-8'))['messages']
+    messages = json.loads((ROOT / 'result.json').read_text(encoding='utf-8'))['messages']
     seen = set()
     for msg in messages:
         text = ' '.join(message_text(msg).split())

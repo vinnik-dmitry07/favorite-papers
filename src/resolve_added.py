@@ -40,7 +40,8 @@ def main() -> None:
             'authors': [a.findtext('a:name', '', NS)
                         for a in entry.findall('a:author', NS)][:3],
         }
-    known = set(json.loads(Path('papers_titles.json').read_text(encoding='utf-8')))
+    assets = Path(__file__).resolve().parent.parent / 'assets'
+    known = set(json.loads((assets / 'papers_titles.json').read_text(encoding='utf-8')))
     for arxiv_id in IDS:
         info = out.get(arxiv_id)
         flag = 'already listed' if arxiv_id in known else 'NEW'
@@ -49,7 +50,7 @@ def main() -> None:
                   f'({", ".join(info["authors"])})')
         else:
             print(f'{arxiv_id} [{flag}] <not resolved>')
-    Path('added_titles.json').write_text(
+    (assets / 'added_titles.json').write_text(
         json.dumps(out, ensure_ascii=False, indent=2), encoding='utf-8')
 
 

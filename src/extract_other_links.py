@@ -1,8 +1,7 @@
 import json
 import re
-from pathlib import Path
 
-from extract_papers import message_text
+from extract_papers import ROOT, message_text
 
 PATTERN = re.compile(
     r'https?://(?:www\.)?(?:openreview\.net|nature\.com|science\.org|'
@@ -11,7 +10,7 @@ PATTERN = re.compile(
 
 
 def main() -> None:
-    messages = json.loads(Path('result.json').read_text(encoding='utf-8'))['messages']
+    messages = json.loads((ROOT / 'result.json').read_text(encoding='utf-8'))['messages']
     seen = []
     for msg in messages:
         for url in PATTERN.findall(message_text(msg)):

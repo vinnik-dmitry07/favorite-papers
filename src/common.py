@@ -12,19 +12,21 @@ import unicodedata
 from pathlib import Path
 from urllib.parse import urlsplit
 
-MAP_DIR = Path(__file__).resolve().parent
-ROOT = MAP_DIR.parent
-CACHE_DIR = MAP_DIR / 'cache'
+SRC_DIR = Path(__file__).resolve().parent
+ROOT = SRC_DIR.parent
+ASSETS = ROOT / 'assets'
+CACHE_DIR = ROOT / 'cache'
+MAP_DIR = ASSETS
 
 README = ROOT / 'readme.md'
-CATALOG = MAP_DIR / 'catalog.json'
-REFS = MAP_DIR / 'refs.json'
-PAGE_META = MAP_DIR / 'page_meta.json'
-GRAPH = MAP_DIR / 'graph.json'
-GRAPH_JS = MAP_DIR / 'graph_data.js'
-ARXIV_META = MAP_DIR / 'arxiv_meta.json'
-KNOWN_META = MAP_DIR / 'known_meta.json'
-LITMAPS = MAP_DIR / 'litmaps.json'
+CATALOG = ASSETS / 'catalog.json'
+REFS = ASSETS / 'refs.json'
+PAGE_META = ASSETS / 'page_meta.json'
+GRAPH = ASSETS / 'graph.json'
+GRAPH_JS = ASSETS / 'graph_data.js'
+ARXIV_META = ASSETS / 'arxiv_meta.json'
+KNOWN_META = ASSETS / 'known_meta.json'
+LITMAPS = ASSETS / 'litmaps.json'
 
 ARXIV_URL_RE = re.compile(
     r'arxiv\.org/(?:abs|pdf|html|format)/'

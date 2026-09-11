@@ -2,8 +2,9 @@ import json
 import re
 from pathlib import Path
 
-SRC = Path('result.json')
-OUT = Path('arxiv_dump.txt')
+ROOT = Path(__file__).resolve().parent.parent
+SRC = ROOT / 'result.json'
+OUT = ROOT / 'assets' / 'arxiv_dump.txt'
 
 ARXIV_RE = re.compile(
     r'arxiv\.org/(?:abs|pdf|html)/(\d{4}\.\d{4,5}|[a-z\-]+/\d{7})', re.I

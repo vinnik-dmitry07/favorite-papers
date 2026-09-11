@@ -14,9 +14,19 @@ credentials.json
 *.pem
 *.key
 
+# Telegram folder export index
+tg/*.sqlite
+tg/*.sqlite-journal
+tg/*.sqlite-wal
+tg/*.sqlite-shm
+assets/tg/*.sqlite
+assets/tg/*.sqlite-journal
+assets/tg/*.sqlite-wal
+assets/tg/*.sqlite-shm
+
 # Citation map: raw fetched documents and verification screenshots
-map/cache/
-map/shots/
+cache/
+shots/
 
 # Python
 __pycache__/

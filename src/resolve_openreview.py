@@ -55,7 +55,7 @@ def main() -> None:
         out[forum_id] = title or f'<unresolved> {errors}'
         print(f'{forum_id}: {out[forum_id][:120]}', flush=True)
         time.sleep(1)
-    Path('openreview_titles.json').write_text(
+    (Path(__file__).resolve().parent.parent / 'assets' / 'openreview_titles.json').write_text(
         json.dumps(out, ensure_ascii=False, indent=2), encoding='utf-8')
 
 

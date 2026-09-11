@@ -2,9 +2,10 @@ import json
 import re
 from pathlib import Path
 
-RESULT = Path('result.json')
-PAPERS = Path('readme.md')
-OUT = Path('readme.md')
+ROOT = Path(__file__).resolve().parent.parent
+RESULT = ROOT / 'result.json'
+PAPERS = ROOT / 'readme.md'
+OUT = ROOT / 'readme.md'
 
 CHAT_ID = 268338453  # Saved Messages peer from export
 

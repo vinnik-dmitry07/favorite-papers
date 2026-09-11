@@ -1,35 +1,61 @@
-'''Drive map/index.html in Chrome and report what actually rendered.
+'''Drive src/index.html in Chrome and report what actually rendered.
 
-Run:  python map/verify_map.py [--preview]
+Run:  python src/verify_map.py [--preview]
 
---preview also refreshes map/preview.png, the still used in readme.md.
+Serves the repo root over HTTP so Chrome can load ../assets/.
+--preview also refreshes assets/preview.png, the still used in readme.md.
 '''
 
 import sys
-from pathlib import Path
+import threading
+from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
 from playwright.sync_api import sync_playwright
 
-MAP_DIR = Path(__file__).resolve().parent
-TARGET = (MAP_DIR / 'index.html').as_uri()
-SHOTS = MAP_DIR / 'shots'
+from common import ASSETS, ROOT
+
+SHOTS = ROOT / 'shots'
+PREVIEW = ASSETS / 'preview.png'
+
+
+class _RootHandler(SimpleHTTPRequestHandler):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, directory=str(ROOT), **kwargs)
+
+    def log_message(self, format, *args):
+        return
+
+
+def start_server() -> ThreadingHTTPServer:
+    server = ThreadingHTTPServer(('127.0.0.1', 0), _RootHandler)
+    thread = threading.Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    return server
+
+
+def map_url(server: ThreadingHTTPServer) -> str:
+    return f'http://127.0.0.1:{server.server_address[1]}/src/index.html'
 
 
 def preview() -> None:
     '''Render the still that readme.md links to.'''
+    server = start_server()
     with sync_playwright() as pw:
         browser = pw.chromium.launch(channel='chrome')
         page = browser.new_page(viewport={'width': 1600, 'height': 900},
                                 device_scale_factor=1.5)
-        page.goto(TARGET, wait_until='load')
+        page.goto(map_url(server), wait_until='load')
         page.wait_for_timeout(1500)
-        page.screenshot(path=str(MAP_DIR / 'preview.png'))
+        page.screenshot(path=str(PREVIEW))
         browser.close()
-    print(f'wrote {MAP_DIR / "preview.png"}')
+    server.shutdown()
+    print(f'wrote {PREVIEW}')
 
 
 def main() -> None:
-    SHOTS.mkdir(exist_ok=True)
+    SHOTS.mkdir(parents=True, exist_ok=True)
+    server = start_server()
+    target = map_url(server)
     errors: list[str] = []
     with sync_playwright() as pw:
         browser = pw.chromium.launch(channel='chrome')
@@ -37,7 +63,7 @@ def main() -> None:
         page.on('console', lambda m: errors.append(f'console.{m.type}: {m.text}')
                 if m.type in ('error', 'warning') else None)
         page.on('pageerror', lambda e: errors.append(f'pageerror: {e}'))
-        page.goto(TARGET, wait_until='load')
+        page.goto(target, wait_until='load')
         page.wait_for_timeout(1200)
 
         counts = page.evaluate('''() => {
@@ -505,6 +531,7 @@ def main() -> None:
         })'''))
         page.screenshot(path=str(SHOTS / '05-narrow.png'))
         browser.close()
+    server.shutdown()
 
     if errors:
         print('\nBROWSER PROBLEMS:')
