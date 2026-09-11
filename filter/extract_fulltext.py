@@ -215,6 +215,9 @@ EXTRA_PDF_URLS = {
     'openreview:hcQfTsVnBo': ['https://arxiv.org/pdf/2312.06581'],
     'openreview:ry_WPG-A-': ['https://arxiv.org/pdf/1703.09146'],
     'doi:10.1073/pnas.1611835114': ['https://arxiv.org/pdf/1612.00796'],
+    'doi:10.1038/s41586-023-06924-6': [
+        'https://www.nature.com/articles/s41586-023-06924-6.pdf',
+    ],
 }
 
 
