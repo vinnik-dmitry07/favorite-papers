@@ -265,6 +265,76 @@
 
   var xBase, yBase, transform = d3.zoomIdentity, plot = {};
   var hovered = null, locked = null, matches = null, tagFilter = null;
+  var PREFS_KEY = 'key-papers-map-prefs';
+
+  function optionExists(select, value) {
+    for (var i = 0; i < select.options.length; i += 1) {
+      if (select.options[i].value === value) return true;
+    }
+    return false;
+  }
+
+  function loadPrefs() {
+    try {
+      var raw = window.localStorage.getItem(PREFS_KEY);
+      if (!raw) return {};
+      var parsed = JSON.parse(raw);
+      return parsed && typeof parsed === 'object' ? parsed : {};
+    } catch (err) {
+      return {};
+    }
+  }
+
+  function savePrefs() {
+    try {
+      window.localStorage.setItem(PREFS_KEY, JSON.stringify({
+        labels: document.getElementById('labels').value,
+        yaxis: document.getElementById('yaxis').value,
+        addcited: document.getElementById('addcited').checked,
+        edges: document.getElementById('edges').checked,
+        citefilter: document.getElementById('citefilter').checked,
+        tgfilter: document.getElementById('tgfilter').checked,
+        tag: tagFilter
+      }));
+    } catch (err) {
+      return;
+    }
+  }
+
+  function applyPrefs() {
+    var prefs = loadPrefs();
+    var labels = document.getElementById('labels');
+    if (prefs.labels && optionExists(labels, prefs.labels)) {
+      labels.value = prefs.labels;
+    }
+    var yaxis = document.getElementById('yaxis');
+    if (prefs.yaxis && optionExists(yaxis, prefs.yaxis)) {
+      yaxis.value = prefs.yaxis;
+    }
+    if (typeof prefs.addcited === 'boolean') {
+      document.getElementById('addcited').checked = prefs.addcited;
+    }
+    if (typeof prefs.edges === 'boolean') {
+      document.getElementById('edges').checked = prefs.edges;
+    }
+    if (typeof prefs.citefilter === 'boolean') {
+      document.getElementById('citefilter').checked = prefs.citefilter;
+    }
+    if (typeof prefs.tgfilter === 'boolean') {
+      document.getElementById('tgfilter').checked = prefs.tgfilter;
+    }
+    if (prefs.tag === 'untagged' || (prefs.tag && nodes.some(function (d) {
+      return (d.tags || []).indexOf(prefs.tag) >= 0;
+    }))) {
+      tagFilter = prefs.tag;
+    }
+  }
+
+  function syncEdges() {
+    gEdges.attr('display', document.getElementById('edges').checked ? null : 'none');
+  }
+
+  applyPrefs();
 
   var zoom = d3.zoom().scaleExtent([0.55, 9]).on('zoom', function (event) {
     transform = event.transform;
@@ -767,6 +837,7 @@
         tagFilter = tagFilter === value ? null : value;
         applyFilters();
         markLegend();
+        savePrefs();
       });
       el.appendChild(span);
     }
@@ -848,7 +919,10 @@
     }
   }
 
-  document.getElementById('labels').addEventListener('change', scheduleLabels);
+  document.getElementById('labels').addEventListener('change', function () {
+    savePrefs();
+    scheduleLabels();
+  });
   function applyYAxis() {
     syncAddCited();
     document.getElementById('note').textContent = note(
@@ -856,14 +930,27 @@
     svg.call(zoom.transform, d3.zoomIdentity);
     redraw();
   }
-  document.getElementById('yaxis').addEventListener('change', applyYAxis);
-  document.getElementById('addcited').addEventListener('change', applyYAxis);
-  document.getElementById('edges').addEventListener('change', function (e) {
-    gEdges.attr('display', e.target.checked ? null : 'none');
+  document.getElementById('yaxis').addEventListener('change', function () {
+    savePrefs();
+    applyYAxis();
+  });
+  document.getElementById('addcited').addEventListener('change', function () {
+    savePrefs();
+    applyYAxis();
+  });
+  document.getElementById('edges').addEventListener('change', function () {
+    savePrefs();
+    syncEdges();
   });
   document.getElementById('search').addEventListener('input', runSearch);
-  document.getElementById('citefilter').addEventListener('change', runSearch);
-  document.getElementById('tgfilter').addEventListener('change', runSearch);
+  document.getElementById('citefilter').addEventListener('change', function () {
+    savePrefs();
+    runSearch();
+  });
+  document.getElementById('tgfilter').addEventListener('change', function () {
+    savePrefs();
+    runSearch();
+  });
   document.getElementById('reset').addEventListener('click', function () {
     unlock();
     svg.transition().duration(350).call(zoom.transform, d3.zoomIdentity);
@@ -882,6 +969,7 @@
     document.getElementById('tgfilter').checked = false;
     tagFilter = null;
     markLegend();
+    savePrefs();
     runSearch();
   });
 
@@ -896,4 +984,8 @@
   document.getElementById('stats').textContent = stats();
   document.getElementById('note').textContent = note(null);
   redraw();
+  syncEdges();
+  if (matches || tagFilter || citeFilterOn() || telegramFilterOn()) {
+    applyFilters();
+  }
 }());
