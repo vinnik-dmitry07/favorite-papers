@@ -136,6 +136,31 @@ def message_text(msg: dict) -> str:
     return ''.join(parts)
 
 
+def is_arxiv_id(value: str) -> bool:
+    if not re.fullmatch(r'\d{4}\.\d{4,5}', value):
+        return False
+    yy = int(value[:2])
+    mm = int(value[2:4])
+    return 1 <= mm <= 12 and 7 <= yy <= 30
+
+
+def strip_url_junk(value: str) -> str:
+    value = value.split('#', 1)[0].split('?', 1)[0]
+    return value.rstrip(').,;\'">/')
+
+
+def canonicalize_doi(value: str) -> str:
+    value = strip_url_junk(value)
+    value = re.sub(r'^https?://(?:dx\.)?doi\.org/', '', value, flags=re.I)
+    return value.lower()
+
+
+def canonicalize_tc(value: str) -> str:
+    value = strip_url_junk(value)
+    value = re.sub(r'/index\.html?$', '', value, flags=re.I)
+    return value.rstrip('/')
+
+
 def paper_keys_from_text(text: str) -> set[str]:
     keys = set()
     for pattern, kind in PAPER_PATTERNS:
@@ -144,27 +169,25 @@ def paper_keys_from_text(text: str) -> set[str]:
                 value = '/'.join(match)
             else:
                 value = match
-            value = value.rstrip(').,;\'"')
+            value = strip_url_junk(value)
             if kind == 'arxiv':
-                yy = int(value[:2])
-                mm = int(value[2:4])
-                if mm < 1 or mm > 12 or yy < 7 or yy > 30:
+                if not is_arxiv_id(value):
                     continue
                 keys.add(f'arxiv:{value}')
             elif kind == 'openreview':
                 keys.add(f'or:{value}')
             elif kind == 'acl':
-                keys.add(f'acl:{value.rstrip("/")}')
+                keys.add(f'acl:{value}')
             elif kind == 'doi':
-                keys.add(f'doi:{value.rstrip("/")}')
+                keys.add(f'doi:{canonicalize_doi(value)}')
             elif kind == 'nature':
+                value = value.lower()
                 keys.add(f'nature:{value}')
-                # also common as doi 10.1038/<id>
                 keys.add(f'doi:10.1038/{value}')
             elif kind == 'science':
-                keys.add(f'doi:{value}')
+                keys.add(f'doi:{canonicalize_doi(value)}')
             elif kind == 'tc':
-                keys.add(f'tc:{value.rstrip("/")}')
+                keys.add(f'tc:{canonicalize_tc(value)}')
             elif kind == 'openai':
                 keys.add(f'openai:{value}')
             elif kind == 'anthropic':
@@ -191,15 +214,30 @@ def paper_keys_from_text(text: str) -> set[str]:
 
 
 def normalize_keys(keys: set[str]) -> set[str]:
-    '''Add alias keys for brittle identifiers (biorxiv versions, etc.).'''
-    out = set(keys)
-    for key in list(keys):
-        if key.startswith('doi:10.1101/'):
-            base = re.sub(r'v\d+(?:\.full)?$', '', key)
-            out.add(base)
-        if key.startswith('doi:10.1038/'):
-            # nature article ids sometimes listed bare
-            out.add('nature:' + key.split('/', 2)[-1])
+    '''Canonicalize identifiers and add aliases (DOI case, biorxiv versions).'''
+    out: set[str] = set()
+    for key in keys:
+        kind, sep, rest = key.partition(':')
+        if not sep:
+            out.add(key)
+            continue
+        if kind == 'doi':
+            rest = canonicalize_doi(rest)
+            out.add(f'doi:{rest}')
+            if rest.startswith('10.1101/'):
+                out.add('doi:' + re.sub(r'v\d+(?:\.full)?$', '', rest))
+            if rest.startswith('10.1038/'):
+                out.add('nature:' + rest.split('/', 1)[-1])
+            continue
+        if kind == 'nature':
+            rest = rest.lower()
+            out.add(f'nature:{rest}')
+            out.add(f'doi:10.1038/{rest}')
+            continue
+        if kind == 'tc':
+            out.add(f'tc:{canonicalize_tc(rest)}')
+            continue
+        out.add(f'{kind}:{rest}')
     return out
 
 

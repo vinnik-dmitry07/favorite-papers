@@ -10,41 +10,56 @@ from os import environ
 from pathlib import Path
 from typing import Any
 
-SRC = Path(__file__).resolve().parent.parent
-ROOT = SRC.parent
+ROOT = Path(__file__).resolve().parent.parent
+SRC = ROOT / 'src'
 if str(SRC) not in sys.path:
-    sys.path.insert(0, str(SRC))
+    sys.path.append(str(SRC))
 
 from add_tg_links import (  # noqa: E402
-    TME_POST,
     channel_translate_link,
+    is_arxiv_id,
     normalize_keys,
     paper_keys_from_text,
 )
 
-
-def _tg_dir() -> Path:
-    assets_tg = ROOT / 'assets' / 'tg'
-    legacy = ROOT / 'tg'
-    if (assets_tg / 'ml_folder.sqlite').exists():
-        return assets_tg
-    if (legacy / 'ml_folder.sqlite').exists():
-        return legacy
-    return assets_tg
-
-
-TG_DIR = _tg_dir()
-DB = TG_DIR / 'ml_folder.sqlite'
-SESSION = TG_DIR / 'ml_folder'
-ENV = ROOT / '.env'
+CANONICAL_TG = ROOT / 'tg'
+LEGACY_TG = ROOT / 'assets' / 'tg'
+SCHEMA_VERSION = 2
+URL_RE = re.compile(r'https?://[^\s\]\)>\'",]+', re.I)
+ARXIV_BARE_RE = re.compile(r'(?<![\d.])(\d{4}\.\d{4,5})(?:v\d+)?(?![\d.])')
 DEFAULT_SLUG = '5iWgAjztpOJiYTQy'
 DEFAULT_FOLDER = 'ML'
+ENV = ROOT / '.env'
 
-URL_RE = re.compile(r'https?://[^\s\]\)>\'",]+', re.I)
-ARXIV_BARE_RE = re.compile(
-    r'(?<![\d.])(\d{4}\.\d{4,5})(?:v\d+)?(?![\d.])',
-)
+
+def resolve_db_path() -> Path:
+    for path in (
+        CANONICAL_TG / 'ml_folder.sqlite',
+        LEGACY_TG / 'ml_folder.sqlite',
+    ):
+        if path.exists():
+            return path
+    return CANONICAL_TG / 'ml_folder.sqlite'
+
+
+def resolve_session_path() -> Path:
+    '''Telethon session stem, independent of where the sqlite file lives.'''
+    for stem in (CANONICAL_TG / 'ml_folder', LEGACY_TG / 'ml_folder'):
+        if stem.with_suffix('.session').exists():
+            return stem
+    return CANONICAL_TG / 'ml_folder'
+
+
+DB = resolve_db_path()
+SESSION = resolve_session_path()
+TG_DIR = DB.parent
+
 SCHEMA = '''
+CREATE TABLE IF NOT EXISTS meta (
+    key TEXT PRIMARY KEY,
+    value TEXT
+);
+
 CREATE TABLE IF NOT EXISTS channels (
     id INTEGER PRIMARY KEY,
     username TEXT,
@@ -65,6 +80,8 @@ CREATE TABLE IF NOT EXISTS messages (
     fwd_username TEXT,
     fwd_post_id INTEGER,
     fwd_name TEXT,
+    is_fwd INTEGER DEFAULT 0,
+    key_count INTEGER DEFAULT 0,
     grouped_id INTEGER,
     views INTEGER,
     PRIMARY KEY (channel_id, id)
@@ -77,17 +94,27 @@ CREATE TABLE IF NOT EXISTS paper_keys (
     PRIMARY KEY (key, channel_id, msg_id)
 );
 CREATE INDEX IF NOT EXISTS paper_keys_key ON paper_keys(key);
+CREATE INDEX IF NOT EXISTS paper_keys_msg ON paper_keys(channel_id, msg_id);
 
 CREATE VIRTUAL TABLE IF NOT EXISTS fts USING fts5(
-    channel_id UNINDEXED,
-    msg_id UNINDEXED,
-    text
+    text,
+    tokenize='unicode61'
 );
 '''
 
 
+def configure_stdio() -> None:
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, 'reconfigure', None)
+        if reconfigure is None:
+            continue
+        try:
+            reconfigure(encoding='utf-8', errors='replace')
+        except Exception:  # noqa: BLE001
+            pass
+
+
 def load_env(path: Path | None = None) -> dict[str, str]:
-    '''Parse a tiny KEY=value .env file. Existing process env wins.'''
     env_path = path or ENV
     out: dict[str, str] = {}
     if env_path.exists():
@@ -105,7 +132,7 @@ def env_get(name: str, default: str = '') -> str:
 
 
 def make_client():
-    '''Telethon client; session lives next to the SQLite index.'''
+    '''Telethon client. FloodWait is raised so export can log the sleep.'''
     try:
         from telethon import TelegramClient
     except ImportError as exc:
@@ -123,11 +150,73 @@ def make_client():
     except ValueError as exc:
         raise SystemExit('TG_API_ID must be an integer') from exc
 
-    TG_DIR.mkdir(parents=True, exist_ok=True)
+    SESSION.parent.mkdir(parents=True, exist_ok=True)
     client = TelegramClient(str(SESSION), api_id, api_hash)
-    # Sleep through FloodWait instead of raising.
-    client.flood_sleep_threshold = 24 * 60 * 60
+    client.flood_sleep_threshold = 0
     return client
+
+
+def _table_columns(conn: sqlite3.Connection, table: str) -> set[str]:
+    return {row[1] for row in conn.execute(f'PRAGMA table_info({table})')}
+
+
+def _schema_version(conn: sqlite3.Connection) -> int:
+    conn.execute(
+        'CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT)'
+    )
+    row = conn.execute(
+        "SELECT value FROM meta WHERE key = 'schema'",
+    ).fetchone()
+    return int(row[0]) if row else 0
+
+
+def _fts_is_legacy(conn: sqlite3.Connection) -> bool:
+    row = conn.execute(
+        "SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'fts'",
+    ).fetchone()
+    if not row or not row[0]:
+        return True
+    return 'channel_id' in row[0]
+
+
+def _ensure_message_columns(conn: sqlite3.Connection) -> None:
+    cols = _table_columns(conn, 'messages')
+    if 'is_fwd' not in cols:
+        conn.execute(
+            'ALTER TABLE messages ADD COLUMN is_fwd INTEGER DEFAULT 0',
+        )
+    if 'key_count' not in cols:
+        conn.execute(
+            'ALTER TABLE messages ADD COLUMN key_count INTEGER DEFAULT 0',
+        )
+
+
+def migrate_schema(conn: sqlite3.Connection) -> None:
+    _ensure_message_columns(conn)
+    conn.execute(
+        'CREATE INDEX IF NOT EXISTS paper_keys_msg '
+        'ON paper_keys(channel_id, msg_id)',
+    )
+    version = _schema_version(conn)
+    legacy_fts = _fts_is_legacy(conn)
+    if version >= SCHEMA_VERSION and not legacy_fts:
+        return
+    stored = conn.execute('SELECT COUNT(*) FROM messages').fetchone()[0]
+    if legacy_fts:
+        print('migrating telegram index (rebuild fts)...', flush=True)
+        conn.execute('DROP TABLE IF EXISTS fts')
+        conn.execute(
+            "CREATE VIRTUAL TABLE fts USING fts5(text, tokenize='unicode61')",
+        )
+        conn.commit()
+    if stored:
+        print('migrating telegram index (paper keys + fts)...', flush=True)
+        reindex_all(conn)
+    conn.execute(
+        "INSERT OR REPLACE INTO meta (key, value) VALUES ('schema', ?)",
+        (str(SCHEMA_VERSION),),
+    )
+    conn.commit()
 
 
 def open_db(path: Path | None = None) -> sqlite3.Connection:
@@ -138,6 +227,7 @@ def open_db(path: Path | None = None) -> sqlite3.Connection:
     conn.execute('PRAGMA journal_mode=WAL')
     conn.execute('PRAGMA foreign_keys=ON')
     conn.executescript(SCHEMA)
+    migrate_schema(conn)
     return conn
 
 
@@ -163,7 +253,6 @@ def _entity_urls(msg: Any) -> list[str]:
 
 
 def _webpage_bits(msg: Any) -> tuple[list[str], list[str]]:
-    '''Return (urls, extra text) from a link preview, if any.'''
     media = getattr(msg, 'media', None)
     webpage = getattr(media, 'webpage', None)
     if webpage is None:
@@ -187,9 +276,11 @@ def _forward_info(msg: Any) -> dict[str, Any]:
         'fwd_username': None,
         'fwd_post_id': None,
         'fwd_name': None,
+        'is_fwd': 0,
     }
     if fwd is None:
         return info
+    info['is_fwd'] = 1
     from_id = getattr(fwd, 'from_id', None)
     if from_id is not None:
         info['fwd_channel_id'] = getattr(from_id, 'channel_id', None)
@@ -205,6 +296,14 @@ def _forward_info(msg: Any) -> dict[str, Any]:
         if not info['fwd_name']:
             info['fwd_name'] = getattr(chat, 'title', None)
     return info
+
+
+def inferred_is_fwd(row: dict[str, Any]) -> int:
+    if row.get('is_fwd'):
+        return 1
+    if row.get('fwd_post_id') or row.get('fwd_channel_id') or row.get('fwd_name'):
+        return 1
+    return 0
 
 
 def message_row(msg: Any, channel_id: int) -> dict[str, Any] | None:
@@ -233,19 +332,17 @@ def message_row(msg: Any, channel_id: int) -> dict[str, Any] | None:
         'urls': '\n'.join(urls),
         'grouped_id': getattr(msg, 'grouped_id', None),
         'views': getattr(msg, 'views', None),
+        'key_count': 0,
     }
     row.update(_forward_info(msg))
     return row
 
 
 def keys_from_query(query: str) -> set[str]:
-    '''Paper keys from a URL, bare arXiv id, DOI, or free text.'''
     keys = normalize_keys(paper_keys_from_text(query))
     for match in ARXIV_BARE_RE.finditer(query):
         value = match.group(1)
-        yy = int(value[:2])
-        mm = int(value[2:4])
-        if 1 <= mm <= 12 and 7 <= yy <= 30:
+        if is_arxiv_id(value):
             keys.add(f'arxiv:{value}')
     return normalize_keys(keys)
 
@@ -255,69 +352,118 @@ def keys_from_row(row: dict[str, Any]) -> set[str]:
     return normalize_keys(paper_keys_from_text(blob))
 
 
-def refresh_index(conn: sqlite3.Connection, row: dict[str, Any]) -> None:
+def _message_rowid(
+    conn: sqlite3.Connection,
+    channel_id: int,
+    msg_id: int,
+) -> int | None:
+    row = conn.execute(
+        'SELECT rowid FROM messages WHERE channel_id = ? AND id = ?',
+        (channel_id, msg_id),
+    ).fetchone()
+    return int(row[0]) if row else None
+
+
+def refresh_index(
+    conn: sqlite3.Connection,
+    row: dict[str, Any],
+    *,
+    replace: bool = True,
+) -> None:
     '''Rebuild paper_keys + FTS for one already-stored message.'''
-    conn.execute(
-        'DELETE FROM paper_keys WHERE channel_id = ? AND msg_id = ?',
-        (row['channel_id'], row['id']),
-    )
-    for key in keys_from_row(row):
+    channel_id = row['channel_id']
+    msg_id = row['id']
+    rowid = _message_rowid(conn, channel_id, msg_id)
+    if rowid is None:
+        return
+    keys = keys_from_row(row)
+    is_fwd = inferred_is_fwd(row)
+    if replace:
+        conn.execute(
+            'DELETE FROM paper_keys WHERE channel_id = ? AND msg_id = ?',
+            (channel_id, msg_id),
+        )
+        conn.execute('DELETE FROM fts WHERE rowid = ?', (rowid,))
+    for key in keys:
         conn.execute(
             'INSERT OR IGNORE INTO paper_keys (key, channel_id, msg_id) '
             'VALUES (?, ?, ?)',
-            (key, row['channel_id'], row['id']),
+            (key, channel_id, msg_id),
         )
     conn.execute(
-        'DELETE FROM fts WHERE channel_id = ? AND msg_id = ?',
-        (row['channel_id'], row['id']),
+        'UPDATE messages SET is_fwd = ?, key_count = ? WHERE rowid = ?',
+        (is_fwd, len(keys), rowid),
     )
     if row.get('text'):
         conn.execute(
-            'INSERT INTO fts (channel_id, msg_id, text) VALUES (?, ?, ?)',
-            (row['channel_id'], row['id'], row['text']),
+            'INSERT INTO fts (rowid, text) VALUES (?, ?)',
+            (rowid, row['text']),
         )
 
 
 def index_message(conn: sqlite3.Connection, row: dict[str, Any]) -> int:
     '''Insert or replace one message and refresh paper_keys + FTS. Returns 1.'''
+    row = dict(row)
+    row['is_fwd'] = inferred_is_fwd(row)
+    row.setdefault('key_count', 0)
     conn.execute(
         '''
-        INSERT OR REPLACE INTO messages (
+        INSERT INTO messages (
             channel_id, id, date, text, urls,
             fwd_channel_id, fwd_username, fwd_post_id, fwd_name,
-            grouped_id, views
+            is_fwd, key_count, grouped_id, views
         ) VALUES (
             :channel_id, :id, :date, :text, :urls,
             :fwd_channel_id, :fwd_username, :fwd_post_id, :fwd_name,
-            :grouped_id, :views
+            :is_fwd, :key_count, :grouped_id, :views
         )
+        ON CONFLICT(channel_id, id) DO UPDATE SET
+            date = excluded.date,
+            text = excluded.text,
+            urls = excluded.urls,
+            fwd_channel_id = excluded.fwd_channel_id,
+            fwd_username = COALESCE(
+                excluded.fwd_username, messages.fwd_username
+            ),
+            fwd_post_id = excluded.fwd_post_id,
+            fwd_name = COALESCE(excluded.fwd_name, messages.fwd_name),
+            is_fwd = excluded.is_fwd,
+            grouped_id = excluded.grouped_id,
+            views = excluded.views
         ''',
         row,
     )
-    refresh_index(conn, row)
+    refresh_index(conn, row, replace=True)
     return 1
 
 
 def reindex_all(conn: sqlite3.Connection) -> tuple[int, int]:
     '''Rebuild paper_keys and FTS from stored messages. Returns (msgs, keys).'''
-    rows = conn.execute(
-        'SELECT channel_id, id, date, text, urls, '
-        'fwd_channel_id, fwd_username, fwd_post_id, fwd_name, '
-        'grouped_id, views FROM messages'
-    ).fetchall()
-    total = len(rows)
+    total = conn.execute('SELECT COUNT(*) FROM messages').fetchone()[0]
     conn.execute('DELETE FROM paper_keys')
     conn.execute('DELETE FROM fts')
-    for done, raw in enumerate(rows, start=1):
-        refresh_index(conn, dict(raw))
-        if done % 500 == 0 or done == total:
-            pct = 100 * done / total if total else 100
-            print(f'\rreindex {done}/{total} ({pct:.0f}%)', end='', flush=True)
     conn.commit()
+    cursor = conn.execute(
+        'SELECT channel_id, id, date, text, urls, '
+        'fwd_channel_id, fwd_username, fwd_post_id, fwd_name, '
+        'is_fwd, key_count, grouped_id, views FROM messages',
+    )
+    done = 0
+    while True:
+        batch = cursor.fetchmany(500)
+        if not batch:
+            break
+        for raw in batch:
+            refresh_index(conn, dict(raw), replace=False)
+            done += 1
+        conn.commit()
+        if total:
+            pct = 100 * done / total
+            print(f'\rreindex {done}/{total} ({pct:.0f}%)', end='', flush=True)
     keys = conn.execute('SELECT COUNT(*) FROM paper_keys').fetchone()[0]
     if total:
         print(flush=True)
-    return total, keys
+    return done, keys
 
 
 def upsert_channel(
@@ -332,11 +478,13 @@ def upsert_channel(
 ) -> None:
     conn.execute(
         '''
-        INSERT INTO channels (id, username, title, kind, last_id, total, synced_at)
+        INSERT INTO channels (
+            id, username, title, kind, last_id, total, synced_at
+        )
         VALUES (?, ?, ?, ?, COALESCE(?, 0), ?, ?)
         ON CONFLICT(id) DO UPDATE SET
-            username = excluded.username,
-            title = excluded.title,
+            username = COALESCE(excluded.username, channels.username),
+            title = COALESCE(excluded.title, channels.title),
             kind = excluded.kind,
             last_id = COALESCE(excluded.last_id, channels.last_id),
             total = COALESCE(excluded.total, channels.total),
@@ -391,7 +539,6 @@ def public_post_url(
     channel_id: int,
     msg_id: int,
 ) -> tuple[str, bool]:
-    '''Return (url, is_public).'''
     if username:
         return f'https://t.me/{username}/{msg_id}', True
     return f'https://t.me/c/{channel_id}/{msg_id}', False
@@ -400,9 +547,7 @@ def public_post_url(
 def badge_for(username: str | None, msg_id: int) -> str | None:
     if not username:
         return None
-    return (
-        f'[⌲ tg]({channel_translate_link(username, str(msg_id))})'
-    )
+    return f'[⌲ tg]({channel_translate_link(username, str(msg_id))})'
 
 
 def db_size(path: Path | None = None) -> int:
@@ -420,40 +565,9 @@ def format_size(n: int) -> str:
     return f'{n / (1024 ** 2):.1f} MB'
 
 
-def channel_label(username: str | None, title: str | None, channel_id: int) -> str:
+def channel_label(
+    username: str | None,
+    title: str | None,
+    channel_id: int,
+) -> str:
     return username or title or str(channel_id)
-
-
-# Re-export for callers that only import common.
-__all__ = [
-    'ARXIV_BARE_RE',
-    'DB',
-    'DEFAULT_FOLDER',
-    'DEFAULT_SLUG',
-    'ENV',
-    'ROOT',
-    'SESSION',
-    'TME_POST',
-    'TG_DIR',
-    'badge_for',
-    'channel_label',
-    'channel_last_id',
-    'channel_translate_link',
-    'db_size',
-    'env_get',
-    'format_size',
-    'index_message',
-    'refresh_index',
-    'keys_from_query',
-    'keys_from_row',
-    'load_env',
-    'make_client',
-    'message_row',
-    'normalize_keys',
-    'open_db',
-    'paper_keys_from_text',
-    'public_post_url',
-    'reindex_all',
-    'set_channel_progress',
-    'upsert_channel',
-]
