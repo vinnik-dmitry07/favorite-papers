@@ -340,7 +340,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument('--backend', choices=['vllm', 'ai_researcher'], default='vllm')
     parser.add_argument('--batch-size', type=int, default=0)
     parser.add_argument('--deep-mode', default='')
+    parser.add_argument('--seed', type=int, default=0)
+    parser.add_argument('--max-tokens', type=int, default=0)
+    parser.add_argument('--out-suffix', default='')
     return parser.parse_args()
+
+
+def output_name(name: str, suffix: str = '') -> str:
+    suffix = (suffix or '').strip().lstrip('.')
+    return f'{name}.{suffix}' if suffix else name
 
 
 def deep_mode_of(spec: dict, args) -> str:
@@ -585,7 +593,7 @@ def run_vllm(name: str, spec: dict, rows: list[dict], args, index: dict) -> None
     sample = {
         'temperature': spec.get('temperature', 0.3),
         'max_tokens': spec['max_tokens'],
-        'seed': 0,
+        'seed': args.seed,
     }
     if spec.get('top_p') is not None:
         sample['top_p'] = spec['top_p']
@@ -609,7 +617,8 @@ def run_vllm(name: str, spec: dict, rows: list[dict], args, index: dict) -> None
     budget = paper_budget(tokenizer, spec['kind'], max_len, spec['max_tokens'], mode)
     print(
         f'{name}: vLLM batch_size={batch_size} paper_budget={budget} '
-        f'max_len={max_len} max_tokens={spec["max_tokens"]} mode={mode!r}',
+        f'max_len={max_len} max_tokens={spec["max_tokens"]} seed={args.seed} '
+        f'mode={mode!r}',
         flush=True,
     )
 
@@ -657,9 +666,12 @@ def run_vllm(name: str, spec: dict, rows: list[dict], args, index: dict) -> None
 
 def main() -> None:
     args = parse_args()
-    spec = MODELS[args.model]
+    spec = dict(MODELS[args.model])
+    if args.max_tokens > 0:
+        spec['max_tokens'] = args.max_tokens
+    name = output_name(args.model, args.out_suffix)
     wanted = {part.strip() for part in args.only_keys.split(',') if part.strip()}
-    out = scores_path(args.model)
+    out = scores_path(name)
     done = scored_keys(out)
     index = fulltext_index()
     rows = []
@@ -669,14 +681,14 @@ def main() -> None:
         if row['key'] in done:
             continue
         rows.append(row)
-    print(f'{args.model}: {len(done)} cached, {len(rows)} to score', flush=True)
+    print(f'{name}: {len(done)} cached, {len(rows)} to score', flush=True)
     if not rows:
         return
     if args.backend == 'ai_researcher' and spec['kind'] in {'cycle', 'deep'}:
-        run_ai_researcher(args.model, spec, rows, args, index)
+        run_ai_researcher(name, spec, rows, args, index)
     else:
-        run_vllm(args.model, spec, rows, args, index)
-    print(f'{args.model}: wrote {out}', flush=True)
+        run_vllm(name, spec, rows, args, index)
+    print(f'{name}: wrote {out}', flush=True)
 
 
 if __name__ == '__main__':

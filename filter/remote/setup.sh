@@ -18,17 +18,24 @@ fi
 
 echo "[setup] python=$(python --version 2>/dev/null || python3 --version) gpu=$(nvidia-smi --query-gpu=name,memory.total --format=csv,noheader || true)"
 
+# Verified stack on RTX PRO 6000 Blackwell (sm_120), driver 610.43.02:
+# vLLM 0.29.0, torch 2.13.0+cu130.
+# Required env: VLLM_USE_FLASHINFER_SAMPLER=0 VLLM_ATTENTION_BACKEND=FLASH_ATTN
 python -m pip install -U pip
-python -m pip install -U \
-  'vllm' \
-  'ai_researcher' \
-  'peft' \
-  'bitsandbytes' \
-  'tqdm' \
-  'huggingface_hub[cli]' \
-  'transformers' \
-  'accelerate' \
-  'numpy'
+if [[ -f "$ROOT/requirements.lock" && "${USE_LOCK:-0}" == 1 ]]; then
+  python -m pip install -r "$ROOT/requirements.lock"
+else
+  python -m pip install -U \
+    'vllm' \
+    'ai_researcher' \
+    'peft' \
+    'bitsandbytes' \
+    'tqdm' \
+    'huggingface_hub[cli]' \
+    'transformers' \
+    'accelerate' \
+    'numpy'
+fi
 
 if [[ -z "${HF_TOKEN:-}" ]]; then
   echo "[setup] WARNING: HF_TOKEN is empty. Gated CycleReviewer/DeepReviewer downloads will fail."

@@ -12,17 +12,25 @@ Ratings of well-known older papers (Llama 3, DeepSeekMath, DAPO, …) can be inf
 | NAIP-v1 | 319 |
 | SciJudge BT | 319 |
 | DGC-BERT p(accept) | 319 |
-| CycleReviewer-8B | 311 |
+| CycleReviewer-8B | 319 |
 | CycleReviewer-70B | 0 |
-| DeepReviewer-7B Standard | 300 |
-| DeepReviewer-7B Fast | 258 |
-| DeepReviewer-14B Fast | 314 |
-| OpenReviewer-8B | 316 |
+| DeepReviewer-7B Standard | 310 |
+| DeepReviewer-7B Fast | 307 |
+| DeepReviewer-14B Fast | 317 |
+| OpenReviewer-8B | 319 |
 | SEA-E | 319 |
 
 ## DeepReviewer-7B Fast vs Standard
 
-Intersection n=247. Spearman `0.361`. Accept/Reject macro-F1 `0.606` (n=247). Standard is a partial run; Fast is the column used in mean_rating10 / rank_avg.
+Intersection n=301. Spearman `0.374`. Accept/Reject macro-F1 `0.604` (n=301). Standard is a partial run; Fast is the column used in mean_rating10 / rank_avg.
+
+## Self-agreement (seed 0 vs seed 1)
+
+| model | n | Spearman | macro-F1 |
+|---|---:|---:|---:|
+| CR-8B | 51 | 0.512 | 0.648 |
+| DR-14B Fast | 51 | 0.742 | 0.753 |
+
 
 ## Agreement (Spearman)
 
@@ -31,91 +39,91 @@ Intersection n=247. Spearman `0.361`. Accept/Reject macro-F1 `0.606` (n=247). St
 | NAIPv2 | NAIP-v1 | 319 | 0.249 |
 | NAIPv2 | SciJudge | 319 | 0.426 |
 | NAIPv2 | DGC-BERT | 319 | 0.329 |
-| NAIPv2 | CR-8B | 311 | 0.167 |
+| NAIPv2 | CR-8B | 319 | 0.168 |
 | NAIPv2 | CR-70B | 0 |  |
-| NAIPv2 | DR-7B Std | 300 | 0.396 |
-| NAIPv2 | DR-7B Fast | 258 | 0.314 |
-| NAIPv2 | DR-14B Fast | 314 | 0.491 |
-| NAIPv2 | OR-8B | 316 | 0.209 |
+| NAIPv2 | DR-7B Std | 310 | 0.402 |
+| NAIPv2 | DR-7B Fast | 307 | 0.316 |
+| NAIPv2 | DR-14B Fast | 317 | 0.485 |
+| NAIPv2 | OR-8B | 319 | 0.220 |
 | NAIPv2 | SEA-E | 319 | 0.333 |
 | NAIP-v1 | SciJudge | 319 | 0.487 |
 | NAIP-v1 | DGC-BERT | 319 | 0.125 |
-| NAIP-v1 | CR-8B | 311 | 0.208 |
+| NAIP-v1 | CR-8B | 319 | 0.215 |
 | NAIP-v1 | CR-70B | 0 |  |
-| NAIP-v1 | DR-7B Std | 300 | 0.136 |
-| NAIP-v1 | DR-7B Fast | 258 | 0.114 |
-| NAIP-v1 | DR-14B Fast | 314 | 0.104 |
-| NAIP-v1 | OR-8B | 316 | 0.122 |
+| NAIP-v1 | DR-7B Std | 310 | 0.129 |
+| NAIP-v1 | DR-7B Fast | 307 | 0.153 |
+| NAIP-v1 | DR-14B Fast | 317 | 0.105 |
+| NAIP-v1 | OR-8B | 319 | 0.118 |
 | NAIP-v1 | SEA-E | 319 | 0.114 |
 | SciJudge | DGC-BERT | 319 | 0.406 |
-| SciJudge | CR-8B | 311 | 0.330 |
+| SciJudge | CR-8B | 319 | 0.333 |
 | SciJudge | CR-70B | 0 |  |
-| SciJudge | DR-7B Std | 300 | 0.298 |
-| SciJudge | DR-7B Fast | 258 | 0.296 |
-| SciJudge | DR-14B Fast | 314 | 0.341 |
-| SciJudge | OR-8B | 316 | 0.259 |
+| SciJudge | DR-7B Std | 310 | 0.248 |
+| SciJudge | DR-7B Fast | 307 | 0.219 |
+| SciJudge | DR-14B Fast | 317 | 0.341 |
+| SciJudge | OR-8B | 319 | 0.256 |
 | SciJudge | SEA-E | 319 | 0.332 |
-| DGC-BERT | CR-8B | 311 | 0.113 |
+| DGC-BERT | CR-8B | 319 | 0.101 |
 | DGC-BERT | CR-70B | 0 |  |
-| DGC-BERT | DR-7B Std | 300 | 0.208 |
-| DGC-BERT | DR-7B Fast | 258 | 0.193 |
-| DGC-BERT | DR-14B Fast | 314 | 0.204 |
-| DGC-BERT | OR-8B | 316 | -0.061 |
+| DGC-BERT | DR-7B Std | 310 | 0.216 |
+| DGC-BERT | DR-7B Fast | 307 | 0.191 |
+| DGC-BERT | DR-14B Fast | 317 | 0.198 |
+| DGC-BERT | OR-8B | 319 | -0.053 |
 | DGC-BERT | SEA-E | 319 | 0.137 |
 | CR-8B | CR-70B | 0 |  |
-| CR-8B | DR-7B Std | 292 | 0.241 |
-| CR-8B | DR-7B Fast | 251 | 0.185 |
-| CR-8B | DR-14B Fast | 306 | 0.216 |
-| CR-8B | OR-8B | 308 | 0.139 |
-| CR-8B | SEA-E | 311 | 0.185 |
+| CR-8B | DR-7B Std | 310 | 0.233 |
+| CR-8B | DR-7B Fast | 307 | 0.168 |
+| CR-8B | DR-14B Fast | 317 | 0.219 |
+| CR-8B | OR-8B | 319 | 0.122 |
+| CR-8B | SEA-E | 319 | 0.171 |
 | CR-70B | DR-7B Std | 0 |  |
 | CR-70B | DR-7B Fast | 0 |  |
 | CR-70B | DR-14B Fast | 0 |  |
 | CR-70B | OR-8B | 0 |  |
 | CR-70B | SEA-E | 0 |  |
-| DR-7B Std | DR-7B Fast | 247 | 0.361 |
-| DR-7B Std | DR-14B Fast | 297 | 0.383 |
-| DR-7B Std | OR-8B | 297 | 0.213 |
-| DR-7B Std | SEA-E | 300 | 0.292 |
-| DR-7B Fast | DR-14B Fast | 254 | 0.320 |
-| DR-7B Fast | OR-8B | 256 | 0.191 |
-| DR-7B Fast | SEA-E | 258 | 0.305 |
-| DR-14B Fast | OR-8B | 311 | 0.283 |
-| DR-14B Fast | SEA-E | 314 | 0.252 |
-| OR-8B | SEA-E | 316 | 0.231 |
+| DR-7B Std | DR-7B Fast | 301 | 0.374 |
+| DR-7B Std | DR-14B Fast | 310 | 0.377 |
+| DR-7B Std | OR-8B | 310 | 0.230 |
+| DR-7B Std | SEA-E | 310 | 0.292 |
+| DR-7B Fast | DR-14B Fast | 306 | 0.314 |
+| DR-7B Fast | OR-8B | 307 | 0.231 |
+| DR-7B Fast | SEA-E | 307 | 0.287 |
+| DR-14B Fast | OR-8B | 317 | 0.265 |
+| DR-14B Fast | SEA-E | 317 | 0.243 |
+| OR-8B | SEA-E | 319 | 0.232 |
 
 ## Agreement (macro-F1 Accept/Reject)
 
 | model A | model B | n | macro-F1 |
 |---|---|---:|---:|
-| DGC-BERT | CR-8B | 311 | 0.457 |
+| DGC-BERT | CR-8B | 319 | 0.452 |
 | DGC-BERT | CR-70B | 0 |  |
-| DGC-BERT | DR-7B Std | 300 | 0.560 |
-| DGC-BERT | DR-7B Fast | 258 | 0.551 |
-| DGC-BERT | DR-14B Fast | 314 | 0.576 |
-| DGC-BERT | OR-8B | 316 | 0.444 |
+| DGC-BERT | DR-7B Std | 310 | 0.561 |
+| DGC-BERT | DR-7B Fast | 307 | 0.573 |
+| DGC-BERT | DR-14B Fast | 317 | 0.573 |
+| DGC-BERT | OR-8B | 319 | 0.452 |
 | DGC-BERT | SEA-E | 319 | 0.431 |
 | CR-8B | CR-70B | 0 |  |
-| CR-8B | DR-7B Std | 292 | 0.529 |
-| CR-8B | DR-7B Fast | 251 | 0.488 |
-| CR-8B | DR-14B Fast | 306 | 0.434 |
-| CR-8B | OR-8B | 308 | 0.340 |
-| CR-8B | SEA-E | 311 | 0.271 |
+| CR-8B | DR-7B Std | 310 | 0.532 |
+| CR-8B | DR-7B Fast | 307 | 0.479 |
+| CR-8B | DR-14B Fast | 317 | 0.438 |
+| CR-8B | OR-8B | 319 | 0.347 |
+| CR-8B | SEA-E | 319 | 0.271 |
 | CR-70B | DR-7B Std | 0 |  |
 | CR-70B | DR-7B Fast | 0 |  |
 | CR-70B | DR-14B Fast | 0 |  |
 | CR-70B | OR-8B | 0 |  |
 | CR-70B | SEA-E | 0 |  |
-| DR-7B Std | DR-7B Fast | 247 | 0.606 |
-| DR-7B Std | DR-14B Fast | 297 | 0.592 |
-| DR-7B Std | OR-8B | 297 | 0.527 |
-| DR-7B Std | SEA-E | 300 | 0.408 |
-| DR-7B Fast | DR-14B Fast | 254 | 0.637 |
-| DR-7B Fast | OR-8B | 256 | 0.542 |
-| DR-7B Fast | SEA-E | 258 | 0.512 |
-| DR-14B Fast | OR-8B | 311 | 0.575 |
-| DR-14B Fast | SEA-E | 314 | 0.541 |
-| OR-8B | SEA-E | 316 | 0.631 |
+| DR-7B Std | DR-7B Fast | 301 | 0.604 |
+| DR-7B Std | DR-14B Fast | 310 | 0.589 |
+| DR-7B Std | OR-8B | 310 | 0.527 |
+| DR-7B Std | SEA-E | 310 | 0.407 |
+| DR-7B Fast | DR-14B Fast | 306 | 0.645 |
+| DR-7B Fast | OR-8B | 307 | 0.553 |
+| DR-7B Fast | SEA-E | 307 | 0.499 |
+| DR-14B Fast | OR-8B | 317 | 0.571 |
+| DR-14B Fast | SEA-E | 317 | 0.540 |
+| OR-8B | SEA-E | 319 | 0.636 |
 
 ## Ranking by readme section
 
@@ -124,30 +132,30 @@ Intersection n=247. Spearman `0.361`. Accept/Reject macro-F1 `0.606` (n=247). St
 | rank | title | year | mean 1–10 | accept | key |
 |---:|---|---|---:|---:|---|
 | 1 | [Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor](#arxiv-1801.01290) | 2018 | 6.4 | 5/6 | `arxiv:1801.01290` |
-| 2 | [Deep Neuroevolution: Genetic Algorithms Are a Competitive Alternative for Training Deep Neural Networks for Reinforcement Learning](#arxiv-1712.06567) | 2017 | 6.5 | 3/5 | `arxiv:1712.06567` |
-| 3 | [First return, then explore](#arxiv-2004.12919) | 2020 | 5.9 | 4/5 | `arxiv:2004.12919` |
+| 2 | [First return, then explore](#arxiv-2004.12919) | 2020 | 6.2 | 5/6 | `arxiv:2004.12919` |
+| 3 | [Deep Neuroevolution: Genetic Algorithms Are a Competitive Alternative for Training Deep Neural Networks for Reinforcement Learning](#arxiv-1712.06567) | 2017 | 6.3 | 4/6 | `arxiv:1712.06567` |
 | 4 | [Mastering Diverse Domains through World Models](#arxiv-2301.04104) | 2023 | 6.1 | 5/6 | `arxiv:2301.04104` |
-| 5 | [A Distributional Perspective on Reinforcement Learning](#arxiv-1707.06887) | 2017 | 6.1 | 4/5 | `arxiv:1707.06887` |
-| 6 | [Prioritized Experience Replay](#arxiv-1511.05952) | 2015 | 5.8 | 4/5 | `arxiv:1511.05952` |
-| 7 | [Q-Learning With World Models](#arxiv-2608.17163) | 2026 | 6.0 | 5/6 | `arxiv:2608.17163` |
-| 8 | [Dueling Network Architectures for Deep Reinforcement Learning](#arxiv-1511.06581) | 2015 | 5.9 | 5/6 | `arxiv:1511.06581` |
-| 9 | [Bigger, Better, Faster: Human-level Atari with human-level efficiency](#arxiv-2305.19452) | 2023 | 5.8 | 3/6 | `arxiv:2305.19452` |
-| 10 | [CDE: Curiosity-Driven Exploration for Efficient Reinforcement Learning in Large Language Models](#arxiv-2509.09675) | 2025 | 6.0 | 5/6 | `arxiv:2509.09675` |
-| 11 | [Rainbow: Combining Improvements in Deep Reinforcement Learning](#arxiv-1710.02298) | 2017 | 5.7 | 3/6 | `arxiv:1710.02298` |
+| 5 | [A Distributional Perspective on Reinforcement Learning](#arxiv-1707.06887) | 2017 | 6.0 | 5/6 | `arxiv:1707.06887` |
+| 6 | [Q-Learning With World Models](#arxiv-2608.17163) | 2026 | 6.0 | 5/6 | `arxiv:2608.17163` |
+| 7 | [Dueling Network Architectures for Deep Reinforcement Learning](#arxiv-1511.06581) | 2015 | 5.9 | 5/6 | `arxiv:1511.06581` |
+| 8 | [Bigger, Better, Faster: Human-level Atari with human-level efficiency](#arxiv-2305.19452) | 2023 | 5.8 | 3/6 | `arxiv:2305.19452` |
+| 9 | [CDE: Curiosity-Driven Exploration for Efficient Reinforcement Learning in Large Language Models](#arxiv-2509.09675) | 2025 | 6.0 | 5/6 | `arxiv:2509.09675` |
+| 10 | [Rainbow: Combining Improvements in Deep Reinforcement Learning](#arxiv-1710.02298) | 2017 | 5.7 | 3/6 | `arxiv:1710.02298` |
+| 11 | [Prioritized Experience Replay](#arxiv-1511.05952) | 2015 | 5.5 | 4/6 | `arxiv:1511.05952` |
 | 12 | [Sample-Efficient RL by Breaking the Replay Ratio Barrier (ICLR 2023, precursor of BBF)](#openreview-OpC-9aBBVJe) | unknown | 6.0 | 5/6 | `openreview:OpC-9aBBVJe` |
 | 13 | [Deep Reinforcement Learning with Double Q-learning](#arxiv-1509.06461) | 2015 | 5.5 | 4/6 | `arxiv:1509.06461` |
 | 14 | [The Primacy Bias in Deep Reinforcement Learning](#arxiv-2205.07802) | 2022 | 6.1 | 5/6 | `arxiv:2205.07802` |
 | 15 | [1000 Layer Networks for Self-Supervised RL: Scaling Depth Can Enable New Goal-Reaching Capabilities](#arxiv-2503.14858) | 2025 | 5.5 | 5/6 | `arxiv:2503.14858` |
 | 16 | [For SALE: State-Action Representation Learning for Deep Reinforcement Learning](#arxiv-2306.02451) | 2023 | 5.6 | 4/6 | `arxiv:2306.02451` |
-| 17 | [Beyond The Rainbow: High Performance Deep Reinforcement Learning on a Desktop PC](#arxiv-2411.03820) | 2024 | 5.8 | 2/5 | `arxiv:2411.03820` |
+| 17 | [Beyond The Rainbow: High Performance Deep Reinforcement Learning on a Desktop PC](#arxiv-2411.03820) | 2024 | 5.8 | 2/6 | `arxiv:2411.03820` |
 | 18 | [Towards General-Purpose Model-Free Reinforcement Learning](#arxiv-2501.16142) | 2025 | 5.7 | 4/6 | `arxiv:2501.16142` |
 | 19 | [Metalearning Continual Learning Algorithms](#arxiv-2312.00276) | 2023 | 5.6 | 4/6 | `arxiv:2312.00276` |
 | 20 | [In-Context Reinforcement Learning for Variable Action Spaces](#arxiv-2312.13327) | 2023 | 5.7 | 4/6 | `arxiv:2312.13327` |
 | 21 | [Addressing Function Approximation Error in Actor-Critic Methods](#arxiv-1802.09477) | 2018 | 4.3 | 1/4 | `arxiv:1802.09477` |
 | 22 | [A Minimalist Approach to Offline Reinforcement Learning](#arxiv-2106.06860) | 2021 | 5.0 | 3/6 | `arxiv:2106.06860` |
-| 23 | [Offline Reinforcement Learning: Tutorial, Review, and Perspectives on Open Problems](#arxiv-2005.01643) | 2020 | 3.8 | 0/5 | `arxiv:2005.01643` |
+| 23 | [Offline Reinforcement Learning: Tutorial, Review, and Perspectives on Open Problems](#arxiv-2005.01643) | 2020 | 4.2 | 0/6 | `arxiv:2005.01643` |
 | 24 | [Benchmarking Batch Deep Reinforcement Learning Algorithms](#arxiv-1910.01708) | 2019 | 4.2 | 2/6 | `arxiv:1910.01708` |
-| 25 | [Revisiting Rainbow: Promoting more Insightful and Inclusive Deep Reinforcement Learning Research](#arxiv-2011.14826) | 2020 | 4.2 | 1/5 | `arxiv:2011.14826` |
+| 25 | [Revisiting Rainbow: Promoting more Insightful and Inclusive Deep Reinforcement Learning Research](#arxiv-2011.14826) | 2020 | 4.4 | 1/6 | `arxiv:2011.14826` |
 | 26 | [Meta-Reinforcement Learning with Zero-Shot RL](#openreview-XyGJJ4FPoX) | unknown | 4.7 | 0/6 | `openreview:XyGJJ4FPoX` |
 
 ### Post-training
@@ -161,36 +169,36 @@ Intersection n=247. Spearman `0.361`. Accept/Reject macro-F1 `0.606` (n=247). St
 | 5 | [The Art of Scaling Reinforcement Learning Compute for LLMs](#arxiv-2510.13786) | 2025 | 6.3 | 5/6 | `arxiv:2510.13786` |
 | 6 | [Spurious Rewards Paradox: Mechanistically Understanding How RLVR Activates Memorization Shortcuts in LLMs](#arxiv-2601.11061) | 2026 | 6.3 | 5/6 | `arxiv:2601.11061` |
 | 7 | [From Reasoning Chains to Verifiable Subproblems: Curriculum Reinforcement Learning Enables Credit Assignment for LLM Reasoning](#arxiv-2605.22074) | 2026 | 6.3 | 5/6 | `arxiv:2605.22074` |
-| 8 | [Learning to Discover at Test Time](#arxiv-2601.16175) | 2026 | 6.8 | 4/5 | `arxiv:2601.16175` |
-| 9 | [Reinforcement Learning via Self-Distillation](#arxiv-2601.20802) | 2026 | 6.2 | 5/6 | `arxiv:2601.20802` |
-| 10 | [On the Generalization of SFT: A Reinforcement Learning Perspective with Reward Rectification](#arxiv-2508.05629) | 2025 | 6.4 | 5/6 | `arxiv:2508.05629` |
-| 11 | [GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning](#arxiv-2507.19457) | 2025 | 6.3 | 5/6 | `arxiv:2507.19457` |
-| 12 | [Self-Distilled Reasoner: On-Policy Self-Distillation for Large Language Models](#arxiv-2601.18734) | 2026 | 6.3 | 5/6 | `arxiv:2601.18734` |
-| 13 | [Rethinking On-Policy Distillation of Large Language Models: Phenomenology, Mechanism, and Recipe](#arxiv-2604.13016) | 2026 | 6.3 | 5/6 | `arxiv:2604.13016` |
+| 8 | [Reinforcement Learning via Self-Distillation](#arxiv-2601.20802) | 2026 | 6.2 | 5/6 | `arxiv:2601.20802` |
+| 9 | [On the Generalization of SFT: A Reinforcement Learning Perspective with Reward Rectification](#arxiv-2508.05629) | 2025 | 6.4 | 5/6 | `arxiv:2508.05629` |
+| 10 | [GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning](#arxiv-2507.19457) | 2025 | 6.3 | 5/6 | `arxiv:2507.19457` |
+| 11 | [Self-Distilled Reasoner: On-Policy Self-Distillation for Large Language Models](#arxiv-2601.18734) | 2026 | 6.3 | 5/6 | `arxiv:2601.18734` |
+| 12 | [Rethinking On-Policy Distillation of Large Language Models: Phenomenology, Mechanism, and Recipe](#arxiv-2604.13016) | 2026 | 6.3 | 5/6 | `arxiv:2604.13016` |
+| 13 | [Learning to Discover at Test Time](#arxiv-2601.16175) | 2026 | 6.5 | 5/6 | `arxiv:2601.16175` |
 | 14 | [Revisiting Reinforcement Learning with Verifiable Rewards from a Contrastive Perspective](#arxiv-2605.12969) | 2026 | 6.5 | 5/6 | `arxiv:2605.12969` |
-| 15 | [Self-Distillation Bridges Distribution Gap in Language Model Fine-Tuning](#arxiv-2402.13669) | 2024 | 6.5 | 4/5 | `arxiv:2402.13669` |
-| 16 | [Reasoning with Sampling: Your Base Model is Smarter Than You Think](#arxiv-2510.14901) | 2025 | 6.5 | 5/6 | `arxiv:2510.14901` |
-| 17 | [Skip-Connected Policy Optimization for Implicit Advantage](#arxiv-2604.08690) | 2026 | 6.5 | 5/6 | `arxiv:2604.08690` |
-| 18 | [TTRL: Test-Time Reinforcement Learning](#arxiv-2504.16084) | 2025 | 6.1 | 5/6 | `arxiv:2504.16084` |
-| 19 | [Self-Refine: Iterative Refinement with Self-Feedback](#arxiv-2303.17651) | 2023 | 6.2 | 5/5 | `arxiv:2303.17651` |
-| 20 | [Understanding R1-Zero-Like Training: A Critical Perspective](#arxiv-2503.20783) | 2025 | 6.2 | 4/6 | `arxiv:2503.20783` |
-| 21 | [SR-GRPO: Stable Rank as an Intrinsic Geometric Reward for Large Language Model Alignment](#arxiv-2512.02807) | 2025 | 6.0 | 5/6 | `arxiv:2512.02807` |
-| 22 | [RLVE: Scaling Up Reinforcement Learning for Language Models with Adaptive Verifiable Environments](#arxiv-2511.07317) | 2025 | 6.5 | 5/6 | `arxiv:2511.07317` |
-| 23 | [LADDER: Self-Improving LLMs Through Recursive Problem Decomposition](#arxiv-2503.00735) | 2025 | 6.0 | 4/5 | `arxiv:2503.00735` |
-| 24 | [Soft Adaptive Policy Optimization](#arxiv-2511.20347) | 2025 | 6.3 | 4/6 | `arxiv:2511.20347` |
-| 25 | [Beyond the 80/20 Rule: High-Entropy Minority Tokens Drive Effective Reinforcement Learning for LLM Reasoning](#arxiv-2506.01939) | 2025 | 6.2 | 3/6 | `arxiv:2506.01939` |
+| 15 | [Reasoning with Sampling: Your Base Model is Smarter Than You Think](#arxiv-2510.14901) | 2025 | 6.5 | 5/6 | `arxiv:2510.14901` |
+| 16 | [Self-Distillation Bridges Distribution Gap in Language Model Fine-Tuning](#arxiv-2402.13669) | 2024 | 6.4 | 5/6 | `arxiv:2402.13669` |
+| 17 | [TTRL: Test-Time Reinforcement Learning](#arxiv-2504.16084) | 2025 | 6.1 | 5/6 | `arxiv:2504.16084` |
+| 18 | [Skip-Connected Policy Optimization for Implicit Advantage](#arxiv-2604.08690) | 2026 | 6.5 | 5/6 | `arxiv:2604.08690` |
+| 19 | [Understanding R1-Zero-Like Training: A Critical Perspective](#arxiv-2503.20783) | 2025 | 6.2 | 4/6 | `arxiv:2503.20783` |
+| 20 | [SR-GRPO: Stable Rank as an Intrinsic Geometric Reward for Large Language Model Alignment](#arxiv-2512.02807) | 2025 | 6.0 | 5/6 | `arxiv:2512.02807` |
+| 21 | [RLVE: Scaling Up Reinforcement Learning for Language Models with Adaptive Verifiable Environments](#arxiv-2511.07317) | 2025 | 6.5 | 5/6 | `arxiv:2511.07317` |
+| 22 | [Self-Refine: Iterative Refinement with Self-Feedback](#arxiv-2303.17651) | 2023 | 6.2 | 6/6 | `arxiv:2303.17651` |
+| 23 | [Soft Adaptive Policy Optimization](#arxiv-2511.20347) | 2025 | 6.3 | 4/6 | `arxiv:2511.20347` |
+| 24 | [Beyond the 80/20 Rule: High-Entropy Minority Tokens Drive Effective Reinforcement Learning for LLM Reasoning](#arxiv-2506.01939) | 2025 | 6.2 | 3/6 | `arxiv:2506.01939` |
+| 25 | [LADDER: Self-Improving LLMs Through Recursive Problem Decomposition](#arxiv-2503.00735) | 2025 | 6.0 | 4/6 | `arxiv:2503.00735` |
 | 26 | [To Retain or to Adapt? Generalizing Continual Learning](#arxiv-2607.05609) | 2026 | 6.1 | 4/6 | `arxiv:2607.05609` |
 | 27 | [Unifying Group-Relative and Self-Distillation Policy Optimization via Sample Routing](#arxiv-2604.02288) | 2026 | 5.9 | 5/6 | `arxiv:2604.02288` |
 | 28 | [Self-Distillation Enables Continual Learning](#arxiv-2601.19897) | 2026 | 6.0 | 6/6 | `arxiv:2601.19897` |
-| 29 | [DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models](#arxiv-2402.03300) | 2024 | 6.2 | 5/6 | `arxiv:2402.03300` |
-| 30 | [The First Few Tokens Are All You Need: An Efficient and Effective Unsupervised Prefix Fine-Tuning Method for Reasoning Models](#arxiv-2503.02875) | 2025 | 6.2 | 3/6 | `arxiv:2503.02875` |
-| 31 | [Emergent Hierarchical Reasoning in LLMs through Reinforcement Learning](#arxiv-2509.03646) | 2025 | 5.9 | 3/6 | `arxiv:2509.03646` |
+| 29 | [The First Few Tokens Are All You Need: An Efficient and Effective Unsupervised Prefix Fine-Tuning Method for Reasoning Models](#arxiv-2503.02875) | 2025 | 6.2 | 3/6 | `arxiv:2503.02875` |
+| 30 | [Emergent Hierarchical Reasoning in LLMs through Reinforcement Learning](#arxiv-2509.03646) | 2025 | 5.9 | 3/6 | `arxiv:2509.03646` |
+| 31 | [DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models](#arxiv-2402.03300) | 2024 | 6.2 | 5/6 | `arxiv:2402.03300` |
 | 32 | [Latent On-Policy Self-Distillation](#arxiv-2608.13040) | 2026 | 6.1 | 5/6 | `arxiv:2608.13040` |
-| 33 | [Revisiting On-Policy Distillation: Empirical Failure Modes and Simple Fixes](#arxiv-2603.25562) | 2026 | 5.8 | 4/5 | `arxiv:2603.25562` |
-| 34 | [Gradient Regularization Mitigates Reward Hacking in Reinforcement Learning from Human Feedback and Verifiable Rewards](#arxiv-2602.18037) | 2026 | 5.9 | 3/5 | `arxiv:2602.18037` |
-| 35 | [Single-stream Policy Optimization](#arxiv-2509.13232) | 2025 | 6.0 | 5/6 | `arxiv:2509.13232` |
-| 36 | [ESPO: Entropy Importance Sampling Policy Optimization](#arxiv-2512.00499) | 2025 | 6.2 | 5/6 | `arxiv:2512.00499` |
-| 37 | [Towards Execution-Grounded Automated AI Research](#arxiv-2601.14525) | 2026 | 6.2 | 5/6 | `arxiv:2601.14525` |
+| 33 | [Gradient Regularization Mitigates Reward Hacking in Reinforcement Learning from Human Feedback and Verifiable Rewards](#arxiv-2602.18037) | 2026 | 6.0 | 3/6 | `arxiv:2602.18037` |
+| 34 | [Single-stream Policy Optimization](#arxiv-2509.13232) | 2025 | 6.0 | 5/6 | `arxiv:2509.13232` |
+| 35 | [Revisiting On-Policy Distillation: Empirical Failure Modes and Simple Fixes](#arxiv-2603.25562) | 2026 | 5.8 | 5/6 | `arxiv:2603.25562` |
+| 36 | [Towards Execution-Grounded Automated AI Research](#arxiv-2601.14525) | 2026 | 6.2 | 5/6 | `arxiv:2601.14525` |
+| 37 | [ESPO: Entropy Importance Sampling Policy Optimization](#arxiv-2512.00499) | 2025 | 6.2 | 5/6 | `arxiv:2512.00499` |
 | 38 | [iGRPO: Self-Feedback-Driven LLM Reasoning](#arxiv-2602.09000) | 2026 | 5.6 | 3/6 | `arxiv:2602.09000` |
 | 39 | [MiniMax-M1: Scaling Test-Time Compute Efficiently with Lightning Attention](#arxiv-2506.13585) | 2025 | 6.0 | 3/6 | `arxiv:2506.13585` |
 | 40 | [Learning to Reason without External Rewards](#arxiv-2505.19590) | 2025 | 5.3 | 3/6 | `arxiv:2505.19590` |
@@ -199,8 +207,8 @@ Intersection n=247. Spearman `0.361`. Accept/Reject macro-F1 `0.606` (n=247). St
 | 43 | [Curriculum Reinforcement Learning from Easy to Hard Tasks Improves LLM Reasoning](#arxiv-2506.06632) | 2025 | 5.9 | 5/6 | `arxiv:2506.06632` |
 | 44 | [Does Reinforcement Learning Really Incentivize Reasoning Capacity in LLMs Beyond the Base Model?](#arxiv-2504.13837) | 2025 | 5.8 | 4/6 | `arxiv:2504.13837` |
 | 45 | [Learning from Own Solutions: Self-Conditioned Credit Assignment for Reinforcement Learning with Verifiable Rewards](#arxiv-2606.18810) | 2026 | 6.3 | 4/6 | `arxiv:2606.18810` |
-| 46 | [Group Sequence Policy Optimization](#arxiv-2507.18071) | 2025 | 5.5 | 4/6 | `arxiv:2507.18071` |
-| 47 | [GRPO-VPS: Enhancing Group Relative Policy Optimization with Verifiable Process Supervision for Effective Reasoning](#arxiv-2604.20659) | 2026 | 6.0 | 4/6 | `arxiv:2604.20659` |
+| 46 | [GRPO-VPS: Enhancing Group Relative Policy Optimization with Verifiable Process Supervision for Effective Reasoning](#arxiv-2604.20659) | 2026 | 6.0 | 4/6 | `arxiv:2604.20659` |
+| 47 | [Group Sequence Policy Optimization](#arxiv-2507.18071) | 2025 | 5.5 | 4/6 | `arxiv:2507.18071` |
 | 48 | [DAPO: An Open-Source LLM Reinforcement Learning System at Scale](#arxiv-2503.14476) | 2025 | 6.0 | 3/6 | `arxiv:2503.14476` |
 | 49 | [RIFT: A RubrIc Failure Mode Taxonomy and Automated Diagnostics](#arxiv-2604.01375) | 2026 | 5.8 | 2/6 | `arxiv:2604.01375` |
 | 50 | [It Takes Two: Your GRPO Is Secretly DPO](#arxiv-2510.00977) | 2025 | 5.7 | 4/6 | `arxiv:2510.00977` |
@@ -215,36 +223,36 @@ Intersection n=247. Spearman `0.361`. Accept/Reject macro-F1 `0.606` (n=247). St
 | rank | title | year | mean 1–10 | accept | key |
 |---:|---|---|---:|---:|---|
 | 1 | [Large Language Diffusion Models](#arxiv-2502.09992) | 2025 | 6.7 | 5/6 | `arxiv:2502.09992` |
-| 2 | [Mixture-of-Recursions: Learning Dynamic Recursive Depths for Adaptive Token-Level Computation](#arxiv-2507.10524) | 2025 | 6.1 | 5/5 | `arxiv:2507.10524` |
-| 3 | [Hyena Hierarchy: Towards Larger Convolutional Language Models](#arxiv-2302.10866) | 2023 | 6.2 | 5/6 | `arxiv:2302.10866` |
-| 4 | [Language Is Not All You Need: Aligning Perception with Language Models](#arxiv-2302.14045) | 2023 | 6.2 | 4/5 | `arxiv:2302.14045` |
-| 5 | [Olmo 3](#arxiv-2512.13961) | 2025 | 7.2 | 3/5 | `arxiv:2512.13961` |
-| 6 | [Cache-to-Cache: Direct Semantic Communication Between Large Language Models](#arxiv-2510.03215) | 2025 | 6.5 | 4/6 | `arxiv:2510.03215` |
-| 7 | [DiffusionGemma Technical Report](#arxiv-2608.00146) | 2026 | 6.7 | 3/6 | `arxiv:2608.00146` |
-| 8 | [Enabling Agents to Communicate Entirely in Latent Space](#arxiv-2511.09149) | 2025 | 6.6 | 4/6 | `arxiv:2511.09149` |
-| 9 | [Skip a Layer or Loop It? Learning Program-of-Layers in LLMs](#arxiv-2606.06574) | 2026 | 6.0 | 5/6 | `arxiv:2606.06574` |
-| 10 | [LLaDA2.0: Scaling Up Diffusion Language Models to 100B](#arxiv-2512.15745) | 2025 | 6.4 | 3/6 | `arxiv:2512.15745` |
+| 2 | [Hyena Hierarchy: Towards Larger Convolutional Language Models](#arxiv-2302.10866) | 2023 | 6.2 | 5/6 | `arxiv:2302.10866` |
+| 3 | [Cache-to-Cache: Direct Semantic Communication Between Large Language Models](#arxiv-2510.03215) | 2025 | 6.5 | 4/6 | `arxiv:2510.03215` |
+| 4 | [Language Is Not All You Need: Aligning Perception with Language Models](#arxiv-2302.14045) | 2023 | 6.2 | 5/6 | `arxiv:2302.14045` |
+| 5 | [DiffusionGemma Technical Report](#arxiv-2608.00146) | 2026 | 6.7 | 3/6 | `arxiv:2608.00146` |
+| 6 | [Mixture-of-Recursions: Learning Dynamic Recursive Depths for Adaptive Token-Level Computation](#arxiv-2507.10524) | 2025 | 6.0 | 6/6 | `arxiv:2507.10524` |
+| 7 | [Enabling Agents to Communicate Entirely in Latent Space](#arxiv-2511.09149) | 2025 | 6.6 | 4/6 | `arxiv:2511.09149` |
+| 8 | [Skip a Layer or Loop It? Learning Program-of-Layers in LLMs](#arxiv-2606.06574) | 2026 | 6.0 | 5/6 | `arxiv:2606.06574` |
+| 9 | [LLaDA2.0: Scaling Up Diffusion Language Models to 100B](#arxiv-2512.15745) | 2025 | 6.4 | 3/6 | `arxiv:2512.15745` |
+| 10 | [Olmo 3](#arxiv-2512.13961) | 2025 | 6.3 | 3/6 | `arxiv:2512.13961` |
 | 11 | [A Hippocampus for Linear Attention: An Exact Memory for What the Recurrent State Forgets](#arxiv-2607.02303) | 2026 | 6.2 | 5/6 | `arxiv:2607.02303` |
 | 12 | [Recursive Language Models](#arxiv-2512.24601) | 2025 | 6.0 | 4/6 | `arxiv:2512.24601` |
 | 13 | [Memorizing Transformers](#arxiv-2203.08913) | 2022 | 6.3 | 5/6 | `arxiv:2203.08913` |
-| 14 | [XBridge: Entity-Grounded Latent Bridge for Heterogeneous LLM Communication](#arxiv-2608.11676) | 2026 | 6.4 | 3/5 | `arxiv:2608.11676` |
-| 15 | [Beyond Scattered Acceptance: Fast and Coherent Inference for DLMs via Longest Stable Prefixes](#arxiv-2603.05454) | 2026 | 6.0 | 4/6 | `arxiv:2603.05454` |
-| 16 | [The Llama 3 Herd of Models](#arxiv-2407.21783) | 2024 | 6.0 | 3/6 | `arxiv:2407.21783` |
-| 17 | [2 OLMo 2 Furious](#arxiv-2501.00656) | 2024 | 6.0 | 4/6 | `arxiv:2501.00656` |
+| 14 | [Beyond Scattered Acceptance: Fast and Coherent Inference for DLMs via Longest Stable Prefixes](#arxiv-2603.05454) | 2026 | 6.0 | 4/6 | `arxiv:2603.05454` |
+| 15 | [The Llama 3 Herd of Models](#arxiv-2407.21783) | 2024 | 6.0 | 3/6 | `arxiv:2407.21783` |
+| 16 | [2 OLMo 2 Furious](#arxiv-2501.00656) | 2024 | 6.0 | 4/6 | `arxiv:2501.00656` |
+| 17 | [XBridge: Entity-Grounded Latent Bridge for Heterogeneous LLM Communication](#arxiv-2608.11676) | 2026 | 6.2 | 4/6 | `arxiv:2608.11676` |
 | 18 | [DMax: Aggressive Parallel Decoding for dLLMs](#arxiv-2604.08302) | 2026 | 6.2 | 4/6 | `arxiv:2604.08302` |
-| 19 | [Encoder-Decoder or Decoder-Only? Revisiting Encoder-Decoder Large Language Model](#arxiv-2510.26622) | 2025 | 6.0 | 5/5 | `arxiv:2510.26622` |
-| 20 | [LLaDA2.1: Speeding Up Text Diffusion via Token Editing](#arxiv-2602.08676) | 2026 | 5.5 | 4/6 | `arxiv:2602.08676` |
+| 19 | [LLaDA2.1: Speeding Up Text Diffusion via Token Editing](#arxiv-2602.08676) | 2026 | 5.5 | 4/6 | `arxiv:2602.08676` |
+| 20 | [Smarter, Better, Faster, Longer: A Modern Bidirectional Encoder for Fast, Memory Efficient, and Long Context Finetuning and Inference](#arxiv-2412.13663) | 2024 | 6.0 | 5/6 | `arxiv:2412.13663` |
 | 21 | [Florence-2: Advancing a Unified Representation for a Variety of Vision Tasks](#arxiv-2311.06242) | 2023 | 6.1 | 3/6 | `arxiv:2311.06242` |
-| 22 | [Smarter, Better, Faster, Longer: A Modern Bidirectional Encoder for Fast, Memory Efficient, and Long Context Finetuning and Inference](#arxiv-2412.13663) | 2024 | 6.0 | 5/6 | `arxiv:2412.13663` |
-| 23 | [Unlimiformer: Long-Range Transformers with Unlimited Length Input](#arxiv-2305.01625) | 2023 | 5.9 | 4/5 | `arxiv:2305.01625` |
-| 24 | [Neural Networks and the Chomsky Hierarchy](#arxiv-2207.02098) | 2022 | 6.4 | 6/6 | `arxiv:2207.02098` |
-| 25 | [Cross-Model KV Cache Transfer in LLM Families: A Closed-Form Linear Mapping for Prefill Reuse](#arxiv-2608.03893) | 2026 | 5.8 | 4/6 | `arxiv:2608.03893` |
+| 22 | [Encoder-Decoder or Decoder-Only? Revisiting Encoder-Decoder Large Language Model](#arxiv-2510.26622) | 2025 | 5.9 | 5/6 | `arxiv:2510.26622` |
+| 23 | [Neural Networks and the Chomsky Hierarchy](#arxiv-2207.02098) | 2022 | 6.4 | 6/6 | `arxiv:2207.02098` |
+| 24 | [Cross-Model KV Cache Transfer in LLM Families: A Closed-Form Linear Mapping for Prefill Reuse](#arxiv-2608.03893) | 2026 | 5.8 | 4/6 | `arxiv:2608.03893` |
+| 25 | [Unlimiformer: Long-Range Transformers with Unlimited Length Input](#arxiv-2305.01625) | 2023 | 5.8 | 5/6 | `arxiv:2305.01625` |
 | 26 | [Encoder-Decoder Gemma: Improving the Quality-Efficiency Trade-Off via Adaptation](#arxiv-2504.06225) | 2025 | 5.2 | 4/6 | `arxiv:2504.06225` |
 | 27 | [Communicating Activations Between Language Model Agents](#arxiv-2501.14082) | 2025 | 6.2 | 5/6 | `arxiv:2501.14082` |
 | 28 | [TransformerFAM: Feedback attention is working memory](#arxiv-2404.09173) | 2024 | 5.5 | 3/6 | `arxiv:2404.09173` |
 | 29 | [Searching for Activation Functions](#arxiv-1710.05941) | 2017 | 5.7 | 4/6 | `arxiv:1710.05941` |
-| 30 | [Scaling MLPs: A Tale of Inductive Bias](#arxiv-2306.13575) | 2023 | 5.5 | 2/5 | `arxiv:2306.13575` |
-| 31 | [Leave No Context Behind: Efficient Infinite Context Transformers with Infini-attention](#arxiv-2404.07143) | 2024 | 5.4 | 2/5 | `arxiv:2404.07143` |
+| 30 | [Scaling MLPs: A Tale of Inductive Bias](#arxiv-2306.13575) | 2023 | 5.6 | 2/6 | `arxiv:2306.13575` |
+| 31 | [Leave No Context Behind: Efficient Infinite Context Transformers with Infini-attention](#arxiv-2404.07143) | 2024 | 5.5 | 3/6 | `arxiv:2404.07143` |
 | 32 | [Latent Cache Flow: Model-to-Model Communication Without Text](#arxiv-2605.22863) | 2026 | 5.7 | 3/6 | `arxiv:2605.22863` |
 | 33 | [Your Transformer is Secretly Linear](#arxiv-2405.12250) | 2024 | 4.9 | 3/6 | `arxiv:2405.12250` |
 | 34 | [xLSTM: Extended Long Short-Term Memory](#arxiv-2405.04517) | 2024 | 4.5 | 1/6 | `arxiv:2405.04517` |
@@ -257,102 +265,102 @@ Intersection n=247. Spearman `0.361`. Accept/Reject macro-F1 `0.606` (n=247). St
 | rank | title | year | mean 1–10 | accept | key |
 |---:|---|---|---:|---:|---|
 | 1 | [Reinforcing General Reasoning without Verifiers](#arxiv-2505.21493) | 2025 | 6.6 | 5/6 | `arxiv:2505.21493` |
-| 2 | [LiveMathematicianBench: A Live Benchmark for Mathematician-Level Reasoning with Proof Sketches](#arxiv-2604.01754) | 2026 | 6.9 | 3/5 | `arxiv:2604.01754` |
-| 3 | [rStar-Math: Small LLMs Can Master Math Reasoning with Self-Evolved Deep Thinking](#arxiv-2501.04519) | 2025 | 6.5 | 5/6 | `arxiv:2501.04519` |
-| 4 | [SIM-CoT: Supervised Implicit Chain-of-Thought](#arxiv-2509.20317) | 2025 | 6.5 | 6/6 | `arxiv:2509.20317` |
+| 2 | [rStar-Math: Small LLMs Can Master Math Reasoning with Self-Evolved Deep Thinking](#arxiv-2501.04519) | 2025 | 6.5 | 5/6 | `arxiv:2501.04519` |
+| 3 | [SIM-CoT: Supervised Implicit Chain-of-Thought](#arxiv-2509.20317) | 2025 | 6.5 | 6/6 | `arxiv:2509.20317` |
+| 4 | [LiveMathematicianBench: A Live Benchmark for Mathematician-Level Reasoning with Proof Sketches](#arxiv-2604.01754) | 2026 | 6.8 | 3/6 | `arxiv:2604.01754` |
 | 5 | [Spurious Rewards: Rethinking Training Signals in RLVR](#arxiv-2506.10947) | 2025 | 7.1 | 5/5 | `arxiv:2506.10947` |
 | 6 | [The Unreasonable Effectiveness of Entropy Minimization in LLM Reasoning](#arxiv-2505.15134) | 2025 | 6.3 | 5/6 | `arxiv:2505.15134` |
 | 7 | [In-Context Algebra](#arxiv-2512.16902) | 2025 | 6.8 | 6/6 | `arxiv:2512.16902` |
-| 8 | [How do language models learn facts? Dynamics, curricula and hallucinations](#arxiv-2503.21676) | 2025 | 7.1 | 5/5 | `arxiv:2503.21676` |
-| 9 | [Progress measures for grokking via mechanistic interpretability](#arxiv-2301.05217) | 2023 | 6.6 | 6/6 | `arxiv:2301.05217` |
-| 10 | [Physics of Language Models: Part 3.3, Knowledge Capacity Scaling Laws](#arxiv-2404.05405) | 2024 | 6.9 | 3/5 | `arxiv:2404.05405` |
-| 11 | [Arithmetic Without Algorithms: Language Models Solve Math With a Bag of Heuristics](#arxiv-2410.21272) | 2024 | 6.6 | 5/6 | `arxiv:2410.21272` |
-| 12 | [Pre-trained Large Language Models Use Fourier Features to Compute Addition](#arxiv-2406.03445) | 2024 | 5.9 | 4/5 | `arxiv:2406.03445` |
-| 13 | [Reliable Chain-of-Thought via Prefix Consistency](#arxiv-2605.07654) | 2026 | 6.2 | 5/6 | `arxiv:2605.07654` |
-| 14 | [Bridging the Gap Between Latent and Explicit Reasoning with Looped Transformers](#arxiv-2606.31779) | 2026 | 6.0 | 4/6 | `arxiv:2606.31779` |
-| 15 | [Physics of Language Models: Part 1, Learning Hierarchical Language Structures](#arxiv-2305.13673) | 2023 | 6.1 | 5/6 | `arxiv:2305.13673` |
-| 16 | [Language Models Use Trigonometry to Do Addition](#arxiv-2502.00873) | 2025 | 6.2 | 5/6 | `arxiv:2502.00873` |
-| 17 | [Are Emergent Abilities of Large Language Models a Mirage?](#arxiv-2304.15004) | 2023 | 6.2 | 4/6 | `arxiv:2304.15004` |
+| 8 | [Progress measures for grokking via mechanistic interpretability](#arxiv-2301.05217) | 2023 | 6.6 | 6/6 | `arxiv:2301.05217` |
+| 9 | [Arithmetic Without Algorithms: Language Models Solve Math With a Bag of Heuristics](#arxiv-2410.21272) | 2024 | 6.6 | 5/6 | `arxiv:2410.21272` |
+| 10 | [Reliable Chain-of-Thought via Prefix Consistency](#arxiv-2605.07654) | 2026 | 6.2 | 5/6 | `arxiv:2605.07654` |
+| 11 | [Bridging the Gap Between Latent and Explicit Reasoning with Looped Transformers](#arxiv-2606.31779) | 2026 | 6.0 | 4/6 | `arxiv:2606.31779` |
+| 12 | [Physics of Language Models: Part 1, Learning Hierarchical Language Structures](#arxiv-2305.13673) | 2023 | 6.1 | 5/6 | `arxiv:2305.13673` |
+| 13 | [Language Models Use Trigonometry to Do Addition](#arxiv-2502.00873) | 2025 | 6.2 | 5/6 | `arxiv:2502.00873` |
+| 14 | [Are Emergent Abilities of Large Language Models a Mirage?](#arxiv-2304.15004) | 2023 | 6.2 | 4/6 | `arxiv:2304.15004` |
+| 15 | [Physics of Language Models: Part 3.3, Knowledge Capacity Scaling Laws](#arxiv-2404.05405) | 2024 | 6.6 | 4/6 | `arxiv:2404.05405` |
+| 16 | [How do language models learn facts? Dynamics, curricula and hallucinations](#arxiv-2503.21676) | 2025 | 6.5 | 5/6 | `arxiv:2503.21676` |
+| 17 | [Pre-trained Large Language Models Use Fourier Features to Compute Addition](#arxiv-2406.03445) | 2024 | 5.8 | 5/6 | `arxiv:2406.03445` |
 | 18 | [Grokked Transformers are Implicit Reasoners: A Mechanistic Journey to the Edge of Generalization](#arxiv-2405.15071) | 2024 | 6.0 | 5/6 | `arxiv:2405.15071` |
 | 19 | [Modular Arithmetic: Language Models Solve Math Digit by Digit](#arxiv-2508.02513) | 2025 | 6.2 | 5/6 | `arxiv:2508.02513` |
-| 20 | [Multimodal Chain-of-Thought Reasoning in Language Models](#arxiv-2302.00923) | 2023 | 6.4 | 4/5 | `arxiv:2302.00923` |
+| 20 | [Scaling up Test-Time Compute with Latent Reasoning: A Recurrent Depth Approach](#arxiv-2502.05171) | 2025 | 6.3 | 4/6 | `arxiv:2502.05171` |
 | 21 | [Self-Consistency Improves Chain of Thought Reasoning in Language Models](#arxiv-2203.11171) | 2022 | 5.7 | 6/6 | `arxiv:2203.11171` |
 | 22 | [Why Can't Transformers Learn Multiplication? Reverse-Engineering Reveals Long-Range Dependency Pitfalls](#arxiv-2510.00184) | 2025 | 6.3 | 6/6 | `arxiv:2510.00184` |
-| 23 | [Scaling up Test-Time Compute with Latent Reasoning: A Recurrent Depth Approach](#arxiv-2502.05171) | 2025 | 6.3 | 4/6 | `arxiv:2502.05171` |
+| 23 | [Physics of Language Models: Part 2.1, Grade-School Math and the Hidden Reasoning Process](#arxiv-2407.20311) | 2024 | 6.4 | 5/6 | `arxiv:2407.20311` |
 | 24 | [Physics of Language Models: Part 3.2, Knowledge Manipulation](#arxiv-2309.14402) | 2023 | 7.0 | 3/5 | `arxiv:2309.14402` |
-| 25 | [Physics of Language Models: Part 2.1, Grade-School Math and the Hidden Reasoning Process](#arxiv-2407.20311) | 2024 | 6.4 | 5/6 | `arxiv:2407.20311` |
-| 26 | [Reinforcement Learning for Reasoning in Large Language Models with One Training Example](#arxiv-2504.20571) | 2025 | 5.9 | 4/6 | `arxiv:2504.20571` |
+| 25 | [Reinforcement Learning for Reasoning in Large Language Models with One Training Example](#arxiv-2504.20571) | 2025 | 5.9 | 4/6 | `arxiv:2504.20571` |
+| 26 | [Multimodal Chain-of-Thought Reasoning in Language Models](#arxiv-2302.00923) | 2023 | 6.2 | 5/6 | `arxiv:2302.00923` |
 | 27 | [Emergent Analogical Reasoning in Large Language Models](#arxiv-2212.09196) | 2022 | 6.3 | 4/6 | `arxiv:2212.09196` |
-| 28 | [Evaluating the World Model Implicit in a Generative Model](#arxiv-2406.03689) | 2024 | 6.5 | 4/6 | `arxiv:2406.03689` |
-| 29 | [The Reversal Curse: LLMs trained on "A is B" fail to learn "B is A"](#arxiv-2309.12288) | 2023 | 5.7 | 4/6 | `arxiv:2309.12288` |
+| 28 | [The Reversal Curse: LLMs trained on "A is B" fail to learn "B is A"](#arxiv-2309.12288) | 2023 | 5.7 | 4/6 | `arxiv:2309.12288` |
+| 29 | [Evaluating the World Model Implicit in a Generative Model](#arxiv-2406.03689) | 2024 | 6.5 | 4/6 | `arxiv:2406.03689` |
 | 30 | [Training Large Language Models to Reason in a Continuous Latent Space](#arxiv-2412.06769) | 2024 | 6.1 | 4/6 | `arxiv:2412.06769` |
 | 31 | [Transcendence: Generative Models Can Outperform The Experts That Train Them](#arxiv-2406.11741) | 2024 | 6.0 | 4/6 | `arxiv:2406.11741` |
 | 32 | [Emergent Capabilities Arise Randomly from Learning Sparse Attention Patterns](#arxiv-2606.25010) | 2026 | 6.0 | 4/6 | `arxiv:2606.25010` |
 | 33 | [The Lookahead Limitation: Why Multi-Operand Addition is Hard for LLMs](#arxiv-2502.19981) | 2025 | 5.8 | 2/6 | `arxiv:2502.19981` |
-| 34 | [Grokking Group Multiplication with Cosets](#openreview-hcQfTsVnBo) | unknown | 6.5 | 4/6 | `openreview:hcQfTsVnBo` |
-| 35 | [Language Models Are Capable of Metacognitive Monitoring and Control of Their Internal Activations](#arxiv-2505.13763) | 2025 | 6.6 | 4/5 | `arxiv:2505.13763` |
+| 34 | [Language Models Are Capable of Metacognitive Monitoring and Control of Their Internal Activations](#arxiv-2505.13763) | 2025 | 6.5 | 4/6 | `arxiv:2505.13763` |
+| 35 | [Grokking Group Multiplication with Cosets](#openreview-hcQfTsVnBo) | unknown | 6.5 | 4/6 | `openreview:hcQfTsVnBo` |
 | 36 | [A Formal Comparison Between Chain of Thought and Latent Thought](#arxiv-2509.25239) | 2025 | 6.0 | 4/6 | `arxiv:2509.25239` |
 | 37 | [Dissociating language and thought in large language models](#arxiv-2301.06627) | 2023 | 6.2 | 3/6 | `arxiv:2301.06627` |
 | 38 | [Competitive Programming with Large Reasoning Models](#arxiv-2502.06807) | 2025 | 5.8 | 4/6 | `arxiv:2502.06807` |
 | 39 | [How Do Large Language Models Acquire Factual Knowledge During Pretraining?](#arxiv-2406.11813) | 2024 | 6.0 | 5/6 | `arxiv:2406.11813` |
 | 40 | [A Mechanistic Analysis of Looped Reasoning Language Models](#arxiv-2604.11791) | 2026 | 6.2 | 2/6 | `arxiv:2604.11791` |
-| 41 | [Can Large Reasoning Models Self-Train?](#arxiv-2505.21444) | 2025 | 6.1 | 2/5 | `arxiv:2505.21444` |
-| 42 | [Language Models Compare Quantities Using Number-specific and Unit-specific Heuristics](#arxiv-2606.03982) | 2026 | 6.0 | 2/5 | `arxiv:2606.03982` |
-| 43 | [Physics of Language Models: Part 3.1, Knowledge Storage and Extraction](#arxiv-2309.14316) | 2023 | 6.1 | 4/6 | `arxiv:2309.14316` |
-| 44 | [The Truth is in There: Improving Reasoning in Language Models with Layer-Selective Rank Reduction](#arxiv-2312.13558) | 2023 | 5.8 | 4/6 | `arxiv:2312.13558` |
+| 41 | [Language Models Compare Quantities Using Number-specific and Unit-specific Heuristics](#arxiv-2606.03982) | 2026 | 6.0 | 3/6 | `arxiv:2606.03982` |
+| 42 | [Physics of Language Models: Part 3.1, Knowledge Storage and Extraction](#arxiv-2309.14316) | 2023 | 6.1 | 4/6 | `arxiv:2309.14316` |
+| 43 | [The Truth is in There: Improving Reasoning in Language Models with Layer-Selective Rank Reduction](#arxiv-2312.13558) | 2023 | 5.8 | 4/6 | `arxiv:2312.13558` |
+| 44 | [Can Large Reasoning Models Self-Train?](#arxiv-2505.21444) | 2025 | 6.0 | 2/6 | `arxiv:2505.21444` |
 | 45 | [From Explicit CoT to Implicit CoT: Learning to Internalize CoT Step by Step](#arxiv-2405.14838) | 2024 | 5.6 | 4/6 | `arxiv:2405.14838` |
 | 46 | [Evidence from formal logical reasoning reveals that the language of thought is not natural language](#doi-10.1073-pnas.2520095123) | 2026 | 5.7 | 4/6 | `doi:10.1073/pnas.2520095123` |
 | 47 | [Knowledge Mechanisms in Large Language Models: A Survey and Perspective](#arxiv-2407.15017) | 2024 | 5.8 | 3/6 | `arxiv:2407.15017` |
-| 48 | [AI-rithmetic](#arxiv-2602.10416) | 2026 | 5.6 | 1/5 | `arxiv:2602.10416` |
+| 48 | [AI-rithmetic](#arxiv-2602.10416) | 2026 | 5.5 | 2/6 | `arxiv:2602.10416` |
 | 49 | [LLMs Can't Plan, But Can Help Planning in LLM-Modulo Frameworks](#arxiv-2402.01817) | 2024 | 6.0 | 2/6 | `arxiv:2402.01817` |
 | 50 | [Large Language Models Still Can't Plan / PlanBench (Kambhampati)](#openreview-wUU-7XTL5XO) | unknown | 5.4 | 2/6 | `openreview:wUU-7XTL5XO` |
-| 51 | [Position: LLMs can't jump](#openreview-klU4737opt) | unknown | 5.7 | 2/5 | `openreview:klU4737opt` |
+| 51 | [Position: LLMs can't jump](#openreview-klU4737opt) | unknown | 5.5 | 2/6 | `openreview:klU4737opt` |
 | 52 | [Language is primarily a tool for communication rather than thought](#doi-10.1038-s41586-024-07522-w) | 2024 | 5.9 | 4/5 | `doi:10.1038/s41586-024-07522-w` |
 | 53 | [Why mathematics is set to be revolutionized by AI](#doi-10.1038-d41586-024-01413-w) | 2024 | 5.2 | 3/5 | `doi:10.1038/d41586-024-01413-w` |
-| 54 | [Scaling of Search and Learning: A Roadmap to Reproduce o1 from Reinforcement Learning Perspective](#arxiv-2412.14135) | 2024 | 3.5 | 0/5 | `arxiv:2412.14135` |
+| 54 | [Scaling of Search and Learning: A Roadmap to Reproduce o1 from Reinforcement Learning Perspective](#arxiv-2412.14135) | 2024 | 3.8 | 0/6 | `arxiv:2412.14135` |
 
 ### Data, training, optimization
 
 | rank | title | year | mean 1–10 | accept | key |
 |---:|---|---|---:|---:|---|
-| 1 | [Symbolic Discovery of Optimization Algorithms](#arxiv-2302.06675) | 2023 | 6.5 | 3/5 | `arxiv:2302.06675` |
+| 1 | [Symbolic Discovery of Optimization Algorithms](#arxiv-2302.06675) | 2023 | 6.5 | 4/6 | `arxiv:2302.06675` |
 | 2 | [Explorative Modeling: Unlocking a Third Pretraining Axis and End-to-End Generation](#arxiv-2607.27372) | 2026 | 6.2 | 6/6 | `arxiv:2607.27372` |
 | 3 | [Sharpness-Aware Minimization for Efficiently Improving Generalization](#arxiv-2010.01412) | 2020 | 6.0 | 5/6 | `arxiv:2010.01412` |
-| 4 | [Scaling Laws for Neural Language Models](#arxiv-2001.08361) | 2020 | 5.5 | 3/5 | `arxiv:2001.08361` |
-| 5 | [Large Batch Optimization for Deep Learning: Training BERT in 76 minutes](#arxiv-1904.00962) | 2019 | 5.8 | 3/6 | `arxiv:1904.00962` |
-| 6 | [The Loss Does Not See the Basis, but Adam Does](#arxiv-2608.05136) | 2026 | 6.4 | 5/6 | `arxiv:2608.05136` |
+| 4 | [Scaling Laws for Neural Language Models](#arxiv-2001.08361) | 2020 | 5.6 | 4/6 | `arxiv:2001.08361` |
+| 5 | [The Loss Does Not See the Basis, but Adam Does](#arxiv-2608.05136) | 2026 | 6.4 | 5/6 | `arxiv:2608.05136` |
+| 6 | [Large Batch Optimization for Deep Learning: Training BERT in 76 minutes](#arxiv-1904.00962) | 2019 | 5.8 | 3/6 | `arxiv:1904.00962` |
 | 7 | [How much do language models memorize?](#arxiv-2505.24832) | 2025 | 6.0 | 5/6 | `arxiv:2505.24832` |
 | 8 | [The Road Less Scheduled](#arxiv-2405.15682) | 2024 | 5.8 | 4/6 | `arxiv:2405.15682` |
-| 9 | [Tasks, stability, architecture, and compute: Training more effective learned optimizers, and using them to train themselves](#arxiv-2009.11243) | 2020 | 6.4 | 3/5 | `arxiv:2009.11243` |
+| 9 | [Tasks, stability, architecture, and compute: Training more effective learned optimizers, and using them to train themselves](#arxiv-2009.11243) | 2020 | 6.7 | 4/6 | `arxiv:2009.11243` |
 | 10 | [Sophia: A Scalable Stochastic Second-order Optimizer for Language Model Pre-training](#arxiv-2305.14342) | 2023 | 5.8 | 4/6 | `arxiv:2305.14342` |
 | 11 | [On-Policy RL Meets Off-Policy Experts: Harmonizing Supervised Fine-Tuning and Reinforcement Learning via Dynamic Weighting](#arxiv-2508.11408) | 2025 | 6.1 | 4/6 | `arxiv:2508.11408` |
-| 12 | [Grokfast: Accelerated Grokking by Amplifying Slow Gradients](#arxiv-2405.20233) | 2024 | 6.0 | 3/5 | `arxiv:2405.20233` |
-| 13 | [Scaling Laws for Reward Model Overoptimization](#arxiv-2210.10760) | 2022 | 6.1 | 5/6 | `arxiv:2210.10760` |
-| 14 | [The AdEMAMix Optimizer: Better, Faster, Older](#arxiv-2409.03137) | 2024 | 6.1 | 4/6 | `arxiv:2409.03137` |
-| 15 | [How Neural Networks Extrapolate: From Feedforward to Graph Neural Networks](#arxiv-2009.11848) | 2020 | 6.1 | 5/6 | `arxiv:2009.11848` |
-| 16 | [Learning Vision from Models Rivals Learning Vision from Data](#arxiv-2312.17742) | 2023 | 5.8 | 3/6 | `arxiv:2312.17742` |
-| 17 | [Scaling Laws and Compute-Optimal Training Beyond Fixed Training Durations](#arxiv-2405.18392) | 2024 | 5.9 | 5/6 | `arxiv:2405.18392` |
-| 18 | [Loss of plasticity in deep continual learning](#doi-10.1038-s41586-024-07711-7) | 2024 | 6.2 | 4/6 | `doi:10.1038/s41586-024-07711-7` |
+| 12 | [Scaling Laws for Reward Model Overoptimization](#arxiv-2210.10760) | 2022 | 6.1 | 5/6 | `arxiv:2210.10760` |
+| 13 | [The AdEMAMix Optimizer: Better, Faster, Older](#arxiv-2409.03137) | 2024 | 6.1 | 4/6 | `arxiv:2409.03137` |
+| 14 | [How Neural Networks Extrapolate: From Feedforward to Graph Neural Networks](#arxiv-2009.11848) | 2020 | 6.1 | 5/6 | `arxiv:2009.11848` |
+| 15 | [Learning Vision from Models Rivals Learning Vision from Data](#arxiv-2312.17742) | 2023 | 5.8 | 3/6 | `arxiv:2312.17742` |
+| 16 | [Scaling Laws and Compute-Optimal Training Beyond Fixed Training Durations](#arxiv-2405.18392) | 2024 | 5.9 | 5/6 | `arxiv:2405.18392` |
+| 17 | [Loss of plasticity in deep continual learning](#doi-10.1038-s41586-024-07711-7) | 2024 | 6.2 | 4/6 | `doi:10.1038/s41586-024-07711-7` |
+| 18 | [Grokfast: Accelerated Grokking by Amplifying Slow Gradients](#arxiv-2405.20233) | 2024 | 6.0 | 3/6 | `arxiv:2405.20233` |
 | 19 | [NorMuon: Making Muon more efficient and scalable](#arxiv-2510.05491) | 2025 | 5.9 | 5/6 | `arxiv:2510.05491` |
 | 20 | [The Lottery Ticket Hypothesis: Finding Sparse, Trainable Neural Networks](#arxiv-1803.03635) | 2018 | 5.7 | 3/6 | `arxiv:1803.03635` |
 | 21 | [Emergent properties with repeated examples](#arxiv-2410.07041) | 2024 | 6.1 | 5/6 | `arxiv:2410.07041` |
 | 22 | [On the Information Bottleneck Theory of Deep Learning (Saxe et al.)](#openreview-ry_WPG-A-) | unknown | 5.8 | 5/6 | `openreview:ry_WPG-A-` |
-| 23 | [Overcoming catastrophic forgetting in neural networks](#doi-10.1073-pnas.1611835114) | 2017 | 5.8 | 4/6 | `doi:10.1073/pnas.1611835114` |
-| 24 | [gzip Predicts Data-dependent Scaling Laws](#arxiv-2405.16684) | 2024 | 5.2 | 3/6 | `arxiv:2405.16684` |
-| 25 | [No Train No Gain: Revisiting Efficient Training Algorithms For Transformer-based Language Models](#arxiv-2307.06440) | 2023 | 4.7 | 3/5 | `arxiv:2307.06440` |
-| 26 | [Cramming: Training a Language Model on a Single GPU in One Day](#arxiv-2212.14034) | 2022 | 5.8 | 3/5 | `arxiv:2212.14034` |
-| 27 | [Self-Improving Pretraining: using post-trained models to pretrain better models](#arxiv-2601.21343) | 2026 | 5.8 | 3/6 | `arxiv:2601.21343` |
-| 28 | [Perplexed by Perplexity: Perplexity-Based Data Pruning With Small Reference Models](#arxiv-2405.20541) | 2024 | 5.0 | 3/5 | `arxiv:2405.20541` |
-| 29 | [Super-Convergence: Very Fast Training of Neural Networks Using Large Learning Rates](#arxiv-1708.07120) | 2017 | 4.7 | 3/6 | `arxiv:1708.07120` |
-| 30 | [MetaOptimize: A Framework for Optimizing Step Sizes and Other Meta-parameters](#arxiv-2402.02342) | 2024 | 5.7 | 3/5 | `arxiv:2402.02342` |
-| 31 | [Supervised Fine Tuning on Curated Data is Reinforcement Learning (and can be improved)](#arxiv-2507.12856) | 2025 | 5.8 | 2/6 | `arxiv:2507.12856` |
+| 23 | [gzip Predicts Data-dependent Scaling Laws](#arxiv-2405.16684) | 2024 | 5.2 | 3/6 | `arxiv:2405.16684` |
+| 24 | [Perplexed by Perplexity: Perplexity-Based Data Pruning With Small Reference Models](#arxiv-2405.20541) | 2024 | 5.2 | 4/6 | `arxiv:2405.20541` |
+| 25 | [Overcoming catastrophic forgetting in neural networks](#doi-10.1073-pnas.1611835114) | 2017 | 5.8 | 4/6 | `doi:10.1073/pnas.1611835114` |
+| 26 | [Self-Improving Pretraining: using post-trained models to pretrain better models](#arxiv-2601.21343) | 2026 | 5.8 | 3/6 | `arxiv:2601.21343` |
+| 27 | [Super-Convergence: Very Fast Training of Neural Networks Using Large Learning Rates](#arxiv-1708.07120) | 2017 | 4.7 | 3/6 | `arxiv:1708.07120` |
+| 28 | [Cramming: Training a Language Model on a Single GPU in One Day](#arxiv-2212.14034) | 2022 | 5.8 | 3/6 | `arxiv:2212.14034` |
+| 29 | [No Train No Gain: Revisiting Efficient Training Algorithms For Transformer-based Language Models](#arxiv-2307.06440) | 2023 | 4.8 | 3/6 | `arxiv:2307.06440` |
+| 30 | [Supervised Fine Tuning on Curated Data is Reinforcement Learning (and can be improved)](#arxiv-2507.12856) | 2025 | 5.8 | 2/6 | `arxiv:2507.12856` |
+| 31 | [MetaOptimize: A Framework for Optimizing Step Sizes and Other Meta-parameters](#arxiv-2402.02342) | 2024 | 5.4 | 3/6 | `arxiv:2402.02342` |
 | 32 | [Reinforcement Pre-Training](#arxiv-2506.08007) | 2025 | 5.5 | 3/6 | `arxiv:2506.08007` |
 | 33 | [Learning in High Dimension Always Amounts to Extrapolation](#arxiv-2110.09485) | 2021 | 3.9 | 1/6 | `arxiv:2110.09485` |
 | 34 | [Continual Learning and Catastrophic Forgetting](#arxiv-2403.05175) | 2024 | 5.6 | 2/6 | `arxiv:2403.05175` |
 | 35 | [Measuring Catastrophic Forgetting in Neural Networks](#arxiv-1708.02072) | 2017 | 4.0 | 2/6 | `arxiv:1708.02072` |
 | 36 | [Cyclical Learning Rates for Training Neural Networks](#arxiv-1506.01186) | 2015 | 4.4 | 1/6 | `arxiv:1506.01186` |
 | 37 | [Catastrophic Forgetting in Deep Learning: A Comprehensive Taxonomy](#arxiv-2312.10549) | 2023 | 3.3 | 0/6 | `arxiv:2312.10549` |
-| 38 | [Continual Backprop: Stochastic Gradient Descent with Persistent Randomness](#arxiv-2108.06325) | 2021 | 3.3 | 0/5 | `arxiv:2108.06325` |
+| 38 | [Continual Backprop: Stochastic Gradient Descent with Persistent Randomness](#arxiv-2108.06325) | 2021 | 3.7 | 0/6 | `arxiv:2108.06325` |
 | 39 | [Step-size Optimization for Continual Learning](#arxiv-2401.17401) | 2024 | 3.4 | 1/5 | `arxiv:2401.17401` |
 | 40 | [Nested Learning: The Illusion of Deep Learning Architectures](#arxiv-2512.24695) | 2025 | 4.0 | 0/6 | `arxiv:2512.24695` |
 
@@ -368,8 +376,8 @@ Intersection n=247. Spearman `0.361`. Accept/Reject macro-F1 `0.606` (n=247). St
 | 6 | [Unsupervised Learning of Visual Features by Contrasting Cluster Assignments](#arxiv-2006.09882) | 2020 | 6.3 | 4/6 | `arxiv:2006.09882` |
 | 7 | [The GAN is dead; long live the GAN! A Modern GAN Baseline](#arxiv-2501.05441) | 2025 | 5.8 | 4/6 | `arxiv:2501.05441` |
 | 8 | [iBOT: Image BERT Pre-Training with Online Tokenizer](#arxiv-2111.07832) | 2021 | 6.2 | 4/6 | `arxiv:2111.07832` |
-| 9 | [Latent Consistency Models: Synthesizing High-Resolution Images with Few-Step Inference](#arxiv-2310.04378) | 2023 | 5.7 | 3/6 | `arxiv:2310.04378` |
-| 10 | [Towards Universal Fake Image Detectors that Generalize Across Generative Models](#arxiv-2302.10174) | 2023 | 6.4 | 4/6 | `arxiv:2302.10174` |
+| 9 | [Towards Universal Fake Image Detectors that Generalize Across Generative Models](#arxiv-2302.10174) | 2023 | 6.4 | 4/6 | `arxiv:2302.10174` |
+| 10 | [Latent Consistency Models: Synthesizing High-Resolution Images with Few-Step Inference](#arxiv-2310.04378) | 2023 | 5.7 | 3/6 | `arxiv:2310.04378` |
 | 11 | [Image as a Foreign Language: BEiT Pretraining for All Vision and Vision-Language Tasks](#arxiv-2208.10442) | 2022 | 5.5 | 4/6 | `arxiv:2208.10442` |
 | 12 | [Emu: Enhancing Image Generation Models Using Photogenic Needles in a Haystack](#arxiv-2309.15807) | 2023 | 6.2 | 4/6 | `arxiv:2309.15807` |
 | 13 | [DINOv2: Learning Robust Visual Features without Supervision](#arxiv-2304.07193) | 2023 | 5.7 | 3/6 | `arxiv:2304.07193` |
@@ -385,47 +393,47 @@ Intersection n=247. Spearman `0.361`. Accept/Reject macro-F1 `0.606` (n=247). St
 
 | rank | title | year | mean 1–10 | accept | key |
 |---:|---|---|---:|---:|---|
-| 1 | [Rainbow Teaming: Open-Ended Generation of Diverse Adversarial Prompts](#arxiv-2402.16822) | 2024 | 6.6 | 4/5 | `arxiv:2402.16822` |
+| 1 | [Rainbow Teaming: Open-Ended Generation of Diverse Adversarial Prompts](#arxiv-2402.16822) | 2024 | 6.6 | 5/6 | `arxiv:2402.16822` |
 | 2 | [One Embedder, Any Task: Instruction-Finetuned Text Embeddings](#arxiv-2212.09741) | 2022 | 6.1 | 5/6 | `arxiv:2212.09741` |
 | 3 | [Beyond the Imitation Game: Quantifying and extrapolating the capabilities of language models](#arxiv-2206.04615) | 2022 | 6.4 | 3/5 | `arxiv:2206.04615` |
 | 4 | [CEO-Bench: Can Agents Play the Long Game?](#arxiv-2606.18543) | 2026 | 6.4 | 5/6 | `arxiv:2606.18543` |
 | 5 | [Matryoshka Representation Learning](#arxiv-2205.13147) | 2022 | 6.1 | 5/6 | `arxiv:2205.13147` |
-| 6 | [Demonstrate-Search-Predict: Composing retrieval and language models for knowledge-intensive NLP](#arxiv-2212.14024) | 2022 | 6.1 | 5/6 | `arxiv:2212.14024` |
-| 7 | [Large Dual Encoders Are Generalizable Retrievers](#arxiv-2112.07899) | 2021 | 6.4 | 3/5 | `arxiv:2112.07899` |
+| 6 | [Large Dual Encoders Are Generalizable Retrievers](#arxiv-2112.07899) | 2021 | 6.3 | 3/6 | `arxiv:2112.07899` |
+| 7 | [Demonstrate-Search-Predict: Composing retrieval and language models for knowledge-intensive NLP](#arxiv-2212.14024) | 2022 | 6.1 | 5/6 | `arxiv:2212.14024` |
 | 8 | [MLE-bench: Evaluating Machine Learning Agents on Machine Learning Engineering](#arxiv-2410.07095) | 2024 | 6.0 | 3/6 | `arxiv:2410.07095` |
-| 9 | [Can Generalist Foundation Models Outcompete Special-Purpose Tuning? Case Study in Medicine](#arxiv-2311.16452) | 2023 | 6.1 | 5/5 | `arxiv:2311.16452` |
+| 9 | [Artifacts or Abduction: How Do LLMs Answer Multiple-Choice Questions Without the Question?](#arxiv-2402.12483) | 2024 | 6.0 | 4/6 | `arxiv:2402.12483` |
 | 10 | [Did Aristotle Use a Laptop? A Question Answering Benchmark with Implicit Reasoning Strategies](#arxiv-2101.02235) | 2021 | 6.0 | 4/6 | `arxiv:2101.02235` |
-| 11 | [Artifacts or Abduction: How Do LLMs Answer Multiple-Choice Questions Without the Question?](#arxiv-2402.12483) | 2024 | 5.9 | 3/5 | `arxiv:2402.12483` |
+| 11 | [Can Generalist Foundation Models Outcompete Special-Purpose Tuning? Case Study in Medicine](#arxiv-2311.16452) | 2023 | 5.9 | 5/6 | `arxiv:2311.16452` |
 | 12 | [Super-NaturalInstructions: Generalization via Declarative Instructions on 1600+ NLP Tasks](#acl-2022.emnlp-main.340) | unknown | 6.0 | 4/5 | `acl:2022.emnlp-main.340` |
 | 13 | [Learning to Compress Prompts with Gist Tokens](#arxiv-2304.08467) | 2023 | 5.3 | 3/6 | `arxiv:2304.08467` |
-| 14 | [Promptbreeder: Self-Referential Self-Improvement Via Prompt Evolution](#arxiv-2309.16797) | 2023 | 5.4 | 4/5 | `arxiv:2309.16797` |
-| 15 | [People cannot distinguish GPT-4 from a human in a Turing test](#arxiv-2405.08007) | 2024 | 5.0 | 1/5 | `arxiv:2405.08007` |
-| 16 | [PRIMERA: Pyramid-based Masked Sentence Pre-training for Multi-document Summarization](#acl-2022.acl-long.360) | unknown | 5.7 | 3/6 | `acl:2022.acl-long.360` |
-| 17 | [A System for Answering Simple Questions in Multiple Languages](#acl-2023.acl-demo.51) | unknown | 5.3 | 2/5 | `acl:2023.acl-demo.51` |
+| 14 | [Promptbreeder: Self-Referential Self-Improvement Via Prompt Evolution](#arxiv-2309.16797) | 2023 | 4.9 | 4/6 | `arxiv:2309.16797` |
+| 15 | [PRIMERA: Pyramid-based Masked Sentence Pre-training for Multi-document Summarization](#acl-2022.acl-long.360) | unknown | 5.7 | 3/6 | `acl:2022.acl-long.360` |
+| 16 | [People cannot distinguish GPT-4 from a human in a Turing test](#arxiv-2405.08007) | 2024 | 4.6 | 1/6 | `arxiv:2405.08007` |
+| 17 | [A System for Answering Simple Questions in Multiple Languages](#acl-2023.acl-demo.51) | unknown | 5.2 | 2/6 | `acl:2023.acl-demo.51` |
 
 ### Agents, open-endedness, AGI
 
 | rank | title | year | mean 1–10 | accept | key |
 |---:|---|---|---:|---:|---|
-| 1 | [Robust agents learn causal world models (ICLR 2024 best paper)](#openreview-pOoKI3ouv1) | unknown | 7.1 | 5/6 | `openreview:pOoKI3ouv1` |
-| 2 | [MemRL: Self-Evolving Agents via Runtime Reinforcement Learning on Episodic Memory](#arxiv-2601.03192) | 2026 | 6.1 | 4/5 | `arxiv:2601.03192` |
-| 3 | [SPADE: Self-Play in Adaptive Synthetic Executable Environments](#arxiv-2608.19197) | 2026 | 7.2 | 4/5 | `arxiv:2608.19197` |
+| 1 | [MemRL: Self-Evolving Agents via Runtime Reinforcement Learning on Episodic Memory](#arxiv-2601.03192) | 2026 | 6.4 | 5/6 | `arxiv:2601.03192` |
+| 2 | [Robust agents learn causal world models (ICLR 2024 best paper)](#openreview-pOoKI3ouv1) | unknown | 7.1 | 5/6 | `openreview:pOoKI3ouv1` |
+| 3 | [SPADE: Self-Play in Adaptive Synthetic Executable Environments](#arxiv-2608.19197) | 2026 | 7.0 | 5/6 | `arxiv:2608.19197` |
 | 4 | [Self-Improvements in Modern Agentic Systems: A Survey](#arxiv-2607.13104) | 2026 | 6.3 | 5/6 | `arxiv:2607.13104` |
 | 5 | [Hyperagents](#arxiv-2603.19461) | 2026 | 6.2 | 5/6 | `arxiv:2603.19461` |
-| 6 | [Learning Formal Mathematics From Intrinsic Motivation](#arxiv-2407.00695) | 2024 | 6.6 | 3/5 | `arxiv:2407.00695` |
-| 7 | [Harnessing Agentic Evolution](#arxiv-2605.13821) | 2026 | 6.3 | 5/6 | `arxiv:2605.13821` |
-| 8 | [MemEvolve: Meta-Evolution of Agent Memory Systems](#arxiv-2512.18746) | 2025 | 6.2 | 4/6 | `arxiv:2512.18746` |
-| 9 | [Darwin Godel Machine: Open-Ended Evolution of Self-Improving Agents](#arxiv-2505.22954) | 2025 | 6.1 | 3/5 | `arxiv:2505.22954` |
-| 10 | [Meta Context Engineering via Agentic Skill Evolution](#arxiv-2601.21557) | 2026 | 6.2 | 4/5 | `arxiv:2601.21557` |
-| 11 | [Dr. Zero: Self-Evolving Search Agents without Training Data](#arxiv-2601.07055) | 2026 | 6.0 | 5/6 | `arxiv:2601.07055` |
+| 6 | [Harnessing Agentic Evolution](#arxiv-2605.13821) | 2026 | 6.3 | 5/6 | `arxiv:2605.13821` |
+| 7 | [MemEvolve: Meta-Evolution of Agent Memory Systems](#arxiv-2512.18746) | 2025 | 6.2 | 4/6 | `arxiv:2512.18746` |
+| 8 | [Learning Formal Mathematics From Intrinsic Motivation](#arxiv-2407.00695) | 2024 | 6.4 | 3/6 | `arxiv:2407.00695` |
+| 9 | [Learning to Continually Learn via Meta-learning Agentic Memory Designs](#arxiv-2602.07755) | 2026 | 6.3 | 5/6 | `arxiv:2602.07755` |
+| 10 | [Dr. Zero: Self-Evolving Search Agents without Training Data](#arxiv-2601.07055) | 2026 | 6.0 | 5/6 | `arxiv:2601.07055` |
+| 11 | [Darwin Godel Machine: Open-Ended Evolution of Self-Improving Agents](#arxiv-2505.22954) | 2025 | 6.0 | 4/6 | `arxiv:2505.22954` |
 | 12 | [Automated Design of Agentic Systems](#arxiv-2408.08435) | 2024 | 6.2 | 4/6 | `arxiv:2408.08435` |
-| 13 | [Propose, Solve, Verify: Self-Play Through Formal Verification](#arxiv-2512.18160) | 2025 | 6.0 | 4/5 | `arxiv:2512.18160` |
-| 14 | [Learning to Continually Learn via Meta-learning Agentic Memory Designs](#arxiv-2602.07755) | 2026 | 6.3 | 3/4 | `arxiv:2602.07755` |
+| 13 | [Propose, Solve, Verify: Self-Play Through Formal Verification](#arxiv-2512.18160) | 2025 | 6.1 | 5/6 | `arxiv:2512.18160` |
+| 14 | [Meta Context Engineering via Agentic Skill Evolution](#arxiv-2601.21557) | 2026 | 5.5 | 4/6 | `arxiv:2601.21557` |
 | 15 | [Competition and Attraction Improve Model Fusion](#arxiv-2508.16204) | 2025 | 5.8 | 4/6 | `arxiv:2508.16204` |
-| 16 | [AlphaGo Moment for Model Architecture Discovery](#arxiv-2507.18074) | 2025 | 5.2 | 2/5 | `arxiv:2507.18074` |
+| 16 | [AlphaGo Moment for Model Architecture Discovery](#arxiv-2507.18074) | 2025 | 5.2 | 2/6 | `arxiv:2507.18074` |
 | 17 | [Ouroboros: A Self-Developing Frontier Coding Agent with Reviewed Core Evolution](#arxiv-2608.08311) | 2026 | 6.2 | 3/6 | `arxiv:2608.08311` |
-| 18 | [Open-Endedness is Essential for Artificial Superhuman Intelligence](#arxiv-2406.04268) | 2024 | 5.5 | 2/6 | `arxiv:2406.04268` |
-| 19 | [Toward Training Superintelligent Software Agents through Self-Play SWE-RL](#arxiv-2512.18552) | 2025 | 5.7 | 3/6 | `arxiv:2512.18552` |
+| 18 | [Toward Training Superintelligent Software Agents through Self-Play SWE-RL](#arxiv-2512.18552) | 2025 | 5.7 | 3/6 | `arxiv:2512.18552` |
+| 19 | [Open-Endedness is Essential for Artificial Superhuman Intelligence](#arxiv-2406.04268) | 2024 | 5.5 | 2/6 | `arxiv:2406.04268` |
 | 20 | [Levels of AGI for Operationalizing Progress on the Path to AGI](#arxiv-2311.02462) | 2023 | 5.5 | 2/6 | `arxiv:2311.02462` |
 | 21 | [Vending-Bench: A Benchmark for Long-Term Coherence of Autonomous Agents](#arxiv-2502.15840) | 2025 | 4.5 | 2/6 | `arxiv:2502.15840` |
 | 22 | [A Definition of Open-Ended Learning Problems for Goal-Conditioned Agents](#arxiv-2311.00344) | 2023 | 5.5 | 3/6 | `arxiv:2311.00344` |
@@ -452,11 +460,11 @@ Intersection n=247. Spearman `0.361`. Accept/Reject macro-F1 `0.606` (n=247). St
 |---:|---|---|---:|---:|---|
 | 1 | [Constitutional Classifiers: Defending against Universal Jailbreaks across Thousands of Hours of Red Teaming](#arxiv-2501.18837) | 2025 | 6.4 | 5/6 | `arxiv:2501.18837` |
 | 2 | [When Activation Oracles Learn Not to Read: Concept-Specific Blind Spots in Fine-Tuned Oracles](#arxiv-2607.23379) | 2026 | 6.5 | 4/6 | `arxiv:2607.23379` |
-| 3 | [Parametrically Retargetable Decision-Makers Tend To Seek Power](#arxiv-2206.13477) | 2022 | 5.2 | 3/6 | `arxiv:2206.13477` |
-| 4 | [Sparse Autoencoders Find Highly Interpretable Features in Language Models](#arxiv-2309.08600) | 2023 | 6.2 | 4/6 | `arxiv:2309.08600` |
-| 5 | [Could a Large Language Model be Conscious?](#arxiv-2303.07103) | 2023 | 5.9 | 2/5 | `arxiv:2303.07103` |
-| 6 | [Optimal Policies Tend to Seek Power](#arxiv-1912.01683) | 2019 | 6.2 | 3/5 | `arxiv:1912.01683` |
-| 7 | [Is Power-Seeking AI an Existential Risk?](#arxiv-2206.13353) | 2022 | 5.6 | 2/5 | `arxiv:2206.13353` |
+| 3 | [Is Power-Seeking AI an Existential Risk?](#arxiv-2206.13353) | 2022 | 5.8 | 2/6 | `arxiv:2206.13353` |
+| 4 | [Could a Large Language Model be Conscious?](#arxiv-2303.07103) | 2023 | 5.9 | 2/5 | `arxiv:2303.07103` |
+| 5 | [Parametrically Retargetable Decision-Makers Tend To Seek Power](#arxiv-2206.13477) | 2022 | 5.2 | 3/6 | `arxiv:2206.13477` |
+| 6 | [Sparse Autoencoders Find Highly Interpretable Features in Language Models](#arxiv-2309.08600) | 2023 | 6.2 | 4/6 | `arxiv:2309.08600` |
+| 7 | [Optimal Policies Tend to Seek Power](#arxiv-1912.01683) | 2019 | 5.7 | 3/6 | `arxiv:1912.01683` |
 | 8 | [Is Evaluation Awareness Just Format Sensitivity? Limitations of Probe-Based Evidence under Controlled Prompt Structure](#arxiv-2603.19426) | 2026 | 6.0 | 5/6 | `arxiv:2603.19426` |
 | 9 | [Power-seeking can be probable and predictive for trained agents](#arxiv-2304.06528) | 2023 | 5.0 | 3/6 | `arxiv:2304.06528` |
 | 10 | [Consciousness in Artificial Intelligence: Insights from the Science of Consciousness](#arxiv-2308.08708) | 2023 | 6.0 | 4/6 | `arxiv:2308.08708` |
@@ -470,10 +478,10 @@ Intersection n=247. Spearman `0.361`. Accept/Reject macro-F1 `0.606` (n=247). St
 | 1 | [From Tokens to Thoughts: How LLMs and Humans Trade Compression for Meaning](#arxiv-2505.17117) | 2025 | 6.6 | 6/6 | `arxiv:2505.17117` |
 | 2 | [Attractor and integrator networks in the brain](#arxiv-2112.03978) | 2021 | 6.2 | 5/6 | `arxiv:2112.03978` |
 | 3 | [Sleep prevents catastrophic forgetting in spiking neural networks by forming a joint synaptic weight representation](#doi-10.1371-journal.pcbi.1010628) | 2022 | 6.7 | 4/6 | `doi:10.1371/journal.pcbi.1010628` |
-| 4 | [MetaWorm: An Integrative Data-Driven Model Simulating <i>C. elegans</i> Brain, Body and Environment Interactions](#doi-10.1101-2024.02.22.581686) | 2024 | 5.6 | 3/5 | `doi:10.1101/2024.02.22.581686` |
+| 4 | [MetaWorm: An Integrative Data-Driven Model Simulating <i>C. elegans</i> Brain, Body and Environment Interactions](#doi-10.1101-2024.02.22.581686) | 2024 | 5.7 | 3/6 | `doi:10.1101/2024.02.22.581686` |
 | 5 | [Neural spiking for causal inference and learning](#doi-10.1371-journal.pcbi.1011005) | 2023 | 5.8 | 4/6 | `doi:10.1371/journal.pcbi.1011005` |
 | 6 | [Relating transformers to models and neural representations of the hippocampal formation](#arxiv-2112.04035) | 2021 | 6.1 | 3/6 | `arxiv:2112.04035` |
-| 7 | [Emergence of belief-like representations through reinforcement learning](#doi-10.1101-2023.04.04.535512) | 2023 | 6.2 | 2/4 | `doi:10.1101/2023.04.04.535512` |
+| 7 | [Emergence of belief-like representations through reinforcement learning](#doi-10.1101-2023.04.04.535512) | 2023 | 6.0 | 2/6 | `doi:10.1101/2023.04.04.535512` |
 | 8 | [This is how the Neocortex Learns](#arxiv-2606.08720) | 2026 | 6.0 | 3/6 | `arxiv:2606.08720` |
 | 9 | [Correspondence between neuroevolution and gradient descent](#doi-10.1038-s41467-021-26568-2) | 2021 | 6.0 | 3/6 | `doi:10.1038/s41467-021-26568-2` |
 | 10 | [Toward Next-Generation Artificial Intelligence: Catalyzing the NeuroAI Revolution](#arxiv-2210.08340) | 2022 | 5.2 | 3/6 | `arxiv:2210.08340` |
@@ -510,7 +518,7 @@ Intersection n=247. Spearman `0.361`. Accept/Reject macro-F1 `0.606` (n=247). St
 | rank | title | year | mean 1–10 | accept | key |
 |---:|---|---|---:|---:|---|
 | 1 | [TPU v4: An Optically Reconfigurable Supercomputer for Machine Learning with Hardware Support for Embeddings](#arxiv-2304.01433) | 2023 | 6.8 | 3/5 | `arxiv:2304.01433` |
-| 2 | [Inverse-designed low-index-contrast structures on a silicon photonics platform for vector–matrix multiplication](#doi-10.1038-s41566-024-01394-2) | 2024 | 5.6 | 2/5 | `doi:10.1038/s41566-024-01394-2` |
+| 2 | [Inverse-designed low-index-contrast structures on a silicon photonics platform for vector–matrix multiplication](#doi-10.1038-s41566-024-01394-2) | 2024 | 5.5 | 2/6 | `doi:10.1038/s41566-024-01394-2` |
 | 3 | [Fully parallel optical matrix-matrix multiplication](#arxiv-2309.10232) | 2023 | 3.2 | 0/6 | `arxiv:2309.10232` |
 
 ## Bottom 30 (candidates to drop)
@@ -521,34 +529,34 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 |---|---|---|---:|---:|---:|
 | [A Deep Reinforcement Learning Framework for the Financial Portfolio Management Problem](#arxiv-1706.10059) | Finance | 2017 | 3.1 | 3.8 | 0/6 |
 | [Fully parallel optical matrix-matrix multiplication](#arxiv-2309.10232) | Other | 2023 | 5.3 | 3.2 | 0/6 |
-| [Scaling of Search and Learning: A Roadmap to Reproduce o1 from Reinforcement Learning Perspective](#arxiv-2412.14135) | Reasoning and the "physics" of language models | 2024 | 7.1 | 3.5 | 0/5 |
+| [Scaling of Search and Learning: A Roadmap to Reproduce o1 from Reinforcement Learning Perspective](#arxiv-2412.14135) | Reasoning and the "physics" of language models | 2024 | 7.4 | 3.8 | 0/6 |
 | [Financial Trading as a Game: A Deep Reinforcement Learning Approach](#arxiv-1807.02787) | Finance | 2018 | 7.5 | 3.2 | 1/6 |
 | [Nested Learning: The Illusion of Deep Learning Architectures](#arxiv-2512.24695) | Data, training, optimization | 2025 | 11.7 | 4.0 | 0/6 |
-| [Palatable Conceptions of Disembodied Being](#arxiv-2503.16348) | AI safety and consciousness | 2025 | 12.2 | 4.4 | 2/6 |
-| [Step-size Optimization for Continual Learning](#arxiv-2401.17401) | Data, training, optimization | 2024 | 12.7 | 3.4 | 1/5 |
-| [Deep Learning Interviews: Hundreds of fully solved job interview questions from a wide range of key topics in AI](#arxiv-2201.00650) | Books | 2021 | 13.0 | 4.0 | 0/5 |
-| [Continual Backprop: Stochastic Gradient Descent with Persistent Randomness](#arxiv-2108.06325) | Data, training, optimization | 2021 | 15.1 | 3.3 | 0/5 |
-| [Catastrophic Forgetting in Deep Learning: A Comprehensive Taxonomy](#arxiv-2312.10549) | Data, training, optimization | 2023 | 16.1 | 3.3 | 0/6 |
+| [Palatable Conceptions of Disembodied Being](#arxiv-2503.16348) | AI safety and consciousness | 2025 | 12.1 | 4.4 | 2/6 |
+| [Step-size Optimization for Continual Learning](#arxiv-2401.17401) | Data, training, optimization | 2024 | 12.8 | 3.4 | 1/5 |
+| [Deep Learning Interviews: Hundreds of fully solved job interview questions from a wide range of key topics in AI](#arxiv-2201.00650) | Books | 2021 | 13.1 | 4.0 | 0/5 |
+| [Continual Backprop: Stochastic Gradient Descent with Persistent Randomness](#arxiv-2108.06325) | Data, training, optimization | 2021 | 15.5 | 3.7 | 0/6 |
+| [Catastrophic Forgetting in Deep Learning: A Comprehensive Taxonomy](#arxiv-2312.10549) | Data, training, optimization | 2023 | 16.0 | 3.3 | 0/6 |
 | [GLU Variants Improve Transformer](#arxiv-2002.05202) | LLMs: architectures, context, training | 2020 | 16.8 | 3.5 | 1/6 |
-| [Meta-Reinforcement Learning with Zero-Shot RL](#openreview-XyGJJ4FPoX) | Reinforcement learning | unknown | 17.3 | 4.7 | 0/6 |
-| [Revisiting Rainbow: Promoting more Insightful and Inclusive Deep Reinforcement Learning Research](#arxiv-2011.14826) | Reinforcement learning | 2020 | 17.8 | 4.2 | 1/5 |
-| [A social path to human-like artificial intelligence](#doi-10.1038-s42256-023-00754-x) | Agents, open-endedness, AGI | 2023 | 17.9 | 4.5 | 1/6 |
-| [Correcting Biased Centered Kernel Alignment Measures in Biological and Artificial Neural Networks](#arxiv-2405.01012) | Representation alignment | 2024 | 17.9 | 4.6 | 1/6 |
+| [Meta-Reinforcement Learning with Zero-Shot RL](#openreview-XyGJJ4FPoX) | Reinforcement learning | unknown | 17.5 | 4.7 | 0/6 |
+| [Revisiting Rainbow: Promoting more Insightful and Inclusive Deep Reinforcement Learning Research](#arxiv-2011.14826) | Reinforcement learning | 2020 | 17.8 | 4.4 | 1/6 |
+| [A social path to human-like artificial intelligence](#doi-10.1038-s42256-023-00754-x) | Agents, open-endedness, AGI | 2023 | 17.8 | 4.5 | 1/6 |
+| [Correcting Biased Centered Kernel Alignment Measures in Biological and Artificial Neural Networks](#arxiv-2405.01012) | Representation alignment | 2024 | 18.0 | 4.6 | 1/6 |
 | [Benchmarking Batch Deep Reinforcement Learning Algorithms](#arxiv-1910.01708) | Reinforcement learning | 2019 | 19.1 | 4.2 | 2/6 |
-| [Self-Programming AI: Code-Learning Agents for Autonomous Refactoring and Architectural Evolution](#doi-10.21203-rs.3.rs-6688473-v1) | Agents, open-endedness, AGI | 2025 | 20.2 | 4.5 | 2/6 |
+| [Self-Programming AI: Code-Learning Agents for Autonomous Refactoring and Architectural Evolution](#doi-10.21203-rs.3.rs-6688473-v1) | Agents, open-endedness, AGI | 2025 | 19.3 | 4.5 | 2/6 |
 | [Cyclical Learning Rates for Training Neural Networks](#arxiv-1506.01186) | Data, training, optimization | 2015 | 20.3 | 4.4 | 1/6 |
-| [Applications of deep learning in stock market prediction: recent progress](#arxiv-2003.01859) | Finance | 2020 | 20.5 | 4.3 | 1/6 |
-| [Reinforcement Learning Textbook](#arxiv-2201.09746) | Books | 2022 | 21.2 | 4.5 | 1/6 |
-| [Inverse-designed low-index-contrast structures on a silicon photonics platform for vector–matrix multiplication](#doi-10.1038-s41566-024-01394-2) | Other | 2024 | 21.4 | 5.6 | 2/5 |
-| [Why mathematics is set to be revolutionized by AI](#doi-10.1038-d41586-024-01413-w) | Reasoning and the "physics" of language models | 2024 | 21.8 | 5.2 | 3/5 |
-| [Offline Reinforcement Learning: Tutorial, Review, and Perspectives on Open Problems](#arxiv-2005.01643) | Reinforcement learning | 2020 | 22.8 | 3.8 | 0/5 |
-| [Measuring Catastrophic Forgetting in Neural Networks](#arxiv-1708.02072) | Data, training, optimization | 2017 | 23.0 | 4.0 | 2/6 |
+| [Applications of deep learning in stock market prediction: recent progress](#arxiv-2003.01859) | Finance | 2020 | 20.6 | 4.3 | 1/6 |
+| [Reinforcement Learning Textbook](#arxiv-2201.09746) | Books | 2022 | 21.1 | 4.5 | 1/6 |
+| [Inverse-designed low-index-contrast structures on a silicon photonics platform for vector–matrix multiplication](#doi-10.1038-s41566-024-01394-2) | Other | 2024 | 21.2 | 5.5 | 2/6 |
+| [Why mathematics is set to be revolutionized by AI](#doi-10.1038-d41586-024-01413-w) | Reasoning and the "physics" of language models | 2024 | 21.9 | 5.2 | 3/5 |
+| [Measuring Catastrophic Forgetting in Neural Networks](#arxiv-1708.02072) | Data, training, optimization | 2017 | 22.9 | 4.0 | 2/6 |
 | [A Path Towards Autonomous Machine Intelligence (LeCun, 2022)](#openreview-BZ5a1r-kVsf) | Self-supervised learning and vision | unknown | 23.0 | 4.4 | 2/5 |
-| [Toward Next-Generation Artificial Intelligence: Catalyzing the NeuroAI Revolution](#arxiv-2210.08340) | NeuroAI | 2022 | 23.2 | 5.2 | 3/6 |
-| [Evolutionary Strategies lead to Catastrophic Forgetting in LLMs](#arxiv-2601.20861) | Post-training | 2026 | 23.9 | 5.1 | 3/6 |
-| [Continual Learning and Catastrophic Forgetting](#arxiv-2403.05175) | Data, training, optimization | 2024 | 24.2 | 5.6 | 2/6 |
-| [AI-GAs: AI-generating algorithms, an alternate paradigm for producing general artificial intelligence](#arxiv-1905.10985) | Agents, open-endedness, AGI | 2019 | 24.2 | 4.3 | 1/6 |
-| [To Compress or Not to Compress- Self-Supervised Learning and Information Theory: A Review](#arxiv-2304.09355) | Self-supervised learning and vision | 2023 | 24.2 | 4.5 | 1/5 |
+| [Toward Next-Generation Artificial Intelligence: Catalyzing the NeuroAI Revolution](#arxiv-2210.08340) | NeuroAI | 2022 | 23.4 | 5.2 | 3/6 |
+| [Offline Reinforcement Learning: Tutorial, Review, and Perspectives on Open Problems](#arxiv-2005.01643) | Reinforcement learning | 2020 | 23.5 | 4.2 | 0/6 |
+| [Evolutionary Strategies lead to Catastrophic Forgetting in LLMs](#arxiv-2601.20861) | Post-training | 2026 | 24.1 | 5.1 | 3/6 |
+| [Continual Learning and Catastrophic Forgetting](#arxiv-2403.05175) | Data, training, optimization | 2024 | 24.1 | 5.6 | 2/6 |
+| [To Compress or Not to Compress- Self-Supervised Learning and Information Theory: A Review](#arxiv-2304.09355) | Self-supervised learning and vision | 2023 | 24.3 | 4.5 | 1/5 |
+| [AI-GAs: AI-generating algorithms, an alternate paradigm for producing general artificial intelligence](#arxiv-1905.10985) | Agents, open-endedness, AGI | 2019 | 24.5 | 4.3 | 1/6 |
 
 ## Per paper
 
@@ -557,7 +565,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2608.17163` · Reinforcement learning · 2026-08-17
 
-- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 53.8 (100=best) · rank in year 44.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 54.2 (100=best) · rank in year 43.0 (1=best)
 - NAIPv2 `-0.711` · NAIP-v1 `0.593` · SciJudge `-4.647` · DGC-BERT `0.760`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.0` Accept · 14B Fast `6.5` Accept
@@ -570,20 +578,20 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2509.09675` · Reinforcement learning · 2025-09-11
 
-- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 51.0 (100=best) · rank in year 51.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 51.4 (100=best) · rank in year 51.0 (1=best)
 - NAIPv2 `-0.663` · NAIP-v1 `0.401` · SciJudge `-2.386` · DGC-BERT `0.946`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.8` Accept · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/7659](https://t.me/axisofordinary/7659)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The novelty of the paper is limited. The idea of using perplexity as a curiosity signal is not new. There are many papers that use perplexity as a curiosity signal for exploration. For example, (1) uses perplexity as a curiosity signal for exploration in RL. The idea of using the variance of value estimates as a curiosity signal is also not new. There are many papers that use the va deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  1. The novelty of the paper is limited. The idea of using perplexity as a curiosity signal is not new. There are many papers that use perplexity as a curiosity signal for exploration. For example, (1) uses perplexity as a curiosity signal for exploration in RL. The idea of using the variance of value estimates as a curiosity signal is also not new. There are many papers that use the va cyclereviewer-8b.seed1: Weaknesses  1. The experiments are not convincing. The au
 
 <a id="arxiv-2503.14858"></a>
 ### 1000 Layer Networks for Self-Supervised RL: Scaling Depth Can Enable New Goal-Reaching Capabilities
 
 `arxiv:2503.14858` · Reinforcement learning · 2025-03-19
 
-- mean rating (1–10): **5.5** · accept votes **5/6** · percentile rank_avg 45.7 (100=best) · rank in year 64.0 (1=best)
+- mean rating (1–10): **5.5** · accept votes **5/6** · percentile rank_avg 45.9 (100=best) · rank in year 64.0 (1=best)
 - NAIPv2 `0.184` · NAIP-v1 `0.590` · SciJudge `-0.760` · DGC-BERT `0.755`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.5` Reject · 7B Fast `5.7` Accept · 14B Fast `7.0` Accept
@@ -609,10 +617,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2411.03820` · Reinforcement learning · 2024-11-06
 
-- mean rating (1–10): **5.8** · accept votes **2/5** · percentile rank_avg 42.3 (100=best) · rank in year 27.0 (1=best)
+- mean rating (1–10): **5.8** · accept votes **2/6** · percentile rank_avg 41.8 (100=best) · rank in year 28.0 (1=best)
 - NAIPv2 `0.004` · NAIP-v1 `0.487` · SciJudge `-3.803` · DGC-BERT `0.091`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
-- DeepReviewer 7B Std `5.5` Reject · 7B Fast ``  · 14B Fast `5.0` Reject
+- DeepReviewer 7B Std `5.5` Reject · 7B Fast `5.8` Reject · 14B Fast `5.0` Reject
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/2.0) · SEA-E `7.0` Accept
 - Telegram: [j_links/7764](https://t.me/j_links/7764)
 - Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper does not provide a detailed analysis of the computational resources required to train the agent. It would be helpful to provide a more detailed breakdown of the computational resources required, such as the number of GPUs, CPU cores, and memory required to train the agent. 2. The paper does not provide a detailed analysis of the hyperparameters used to train the agent. It  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -622,7 +630,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2312.13327` · Reinforcement learning · 2023-12-20
 
-- mean rating (1–10): **5.7** · accept votes **4/6** · percentile rank_avg 36.7 (100=best) · rank in year 40.0 (1=best)
+- mean rating (1–10): **5.7** · accept votes **4/6** · percentile rank_avg 37.1 (100=best) · rank in year 40.0 (1=best)
 - NAIPv2 `0.215` · NAIP-v1 `0.453` · SciJudge `-5.308` · DGC-BERT `0.658`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `4.0` Reject · 7B Fast `6.0` Accept · 14B Fast `5.8` Reject
@@ -635,20 +643,20 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2312.00276` · Reinforcement learning · 2023-12-01
 
-- mean rating (1–10): **5.6** · accept votes **4/6** · percentile rank_avg 40.1 (100=best) · rank in year 34.0 (1=best)
+- mean rating (1–10): **5.6** · accept votes **4/6** · percentile rank_avg 40.4 (100=best) · rank in year 33.0 (1=best)
 - NAIPv2 `-2.000` · NAIP-v1 `0.537` · SciJudge `-2.953` · DGC-BERT `0.504`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `5.7` Reject · 14B Fast `5.8` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [knowledge_accumulator/145](https://t.me/knowledge_accumulator/145)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The proposed method is not novel. The authors claim that their method is novel because it is the first to meta-learn a learning algorithm for continual learning. However, there are many prior works that have done the same thing. For example, see (1, 2, 3).  (1) Learning to Learn for Continual Learning  (2) Meta-Continual Learning: A Continual Learning Framework Using Meta-Learning  (3) deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  The proposed method is not novel. The authors claim that their method is novel because it is the first to meta-learn a learning algorithm for continual learning. However, there are many prior works that have done the same thing. For example, see (1, 2, 3).  (1) Learning to Learn for Continual Learning  (2) Meta-Continual Learning: A Continual Learning Framework Using Meta-Learning  (3) cyclereviewer-8b.seed1: Weaknesses  - The method seems to be a straightforward ap
 
 <a id="arxiv-2306.02451"></a>
 ### For SALE: State-Action Representation Learning for Deep Reinforcement Learning
 
 `arxiv:2306.02451` · Reinforcement learning · 2023-06-04
 
-- mean rating (1–10): **5.6** · accept votes **4/6** · percentile rank_avg 44.7 (100=best) · rank in year 29.0 (1=best)
+- mean rating (1–10): **5.6** · accept votes **4/6** · percentile rank_avg 45.0 (100=best) · rank in year 29.0 (1=best)
 - NAIPv2 `-2.250` · NAIP-v1 `0.436` · SciJudge `-3.172` · DGC-BERT `0.900`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `6.2` Accept · 14B Fast `4.7` Reject
@@ -661,7 +669,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2305.19452` · Reinforcement learning · 2023-05-30
 
-- mean rating (1–10): **5.8** · accept votes **3/6** · percentile rank_avg 51.2 (100=best) · rank in year 22.0 (1=best)
+- mean rating (1–10): **5.8** · accept votes **3/6** · percentile rank_avg 51.6 (100=best) · rank in year 20.0 (1=best)
 - NAIPv2 `1.444` · NAIP-v1 `0.643` · SciJudge `-2.788` · DGC-BERT `0.799`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.0` Reject · 14B Fast `6.2` Accept
@@ -674,20 +682,20 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2301.04104` · Reinforcement learning · 2023-01-10
 
-- mean rating (1–10): **6.1** · accept votes **5/6** · percentile rank_avg 58.5 (100=best) · rank in year 10.0 (1=best)
+- mean rating (1–10): **6.1** · accept votes **5/6** · percentile rank_avg 58.7 (100=best) · rank in year 9.0 (1=best)
 - NAIPv2 `-1.748` · NAIP-v1 `0.739` · SciJudge `3.516` · DGC-BERT `0.596`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `7.0` Accept · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/4175](https://t.me/gonzo_ML/4175), [knowledge_accumulator/155](https://t.me/knowledge_accumulator/155), [gonzo_ML/1791](https://t.me/gonzo_ML/1791), [ai_newz/1700](https://t.me/ai_newz/1700), [j_links/6396](https://t.me/j_links/6396), [AGI_and_RL/988](https://t.me/AGI_and_RL/988)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks a detailed comparison with previous work, particularly in terms of the specific hyperparameters used and the computational resources required. 2. The paper does not provide a clear explanation of the intuition behind the proposed algorithm and how it addresses the challenges of reinforcement learning. 3. The paper does not provide a detailed analysis of the computati deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks a detailed comparison with previous work, particularly in terms of the specific hyperparameters used and the computational resources required. 2. The paper does not provide a clear explanation of the intuition behind the proposed algorithm and how it addresses the challenges of reinforcement learning. 3. The paper does not provide a detailed analysis of the computati cyclereviewer-8b.seed1: Weaknesses  The paper presents a new algorithm for reinfo
 
 <a id="openreview-XyGJJ4FPoX"></a>
 ### Meta-Reinforcement Learning with Zero-Shot RL
 
 `openreview:XyGJJ4FPoX` · Reinforcement learning · unknown
 
-- mean rating (1–10): **4.7** · accept votes **0/6** · percentile rank_avg 17.3 (100=best) · rank in year 12.0 (1=best)
+- mean rating (1–10): **4.7** · accept votes **0/6** · percentile rank_avg 17.5 (100=best) · rank in year 12.0 (1=best)
 - NAIPv2 `-3.945` · NAIP-v1 `0.472` · SciJudge `-3.924` · DGC-BERT `0.183`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `5.7` Reject · 14B Fast `4.2` Reject
@@ -700,7 +708,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `openreview:OpC-9aBBVJe` · Reinforcement learning · unknown
 
-- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 49.4 (100=best) · rank in year 3.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 49.7 (100=best) · rank in year 3.0 (1=best)
 - NAIPv2 `-1.396` · NAIP-v1 `0.698` · SciJudge `1.251` · DGC-BERT `0.016`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.8` Accept · 7B Fast `5.8` Accept · 14B Fast `6.5` Accept
@@ -713,7 +721,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2205.07802` · Reinforcement learning · 2022-05-16
 
-- mean rating (1–10): **6.1** · accept votes **5/6** · percentile rank_avg 47.5 (100=best) · rank in year 12.0 (1=best)
+- mean rating (1–10): **6.1** · accept votes **5/6** · percentile rank_avg 47.9 (100=best) · rank in year 13.0 (1=best)
 - NAIPv2 `-1.850` · NAIP-v1 `0.358` · SciJudge `-3.554` · DGC-BERT `0.855`
 - CycleReviewer 8B `4.8` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.5` Accept · 14B Fast `6.2` Accept
@@ -739,23 +747,23 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2011.14826` · Reinforcement learning · 2020-11-20
 
-- mean rating (1–10): **4.2** · accept votes **1/5** · percentile rank_avg 17.8 (100=best) · rank in year 10.0 (1=best)
+- mean rating (1–10): **4.4** · accept votes **1/6** · percentile rank_avg 17.8 (100=best) · rank in year 10.0 (1=best)
 - NAIPv2 `-3.248` · NAIP-v1 `0.415` · SciJudge `-3.891` · DGC-BERT `0.397`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
-- DeepReviewer 7B Std `5.0` Reject · 7B Fast ``  · 14B Fast `4.8` Reject
+- DeepReviewer 7B Std `5.0` Reject · 7B Fast `5.2` Reject · 14B Fast `4.8` Reject
 - OpenReviewer `3.0` (S/P/C 3.0/2.0/2.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper lacks novelty in terms of the experiments performed. The authors have not introduced any new algorithms or techniques, but rather have performed experiments on existing ones. The paper would benefit from more in-depth analysis and insights from the experiments.  ### Questions  1. What are the limitations of the paper? How can they be addressed in future work? 2. What are the  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  The paper lacks novelty in terms of the experiments performed. The authors have not introduced any new algorithms or techniques, but rather have performed experiments on existing ones. The paper would benefit from more in-depth analysis and insights from the experiments.  ### Questions  1. What are the limitations of the paper? How can they be addressed in future work? 2. What are the  cyclereviewer-8b.seed1: Weaknesses  1. The contribution of this paper is limited.
 
 <a id="arxiv-2005.01643"></a>
 ### Offline Reinforcement Learning: Tutorial, Review, and Perspectives on Open Problems
 
 `arxiv:2005.01643` · Reinforcement learning · 2020-05-04
 
-- mean rating (1–10): **3.8** · accept votes **0/5** · percentile rank_avg 22.8 (100=best) · rank in year 8.0 (1=best)
+- mean rating (1–10): **4.2** · accept votes **0/6** · percentile rank_avg 23.5 (100=best) · rank in year 8.0 (1=best)
 - NAIPv2 `-4.117` · NAIP-v1 `0.684` · SciJudge `2.038` · DGC-BERT `0.060`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
-- DeepReviewer 7B Std `4.0` Reject · 7B Fast ``  · 14B Fast `4.3` Reject
+- DeepReviewer 7B Std `4.0` Reject · 7B Fast `5.7` Reject · 14B Fast `4.3` Reject
 - OpenReviewer `5.0` (S/P/C 3.0/2.0/2.0) · SEA-E `3.0` Reject
 - Telegram: [gonzo_ML/722](https://t.me/gonzo_ML/722), [j_links/3476](https://t.me/j_links/3476)
 - Weaknesses: cyclereviewer-8b: Weaknesses  The paper is a tutorial paper and does not present any new results or contributions to the field of offline reinforcement learning. The paper does not provide any new insights or perspectives on the field, and it does not discuss any of the recent advances or developments in the field. The paper also does not provide any empirical evaluations or comparisons of the different algorithms  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -765,10 +773,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2004.12919` · Reinforcement learning · 2020-04-27
 
-- mean rating (1–10): **5.9** · accept votes **4/5** · percentile rank_avg 64.1 (100=best) · rank in year 2.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **5/6** · percentile rank_avg 67.1 (100=best) · rank in year 2.0 (1=best)
 - NAIPv2 `-0.674` · NAIP-v1 `0.851` · SciJudge `2.038` · DGC-BERT `0.740`
 - CycleReviewer 8B `2.5` Reject · 70B `` 
-- DeepReviewer 7B Std `6.0` Accept · 7B Fast ``  · 14B Fast `6.2` Accept
+- DeepReviewer 7B Std `6.0` Accept · 7B Fast `7.3` Accept · 14B Fast `6.2` Accept
 - OpenReviewer `8.0` (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [j_links/3440](https://t.me/j_links/3440)
 - Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper's novelty is limited, as the idea of exploring promising states and returning to them is not a new concept in the field of reinforcement learning. The paper does not provide a clear justification for why this approach is necessary or how it differs from existing methods. 2. The paper lacks a thorough comparison with existing exploration algorithms, making it difficult to a deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -791,13 +799,13 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:1802.09477` · Reinforcement learning · 2018-02-26
 
-- mean rating (1–10): **4.3** · accept votes **1/4** · percentile rank_avg 26.7 (100=best) · rank in year 3.0 (1=best)
+- mean rating (1–10): **4.3** · accept votes **1/4** · percentile rank_avg 26.8 (100=best) · rank in year 3.0 (1=best)
 - NAIPv2 `-3.898` · NAIP-v1 `0.363` · SciJudge `-0.461` · DGC-BERT `0.888`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std ``  · 7B Fast ``  · 14B Fast `` 
 - OpenReviewer `3.0` (S/P/C 2.0/2.0/2.0) · SEA-E `5.0` Reject
 - Telegram: [AGI_and_RL/988](https://t.me/AGI_and_RL/988)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The proposed method is not novel enough. The idea of learning a contrastive model to detect adversarial examples has been explored in previous works (1, 2, 3). The authors should compare their method with these works and discuss the differences and advantages of their method. - The evaluation is not comprehensive enough. The authors only evaluate their method on a limited number of d deepreviewer-7b: weaknesses, and suggest improvements.  3. **Break Down the Issue
+- Weaknesses: cyclereviewer-8b: Weaknesses  - The proposed method is not novel enough. The idea of learning a contrastive model to detect adversarial examples has been explored in previous works (1, 2, 3). The authors should compare their method with these works and discuss the differences and advantages of their method. - The evaluation is not comprehensive enough. The authors only evaluate their method on a limited number of d deepreviewer-7b: weaknesses, pushing for rigor and detail.     * **Reviewer 4 (St
 
 <a id="arxiv-1801.01290"></a>
 ### Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor
@@ -817,10 +825,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:1712.06567` · Reinforcement learning · 2017-12-18
 
-- mean rating (1–10): **6.5** · accept votes **3/5** · percentile rank_avg 64.6 (100=best) · rank in year 1.0 (1=best)
+- mean rating (1–10): **6.3** · accept votes **4/6** · percentile rank_avg 60.1 (100=best) · rank in year 1.0 (1=best)
 - NAIPv2 `-0.830` · NAIP-v1 `0.779` · SciJudge `-2.734` · DGC-BERT `0.451`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
-- DeepReviewer 7B Std ``  · 7B Fast ``  · 14B Fast `7.0` Accept
+- DeepReviewer 7B Std `5.8` Reject · 7B Fast `5.8` Accept · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: —
 - Weaknesses: cyclereviewer-8b: Weaknesses  - The paper only compares the GA with other deep RL methods, but does not provide a comparison with other evolutionary algorithms. - The paper only considers a limited set of tasks, and it is unclear how the GA would perform on other tasks. - The paper does not provide a detailed analysis of the computational resources required to train the GA.  ### Questions  - How does the GA compare deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -836,17 +844,17 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `5.5` Reject · 14B Fast `5.0` Reject
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [knowledge_accumulator/194](https://t.me/knowledge_accumulator/194), [j_links/520](https://t.me/j_links/520)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a clear motivation for combining all these extensions. It would be helpful to provide a more detailed explanation of why these extensions are complementary and how they work together to improve performance. - The paper does not provide a detailed analysis of the hyperparameters used in the experiments. It would be helpful to provide a more detailed discussi deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a clear motivation for combining all these extensions. It would be helpful to provide a more detailed explanation of why these extensions are complementary and how they work together to improve performance. - The paper does not provide a detailed analysis of the hyperparameters used in the experiments. It would be helpful to provide a more detailed discussi cyclereviewer-8b.seed1: Weaknesses  The paper is a combination of existing method
 
 <a id="arxiv-1707.06887"></a>
 ### A Distributional Perspective on Reinforcement Learning
 
 `arxiv:1707.06887` · Reinforcement learning · 2017-07-21
 
-- mean rating (1–10): **6.1** · accept votes **4/5** · percentile rank_avg 57.8 (100=best) · rank in year 2.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 55.7 (100=best) · rank in year 2.0 (1=best)
 - NAIPv2 `-2.482` · NAIP-v1 `0.682` · SciJudge `2.160` · DGC-BERT `0.891`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
-- DeepReviewer 7B Std `4.5` Accept · 7B Fast ``  · 14B Fast `6.7` Accept
+- DeepReviewer 7B Std `4.5` Accept · 7B Fast `5.8` Accept · 14B Fast `6.7` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [knowledge_accumulator/194](https://t.me/knowledge_accumulator/194), [j_links/332](https://t.me/j_links/332)
 - Weaknesses: cyclereviewer-8b: Weaknesses  1. The theoretical results are not very surprising. The distributional Bellman operator is a contraction in Wasserstein distance, which has been shown in previous work. The authors only show that the distributional Bellman operator is a contraction in Wasserstein distance, but do not show that the proposed algorithm converges to the optimal solution.   2. The proposed algorithm is a si deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -856,7 +864,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:1511.06581` · Reinforcement learning · 2015-11-20
 
-- mean rating (1–10): **5.9** · accept votes **5/6** · percentile rank_avg 52.8 (100=best) · rank in year 2.0 (1=best)
+- mean rating (1–10): **5.9** · accept votes **5/6** · percentile rank_avg 53.1 (100=best) · rank in year 1.0 (1=best)
 - NAIPv2 `-4.504` · NAIP-v1 `0.628` · SciJudge `-0.007` · DGC-BERT `0.840`
 - CycleReviewer 8B `4.8` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.7` Accept · 14B Fast `5.0` Accept
@@ -869,10 +877,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:1511.05952` · Reinforcement learning · 2015-11-18
 
-- mean rating (1–10): **5.8** · accept votes **4/5** · percentile rank_avg 54.3 (100=best) · rank in year 1.0 (1=best)
+- mean rating (1–10): **5.5** · accept votes **4/6** · percentile rank_avg 50.0 (100=best) · rank in year 2.0 (1=best)
 - NAIPv2 `-1.875` · NAIP-v1 `0.706` · SciJudge `2.060` · DGC-BERT `0.910`
 - CycleReviewer 8B `4.0` Reject · 70B `` 
-- DeepReviewer 7B Std `4.8` Reject · 7B Fast ``  · 14B Fast `5.0` Accept
+- DeepReviewer 7B Std `4.8` Reject · 7B Fast `4.8` Reject · 14B Fast `5.0` Accept
 - OpenReviewer `8.0` (S/P/C 4.0/4.0/4.0) · SEA-E `6.0` Accept
 - Telegram: [knowledge_accumulator/194](https://t.me/knowledge_accumulator/194), [AGI_and_RL/189](https://t.me/AGI_and_RL/189)
 - Weaknesses: cyclereviewer-8b: Weaknesses  - The proposed algorithm is not novel.  - The experimental results are not convincing.  - The proposed algorithm is not well-motivated.   The proposed algorithm is not novel. The idea of prioritizing transitions based on TD error is not new. The authors should cite prior work (1) that also proposes prioritized experience replay for deep Q-learning.   The experimental results are not co deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -882,7 +890,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:1509.06461` · Reinforcement learning · 2015-09-22
 
-- mean rating (1–10): **5.5** · accept votes **4/6** · percentile rank_avg 48.7 (100=best) · rank in year 3.0 (1=best)
+- mean rating (1–10): **5.5** · accept votes **4/6** · percentile rank_avg 49.0 (100=best) · rank in year 3.0 (1=best)
 - NAIPv2 `-2.979` · NAIP-v1 `0.721` · SciJudge `-0.671` · DGC-BERT `0.890`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Reject · 14B Fast `4.0` Accept
@@ -895,7 +903,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2608.13040` · Post-training · 2026-08-13
 
-- mean rating (1–10): **6.1** · accept votes **5/6** · percentile rank_avg 56.1 (100=best) · rank in year 37.0 (1=best)
+- mean rating (1–10): **6.1** · accept votes **5/6** · percentile rank_avg 56.4 (100=best) · rank in year 37.0 (1=best)
 - NAIPv2 `-0.950` · NAIP-v1 `0.536` · SciJudge `-2.097` · DGC-BERT `0.842`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `7.0` Accept · 14B Fast `6.5` Accept
@@ -908,7 +916,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2608.09888` · Post-training · 2026-08-10
 
-- mean rating (1–10): **5.4** · accept votes **2/6** · percentile rank_avg 39.0 (100=best) · rank in year 64.0 (1=best)
+- mean rating (1–10): **5.4** · accept votes **2/6** · percentile rank_avg 39.0 (100=best) · rank in year 65.0 (1=best)
 - NAIPv2 `-0.529` · NAIP-v1 `0.629` · SciJudge `-3.334` · DGC-BERT `0.411`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `4.2` Reject · 14B Fast `5.7` Reject
@@ -921,7 +929,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2607.07847` · Post-training · 2026-07-08
 
-- mean rating (1–10): **5.9** · accept votes **4/6** · percentile rank_avg 50.0 (100=best) · rank in year 53.0 (1=best)
+- mean rating (1–10): **5.9** · accept votes **4/6** · percentile rank_avg 50.4 (100=best) · rank in year 53.0 (1=best)
 - NAIPv2 `-0.608` · NAIP-v1 `0.653` · SciJudge `1.443` · DGC-BERT `0.382`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.8` Reject · 7B Fast `6.0` Accept · 14B Fast `6.5` Accept
@@ -934,20 +942,20 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2607.05609` · Post-training · 2026-07-06
 
-- mean rating (1–10): **6.1** · accept votes **4/6** · percentile rank_avg 59.4 (100=best) · rank in year 31.0 (1=best)
+- mean rating (1–10): **6.1** · accept votes **4/6** · percentile rank_avg 59.8 (100=best) · rank in year 30.0 (1=best)
 - NAIPv2 `0.292` · NAIP-v1 `0.529` · SciJudge `-2.818` · DGC-BERT `0.825`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `6.0` Reject · 14B Fast `6.5` Reject
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/5817](https://t.me/gonzo_ML/5817)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The authors do not provide an experimental evaluation of the proposed algorithm, Window. It would be interesting to see how the Window algorithm compares to other continual learning algorithms in terms of Transfer Efficiency.  ### Questions  How does the Window algorithm compare to other continual learning algorithms in terms of Transfer Efficiency?  ### Flag For Ethics Review  No ethi deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  The authors do not provide an experimental evaluation of the proposed algorithm, Window. It would be interesting to see how the Window algorithm compares to other continual learning algorithms in terms of Transfer Efficiency.  ### Questions  How does the Window algorithm compare to other continual learning algorithms in terms of Transfer Efficiency?  ### Flag For Ethics Review  No ethi cyclereviewer-8b.seed1: Weaknesses  1. The authors claim that the paper challenge
 
 <a id="arxiv-2606.23740"></a>
 ### Weight-Space Geometry of Offline Reasoning Training
 
 `arxiv:2606.23740` · Post-training · 2026-06-21
 
-- mean rating (1–10): **5.5** · accept votes **2/6** · percentile rank_avg 36.5 (100=best) · rank in year 68.0 (1=best)
+- mean rating (1–10): **5.5** · accept votes **2/6** · percentile rank_avg 36.5 (100=best) · rank in year 67.0 (1=best)
 - NAIPv2 `0.401` · NAIP-v1 `0.346` · SciJudge `0.405` · DGC-BERT `0.074`
 - CycleReviewer 8B `4.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `4.8` Reject · 14B Fast `6.5` Reject
@@ -960,7 +968,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2606.18810` · Post-training · 2026-06-17
 
-- mean rating (1–10): **6.3** · accept votes **4/6** · percentile rank_avg 49.2 (100=best) · rank in year 55.0 (1=best)
+- mean rating (1–10): **6.3** · accept votes **4/6** · percentile rank_avg 49.5 (100=best) · rank in year 55.0 (1=best)
 - NAIPv2 `-1.278` · NAIP-v1 `0.505` · SciJudge `-3.719` · DGC-BERT `0.160`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Reject · 7B Fast `6.5` Accept · 14B Fast `7.5` Accept
@@ -973,7 +981,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2606.06021` · Post-training · 2026-06-04
 
-- mean rating (1–10): **6.3** · accept votes **4/6** · percentile rank_avg 75.7 (100=best) · rank in year 2.0 (1=best)
+- mean rating (1–10): **6.3** · accept votes **4/6** · percentile rank_avg 76.1 (100=best) · rank in year 2.0 (1=best)
 - NAIPv2 `3.092` · NAIP-v1 `0.698` · SciJudge `0.898` · DGC-BERT `0.915`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `6.8` Accept · 7B Fast `6.0` Reject · 14B Fast `7.0` Accept
@@ -986,7 +994,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2605.22074` · Post-training · 2026-05-21
 
-- mean rating (1–10): **6.3** · accept votes **5/6** · percentile rank_avg 69.7 (100=best) · rank in year 9.0 (1=best)
+- mean rating (1–10): **6.3** · accept votes **5/6** · percentile rank_avg 69.8 (100=best) · rank in year 9.0 (1=best)
 - NAIPv2 `-0.527` · NAIP-v1 `0.638` · SciJudge `1.754` · DGC-BERT `0.907`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `7.0` Accept · 14B Fast `5.8` Reject
@@ -999,7 +1007,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2605.12969` · Post-training · 2026-05-13
 
-- mean rating (1–10): **6.5** · accept votes **5/6** · percentile rank_avg 64.8 (100=best) · rank in year 20.0 (1=best)
+- mean rating (1–10): **6.5** · accept votes **5/6** · percentile rank_avg 64.9 (100=best) · rank in year 21.0 (1=best)
 - NAIPv2 `0.069` · NAIP-v1 `0.457` · SciJudge `-2.193` · DGC-BERT `0.943`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `7.0` Accept · 14B Fast `7.5` Accept
@@ -1025,7 +1033,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2604.20659` · Post-training · 2026-04-22
 
-- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 47.8 (100=best) · rank in year 56.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 48.2 (100=best) · rank in year 56.0 (1=best)
 - NAIPv2 `-1.234` · NAIP-v1 `0.453` · SciJudge `-1.101` · DGC-BERT `0.697`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `5.8` Reject · 14B Fast `7.0` Accept
@@ -1038,7 +1046,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2604.13016` · Post-training · 2026-04-14
 
-- mean rating (1–10): **6.3** · accept votes **5/6** · percentile rank_avg 65.9 (100=best) · rank in year 16.0 (1=best)
+- mean rating (1–10): **6.3** · accept votes **5/6** · percentile rank_avg 66.0 (100=best) · rank in year 15.0 (1=best)
 - NAIPv2 `0.490` · NAIP-v1 `0.563` · SciJudge `0.207` · DGC-BERT `0.852`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `7.5` Accept · 14B Fast `6.0` Reject
@@ -1051,7 +1059,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2604.08690` · Post-training · 2026-04-09
 
-- mean rating (1–10): **6.5** · accept votes **5/6** · percentile rank_avg 61.6 (100=best) · rank in year 25.0 (1=best)
+- mean rating (1–10): **6.5** · accept votes **5/6** · percentile rank_avg 61.7 (100=best) · rank in year 26.0 (1=best)
 - NAIPv2 `-0.349` · NAIP-v1 `0.353` · SciJudge `-3.046` · DGC-BERT `0.886`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `7.5` Accept · 14B Fast `6.5` Accept
@@ -1064,7 +1072,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2604.02288` · Post-training · 2026-04-02
 
-- mean rating (1–10): **5.9** · accept votes **5/6** · percentile rank_avg 59.3 (100=best) · rank in year 32.0 (1=best)
+- mean rating (1–10): **5.9** · accept votes **5/6** · percentile rank_avg 59.7 (100=best) · rank in year 31.0 (1=best)
 - NAIPv2 `0.539` · NAIP-v1 `0.620` · SciJudge `2.061` · DGC-BERT `0.848`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `6.0` Accept · 14B Fast `6.5` Accept
@@ -1077,7 +1085,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2604.01375` · Post-training · 2026-04-01
 
-- mean rating (1–10): **5.8** · accept votes **2/6** · percentile rank_avg 45.8 (100=best) · rank in year 57.0 (1=best)
+- mean rating (1–10): **5.8** · accept votes **2/6** · percentile rank_avg 46.2 (100=best) · rank in year 57.0 (1=best)
 - NAIPv2 `-1.389` · NAIP-v1 `0.541` · SciJudge `-0.397` · DGC-BERT `0.309`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.2` Reject · 14B Fast `5.8` Reject
@@ -1090,10 +1098,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2603.25562` · Post-training · 2026-03-26
 
-- mean rating (1–10): **5.8** · accept votes **4/5** · percentile rank_avg 55.7 (100=best) · rank in year 40.0 (1=best)
+- mean rating (1–10): **5.8** · accept votes **5/6** · percentile rank_avg 53.9 (100=best) · rank in year 44.0 (1=best)
 - NAIPv2 `-0.349` · NAIP-v1 `0.660` · SciJudge `0.503` · DGC-BERT `0.870`
 - CycleReviewer 8B `4.2` Reject · 70B `` 
-- DeepReviewer 7B Std `5.2` Reject · 7B Fast ``  · 14B Fast `7.0` Accept
+- DeepReviewer 7B Std `5.2` Reject · 7B Fast `5.8` Accept · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
 - Weaknesses: cyclereviewer-8b: Weaknesses  - The proposed method is not novel. The idea of using top-K local support matching has been studied in the RL community for a long time. See, for example, (1,2). It is unclear why the authors did not cite these papers. - The empirical results are not convincing. The proposed method is only evaluated on two small datasets, which are not sufficient to demonstrate its effectiveness. The a deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -1103,7 +1111,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2603.24472` · Post-training · 2026-03-25
 
-- mean rating (1–10): **5.7** · accept votes **3/6** · percentile rank_avg 43.0 (100=best) · rank in year 61.0 (1=best)
+- mean rating (1–10): **5.7** · accept votes **3/6** · percentile rank_avg 43.3 (100=best) · rank in year 61.0 (1=best)
 - NAIPv2 `-0.968` · NAIP-v1 `0.561` · SciJudge `1.424` · DGC-BERT `0.251`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `5.8` Reject · 14B Fast `5.8` Accept
@@ -1116,10 +1124,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2602.18037` · Post-training · 2026-02-20
 
-- mean rating (1–10): **5.9** · accept votes **3/5** · percentile rank_avg 54.4 (100=best) · rank in year 42.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **3/6** · percentile rank_avg 56.4 (100=best) · rank in year 38.0 (1=best)
 - NAIPv2 `-1.482` · NAIP-v1 `0.387` · SciJudge `1.787` · DGC-BERT `0.828`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
-- DeepReviewer 7B Std `8.0` Accept · 7B Fast ``  · 14B Fast `6.5` Accept
+- DeepReviewer 7B Std `8.0` Accept · 7B Fast `6.5` Reject · 14B Fast `6.5` Accept
 - OpenReviewer `5.0` (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [j_links/8317](https://t.me/j_links/8317)
 - Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks a comprehensive evaluation of the proposed method, with only a few experiments conducted on small-scale datasets. 2. The paper does not provide a detailed analysis of the computational cost of the proposed method. 3. The paper does not discuss the limitations of the proposed method and potential future research directions.  ## Questions  1. How does the proposed meth deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -1129,7 +1137,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2602.09000` · Post-training · 2026-02-09
 
-- mean rating (1–10): **5.6** · accept votes **3/6** · percentile rank_avg 52.3 (100=best) · rank in year 48.0 (1=best)
+- mean rating (1–10): **5.6** · accept votes **3/6** · percentile rank_avg 52.6 (100=best) · rank in year 48.0 (1=best)
 - NAIPv2 `-1.219` · NAIP-v1 `0.502` · SciJudge `3.180` · DGC-BERT `0.912`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `5.5` Reject · 14B Fast `6.5` Accept
@@ -1142,7 +1150,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2601.20861` · Post-training · 2026-01-28
 
-- mean rating (1–10): **5.1** · accept votes **3/6** · percentile rank_avg 23.9 (100=best) · rank in year 71.0 (1=best)
+- mean rating (1–10): **5.1** · accept votes **3/6** · percentile rank_avg 24.1 (100=best) · rank in year 71.0 (1=best)
 - NAIPv2 `-2.814` · NAIP-v1 `0.345` · SciJudge `-2.096` · DGC-BERT `0.038`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `5.7` Accept · 14B Fast `4.0` Reject
@@ -1155,7 +1163,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2601.20802` · Post-training · 2026-01-28
 
-- mean rating (1–10): **6.2** · accept votes **5/6** · percentile rank_avg 68.0 (100=best) · rank in year 11.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **5/6** · percentile rank_avg 68.4 (100=best) · rank in year 10.0 (1=best)
 - NAIPv2 `-0.924` · NAIP-v1 `0.584` · SciJudge `3.395` · DGC-BERT `0.912`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.5` Accept · 14B Fast `7.0` Accept
@@ -1168,7 +1176,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2601.19897` · Post-training · 2026-01-27
 
-- mean rating (1–10): **6.0** · accept votes **6/6** · percentile rank_avg 59.2 (100=best) · rank in year 33.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **6/6** · percentile rank_avg 59.5 (100=best) · rank in year 32.0 (1=best)
 - NAIPv2 `-1.568` · NAIP-v1 `0.601` · SciJudge `2.262` · DGC-BERT `0.924`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `6.2` Accept · 14B Fast `6.0` Accept
@@ -1181,7 +1189,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2601.18734` · Post-training · 2026-01-26
 
-- mean rating (1–10): **6.3** · accept votes **5/6** · percentile rank_avg 66.1 (100=best) · rank in year 15.0 (1=best)
+- mean rating (1–10): **6.3** · accept votes **5/6** · percentile rank_avg 66.4 (100=best) · rank in year 13.0 (1=best)
 - NAIPv2 `1.841` · NAIP-v1 `0.656` · SciJudge `0.972` · DGC-BERT `0.813`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Reject · 7B Fast `6.7` Accept · 14B Fast `6.0` Accept
@@ -1194,10 +1202,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2601.16175` · Post-training · 2026-01-22
 
-- mean rating (1–10): **6.8** · accept votes **4/5** · percentile rank_avg 69.1 (100=best) · rank in year 10.0 (1=best)
+- mean rating (1–10): **6.5** · accept votes **5/6** · percentile rank_avg 65.9 (100=best) · rank in year 16.0 (1=best)
 - NAIPv2 `-0.401` · NAIP-v1 `0.564` · SciJudge `3.644` · DGC-BERT `0.030`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
-- DeepReviewer 7B Std `6.2` Accept · 7B Fast ``  · 14B Fast `8.0` Accept
+- DeepReviewer 7B Std `6.2` Accept · 7B Fast `5.8` Accept · 14B Fast `8.0` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [j_links/8337](https://t.me/j_links/8337), [gonzo_ML/4643](https://t.me/gonzo_ML/4643)
 - Weaknesses: cyclereviewer-8b: Weaknesses  The paper only evaluates the method on a limited set of problems and does not provide a comprehensive evaluation of its performance. The paper also does not provide a detailed analysis of the method's performance on different types of problems.  ### Questions  The paper mentions that the method can only be applied to problems with continuous rewards. Can the method be extended to probl deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -1207,7 +1215,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2601.14525` · Post-training · 2026-01-20
 
-- mean rating (1–10): **6.2** · accept votes **5/6** · percentile rank_avg 53.4 (100=best) · rank in year 46.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **5/6** · percentile rank_avg 53.8 (100=best) · rank in year 45.0 (1=best)
 - NAIPv2 `-0.429` · NAIP-v1 `0.485` · SciJudge `2.164` · DGC-BERT `0.572`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.0` Accept · 14B Fast `6.5` Accept
@@ -1220,7 +1228,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2601.11061` · Post-training · 2026-01-16
 
-- mean rating (1–10): **6.3** · accept votes **5/6** · percentile rank_avg 72.9 (100=best) · rank in year 5.0 (1=best)
+- mean rating (1–10): **6.3** · accept votes **5/6** · percentile rank_avg 73.1 (100=best) · rank in year 5.0 (1=best)
 - NAIPv2 `2.123` · NAIP-v1 `0.655` · SciJudge `2.783` · DGC-BERT `0.666`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `7.0` Accept · 14B Fast `6.5` Reject
@@ -1233,7 +1241,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2512.02807` · Post-training · 2025-12-02
 
-- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 61.2 (100=best) · rank in year 28.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 61.6 (100=best) · rank in year 28.0 (1=best)
 - NAIPv2 `-0.412` · NAIP-v1 `0.616` · SciJudge `0.117` · DGC-BERT `0.904`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.5` Accept · 14B Fast `6.5` Accept
@@ -1246,7 +1254,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2512.00499` · Post-training · 2025-11-29
 
-- mean rating (1–10): **6.2** · accept votes **5/6** · percentile rank_avg 53.6 (100=best) · rank in year 45.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **5/6** · percentile rank_avg 53.7 (100=best) · rank in year 46.0 (1=best)
 - NAIPv2 `-0.965` · NAIP-v1 `0.544` · SciJudge `-4.422` · DGC-BERT `0.884`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `7.5` Accept · 14B Fast `6.0` Accept
@@ -1259,7 +1267,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2511.20347` · Post-training · 2025-11-25
 
-- mean rating (1–10): **6.3** · accept votes **4/6** · percentile rank_avg 60.3 (100=best) · rank in year 33.0 (1=best)
+- mean rating (1–10): **6.3** · accept votes **4/6** · percentile rank_avg 60.7 (100=best) · rank in year 32.0 (1=best)
 - NAIPv2 `-0.818` · NAIP-v1 `0.581` · SciJudge `-1.591` · DGC-BERT `0.819`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Reject · 14B Fast `7.0` Accept
@@ -1272,7 +1280,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2511.07317` · Post-training · 2025-11-10
 
-- mean rating (1–10): **6.5** · accept votes **5/6** · percentile rank_avg 60.9 (100=best) · rank in year 30.0 (1=best)
+- mean rating (1–10): **6.5** · accept votes **5/6** · percentile rank_avg 61.2 (100=best) · rank in year 31.0 (1=best)
 - NAIPv2 `-0.931` · NAIP-v1 `0.519` · SciJudge `-0.278` · DGC-BERT `0.547`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Reject · 7B Fast `6.8` Accept · 14B Fast `7.5` Accept
@@ -1285,7 +1293,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2510.14901` · Post-training · 2025-10-16
 
-- mean rating (1–10): **6.5** · accept votes **5/6** · percentile rank_avg 63.1 (100=best) · rank in year 22.0 (1=best)
+- mean rating (1–10): **6.5** · accept votes **5/6** · percentile rank_avg 63.2 (100=best) · rank in year 20.0 (1=best)
 - NAIPv2 `-1.463` · NAIP-v1 `0.513` · SciJudge `1.057` · DGC-BERT `0.885`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `7.0` Accept · 14B Fast `6.5` Accept
@@ -1298,7 +1306,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2510.13786` · Post-training · 2025-10-15
 
-- mean rating (1–10): **6.3** · accept votes **5/6** · percentile rank_avg 74.0 (100=best) · rank in year 5.0 (1=best)
+- mean rating (1–10): **6.3** · accept votes **5/6** · percentile rank_avg 74.3 (100=best) · rank in year 5.0 (1=best)
 - NAIPv2 `0.044` · NAIP-v1 `0.693` · SciJudge `1.318` · DGC-BERT `0.852`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `6.8` Accept · 14B Fast `6.0` Reject
@@ -1311,7 +1319,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2510.00977` · Post-training · 2025-10-01
 
-- mean rating (1–10): **5.7** · accept votes **4/6** · percentile rank_avg 44.4 (100=best) · rank in year 67.0 (1=best)
+- mean rating (1–10): **5.7** · accept votes **4/6** · percentile rank_avg 44.3 (100=best) · rank in year 65.0 (1=best)
 - NAIPv2 `-0.455` · NAIP-v1 `0.411` · SciJudge `-2.651` · DGC-BERT `0.614`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `4.8` Reject · 14B Fast `6.5` Accept
@@ -1324,7 +1332,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2509.25123` · Post-training · 2025-09-29
 
-- mean rating (1–10): **5.8** · accept votes **4/6** · percentile rank_avg 50.7 (100=best) · rank in year 52.0 (1=best)
+- mean rating (1–10): **5.8** · accept votes **4/6** · percentile rank_avg 50.7 (100=best) · rank in year 53.0 (1=best)
 - NAIPv2 `-0.188` · NAIP-v1 `0.603` · SciJudge `-0.882` · DGC-BERT `0.417`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `4.2` Reject · 14B Fast `6.5` Accept
@@ -1337,7 +1345,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2509.13232` · Post-training · 2025-09-16
 
-- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 54.0 (100=best) · rank in year 44.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 54.2 (100=best) · rank in year 44.0 (1=best)
 - NAIPv2 `-0.961` · NAIP-v1 `0.567` · SciJudge `1.330` · DGC-BERT `0.947`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.0` Reject · 7B Fast `7.0` Accept · 14B Fast `6.0` Accept
@@ -1350,7 +1358,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2509.03646` · Post-training · 2025-09-03
 
-- mean rating (1–10): **5.9** · accept votes **3/6** · percentile rank_avg 57.4 (100=best) · rank in year 42.0 (1=best)
+- mean rating (1–10): **5.9** · accept votes **3/6** · percentile rank_avg 57.6 (100=best) · rank in year 41.0 (1=best)
 - NAIPv2 `-0.492` · NAIP-v1 `0.669` · SciJudge `-0.405` · DGC-BERT `0.871`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Reject · 7B Fast `5.5` Reject · 14B Fast `6.0` Reject
@@ -1363,7 +1371,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2508.07629` · Post-training · 2025-08-11
 
-- mean rating (1–10): **5.8** · accept votes **3/6** · percentile rank_avg 37.5 (100=best) · rank in year 69.0 (1=best)
+- mean rating (1–10): **5.8** · accept votes **3/6** · percentile rank_avg 37.6 (100=best) · rank in year 69.0 (1=best)
 - NAIPv2 `-1.587` · NAIP-v1 `0.330` · SciJudge `0.493` · DGC-BERT `0.049`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std ``  · 7B Fast `5.2` Reject · 14B Fast `6.0` Reject
@@ -1376,7 +1384,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2508.05629` · Post-training · 2025-08-07
 
-- mean rating (1–10): **6.4** · accept votes **5/6** · percentile rank_avg 67.6 (100=best) · rank in year 13.0 (1=best)
+- mean rating (1–10): **6.4** · accept votes **5/6** · percentile rank_avg 67.8 (100=best) · rank in year 12.0 (1=best)
 - NAIPv2 `1.032` · NAIP-v1 `0.536` · SciJudge `-2.207` · DGC-BERT `0.950`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.4` Accept · 7B Fast `7.0` Accept · 14B Fast `6.5` Accept
@@ -1389,7 +1397,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2507.19457` · Post-training · 2025-07-25
 
-- mean rating (1–10): **6.3** · accept votes **5/6** · percentile rank_avg 66.4 (100=best) · rank in year 17.0 (1=best)
+- mean rating (1–10): **6.3** · accept votes **5/6** · percentile rank_avg 66.8 (100=best) · rank in year 14.0 (1=best)
 - NAIPv2 `2.922` · NAIP-v1 `0.504` · SciJudge `0.575` · DGC-BERT `0.518`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.5` Accept · 14B Fast `7.0` Accept
@@ -1402,7 +1410,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2507.18071` · Post-training · 2025-07-24
 
-- mean rating (1–10): **5.5** · accept votes **4/6** · percentile rank_avg 47.8 (100=best) · rank in year 59.0 (1=best)
+- mean rating (1–10): **5.5** · accept votes **4/6** · percentile rank_avg 47.9 (100=best) · rank in year 59.0 (1=best)
 - NAIPv2 `-1.184` · NAIP-v1 `0.424` · SciJudge `1.292` · DGC-BERT `0.875`
 - CycleReviewer 8B `4.2` Reject · 70B `` 
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `4.8` Reject · 14B Fast `6.5` Accept
@@ -1415,7 +1423,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2506.13585` · Post-training · 2025-06-16
 
-- mean rating (1–10): **6.0** · accept votes **3/6** · percentile rank_avg 52.1 (100=best) · rank in year 49.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **3/6** · percentile rank_avg 52.3 (100=best) · rank in year 49.0 (1=best)
 - NAIPv2 `1.191` · NAIP-v1 `0.258` · SciJudge `3.205` · DGC-BERT `0.306`
 - CycleReviewer 8B `4.8` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.5` Reject · 14B Fast `8.0` Accept
@@ -1428,7 +1436,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2506.06632` · Post-training · 2025-06-07
 
-- mean rating (1–10): **5.9** · accept votes **5/6** · percentile rank_avg 49.8 (100=best) · rank in year 54.0 (1=best)
+- mean rating (1–10): **5.9** · accept votes **5/6** · percentile rank_avg 50.2 (100=best) · rank in year 54.0 (1=best)
 - NAIPv2 `1.160` · NAIP-v1 `0.422` · SciJudge `0.002` · DGC-BERT `0.832`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `6.5` Accept · 14B Fast `6.5` Accept
@@ -1441,7 +1449,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2506.03106` · Post-training · 2025-06-03
 
-- mean rating (1–10): **6.5** · accept votes **6/6** · percentile rank_avg 77.4 (100=best) · rank in year 3.0 (1=best)
+- mean rating (1–10): **6.5** · accept votes **6/6** · percentile rank_avg 77.7 (100=best) · rank in year 2.0 (1=best)
 - NAIPv2 `1.530` · NAIP-v1 `0.635` · SciJudge `1.974` · DGC-BERT `0.909`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.0` Accept · 14B Fast `7.5` Accept
@@ -1454,20 +1462,20 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2506.01939` · Post-training · 2025-06-02
 
-- mean rating (1–10): **6.2** · accept votes **3/6** · percentile rank_avg 59.6 (100=best) · rank in year 35.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **3/6** · percentile rank_avg 60.0 (100=best) · rank in year 35.0 (1=best)
 - NAIPv2 `-1.289` · NAIP-v1 `0.601` · SciJudge `1.841` · DGC-BERT `0.275`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `5.8` Reject · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [axisofordinary/7296](https://t.me/axisofordinary/7296), [tech_priestess/2386](https://t.me/tech_priestess/2386)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The main weakness of the paper is that the results are not very surprising and do not seem to have a significant impact on the field. The paper is essentially showing that high-entropy tokens are important for reasoning, which is already known. The paper also shows that training on high-entropy tokens can achieve comparable performance to training on all tokens, but this is not surpris deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  The main weakness of the paper is that the results are not very surprising and do not seem to have a significant impact on the field. The paper is essentially showing that high-entropy tokens are important for reasoning, which is already known. The paper also shows that training on high-entropy tokens can achieve comparable performance to training on all tokens, but this is not surpris cyclereviewer-8b.seed1: Weaknesses  I have several concerns about the paper: 1. T
 
 <a id="arxiv-2505.19590"></a>
 ### Learning to Reason without External Rewards
 
 `arxiv:2505.19590` · Post-training · 2025-05-26
 
-- mean rating (1–10): **5.3** · accept votes **3/6** · percentile rank_avg 51.6 (100=best) · rank in year 50.0 (1=best)
+- mean rating (1–10): **5.3** · accept votes **3/6** · percentile rank_avg 51.7 (100=best) · rank in year 50.0 (1=best)
 - NAIPv2 `1.556` · NAIP-v1 `0.594` · SciJudge `1.122` · DGC-BERT `0.822`
 - CycleReviewer 8B `4.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Reject · 7B Fast `4.8` Reject · 14B Fast `6.0` Accept
@@ -1480,7 +1488,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2505.10978` · Post-training · 2025-05-16
 
-- mean rating (1–10): **6.3** · accept votes **6/6** · percentile rank_avg 74.8 (100=best) · rank in year 4.0 (1=best)
+- mean rating (1–10): **6.3** · accept votes **6/6** · percentile rank_avg 75.1 (100=best) · rank in year 4.0 (1=best)
 - NAIPv2 `0.338` · NAIP-v1 `0.675` · SciJudge `1.363` · DGC-BERT `0.888`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `6.0` Accept · 14B Fast `6.7` Accept
@@ -1493,7 +1501,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2504.16084` · Post-training · 2025-04-22
 
-- mean rating (1–10): **6.1** · accept votes **5/6** · percentile rank_avg 61.6 (100=best) · rank in year 25.0 (1=best)
+- mean rating (1–10): **6.1** · accept votes **5/6** · percentile rank_avg 62.0 (100=best) · rank in year 25.0 (1=best)
 - NAIPv2 `1.952` · NAIP-v1 `0.403` · SciJudge `2.112` · DGC-BERT `0.948`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.0` Accept · 14B Fast `7.0` Accept
@@ -1506,7 +1514,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2504.13837` · Post-training · 2025-04-18
 
-- mean rating (1–10): **5.8** · accept votes **4/6** · percentile rank_avg 49.6 (100=best) · rank in year 55.0 (1=best)
+- mean rating (1–10): **5.8** · accept votes **4/6** · percentile rank_avg 50.0 (100=best) · rank in year 56.0 (1=best)
 - NAIPv2 `-1.139` · NAIP-v1 `0.544` · SciJudge `1.785` · DGC-BERT `0.742`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.5` Accept · 14B Fast `6.5` Accept
@@ -1519,7 +1527,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2503.20783` · Post-training · 2025-03-26
 
-- mean rating (1–10): **6.2** · accept votes **4/6** · percentile rank_avg 61.2 (100=best) · rank in year 27.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **4/6** · percentile rank_avg 61.6 (100=best) · rank in year 26.0 (1=best)
 - NAIPv2 `1.818` · NAIP-v1 `0.442` · SciJudge `2.446` · DGC-BERT `0.447`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.5` Accept · 14B Fast `7.0` Accept
@@ -1532,7 +1540,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2503.14476` · Post-training · 2025-03-18
 
-- mean rating (1–10): **6.0** · accept votes **3/6** · percentile rank_avg 46.6 (100=best) · rank in year 63.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **3/6** · percentile rank_avg 46.5 (100=best) · rank in year 63.0 (1=best)
 - NAIPv2 `-1.369` · NAIP-v1 `0.501` · SciJudge `2.191` · DGC-BERT `0.160`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `4.0` Reject · 7B Fast `5.0` Reject · 14B Fast `6.0` Reject
@@ -1545,23 +1553,23 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2503.02875` · Post-training · 2025-03-04
 
-- mean rating (1–10): **6.2** · accept votes **3/6** · percentile rank_avg 58.6 (100=best) · rank in year 39.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **3/6** · percentile rank_avg 59.0 (100=best) · rank in year 39.0 (1=best)
 - NAIPv2 `-1.960` · NAIP-v1 `0.596` · SciJudge `3.143` · DGC-BERT `0.817`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `5.8` Reject · 14B Fast `6.5` Reject
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [data_secrets/6419](https://t.me/data_secrets/6419), [axisofordinary/7009](https://t.me/axisofordinary/7009)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The authors claim that the proposed method is "unsupervised" in the sense that it does not require labeled data or rejection sampling. However, the method still requires a dataset of questions and answers, which is not entirely unsupervised. In addition, the authors use a subset of the dataset for full reasoning trace generation, which is still supervised. I would suggest the authors deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  - The authors claim that the proposed method is "unsupervised" in the sense that it does not require labeled data or rejection sampling. However, the method still requires a dataset of questions and answers, which is not entirely unsupervised. In addition, the authors use a subset of the dataset for full reasoning trace generation, which is still supervised. I would suggest the authors cyclereviewer-8b.seed1: Weaknesses  - The paper does not provide a theoretical an
 
 <a id="arxiv-2503.00735"></a>
 ### LADDER: Self-Improving LLMs Through Recursive Problem Decomposition
 
 `arxiv:2503.00735` · Post-training · 2025-03-02
 
-- mean rating (1–10): **6.0** · accept votes **4/5** · percentile rank_avg 60.7 (100=best) · rank in year 31.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 59.8 (100=best) · rank in year 36.0 (1=best)
 - NAIPv2 `-0.900` · NAIP-v1 `0.600` · SciJudge `3.585` · DGC-BERT `0.731`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
-- DeepReviewer 7B Std `6.0` Reject · 7B Fast ``  · 14B Fast `6.0` Reject
+- DeepReviewer 7B Std `6.0` Reject · 7B Fast `6.0` Reject · 14B Fast `6.0` Reject
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/7020](https://t.me/axisofordinary/7020), [AGI_and_RL/986](https://t.me/AGI_and_RL/986)
 - Weaknesses: cyclereviewer-8b: Weaknesses  - The paper focuses on mathematical integration tasks, which may not be representative of all types of complex tasks that LLMs need to solve. It would be helpful to see if the approach works on other types of tasks as well. - The paper does not provide a detailed analysis of the computational cost of the approach. It would be helpful to understand the trade-off between the potential im deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -1571,10 +1579,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2402.13669` · Post-training · 2024-02-21
 
-- mean rating (1–10): **6.5** · accept votes **4/5** · percentile rank_avg 63.5 (100=best) · rank in year 5.0 (1=best)
+- mean rating (1–10): **6.4** · accept votes **5/6** · percentile rank_avg 62.3 (100=best) · rank in year 4.0 (1=best)
 - NAIPv2 `0.723` · NAIP-v1 `0.570` · SciJudge `1.364` · DGC-BERT `0.909`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
-- DeepReviewer 7B Std `4.2` Reject · 7B Fast ``  · 14B Fast `6.7` Accept
+- DeepReviewer 7B Std `4.2` Reject · 7B Fast `6.0` Accept · 14B Fast `6.7` Accept
 - OpenReviewer `8.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
 - Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper does not provide a thorough analysis of the limitations of the proposed method. For example, the paper does not discuss the computational cost of generating the distilled dataset, or the potential trade-off between performance and computational cost. 2. The paper does not provide a comparison with other methods for mitigating catastrophic forgetting in LLM fine-tuning. For deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -1584,24 +1592,24 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2402.03300` · Post-training · 2024-02-05
 
-- mean rating (1–10): **6.2** · accept votes **5/6** · percentile rank_avg 58.9 (100=best) · rank in year 9.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **5/6** · percentile rank_avg 57.1 (100=best) · rank in year 13.0 (1=best)
 - NAIPv2 `-1.261` · NAIP-v1 `0.440` · SciJudge `3.477` · DGC-BERT `0.859`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
-- DeepReviewer 7B Std ``  · 7B Fast `5.5` Reject · 14B Fast `7.5` Accept
+- DeepReviewer 7B Std `5.5` Reject · 7B Fast `5.5` Reject · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/4555](https://t.me/gonzo_ML/4555), [gonzo_ML/4303](https://t.me/gonzo_ML/4303), [gonzo_ML/3319](https://t.me/gonzo_ML/3319), [gonzo_ML/3313](https://t.me/gonzo_ML/3313), [buckwheat_thoughts/104](https://t.me/buckwheat_thoughts/104), [buckwheat_thoughts/105](https://t.me/buckwheat_thoughts/105), [AGI_and_RL/948](https://t.me/AGI_and_RL/948), [gonzo_ML/3239](https://t.me/gonzo_ML/3239)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper does not provide a detailed analysis of the data selection pipeline used to construct the DeepSeekMath Corpus. It would be helpful to have a more detailed description of the data selection process, including how the data was filtered and how the quality of the data was assessed.  2. The paper does not provide a detailed analysis of the performance of the model on different deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper does not provide a detailed analysis of the data selection pipeline used to construct the DeepSeekMath Corpus. It would be helpful to have a more detailed description of the data selection process, including how the data was filtered and how the quality of the data was assessed.  2. The paper does not provide a detailed analysis of the performance of the model on different cyclereviewer-8b.seed1: Weaknesses  1. The paper is not well-organized, some part
 
 <a id="arxiv-2303.17651"></a>
 ### Self-Refine: Iterative Refinement with Self-Feedback
 
 `arxiv:2303.17651` · Post-training · 2023-03-30
 
-- mean rating (1–10): **6.2** · accept votes **5/5** · percentile rank_avg 61.4 (100=best) · rank in year 8.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **6/6** · percentile rank_avg 60.7 (100=best) · rank in year 8.0 (1=best)
 - NAIPv2 `-2.209` · NAIP-v1 `0.704` · SciJudge `4.059` · DGC-BERT `0.851`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `5.8` Accept · 14B Fast `6.0` Accept
-- OpenReviewer `` (S/P/C None/None/None) · SEA-E `7.0` Accept
+- OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [gonzo_ML/1467](https://t.me/gonzo_ML/1467)
 - Weaknesses: cyclereviewer-8b: Weaknesses  The paper evaluates Self-Refine on a limited number of tasks, and it is not clear how well the approach would perform on other tasks or domains. The paper also does not provide a detailed comparison with other approaches that use feedback and refinement to improve LLM outputs.  The paper does not provide a detailed analysis of the computational cost of Self-Refine, including the time a deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
 
@@ -1610,10 +1618,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2608.11676` · LLMs: architectures, context, training · 2026-08-12
 
-- mean rating (1–10): **6.4** · accept votes **3/5** · percentile rank_avg 59.6 (100=best) · rank in year 30.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **4/6** · percentile rank_avg 56.6 (100=best) · rank in year 35.0 (1=best)
 - NAIPv2 `-0.440` · NAIP-v1 `0.609` · SciJudge `-3.182` · DGC-BERT `0.209`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
-- DeepReviewer 7B Std `7.0` Accept · 7B Fast ``  · 14B Fast `7.5` Accept
+- DeepReviewer 7B Std `7.0` Accept · 7B Fast `5.7` Accept · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
 - Weaknesses: cyclereviewer-8b: Weaknesses  1. The proposed method is only evaluated on a limited set of benchmarks, and it is unclear how the method will perform on other tasks. 2. The method requires training a separate bridge for each sender-receiver pair, which may be computationally expensive. 3. The method assumes that the sender and receiver have the same vocabulary, which may not always be the case in real-world applicat deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -1623,7 +1631,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2608.03893` · LLMs: architectures, context, training · 2026-08-04
 
-- mean rating (1–10): **5.8** · accept votes **4/6** · percentile rank_avg 50.2 (100=best) · rank in year 52.0 (1=best)
+- mean rating (1–10): **5.8** · accept votes **4/6** · percentile rank_avg 50.6 (100=best) · rank in year 52.0 (1=best)
 - NAIPv2 `-0.026` · NAIP-v1 `0.437` · SciJudge `-0.487` · DGC-BERT `0.067`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.5` Accept · 14B Fast `6.5` Accept
@@ -1649,46 +1657,46 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2607.02303` · LLMs: architectures, context, training · 2026-07-02
 
-- mean rating (1–10): **6.2** · accept votes **5/6** · percentile rank_avg 61.3 (100=best) · rank in year 27.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **5/6** · percentile rank_avg 61.6 (100=best) · rank in year 27.0 (1=best)
 - NAIPv2 `0.288` · NAIP-v1 `0.584` · SciJudge `1.483` · DGC-BERT `0.693`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.8` Accept · 7B Fast `5.8` Accept · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [gonzo_ML/5675](https://t.me/gonzo_ML/5675)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The main weakness of the paper is that the proposed method is not novel. The idea of using a cache to improve the performance of linear attention models has been proposed in previous works such as LTE and NHA. The novelty of this paper is mainly in the way the cache is filled with the most important key-value pairs.  ### Questions  1. How does the proposed method compare to LTE and NHA deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  The main weakness of the paper is that the proposed method is not novel. The idea of using a cache to improve the performance of linear attention models has been proposed in previous works such as LTE and NHA. The novelty of this paper is mainly in the way the cache is filled with the most important key-value pairs.  ### Questions  1. How does the proposed method compare to LTE and NHA cyclereviewer-8b.seed1: Weaknesses  - The paper does not provide a detailed compa
 
 <a id="arxiv-2606.06574"></a>
 ### Skip a Layer or Loop It? Learning Program-of-Layers in LLMs
 
 `arxiv:2606.06574` · LLMs: architectures, context, training · 2026-06-04
 
-- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 64.0 (100=best) · rank in year 23.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 64.4 (100=best) · rank in year 23.0 (1=best)
 - NAIPv2 `-0.587` · NAIP-v1 `0.680` · SciJudge `-0.313` · DGC-BERT `0.957`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.0` Accept · 14B Fast `6.2` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [gonzo_ML/5950](https://t.me/gonzo_ML/5950)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The authors claim that their method can reduce the inference latency. However, the authors only report the number of layers executed, but not the actual inference latency. I think it is more important to report the actual inference latency, as the number of layers executed may not be a good indicator of the actual inference latency.  2. The authors only evaluate the proposed method  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  1. The authors claim that their method can reduce the inference latency. However, the authors only report the number of layers executed, but not the actual inference latency. I think it is more important to report the actual inference latency, as the number of layers executed may not be a good indicator of the actual inference latency.  2. The authors only evaluate the proposed method  cyclereviewer-8b.seed1: Weaknesses  1. The motivation is not clear. The authors c
 
 <a id="arxiv-2605.22863"></a>
 ### Latent Cache Flow: Model-to-Model Communication Without Text
 
 `arxiv:2605.22863` · LLMs: architectures, context, training · 2026-05-19
 
-- mean rating (1–10): **5.7** · accept votes **3/6** · percentile rank_avg 37.1 (100=best) · rank in year 66.0 (1=best)
+- mean rating (1–10): **5.7** · accept votes **3/6** · percentile rank_avg 37.6 (100=best) · rank in year 66.0 (1=best)
 - NAIPv2 `-1.681` · NAIP-v1 `0.490` · SciJudge `-2.298` · DGC-BERT `0.281`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept · 14B Fast `5.8` Reject
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The novelty of this paper is limited. The idea of compressing the key-value cache into a lower-dimensional latent space is not new. In fact, the authors mentioned that "KV states can be compressed within a model" in the paper. The novelty of this paper lies in the application of this idea to LLM communication. 2. The experiments are not convincing. The authors only conduct experimen deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  1. The novelty of this paper is limited. The idea of compressing the key-value cache into a lower-dimensional latent space is not new. In fact, the authors mentioned that "KV states can be compressed within a model" in the paper. The novelty of this paper lies in the application of this idea to LLM communication. 2. The experiments are not convincing. The authors only conduct experimen cyclereviewer-8b.seed1: Weaknesses  1. The paper is not well written. The present
 
 <a id="arxiv-2604.08302"></a>
 ### DMax: Aggressive Parallel Decoding for dLLMs
 
 `arxiv:2604.08302` · LLMs: architectures, context, training · 2026-04-09
 
-- mean rating (1–10): **6.2** · accept votes **4/6** · percentile rank_avg 56.1 (100=best) · rank in year 38.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **4/6** · percentile rank_avg 56.1 (100=best) · rank in year 40.0 (1=best)
 - NAIPv2 `2.402` · NAIP-v1 `0.470` · SciJudge `-0.034` · DGC-BERT `0.709`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `7.5` Accept · 14B Fast `6.0` Reject
@@ -1701,7 +1709,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2603.05454` · LLMs: architectures, context, training · 2026-03-05
 
-- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 58.9 (100=best) · rank in year 34.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 59.3 (100=best) · rank in year 33.0 (1=best)
 - NAIPv2 `-0.349` · NAIP-v1 `0.573` · SciJudge `1.690` · DGC-BERT `0.820`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `5.8` Reject · 14B Fast `6.0` Accept
@@ -1714,20 +1722,20 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2602.08676` · LLMs: architectures, context, training · 2026-02-09
 
-- mean rating (1–10): **5.5** · accept votes **4/6** · percentile rank_avg 54.2 (100=best) · rank in year 43.0 (1=best)
+- mean rating (1–10): **5.5** · accept votes **4/6** · percentile rank_avg 54.5 (100=best) · rank in year 42.0 (1=best)
 - NAIPv2 `0.517` · NAIP-v1 `0.613` · SciJudge `2.557` · DGC-BERT `0.633`
 - CycleReviewer 8B `4.0` Reject · 70B `` 
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `5.5` Reject · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/8164](https://t.me/axisofordinary/8164)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The proposed decoding algorithm is not new. There have been many previous works that use a mixture of mask-to-token and token-to-token decoding to improve the decoding efficiency. For example, (1) also uses a mixture of mask-to-token and token-to-token decoding to improve the decoding efficiency. The main difference between the proposed method and (1) is that the proposed method use deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  1. The proposed decoding algorithm is not new. There have been many previous works that use a mixture of mask-to-token and token-to-token decoding to improve the decoding efficiency. For example, (1) also uses a mixture of mask-to-token and token-to-token decoding to improve the decoding efficiency. The main difference between the proposed method and (1) is that the proposed method use cyclereviewer-8b.seed1: Weaknesses  The paper is not well-written and the experim
 
 <a id="arxiv-2512.24601"></a>
 ### Recursive Language Models
 
 `arxiv:2512.24601` · LLMs: architectures, context, training · 2025-12-31
 
-- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 60.5 (100=best) · rank in year 32.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 60.7 (100=best) · rank in year 33.0 (1=best)
 - NAIPv2 `1.517` · NAIP-v1 `0.511` · SciJudge `1.017` · DGC-BERT `0.906`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Reject · 7B Fast `5.2` Reject · 14B Fast `6.5` Accept
@@ -1740,7 +1748,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2512.14856` · LLMs: architectures, context, training · 2025-12-16
 
-- mean rating (1–10): **5.4** · accept votes **2/6** · percentile rank_avg 33.1 (100=best) · rank in year 74.0 (1=best)
+- mean rating (1–10): **5.4** · accept votes **2/6** · percentile rank_avg 33.5 (100=best) · rank in year 74.0 (1=best)
 - NAIPv2 `-1.177` · NAIP-v1 `0.465` · SciJudge `0.722` · DGC-BERT `0.348`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.0` Accept · 14B Fast `5.5` Reject
@@ -1753,20 +1761,20 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2512.13961` · LLMs: architectures, context, training · 2025-12-15
 
-- mean rating (1–10): **7.2** · accept votes **3/5** · percentile rank_avg 67.9 (100=best) · rank in year 11.0 (1=best)
+- mean rating (1–10): **6.3** · accept votes **3/6** · percentile rank_avg 62.2 (100=best) · rank in year 24.0 (1=best)
 - NAIPv2 `-0.192` · NAIP-v1 `0.468` · SciJudge `2.817` · DGC-BERT `0.135`
-- CycleReviewer 8B ``  · 70B `` 
+- CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.7` Reject · 7B Fast `6.2` Reject · 14B Fast `6.5` Accept
 - OpenReviewer `8.0` (S/P/C 4.0/3.0/4.0) · SEA-E `8.0` Accept
 - Telegram: [abstractDL/356](https://t.me/abstractDL/356), [j_links/8236](https://t.me/j_links/8236)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not provide a clear motivation for releasing the entire model flow, rather than just the final weights. The authors claim that releasing the entire model flow will enable infinite customization through intervention at any stage of the model development process, but it is not clear how this will benefit the research community. The paper also does not provide a clear expla deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  The paper lacks a clear and concise summary of the main contributions and findings. The introduction is lengthy and does not provide a clear overview of the paper's main contributions. The paper also lacks a clear and concise conclusion that summarizes the main findings and contributions.  The paper does not provide a clear and detailed explanation of the methodology used to train the  cyclereviewer-8b.seed1: Weaknesses  The paper lacks a clear and well-defined rese
 
 <a id="arxiv-2512.15745"></a>
 ### LLaDA2.0: Scaling Up Diffusion Language Models to 100B
 
 `arxiv:2512.15745` · LLMs: architectures, context, training · 2025-12-10
 
-- mean rating (1–10): **6.4** · accept votes **3/6** · percentile rank_avg 62.7 (100=best) · rank in year 23.0 (1=best)
+- mean rating (1–10): **6.4** · accept votes **3/6** · percentile rank_avg 62.9 (100=best) · rank in year 21.0 (1=best)
 - NAIPv2 `0.392` · NAIP-v1 `0.606` · SciJudge `2.352` · DGC-BERT `0.073`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `5.5` Accept · 14B Fast `6.5` Reject
@@ -1779,23 +1787,23 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2511.09149` · LLMs: architectures, context, training · 2025-11-12
 
-- mean rating (1–10): **6.6** · accept votes **4/6** · percentile rank_avg 65.1 (100=best) · rank in year 20.0 (1=best)
+- mean rating (1–10): **6.6** · accept votes **4/6** · percentile rank_avg 65.5 (100=best) · rank in year 18.0 (1=best)
 - NAIPv2 `0.965` · NAIP-v1 `0.694` · SciJudge `-2.694` · DGC-BERT `0.637`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Reject · 7B Fast `6.0` Reject · 14B Fast `7.5` Accept
 - OpenReviewer `8.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The proposed method is limited to a two-agent setting. It is unclear how it would scale to more complex multi-agent systems. - The method assumes access to internal model representations, which may not be available in all scenarios. - The method is not interpretable and may be difficult to debug or monitor.  ### Questions  - How does the method scale to more complex multi-agent syste deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  - The proposed method is limited to a two-agent setting. It is unclear how it would scale to more complex multi-agent systems. - The method assumes access to internal model representations, which may not be available in all scenarios. - The method is not interpretable and may be difficult to debug or monitor.  ### Questions  - How does the method scale to more complex multi-agent syste cyclereviewer-8b.seed1: Weaknesses  The paper lacks a clear motivation for the pr
 
 <a id="arxiv-2510.26622"></a>
 ### Encoder-Decoder or Decoder-Only? Revisiting Encoder-Decoder Large Language Model
 
 `arxiv:2510.26622` · LLMs: architectures, context, training · 2025-10-30
 
-- mean rating (1–10): **6.0** · accept votes **5/5** · percentile rank_avg 55.5 (100=best) · rank in year 43.0 (1=best)
+- mean rating (1–10): **5.9** · accept votes **5/6** · percentile rank_avg 52.9 (100=best) · rank in year 48.0 (1=best)
 - NAIPv2 `-0.363` · NAIP-v1 `0.578` · SciJudge `-0.524` · DGC-BERT `0.763`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
-- DeepReviewer 7B Std `6.0` Accept · 7B Fast ``  · 14B Fast `6.0` Accept
+- DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.7` Reject · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/4220](https://t.me/gonzo_ML/4220), [gonzo_ML/4217](https://t.me/gonzo_ML/4217)
 - Weaknesses: cyclereviewer-8b: Weaknesses  1. The authors only compare the performance of the encoder-decoder and decoder-only models on a single pretraining dataset (RedPajama V1). It would be interesting to see how the models perform on other pretraining datasets, such as the Common Crawl dataset used by LLaMA.  2. The authors only compare the performance of the encoder-decoder and decoder-only models on a single finetuning d deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -1805,7 +1813,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2510.03215` · LLMs: architectures, context, training · 2025-10-03
 
-- mean rating (1–10): **6.5** · accept votes **4/6** · percentile rank_avg 67.0 (100=best) · rank in year 16.0 (1=best)
+- mean rating (1–10): **6.5** · accept votes **4/6** · percentile rank_avg 67.3 (100=best) · rank in year 13.0 (1=best)
 - NAIPv2 `2.059` · NAIP-v1 `0.631` · SciJudge `-0.916` · DGC-BERT `0.227`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `6.5` Accept · 14B Fast `7.5` Accept
@@ -1818,10 +1826,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2507.10524` · LLMs: architectures, context, training · 2025-07-14
 
-- mean rating (1–10): **6.1** · accept votes **5/5** · percentile rank_avg 70.9 (100=best) · rank in year 8.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **6/6** · percentile rank_avg 65.7 (100=best) · rank in year 17.0 (1=best)
 - NAIPv2 `0.704` · NAIP-v1 `0.743` · SciJudge `1.590` · DGC-BERT `0.916`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
-- DeepReviewer 7B Std `6.0` Accept · 7B Fast ``  · 14B Fast `6.5` Accept
+- DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.2` Accept · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/3835](https://t.me/gonzo_ML/3835), [data_secrets/7384](https://t.me/data_secrets/7384)
 - Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a detailed analysis of the computational cost of the proposed method. - The paper does not provide a detailed analysis of the memory requirements of the proposed method. - The paper does not provide a detailed analysis of the performance of the proposed method on different types of tasks.  ### Questions  - How does the proposed method compare to other metho deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -1831,7 +1839,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2504.06225` · LLMs: architectures, context, training · 2025-04-08
 
-- mean rating (1–10): **5.2** · accept votes **4/6** · percentile rank_avg 50.1 (100=best) · rank in year 53.0 (1=best)
+- mean rating (1–10): **5.2** · accept votes **4/6** · percentile rank_avg 50.1 (100=best) · rank in year 55.0 (1=best)
 - NAIPv2 `-0.588` · NAIP-v1 `0.592` · SciJudge `0.225` · DGC-BERT `0.919`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `5.0` Reject · 14B Fast `6.8` Accept
@@ -1844,7 +1852,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2502.09992` · LLMs: architectures, context, training · 2025-02-14
 
-- mean rating (1–10): **6.7** · accept votes **5/6** · percentile rank_avg 80.1 (100=best) · rank in year 1.0 (1=best)
+- mean rating (1–10): **6.7** · accept votes **5/6** · percentile rank_avg 80.6 (100=best) · rank in year 1.0 (1=best)
 - NAIPv2 `0.659` · NAIP-v1 `0.700` · SciJudge `3.608` · DGC-BERT `0.892`
 - CycleReviewer 8B `4.8` Reject · 70B `` 
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `6.0` Accept · 14B Fast `7.5` Accept
@@ -1857,7 +1865,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2501.14082` · LLMs: architectures, context, training · 2025-01-23
 
-- mean rating (1–10): **6.2** · accept votes **5/6** · percentile rank_avg 49.4 (100=best) · rank in year 56.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **5/6** · percentile rank_avg 49.8 (100=best) · rank in year 57.0 (1=best)
 - NAIPv2 `-2.201` · NAIP-v1 `0.405` · SciJudge `1.197` · DGC-BERT `0.102`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `5.8` Accept · 14B Fast `7.5` Accept
@@ -1870,7 +1878,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2501.00656` · LLMs: architectures, context, training · 2024-12-31
 
-- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 57.8 (100=best) · rank in year 13.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 58.2 (100=best) · rank in year 12.0 (1=best)
 - NAIPv2 `-0.377` · NAIP-v1 `0.689` · SciJudge `3.646` · DGC-BERT `0.052`
 - CycleReviewer 8B `3.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept · 14B Fast `6.5` Accept
@@ -1883,7 +1891,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2412.13663` · LLMs: architectures, context, training · 2024-12-18
 
-- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 53.4 (100=best) · rank in year 18.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 53.8 (100=best) · rank in year 18.0 (1=best)
 - NAIPv2 `-1.003` · NAIP-v1 `0.656` · SciJudge `-1.417` · DGC-BERT `0.731`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.0` Accept · 14B Fast `7.0` Accept
@@ -1896,7 +1904,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2407.21783` · LLMs: architectures, context, training · 2024-07-31
 
-- mean rating (1–10): **6.0** · accept votes **3/6** · percentile rank_avg 58.1 (100=best) · rank in year 10.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **3/6** · percentile rank_avg 58.3 (100=best) · rank in year 11.0 (1=best)
 - NAIPv2 `-2.232` · NAIP-v1 `0.744` · SciJudge `4.050` · DGC-BERT `0.445`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Reject · 7B Fast `6.8` Accept · 14B Fast `4.0` Reject
@@ -1909,7 +1917,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2405.12250` · LLMs: architectures, context, training · 2024-05-19
 
-- mean rating (1–10): **4.9** · accept votes **3/6** · percentile rank_avg 35.8 (100=best) · rank in year 37.0 (1=best)
+- mean rating (1–10): **4.9** · accept votes **3/6** · percentile rank_avg 35.7 (100=best) · rank in year 37.0 (1=best)
 - NAIPv2 `-2.941` · NAIP-v1 `0.483` · SciJudge `1.824` · DGC-BERT `0.769`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `4.0` Reject · 14B Fast `3.5` Reject
@@ -1922,20 +1930,20 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2405.04517` · LLMs: architectures, context, training · 2024-05-07
 
-- mean rating (1–10): **4.5** · accept votes **1/6** · percentile rank_avg 35.4 (100=best) · rank in year 39.0 (1=best)
+- mean rating (1–10): **4.5** · accept votes **1/6** · percentile rank_avg 35.4 (100=best) · rank in year 38.0 (1=best)
 - NAIPv2 `-1.738` · NAIP-v1 `0.465` · SciJudge `3.424` · DGC-BERT `0.254`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `3.5` Reject · 14B Fast `6.2` Reject
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `4.0` Reject
 - Telegram: [gonzo_ML/2624](https://t.me/gonzo_ML/2624), [gonzo_ML/2626](https://t.me/gonzo_ML/2626), [axisofordinary/6294](https://t.me/axisofordinary/6294), [data_secrets/4008](https://t.me/data_secrets/4008), [lovedeathtransformers/8203](https://t.me/lovedeathtransformers/8203)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper presents a new LSTM architecture that is designed to address the limitations of the original LSTM model. The authors introduce two new components: a scalar memory and a matrix memory, and a new update rule based on covariance. The authors also introduce a new gating mechanism that is designed to improve the performance of the model. The authors evaluate the proposed model on  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  The paper presents a new LSTM architecture that is designed to address the limitations of the original LSTM model. The authors introduce two new components: a scalar memory and a matrix memory, and a new update rule based on covariance. The authors also introduce a new gating mechanism that is designed to improve the performance of the model. The authors evaluate the proposed model on  cyclereviewer-8b.seed1: Weaknesses  The paper does not provide a clear motivation
 
 <a id="arxiv-2404.09173"></a>
 ### TransformerFAM: Feedback attention is working memory
 
 `arxiv:2404.09173` · LLMs: architectures, context, training · 2024-04-14
 
-- mean rating (1–10): **5.5** · accept votes **3/6** · percentile rank_avg 46.9 (100=best) · rank in year 24.0 (1=best)
+- mean rating (1–10): **5.5** · accept votes **3/6** · percentile rank_avg 47.3 (100=best) · rank in year 24.0 (1=best)
 - NAIPv2 `-2.414` · NAIP-v1 `0.595` · SciJudge `0.830` · DGC-BERT `0.948`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `6.0` Reject · 14B Fast `4.8` Reject
@@ -1948,10 +1956,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2404.07143` · LLMs: architectures, context, training · 2024-04-10
 
-- mean rating (1–10): **5.4** · accept votes **2/5** · percentile rank_avg 44.9 (100=best) · rank in year 26.0 (1=best)
+- mean rating (1–10): **5.5** · accept votes **3/6** · percentile rank_avg 44.1 (100=best) · rank in year 26.0 (1=best)
 - NAIPv2 `-2.006` · NAIP-v1 `0.497` · SciJudge `3.254` · DGC-BERT `0.878`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
-- DeepReviewer 7B Std `6.0` Reject · 7B Fast ``  · 14B Fast `5.5` Reject
+- DeepReviewer 7B Std `6.0` Reject · 7B Fast `5.8` Accept · 14B Fast `5.5` Reject
 - OpenReviewer `5.0` (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [lovedeathtransformers/7589](https://t.me/lovedeathtransformers/7589), [gonzo_ML/2585](https://t.me/gonzo_ML/2585), [gonzo_ML/2586](https://t.me/gonzo_ML/2586), [chillhousetech/690](https://t.me/chillhousetech/690), [axisofordinary/6247](https://t.me/axisofordinary/6247)
 - Weaknesses: cyclereviewer-8b: Weaknesses  - The proposed method is not as effective as the baseline methods on the long-context language modeling tasks. - The proposed method is not evaluated on the long-context tasks with 8B LLMs.  ### Questions  - The proposed method is not as effective as the baseline methods on the long-context language modeling tasks. For example, the proposed method achieves a perplexity of 2.29 on PG19, deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -1961,7 +1969,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2311.06242` · LLMs: architectures, context, training · 2023-11-10
 
-- mean rating (1–10): **6.1** · accept votes **3/6** · percentile rank_avg 53.5 (100=best) · rank in year 17.0 (1=best)
+- mean rating (1–10): **6.1** · accept votes **3/6** · percentile rank_avg 53.8 (100=best) · rank in year 16.0 (1=best)
 - NAIPv2 `-1.918` · NAIP-v1 `0.479` · SciJudge `2.835` · DGC-BERT `0.049`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `6.5` Accept · 14B Fast `6.0` Reject
@@ -1974,10 +1982,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2306.13575` · LLMs: architectures, context, training · 2023-06-23
 
-- mean rating (1–10): **5.5** · accept votes **2/5** · percentile rank_avg 45.9 (100=best) · rank in year 28.0 (1=best)
+- mean rating (1–10): **5.6** · accept votes **2/6** · percentile rank_avg 46.6 (100=best) · rank in year 28.0 (1=best)
 - NAIPv2 `-1.609` · NAIP-v1 `0.617` · SciJudge `-0.042` · DGC-BERT `0.307`
 - CycleReviewer 8B `4.0` Reject · 70B `` 
-- DeepReviewer 7B Std `8.0` Accept · 7B Fast ``  · 14B Fast `6.0` Reject
+- DeepReviewer 7B Std `8.0` Accept · 7B Fast `6.0` Reject · 14B Fast `6.0` Reject
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/1674](https://t.me/gonzo_ML/1674)
 - Weaknesses: cyclereviewer-8b: Weaknesses  1. The novelty of this paper is limited. The authors mainly study the performance of MLPs on vision tasks and show that they can achieve strong performance with sufficient scale. This is not surprising and has been shown in previous works such as (1).  2. The authors do not provide any theoretical analysis for the performance of MLPs.  3. The authors do not compare the performance of M deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -1987,10 +1995,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2305.01625` · LLMs: architectures, context, training · 2023-05-02
 
-- mean rating (1–10): **5.9** · accept votes **4/5** · percentile rank_avg 51.9 (100=best) · rank in year 21.0 (1=best)
+- mean rating (1–10): **5.8** · accept votes **5/6** · percentile rank_avg 50.4 (100=best) · rank in year 24.0 (1=best)
 - NAIPv2 `0.546` · NAIP-v1 `0.543` · SciJudge `0.005` · DGC-BERT `0.843`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
-- DeepReviewer 7B Std `5.0` Reject · 7B Fast ``  · 14B Fast `6.5` Accept
+- DeepReviewer 7B Std `5.0` Reject · 7B Fast `5.8` Accept · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/1584](https://t.me/gonzo_ML/1584), [axisofordinary/4895](https://t.me/axisofordinary/4895), [gonzo_ML/1507](https://t.me/gonzo_ML/1507)
 - Weaknesses: cyclereviewer-8b: Weaknesses  - The method is only evaluated on summarization tasks. It is unclear how the method will perform on other tasks such as translation. - The method requires a kNN search over the encoder output, which can be slow. This may limit the applicability of the method to long inputs. - The method requires a large amount of memory to store the kNN index, which can be a limitation for very long in deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -2000,10 +2008,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2302.14045` · LLMs: architectures, context, training · 2023-02-27
 
-- mean rating (1–10): **6.2** · accept votes **4/5** · percentile rank_avg 69.0 (100=best) · rank in year 3.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **5/6** · percentile rank_avg 67.3 (100=best) · rank in year 4.0 (1=best)
 - NAIPv2 `-1.012` · NAIP-v1 `0.670` · SciJudge `3.013` · DGC-BERT `0.908`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
-- DeepReviewer 7B Std `6.0` Accept · 7B Fast ``  · 14B Fast `6.0` Accept
+- DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [gonzo_ML/2009](https://t.me/gonzo_ML/2009), [scitator_ai/79](https://t.me/scitator_ai/79), [gonzo_ML/1364](https://t.me/gonzo_ML/1364), [axisofordinary/4500](https://t.me/axisofordinary/4500), [gonzo_ML/1339](https://t.me/gonzo_ML/1339), [derplearning/2399](https://t.me/derplearning/2399), [j_links/6507](https://t.me/j_links/6507), [derplearning/2372](https://t.me/derplearning/2372)
 - Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper does not provide a detailed analysis of the limitations of the proposed approach. 2. The paper does not provide a comparison with other state-of-the-art models on the same tasks. 3. The paper does not provide a discussion of the potential applications of the proposed approach.  ### Questions  1. Can you provide a detailed analysis of the limitations of the proposed approac deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -2013,7 +2021,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2302.10866` · LLMs: architectures, context, training · 2023-02-21
 
-- mean rating (1–10): **6.2** · accept votes **5/6** · percentile rank_avg 69.5 (100=best) · rank in year 2.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **5/6** · percentile rank_avg 69.8 (100=best) · rank in year 2.0 (1=best)
 - NAIPv2 `-0.003` · NAIP-v1 `0.679` · SciJudge `3.511` · DGC-BERT `0.908`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.5` Accept · 14B Fast `7.5` Accept
@@ -2026,7 +2034,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2302.07253` · LLMs: architectures, context, training · 2023-02-14
 
-- mean rating (1–10): **5.6** · accept votes **4/6** · percentile rank_avg 34.1 (100=best) · rank in year 41.0 (1=best)
+- mean rating (1–10): **5.6** · accept votes **4/6** · percentile rank_avg 34.5 (100=best) · rank in year 41.0 (1=best)
 - NAIPv2 `-2.529` · NAIP-v1 `0.485` · SciJudge `-0.631` · DGC-BERT `0.732`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `6.0` Accept · 14B Fast `6.0` Reject
@@ -2039,7 +2047,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2207.02098` · LLMs: architectures, context, training · 2022-07-05
 
-- mean rating (1–10): **6.4** · accept votes **6/6** · percentile rank_avg 51.0 (100=best) · rank in year 10.0 (1=best)
+- mean rating (1–10): **6.4** · accept votes **6/6** · percentile rank_avg 51.4 (100=best) · rank in year 10.0 (1=best)
 - NAIPv2 `-1.336` · NAIP-v1 `0.379` · SciJudge `-1.255` · DGC-BERT `0.580`
 - CycleReviewer 8B `5.8` Accept · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `5.8` Accept · 14B Fast `6.5` Accept
@@ -2052,7 +2060,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2203.08913` · LLMs: architectures, context, training · 2022-03-16
 
-- mean rating (1–10): **6.3** · accept votes **5/6** · percentile rank_avg 59.9 (100=best) · rank in year 4.0 (1=best)
+- mean rating (1–10): **6.3** · accept votes **5/6** · percentile rank_avg 60.2 (100=best) · rank in year 4.0 (1=best)
 - NAIPv2 `-1.776` · NAIP-v1 `0.668` · SciJudge `1.050` · DGC-BERT `0.663`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.2` Accept · 14B Fast `6.5` Accept
@@ -2078,7 +2086,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:1710.05941` · LLMs: architectures, context, training · 2017-10-16
 
-- mean rating (1–10): **5.7** · accept votes **4/6** · percentile rank_avg 46.3 (100=best) · rank in year 4.0 (1=best)
+- mean rating (1–10): **5.7** · accept votes **4/6** · percentile rank_avg 46.7 (100=best) · rank in year 4.0 (1=best)
 - NAIPv2 `-1.962` · NAIP-v1 `0.734` · SciJudge `1.835` · DGC-BERT `0.614`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.0` Accept · 14B Fast `5.8` Accept
@@ -2091,7 +2099,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `doi:10.1073/pnas.2520095123` · Reasoning and the "physics" of language models · 2026-07-06
 
-- mean rating (1–10): **5.7** · accept votes **4/6** · percentile rank_avg 41.3 (100=best) · rank in year 62.0 (1=best) · partial fulltext
+- mean rating (1–10): **5.7** · accept votes **4/6** · percentile rank_avg 41.4 (100=best) · rank in year 62.0 (1=best) · partial fulltext
 - NAIPv2 `-1.912` · NAIP-v1 `0.588` · SciJudge `-7.299` · DGC-BERT `0.105`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.5` Accept · 14B Fast `7.0` Accept
@@ -2104,7 +2112,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2606.31779` · Reasoning and the "physics" of language models · 2026-06-30
 
-- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 64.7 (100=best) · rank in year 21.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 65.0 (100=best) · rank in year 20.0 (1=best)
 - NAIPv2 `2.404` · NAIP-v1 `0.771` · SciJudge `0.833` · DGC-BERT `0.735`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.5` Accept · 14B Fast `6.2` Reject
@@ -2117,23 +2125,23 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2606.25010` · Reasoning and the "physics" of language models · 2026-06-23
 
-- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 53.4 (100=best) · rank in year 45.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 53.6 (100=best) · rank in year 46.0 (1=best)
 - NAIPv2 `-0.768` · NAIP-v1 `0.409` · SciJudge `-0.623` · DGC-BERT `0.879`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Reject · 7B Fast `7.0` Accept · 14B Fast `6.0` Reject
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/5867](https://t.me/gonzo_ML/5867)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not seem to have any significant contributions. The authors show that the emergence of capabilities is driven by the learning of task-relevant attention patterns. This is not a new finding. The authors also show that the difficulty of learning attention patterns depends on context length and pattern sparsity. This is also not a new finding. The authors also show that sca deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not seem to have any significant contributions. The authors show that the emergence of capabilities is driven by the learning of task-relevant attention patterns. This is not a new finding. The authors also show that the difficulty of learning attention patterns depends on context length and pattern sparsity. This is also not a new finding. The authors also show that sca cyclereviewer-8b.seed1: Weaknesses  1. The experiments are not very convincing. T
 
 <a id="arxiv-2606.03982"></a>
 ### Language Models Compare Quantities Using Number-specific and Unit-specific Heuristics
 
 `arxiv:2606.03982` · Reasoning and the "physics" of language models · 2026-06-02
 
-- mean rating (1–10): **6.0** · accept votes **2/5** · percentile rank_avg 44.5 (100=best) · rank in year 59.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **3/6** · percentile rank_avg 45.3 (100=best) · rank in year 59.0 (1=best)
 - NAIPv2 `-0.947` · NAIP-v1 `0.431` · SciJudge `-3.789` · DGC-BERT `0.120`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
-- DeepReviewer 7B Std `6.5` Accept · 7B Fast ``  · 14B Fast `6.0` Reject
+- DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.0` Accept · 14B Fast `6.0` Reject
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/2.0) · SEA-E `7.0` Accept
 - Telegram: —
 - Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks novelty. The authors have conducted a thorough analysis of language models' behavior in comparing quantities with measurement units. However, the results are not surprising, and the conclusions drawn from the analysis are not particularly novel or groundbreaking. The paper could benefit from a more in-depth exploration of the implications of these findings or a more  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -2143,20 +2151,20 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2605.07654` · Reasoning and the "physics" of language models · 2026-05-08
 
-- mean rating (1–10): **6.2** · accept votes **5/6** · percentile rank_avg 65.5 (100=best) · rank in year 17.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **5/6** · percentile rank_avg 65.7 (100=best) · rank in year 17.0 (1=best)
 - NAIPv2 `0.827` · NAIP-v1 `0.720` · SciJudge `1.572` · DGC-BERT `0.774`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.8` Accept · 7B Fast `7.0` Accept · 14B Fast `6.8` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks sufficient analysis of the proposed method. For example, the paper does not provide any theoretical analysis of the proposed method. The authors only show that the reproduction rate is higher for correct answers than for incorrect answers. However, it is not clear why this is the case or how it leads to the proposed method. It would be helpful to provide a more detai deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks sufficient analysis of the proposed method. For example, the paper does not provide any theoretical analysis of the proposed method. The authors only show that the reproduction rate is higher for correct answers than for incorrect answers. However, it is not clear why this is the case or how it leads to the proposed method. It would be helpful to provide a more detai cyclereviewer-8b.seed1: Weaknesses  1. The paper does not discuss the limitations
 
 <a id="arxiv-2604.11791"></a>
 ### A Mechanistic Analysis of Looped Reasoning Language Models
 
 `arxiv:2604.11791` · Reasoning and the "physics" of language models · 2026-04-13
 
-- mean rating (1–10): **6.2** · accept votes **2/6** · percentile rank_avg 45.7 (100=best) · rank in year 58.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **2/6** · percentile rank_avg 46.0 (100=best) · rank in year 58.0 (1=best)
 - NAIPv2 `-0.953` · NAIP-v1 `0.346` · SciJudge `-2.487` · DGC-BERT `0.489`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.8` Reject · 14B Fast `6.5` Reject
@@ -2169,10 +2177,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2604.01754` · Reasoning and the "physics" of language models · 2026-04-02
 
-- mean rating (1–10): **6.9** · accept votes **3/5** · percentile rank_avg 72.7 (100=best) · rank in year 6.0 (1=best)
+- mean rating (1–10): **6.8** · accept votes **3/6** · percentile rank_avg 70.5 (100=best) · rank in year 8.0 (1=best)
 - NAIPv2 `-0.744` · NAIP-v1 `0.756` · SciJudge `3.322` · DGC-BERT `0.424`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
-- DeepReviewer 7B Std `6.0` Accept · 7B Fast ``  · 14B Fast `5.8` Reject
+- DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Reject · 14B Fast `5.8` Reject
 - OpenReviewer `8.0` (S/P/C 3.0/3.0/3.0) · SEA-E `8.0` Accept
 - Telegram: —
 - Weaknesses: cyclereviewer-8b: weaknesses of each model.  ### Weaknesses  1. The paper does not provide a detailed description of the dataset used to train the models being evaluated. This makes it difficult to understand the potential biases and limitations of the models and how they may impact the results. 2. The paper does not provide a detailed analysis of the potential sources of error in the benchmark. This makes it diffi deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -2182,23 +2190,23 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2602.10416` · Reasoning and the "physics" of language models · 2026-02-11
 
-- mean rating (1–10): **5.6** · accept votes **1/5** · percentile rank_avg 36.6 (100=best) · rank in year 67.0 (1=best)
+- mean rating (1–10): **5.5** · accept votes **2/6** · percentile rank_avg 34.8 (100=best) · rank in year 69.0 (1=best)
 - NAIPv2 `-1.744` · NAIP-v1 `0.367` · SciJudge `3.162` · DGC-BERT `0.162`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
-- DeepReviewer 7B Std `5.0` Reject · 7B Fast ``  · 14B Fast `5.8` Reject
+- DeepReviewer 7B Std `5.0` Reject · 7B Fast `5.2` Accept · 14B Fast `5.8` Reject
 - OpenReviewer `5.0` (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a clear explanation of why the error rate is periodic with respect to the length of the numbers being added. - The paper does not provide a clear explanation of why the error rate is higher for numbers whose length is not a multiple of 3. - The paper does not provide a clear explanation of why the error rate is higher for numbers whose length is not a multi deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a clear explanation of why the error rate is periodic with respect to the length of the numbers being added. - The paper does not provide a clear explanation of why the error rate is higher for numbers whose length is not a multiple of 3. - The paper does not provide a clear explanation of why the error rate is higher for numbers whose length is not a multi cyclereviewer-8b.seed1: Weaknesses  - The paper only considers the task of adding
 
 <a id="openreview-klU4737opt"></a>
 ### Position: LLMs can't jump
 
 `openreview:klU4737opt` · Reasoning and the "physics" of language models · unknown
 
-- mean rating (1–10): **5.7** · accept votes **2/5** · percentile rank_avg 29.3 (100=best) · rank in year 9.0 (1=best)
+- mean rating (1–10): **5.5** · accept votes **2/6** · percentile rank_avg 27.8 (100=best) · rank in year 9.0 (1=best)
 - NAIPv2 `-3.801` · NAIP-v1 `0.327` · SciJudge `-1.420` · DGC-BERT `0.040`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
-- DeepReviewer 7B Std `5.2` Reject · 7B Fast ``  · 14B Fast `4.8` Reject
+- DeepReviewer 7B Std `5.2` Reject · 7B Fast `5.0` Reject · 14B Fast `4.8` Reject
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: —
 - Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a clear definition of what is meant by "abductive leap" or how it differs from inductive and deductive reasoning. - The paper does not provide a clear explanation of how physically consistent, multimodal world models could enable AI systems to make abductive leaps. - The paper does not provide a clear evaluation of the proposed solution or a plan for how it deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -2208,7 +2216,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2512.16902` · Reasoning and the "physics" of language models · 2025-12-18
 
-- mean rating (1–10): **6.8** · accept votes **6/6** · percentile rank_avg 67.5 (100=best) · rank in year 14.0 (1=best)
+- mean rating (1–10): **6.8** · accept votes **6/6** · percentile rank_avg 67.9 (100=best) · rank in year 11.0 (1=best)
 - NAIPv2 `-0.869` · NAIP-v1 `0.504` · SciJudge `-2.895` · DGC-BERT `0.931`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.8` Accept · 7B Fast `6.2` Accept · 14B Fast `6.5` Accept
@@ -2221,7 +2229,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2510.00184` · Reasoning and the "physics" of language models · 2025-09-30
 
-- mean rating (1–10): **6.3** · accept votes **6/6** · percentile rank_avg 59.5 (100=best) · rank in year 36.0 (1=best)
+- mean rating (1–10): **6.3** · accept votes **6/6** · percentile rank_avg 59.7 (100=best) · rank in year 37.0 (1=best)
 - NAIPv2 `-1.400` · NAIP-v1 `0.696` · SciJudge `-0.497` · DGC-BERT `0.774`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.8` Accept · 14B Fast `6.7` Accept
@@ -2234,7 +2242,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2509.25239` · Reasoning and the "physics" of language models · 2025-09-25
 
-- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 48.4 (100=best) · rank in year 58.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 48.9 (100=best) · rank in year 58.0 (1=best)
 - NAIPv2 `-2.500` · NAIP-v1 `0.488` · SciJudge `-3.979` · DGC-BERT `0.853`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.0` Reject · 14B Fast `6.5` Accept
@@ -2247,7 +2255,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2509.20317` · Reasoning and the "physics" of language models · 2025-09-24
 
-- mean rating (1–10): **6.5** · accept votes **6/6** · percentile rank_avg 70.5 (100=best) · rank in year 9.0 (1=best)
+- mean rating (1–10): **6.5** · accept votes **6/6** · percentile rank_avg 70.8 (100=best) · rank in year 8.0 (1=best)
 - NAIPv2 `1.872` · NAIP-v1 `0.683` · SciJudge `0.980` · DGC-BERT `0.939`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `3.8` Reject · 7B Fast `6.3` Accept · 14B Fast `7.0` Accept
@@ -2260,7 +2268,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2508.02513` · Reasoning and the "physics" of language models · 2025-08-04
 
-- mean rating (1–10): **6.2** · accept votes **5/6** · percentile rank_avg 61.3 (100=best) · rank in year 26.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **5/6** · percentile rank_avg 61.6 (100=best) · rank in year 27.0 (1=best)
 - NAIPv2 `-0.951` · NAIP-v1 `0.661` · SciJudge `-0.412` · DGC-BERT `0.733`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `5.8` Reject · 14B Fast `6.5` Accept
@@ -2273,10 +2281,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2506.10947` · Reasoning and the "physics" of language models · 2025-06-12
 
-- mean rating (1–10): **7.1** · accept votes **5/5** · percentile rank_avg 70.0 (100=best) · rank in year 10.0 (1=best)
+- mean rating (1–10): **7.1** · accept votes **5/5** · percentile rank_avg 70.1 (100=best) · rank in year 9.0 (1=best)
 - NAIPv2 `-0.237` · NAIP-v1 `0.326` · SciJudge `0.084` · DGC-BERT `0.888`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
-- DeepReviewer 7B Std ``  · 7B Fast ``  · 14B Fast `7.5` Accept
+- DeepReviewer 7B Std `6.2` Accept · 7B Fast ``  · 14B Fast `7.5` Accept
 - OpenReviewer `8.0` (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [buckwheat_thoughts/306](https://t.me/buckwheat_thoughts/306), [gonzo_ML/4702](https://t.me/gonzo_ML/4702)
 - Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a clear explanation for why spurious rewards can lead to improvements in performance. The authors hypothesize that it is due to the clipping bias in GRPO, but this is not clearly explained. It would be helpful if the authors could provide a more detailed explanation of this phenomenon. - The paper only considers a single type of spurious reward, which is ra deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -2286,7 +2294,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2505.21493` · Reasoning and the "physics" of language models · 2025-05-27
 
-- mean rating (1–10): **6.6** · accept votes **5/6** · percentile rank_avg 73.0 (100=best) · rank in year 6.0 (1=best)
+- mean rating (1–10): **6.6** · accept votes **5/6** · percentile rank_avg 73.2 (100=best) · rank in year 6.0 (1=best)
 - NAIPv2 `0.858` · NAIP-v1 `0.455` · SciJudge `3.250` · DGC-BERT `0.812`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `7.0` Accept · 14B Fast `6.8` Accept
@@ -2299,10 +2307,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2505.21444` · Reasoning and the "physics" of language models · 2025-05-27
 
-- mean rating (1–10): **6.1** · accept votes **2/5** · percentile rank_avg 44.5 (100=best) · rank in year 66.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **2/6** · percentile rank_avg 42.5 (100=best) · rank in year 66.0 (1=best)
 - NAIPv2 `-1.297` · NAIP-v1 `0.361` · SciJudge `0.133` · DGC-BERT `0.480`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
-- DeepReviewer 7B Std `5.2` Reject · 7B Fast ``  · 14B Fast `5.8` Reject
+- DeepReviewer 7B Std `5.2` Reject · 7B Fast `5.5` Reject · 14B Fast `5.8` Reject
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [buckwheat_thoughts/306](https://t.me/buckwheat_thoughts/306), [gonzo_ML/4702](https://t.me/gonzo_ML/4702)
 - Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper is a bit incremental, as it is a simple extension of the previous work. The authors should discuss more about the difference between the previous work and the current work.  2. The authors should discuss more about the limitations of the paper.  3. The authors should discuss more about the potential future work.  ### Questions  1. The authors should discuss more about the  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -2312,23 +2320,23 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2505.15134` · Reasoning and the "physics" of language models · 2025-05-21
 
-- mean rating (1–10): **6.3** · accept votes **5/6** · percentile rank_avg 67.7 (100=best) · rank in year 12.0 (1=best)
+- mean rating (1–10): **6.3** · accept votes **5/6** · percentile rank_avg 68.2 (100=best) · rank in year 10.0 (1=best)
 - NAIPv2 `-0.945` · NAIP-v1 `0.718` · SciJudge `3.711` · DGC-BERT `0.750`
 - CycleReviewer 8B `4.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `6.5` Accept · 14B Fast `7.0` Accept
 - OpenReviewer `8.0` (S/P/C 4.0/4.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [buckwheat_thoughts/306](https://t.me/buckwheat_thoughts/306), [gonzo_ML/4702](https://t.me/gonzo_ML/4702)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks novelty. The proposed methods are simple and have been explored in previous works. The main difference is that this paper applies these methods to LLMs. 2. The paper lacks ablation studies. The authors only show the results of the proposed methods without showing the results of the individual components. 3. The paper lacks comparison with other methods. The authors o deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks novelty. The proposed methods are simple and have been explored in previous works. The main difference is that this paper applies these methods to LLMs. 2. The paper lacks ablation studies. The authors only show the results of the proposed methods without showing the results of the individual components. 3. The paper lacks comparison with other methods. The authors o cyclereviewer-8b.seed1: Weaknesses  - The paper lacks a theoretical analysis of w
 
 <a id="arxiv-2505.13763"></a>
 ### Language Models Are Capable of Metacognitive Monitoring and Control of Their Internal Activations
 
 `arxiv:2505.13763` · Reasoning and the "physics" of language models · 2025-05-19
 
-- mean rating (1–10): **6.6** · accept votes **4/5** · percentile rank_avg 49.4 (100=best) · rank in year 57.0 (1=best)
+- mean rating (1–10): **6.5** · accept votes **4/6** · percentile rank_avg 50.7 (100=best) · rank in year 52.0 (1=best)
 - NAIPv2 `-1.741` · NAIP-v1 `0.559` · SciJudge `0.290` · DGC-BERT `0.055`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
-- DeepReviewer 7B Std `4.8` Reject · 7B Fast ``  · 14B Fast `6.5` Accept
+- DeepReviewer 7B Std `4.8` Reject · 7B Fast `6.2` Reject · 14B Fast `6.5` Accept
 - OpenReviewer `8.0` (S/P/C 4.0/4.0/4.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/7240](https://t.me/axisofordinary/7240)
 - Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks a discussion of the limitations of the proposed neurofeedback paradigm. For example, how do the authors ensure that the LLMs are not just memorizing the relationship between the input and the label, rather than actually understanding the underlying concept? How do the authors ensure that the LLMs are not just exploiting the correlation between the input and the label deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -2338,7 +2346,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2504.20571` · Reasoning and the "physics" of language models · 2025-04-29
 
-- mean rating (1–10): **5.9** · accept votes **4/6** · percentile rank_avg 57.9 (100=best) · rank in year 41.0 (1=best)
+- mean rating (1–10): **5.9** · accept votes **4/6** · percentile rank_avg 58.3 (100=best) · rank in year 40.0 (1=best)
 - NAIPv2 `1.729` · NAIP-v1 `0.521` · SciJudge `3.507` · DGC-BERT `0.725`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.0` Accept · 14B Fast `6.5` Accept
@@ -2351,20 +2359,20 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2503.21676` · Reasoning and the "physics" of language models · 2025-03-27
 
-- mean rating (1–10): **7.1** · accept votes **5/5** · percentile rank_avg 67.5 (100=best) · rank in year 15.0 (1=best)
+- mean rating (1–10): **6.5** · accept votes **5/6** · percentile rank_avg 62.5 (100=best) · rank in year 23.0 (1=best)
 - NAIPv2 `-0.619` · NAIP-v1 `0.448` · SciJudge `1.715` · DGC-BERT `0.792`
-- CycleReviewer 8B ``  · 70B `` 
+- CycleReviewer 8B `4.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `7.0` Accept · 14B Fast `6.5` Accept
 - OpenReviewer `8.0` (S/P/C 4.0/4.0/4.0) · SEA-E `7.0` Accept
 - Telegram: [data_secrets/6564](https://t.me/data_secrets/6564)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper is not well connected to prior work. For example, the paper claims that "the learning dynamics we observe may manifest differently at larger scales or with different architectural choices." However, there are many papers that study the learning dynamics of LLMs. For example, (1) shows that the learning dynamics of LLMs are different from small models. (2) shows that the learn deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  1. The authors claim that their findings are generalizable to LLMs, but the experiments are conducted on small models (44M parameters). The authors should conduct experiments on larger models to support their claims. 2. The authors claim that their findings are generalizable to real-world data, but the experiments are conducted on synthetic data. The authors should conduct experiments  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
 
 <a id="arxiv-2502.19981"></a>
 ### The Lookahead Limitation: Why Multi-Operand Addition is Hard for LLMs
 
 `arxiv:2502.19981` · Reasoning and the "physics" of language models · 2025-02-27
 
-- mean rating (1–10): **5.8** · accept votes **2/6** · percentile rank_avg 52.6 (100=best) · rank in year 47.0 (1=best)
+- mean rating (1–10): **5.8** · accept votes **2/6** · percentile rank_avg 53.0 (100=best) · rank in year 47.0 (1=best)
 - NAIPv2 `-2.475` · NAIP-v1 `0.728` · SciJudge `-0.304` · DGC-BERT `0.449`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `6.0` Reject · 14B Fast `4.8` Reject
@@ -2377,10 +2385,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2502.05171` · Reasoning and the "physics" of language models · 2025-02-07
 
-- mean rating (1–10): **6.3** · accept votes **4/6** · percentile rank_avg 58.7 (100=best) · rank in year 38.0 (1=best)
+- mean rating (1–10): **6.3** · accept votes **4/6** · percentile rank_avg 61.3 (100=best) · rank in year 30.0 (1=best)
 - NAIPv2 `-1.399` · NAIP-v1 `0.460` · SciJudge `0.514` · DGC-BERT `0.918`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
-- DeepReviewer 7B Std ``  · 7B Fast `6.0` Reject · 14B Fast `7.5` Accept
+- DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.0` Reject · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [seeallochnaya/3895](https://t.me/seeallochnaya/3895), [gonzo_ML/5334](https://t.me/gonzo_ML/5334), [axisofordinary/7296](https://t.me/axisofordinary/7296), [buckwheat_thoughts/110](https://t.me/buckwheat_thoughts/110), [axisofordinary/6971](https://t.me/axisofordinary/6971)
 - Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not include a comparison with existing methods for scaling language models.  ### Questions  How does the proposed approach compare to existing methods for scaling language models?  ### Flag For Ethics Review  No ethics review needed.  ### Rating  6: marginally above the acceptance threshold  ### Confidence  4: You are confident in your assessment, but not absolutely cert deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -2390,7 +2398,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2502.06807` · Reasoning and the "physics" of language models · 2025-02-03
 
-- mean rating (1–10): **5.8** · accept votes **4/6** · percentile rank_avg 47.0 (100=best) · rank in year 62.0 (1=best)
+- mean rating (1–10): **5.8** · accept votes **4/6** · percentile rank_avg 47.3 (100=best) · rank in year 62.0 (1=best)
 - NAIPv2 `-0.521` · NAIP-v1 `0.472` · SciJudge `3.213` · DGC-BERT `0.503`
 - CycleReviewer 8B `2.5` Reject · 70B `` 
 - DeepReviewer 7B Std `3.2` Reject · 7B Fast `6.5` Reject · 14B Fast `5.8` Accept
@@ -2403,7 +2411,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2502.00873` · Reasoning and the "physics" of language models · 2025-02-02
 
-- mean rating (1–10): **6.2** · accept votes **5/6** · percentile rank_avg 63.8 (100=best) · rank in year 21.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **5/6** · percentile rank_avg 63.9 (100=best) · rank in year 19.0 (1=best)
 - NAIPv2 `-0.740` · NAIP-v1 `0.506` · SciJudge `3.569` · DGC-BERT `0.164`
 - CycleReviewer 8B `5.2` Accept · 70B `` 
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `7.0` Accept · 14B Fast `7.0` Accept
@@ -2416,7 +2424,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2501.04519` · Reasoning and the "physics" of language models · 2025-01-08
 
-- mean rating (1–10): **6.5** · accept votes **5/6** · percentile rank_avg 71.1 (100=best) · rank in year 7.0 (1=best)
+- mean rating (1–10): **6.5** · accept votes **5/6** · percentile rank_avg 71.3 (100=best) · rank in year 7.0 (1=best)
 - NAIPv2 `2.328` · NAIP-v1 `0.656` · SciJudge `3.417` · DGC-BERT `0.417`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.8` Accept · 7B Fast `7.0` Accept · 14B Fast `6.2` Accept
@@ -2429,10 +2437,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2412.14135` · Reasoning and the "physics" of language models · 2024-12-18
 
-- mean rating (1–10): **3.5** · accept votes **0/5** · percentile rank_avg 7.1 (100=best) · rank in year 47.0 (1=best)
+- mean rating (1–10): **3.8** · accept votes **0/6** · percentile rank_avg 7.4 (100=best) · rank in year 47.0 (1=best)
 - NAIPv2 `-3.502` · NAIP-v1 `0.258` · SciJudge `-3.088` · DGC-BERT `0.003`
 - CycleReviewer 8B `1.0` Reject · 70B `` 
-- DeepReviewer 7B Std `4.2` Reject · 7B Fast ``  · 14B Fast `3.0` Reject
+- DeepReviewer 7B Std `4.2` Reject · 7B Fast `4.8` Reject · 14B Fast `3.0` Reject
 - OpenReviewer `5.0` (S/P/C 3.0/3.0/2.0) · SEA-E `5.0` Reject
 - Telegram: [AGI_and_RL/881](https://t.me/AGI_and_RL/881)
 - Weaknesses: cyclereviewer-8b: Weaknesses  This paper is a survey paper about the four key components of the o1 model: policy initialization, reward design, search, and learning. The authors first introduce the background of reinforcement learning and its connection to LLM. Then, the authors introduce the four key components of the o1 model. The authors first introduce the policy initialization of the o1 model, which includes p deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -2442,7 +2450,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2412.06769` · Reasoning and the "physics" of language models · 2024-12-09
 
-- mean rating (1–10): **6.1** · accept votes **4/6** · percentile rank_avg 53.9 (100=best) · rank in year 16.0 (1=best)
+- mean rating (1–10): **6.1** · accept votes **4/6** · percentile rank_avg 54.2 (100=best) · rank in year 16.0 (1=best)
 - NAIPv2 `-1.824` · NAIP-v1 `0.554` · SciJudge `1.218` · DGC-BERT `0.750`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.2` Reject · 14B Fast `6.2` Reject
@@ -2455,20 +2463,20 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2410.21272` · Reasoning and the "physics" of language models · 2024-10-28
 
-- mean rating (1–10): **6.6** · accept votes **5/6** · percentile rank_avg 66.7 (100=best) · rank in year 3.0 (1=best)
+- mean rating (1–10): **6.6** · accept votes **5/6** · percentile rank_avg 66.2 (100=best) · rank in year 2.0 (1=best)
 - NAIPv2 `-0.077` · NAIP-v1 `0.618` · SciJudge `1.307` · DGC-BERT `0.291`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
-- DeepReviewer 7B Std ``  · 7B Fast `6.0` Accept · 14B Fast `8.0` Accept
+- DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept · 14B Fast `8.0` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [j_links/7782](https://t.me/j_links/7782)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not discuss how the heuristics are learned during training. The paper only shows that the heuristics are present in the final model, but it does not show how they are learned. It would be interesting to see how the heuristics are learned during training and how they change over time.  ### Questions  How are the heuristics learned during training? How do they change over  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not discuss how the heuristics are learned during training. The paper only shows that the heuristics are present in the final model, but it does not show how they are learned. It would be interesting to see how the heuristics are learned during training and how they change over time.  ### Questions  How are the heuristics learned during training? How do they change over  cyclereviewer-8b.seed1: Weaknesses  - The paper does not provide a detailed expla
 
 <a id="arxiv-2305.13673"></a>
 ### Physics of Language Models: Part 1, Learning Hierarchical Language Structures
 
 `arxiv:2305.13673` · Reasoning and the "physics" of language models · 2023-05-23
 
-- mean rating (1–10): **6.1** · accept votes **5/6** · percentile rank_avg 63.9 (100=best) · rank in year 6.0 (1=best)
+- mean rating (1–10): **6.1** · accept votes **5/6** · percentile rank_avg 64.3 (100=best) · rank in year 6.0 (1=best)
 - NAIPv2 `-0.169` · NAIP-v1 `0.496` · SciJudge `1.199` · DGC-BERT `0.867`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `6.7` Accept · 14B Fast `7.0` Accept
@@ -2481,7 +2489,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2407.20311` · Reasoning and the "physics" of language models · 2024-07-29
 
-- mean rating (1–10): **6.4** · accept votes **5/6** · percentile rank_avg 58.0 (100=best) · rank in year 11.0 (1=best)
+- mean rating (1–10): **6.4** · accept votes **5/6** · percentile rank_avg 58.5 (100=best) · rank in year 9.0 (1=best)
 - NAIPv2 `-2.086` · NAIP-v1 `0.498` · SciJudge `2.144` · DGC-BERT `0.745`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.8` Reject · 7B Fast `6.0` Accept · 14B Fast `7.5` Accept
@@ -2494,7 +2502,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2309.14316` · Reasoning and the "physics" of language models · 2023-09-25
 
-- mean rating (1–10): **6.1** · accept votes **4/6** · percentile rank_avg 43.6 (100=best) · rank in year 31.0 (1=best)
+- mean rating (1–10): **6.1** · accept votes **4/6** · percentile rank_avg 44.0 (100=best) · rank in year 31.0 (1=best)
 - NAIPv2 `-1.495` · NAIP-v1 `0.444` · SciJudge `-0.565` · DGC-BERT `0.152`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `6.5` Accept · 14B Fast `6.5` Accept
@@ -2507,7 +2515,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2309.14402` · Reasoning and the "physics" of language models · 2023-09-25
 
-- mean rating (1–10): **7.0** · accept votes **3/5** · percentile rank_avg 58.5 (100=best) · rank in year 11.0 (1=best)
+- mean rating (1–10): **7.0** · accept votes **3/5** · percentile rank_avg 58.4 (100=best) · rank in year 10.0 (1=best)
 - NAIPv2 `-1.719` · NAIP-v1 `0.454` · SciJudge `1.264` · DGC-BERT `0.177`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast ``  · 14B Fast `7.0` Accept
@@ -2520,10 +2528,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2404.05405` · Reasoning and the "physics" of language models · 2024-04-08
 
-- mean rating (1–10): **6.9** · accept votes **3/5** · percentile rank_avg 66.8 (100=best) · rank in year 2.0 (1=best)
+- mean rating (1–10): **6.6** · accept votes **4/6** · percentile rank_avg 63.1 (100=best) · rank in year 3.0 (1=best)
 - NAIPv2 `-0.638` · NAIP-v1 `0.514` · SciJudge `3.621` · DGC-BERT `0.237`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
-- DeepReviewer 7B Std `6.0` Accept · 7B Fast ``  · 14B Fast `7.5` Accept
+- DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.7` Accept · 14B Fast `7.5` Accept
 - OpenReviewer `8.0` (S/P/C 4.0/4.0/4.0) · SEA-E `7.0` Accept
 - Telegram: [lovedeathtransformers/7555](https://t.me/lovedeathtransformers/7555), [seeallochnaya/1268](https://t.me/seeallochnaya/1268), [lovedeathtransformers/8152](https://t.me/lovedeathtransformers/8152)
 - Weaknesses: cyclereviewer-8b: Weaknesses  The paper focuses on a synthetic dataset and doesn't study the knowledge storage capacity of real-world language models. The results are not generalizable to real-world models. The paper also doesn't discuss the limitations of the proposed method.  ### Questions  - What are the limitations of the proposed method? How can it be improved? - Can the proposed method be applied to real-worl deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -2533,7 +2541,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2407.15017` · Reasoning and the "physics" of language models · 2024-07-22
 
-- mean rating (1–10): **5.8** · accept votes **3/6** · percentile rank_avg 38.9 (100=best) · rank in year 34.0 (1=best)
+- mean rating (1–10): **5.8** · accept votes **3/6** · percentile rank_avg 39.2 (100=best) · rank in year 34.0 (1=best)
 - NAIPv2 `-2.588` · NAIP-v1 `0.644` · SciJudge `1.432` · DGC-BERT `0.021`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `5.8` Reject · 14B Fast `5.8` Accept
@@ -2546,7 +2554,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `doi:10.1038/s41586-024-07522-w` · Reasoning and the "physics" of language models · 2024-06-19
 
-- mean rating (1–10): **5.9** · accept votes **4/5** · percentile rank_avg 27.4 (100=best) · rank in year 41.0 (1=best)
+- mean rating (1–10): **5.9** · accept votes **4/5** · percentile rank_avg 27.5 (100=best) · rank in year 41.0 (1=best)
 - NAIPv2 `-5.289` · NAIP-v1 `0.204` · SciJudge `-8.846` · DGC-BERT `0.060`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std ``  · 7B Fast ``  · 14B Fast `5.8` Accept
@@ -2559,7 +2567,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2406.11813` · Reasoning and the "physics" of language models · 2024-06-17
 
-- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 46.3 (100=best) · rank in year 25.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 46.7 (100=best) · rank in year 25.0 (1=best)
 - NAIPv2 `-1.204` · NAIP-v1 `0.502` · SciJudge `0.072` · DGC-BERT `0.244`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `6.2` Accept · 14B Fast `6.0` Accept
@@ -2572,13 +2580,13 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2406.11741` · Reasoning and the "physics" of language models · 2024-06-17
 
-- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 53.8 (100=best) · rank in year 17.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 54.1 (100=best) · rank in year 17.0 (1=best)
 - NAIPv2 `-1.136` · NAIP-v1 `0.593` · SciJudge `2.147` · DGC-BERT `0.654`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `5.8` Accept · 14B Fast `5.2` Reject
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/2.0) · SEA-E `7.0` Accept
 - Telegram: [axisofordinary/6439](https://t.me/axisofordinary/6439), [seeallochnaya/1559](https://t.me/seeallochnaya/1559)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper lacks a clear motivation for studying the phenomenon of "transcendence". While the paper provides a theoretical analysis of the conditions under which transcendence can occur, it is not clear why this phenomenon is important or interesting. The paper also lacks a clear discussion of the limitations of the theoretical results, and how they relate to the empirical results. Addi deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  The paper lacks a clear motivation for studying the phenomenon of "transcendence". While the paper provides a theoretical analysis of the conditions under which transcendence can occur, it is not clear why this phenomenon is important or interesting. The paper also lacks a clear discussion of the limitations of the theoretical results, and how they relate to the empirical results. Addi cyclereviewer-8b.seed1: Weaknesses  - The paper only studies the phenomenon of tr
 
 <a id="arxiv-2406.03689"></a>
 ### Evaluating the World Model Implicit in a Generative Model
@@ -2598,10 +2606,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2406.03445` · Reasoning and the "physics" of language models · 2024-06-05
 
-- mean rating (1–10): **5.9** · accept votes **4/5** · percentile rank_avg 66.1 (100=best) · rank in year 4.0 (1=best)
+- mean rating (1–10): **5.8** · accept votes **5/6** · percentile rank_avg 62.2 (100=best) · rank in year 5.0 (1=best)
 - NAIPv2 `-1.313` · NAIP-v1 `0.676` · SciJudge `1.613` · DGC-BERT `0.871`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
-- DeepReviewer 7B Std `7.0` Accept · 7B Fast `7.5` Accept · 14B Fast `` 
+- DeepReviewer 7B Std `7.0` Accept · 7B Fast `7.5` Accept · 14B Fast `5.8` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/2.0) · SEA-E `7.0` Accept
 - Telegram: —
 - Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper's contribution is not very significant. The authors only analyzed a single task (addition) and a single model (GPT-2-XL) and did not generalize to other models or tasks. 2. The paper's findings are somewhat limited to the specific model and task analyzed. It would be more impactful if the authors could generalize their findings to other models and tasks. 3. The paper does  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -2611,7 +2619,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2405.15071` · Reasoning and the "physics" of language models · 2024-05-23
 
-- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 61.9 (100=best) · rank in year 7.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 62.0 (100=best) · rank in year 6.0 (1=best)
 - NAIPv2 `-0.824` · NAIP-v1 `0.652` · SciJudge `3.092` · DGC-BERT `0.698`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `7.3` Accept · 14B Fast `5.8` Accept
@@ -2624,7 +2632,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2405.14838` · Reasoning and the "physics" of language models · 2024-05-23
 
-- mean rating (1–10): **5.6** · accept votes **4/6** · percentile rank_avg 42.0 (100=best) · rank in year 28.0 (1=best)
+- mean rating (1–10): **5.6** · accept votes **4/6** · percentile rank_avg 42.4 (100=best) · rank in year 27.0 (1=best)
 - NAIPv2 `-2.850` · NAIP-v1 `0.458` · SciJudge `1.895` · DGC-BERT `0.909`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.5` Accept · 14B Fast `5.0` Reject
@@ -2637,7 +2645,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `doi:10.1038/d41586-024-01413-w` · Reasoning and the "physics" of language models · 2024-05-14
 
-- mean rating (1–10): **5.2** · accept votes **3/5** · percentile rank_avg 21.8 (100=best) · rank in year 43.0 (1=best) · partial fulltext
+- mean rating (1–10): **5.2** · accept votes **3/5** · percentile rank_avg 21.9 (100=best) · rank in year 43.0 (1=best) · partial fulltext
 - NAIPv2 `-4.922` · NAIP-v1 `0.454` · SciJudge `-5.475` · DGC-BERT `0.036`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std ``  · 7B Fast ``  · 14B Fast `6.0` Accept
@@ -2650,7 +2658,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2402.01817` · Reasoning and the "physics" of language models · 2024-02-02
 
-- mean rating (1–10): **6.0** · accept votes **2/6** · percentile rank_avg 34.3 (100=best) · rank in year 40.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **2/6** · percentile rank_avg 34.5 (100=best) · rank in year 39.0 (1=best)
 - NAIPv2 `-2.639` · NAIP-v1 `0.513` · SciJudge `-0.267` · DGC-BERT `0.004`
 - CycleReviewer 8B `3.5` Reject · 70B `` 
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `5.5` Reject · 14B Fast `5.8` Reject
@@ -2663,7 +2671,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2312.13558` · Reasoning and the "physics" of language models · 2023-12-21
 
-- mean rating (1–10): **5.8** · accept votes **4/6** · percentile rank_avg 42.8 (100=best) · rank in year 33.0 (1=best)
+- mean rating (1–10): **5.8** · accept votes **4/6** · percentile rank_avg 42.9 (100=best) · rank in year 32.0 (1=best)
 - NAIPv2 `-1.128` · NAIP-v1 `0.379` · SciJudge `0.676` · DGC-BERT `0.923`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `4.8` Reject · 7B Fast `5.5` Reject · 14B Fast `6.2` Accept
@@ -2676,7 +2684,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `openreview:hcQfTsVnBo` · Reasoning and the "physics" of language models · unknown
 
-- mean rating (1–10): **6.5** · accept votes **4/6** · percentile rank_avg 50.0 (100=best) · rank in year 2.0 (1=best)
+- mean rating (1–10): **6.5** · accept votes **4/6** · percentile rank_avg 50.2 (100=best) · rank in year 2.0 (1=best)
 - NAIPv2 `-3.244` · NAIP-v1 `0.371` · SciJudge `-6.980` · DGC-BERT `0.035`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.8` Accept · 7B Fast `7.0` Accept · 14B Fast `6.8` Accept
@@ -2689,7 +2697,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2309.12288` · Reasoning and the "physics" of language models · 2023-09-21
 
-- mean rating (1–10): **5.7** · accept votes **4/6** · percentile rank_avg 54.8 (100=best) · rank in year 14.0 (1=best)
+- mean rating (1–10): **5.7** · accept votes **4/6** · percentile rank_avg 55.3 (100=best) · rank in year 14.0 (1=best)
 - NAIPv2 `1.487` · NAIP-v1 `0.676` · SciJudge `1.757` · DGC-BERT `0.254`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Reject · 7B Fast `6.3` Accept · 14B Fast `5.8` Accept
@@ -2702,7 +2710,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2304.15004` · Reasoning and the "physics" of language models · 2023-04-28
 
-- mean rating (1–10): **6.2** · accept votes **4/6** · percentile rank_avg 63.0 (100=best) · rank in year 7.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **4/6** · percentile rank_avg 63.4 (100=best) · rank in year 7.0 (1=best)
 - NAIPv2 `0.762` · NAIP-v1 `0.551` · SciJudge `2.948` · DGC-BERT `0.254`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.2` Accept · 14B Fast `6.5` Accept
@@ -2715,10 +2723,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2302.00923` · Reasoning and the "physics" of language models · 2023-02-02
 
-- mean rating (1–10): **6.4** · accept votes **4/5** · percentile rank_avg 60.2 (100=best) · rank in year 9.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **5/6** · percentile rank_avg 57.1 (100=best) · rank in year 11.0 (1=best)
 - NAIPv2 `-0.418` · NAIP-v1 `0.730` · SciJudge `0.912` · DGC-BERT `0.793`
 - CycleReviewer 8B `5.8` Accept · 70B `` 
-- DeepReviewer 7B Std `5.2` Reject · 7B Fast ``  · 14B Fast `5.8` Reject
+- DeepReviewer 7B Std `5.2` Reject · 7B Fast `5.7` Accept · 14B Fast `5.8` Reject
 - OpenReviewer `8.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/4464](https://t.me/axisofordinary/4464), [axisofordinary/4323](https://t.me/axisofordinary/4323), [j_links/6440](https://t.me/j_links/6440)
 - Weaknesses: cyclereviewer-8b: Weaknesses  The method is not novel. The idea of using two stages for CoT reasoning has been proposed in previous works, such as (1). The method of using a single-head attention network to correlate text tokens with image patches has also been proposed in previous works, such as (2). The method of using a gated fusion mechanism to fuse language and vision representations has also been proposed in  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -2728,20 +2736,20 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2301.06627` · Reasoning and the "physics" of language models · 2023-01-16
 
-- mean rating (1–10): **6.2** · accept votes **3/6** · percentile rank_avg 47.7 (100=best) · rank in year 27.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **3/6** · percentile rank_avg 48.1 (100=best) · rank in year 27.0 (1=best)
 - NAIPv2 `-2.279` · NAIP-v1 `0.436` · SciJudge `1.583` · DGC-BERT `0.311`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `6.5` Reject · 14B Fast `6.8` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [axisofordinary/4244](https://t.me/axisofordinary/4244)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks a clear and concise abstract that summarizes the main contributions and findings of the paper. 2. The paper lacks a clear and concise introduction that provides background information and sets the stage for the rest of the paper. 3. The paper lacks a clear and concise conclusion that summarizes the main findings and contributions of the paper. 4. The paper lacks a cl deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks a clear and concise abstract that summarizes the main contributions and findings of the paper. 2. The paper lacks a clear and concise introduction that provides background information and sets the stage for the rest of the paper. 3. The paper lacks a clear and concise conclusion that summarizes the main findings and contributions of the paper. 4. The paper lacks a cl cyclereviewer-8b.seed1: Weaknesses  - The paper's evaluation of LLMs on functiona
 
 <a id="arxiv-2301.05217"></a>
 ### Progress measures for grokking via mechanistic interpretability
 
 `arxiv:2301.05217` · Reasoning and the "physics" of language models · 2023-01-12
 
-- mean rating (1–10): **6.6** · accept votes **6/6** · percentile rank_avg 67.4 (100=best) · rank in year 4.0 (1=best)
+- mean rating (1–10): **6.6** · accept votes **6/6** · percentile rank_avg 67.4 (100=best) · rank in year 3.0 (1=best)
 - NAIPv2 `-0.686` · NAIP-v1 `0.491` · SciJudge `1.824` · DGC-BERT `0.559`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `8.0` Accept · 14B Fast `7.0` Accept
@@ -2767,7 +2775,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `openreview:wUU-7XTL5XO` · Reasoning and the "physics" of language models · unknown
 
-- mean rating (1–10): **5.4** · accept votes **2/6** · percentile rank_avg 33.9 (100=best) · rank in year 8.0 (1=best)
+- mean rating (1–10): **5.4** · accept votes **2/6** · percentile rank_avg 33.8 (100=best) · rank in year 8.0 (1=best)
 - NAIPv2 `-1.282` · NAIP-v1 `0.555` · SciJudge `1.544` · DGC-BERT `0.014`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast `4.2` Reject · 14B Fast `5.7` Reject
@@ -2780,7 +2788,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2203.11171` · Reasoning and the "physics" of language models · 2022-03-21
 
-- mean rating (1–10): **5.7** · accept votes **6/6** · percentile rank_avg 59.7 (100=best) · rank in year 5.0 (1=best)
+- mean rating (1–10): **5.7** · accept votes **6/6** · percentile rank_avg 60.0 (100=best) · rank in year 5.0 (1=best)
 - NAIPv2 `-2.383` · NAIP-v1 `0.759` · SciJudge `3.638` · DGC-BERT `0.917`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept · 14B Fast `4.5` Accept
@@ -2793,7 +2801,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2608.05136` · Data, training, optimization · 2026-08-05
 
-- mean rating (1–10): **6.4** · accept votes **5/6** · percentile rank_avg 61.5 (100=best) · rank in year 26.0 (1=best)
+- mean rating (1–10): **6.4** · accept votes **5/6** · percentile rank_avg 61.8 (100=best) · rank in year 25.0 (1=best)
 - NAIPv2 `1.129` · NAIP-v1 `0.627` · SciJudge `-3.796` · DGC-BERT `0.208`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.5` Accept · 14B Fast `7.5` Accept
@@ -2806,7 +2814,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2607.27372` · Data, training, optimization · 2026-07-29
 
-- mean rating (1–10): **6.2** · accept votes **6/6** · percentile rank_avg 70.7 (100=best) · rank in year 8.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **6/6** · percentile rank_avg 71.1 (100=best) · rank in year 7.0 (1=best)
 - NAIPv2 `0.640` · NAIP-v1 `0.771` · SciJudge `2.110` · DGC-BERT `0.888`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept · 14B Fast `7.0` Accept
@@ -2819,13 +2827,13 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2601.21343` · Data, training, optimization · 2026-01-29
 
-- mean rating (1–10): **5.8** · accept votes **3/6** · percentile rank_avg 38.9 (100=best) · rank in year 65.0 (1=best)
+- mean rating (1–10): **5.8** · accept votes **3/6** · percentile rank_avg 39.1 (100=best) · rank in year 64.0 (1=best)
 - NAIPv2 `-2.145` · NAIP-v1 `0.484` · SciJudge `0.425` · DGC-BERT `0.335`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `5.5` Reject · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/8485](https://t.me/axisofordinary/8485), [gonzo_ML/4691](https://t.me/gonzo_ML/4691)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks a clear comparison with existing methods. The authors should provide a more comprehensive comparison with other approaches to improve the training of LLMs, such as chain-of-thought and reasoning-based pretraining.  2. The paper does not provide a detailed analysis of the limitations of the proposed approach. The authors should discuss the potential limitations of the deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks a clear comparison with existing methods. The authors should provide a more comprehensive comparison with other approaches to improve the training of LLMs, such as chain-of-thought and reasoning-based pretraining.  2. The paper does not provide a detailed analysis of the limitations of the proposed approach. The authors should discuss the potential limitations of the cyclereviewer-8b.seed1: Weaknesses  1. The paper lacks a detailed discussion of t
 
 <a id="arxiv-2512.24695"></a>
 ### Nested Learning: The Illusion of Deep Learning Architectures
@@ -2838,27 +2846,27 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 - DeepReviewer 7B Std ``  · 7B Fast `5.0` Reject · 14B Fast `4.2` Reject
 - OpenReviewer `5.0` (S/P/C 2.0/2.0/2.0) · SEA-E `3.0` Reject
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper's presentation is not clear enough, and the motivation for the Nested Learning paradigm is not well explained. The authors should provide more clarity on how the Nested Learning paradigm addresses the limitations of current machine learning models and why it is a necessary step forward. Additionally, the paper's organization and structure should be improved to make it easier  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  The paper's presentation is not clear enough, and the motivation for the Nested Learning paradigm is not well explained. The authors should provide more clarity on how the Nested Learning paradigm addresses the limitations of current machine learning models and why it is a necessary step forward. Additionally, the paper's organization and structure should be improved to make it easier  cyclereviewer-8b.seed1: Weaknesses  The paper is very hard to follow and understa
 
 <a id="arxiv-2510.05491"></a>
 ### NorMuon: Making Muon more efficient and scalable
 
 `arxiv:2510.05491` · Data, training, optimization · 2025-10-07
 
-- mean rating (1–10): **5.9** · accept votes **5/6** · percentile rank_avg 47.4 (100=best) · rank in year 60.0 (1=best)
+- mean rating (1–10): **5.9** · accept votes **5/6** · percentile rank_avg 47.6 (100=best) · rank in year 60.0 (1=best)
 - NAIPv2 `-1.236` · NAIP-v1 `0.512` · SciJudge `-1.707` · DGC-BERT `0.663`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `7.0` Accept · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks novelty. The proposed method is a combination of Muon and Adam, which has been done in previous works (1, 2). The authors should compare NorMuon with these works and explain the differences and advantages of their method.  2. The paper does not provide a theoretical analysis of the proposed method. The authors should provide a theoretical analysis of the convergence  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks novelty. The proposed method is a combination of Muon and Adam, which has been done in previous works (1, 2). The authors should compare NorMuon with these works and explain the differences and advantages of their method.  2. The paper does not provide a theoretical analysis of the proposed method. The authors should provide a theoretical analysis of the convergence  cyclereviewer-8b.seed1: Weaknesses  The paper's novelty is limited, as it builds 
 
 <a id="arxiv-2508.11408"></a>
 ### On-Policy RL Meets Off-Policy Experts: Harmonizing Supervised Fine-Tuning and Reinforcement Learning via Dynamic Weighting
 
 `arxiv:2508.11408` · Data, training, optimization · 2025-08-15
 
-- mean rating (1–10): **6.1** · accept votes **4/6** · percentile rank_avg 53.4 (100=best) · rank in year 46.0 (1=best)
+- mean rating (1–10): **6.1** · accept votes **4/6** · percentile rank_avg 53.8 (100=best) · rank in year 45.0 (1=best)
 - NAIPv2 `1.382` · NAIP-v1 `0.602` · SciJudge `-1.390` · DGC-BERT `0.046`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept · 14B Fast `6.0` Accept
@@ -2871,7 +2879,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2507.12856` · Data, training, optimization · 2025-07-17
 
-- mean rating (1–10): **5.8** · accept votes **2/6** · percentile rank_avg 35.2 (100=best) · rank in year 72.0 (1=best)
+- mean rating (1–10): **5.8** · accept votes **2/6** · percentile rank_avg 35.6 (100=best) · rank in year 71.0 (1=best)
 - NAIPv2 `-3.164` · NAIP-v1 `0.229` · SciJudge `-4.049` · DGC-BERT `0.201`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `5.8` Reject · 14B Fast `6.0` Reject
@@ -2884,7 +2892,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2506.08007` · Data, training, optimization · 2025-06-09
 
-- mean rating (1–10): **5.5** · accept votes **3/6** · percentile rank_avg 31.5 (100=best) · rank in year 75.0 (1=best)
+- mean rating (1–10): **5.5** · accept votes **3/6** · percentile rank_avg 31.9 (100=best) · rank in year 75.0 (1=best)
 - NAIPv2 `-2.857` · NAIP-v1 `0.424` · SciJudge `-3.298` · DGC-BERT `0.913`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast `6.0` Reject · 14B Fast `5.0` Reject
@@ -2897,20 +2905,20 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2505.24832` · Data, training, optimization · 2025-05-30
 
-- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 61.0 (100=best) · rank in year 29.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 61.4 (100=best) · rank in year 29.0 (1=best)
 - NAIPv2 `-0.806` · NAIP-v1 `0.508` · SciJudge `2.637` · DGC-BERT `0.785`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.5` Accept · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/5721](https://t.me/gonzo_ML/5721), [data_secrets/7050](https://t.me/data_secrets/7050), [axisofordinary/7283](https://t.me/axisofordinary/7283), [abstractDL/338](https://t.me/abstractDL/338)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper's main contribution is the proposed definition of memorization based on Kolmogorov complexity. However, this definition is not very practical, as it is difficult to estimate Kolmogorov complexity in practice. The paper also does not provide a clear comparison with existing definitions of memorization, such as those based on perplexity or likelihood.  The paper's experiments a deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  The paper's main contribution is the proposed definition of memorization based on Kolmogorov complexity. However, this definition is not very practical, as it is difficult to estimate Kolmogorov complexity in practice. The paper also does not provide a clear comparison with existing definitions of memorization, such as those based on perplexity or likelihood.  The paper's experiments a cyclereviewer-8b.seed1: Weaknesses  The paper lacks a clear motivation for the pr
 
 <a id="arxiv-2410.07041"></a>
 ### Emergent properties with repeated examples
 
 `arxiv:2410.07041` · Data, training, optimization · 2024-10-09
 
-- mean rating (1–10): **6.1** · accept votes **5/6** · percentile rank_avg 41.2 (100=best) · rank in year 30.0 (1=best)
+- mean rating (1–10): **6.1** · accept votes **5/6** · percentile rank_avg 41.4 (100=best) · rank in year 29.0 (1=best)
 - NAIPv2 `-2.184` · NAIP-v1 `0.120` · SciJudge `-3.312` · DGC-BERT `0.719`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.5` Accept · 14B Fast `6.0` Reject
@@ -2923,7 +2931,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2409.03137` · Data, training, optimization · 2024-09-05
 
-- mean rating (1–10): **6.1** · accept votes **4/6** · percentile rank_avg 51.3 (100=best) · rank in year 20.0 (1=best)
+- mean rating (1–10): **6.1** · accept votes **4/6** · percentile rank_avg 51.4 (100=best) · rank in year 19.0 (1=best)
 - NAIPv2 `-0.882` · NAIP-v1 `0.472` · SciJudge `0.180` · DGC-BERT `0.901`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `7.5` Accept · 14B Fast `6.5` Reject
@@ -2936,23 +2944,23 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2405.20541` · Data, training, optimization · 2024-05-30
 
-- mean rating (1–10): **5.0** · accept votes **3/5** · percentile rank_avg 38.7 (100=best) · rank in year 35.0 (1=best)
+- mean rating (1–10): **5.2** · accept votes **4/6** · percentile rank_avg 40.0 (100=best) · rank in year 32.0 (1=best)
 - NAIPv2 `-1.069` · NAIP-v1 `0.432` · SciJudge `-0.741` · DGC-BERT `0.758`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
-- DeepReviewer 7B Std `4.2` Reject · 7B Fast ``  · 14B Fast `7.0` Accept
+- DeepReviewer 7B Std `4.2` Reject · 7B Fast `6.0` Accept · 14B Fast `7.0` Accept
 - OpenReviewer `2.0` (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [data_secrets/4407](https://t.me/data_secrets/4407), [axisofordinary/6387](https://t.me/axisofordinary/6387)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper's main contribution is an empirical investigation of perplexity-based data pruning for LLMs. While the results are promising, the paper lacks a theoretical foundation or a clear explanation of the underlying mechanisms driving the observed effects. The authors acknowledge this limitation and suggest that future work should investigate the predictive theory for how pruning par deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  The paper's main contribution is an empirical investigation of perplexity-based data pruning for LLMs. While the results are promising, the paper lacks a theoretical foundation or a clear explanation of the underlying mechanisms driving the observed effects. The authors acknowledge this limitation and suggest that future work should investigate the predictive theory for how pruning par cyclereviewer-8b.seed1: Weaknesses  - The novelty of the paper is limited. The me
 
 <a id="arxiv-2405.20233"></a>
 ### Grokfast: Accelerated Grokking by Amplifying Slow Gradients
 
 `arxiv:2405.20233` · Data, training, optimization · 2024-05-30
 
-- mean rating (1–10): **6.0** · accept votes **3/5** · percentile rank_avg 52.4 (100=best) · rank in year 19.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **3/6** · percentile rank_avg 50.1 (100=best) · rank in year 23.0 (1=best)
 - NAIPv2 `1.244` · NAIP-v1 `0.455` · SciJudge `-2.139` · DGC-BERT `0.789`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
-- DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.0` Reject · 14B Fast `` 
+- DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.0` Reject · 14B Fast `5.8` Reject
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [axisofordinary/6444](https://t.me/axisofordinary/6444), [axisofordinary/6417](https://t.me/axisofordinary/6417)
 - Weaknesses: cyclereviewer-8b: Weaknesses  - The paper lacks a theoretical analysis of the proposed method. It would be helpful to have a theoretical explanation of why the method works and under what conditions it is effective. - The paper only considers a limited set of tasks and datasets. It would be helpful to see if the method works on a wider range of tasks and datasets.  ### Questions  - Can the method be applied to othe deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -2962,7 +2970,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2405.18392` · Data, training, optimization · 2024-05-28
 
-- mean rating (1–10): **5.9** · accept votes **5/6** · percentile rank_avg 50.5 (100=best) · rank in year 21.0 (1=best)
+- mean rating (1–10): **5.9** · accept votes **5/6** · percentile rank_avg 50.8 (100=best) · rank in year 21.0 (1=best)
 - NAIPv2 `1.571` · NAIP-v1 `0.550` · SciJudge `0.251` · DGC-BERT `0.653`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.8` Reject · 7B Fast `5.8` Accept · 14B Fast `6.8` Accept
@@ -2975,7 +2983,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2405.16684` · Data, training, optimization · 2024-05-26
 
-- mean rating (1–10): **5.2** · accept votes **3/6** · percentile rank_avg 40.3 (100=best) · rank in year 31.0 (1=best)
+- mean rating (1–10): **5.2** · accept votes **3/6** · percentile rank_avg 40.2 (100=best) · rank in year 30.0 (1=best)
 - NAIPv2 `-0.097` · NAIP-v1 `0.392` · SciJudge `-0.759` · DGC-BERT `0.855`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `4.8` Reject · 14B Fast `4.2` Reject
@@ -2988,20 +2996,20 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2405.15682` · Data, training, optimization · 2024-05-24
 
-- mean rating (1–10): **5.8** · accept votes **4/6** · percentile rank_avg 59.4 (100=best) · rank in year 8.0 (1=best)
+- mean rating (1–10): **5.8** · accept votes **4/6** · percentile rank_avg 59.9 (100=best) · rank in year 7.0 (1=best)
 - NAIPv2 `-0.572` · NAIP-v1 `0.472` · SciJudge `2.952` · DGC-BERT `0.912`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `6.0` Accept · 14B Fast `5.8` Reject
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/2.0) · SEA-E `7.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper only considers convex problems and does not provide any theoretical results for non-convex problems. - The method requires the stopping time T to be known or set in advance, which may not always be possible in practice. - The method requires the use of a new hyperparameter $\beta$ which may require additional tuning. - The method does not provide any convergence guarantees  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper only considers convex problems and does not provide any theoretical results for non-convex problems. - The method requires the stopping time T to be known or set in advance, which may not always be possible in practice. - The method requires the use of a new hyperparameter $\beta$ which may require additional tuning. - The method does not provide any convergence guarantees  cyclereviewer-8b.seed1: Weaknesses  1. The method seems to be a combination of mo
 
 <a id="arxiv-2403.05175"></a>
 ### Continual Learning and Catastrophic Forgetting
 
 `arxiv:2403.05175` · Data, training, optimization · 2024-03-08
 
-- mean rating (1–10): **5.6** · accept votes **2/6** · percentile rank_avg 24.2 (100=best) · rank in year 42.0 (1=best)
+- mean rating (1–10): **5.6** · accept votes **2/6** · percentile rank_avg 24.1 (100=best) · rank in year 42.0 (1=best)
 - NAIPv2 `-3.904` · NAIP-v1 `0.467` · SciJudge `-4.969` · DGC-BERT `0.018`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast `5.0` Reject · 14B Fast `5.8` Accept
@@ -3014,10 +3022,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2402.02342` · Data, training, optimization · 2024-02-04
 
-- mean rating (1–10): **5.7** · accept votes **3/5** · percentile rank_avg 35.4 (100=best) · rank in year 38.0 (1=best)
+- mean rating (1–10): **5.4** · accept votes **3/6** · percentile rank_avg 32.5 (100=best) · rank in year 40.0 (1=best)
 - NAIPv2 `-1.805` · NAIP-v1 `0.266` · SciJudge `-4.786` · DGC-BERT `0.945`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
-- DeepReviewer 7B Std `4.8` Reject · 7B Fast ``  · 14B Fast `5.8` Reject
+- DeepReviewer 7B Std `4.8` Reject · 7B Fast `4.2` Reject · 14B Fast `5.8` Reject
 - OpenReviewer `6.0` (S/P/C 3.0/2.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
 - Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a comprehensive comparison with existing methods for optimizing meta-parameters. - The paper does not provide a detailed analysis of the computational complexity of the proposed framework. - The paper does not provide a detailed analysis of the performance of the proposed framework on a wide range of machine learning tasks.  ### Questions  - Can the framewo deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -3027,7 +3035,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2401.17401` · Data, training, optimization · 2024-01-30
 
-- mean rating (1–10): **3.4** · accept votes **1/5** · percentile rank_avg 12.7 (100=best) · rank in year 46.0 (1=best)
+- mean rating (1–10): **3.4** · accept votes **1/5** · percentile rank_avg 12.8 (100=best) · rank in year 46.0 (1=best)
 - NAIPv2 `-3.381` · NAIP-v1 `0.206` · SciJudge `-7.192` · DGC-BERT `0.502`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast ``  · 14B Fast `3.0` Reject
@@ -3040,7 +3048,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2312.17742` · Data, training, optimization · 2023-12-28
 
-- mean rating (1–10): **5.8** · accept votes **3/6** · percentile rank_avg 50.6 (100=best) · rank in year 24.0 (1=best)
+- mean rating (1–10): **5.8** · accept votes **3/6** · percentile rank_avg 51.0 (100=best) · rank in year 21.0 (1=best)
 - NAIPv2 `-1.154` · NAIP-v1 `0.652` · SciJudge `0.142` · DGC-BERT `0.916`
 - CycleReviewer 8B `4.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.0` Reject · 7B Fast `6.0` Reject · 14B Fast `7.0` Accept
@@ -3053,23 +3061,23 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2312.10549` · Data, training, optimization · 2023-12-16
 
-- mean rating (1–10): **3.3** · accept votes **0/6** · percentile rank_avg 16.1 (100=best) · rank in year 47.0 (1=best)
+- mean rating (1–10): **3.3** · accept votes **0/6** · percentile rank_avg 16.0 (100=best) · rank in year 47.0 (1=best)
 - NAIPv2 `-3.830` · NAIP-v1 `0.671` · SciJudge `-2.951` · DGC-BERT `0.045`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `4.5` Reject · 14B Fast `3.0` Reject
 - OpenReviewer `3.0` (S/P/C 2.0/2.0/2.0) · SEA-E `3.0` Reject
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: weaknesses of each category and provide a discussion of the current state of the field.  ## Soundness  2 fair  ## Presentation  2 fair  ## Contribution  2 fair  ## Strengths  The paper provides a comprehensive review of the literature on catastrophic forgetting in deep learning, including a taxonomy of methods for mitigating catastrophic forgetting. The authors discuss the problem of catastrophic  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: weaknesses of each category and provide a discussion of the current state of the field.  ## Soundness  2 fair  ## Presentation  2 fair  ## Contribution  2 fair  ## Strengths  The paper provides a comprehensive review of the literature on catastrophic forgetting in deep learning, including a taxonomy of methods for mitigating catastrophic forgetting. The authors discuss the problem of catastrophic  cyclereviewer-8b.seed1: weaknesses of each category and provide a taxonomy to hel
 
 <a id="arxiv-2307.06440"></a>
 ### No Train No Gain: Revisiting Efficient Training Algorithms For Transformer-based Language Models
 
 `arxiv:2307.06440` · Data, training, optimization · 2023-07-12
 
-- mean rating (1–10): **4.7** · accept votes **3/5** · percentile rank_avg 39.7 (100=best) · rank in year 36.0 (1=best)
+- mean rating (1–10): **4.8** · accept votes **3/6** · percentile rank_avg 37.6 (100=best) · rank in year 37.0 (1=best)
 - NAIPv2 `0.661` · NAIP-v1 `0.517` · SciJudge `-2.688` · DGC-BERT `0.796`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
-- DeepReviewer 7B Std `4.2` Reject · 7B Fast ``  · 14B Fast `6.8` Accept
+- DeepReviewer 7B Std `4.2` Reject · 7B Fast `5.2` Reject · 14B Fast `6.8` Accept
 - OpenReviewer `3.0` (S/P/C 2.0/2.0/1.0) · SEA-E `6.0` Accept
 - Telegram: —
 - Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not provide any significant contribution. The authors evaluate a number of methods that aim to speed up training of transformer-based language models and find that they do not improve over the baseline models. The paper does not propose any new methods for speeding up training of transformer-based language models.  ### Questions  N/A  ### Flag For Ethics Review  No ethic deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -3079,7 +3087,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `doi:10.1038/s41586-024-07711-7` · Data, training, optimization · 2024-08-21
 
-- mean rating (1–10): **6.2** · accept votes **4/6** · percentile rank_avg 50.4 (100=best) · rank in year 22.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **4/6** · percentile rank_avg 50.7 (100=best) · rank in year 22.0 (1=best)
 - NAIPv2 `-2.879` · NAIP-v1 `0.428` · SciJudge `-1.420` · DGC-BERT `0.407`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.8` Accept · 7B Fast `7.0` Accept · 14B Fast `6.8` Accept
@@ -3092,7 +3100,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2305.14342` · Data, training, optimization · 2023-05-23
 
-- mean rating (1–10): **5.8** · accept votes **4/6** · percentile rank_avg 53.5 (100=best) · rank in year 16.0 (1=best)
+- mean rating (1–10): **5.8** · accept votes **4/6** · percentile rank_avg 53.9 (100=best) · rank in year 15.0 (1=best)
 - NAIPv2 `-1.202` · NAIP-v1 `0.658` · SciJudge `2.084` · DGC-BERT `0.770`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.2` Reject · 14B Fast `6.0` Accept
@@ -3105,10 +3113,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2302.06675` · Data, training, optimization · 2023-02-13
 
-- mean rating (1–10): **6.5** · accept votes **3/5** · percentile rank_avg 75.1 (100=best) · rank in year 1.0 (1=best)
+- mean rating (1–10): **6.5** · accept votes **4/6** · percentile rank_avg 73.8 (100=best) · rank in year 1.0 (1=best)
 - NAIPv2 `-0.872` · NAIP-v1 `0.779` · SciJudge `3.506` · DGC-BERT `0.449`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
-- DeepReviewer 7B Std `6.5` Accept · 7B Fast `7.0` Accept · 14B Fast `` 
+- DeepReviewer 7B Std `6.5` Accept · 7B Fast `7.0` Accept · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [knowledge_accumulator/139](https://t.me/knowledge_accumulator/139), [gonzo_ML/1674](https://t.me/gonzo_ML/1674), [axisofordinary/4403](https://t.me/axisofordinary/4403), [lovedeathtransformers/5426](https://t.me/lovedeathtransformers/5426), [tech_priestess/1159](https://t.me/tech_priestess/1159), [derplearning/2341](https://t.me/derplearning/2341), [j_links/6478](https://t.me/j_links/6478)
 - Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a detailed analysis of the discovered Lion algorithm, such as its convergence properties and theoretical guarantees. - The paper does not compare the proposed method with other existing approaches to discovering optimization algorithms, such as reinforcement learning-based methods. - The paper does not discuss the limitations of the proposed method and the  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -3118,10 +3126,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2212.14034` · Data, training, optimization · 2022-12-28
 
-- mean rating (1–10): **5.8** · accept votes **3/5** · percentile rank_avg 39.1 (100=best) · rank in year 16.0 (1=best)
+- mean rating (1–10): **5.8** · accept votes **3/6** · percentile rank_avg 37.7 (100=best) · rank in year 16.0 (1=best)
 - NAIPv2 `-1.931` · NAIP-v1 `0.429` · SciJudge `-0.124` · DGC-BERT `0.737`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
-- DeepReviewer 7B Std `5.0` Reject · 7B Fast ``  · 14B Fast `5.8` Reject
+- DeepReviewer 7B Std `5.0` Reject · 7B Fast `5.5` Reject · 14B Fast `5.8` Reject
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/2.0) · SEA-E `7.0` Accept
 - Telegram: [gonzo_ML/1217](https://t.me/gonzo_ML/1217), [scitator_ai/58](https://t.me/scitator_ai/58), [gonzo_ML/1179](https://t.me/gonzo_ML/1179), [axisofordinary/4093](https://t.me/axisofordinary/4093), [j_links/6380](https://t.me/j_links/6380)
 - Weaknesses: cyclereviewer-8b: Weaknesses  1. The novelty of this paper is limited. The authors mainly investigate the effects of various modifications to the training pipeline and find that most of the improvements are related to the scaling laws. This is not a surprising result and has been known in the literature.   2. The experiments are not convincing. The authors only conduct experiments on a single task, GLUE, and the re deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -3131,7 +3139,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2210.10760` · Data, training, optimization · 2022-10-19
 
-- mean rating (1–10): **6.1** · accept votes **5/6** · percentile rank_avg 51.6 (100=best) · rank in year 9.0 (1=best)
+- mean rating (1–10): **6.1** · accept votes **5/6** · percentile rank_avg 51.9 (100=best) · rank in year 9.0 (1=best)
 - NAIPv2 `-0.943` · NAIP-v1 `0.466` · SciJudge `1.368` · DGC-BERT `0.793`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.7` Accept · 14B Fast `5.8` Accept
@@ -3144,7 +3152,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2110.09485` · Data, training, optimization · 2021-10-18
 
-- mean rating (1–10): **3.9** · accept votes **1/6** · percentile rank_avg 27.0 (100=best) · rank in year 9.0 (1=best)
+- mean rating (1–10): **3.9** · accept votes **1/6** · percentile rank_avg 27.1 (100=best) · rank in year 9.0 (1=best)
 - NAIPv2 `-0.846` · NAIP-v1 `0.525` · SciJudge `0.209` · DGC-BERT `0.218`
 - CycleReviewer 8B `1.0` Reject · 70B `` 
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast `5.5` Reject · 14B Fast `6.0` Reject
@@ -3157,10 +3165,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2108.06325` · Data, training, optimization · 2021-08-13
 
-- mean rating (1–10): **3.3** · accept votes **0/5** · percentile rank_avg 15.1 (100=best) · rank in year 11.0 (1=best)
+- mean rating (1–10): **3.7** · accept votes **0/6** · percentile rank_avg 15.5 (100=best) · rank in year 11.0 (1=best)
 - NAIPv2 `-2.754` · NAIP-v1 `0.266` · SciJudge `-4.440` · DGC-BERT `0.349`
 - CycleReviewer 8B `4.2` Reject · 70B `` 
-- DeepReviewer 7B Std `5.8` Reject · 7B Fast ``  · 14B Fast `3.0` Reject
+- DeepReviewer 7B Std `5.8` Reject · 7B Fast `5.2` Reject · 14B Fast `3.0` Reject
 - OpenReviewer `3.0` (S/P/C 3.0/2.0/2.0) · SEA-E `3.0` Reject
 - Telegram: —
 - Weaknesses: cyclereviewer-8b: Weaknesses  The paper is poorly written and the results are not convincing. The paper does not cite a large body of work on continual learning. The paper does not compare with other continual learning methods. The paper does not discuss the limitations of the proposed method.  ### Questions  1. What is the main contribution of the paper? The paper claims that it shows that backprop degrades over t deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -3170,7 +3178,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2010.01412` · Data, training, optimization · 2020-10-03
 
-- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 67.8 (100=best) · rank in year 1.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 68.0 (100=best) · rank in year 1.0 (1=best)
 - NAIPv2 `1.366` · NAIP-v1 `0.811` · SciJudge `2.862` · DGC-BERT `0.925`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `7.0` Accept · 14B Fast `6.5` Accept
@@ -3183,7 +3191,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2009.11848` · Data, training, optimization · 2020-09-24
 
-- mean rating (1–10): **6.1** · accept votes **5/6** · percentile rank_avg 51.1 (100=best) · rank in year 7.0 (1=best)
+- mean rating (1–10): **6.1** · accept votes **5/6** · percentile rank_avg 51.3 (100=best) · rank in year 7.0 (1=best)
 - NAIPv2 `-0.141` · NAIP-v1 `0.540` · SciJudge `-0.798` · DGC-BERT `0.418`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `5.7` Accept · 14B Fast `6.0` Accept
@@ -3196,10 +3204,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2009.11243` · Data, training, optimization · 2020-09-23
 
-- mean rating (1–10): **6.4** · accept votes **3/5** · percentile rank_avg 55.0 (100=best) · rank in year 6.0 (1=best)
+- mean rating (1–10): **6.7** · accept votes **4/6** · percentile rank_avg 59.4 (100=best) · rank in year 5.0 (1=best)
 - NAIPv2 `-1.413` · NAIP-v1 `0.625` · SciJudge `0.558` · DGC-BERT `0.619`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
-- DeepReviewer 7B Std `6.0` Accept · 7B Fast ``  · 14B Fast `5.8` Reject
+- DeepReviewer 7B Std `6.0` Accept · 7B Fast `8.0` Accept · 14B Fast `5.8` Reject
 - OpenReviewer `8.0` (S/P/C 3.0/4.0/4.0) · SEA-E `6.0` Accept
 - Telegram: [knowledge_accumulator/110](https://t.me/knowledge_accumulator/110), [gonzo_ML/372](https://t.me/gonzo_ML/372), [j_links/4121](https://t.me/j_links/4121)
 - Weaknesses: cyclereviewer-8b: Weaknesses  The main weakness of the paper is that it does not provide a clear explanation of why the proposed optimizer works better than previous learned optimizers. The authors do not provide any analysis of the learned optimizer's behavior, such as the types of inductive biases it learns or how it adapts to different tasks. This makes it difficult to understand the underlying mechanisms that l deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -3209,26 +3217,26 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2001.08361` · Data, training, optimization · 2020-01-23
 
-- mean rating (1–10): **5.5** · accept votes **3/5** · percentile rank_avg 63.4 (100=best) · rank in year 3.0 (1=best)
+- mean rating (1–10): **5.6** · accept votes **4/6** · percentile rank_avg 66.1 (100=best) · rank in year 3.0 (1=best)
 - NAIPv2 `0.012` · NAIP-v1 `0.787` · SciJudge `3.527` · DGC-BERT `0.896`
-- CycleReviewer 8B ``  · 70B `` 
+- CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.0` Reject · 7B Fast `6.0` Reject · 14B Fast `4.0` Accept
 - OpenReviewer `5.0` (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [gonzo_ML/4730](https://t.me/gonzo_ML/4730), [data_secrets/5534](https://t.me/data_secrets/5534), [gonzo_ML/1856](https://t.me/gonzo_ML/1856), [AGI_and_RL/612](https://t.me/AGI_and_RL/612), [gonzo_ML/1216](https://t.me/gonzo_ML/1216), [rybolos_channel/316](https://t.me/rybolos_channel/316), [dlinnlp/736](https://t.me/dlinnlp/736), [lovedeathtransformers/5878](https://t.me/lovedeathtransformers/5878)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper is written in a somewhat informal style, which makes it difficult to follow at times. For example, the authors use a lot of colloquial language and make statements that are not supported by evidence. This makes it difficult to understand the main contributions of the paper and to evaluate the validity of the claims made.  - The paper does not provide a clear definition of t deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not provide any theoretical analysis of the scaling laws.  ## Questions  1. What are the theoretical implications of the scaling laws? 2. How do the scaling laws depend on the choice of loss function?  ## Flag For Ethics Review  No ethics review needed.  ## Rating  6: marginally above the acceptance threshold  ## Confidence  4: You are confident in your assessment, but n deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
 
 <a id="arxiv-1904.00962"></a>
 ### Large Batch Optimization for Deep Learning: Training BERT in 76 minutes
 
 `arxiv:1904.00962` · Data, training, optimization · 2019-04-01
 
-- mean rating (1–10): **5.8** · accept votes **3/6** · percentile rank_avg 61.6 (100=best) · rank in year 1.0 (1=best)
+- mean rating (1–10): **5.8** · accept votes **3/6** · percentile rank_avg 61.7 (100=best) · rank in year 1.0 (1=best)
 - NAIPv2 `0.668` · NAIP-v1 `0.668` · SciJudge `1.367` · DGC-BERT `0.913`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `7.0` Accept · 14B Fast `6.0` Reject
 - OpenReviewer `5.0` (S/P/C 2.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [j_links/2316](https://t.me/j_links/2316)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper is not well-organized. The authors present the convergence analysis of Lamb and Lars in Section 3, but do not provide any experimental results in this section. Instead, the experimental results are presented in Section 4. This makes it difficult to understand the significance of the convergence analysis.  2. The paper lacks a clear motivation for the proposed algorithm. Th deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper is not well-organized. The authors present the convergence analysis of Lamb and Lars in Section 3, but do not provide any experimental results in this section. Instead, the experimental results are presented in Section 4. This makes it difficult to understand the significance of the convergence analysis.  2. The paper lacks a clear motivation for the proposed algorithm. Th cyclereviewer-8b.seed1: Weaknesses  1. The paper only provides a limited number o
 
 <a id="arxiv-1803.03635"></a>
 ### The Lottery Ticket Hypothesis: Finding Sparse, Trainable Neural Networks
@@ -3254,14 +3262,14 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast `5.5` Accept · 14B Fast `5.5` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [j_links/582](https://t.me/j_links/582)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper claims that the information bottleneck theory of deep learning is not supported by the experimental results. However, the experiments are limited to small networks and simple datasets. The authors do not provide a comprehensive analysis of the theory and its limitations. The authors also do not provide a clear explanation of the reasons why the compression phase is not observ deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  The paper claims that the information bottleneck theory of deep learning is not supported by the experimental results. However, the experiments are limited to small networks and simple datasets. The authors do not provide a comprehensive analysis of the theory and its limitations. The authors also do not provide a clear explanation of the reasons why the compression phase is not observ cyclereviewer-8b.seed1: Weaknesses  The paper could benefit from a more detailed 
 
 <a id="arxiv-1708.07120"></a>
 ### Super-Convergence: Very Fast Training of Neural Networks Using Large Learning Rates
 
 `arxiv:1708.07120` · Data, training, optimization · 2017-08-23
 
-- mean rating (1–10): **4.7** · accept votes **3/6** · percentile rank_avg 37.7 (100=best) · rank in year 6.0 (1=best)
+- mean rating (1–10): **4.7** · accept votes **3/6** · percentile rank_avg 38.0 (100=best) · rank in year 6.0 (1=best)
 - NAIPv2 `-0.206` · NAIP-v1 `0.528` · SciJudge `0.748` · DGC-BERT `0.854`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `5.8` Reject · 14B Fast `6.7` Accept
@@ -3274,7 +3282,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:1708.02072` · Data, training, optimization · 2017-08-07
 
-- mean rating (1–10): **4.0** · accept votes **2/6** · percentile rank_avg 23.0 (100=best) · rank in year 7.0 (1=best)
+- mean rating (1–10): **4.0** · accept votes **2/6** · percentile rank_avg 22.9 (100=best) · rank in year 7.0 (1=best)
 - NAIPv2 `-2.916` · NAIP-v1 `0.558` · SciJudge `-0.195` · DGC-BERT `0.521`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `4.8` Reject · 14B Fast `3.5` Reject
@@ -3287,10 +3295,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `doi:10.1073/pnas.1611835114` · Data, training, optimization · 2017-03-14
 
-- mean rating (1–10): **5.8** · accept votes **4/6** · percentile rank_avg 40.5 (100=best) · rank in year 5.0 (1=best)
+- mean rating (1–10): **5.8** · accept votes **4/6** · percentile rank_avg 39.4 (100=best) · rank in year 5.0 (1=best)
 - NAIPv2 `-4.164` · NAIP-v1 `0.542` · SciJudge `1.496` · DGC-BERT `0.360`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
-- DeepReviewer 7B Std ``  · 7B Fast `6.0` Accept · 14B Fast `6.0` Accept
+- DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.0` Accept · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: —
 - Weaknesses: cyclereviewer-8b: Weaknesses  The main weakness of the paper is that the method is not evaluated on a wide range of tasks and datasets. The authors only evaluate their method on MNIST and Atari, which are relatively simple tasks. It would be good to see how the method performs on more complex tasks, such as image classification on CIFAR-10 or CIFAR-100, or language modeling on text datasets. Additionally, the autho deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -3313,7 +3321,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2606.02572` · Self-supervised learning and vision · 2026-06-01
 
-- mean rating (1–10): **6.5** · accept votes **5/6** · percentile rank_avg 62.2 (100=best) · rank in year 24.0 (1=best)
+- mean rating (1–10): **6.5** · accept votes **5/6** · percentile rank_avg 62.3 (100=best) · rank in year 24.0 (1=best)
 - NAIPv2 `1.062` · NAIP-v1 `0.622` · SciJudge `-2.665` · DGC-BERT `0.537`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `8.0` Accept · 14B Fast `6.5` Accept
@@ -3326,7 +3334,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2605.26379` · Self-supervised learning and vision · 2026-05-25
 
-- mean rating (1–10): **6.7** · accept votes **5/6** · percentile rank_avg 68.0 (100=best) · rank in year 12.0 (1=best)
+- mean rating (1–10): **6.7** · accept votes **5/6** · percentile rank_avg 68.4 (100=best) · rank in year 11.0 (1=best)
 - NAIPv2 `0.844` · NAIP-v1 `0.475` · SciJudge `-1.511` · DGC-BERT `0.929`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `6.5` Accept · 14B Fast `8.0` Accept
@@ -3339,20 +3347,20 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2604.09168` · Self-supervised learning and vision · 2026-04-10
 
-- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 52.6 (100=best) · rank in year 47.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 53.0 (100=best) · rank in year 47.0 (1=best)
 - NAIPv2 `-1.056` · NAIP-v1 `0.587` · SciJudge `0.397` · DGC-BERT `0.404`
 - CycleReviewer 8B `4.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `6.7` Accept · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [gonzo_ML/5303](https://t.me/gonzo_ML/5303)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The novelty of this paper is limited. The idea of using a recurrent transformer architecture for visual generation is not new. The proposed method is a combination of existing techniques, such as looping and distillation. 2. The experiments are not convincing. The authors only compare their method with MaskGIT and MAGVIT, which are not the state-of-the-art methods in visual generati deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  1. The novelty of this paper is limited. The idea of using a recurrent transformer architecture for visual generation is not new. The proposed method is a combination of existing techniques, such as looping and distillation. 2. The experiments are not convincing. The authors only compare their method with MaskGIT and MAGVIT, which are not the state-of-the-art methods in visual generati cyclereviewer-8b.seed1: Weaknesses  1. The paper does not provide a thorough comp
 
 <a id="arxiv-2511.08544"></a>
 ### LeJEPA: Provable and Scalable Self-Supervised Learning Without the Heuristics
 
 `arxiv:2511.08544` · Self-supervised learning and vision · 2025-11-11
 
-- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 62.3 (100=best) · rank in year 24.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 62.7 (100=best) · rank in year 22.0 (1=best)
 - NAIPv2 `1.300` · NAIP-v1 `0.690` · SciJudge `0.745` · DGC-BERT `0.684`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `5.8` Accept · 14B Fast `7.0` Accept
@@ -3365,7 +3373,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2501.05441` · Self-supervised learning and vision · 2025-01-09
 
-- mean rating (1–10): **5.8** · accept votes **4/6** · percentile rank_avg 59.5 (100=best) · rank in year 37.0 (1=best)
+- mean rating (1–10): **5.8** · accept votes **4/6** · percentile rank_avg 59.6 (100=best) · rank in year 38.0 (1=best)
 - NAIPv2 `0.142` · NAIP-v1 `0.849` · SciJudge `0.109` · DGC-BERT `0.967`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.2` Reject · 14B Fast `6.2` Accept
@@ -3378,7 +3386,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2310.04378` · Self-supervised learning and vision · 2023-10-06
 
-- mean rating (1–10): **5.7** · accept votes **3/6** · percentile rank_avg 56.8 (100=best) · rank in year 12.0 (1=best)
+- mean rating (1–10): **5.7** · accept votes **3/6** · percentile rank_avg 56.8 (100=best) · rank in year 13.0 (1=best)
 - NAIPv2 `0.217` · NAIP-v1 `0.715` · SciJudge `3.772` · DGC-BERT `0.846`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `5.2` Reject · 14B Fast `6.5` Accept
@@ -3391,20 +3399,20 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2309.15807` · Self-supervised learning and vision · 2023-09-27
 
-- mean rating (1–10): **6.2** · accept votes **4/6** · percentile rank_avg 53.4 (100=best) · rank in year 18.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **4/6** · percentile rank_avg 53.7 (100=best) · rank in year 17.0 (1=best)
 - NAIPv2 `-0.754` · NAIP-v1 `0.502` · SciJudge `1.108` · DGC-BERT `0.109`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.5` Reject · 14B Fast `6.7` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [seeallochnaya/663](https://t.me/seeallochnaya/663), [lovedeathtransformers/9356](https://t.me/lovedeathtransformers/9356)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper has several weaknesses:  1. The paper does not provide a thorough analysis of the limitations of the proposed approach. For example, the paper does not discuss how the approach would perform on a wider range of tasks or datasets.  2. The paper does not provide a thorough analysis of the potential risks and challenges associated with the proposed approach. For example, the pap deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  The paper has several weaknesses:  1. The paper does not provide a thorough analysis of the limitations of the proposed approach. For example, the paper does not discuss how the approach would perform on a wider range of tasks or datasets.  2. The paper does not provide a thorough analysis of the potential risks and challenges associated with the proposed approach. For example, the pap cyclereviewer-8b.seed1: Weaknesses  The paper lacks novelty. The idea of fine-tun
 
 <a id="arxiv-2304.12210"></a>
 ### A Cookbook of Self-Supervised Learning
 
 `arxiv:2304.12210` · Self-supervised learning and vision · 2023-04-24
 
-- mean rating (1–10): **4.9** · accept votes **1/6** · percentile rank_avg 27.8 (100=best) · rank in year 44.0 (1=best)
+- mean rating (1–10): **4.9** · accept votes **1/6** · percentile rank_avg 27.9 (100=best) · rank in year 44.0 (1=best)
 - NAIPv2 `-2.777` · NAIP-v1 `0.688` · SciJudge `-0.587` · DGC-BERT `0.047`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.0` Reject · 7B Fast `5.5` Reject · 14B Fast `3.0` Reject
@@ -3417,20 +3425,20 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2304.09355` · Self-supervised learning and vision · 2023-04-19
 
-- mean rating (1–10): **4.5** · accept votes **1/5** · percentile rank_avg 24.2 (100=best) · rank in year 45.0 (1=best)
+- mean rating (1–10): **4.5** · accept votes **1/5** · percentile rank_avg 24.3 (100=best) · rank in year 45.0 (1=best)
 - NAIPv2 `-2.838` · NAIP-v1 `0.636` · SciJudge `-1.772` · DGC-BERT `0.108`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast ``  · 14B Fast `4.0` Reject
 - OpenReviewer `5.0` (S/P/C 3.0/2.0/2.0) · SEA-E `6.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper lacks a clear research question and does not provide any new insights or contributions to the field. The paper is a review of existing work and does not provide any new results or experiments. The paper is not well-organized and is difficult to follow. The authors do not provide any clear conclusions or recommendations for future research.  ## Questions  See above.  ## Flag F deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  The paper lacks a clear research question and does not provide any new insights or contributions to the field. The paper is a review of existing work and does not provide any new results or experiments. The paper is not well-organized and is difficult to follow. The authors do not provide any clear conclusions or recommendations for future research.  ## Questions  See above.  ## Flag F cyclereviewer-8b.seed1: Weaknesses  The paper is not a research paper but a revie
 
 <a id="arxiv-2304.07193"></a>
 ### DINOv2: Learning Robust Visual Features without Supervision
 
 `arxiv:2304.07193` · Self-supervised learning and vision · 2023-04-14
 
-- mean rating (1–10): **5.7** · accept votes **3/6** · percentile rank_avg 53.2 (100=best) · rank in year 19.0 (1=best)
+- mean rating (1–10): **5.7** · accept votes **3/6** · percentile rank_avg 53.7 (100=best) · rank in year 18.0 (1=best)
 - NAIPv2 `-2.252` · NAIP-v1 `0.729` · SciJudge `3.537` · DGC-BERT `0.380`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `6.0` Accept · 14B Fast `6.0` Accept
@@ -3443,7 +3451,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2304.05977` · Self-supervised learning and vision · 2023-04-12
 
-- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 64.6 (100=best) · rank in year 5.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 65.0 (100=best) · rank in year 5.0 (1=best)
 - NAIPv2 `1.893` · NAIP-v1 `0.827` · SciJudge `3.247` · DGC-BERT `0.405`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept · 14B Fast `6.0` Accept
@@ -3456,7 +3464,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2302.10174` · Self-supervised learning and vision · 2023-02-20
 
-- mean rating (1–10): **6.4** · accept votes **4/6** · percentile rank_avg 56.6 (100=best) · rank in year 13.0 (1=best)
+- mean rating (1–10): **6.4** · accept votes **4/6** · percentile rank_avg 56.9 (100=best) · rank in year 12.0 (1=best)
 - NAIPv2 `-1.620` · NAIP-v1 `0.738` · SciJudge `2.115` · DGC-BERT `0.277`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.0` Accept · 14B Fast `6.0` Accept
@@ -3469,20 +3477,20 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2301.08243` · Self-supervised learning and vision · 2023-01-19
 
-- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 50.7 (100=best) · rank in year 23.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 50.9 (100=best) · rank in year 22.0 (1=best)
 - NAIPv2 `-1.402` · NAIP-v1 `0.562` · SciJudge `1.736` · DGC-BERT `0.423`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Reject · 7B Fast `7.5` Accept · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/3501](https://t.me/gonzo_ML/3501), [j_links/6821](https://t.me/j_links/6821)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper lacks a strong theoretical foundation for the proposed method. While the authors provide some intuition for why the method works, there is no formal analysis or proof of its correctness or optimality. This makes it difficult to understand the underlying principles of the method and its limitations. - The paper does not provide a clear comparison to existing methods. While t deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper lacks a strong theoretical foundation for the proposed method. While the authors provide some intuition for why the method works, there is no formal analysis or proof of its correctness or optimality. This makes it difficult to understand the underlying principles of the method and its limitations. - The paper does not provide a clear comparison to existing methods. While t cyclereviewer-8b.seed1: Weaknesses  1. The proposed method is not very novel. The
 
 <a id="arxiv-2212.11565"></a>
 ### Tune-A-Video: One-Shot Tuning of Image Diffusion Models for Text-to-Video Generation
 
 `arxiv:2212.11565` · Self-supervised learning and vision · 2022-12-22
 
-- mean rating (1–10): **5.0** · accept votes **2/6** · percentile rank_avg 41.2 (100=best) · rank in year 15.0 (1=best)
+- mean rating (1–10): **5.0** · accept votes **2/6** · percentile rank_avg 41.3 (100=best) · rank in year 15.0 (1=best)
 - NAIPv2 `-2.020` · NAIP-v1 `0.669` · SciJudge `2.791` · DGC-BERT `0.743`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `4.0` Reject · 14B Fast `5.8` Reject
@@ -3495,7 +3503,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2208.10442` · Self-supervised learning and vision · 2022-08-22
 
-- mean rating (1–10): **5.5** · accept votes **4/6** · percentile rank_avg 53.7 (100=best) · rank in year 8.0 (1=best)
+- mean rating (1–10): **5.5** · accept votes **4/6** · percentile rank_avg 54.1 (100=best) · rank in year 8.0 (1=best)
 - NAIPv2 `-0.626` · NAIP-v1 `0.862` · SciJudge `3.207` · DGC-BERT `0.574`
 - CycleReviewer 8B `4.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept · 14B Fast `6.5` Accept
@@ -3521,7 +3529,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2111.07832` · Self-supervised learning and vision · 2021-11-15
 
-- mean rating (1–10): **6.2** · accept votes **4/6** · percentile rank_avg 58.6 (100=best) · rank in year 2.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **4/6** · percentile rank_avg 58.7 (100=best) · rank in year 3.0 (1=best)
 - NAIPv2 `-1.606` · NAIP-v1 `0.771` · SciJudge `3.295` · DGC-BERT `0.353`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `7.0` Accept · 14B Fast `6.5` Accept
@@ -3534,7 +3542,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2105.04906` · Self-supervised learning and vision · 2021-05-11
 
-- mean rating (1–10): **5.2** · accept votes **3/6** · percentile rank_avg 40.0 (100=best) · rank in year 6.0 (1=best)
+- mean rating (1–10): **5.2** · accept votes **3/6** · percentile rank_avg 40.4 (100=best) · rank in year 6.0 (1=best)
 - NAIPv2 `-2.426` · NAIP-v1 `0.488` · SciJudge `3.088` · DGC-BERT `0.930`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `4.0` Reject · 7B Fast `5.8` Reject · 14B Fast `6.5` Accept
@@ -3547,7 +3555,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2104.14294` · Self-supervised learning and vision · 2021-04-29
 
-- mean rating (1–10): **6.5** · accept votes **4/6** · percentile rank_avg 72.4 (100=best) · rank in year 1.0 (1=best)
+- mean rating (1–10): **6.5** · accept votes **4/6** · percentile rank_avg 72.6 (100=best) · rank in year 1.0 (1=best)
 - NAIPv2 `-1.077` · NAIP-v1 `0.827` · SciJudge `3.530` · DGC-BERT `0.159`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.7` Accept · 14B Fast `7.3` Accept
@@ -3560,7 +3568,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2006.09882` · Self-supervised learning and vision · 2020-06-17
 
-- mean rating (1–10): **6.3** · accept votes **4/6** · percentile rank_avg 61.3 (100=best) · rank in year 4.0 (1=best)
+- mean rating (1–10): **6.3** · accept votes **4/6** · percentile rank_avg 61.4 (100=best) · rank in year 4.0 (1=best)
 - NAIPv2 `-1.362` · NAIP-v1 `0.729` · SciJudge `2.331` · DGC-BERT `0.839`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.0` Reject · 7B Fast `7.5` Accept · 14B Fast `7.0` Accept
@@ -3573,7 +3581,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2606.18543` · Retrieval, embeddings, benchmarks · 2026-06-16
 
-- mean rating (1–10): **6.4** · accept votes **5/6** · percentile rank_avg 65.4 (100=best) · rank in year 19.0 (1=best)
+- mean rating (1–10): **6.4** · accept votes **5/6** · percentile rank_avg 65.6 (100=best) · rank in year 19.0 (1=best)
 - NAIPv2 `-0.407` · NAIP-v1 `0.710` · SciJudge `2.263` · DGC-BERT `0.191`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `6.5` Accept · 14B Fast `7.5` Accept
@@ -3586,7 +3594,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2410.07095` · Retrieval, embeddings, benchmarks · 2024-10-09
 
-- mean rating (1–10): **6.0** · accept votes **3/6** · percentile rank_avg 57.9 (100=best) · rank in year 12.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **3/6** · percentile rank_avg 58.3 (100=best) · rank in year 10.0 (1=best)
 - NAIPv2 `0.277` · NAIP-v1 `0.631` · SciJudge `2.609` · DGC-BERT `0.394`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept · 14B Fast `6.2` Reject
@@ -3599,11 +3607,11 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2405.08007` · Retrieval, embeddings, benchmarks · 2024-05-09
 
-- mean rating (1–10): **5.0** · accept votes **1/5** · percentile rank_avg 41.9 (100=best) · rank in year 29.0 (1=best)
+- mean rating (1–10): **4.6** · accept votes **1/6** · percentile rank_avg 37.9 (100=best) · rank in year 35.0 (1=best)
 - NAIPv2 `-2.674` · NAIP-v1 `0.806` · SciJudge `3.261` · DGC-BERT `0.083`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `3.8` Reject · 7B Fast `4.7` Reject · 14B Fast `7.5` Accept
-- OpenReviewer `` (S/P/C None/None/None) · SEA-E `3.0` Reject
+- OpenReviewer `3.0` (S/P/C 3.0/3.0/1.0) · SEA-E `3.0` Reject
 - Telegram: [axisofordinary/6315](https://t.me/axisofordinary/6315), [gonzo_ML/2655](https://t.me/gonzo_ML/2655), [tech_priestess/1735](https://t.me/tech_priestess/1735)
 - Weaknesses: cyclereviewer-8b: Weaknesses  The paper is not written in a way that is easy to understand. The authors seem to be writing for a very specific audience, and the paper is not well-suited for a broader audience.  ### Questions  What is the significance of the results? Why is it important to know that GPT-4 was judged to be human 54% of the time?  ### Flag For Ethics Review  No ethics review needed.  ### Rating  5: ma deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
 
@@ -3612,10 +3620,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2402.16822` · Retrieval, embeddings, benchmarks · 2024-02-26
 
-- mean rating (1–10): **6.6** · accept votes **4/5** · percentile rank_avg 70.4 (100=best) · rank in year 1.0 (1=best)
+- mean rating (1–10): **6.6** · accept votes **5/6** · percentile rank_avg 71.5 (100=best) · rank in year 1.0 (1=best)
 - NAIPv2 `-1.450` · NAIP-v1 `0.661` · SciJudge `3.145` · DGC-BERT `0.923`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
-- DeepReviewer 7B Std `6.2` Accept · 7B Fast ``  · 14B Fast `7.5` Accept
+- DeepReviewer 7B Std `6.2` Accept · 7B Fast `6.7` Accept · 14B Fast `7.5` Accept
 - OpenReviewer `8.0` (S/P/C 3.0/4.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [rybolos_channel/1495](https://t.me/rybolos_channel/1495)
 - Weaknesses: cyclereviewer-8b: Weaknesses  - The paper lacks a clear definition of what constitutes an adversarial prompt and how it is evaluated. The authors use a variety of terms such as "harmful", "incorrect", "toxic", and "unsafe" to describe the outputs of LLMs when prompted with adversarial prompts, but it is not clear how these terms are defined or measured. Additionally, the authors do not provide a clear explanation o deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -3625,23 +3633,23 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2402.12483` · Retrieval, embeddings, benchmarks · 2024-02-19
 
-- mean rating (1–10): **5.9** · accept votes **3/5** · percentile rank_avg 49.4 (100=best) · rank in year 23.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 51.2 (100=best) · rank in year 20.0 (1=best)
 - NAIPv2 `-1.801` · NAIP-v1 `0.656` · SciJudge `1.980` · DGC-BERT `0.747`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
-- DeepReviewer 7B Std `4.2` Reject · 7B Fast ``  · 14B Fast `6.0` Reject
+- DeepReviewer 7B Std `4.2` Reject · 7B Fast `6.3` Accept · 14B Fast `6.0` Reject
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [tech_priestess/1699](https://t.me/tech_priestess/1699), [axisofordinary/6146](https://t.me/axisofordinary/6146), [seeallochnaya/1697](https://t.me/seeallochnaya/1697)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a clear conclusion or recommendation for how to improve MCQA benchmarks. The authors state that the LLMs' performance on choices-only prompts is not solely due to memorization, but do not provide a clear explanation of what is causing the performance. The authors also state that abductive question inference is a contributing factor, but do not provide a cle deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a clear conclusion or recommendation for how to improve MCQA benchmarks. The authors state that the LLMs' performance on choices-only prompts is not solely due to memorization, but do not provide a clear explanation of what is causing the performance. The authors also state that abductive question inference is a contributing factor, but do not provide a cle cyclereviewer-8b.seed1: Weaknesses  - The paper does not provide a clear conclusi
 
 <a id="arxiv-2311.16452"></a>
 ### Can Generalist Foundation Models Outcompete Special-Purpose Tuning? Case Study in Medicine
 
 `arxiv:2311.16452` · Retrieval, embeddings, benchmarks · 2023-11-28
 
-- mean rating (1–10): **6.1** · accept votes **5/5** · percentile rank_avg 53.9 (100=best) · rank in year 15.0 (1=best)
+- mean rating (1–10): **5.9** · accept votes **5/6** · percentile rank_avg 50.6 (100=best) · rank in year 23.0 (1=best)
 - NAIPv2 `-2.244` · NAIP-v1 `0.628` · SciJudge `1.979` · DGC-BERT `0.706`
 - CycleReviewer 8B `5.5` Accept · 70B `` 
-- DeepReviewer 7B Std `5.2` Reject · 7B Fast ``  · 14B Fast `6.8` Accept
+- DeepReviewer 7B Std `5.2` Reject · 7B Fast `5.3` Reject · 14B Fast `6.8` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/5812](https://t.me/axisofordinary/5812), [seeallochnaya/928](https://t.me/seeallochnaya/928)
 - Weaknesses: cyclereviewer-8b: Weaknesses  - The paper lacks a comprehensive evaluation of the proposed method, particularly in real-world scenarios. - The paper does not provide a detailed comparison with existing methods, making it difficult to assess the novelty and effectiveness of the proposed approach. - The paper does not discuss potential risks and limitations of the proposed method, such as bias and hallucinations.  ## deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -3651,23 +3659,23 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2309.16797` · Retrieval, embeddings, benchmarks · 2023-09-28
 
-- mean rating (1–10): **5.4** · accept votes **4/5** · percentile rank_avg 43.5 (100=best) · rank in year 32.0 (1=best)
+- mean rating (1–10): **4.9** · accept votes **4/6** · percentile rank_avg 40.3 (100=best) · rank in year 34.0 (1=best)
 - NAIPv2 `-4.238` · NAIP-v1 `0.704` · SciJudge `-0.132` · DGC-BERT `0.860`
-- CycleReviewer 8B ``  · 70B `` 
+- CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.0` Accept · 14B Fast `6.7` Accept
 - OpenReviewer `3.0` (S/P/C 2.0/2.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [rybolos_channel/1495](https://t.me/rybolos_channel/1495), [axisofordinary/5574](https://t.me/axisofordinary/5574), [j_links/7082](https://t.me/j_links/7082)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper is very poorly written. The authors do not explain their method clearly, and the paper is full of typos and grammatical errors. For example, the authors use "LLM" and "LLMs" interchangeably, which is confusing. The authors also use "prompt" and "prompts" interchangeably, which is also confusing. The authors also use "task-prompt" and "mutation-prompt" interchangeably, whic deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  1. The proposed method is not well-motivated. The authors claim that the proposed method is self-referential, but it is not clear what self-referential means. The authors also claim that the proposed method is an interesting future where larger and more capable LLMs could further amplify the gains of our approach. However, it is not clear how the proposed method can be scaled to larger deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
 
 <a id="acl-2023.acl-demo.51"></a>
 ### A System for Answering Simple Questions in Multiple Languages
 
 `acl:2023.acl-demo.51` · Retrieval, embeddings, benchmarks · unknown
 
-- mean rating (1–10): **5.3** · accept votes **2/5** · percentile rank_avg 26.0 (100=best) · rank in year 10.0 (1=best) · partial fulltext
+- mean rating (1–10): **5.2** · accept votes **2/6** · percentile rank_avg 24.9 (100=best) · rank in year 10.0 (1=best) · partial fulltext
 - NAIPv2 `-3.318` · NAIP-v1 `0.375` · SciJudge `-1.117` · DGC-BERT `0.054`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
-- DeepReviewer 7B Std `4.0` Reject · 7B Fast ``  · 14B Fast `3.7` Reject
+- DeepReviewer 7B Std `4.0` Reject · 7B Fast `5.0` Reject · 14B Fast `3.7` Reject
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [boris_again/2173](https://t.me/boris_again/2173), [abstractDL/233](https://t.me/abstractDL/233)
 - Weaknesses: cyclereviewer-8b: Weaknesses  - The method is limited to simple questions and cannot handle multi-hop questions. - The method is limited to one-hop questions and cannot handle complex questions that require reasoning. - The method is limited to questions that can be answered by a single triple in the knowledge graph and cannot handle questions that require multiple triples to answer. - The method is limited to ques deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -3690,7 +3698,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2212.14024` · Retrieval, embeddings, benchmarks · 2022-12-28
 
-- mean rating (1–10): **6.1** · accept votes **5/6** · percentile rank_avg 58.7 (100=best) · rank in year 6.0 (1=best)
+- mean rating (1–10): **6.1** · accept votes **5/6** · percentile rank_avg 58.9 (100=best) · rank in year 6.0 (1=best)
 - NAIPv2 `0.195` · NAIP-v1 `0.791` · SciJudge `-1.896` · DGC-BERT `0.669`
 - CycleReviewer 8B `5.8` Accept · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.7` Reject · 14B Fast `6.0` Accept
@@ -3703,7 +3711,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2212.09741` · Retrieval, embeddings, benchmarks · 2022-12-19
 
-- mean rating (1–10): **6.1** · accept votes **5/6** · percentile rank_avg 69.9 (100=best) · rank in year 1.0 (1=best)
+- mean rating (1–10): **6.1** · accept votes **5/6** · percentile rank_avg 70.3 (100=best) · rank in year 1.0 (1=best)
 - NAIPv2 `0.333` · NAIP-v1 `0.723` · SciJudge `2.727` · DGC-BERT `0.877`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.5` Accept · 14B Fast `7.0` Accept
@@ -3729,20 +3737,20 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2205.13147` · Retrieval, embeddings, benchmarks · 2022-05-26
 
-- mean rating (1–10): **6.1** · accept votes **5/6** · percentile rank_avg 65.3 (100=best) · rank in year 3.0 (1=best)
+- mean rating (1–10): **6.1** · accept votes **5/6** · percentile rank_avg 65.6 (100=best) · rank in year 3.0 (1=best)
 - NAIPv2 `2.609` · NAIP-v1 `0.626` · SciJudge `0.610` · DGC-BERT `0.871`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `7.0` Accept · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/3368](https://t.me/gonzo_ML/3368), [doomgrad/757](https://t.me/doomgrad/757), [buckwheat_thoughts/8](https://t.me/buckwheat_thoughts/8), [gonzo_ML/2311](https://t.me/gonzo_ML/2311), [rybolos_channel/1037](https://t.me/rybolos_channel/1037), [gonzo_ML/2037](https://t.me/gonzo_ML/2037), [gonzo_ML/3369](https://t.me/gonzo_ML/3369)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper lacks a clear motivation for the proposed method. The authors should provide more details on why learning a single representation that can be used for multiple downstream tasks is important and how it can benefit the community. - The paper lacks a clear explanation of the proposed method. The authors should provide more details on how the proposed method works and how it ca deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper lacks a clear motivation for the proposed method. The authors should provide more details on why learning a single representation that can be used for multiple downstream tasks is important and how it can benefit the community. - The paper lacks a clear explanation of the proposed method. The authors should provide more details on how the proposed method works and how it ca cyclereviewer-8b.seed1: Weaknesses  - The paper does not provide a clear motivati
 
 <a id="acl-2022.emnlp-main.340"></a>
 ### Super-NaturalInstructions: Generalization via Declarative Instructions on 1600+ NLP Tasks
 
 `acl:2022.emnlp-main.340` · Retrieval, embeddings, benchmarks · unknown
 
-- mean rating (1–10): **6.0** · accept votes **4/5** · percentile rank_avg 49.3 (100=best) · rank in year 4.0 (1=best) · partial fulltext
+- mean rating (1–10): **6.0** · accept votes **4/5** · percentile rank_avg 49.4 (100=best) · rank in year 4.0 (1=best) · partial fulltext
 - NAIPv2 `-2.061` · NAIP-v1 `0.551` · SciJudge `3.130` · DGC-BERT `0.241`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast ``  · 14B Fast `6.0` Accept
@@ -3755,10 +3763,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2112.07899` · Retrieval, embeddings, benchmarks · 2021-12-15
 
-- mean rating (1–10): **6.4** · accept votes **3/5** · percentile rank_avg 58.5 (100=best) · rank in year 3.0 (1=best)
+- mean rating (1–10): **6.3** · accept votes **3/6** · percentile rank_avg 59.0 (100=best) · rank in year 2.0 (1=best)
 - NAIPv2 `-0.023` · NAIP-v1 `0.572` · SciJudge `2.128` · DGC-BERT `0.059`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
-- DeepReviewer 7B Std `6.2` Accept · 7B Fast ``  · 14B Fast `6.5` Accept
+- DeepReviewer 7B Std `6.2` Accept · 7B Fast `6.2` Reject · 14B Fast `6.5` Accept
 - OpenReviewer `8.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [dealerAI/8](https://t.me/dealerAI/8), [lovedeathtransformers/5427](https://t.me/lovedeathtransformers/5427)
 - Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a clear explanation of why scaling up the model size improves the generalization of dual encoders. The authors should provide more analysis and discussion on this aspect. - The paper does not provide a comparison with other models that use different interaction layers, such as multi-vector encoding models and ColBERT. The authors should provide more discuss deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -3768,7 +3776,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `acl:2022.acl-long.360` · Retrieval, embeddings, benchmarks · unknown
 
-- mean rating (1–10): **5.7** · accept votes **3/6** · percentile rank_avg 38.4 (100=best) · rank in year 7.0 (1=best) · partial fulltext
+- mean rating (1–10): **5.7** · accept votes **3/6** · percentile rank_avg 38.5 (100=best) · rank in year 7.0 (1=best) · partial fulltext
 - NAIPv2 `-2.773` · NAIP-v1 `0.625` · SciJudge `1.730` · DGC-BERT `0.079`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `3.8` Reject · 7B Fast `5.7` Reject · 14B Fast `6.0` Accept
@@ -3781,7 +3789,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2101.02235` · Retrieval, embeddings, benchmarks · 2021-01-06
 
-- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 51.2 (100=best) · rank in year 4.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 51.1 (100=best) · rank in year 4.0 (1=best)
 - NAIPv2 `-2.572` · NAIP-v1 `0.593` · SciJudge `1.722` · DGC-BERT `0.469`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `4.8` Reject · 14B Fast `6.0` Accept
@@ -3794,7 +3802,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2608.23875` · Agents, open-endedness, AGI · 2026-08-24
 
-- mean rating (1–10): **4.7** · accept votes **2/6** · percentile rank_avg 24.7 (100=best) · rank in year 70.0 (1=best)
+- mean rating (1–10): **4.7** · accept votes **2/6** · percentile rank_avg 24.6 (100=best) · rank in year 70.0 (1=best)
 - NAIPv2 `-2.221` · NAIP-v1 `0.558` · SciJudge `-2.715` · DGC-BERT `0.067`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `4.7` Reject · 14B Fast `3.8` Reject
@@ -3807,20 +3815,20 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2608.19197` · Agents, open-endedness, AGI · 2026-08-19
 
-- mean rating (1–10): **7.2** · accept votes **4/5** · percentile rank_avg 71.1 (100=best) · rank in year 7.0 (1=best)
+- mean rating (1–10): **7.0** · accept votes **5/6** · percentile rank_avg 72.9 (100=best) · rank in year 6.0 (1=best)
 - NAIPv2 `0.183` · NAIP-v1 `0.656` · SciJudge `0.132` · DGC-BERT `0.078`
-- CycleReviewer 8B ``  · 70B `` 
+- CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `7.0` Accept · 14B Fast `7.0` Accept
 - OpenReviewer `8.0` (S/P/C 4.0/4.0/4.0) · SEA-E `7.0` Accept
 - Telegram: [axisofordinary/9061](https://t.me/axisofordinary/9061)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The proposed method is only evaluated on the reasoning tasks. It would be interesting to see the performance on other types of tasks, such as language translation, image captioning, etc. - The proposed method is only evaluated on the reasoning tasks. It would be interesting to see the performance on other types of tasks, such as language translation, image captioning, etc. - The prop deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks a clear comparison with existing methods in the field, making it difficult to assess the novelty and significance of the proposed approach.  2. The paper does not provide a detailed explanation of the limitations of the proposed approach, which is important for understanding the potential applications and limitations of the method.  3. The paper does not provide a cl deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
 
 <a id="arxiv-2608.08311"></a>
 ### Ouroboros: A Self-Developing Frontier Coding Agent with Reviewed Core Evolution
 
 `arxiv:2608.08311` · Agents, open-endedness, AGI · 2026-08-08
 
-- mean rating (1–10): **6.2** · accept votes **3/6** · percentile rank_avg 40.2 (100=best) · rank in year 63.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **3/6** · percentile rank_avg 40.4 (100=best) · rank in year 63.0 (1=best)
 - NAIPv2 `-1.249` · NAIP-v1 `0.368` · SciJudge `0.816` · DGC-BERT `0.012`
 - CycleReviewer 8B `4.0` Reject · 70B `` 
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast `7.5` Accept · 14B Fast `5.8` Reject
@@ -3833,7 +3841,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2607.13104` · Agents, open-endedness, AGI · 2026-07-14
 
-- mean rating (1–10): **6.3** · accept votes **5/6** · percentile rank_avg 65.5 (100=best) · rank in year 18.0 (1=best)
+- mean rating (1–10): **6.3** · accept votes **5/6** · percentile rank_avg 65.7 (100=best) · rank in year 18.0 (1=best)
 - NAIPv2 `0.084` · NAIP-v1 `0.655` · SciJudge `2.386` · DGC-BERT `0.010`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `7.0` Accept · 14B Fast `7.5` Accept
@@ -3846,7 +3854,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2605.13821` · Agents, open-endedness, AGI · 2026-05-13
 
-- mean rating (1–10): **6.3** · accept votes **5/6** · percentile rank_avg 61.1 (100=best) · rank in year 28.0 (1=best)
+- mean rating (1–10): **6.3** · accept votes **5/6** · percentile rank_avg 61.2 (100=best) · rank in year 28.0 (1=best)
 - NAIPv2 `-0.344` · NAIP-v1 `0.618` · SciJudge `0.831` · DGC-BERT `0.625`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `7.0` Accept · 14B Fast `6.5` Reject
@@ -3859,7 +3867,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2603.19461` · Agents, open-endedness, AGI · 2026-03-19
 
-- mean rating (1–10): **6.2** · accept votes **5/6** · percentile rank_avg 64.2 (100=best) · rank in year 22.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **5/6** · percentile rank_avg 64.5 (100=best) · rank in year 22.0 (1=best)
 - NAIPv2 `-0.993` · NAIP-v1 `0.700` · SciJudge `1.850` · DGC-BERT `0.445`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.5` Accept · 14B Fast `6.5` Accept
@@ -3872,33 +3880,33 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2602.07755` · Agents, open-endedness, AGI · 2026-02-08
 
-- mean rating (1–10): **6.3** · accept votes **3/4** · percentile rank_avg 50.7 (100=best) · rank in year 50.0 (1=best)
+- mean rating (1–10): **6.3** · accept votes **5/6** · percentile rank_avg 56.5 (100=best) · rank in year 36.0 (1=best)
 - NAIPv2 `-0.724` · NAIP-v1 `0.525` · SciJudge `1.570` · DGC-BERT `0.013`
-- CycleReviewer 8B ``  · 70B `` 
-- DeepReviewer 7B Std `6.0` Accept · 7B Fast ``  · 14B Fast `7.0` Accept
+- CycleReviewer 8B `6.0` Accept · 70B `` 
+- DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.5` Accept · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/8164](https://t.me/axisofordinary/8164)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper lacks a clear definition of what memory design means. For example, it would be helpful to have a definition of memory design and how it is different from memory content. For example, in the context of G-Memory, the memory design refers to the graph structure, while the memory content refers to the nodes and edges in the graph.  - The paper lacks a clear definition of what t deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper lacks a clear definition of the search space for memory designs. The authors mention that the search space is defined as code, but it is unclear what specific aspects of memory design are being explored. - The paper does not provide a thorough analysis of the limitations of the proposed method. For example, it is not clear how ALMA would perform in more complex or dynamic e deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
 
 <a id="arxiv-2601.21557"></a>
 ### Meta Context Engineering via Agentic Skill Evolution
 
 `arxiv:2601.21557` · Agents, open-endedness, AGI · 2026-01-29
 
-- mean rating (1–10): **6.2** · accept votes **4/5** · percentile rank_avg 57.1 (100=best) · rank in year 35.0 (1=best)
+- mean rating (1–10): **5.5** · accept votes **4/6** · percentile rank_avg 52.5 (100=best) · rank in year 49.0 (1=best)
 - NAIPv2 `-0.715` · NAIP-v1 `0.563` · SciJudge `0.796` · DGC-BERT `0.512`
-- CycleReviewer 8B ``  · 70B `` 
+- CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `6.0` Accept · 14B Fast `5.8` Reject
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The motivation is not clear. Why do we need to propose a bi-level optimization framework for context engineering? What are the limitations of the existing methods? - The proposed method is not evaluated on a wide range of tasks. The paper only evaluates on five benchmarks across different domains, which is not enough to show the effectiveness of the proposed method. - The proposed me deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper is not well-organized. The authors should consider reorganizing the paper to make it more coherent and easier to follow. 2. The paper lacks sufficient technical details. The authors should provide more technical details about the proposed method and the experimental setup. 3. The paper lacks sufficient experimental results. The authors should provide more experimental resu deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
 
 <a id="arxiv-2601.07055"></a>
 ### Dr. Zero: Self-Evolving Search Agents without Training Data
 
 `arxiv:2601.07055` · Agents, open-endedness, AGI · 2026-01-11
 
-- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 55.9 (100=best) · rank in year 39.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 56.3 (100=best) · rank in year 39.0 (1=best)
 - NAIPv2 `-0.861` · NAIP-v1 `0.525` · SciJudge `2.974` · DGC-BERT `0.679`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `6.5` Accept · 14B Fast `7.0` Accept
@@ -3911,10 +3919,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2601.03192` · Agents, open-endedness, AGI · 2026-01-06
 
-- mean rating (1–10): **6.1** · accept votes **4/5** · percentile rank_avg 73.1 (100=best) · rank in year 4.0 (1=best)
+- mean rating (1–10): **6.4** · accept votes **5/6** · percentile rank_avg 75.5 (100=best) · rank in year 3.0 (1=best)
 - NAIPv2 `1.841` · NAIP-v1 `0.729` · SciJudge `2.600` · DGC-BERT `0.796`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
-- DeepReviewer 7B Std `6.5` Accept · 7B Fast ``  · 14B Fast `7.0` Accept
+- DeepReviewer 7B Std `6.5` Accept · 7B Fast `7.5` Accept · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/9061](https://t.me/axisofordinary/9061), [axisofordinary/8089](https://t.me/axisofordinary/8089)
 - Weaknesses: cyclereviewer-8b: Weaknesses  - The novelty is limited. The idea of optimizing the retrieval policy via RL is not new, and the method is quite similar to the existing methods (e.g., (1)). The novelty of this work is mainly the application of the idea to LLM agents. - The evaluation is not sufficient. The method is evaluated on only a few benchmarks, and the results are not convincing enough to support the claim of  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -3924,7 +3932,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2512.18746` · Agents, open-endedness, AGI · 2025-12-21
 
-- mean rating (1–10): **6.2** · accept votes **4/6** · percentile rank_avg 59.8 (100=best) · rank in year 34.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **4/6** · percentile rank_avg 60.0 (100=best) · rank in year 34.0 (1=best)
 - NAIPv2 `-0.453` · NAIP-v1 `0.626` · SciJudge `-0.581` · DGC-BERT `0.161`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `7.0` Accept · 14B Fast `6.2` Accept
@@ -3943,17 +3951,17 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `4.8` Reject · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/9061](https://t.me/axisofordinary/9061), [data_secrets/8572](https://t.me/data_secrets/8572), [axisofordinary/8028](https://t.me/axisofordinary/8028)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper lacks a clear explanation of the motivation for the proposed method. What are the benefits of self-play SWE-RL (SSR) compared to existing methods? - The paper does not provide a detailed explanation of the experimental setup, including the data used, the evaluation metrics, and the baselines used for comparison. More details are needed to understand the experimental design  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper lacks a clear explanation of the motivation for the proposed method. What are the benefits of self-play SWE-RL (SSR) compared to existing methods? - The paper does not provide a detailed explanation of the experimental setup, including the data used, the evaluation metrics, and the baselines used for comparison. More details are needed to understand the experimental design  cyclereviewer-8b.seed1: Weaknesses  1. The paper does not provide a clear explana
 
 <a id="arxiv-2512.18160"></a>
 ### Propose, Solve, Verify: Self-Play Through Formal Verification
 
 `arxiv:2512.18160` · Agents, open-endedness, AGI · 2025-12-20
 
-- mean rating (1–10): **6.0** · accept votes **4/5** · percentile rank_avg 52.2 (100=best) · rank in year 48.0 (1=best)
+- mean rating (1–10): **6.1** · accept votes **5/6** · percentile rank_avg 54.3 (100=best) · rank in year 43.0 (1=best)
 - NAIPv2 `-1.147` · NAIP-v1 `0.551` · SciJudge `-2.296` · DGC-BERT `0.943`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
-- DeepReviewer 7B Std `5.5` Reject · 7B Fast ``  · 14B Fast `7.0` Accept
+- DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.5` Accept · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/9061](https://t.me/axisofordinary/9061), [axisofordinary/8073](https://t.me/axisofordinary/8073)
 - Weaknesses: cyclereviewer-8b: Weaknesses  - The paper lacks a clear explanation of how the proposer model is trained. The authors mention that the proposer is updated using the data pool, but do not provide details on the training process. - The paper does not provide a clear explanation of how the difficulty-aware proposer works. The authors mention that the proposer generates problems in the form of formal specifications, bu deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -3963,7 +3971,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2511.15593` · Agents, open-endedness, AGI · 2025-11-19
 
-- mean rating (1–10): **5.3** · accept votes **2/6** · percentile rank_avg 25.2 (100=best) · rank in year 77.0 (1=best)
+- mean rating (1–10): **5.3** · accept votes **2/6** · percentile rank_avg 25.5 (100=best) · rank in year 77.0 (1=best)
 - NAIPv2 `-2.432` · NAIP-v1 `0.436` · SciJudge `-5.377` · DGC-BERT `0.401`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.5` Reject · 7B Fast `5.8` Accept · 14B Fast `4.8` Reject
@@ -3976,7 +3984,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2508.16204` · Agents, open-endedness, AGI · 2025-08-22
 
-- mean rating (1–10): **5.8** · accept votes **4/6** · percentile rank_avg 47.1 (100=best) · rank in year 61.0 (1=best)
+- mean rating (1–10): **5.8** · accept votes **4/6** · percentile rank_avg 47.4 (100=best) · rank in year 61.0 (1=best)
 - NAIPv2 `0.670` · NAIP-v1 `0.460` · SciJudge `-3.828` · DGC-BERT `0.853`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.8` Reject · 7B Fast `6.2` Reject · 14B Fast `7.5` Accept
@@ -3989,10 +3997,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2507.18074` · Agents, open-endedness, AGI · 2025-07-24
 
-- mean rating (1–10): **5.2** · accept votes **2/5** · percentile rank_avg 44.7 (100=best) · rank in year 65.0 (1=best)
+- mean rating (1–10): **5.2** · accept votes **2/6** · percentile rank_avg 41.7 (100=best) · rank in year 67.0 (1=best)
 - NAIPv2 `-0.628` · NAIP-v1 `0.658` · SciJudge `2.782` · DGC-BERT `0.119`
 - CycleReviewer 8B `5.2` Accept · 70B `` 
-- DeepReviewer 7B Std `6.0` Accept · 7B Fast ``  · 14B Fast `5.5` Reject
+- DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.0` Reject · 14B Fast `5.5` Reject
 - OpenReviewer `5.0` (S/P/C 2.0/3.0/2.0) · SEA-E `5.0` Accept
 - Telegram: [rybolos_channel/1549](https://t.me/rybolos_channel/1549), [gonzo_ML/3874](https://t.me/gonzo_ML/3874), [data_secrets/7461](https://t.me/data_secrets/7461)
 - Weaknesses: cyclereviewer-8b: Weaknesses  The paper proposes a framework for neural architecture search using large language models, but it does not provide a detailed evaluation of the framework's performance compared to other neural architecture search methods. The paper also does not provide a detailed analysis of the strengths and weaknesses of the framework, and it does not discuss potential limitations and future work.   deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -4002,10 +4010,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2505.22954` · Agents, open-endedness, AGI · 2025-05-29
 
-- mean rating (1–10): **6.1** · accept votes **3/5** · percentile rank_avg 57.9 (100=best) · rank in year 40.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 55.9 (100=best) · rank in year 42.0 (1=best)
 - NAIPv2 `-0.615` · NAIP-v1 `0.709` · SciJudge `1.646` · DGC-BERT `0.376`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
-- DeepReviewer 7B Std `5.2` Reject · 7B Fast ``  · 14B Fast `7.5` Accept
+- DeepReviewer 7B Std `5.2` Reject · 7B Fast `5.8` Accept · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [data_secrets/7688](https://t.me/data_secrets/7688), [lovedeathtransformers/9379](https://t.me/lovedeathtransformers/9379), [data_secrets/7012](https://t.me/data_secrets/7012), [axisofordinary/7267](https://t.me/axisofordinary/7267), [gonzo_ML/3678](https://t.me/gonzo_ML/3678), [gonzo_ML/3681](https://t.me/gonzo_ML/3681)
 - Weaknesses: cyclereviewer-8b: Weaknesses  The paper proposes a novel approach to self-improving AI systems that uses a combination of evolutionary algorithms and empirical validation to improve its performance on coding benchmarks. However, the paper does not provide a detailed analysis of the limitations of this approach. For example, it is not clear how the DGM would perform on more complex coding tasks or on tasks that requ deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -4015,10 +4023,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `doi:10.21203/rs.3.rs-6688473/v1` · Agents, open-endedness, AGI · 2025-05-20
 
-- mean rating (1–10): **4.5** · accept votes **2/6** · percentile rank_avg 20.2 (100=best) · rank in year 78.0 (1=best)
+- mean rating (1–10): **4.5** · accept votes **2/6** · percentile rank_avg 19.3 (100=best) · rank in year 78.0 (1=best)
 - NAIPv2 `-2.812` · NAIP-v1 `0.604` · SciJudge `-2.483` · DGC-BERT `0.009`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
-- DeepReviewer 7B Std ``  · 7B Fast `4.0` Reject · 14B Fast `3.0` Reject
+- DeepReviewer 7B Std `4.0` Reject · 7B Fast `4.0` Reject · 14B Fast `3.0` Reject
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `5.0` Accept
 - Telegram: —
 - Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks a comprehensive literature review. The authors should include more relevant works in the related work section to provide a more thorough background and context for their proposed method. 2. The evaluation is limited to five simple tasks. The authors should consider adding more complex tasks to demonstrate the effectiveness of their method. 3. The paper lacks a discus deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -4028,7 +4036,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2502.15840` · Agents, open-endedness, AGI · 2025-02-20
 
-- mean rating (1–10): **4.5** · accept votes **2/6** · percentile rank_avg 30.5 (100=best) · rank in year 76.0 (1=best)
+- mean rating (1–10): **4.5** · accept votes **2/6** · percentile rank_avg 30.9 (100=best) · rank in year 76.0 (1=best)
 - NAIPv2 `-1.640` · NAIP-v1 `0.395` · SciJudge `1.397` · DGC-BERT `0.032`
 - CycleReviewer 8B `1.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.3` Accept · 14B Fast `4.0` Reject
@@ -4041,23 +4049,23 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2408.08435` · Agents, open-endedness, AGI · 2024-08-15
 
-- mean rating (1–10): **6.2** · accept votes **4/6** · percentile rank_avg 54.5 (100=best) · rank in year 15.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **4/6** · percentile rank_avg 54.6 (100=best) · rank in year 15.0 (1=best)
 - NAIPv2 `-2.412` · NAIP-v1 `0.655` · SciJudge `3.114` · DGC-BERT `0.327`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `5.5` Reject · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [knowledge_accumulator/231](https://t.me/knowledge_accumulator/231)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a detailed analysis of the limitations of the proposed approach. - The paper does not discuss the potential risks and challenges of automating the design of agentic systems. - The paper does not provide a detailed comparison with other approaches to automating the design of agentic systems.  ### Questions  - What are the limitations of the proposed approach deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide a detailed analysis of the limitations of the proposed approach. - The paper does not discuss the potential risks and challenges of automating the design of agentic systems. - The paper does not provide a detailed comparison with other approaches to automating the design of agentic systems.  ### Questions  - What are the limitations of the proposed approach cyclereviewer-8b.seed1: Weaknesses  - The authors do not provide any analysis of 
 
 <a id="arxiv-2407.00695"></a>
 ### Learning Formal Mathematics From Intrinsic Motivation
 
 `arxiv:2407.00695` · Agents, open-endedness, AGI · 2024-06-30
 
-- mean rating (1–10): **6.6** · accept votes **3/5** · percentile rank_avg 62.2 (100=best) · rank in year 6.0 (1=best)
+- mean rating (1–10): **6.4** · accept votes **3/6** · percentile rank_avg 59.0 (100=best) · rank in year 8.0 (1=best)
 - NAIPv2 `-0.889` · NAIP-v1 `0.455` · SciJudge `1.298` · DGC-BERT `0.242`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
-- DeepReviewer 7B Std `6.5` Reject · 7B Fast ``  · 14B Fast `7.5` Accept
+- DeepReviewer 7B Std `6.5` Reject · 7B Fast `5.7` Reject · 14B Fast `7.5` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/2.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [axisofordinary/6466](https://t.me/axisofordinary/6466), [j_links/7590](https://t.me/j_links/7590)
 - Weaknesses: cyclereviewer-8b: Weaknesses  The authors claim that their method can generate conjectures and prove them without any prior knowledge. However, the method relies on the type-directed synthesis algorithm to generate conjectures, which requires prior knowledge of the mathematical domain. The authors should clarify this point.  The authors claim that their method can generate conjectures and prove them without any hum deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -4067,20 +4075,20 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2406.04268` · Agents, open-endedness, AGI · 2024-06-06
 
-- mean rating (1–10): **5.5** · accept votes **2/6** · percentile rank_avg 36.8 (100=best) · rank in year 36.0 (1=best)
+- mean rating (1–10): **5.5** · accept votes **2/6** · percentile rank_avg 36.7 (100=best) · rank in year 36.0 (1=best)
 - NAIPv2 `-2.396` · NAIP-v1 `0.614` · SciJudge `0.634` · DGC-BERT `0.008`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `4.8` Reject · 14B Fast `4.8` Reject
 - OpenReviewer `6.0` (S/P/C 3.0/4.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [rybolos_channel/1195](https://t.me/rybolos_channel/1195), [gonzo_ML/2746](https://t.me/gonzo_ML/2746), [gonzo_ML/2743](https://t.me/gonzo_ML/2743), [axisofordinary/6414](https://t.me/axisofordinary/6414)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not provide any new experimental results or empirical evidence to support its claims.  The paper does not provide a clear roadmap or plan for how to achieve open-endedness in AI systems.  The paper does not discuss the potential challenges and limitations of achieving open-endedness in AI systems.  ### Questions  How do you plan to achieve open-endedness in AI systems?   deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not provide any new experimental results or empirical evidence to support its claims.  The paper does not provide a clear roadmap or plan for how to achieve open-endedness in AI systems.  The paper does not discuss the potential challenges and limitations of achieving open-endedness in AI systems.  ### Questions  How do you plan to achieve open-endedness in AI systems?   cyclereviewer-8b.seed1: Weaknesses  1. The paper does not provide a clear roadmap
 
 <a id="openreview-pOoKI3ouv1"></a>
 ### Robust agents learn causal world models (ICLR 2024 best paper)
 
 `openreview:pOoKI3ouv1` · Agents, open-endedness, AGI · unknown
 
-- mean rating (1–10): **7.1** · accept votes **5/6** · percentile rank_avg 74.7 (100=best) · rank in year 1.0 (1=best)
+- mean rating (1–10): **7.1** · accept votes **5/6** · percentile rank_avg 74.9 (100=best) · rank in year 1.0 (1=best)
 - NAIPv2 `-0.457` · NAIP-v1 `0.615` · SciJudge `2.534` · DGC-BERT `0.221`
 - CycleReviewer 8B `8.0` Accept · 70B `` 
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `7.0` Accept · 14B Fast `6.5` Accept
@@ -4093,7 +4101,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `doi:10.1038/s42256-023-00754-x` · Agents, open-endedness, AGI · 2023-11-17
 
-- mean rating (1–10): **4.5** · accept votes **1/6** · percentile rank_avg 17.9 (100=best) · rank in year 46.0 (1=best)
+- mean rating (1–10): **4.5** · accept votes **1/6** · percentile rank_avg 17.8 (100=best) · rank in year 46.0 (1=best)
 - NAIPv2 `-4.184` · NAIP-v1 `0.438` · SciJudge `-10.641` · DGC-BERT `0.050`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `5.0` Reject · 14B Fast `5.2` Reject
@@ -4106,7 +4114,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2311.02462` · Agents, open-endedness, AGI · 2023-11-04
 
-- mean rating (1–10): **5.5** · accept votes **2/6** · percentile rank_avg 31.7 (100=best) · rank in year 42.0 (1=best)
+- mean rating (1–10): **5.5** · accept votes **2/6** · percentile rank_avg 31.6 (100=best) · rank in year 42.0 (1=best)
 - NAIPv2 `-2.020` · NAIP-v1 `0.513` · SciJudge `0.813` · DGC-BERT `0.009`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `4.8` Reject · 14B Fast `4.8` Reject
@@ -4119,7 +4127,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2311.00344` · Agents, open-endedness, AGI · 2023-11-01
 
-- mean rating (1–10): **5.5** · accept votes **3/6** · percentile rank_avg 29.6 (100=best) · rank in year 43.0 (1=best)
+- mean rating (1–10): **5.5** · accept votes **3/6** · percentile rank_avg 30.0 (100=best) · rank in year 43.0 (1=best)
 - NAIPv2 `-1.090` · NAIP-v1 `0.426` · SciJudge `-6.302` · DGC-BERT `0.007`
 - CycleReviewer 8B `4.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `6.5` Accept · 14B Fast `4.8` Reject
@@ -4132,7 +4140,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:1905.10985` · Agents, open-endedness, AGI · 2019-05-27
 
-- mean rating (1–10): **4.3** · accept votes **1/6** · percentile rank_avg 24.2 (100=best) · rank in year 3.0 (1=best)
+- mean rating (1–10): **4.3** · accept votes **1/6** · percentile rank_avg 24.5 (100=best) · rank in year 3.0 (1=best)
 - NAIPv2 `-2.426` · NAIP-v1 `0.621` · SciJudge `-3.201` · DGC-BERT `0.007`
 - CycleReviewer 8B `1.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.5` Reject · 14B Fast `3.0` Reject
@@ -4145,20 +4153,20 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2609.01437` · Harness · 2026-09-01
 
-- mean rating (1–10): **6.6** · accept votes **4/6** · percentile rank_avg 50.8 (100=best) · rank in year 49.0 (1=best)
+- mean rating (1–10): **6.6** · accept votes **4/6** · percentile rank_avg 51.2 (100=best) · rank in year 50.0 (1=best)
 - NAIPv2 `-1.231` · NAIP-v1 `0.617` · SciJudge `-1.947` · DGC-BERT `0.023`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `6.0` Accept · 14B Fast `7.0` Accept
 - OpenReviewer `8.0` (S/P/C 4.0/4.0/4.0) · SEA-E `7.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks novelty. The idea of evaluating the ability of LLMs to develop their own agent harness is not new, and there have been several previous works on this topic. For example, the Meta-Agent Challenge (Lu et al., 2023) directly evaluates the development ability of LLMs. The paper does not clearly explain why the proposed benchmark is better than these previous works.  2. T deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks novelty. The idea of evaluating the ability of LLMs to develop their own agent harness is not new, and there have been several previous works on this topic. For example, the Meta-Agent Challenge (Lu et al., 2023) directly evaluates the development ability of LLMs. The paper does not clearly explain why the proposed benchmark is better than these previous works.  2. T cyclereviewer-8b.seed1: Weaknesses  - The paper only reports results for six crea
 
 <a id="arxiv-2606.01770"></a>
 ### Adaptive Auto-Harness: Sustained Self-Improvement for Agentic System Deployment on Open-Ended Task Streams
 
 `arxiv:2606.01770` · Harness · 2026-06-01
 
-- mean rating (1–10): **6.3** · accept votes **5/6** · percentile rank_avg 54.4 (100=best) · rank in year 41.0 (1=best)
+- mean rating (1–10): **6.3** · accept votes **5/6** · percentile rank_avg 54.6 (100=best) · rank in year 41.0 (1=best)
 - NAIPv2 `0.798` · NAIP-v1 `0.486` · SciJudge `-0.345` · DGC-BERT `0.032`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `7.0` Accept · 14B Fast `6.7` Accept
@@ -4171,7 +4179,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2604.25850` · Harness · 2026-04-28
 
-- mean rating (1–10): **5.9** · accept votes **2/6** · percentile rank_avg 57.0 (100=best) · rank in year 36.0 (1=best)
+- mean rating (1–10): **5.9** · accept votes **2/6** · percentile rank_avg 57.0 (100=best) · rank in year 34.0 (1=best)
 - NAIPv2 `1.099` · NAIP-v1 `0.507` · SciJudge `0.536` · DGC-BERT `0.459`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `4.8` Reject · 14B Fast `6.5` Reject
@@ -4184,20 +4192,20 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2604.19341` · Harness · 2026-04-21
 
-- mean rating (1–10): **6.6** · accept votes **5/6** · percentile rank_avg 74.2 (100=best) · rank in year 3.0 (1=best)
+- mean rating (1–10): **6.6** · accept votes **5/6** · percentile rank_avg 74.3 (100=best) · rank in year 4.0 (1=best)
 - NAIPv2 `-0.211` · NAIP-v1 `0.596` · SciJudge `3.677` · DGC-BERT `0.518`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `10.0` Accept · 7B Fast `8.0` Accept · 14B Fast `7.0` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: —
-- Weaknesses: cyclereviewer-8b: Weaknesses  I have the following concerns:  1. The paper does not clearly explain how the proposal constructor $\Phi$ is implemented. The authors mention that it is a graph-based variant of the PUCT rule, but they do not provide any details. It would be helpful to include a more detailed description of how $\Phi$ is implemented.  2. The paper does not provide any analysis of the computational effi deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  I have the following concerns:  1. The paper does not clearly explain how the proposal constructor $\Phi$ is implemented. The authors mention that it is a graph-based variant of the PUCT rule, but they do not provide any details. It would be helpful to include a more detailed description of how $\Phi$ is implemented.  2. The paper does not provide any analysis of the computational effi cyclereviewer-8b.seed1: Weaknesses  1. The novelty of the paper is limited. The p
 
 <a id="arxiv-2604.08224"></a>
 ### Externalization in LLM Agents: A Unified Review of Memory, Skills, Protocols and Harness Engineering
 
 `arxiv:2604.08224` · Harness · 2026-04-09
 
-- mean rating (1–10): **5.8** · accept votes **3/6** · percentile rank_avg 49.7 (100=best) · rank in year 54.0 (1=best)
+- mean rating (1–10): **5.8** · accept votes **3/6** · percentile rank_avg 49.8 (100=best) · rank in year 54.0 (1=best)
 - NAIPv2 `-0.827` · NAIP-v1 `0.681` · SciJudge `3.109` · DGC-BERT `0.030`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `5.2` Reject · 14B Fast `6.0` Accept
@@ -4210,7 +4218,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2603.28052` · Harness · 2026-03-30
 
-- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 59.9 (100=best) · rank in year 29.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 60.4 (100=best) · rank in year 29.0 (1=best)
 - NAIPv2 `0.213` · NAIP-v1 `0.458` · SciJudge `1.148` · DGC-BERT `0.909`
 - CycleReviewer 8B `4.8` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.0` Accept · 14B Fast `7.5` Accept
@@ -4223,7 +4231,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2607.23379` · AI safety and consciousness · 2026-07-25
 
-- mean rating (1–10): **6.5** · accept votes **4/6** · percentile rank_avg 50.6 (100=best) · rank in year 51.0 (1=best)
+- mean rating (1–10): **6.5** · accept votes **4/6** · percentile rank_avg 50.8 (100=best) · rank in year 51.0 (1=best)
 - NAIPv2 `-0.958` · NAIP-v1 `0.502` · SciJudge `-3.611` · DGC-BERT `0.398`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `7.0` Accept · 14B Fast `7.0` Accept
@@ -4236,7 +4244,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2603.19426` · AI safety and consciousness · 2026-03-19
 
-- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 43.4 (100=best) · rank in year 60.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **5/6** · percentile rank_avg 43.7 (100=best) · rank in year 60.0 (1=best)
 - NAIPv2 `-1.178` · NAIP-v1 `0.428` · SciJudge `-3.866` · DGC-BERT `0.848`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.2` Accept · 14B Fast `5.8` Accept
@@ -4249,20 +4257,20 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2503.16348` · AI safety and consciousness · 2025-03-20
 
-- mean rating (1–10): **4.4** · accept votes **2/6** · percentile rank_avg 12.2 (100=best) · rank in year 79.0 (1=best)
+- mean rating (1–10): **4.4** · accept votes **2/6** · percentile rank_avg 12.1 (100=best) · rank in year 79.0 (1=best)
 - NAIPv2 `-4.512` · NAIP-v1 `0.242` · SciJudge `-5.599` · DGC-BERT `0.013`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `3.5` Reject · 7B Fast `4.5` Reject · 14B Fast `2.5` Reject
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/7048](https://t.me/axisofordinary/7048), [gonzo_ML/3491](https://t.me/gonzo_ML/3491)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper's main weakness is its lack of originality and contribution. The authors draw heavily on existing philosophical theories and concepts, such as Wittgenstein's later philosophy and Buddhist thought, without providing a new or original perspective. The paper also lacks empirical evidence or experimental results to support its claims. The authors rely on philosophical argumentati deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  The paper's main weakness is its lack of originality and contribution. The authors draw heavily on existing philosophical theories and concepts, such as Wittgenstein's later philosophy and Buddhist thought, without providing a new or original perspective. The paper also lacks empirical evidence or experimental results to support its claims. The authors rely on philosophical argumentati cyclereviewer-8b.seed1: Weaknesses  The paper does not provide a clear or well-de
 
 <a id="arxiv-2502.03407"></a>
 ### Detecting Strategic Deception Using Linear Probes
 
 `arxiv:2502.03407` · AI safety and consciousness · 2025-02-05
 
-- mean rating (1–10): **5.3** · accept votes **2/6** · percentile rank_avg 35.4 (100=best) · rank in year 71.0 (1=best)
+- mean rating (1–10): **5.3** · accept votes **2/6** · percentile rank_avg 35.5 (100=best) · rank in year 72.0 (1=best)
 - NAIPv2 `-2.174` · NAIP-v1 `0.558` · SciJudge `1.094` · DGC-BERT `0.056`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `4.2` Reject · 14B Fast `5.8` Reject
@@ -4275,7 +4283,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2501.18837` · AI safety and consciousness · 2025-01-31
 
-- mean rating (1–10): **6.4** · accept votes **5/6** · percentile rank_avg 66.4 (100=best) · rank in year 18.0 (1=best)
+- mean rating (1–10): **6.4** · accept votes **5/6** · percentile rank_avg 66.6 (100=best) · rank in year 15.0 (1=best)
 - NAIPv2 `-1.560` · NAIP-v1 `0.645` · SciJudge `2.925` · DGC-BERT `0.877`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `5.7` Reject · 14B Fast `6.5` Accept
@@ -4288,7 +4296,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2309.08600` · AI safety and consciousness · 2023-09-15
 
-- mean rating (1–10): **6.2** · accept votes **4/6** · percentile rank_avg 48.6 (100=best) · rank in year 25.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **4/6** · percentile rank_avg 48.7 (100=best) · rank in year 26.0 (1=best)
 - NAIPv2 `-1.755` · NAIP-v1 `0.449` · SciJudge `2.857` · DGC-BERT `0.063`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `7.0` Accept · 14B Fast `6.7` Accept
@@ -4301,7 +4309,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2308.08708` · AI safety and consciousness · 2023-08-17
 
-- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 37.1 (100=best) · rank in year 39.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 37.5 (100=best) · rank in year 39.0 (1=best)
 - NAIPv2 `-2.592` · NAIP-v1 `0.605` · SciJudge `-0.852` · DGC-BERT `0.033`
 - CycleReviewer 8B `3.5` Reject · 70B `` 
 - DeepReviewer 7B Std `3.5` Reject · 7B Fast `6.0` Accept · 14B Fast `6.5` Accept
@@ -4320,27 +4328,27 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 - DeepReviewer 7B Std `2.5` Reject · 7B Fast `4.2` Reject · 14B Fast `6.0` Reject
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/4895](https://t.me/axisofordinary/4895), [gonzo_ML/1475](https://t.me/gonzo_ML/1475)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper makes several strong assumptions that limit the applicability of the results. For example, it assumes that the agent learns a goal during the training process, and that the learned goal is randomly chosen from the training-compatible goal set. It also assumes that the state and action spaces are finite, and that the rewards are nonnegative. These assumptions may not hold in a deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  The paper makes several strong assumptions that limit the applicability of the results. For example, it assumes that the agent learns a goal during the training process, and that the learned goal is randomly chosen from the training-compatible goal set. It also assumes that the state and action spaces are finite, and that the rewards are nonnegative. These assumptions may not hold in a cyclereviewer-8b.seed1: Weaknesses  The main weakness of the paper is the lack of
 
 <a id="arxiv-2303.07103"></a>
 ### Could a Large Language Model be Conscious?
 
 `arxiv:2303.07103` · AI safety and consciousness · 2023-03-04
 
-- mean rating (1–10): **5.9** · accept votes **2/5** · percentile rank_avg 47.8 (100=best) · rank in year 26.0 (1=best)
+- mean rating (1–10): **5.9** · accept votes **2/5** · percentile rank_avg 49.0 (100=best) · rank in year 25.0 (1=best)
 - NAIPv2 `-2.414` · NAIP-v1 `0.783` · SciJudge `-0.326` · DGC-BERT `0.037`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
-- DeepReviewer 7B Std ``  · 7B Fast ``  · 14B Fast `3.5` Reject
+- DeepReviewer 7B Std `6.0` Accept · 7B Fast ``  · 14B Fast `3.5` Reject
 - OpenReviewer `8.0` (S/P/C 4.0/4.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/1479](https://t.me/gonzo_ML/1479), [dtulinov/554](https://t.me/dtulinov/554)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper is more of a philosophical discussion than a scientific paper, and does not provide any empirical evidence to support the author's claims. - The author does not provide a clear definition of consciousness, which makes it difficult to evaluate the claims made in the paper. - The author does not provide a clear roadmap for how to overcome the challenges identified, making it  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper is more of a philosophical discussion than a scientific paper, and does not provide any empirical evidence to support the author's claims. - The author does not provide a clear definition of consciousness, which makes it difficult to evaluate the claims made in the paper. - The author does not provide a clear roadmap for how to overcome the challenges identified, making it  cyclereviewer-8b.seed1: Weaknesses  The paper is more of a philosophical discussi
 
 <a id="arxiv-2206.13477"></a>
 ### Parametrically Retargetable Decision-Makers Tend To Seek Power
 
 `arxiv:2206.13477` · AI safety and consciousness · 2022-06-27
 
-- mean rating (1–10): **5.2** · accept votes **3/6** · percentile rank_avg 48.6 (100=best) · rank in year 11.0 (1=best)
+- mean rating (1–10): **5.2** · accept votes **3/6** · percentile rank_avg 48.9 (100=best) · rank in year 12.0 (1=best)
 - NAIPv2 `-0.744` · NAIP-v1 `0.739` · SciJudge `2.456` · DGC-BERT `0.269`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `5.8` Accept · 14B Fast `4.0` Reject
@@ -4353,10 +4361,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2206.13353` · AI safety and consciousness · 2022-06-16
 
-- mean rating (1–10): **5.6** · accept votes **2/5** · percentile rank_avg 43.5 (100=best) · rank in year 13.0 (1=best)
+- mean rating (1–10): **5.8** · accept votes **2/6** · percentile rank_avg 50.2 (100=best) · rank in year 11.0 (1=best)
 - NAIPv2 `-0.861` · NAIP-v1 `0.852` · SciJudge `0.882` · DGC-BERT `0.020`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
-- DeepReviewer 7B Std ``  · 7B Fast ``  · 14B Fast `4.8` Reject
+- DeepReviewer 7B Std `6.2` Accept · 7B Fast `6.8` Reject · 14B Fast `4.8` Reject
 - OpenReviewer `8.0` (S/P/C 4.0/4.0/3.0) · SEA-E `5.0` Accept
 - Telegram: [gonzo_ML/1475](https://t.me/gonzo_ML/1475)
 - Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not provide a detailed analysis of the six premises and does not provide a clear argument for why they are true. The author assigns subjective probabilities to each premise, but does not provide a clear justification for these probabilities. The paper also does not provide a clear discussion of the potential solutions to the problem of power-seeking AI.  ## Questions  Wh deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -4366,20 +4374,20 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:1912.01683` · AI safety and consciousness · 2019-12-03
 
-- mean rating (1–10): **6.2** · accept votes **3/5** · percentile rank_avg 47.4 (100=best) · rank in year 2.0 (1=best)
+- mean rating (1–10): **5.7** · accept votes **3/6** · percentile rank_avg 44.0 (100=best) · rank in year 2.0 (1=best)
 - NAIPv2 `-0.605` · NAIP-v1 `0.415` · SciJudge `2.619` · DGC-BERT `0.705`
-- CycleReviewer 8B ``  · 70B `` 
+- CycleReviewer 8B `3.5` Reject · 70B `` 
 - DeepReviewer 7B Std `4.8` Reject · 7B Fast `5.2` Reject · 14B Fast `5.5` Reject
 - OpenReviewer `8.0` (S/P/C 4.0/3.0/4.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/1475](https://t.me/gonzo_ML/1475)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper does not provide a clear definition of power-seeking behavior in the context of reinforcement learning. The authors introduce a new definition of power, which is the ability to achieve a wide range of goals, but it is not clear how this definition relates to the traditional notion of power-seeking behavior in reinforcement learning. Additionally, the paper does not provide a  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  The paper only considers optimal policies in MDPs and does not discuss the implications for learned policies in real-world environments. The authors also do not provide any empirical results or experiments to support their claims.  ## Questions  1. How do the results in this paper apply to learned policies in real-world environments? 2. Can you provide empirical results or experiments  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
 
 <a id="arxiv-2606.08720"></a>
 ### This is how the Neocortex Learns
 
 `arxiv:2606.08720` · NeuroAI · 2026-06-07
 
-- mean rating (1–10): **6.0** · accept votes **3/6** · percentile rank_avg 35.6 (100=best) · rank in year 69.0 (1=best) · partial fulltext
+- mean rating (1–10): **6.0** · accept votes **3/6** · percentile rank_avg 35.7 (100=best) · rank in year 68.0 (1=best) · partial fulltext
 - NAIPv2 `-1.618` · NAIP-v1 `0.485` · SciJudge `-7.319` · DGC-BERT `0.213`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `1.0` Reject · 7B Fast `8.0` Accept · 14B Fast `3.8` Reject
@@ -4392,7 +4400,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2505.17117` · NeuroAI · 2025-05-21
 
-- mean rating (1–10): **6.6** · accept votes **6/6** · percentile rank_avg 77.5 (100=best) · rank in year 2.0 (1=best)
+- mean rating (1–10): **6.6** · accept votes **6/6** · percentile rank_avg 77.6 (100=best) · rank in year 3.0 (1=best)
 - NAIPv2 `-0.097` · NAIP-v1 `0.768` · SciJudge `1.890` · DGC-BERT `0.626`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `7.5` Accept · 14B Fast `6.5` Accept
@@ -4405,10 +4413,10 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `doi:10.1101/2024.02.22.581686` · NeuroAI · 2024-02-26
 
-- mean rating (1–10): **5.6** · accept votes **3/5** · percentile rank_avg 38.9 (100=best) · rank in year 33.0 (1=best) · partial fulltext
+- mean rating (1–10): **5.7** · accept votes **3/6** · percentile rank_avg 40.2 (100=best) · rank in year 31.0 (1=best) · partial fulltext
 - NAIPv2 `-2.701` · NAIP-v1 `0.501` · SciJudge `-4.023` · DGC-BERT `0.096`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
-- DeepReviewer 7B Std `6.5` Accept · 7B Fast ``  · 14B Fast `7.3` Accept
+- DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.0` Reject · 14B Fast `7.3` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/6364](https://t.me/axisofordinary/6364)
 - Weaknesses: cyclereviewer-8b: Weaknesses  The paper is not well written and lacks clarity. The figures are not self-explanatory and the text is not clear. The authors should provide more details about the methods used to build the model and the results obtained. The authors should also provide more details about the limitations of the model and the future directions for improvement.   The authors should also provide more detai deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -4418,11 +4426,11 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `doi:10.1101/2023.04.04.535512` · NeuroAI · 2023-04-07
 
-- mean rating (1–10): **6.2** · accept votes **2/4** · percentile rank_avg 37.1 (100=best) · rank in year 38.0 (1=best) · partial fulltext
+- mean rating (1–10): **6.0** · accept votes **2/6** · percentile rank_avg 37.6 (100=best) · rank in year 38.0 (1=best) · partial fulltext
 - NAIPv2 `-2.010` · NAIP-v1 `0.301` · SciJudge `-3.189` · DGC-BERT `0.470`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
-- DeepReviewer 7B Std `3.5` Reject · 7B Fast ``  · 14B Fast `6.8` Accept
-- OpenReviewer `` (S/P/C None/None/None) · SEA-E `7.0` Accept
+- DeepReviewer 7B Std `3.5` Reject · 7B Fast `6.3` Reject · 14B Fast `6.8` Accept
+- OpenReviewer `5.0` (S/P/C 3.0/3.0/2.0) · SEA-E `7.0` Accept
 - Telegram: [axisofordinary/4834](https://t.me/axisofordinary/4834)
 - Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper is more of a computational neuroscience study, but it does not provide any neuroscience data. The authors should provide experimental data to support their hypothesis.  2. The authors should compare their model with other models that can learn belief states, such as the one in (1).  3. The authors should also compare their model with other RNN models, such as the ones in ( deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
 
@@ -4431,20 +4439,20 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `doi:10.1371/journal.pcbi.1011005` · NeuroAI · 2023-04-04
 
-- mean rating (1–10): **5.8** · accept votes **4/6** · percentile rank_avg 38.1 (100=best) · rank in year 37.0 (1=best)
+- mean rating (1–10): **5.8** · accept votes **4/6** · percentile rank_avg 38.5 (100=best) · rank in year 36.0 (1=best)
 - NAIPv2 `-1.458` · NAIP-v1 `0.341` · SciJudge `-6.510` · DGC-BERT `0.122`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std ``  · 7B Fast `6.5` Accept · 14B Fast `6.5` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [axisofordinary/4763](https://t.me/axisofordinary/4763)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The main weakness of the paper is that the results are not convincing. The authors use a very simple model to test their idea, and the results are not convincing. For example, in Fig 3A, the authors show that the spiking discontinuity estimator is unbiased when p is small, but this is not surprising. In fact, if p is too small, the estimator will be very noisy. In Fig 3B, the authors s deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  The main weakness of the paper is that the results are not convincing. The authors use a very simple model to test their idea, and the results are not convincing. For example, in Fig 3A, the authors show that the spiking discontinuity estimator is unbiased when p is small, but this is not surprising. In fact, if p is too small, the estimator will be very noisy. In Fig 3B, the authors s cyclereviewer-8b.seed1: Weaknesses  The paper is not well written and the authors
 
 <a id="doi-10.1371-journal.pcbi.1010628"></a>
 ### Sleep prevents catastrophic forgetting in spiking neural networks by forming a joint synaptic weight representation
 
 `doi:10.1371/journal.pcbi.1010628` · NeuroAI · 2022-11-18
 
-- mean rating (1–10): **6.7** · accept votes **4/6** · percentile rank_avg 42.3 (100=best) · rank in year 14.0 (1=best)
+- mean rating (1–10): **6.7** · accept votes **4/6** · percentile rank_avg 42.5 (100=best) · rank in year 14.0 (1=best)
 - NAIPv2 `-3.535` · NAIP-v1 `0.377` · SciJudge `-8.504` · DGC-BERT `0.018`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.7` Accept · 14B Fast `7.5` Accept
@@ -4457,36 +4465,36 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2210.08340` · NeuroAI · 2022-10-15
 
-- mean rating (1–10): **5.2** · accept votes **3/6** · percentile rank_avg 23.2 (100=best) · rank in year 17.0 (1=best) · partial fulltext
+- mean rating (1–10): **5.2** · accept votes **3/6** · percentile rank_avg 23.4 (100=best) · rank in year 17.0 (1=best) · partial fulltext
 - NAIPv2 `-3.387` · NAIP-v1 `0.479` · SciJudge `-5.469` · DGC-BERT `0.087`
 - CycleReviewer 8B `2.5` Reject · 70B `` 
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast `7.0` Accept · 14B Fast `5.8` Accept
 - OpenReviewer `5.0` (S/P/C 2.0/2.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [dtulinov/471](https://t.me/dtulinov/471)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper is more of a call for action than a scientific paper. It does not present any new scientific results or findings. It is more of a position paper or an opinion piece. It is not clear what specific scientific questions the authors are trying to address or what specific challenges they are trying to solve. The paper does not provide any concrete examples or case studies to suppo deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  The paper is more of a call for action than a scientific paper. It does not present any new scientific results or findings. It is more of a position paper or an opinion piece. It is not clear what specific scientific questions the authors are trying to address or what specific challenges they are trying to solve. The paper does not provide any concrete examples or case studies to suppo cyclereviewer-8b.seed1: Weaknesses  The paper lacks a clear research question or 
 
 <a id="arxiv-2112.04035"></a>
 ### Relating transformers to models and neural representations of the hippocampal formation
 
 `arxiv:2112.04035` · NeuroAI · 2021-12-07
 
-- mean rating (1–10): **6.1** · accept votes **3/6** · percentile rank_avg 37.9 (100=best) · rank in year 7.0 (1=best)
+- mean rating (1–10): **6.1** · accept votes **3/6** · percentile rank_avg 38.3 (100=best) · rank in year 7.0 (1=best)
 - NAIPv2 `-1.878` · NAIP-v1 `0.421` · SciJudge `-1.165` · DGC-BERT `0.043`
 - CycleReviewer 8B `4.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.0` Reject · 14B Fast `6.5` Accept
 - OpenReviewer `8.0` (S/P/C 4.0/4.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [axisofordinary/7740](https://t.me/axisofordinary/7740), [boris_again/1275](https://t.me/boris_again/1275)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper is not well written and the ideas are not well presented. The authors should improve the presentation of their work.   2. The authors should provide more details about the experimental setup.   3. The authors should provide more details about the results.   4. The authors should provide more details about the limitations of their work.  ## Questions  1. What is the signifi deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper is not well written and the ideas are not well presented. The authors should improve the presentation of their work.   2. The authors should provide more details about the experimental setup.   3. The authors should provide more details about the results.   4. The authors should provide more details about the limitations of their work.  ## Questions  1. What is the signifi cyclereviewer-8b.seed1: Weaknesses  The paper is written in a way that makes it d
 
 <a id="arxiv-2112.03978"></a>
 ### Attractor and integrator networks in the brain
 
 `arxiv:2112.03978` · NeuroAI · 2021-12-07
 
-- mean rating (1–10): **6.2** · accept votes **5/6** · percentile rank_avg 48.2 (100=best) · rank in year 5.0 (1=best)
+- mean rating (1–10): **6.2** · accept votes **5/6** · percentile rank_avg 46.1 (100=best) · rank in year 5.0 (1=best)
 - NAIPv2 `-2.477` · NAIP-v1 `0.616` · SciJudge `0.539` · DGC-BERT `0.040`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
-- DeepReviewer 7B Std ``  · 7B Fast `6.8` Accept · 14B Fast `6.0` Accept
+- DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.8` Accept · 14B Fast `6.0` Accept
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [dtulinov/468](https://t.me/dtulinov/468)
 - Weaknesses: cyclereviewer-8b: Weaknesses  The paper is a review and does not present any new experimental or theoretical results. While it provides a comprehensive overview of the role of attractor dynamics in the brain, it does not provide any new insights or perspectives on the topic.  ## Questions  No questions.  ## Flag For Ethics Review  No ethics review needed.  ## Rating  6: marginally above the acceptance threshold  ## deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -4496,7 +4504,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `doi:10.1038/s41467-021-26568-2` · NeuroAI · 2021-11-02
 
-- mean rating (1–10): **6.0** · accept votes **3/6** · percentile rank_avg 34.8 (100=best) · rank in year 8.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **3/6** · percentile rank_avg 34.7 (100=best) · rank in year 8.0 (1=best)
 - NAIPv2 `-2.781` · NAIP-v1 `0.435` · SciJudge `-2.452` · DGC-BERT `0.114`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `4.5` Reject · 14B Fast `5.8` Reject
@@ -4509,7 +4517,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2602.14486` · Representation alignment · 2026-02-16
 
-- mean rating (1–10): **7.1** · accept votes **5/6** · percentile rank_avg 66.4 (100=best) · rank in year 13.0 (1=best)
+- mean rating (1–10): **7.1** · accept votes **5/6** · percentile rank_avg 66.7 (100=best) · rank in year 12.0 (1=best)
 - NAIPv2 `-0.554` · NAIP-v1 `0.528` · SciJudge `-4.152` · DGC-BERT `0.477`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.2` Reject · 7B Fast `6.5` Accept · 14B Fast `8.0` Accept
@@ -4522,20 +4530,20 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2507.01098` · Representation alignment · 2025-07-01
 
-- mean rating (1–10): **5.8** · accept votes **2/6** · percentile rank_avg 33.1 (100=best) · rank in year 73.0 (1=best)
+- mean rating (1–10): **5.8** · accept votes **2/6** · percentile rank_avg 33.6 (100=best) · rank in year 73.0 (1=best)
 - NAIPv2 `-2.256` · NAIP-v1 `0.222` · SciJudge `-8.591` · DGC-BERT `0.015`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `6.2` Reject · 14B Fast `6.0` Reject
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `6.0` Accept
 - Telegram: [lovedeathtransformers/10956](https://t.me/lovedeathtransformers/10956)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper's contribution is limited, as it is a note that elaborates on the proof of the PRH for the EDLN model. 2. The paper does not provide any new experimental results or insights that are not already discussed in the original paper by Ziyin et al. (2025). 3. The paper does not discuss the limitations of the EDLN model and how they may affect the validity of the PRH.  ## Questio deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper's contribution is limited, as it is a note that elaborates on the proof of the PRH for the EDLN model. 2. The paper does not provide any new experimental results or insights that are not already discussed in the original paper by Ziyin et al. (2025). 3. The paper does not discuss the limitations of the EDLN model and how they may affect the validity of the PRH.  ## Questio cyclereviewer-8b.seed1: Weaknesses  The paper is a note that elaborates on the pr
 
 <a id="arxiv-2502.15104"></a>
 ### Estimating Neural Representation Alignment from Sparsely Sampled Inputs and Features
 
 `arxiv:2502.15104` · Representation alignment · 2025-02-20
 
-- mean rating (1–10): **6.5** · accept votes **5/6** · percentile rank_avg 66.0 (100=best) · rank in year 19.0 (1=best)
+- mean rating (1–10): **6.5** · accept votes **5/6** · percentile rank_avg 66.2 (100=best) · rank in year 16.0 (1=best)
 - NAIPv2 `-0.112` · NAIP-v1 `0.555` · SciJudge `-5.210` · DGC-BERT `0.833`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `7.0` Accept · 14B Fast `7.5` Accept
@@ -4548,20 +4556,20 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2405.07987` · Representation alignment · 2024-05-13
 
-- mean rating (1–10): **6.0** · accept votes **3/6** · percentile rank_avg 39.6 (100=best) · rank in year 32.0 (1=best)
+- mean rating (1–10): **6.0** · accept votes **3/6** · percentile rank_avg 39.9 (100=best) · rank in year 33.0 (1=best)
 - NAIPv2 `-2.098` · NAIP-v1 `0.557` · SciJudge `-0.180` · DGC-BERT `0.039`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std ``  · 7B Fast `5.7` Reject · 14B Fast `6.5` Accept
 - OpenReviewer `8.0` (S/P/C 4.0/4.0/3.0) · SEA-E `5.0` Accept
 - Telegram: [boris_again/3487](https://t.me/boris_again/3487), [axisofordinary/7502](https://t.me/axisofordinary/7502), [boris_again/3151](https://t.me/boris_again/3151), [axisofordinary/6337](https://t.me/axisofordinary/6337), [lovedeathtransformers/10318](https://t.me/lovedeathtransformers/10318), [dealerAI/806](https://t.me/dealerAI/806), [boris_again/2579](https://t.me/boris_again/2579)
-- Weaknesses: cyclereviewer-8b: Weaknesses  The paper's main weakness is its lack of concrete evidence to support the hypothesis of a shared statistical model of reality. While the authors provide several examples of representation convergence, these examples are largely anecdotal and do not provide a rigorous empirical basis for their hypothesis. Additionally, the paper does not provide a clear definition of what constitutes a  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  The paper's main weakness is its lack of concrete evidence to support the hypothesis of a shared statistical model of reality. While the authors provide several examples of representation convergence, these examples are largely anecdotal and do not provide a rigorous empirical basis for their hypothesis. Additionally, the paper does not provide a clear definition of what constitutes a  cyclereviewer-8b.seed1: Weaknesses  The paper lacks a clear research question and
 
 <a id="arxiv-2405.01012"></a>
 ### Correcting Biased Centered Kernel Alignment Measures in Biological and Artificial Neural Networks
 
 `arxiv:2405.01012` · Representation alignment · 2024-05-02
 
-- mean rating (1–10): **4.6** · accept votes **1/6** · percentile rank_avg 17.9 (100=best) · rank in year 45.0 (1=best)
+- mean rating (1–10): **4.6** · accept votes **1/6** · percentile rank_avg 18.0 (100=best) · rank in year 45.0 (1=best)
 - NAIPv2 `-1.223` · NAIP-v1 `0.264` · SciJudge `-1.800` · DGC-BERT `0.024`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `3.5` Reject · 14B Fast `4.0` Reject
@@ -4574,7 +4582,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2007.02789` · Representation alignment · 2020-07-06
 
-- mean rating (1–10): **6.8** · accept votes **4/6** · percentile rank_avg 57.7 (100=best) · rank in year 5.0 (1=best)
+- mean rating (1–10): **6.8** · accept votes **4/6** · percentile rank_avg 58.0 (100=best) · rank in year 6.0 (1=best)
 - NAIPv2 `-0.351` · NAIP-v1 `0.339` · SciJudge `-4.614` · DGC-BERT `0.388`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
 - DeepReviewer 7B Std `7.5` Accept · 7B Fast `6.5` Accept · 14B Fast `8.0` Accept
@@ -4587,20 +4595,20 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `acl:2025.acl-long.126` · Finance · unknown
 
-- mean rating (1–10): **5.6** · accept votes **2/6** · percentile rank_avg 40.2 (100=best) · rank in year 6.0 (1=best) · partial fulltext
+- mean rating (1–10): **5.6** · accept votes **2/6** · percentile rank_avg 40.6 (100=best) · rank in year 6.0 (1=best) · partial fulltext
 - NAIPv2 `-2.904` · NAIP-v1 `0.557` · SciJudge `-0.440` · DGC-BERT `0.468`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.0` Reject · 14B Fast `4.0` Reject
 - OpenReviewer `6.0` (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
 - Telegram: [rybolos_channel/1561](https://t.me/rybolos_channel/1561)
-- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks a clear evaluation of the proposed benchmark. The authors only provide a brief description of the benchmark and its components, but do not provide a comprehensive evaluation of its effectiveness or limitations.  2. The paper does not provide a clear comparison of the proposed benchmark with existing benchmarks for evaluating LLMs for financial decision-making tasks.  deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
+- Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper lacks a clear evaluation of the proposed benchmark. The authors only provide a brief description of the benchmark and its components, but do not provide a comprehensive evaluation of its effectiveness or limitations.  2. The paper does not provide a clear comparison of the proposed benchmark with existing benchmarks for evaluating LLMs for financial decision-making tasks.  cyclereviewer-8b.seed1: Weaknesses  The paper lacks a clear motivation for the pr
 
 <a id="arxiv-2003.01859"></a>
 ### Applications of deep learning in stock market prediction: recent progress
 
 `arxiv:2003.01859` · Finance · 2020-02-29
 
-- mean rating (1–10): **4.3** · accept votes **1/6** · percentile rank_avg 20.5 (100=best) · rank in year 9.0 (1=best)
+- mean rating (1–10): **4.3** · accept votes **1/6** · percentile rank_avg 20.6 (100=best) · rank in year 9.0 (1=best)
 - NAIPv2 `-6.262` · NAIP-v1 `0.747` · SciJudge `-3.255` · DGC-BERT `0.028`
 - CycleReviewer 8B `4.6` Reject · 70B `` 
 - DeepReviewer 7B Std `1.0` Reject · 7B Fast `3.0` Reject · 14B Fast `3.0` Reject
@@ -4639,7 +4647,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2201.09746` · Books · 2022-01-19
 
-- mean rating (1–10): **4.5** · accept votes **1/6** · percentile rank_avg 21.2 (100=best) · rank in year 18.0 (1=best) · partial fulltext
+- mean rating (1–10): **4.5** · accept votes **1/6** · percentile rank_avg 21.1 (100=best) · rank in year 18.0 (1=best) · partial fulltext
 - NAIPv2 `-4.305` · NAIP-v1 `0.616` · SciJudge `-3.755` · DGC-BERT `0.034`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast `5.0` Reject · 14B Fast `3.8` Reject
@@ -4652,23 +4660,23 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2201.00650` · Books · 2021-12-30
 
-- mean rating (1–10): **4.0** · accept votes **0/5** · percentile rank_avg 13.0 (100=best) · rank in year 12.0 (1=best) · partial fulltext
+- mean rating (1–10): **4.0** · accept votes **0/5** · percentile rank_avg 13.1 (100=best) · rank in year 12.0 (1=best) · partial fulltext
 - NAIPv2 `-3.359` · NAIP-v1 `0.475` · SciJudge `-7.502` · DGC-BERT `0.011`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std ``  · 7B Fast `1.0` Reject · 14B Fast `` 
 - OpenReviewer `5.0` (S/P/C 3.0/3.0/2.0) · SEA-E `5.0` Reject
 - Telegram: [AIHOUSE/260](https://t.me/AIHOUSE/260), [AIHOUSE/19](https://t.me/AIHOUSE/19), [MLResearch/860](https://t.me/MLResearch/860), [tech_priestess/611](https://t.me/tech_priestess/611)
-- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide any insights into the performance of AI models on these questions. - The paper does not provide any insights into the limitations of the dataset or the framework.  ### Questions  - How does the performance of AI models on these questions compare to human performance? - What are the limitations of the dataset or the framework? - How can the dataset or framew deepreviewer-7b: weaknesses, etc.  2. **Initial impressions and Hypotheses:**  My
+- Weaknesses: cyclereviewer-8b: Weaknesses  - The paper does not provide any insights into the performance of AI models on these questions. - The paper does not provide any insights into the limitations of the dataset or the framework.  ### Questions  - How does the performance of AI models on these questions compare to human performance? - What are the limitations of the dataset or the framework? - How can the dataset or framew deepreviewer-7b: Weaknesses:** What are the limitations or areas for improvement?
 
 <a id="doi-10.1038-s41566-024-01394-2"></a>
 ### Inverse-designed low-index-contrast structures on a silicon photonics platform for vector–matrix multiplication
 
 `doi:10.1038/s41566-024-01394-2` · Other · 2024-02-16
 
-- mean rating (1–10): **5.6** · accept votes **2/5** · percentile rank_avg 21.4 (100=best) · rank in year 44.0 (1=best)
+- mean rating (1–10): **5.5** · accept votes **2/6** · percentile rank_avg 21.2 (100=best) · rank in year 44.0 (1=best)
 - NAIPv2 `-3.393` · NAIP-v1 `0.338` · SciJudge `-4.369` · DGC-BERT `0.020`
 - CycleReviewer 8B `4.8` Reject · 70B `` 
-- DeepReviewer 7B Std ``  · 7B Fast ``  · 14B Fast `6.5` Accept
+- DeepReviewer 7B Std ``  · 7B Fast `5.2` Reject · 14B Fast `6.5` Accept
 - OpenReviewer `5.0` (S/P/C 3.0/3.0/2.0) · SEA-E `6.0` Accept
 - Telegram: [gonzo_ML/2688](https://t.me/gonzo_ML/2688)
 - Weaknesses: cyclereviewer-8b: Weaknesses  1. The paper is a review paper, which is not suitable for ICLR.   2. The paper does not provide any new results or insights. It is a comprehensive review of existing work.  3. The paper does not discuss the challenges and limitations of photonic matrix multiplication and photonic acceleration. It only provides a general discussion of the advantages of photonic matrix multiplication.  # deepreviewer-14b: Weaknesses, Suggestions, and Questions. Finally, I will output 
@@ -4691,7 +4699,7 @@ Lowest average percentile rank across models (0 = worst, 100 = best). Decision i
 
 `arxiv:2304.01433` · Other · 2023-04-04
 
-- mean rating (1–10): **6.8** · accept votes **3/5** · percentile rank_avg 53.0 (100=best) · rank in year 20.0 (1=best) · partial fulltext
+- mean rating (1–10): **6.8** · accept votes **3/5** · percentile rank_avg 53.0 (100=best) · rank in year 19.0 (1=best) · partial fulltext
 - NAIPv2 `-1.127` · NAIP-v1 `0.679` · SciJudge `0.359` · DGC-BERT `0.010`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast ``  · 14B Fast `5.2` Reject

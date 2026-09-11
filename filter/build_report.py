@@ -408,6 +408,56 @@ def md_cell(text: str) -> str:
     return (text or '').replace('|', '/').replace('\n', ' ').replace('[', '(').replace(']', ')')
 
 
+SELF_AGREE_MODELS = (
+    ('cyclereviewer-8b', 'CR-8B'),
+    ('deepreviewer-14b', 'DR-14B Fast'),
+)
+
+
+def self_agreement_section() -> list[str]:
+    rows_out = [
+        '## Self-agreement (seed 0 vs seed 1)',
+        '',
+        '| model | n | Spearman | macro-F1 |',
+        '|---|---:|---:|---:|',
+    ]
+    found = False
+    for name, label in SELF_AGREE_MODELS:
+        path = ROOT / f'scores_{name}.seed1.jsonl'
+        if not path.exists():
+            continue
+        found = True
+        seed0 = {
+            row['key']: row
+            for row in read_jsonl(ROOT / SCORE_FILES[name])
+            if is_score_row(row)
+        }
+        seed1 = {row['key']: row for row in read_jsonl(path) if is_score_row(row)}
+        xs, ys, left, right = [], [], [], []
+        for key, row1 in seed1.items():
+            row0 = seed0.get(key)
+            if not row0:
+                continue
+            a = as_float(row0.get('rating'))
+            b = as_float(row1.get('rating'))
+            if a is not None and b is not None:
+                xs.append(a)
+                ys.append(b)
+            d0 = decision_of(row0.get('rating'), row0.get('decision'))
+            d1 = decision_of(row1.get('rating'), row1.get('decision'))
+            if d0 and d1:
+                left.append(d0)
+                right.append(d1)
+        rows_out.append(
+            f'| {label} | {len(xs)} | {fmt(spearman(xs, ys))} | '
+            f'{fmt(symmetric_macro_f1(left, right))} |'
+        )
+    if not found:
+        return []
+    rows_out.append('')
+    return rows_out
+
+
 def write_report(rows: list[dict]) -> None:
     n = len(rows)
     scored = sum(1 for row in rows if row['n_models'])
@@ -453,6 +503,9 @@ def write_report(rows: list[dict]) -> None:
         f'Accept/Reject macro-F1 `{fmt(f1_fast_std)}` (n={len(left)}). '
         'Standard is a partial run; Fast is the column used in mean_rating10 / rank_avg.',
     ]
+    self_lines = self_agreement_section()
+    if self_lines:
+        lines += ['', *self_lines]
     lines += ['', '## Agreement (Spearman)', '', *spear_lines, '', '## Agreement (macro-F1 Accept/Reject)', '', *f1_lines]
     lines += ['', '## Ranking by readme section', '']
     for section, group in by_section.items():
