@@ -7,6 +7,7 @@ map uses as its vertical axis.
 Run:  python src/build_graph.py [--report N]
 '''
 
+import csv
 import re
 import sys
 from datetime import date, timedelta
@@ -16,8 +17,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from common import (  # noqa: E402
     ARXIV_META, ASSETS, CATALOG, GRAPH, GRAPH_JS, KNOWN_META, LITMAPS,
-    PAGE_META, REFS, ROOT, apply_date_overrides, classify, clean_arxiv_id,
-    clean_doi, DOI_RE,
+    PAGE_META, REFS, ROOT, SCORES_CSV, apply_date_overrides, classify,
+    clean_arxiv_id, clean_doi, DOI_RE,
     dump_json, load_json, node_arxiv_ids, norm_title, url_slug,
 )
 from topics import apply_topics, print_coverage, print_mixing, taxonomy  # noqa: E402
@@ -409,6 +410,42 @@ def attach_litmaps(nodes_out: list[dict]) -> None:
     print(f'litmaps overlay     {matched}/{len(papers)} papers matched')
 
 
+def _csv_float(raw: str | None) -> float | None:
+    if raw in (None, ''):
+        return None
+    return float(raw)
+
+
+def _csv_int(raw: str | None) -> int | None:
+    if raw in (None, ''):
+        return None
+    return int(float(raw))
+
+
+def attach_quality(nodes_out: list[dict]) -> None:
+    '''Copy aggregated filter scores onto matching nodes.'''
+    scores: dict[str, dict] = {}
+    if SCORES_CSV.exists():
+        with SCORES_CSV.open(encoding='utf-8', newline='') as handle:
+            for row in csv.DictReader(handle):
+                key = (row.get('key') or '').strip()
+                if key:
+                    scores[key] = row
+    scored = 0
+    for node in nodes_out:
+        row = scores.get(node['id'])
+        quality = _csv_float(row.get('final_score')) if row else None
+        node['quality'] = quality
+        if quality is None:
+            continue
+        node['quality_conf'] = _csv_float(row.get('final_conf'))
+        node['quality_verdict'] = row.get('verdict') or None
+        node['quality_accepts'] = _csv_int(row.get('accept_votes')) or 0
+        node['quality_models'] = _csv_int(row.get('n_models')) or 0
+        scored += 1
+    print(f'quality scores     {scored}/{len(nodes_out)} papers scored')
+
+
 def main() -> None:
     args = sys.argv[1:]
     report = 0
@@ -480,6 +517,7 @@ def main() -> None:
         if node.get('telegram'):
             nodes_out[-1]['telegram'] = True
     attach_litmaps(nodes_out)
+    attach_quality(nodes_out)
     apply_topics(nodes_out)
 
     graph = {

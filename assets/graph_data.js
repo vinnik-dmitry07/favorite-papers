@@ -5,112 +5,112 @@ window.GRAPH_DATA = {
     "fields": [
       {
         "id": "Deep RL",
-        "color": "#2f7d8f",
+        "color": "#1e3f7a",
         "family": "RL"
       },
       {
         "id": "RLVR",
-        "color": "#148f96",
+        "color": "#3d7fd6",
         "family": "RL"
       },
       {
         "id": "Reasoning",
-        "color": "#d4782a",
+        "color": "#e8891f",
         "family": "Reasoning"
       },
       {
         "id": "Latent",
-        "color": "#c45a12",
+        "color": "#a4501a",
         "family": "Reasoning"
       },
       {
         "id": "Architectures",
-        "color": "#5c6bc0",
+        "color": "#7d5cc9",
         "family": "Models"
       },
       {
         "id": "Diffusion",
-        "color": "#7e57c2",
+        "color": "#b58fe6",
         "family": "Models"
       },
       {
         "id": "Inter-model",
-        "color": "#3949ab",
+        "color": "#5e1d8c",
         "family": "Models"
       },
       {
         "id": "Optimizers",
-        "color": "#4a8f5c",
+        "color": "#1b5e20",
         "family": "Training"
       },
       {
         "id": "Scaling",
-        "color": "#3d8a6e",
+        "color": "#a5d6a7",
         "family": "Training"
       },
       {
         "id": "Dynamics",
-        "color": "#8a9a3d",
+        "color": "#43a047",
         "family": "Training"
       },
       {
         "id": "Continual",
-        "color": "#5b8a6b",
+        "color": "#7cb342",
         "family": "Training"
       },
       {
         "id": "Interp",
-        "color": "#7b5ea7",
+        "color": "#c2408a",
         "family": "Understanding"
       },
       {
         "id": "Repr",
-        "color": "#9c6b8a",
+        "color": "#e18fc0",
         "family": "Understanding"
       },
       {
         "id": "Open-ended",
-        "color": "#2e7d6f",
+        "color": "#68d2e2",
         "family": "Agents"
       },
       {
         "id": "Self-improve",
-        "color": "#8d6e63",
+        "color": "#1fa89e",
         "family": "Agents"
       },
       {
         "id": "Harness",
-        "color": "#6d4c41",
+        "color": "#0b6b66",
         "family": "Agents"
       },
       {
         "id": "Discovery",
-        "color": "#6a7d3d",
+        "color": "#228eaa",
         "family": "Agents"
       },
       {
         "id": "Safety",
-        "color": "#c45c48",
+        "color": "#d43d3d",
         "family": "Mind"
       },
       {
         "id": "Consciousness",
-        "color": "#a15a9c",
+        "color": "#8e1d3c",
         "family": "Mind"
       },
       {
         "id": "NeuroAI",
-        "color": "#00897b",
+        "color": "#ef8c78",
         "family": "Mind"
       },
       {
         "id": "SSL",
-        "color": "#00838f",
+        "color": "#b89a14",
         "family": "SSL"
       },
       {
         "id": "Finance",
-        "color": "#78909c",
+        "color": "#6b5e4e",
         "family": "Other"
       },
       {
@@ -159,6 +159,11 @@ window.GRAPH_DATA = {
       "bib_items": 66,
       "lit_cites": 0,
       "lit_refs": 0,
+      "quality": 0.078656,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Deep RL",
       "ideas": [
         "world models"
@@ -191,6 +196,11 @@ window.GRAPH_DATA = {
       "bib_items": 61,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.107383,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [],
       "tags": [
@@ -221,6 +231,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.008775,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Deep RL",
       "ideas": [],
       "tags": [
@@ -250,6 +265,11 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.132651,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Deep RL",
       "ideas": [],
       "tags": [
@@ -279,6 +299,11 @@ window.GRAPH_DATA = {
       "bib_items": 56,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.208723,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 2,
+      "quality_models": 7,
       "topic": "Deep RL",
       "ideas": [],
       "tags": [
@@ -309,6 +334,7 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Deep RL",
       "ideas": [
         "world models"
@@ -342,6 +368,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.060356,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Deep RL",
       "ideas": [],
       "tags": [
@@ -371,6 +402,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 13,
       "lit_refs": 167,
+      "quality": 0.119031,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Continual",
       "ideas": [],
       "tags": [
@@ -400,6 +436,11 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.041838,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Deep RL",
       "ideas": [],
       "tags": [
@@ -430,6 +471,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.223087,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Deep RL",
       "ideas": [],
       "tags": [
@@ -459,6 +505,11 @@ window.GRAPH_DATA = {
       "bib_items": 66,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.156095,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Deep RL",
       "ideas": [
         "world models"
@@ -491,6 +542,11 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.469071,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 0,
+      "quality_models": 7,
       "topic": "Deep RL",
       "ideas": [],
       "tags": [
@@ -516,6 +572,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.159643,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Deep RL",
       "ideas": [],
       "tags": [
@@ -545,6 +606,11 @@ window.GRAPH_DATA = {
       "bib_items": 70,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.273533,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Deep RL",
       "ideas": [],
       "tags": [
@@ -572,6 +638,11 @@ window.GRAPH_DATA = {
       "bib_items": 63,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.494469,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Deep RL",
       "ideas": [],
       "tags": [
@@ -599,6 +670,11 @@ window.GRAPH_DATA = {
       "bib_items": 39,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.262122,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 1,
+      "quality_models": 7,
       "topic": "Deep RL",
       "ideas": [],
       "tags": [
@@ -628,6 +704,11 @@ window.GRAPH_DATA = {
       "bib_items": 190,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.415123,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 0,
+      "quality_models": 7,
       "topic": "Deep RL",
       "ideas": [],
       "tags": [
@@ -657,6 +738,11 @@ window.GRAPH_DATA = {
       "bib_items": 182,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.59631,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Deep RL",
       "ideas": [],
       "tags": [
@@ -686,6 +772,11 @@ window.GRAPH_DATA = {
       "bib_items": 46,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.557336,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 2,
+      "quality_models": 7,
       "topic": "Deep RL",
       "ideas": [],
       "tags": [
@@ -714,6 +805,11 @@ window.GRAPH_DATA = {
       "bib_items": 44,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.366859,
+      "quality_conf": 0.457408,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 1,
+      "quality_models": 4,
       "topic": "Deep RL",
       "ideas": [],
       "tags": [
@@ -740,6 +836,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Deep RL",
       "ideas": [],
       "tags": [
@@ -769,6 +866,11 @@ window.GRAPH_DATA = {
       "bib_items": 36,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.473858,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Deep RL",
       "ideas": [],
       "tags": [
@@ -798,6 +900,11 @@ window.GRAPH_DATA = {
       "bib_items": 57,
       "lit_cites": 1018,
       "lit_refs": 98,
+      "quality": 0.413852,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Deep RL",
       "ideas": [
         "evolution"
@@ -831,6 +938,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.037109,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Deep RL",
       "ideas": [],
       "tags": [
@@ -860,6 +972,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.364501,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Deep RL",
       "ideas": [],
       "tags": [
@@ -890,6 +1007,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.108435,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Deep RL",
       "ideas": [],
       "tags": [
@@ -920,6 +1042,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.013267,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Deep RL",
       "ideas": [],
       "tags": [
@@ -949,6 +1076,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.097115,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Deep RL",
       "ideas": [],
       "tags": [
@@ -978,6 +1110,11 @@ window.GRAPH_DATA = {
       "bib_items": 44,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.133133,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [
         "self-distill"
@@ -1009,6 +1146,11 @@ window.GRAPH_DATA = {
       "bib_items": 34,
       "lit_cites": 0,
       "lit_refs": 0,
+      "quality": -0.346725,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 2,
+      "quality_models": 7,
       "topic": "Latent",
       "ideas": [],
       "tags": [
@@ -1038,6 +1180,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 0,
       "lit_refs": 0,
+      "quality": 0.015228,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Continual",
       "ideas": [],
       "tags": [
@@ -1068,6 +1215,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.073364,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Continual",
       "ideas": [],
       "tags": [
@@ -1097,6 +1249,11 @@ window.GRAPH_DATA = {
       "bib_items": 18,
       "lit_cites": 0,
       "lit_refs": 0,
+      "quality": -0.253426,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 2,
+      "quality_models": 7,
       "topic": "Dynamics",
       "ideas": [],
       "tags": [
@@ -1126,6 +1283,11 @@ window.GRAPH_DATA = {
       "bib_items": 37,
       "lit_cites": 0,
       "lit_refs": 0,
+      "quality": 0.012146,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [
         "GRPO"
@@ -1158,6 +1320,11 @@ window.GRAPH_DATA = {
       "bib_items": 49,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.459308,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [
         "self-distill"
@@ -1190,6 +1357,11 @@ window.GRAPH_DATA = {
       "bib_items": 49,
       "lit_cites": 0,
       "lit_refs": 54,
+      "quality": 0.201837,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [
         "curriculum"
@@ -1222,6 +1394,11 @@ window.GRAPH_DATA = {
       "bib_items": 40,
       "lit_cites": 0,
       "lit_refs": 54,
+      "quality": 0.353226,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [],
       "tags": [
@@ -1250,6 +1427,11 @@ window.GRAPH_DATA = {
       "bib_items": 36,
       "lit_cites": 0,
       "lit_refs": 40,
+      "quality": 0.490307,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [],
       "tags": [
@@ -1279,6 +1461,11 @@ window.GRAPH_DATA = {
       "bib_items": 39,
       "lit_cites": 1,
       "lit_refs": 41,
+      "quality": -0.012237,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [
         "GRPO"
@@ -1311,6 +1498,11 @@ window.GRAPH_DATA = {
       "bib_items": 47,
       "lit_cites": 117,
       "lit_refs": 71,
+      "quality": 0.364253,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [
         "self-distill"
@@ -1343,6 +1535,11 @@ window.GRAPH_DATA = {
       "bib_items": 63,
       "lit_cites": 2,
       "lit_refs": 72,
+      "quality": 0.294195,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [],
       "tags": [
@@ -1372,6 +1569,11 @@ window.GRAPH_DATA = {
       "bib_items": 46,
       "lit_cites": 52,
       "lit_refs": 60,
+      "quality": -0.001614,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [
         "self-distill",
@@ -1406,6 +1608,11 @@ window.GRAPH_DATA = {
       "bib_items": 31,
       "lit_cites": 0,
       "lit_refs": 36,
+      "quality": -0.097209,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [],
       "tags": [
@@ -1435,6 +1642,11 @@ window.GRAPH_DATA = {
       "bib_items": 45,
       "lit_cites": 78,
       "lit_refs": 57,
+      "quality": -0.067567,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [
         "self-distill"
@@ -1467,6 +1679,11 @@ window.GRAPH_DATA = {
       "bib_items": 25,
       "lit_cites": 70,
       "lit_refs": 34,
+      "quality": -0.165571,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [
         "self-distill"
@@ -1498,6 +1715,11 @@ window.GRAPH_DATA = {
       "bib_items": 50,
       "lit_cites": 5,
       "lit_refs": 45,
+      "quality": 0.133469,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [],
       "tags": [
@@ -1527,6 +1749,11 @@ window.GRAPH_DATA = {
       "bib_items": 42,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.054912,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [
         "GRPO",
@@ -1562,6 +1789,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.541447,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Continual",
       "ideas": [
         "evolution",
@@ -1596,6 +1828,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 241,
       "lit_refs": 185,
+      "quality": 0.273633,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [
         "self-distill"
@@ -1628,6 +1865,11 @@ window.GRAPH_DATA = {
       "bib_items": 61,
       "lit_cites": 178,
       "lit_refs": 73,
+      "quality": -0.083126,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Continual",
       "ideas": [
         "self-distill"
@@ -1660,6 +1902,11 @@ window.GRAPH_DATA = {
       "bib_items": 52,
       "lit_cites": 255,
       "lit_refs": 47,
+      "quality": 0.119527,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [
         "self-distill"
@@ -1692,6 +1939,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 100,
       "lit_refs": 0,
+      "quality": 0.271831,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Discovery",
       "ideas": [],
       "tags": [
@@ -1721,6 +1973,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 14,
       "lit_refs": 71,
+      "quality": 0.03791,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Discovery",
       "ideas": [],
       "tags": [
@@ -1751,6 +2008,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 8,
       "lit_refs": 33,
+      "quality": 0.394,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [
         "critique"
@@ -1781,6 +2043,7 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "RLVR",
       "ideas": [
         "GRPO"
@@ -1812,6 +2075,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 0,
       "lit_refs": 57,
+      "quality": 0.234054,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [
         "GRPO"
@@ -1844,6 +2112,11 @@ window.GRAPH_DATA = {
       "bib_items": 26,
       "lit_cites": 12,
       "lit_refs": 25,
+      "quality": 0.188412,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [],
       "tags": [
@@ -1873,6 +2146,11 @@ window.GRAPH_DATA = {
       "bib_items": 12,
       "lit_cites": 101,
       "lit_refs": 12,
+      "quality": 0.118345,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [],
       "tags": [
@@ -1902,6 +2180,11 @@ window.GRAPH_DATA = {
       "bib_items": 64,
       "lit_cites": 37,
       "lit_refs": 74,
+      "quality": 0.370185,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [
         "curriculum"
@@ -1932,6 +2215,11 @@ window.GRAPH_DATA = {
       "bib_items": 41,
       "lit_cites": 111,
       "lit_refs": 57,
+      "quality": 0.211548,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Reasoning",
       "ideas": [],
       "tags": [
@@ -1960,6 +2248,11 @@ window.GRAPH_DATA = {
       "bib_items": 53,
       "lit_cites": 135,
       "lit_refs": 52,
+      "quality": 0.419736,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [],
       "tags": [
@@ -1989,6 +2282,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 29,
       "lit_refs": 73,
+      "quality": -0.10263,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [
         "GRPO"
@@ -2021,6 +2319,11 @@ window.GRAPH_DATA = {
       "bib_items": 41,
       "lit_cites": 52,
       "lit_refs": 48,
+      "quality": -0.062738,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [],
       "tags": [
@@ -2050,6 +2353,11 @@ window.GRAPH_DATA = {
       "bib_items": 46,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.06164,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [
         "self-refine"
@@ -2080,6 +2388,11 @@ window.GRAPH_DATA = {
       "bib_items": 45,
       "lit_cites": 31,
       "lit_refs": 50,
+      "quality": -0.073772,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [],
       "tags": [
@@ -2108,6 +2421,11 @@ window.GRAPH_DATA = {
       "bib_items": 44,
       "lit_cites": 54,
       "lit_refs": 55,
+      "quality": -0.047874,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [],
       "tags": [
@@ -2137,6 +2455,11 @@ window.GRAPH_DATA = {
       "bib_items": 28,
       "lit_cites": 54,
       "lit_refs": 24,
+      "quality": -0.232914,
+      "quality_conf": 0.824711,
+      "quality_verdict": "DROP",
+      "quality_accepts": 3,
+      "quality_models": 6,
       "topic": "RLVR",
       "ideas": [],
       "tags": [
@@ -2166,6 +2489,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 152,
       "lit_refs": 122,
+      "quality": 0.431552,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [],
       "tags": [
@@ -2195,6 +2523,11 @@ window.GRAPH_DATA = {
       "bib_items": 80,
       "lit_cites": 344,
       "lit_refs": 0,
+      "quality": 0.449157,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [
         "evolution",
@@ -2230,6 +2563,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 862,
       "lit_refs": 6,
+      "quality": 0.041873,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [
         "GRPO"
@@ -2262,6 +2600,11 @@ window.GRAPH_DATA = {
       "bib_items": 85,
       "lit_cites": 285,
       "lit_refs": 98,
+      "quality": 0.348907,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Reasoning",
       "ideas": [],
       "tags": [
@@ -2291,6 +2634,11 @@ window.GRAPH_DATA = {
       "bib_items": 54,
       "lit_cites": 103,
       "lit_refs": 73,
+      "quality": 0.045253,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [
         "curriculum"
@@ -2323,6 +2671,11 @@ window.GRAPH_DATA = {
       "bib_items": 69,
       "lit_cites": 105,
       "lit_refs": 53,
+      "quality": 0.422939,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 7,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [
         "GRPO"
@@ -2354,6 +2707,11 @@ window.GRAPH_DATA = {
       "bib_items": 42,
       "lit_cites": 706,
       "lit_refs": 51,
+      "quality": 0.271559,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [],
       "tags": [
@@ -2384,6 +2742,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 259,
       "lit_refs": 66,
+      "quality": 0.001264,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [],
       "tags": [
@@ -2413,6 +2776,11 @@ window.GRAPH_DATA = {
       "bib_items": 78,
       "lit_cites": 434,
       "lit_refs": 99,
+      "quality": 0.310224,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 7,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [
         "GRPO"
@@ -2444,6 +2812,11 @@ window.GRAPH_DATA = {
       "bib_items": 64,
       "lit_cites": 299,
       "lit_refs": 84,
+      "quality": 0.319542,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Reasoning",
       "ideas": [],
       "tags": [
@@ -2473,6 +2846,11 @@ window.GRAPH_DATA = {
       "bib_items": 63,
       "lit_cites": 1202,
       "lit_refs": 71,
+      "quality": 0.014587,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [
         "critique"
@@ -2505,6 +2883,11 @@ window.GRAPH_DATA = {
       "bib_items": 36,
       "lit_cites": 1536,
       "lit_refs": 34,
+      "quality": 0.330719,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [
         "GRPO"
@@ -2533,6 +2916,7 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "RLVR",
       "ideas": [],
       "tags": [
@@ -2562,6 +2946,11 @@ window.GRAPH_DATA = {
       "bib_items": 39,
       "lit_cites": 2961,
       "lit_refs": 41,
+      "quality": -0.318722,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [],
       "tags": [
@@ -2592,6 +2981,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.068257,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [
         "priming"
@@ -2623,6 +3017,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 19,
       "lit_refs": 0,
+      "quality": -0.012267,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [
         "self-refine"
@@ -2655,6 +3054,11 @@ window.GRAPH_DATA = {
       "bib_items": 53,
       "lit_cites": 149,
       "lit_refs": 59,
+      "quality": 0.220117,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [
         "self-distill"
@@ -2687,6 +3091,11 @@ window.GRAPH_DATA = {
       "bib_items": 61,
       "lit_cites": 10145,
       "lit_refs": 86,
+      "quality": 0.321816,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [
         "GRPO"
@@ -2719,6 +3128,11 @@ window.GRAPH_DATA = {
       "bib_items": 52,
       "lit_cites": 179,
       "lit_refs": 0,
+      "quality": 0.099948,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Reasoning",
       "ideas": [
         "self-refine"
@@ -2751,6 +3165,11 @@ window.GRAPH_DATA = {
       "bib_items": 21,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.245079,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Inter-model",
       "ideas": [],
       "tags": [
@@ -2781,6 +3200,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.138859,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Inter-model",
       "ideas": [],
       "tags": [
@@ -2811,6 +3235,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 0,
       "lit_refs": 0,
+      "quality": 0.287497,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Diffusion",
       "ideas": [],
       "tags": [
@@ -2838,6 +3267,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.244158,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Architectures",
       "ideas": [
         "memory"
@@ -2870,6 +3304,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 2,
       "lit_refs": 42,
+      "quality": 0.189938,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Latent",
       "ideas": [],
       "tags": [
@@ -2898,6 +3337,11 @@ window.GRAPH_DATA = {
       "bib_items": 17,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.157062,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Inter-model",
       "ideas": [],
       "tags": [
@@ -2928,6 +3372,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.213938,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Diffusion",
       "ideas": [],
       "tags": [
@@ -2957,6 +3406,11 @@ window.GRAPH_DATA = {
       "bib_items": 31,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.052979,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Diffusion",
       "ideas": [],
       "tags": [
@@ -2986,6 +3440,11 @@ window.GRAPH_DATA = {
       "bib_items": 49,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.042788,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Diffusion",
       "ideas": [],
       "tags": [
@@ -3014,6 +3473,11 @@ window.GRAPH_DATA = {
       "bib_items": 51,
       "lit_cites": 87,
       "lit_refs": 46,
+      "quality": 0.149086,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Latent",
       "ideas": [],
       "tags": [
@@ -3044,6 +3508,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 11,
       "lit_refs": 109,
+      "quality": -0.302203,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 2,
+      "quality_models": 7,
       "topic": "Architectures",
       "ideas": [
         "enc-dec"
@@ -3077,6 +3546,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.223644,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Architectures",
       "ideas": [],
       "tags": [
@@ -3106,6 +3580,11 @@ window.GRAPH_DATA = {
       "bib_items": 77,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.152004,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Diffusion",
       "ideas": [],
       "tags": [
@@ -3135,6 +3614,11 @@ window.GRAPH_DATA = {
       "bib_items": 46,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.294706,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Inter-model",
       "ideas": [],
       "tags": [
@@ -3164,6 +3648,11 @@ window.GRAPH_DATA = {
       "bib_items": 59,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.060493,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Architectures",
       "ideas": [
         "enc-dec"
@@ -3197,6 +3686,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.497618,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Inter-model",
       "ideas": [],
       "tags": [
@@ -3227,6 +3721,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.173657,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 7,
+      "quality_models": 7,
       "topic": "Latent",
       "ideas": [],
       "tags": [
@@ -3257,6 +3756,7 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 23,
       "lit_refs": 101,
+      "quality": null,
       "topic": "Latent",
       "ideas": [],
       "tags": [
@@ -3286,6 +3786,11 @@ window.GRAPH_DATA = {
       "bib_items": 55,
       "lit_cites": 24,
       "lit_refs": 85,
+      "quality": -0.014955,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Architectures",
       "ideas": [
         "enc-dec"
@@ -3318,6 +3823,11 @@ window.GRAPH_DATA = {
       "bib_items": 125,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.497477,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Diffusion",
       "ideas": [],
       "tags": [
@@ -3345,6 +3855,11 @@ window.GRAPH_DATA = {
       "bib_items": 51,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.111202,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Inter-model",
       "ideas": [],
       "tags": [
@@ -3374,6 +3889,11 @@ window.GRAPH_DATA = {
       "bib_items": 140,
       "lit_cites": 312,
       "lit_refs": 0,
+      "quality": 0.230536,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Architectures",
       "ideas": [],
       "tags": [
@@ -3403,6 +3923,11 @@ window.GRAPH_DATA = {
       "bib_items": 99,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.284499,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Architectures",
       "ideas": [
         "enc-dec"
@@ -3436,6 +3961,7 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Inter-model",
       "ideas": [],
       "tags": [
@@ -3465,6 +3991,11 @@ window.GRAPH_DATA = {
       "bib_items": 277,
       "lit_cites": 22308,
       "lit_refs": 0,
+      "quality": 0.075119,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Architectures",
       "ideas": [],
       "tags": [
@@ -3495,6 +4026,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.412104,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Dynamics",
       "ideas": [],
       "tags": [
@@ -3525,6 +4061,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.330839,
+      "quality_conf": 0.952764,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 2,
+      "quality_models": 7,
       "topic": "Architectures",
       "ideas": [],
       "tags": [
@@ -3555,6 +4096,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.091194,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Architectures",
       "ideas": [
         "memory"
@@ -3587,6 +4133,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.064227,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Architectures",
       "ideas": [],
       "tags": [
@@ -3616,6 +4167,11 @@ window.GRAPH_DATA = {
       "bib_items": 79,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.596636,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Architectures",
       "ideas": [],
       "tags": [
@@ -3645,6 +4201,11 @@ window.GRAPH_DATA = {
       "bib_items": 100,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.226693,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Architectures",
       "ideas": [],
       "tags": [
@@ -3675,6 +4236,7 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Architectures",
       "ideas": [],
       "tags": [
@@ -3704,6 +4266,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.239446,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Architectures",
       "ideas": [],
       "tags": [
@@ -3733,6 +4300,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Architectures",
       "ideas": [],
       "tags": [
@@ -3763,6 +4331,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.175761,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Architectures",
       "ideas": [],
       "tags": [
@@ -3792,6 +4365,11 @@ window.GRAPH_DATA = {
       "bib_items": 61,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.2625,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Architectures",
       "ideas": [],
       "tags": [
@@ -3821,6 +4399,11 @@ window.GRAPH_DATA = {
       "bib_items": 59,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.419834,
+      "quality_conf": 0.952764,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Architectures",
       "ideas": [],
       "tags": [
@@ -3850,6 +4433,11 @@ window.GRAPH_DATA = {
       "bib_items": 66,
       "lit_cites": 2,
       "lit_refs": 0,
+      "quality": -0.300444,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Architectures",
       "ideas": [],
       "tags": [
@@ -3880,6 +4468,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.306553,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 7,
+      "quality_models": 7,
       "topic": "Dynamics",
       "ideas": [],
       "tags": [
@@ -3910,6 +4503,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.246151,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Architectures",
       "ideas": [
         "memory"
@@ -3942,6 +4540,11 @@ window.GRAPH_DATA = {
       "bib_items": 39,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.133237,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Architectures",
       "ideas": [],
       "tags": [
@@ -3966,6 +4569,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Other",
       "ideas": [],
       "tags": [
@@ -3992,6 +4596,11 @@ window.GRAPH_DATA = {
       "bib_items": 11,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.583822,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 1,
+      "quality_models": 7,
       "topic": "Architectures",
       "ideas": [],
       "tags": [
@@ -4020,6 +4629,11 @@ window.GRAPH_DATA = {
       "bib_items": 53,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.12771,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Architectures",
       "ideas": [],
       "tags": [
@@ -4049,6 +4663,11 @@ window.GRAPH_DATA = {
       "bib_items": 268,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.078515,
+      "quality_conf": 0.912356,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Consciousness",
       "ideas": [],
       "tags": [
@@ -4078,6 +4697,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.286874,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Latent",
       "ideas": [],
       "tags": [
@@ -4108,6 +4732,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.025009,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Dynamics",
       "ideas": [],
       "tags": [
@@ -4137,6 +4766,11 @@ window.GRAPH_DATA = {
       "bib_items": 28,
       "lit_cites": 0,
       "lit_refs": 28,
+      "quality": -0.006392,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Interp",
       "ideas": [
         "arithmetic"
@@ -4169,6 +4803,11 @@ window.GRAPH_DATA = {
       "bib_items": 51,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.242104,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Reasoning",
       "ideas": [
         "priming"
@@ -4202,6 +4841,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 19,
       "lit_refs": 59,
+      "quality": -0.164242,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Latent",
       "ideas": [],
       "tags": [
@@ -4231,6 +4875,11 @@ window.GRAPH_DATA = {
       "bib_items": 29,
       "lit_cites": 3,
       "lit_refs": 0,
+      "quality": 0.041274,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Reasoning",
       "ideas": [
         "critique"
@@ -4263,6 +4912,11 @@ window.GRAPH_DATA = {
       "bib_items": 48,
       "lit_cites": 0,
       "lit_refs": 46,
+      "quality": -0.409763,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 2,
+      "quality_models": 7,
       "topic": "Interp",
       "ideas": [
         "arithmetic"
@@ -4290,6 +4944,11 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.247144,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 2,
+      "quality_models": 7,
       "topic": "Reasoning",
       "ideas": [],
       "tags": [
@@ -4319,6 +4978,11 @@ window.GRAPH_DATA = {
       "bib_items": 88,
       "lit_cites": 2,
       "lit_refs": 111,
+      "quality": 0.336043,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 7,
+      "quality_models": 7,
       "topic": "Reasoning",
       "ideas": [],
       "tags": [
@@ -4348,6 +5012,11 @@ window.GRAPH_DATA = {
       "bib_items": 21,
       "lit_cites": 10,
       "lit_refs": 24,
+      "quality": 0.059343,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Interp",
       "ideas": [
         "arithmetic"
@@ -4378,6 +5047,11 @@ window.GRAPH_DATA = {
       "bib_items": 44,
       "lit_cites": 12,
       "lit_refs": 77,
+      "quality": 0.122878,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Latent",
       "ideas": [],
       "tags": [
@@ -4408,6 +5082,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.227934,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Latent",
       "ideas": [],
       "tags": [
@@ -4437,6 +5116,11 @@ window.GRAPH_DATA = {
       "bib_items": 25,
       "lit_cites": 7,
       "lit_refs": 27,
+      "quality": 0.088644,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Interp",
       "ideas": [
         "arithmetic"
@@ -4469,6 +5153,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 258,
       "lit_refs": 51,
+      "quality": 0.391367,
+      "quality_conf": 0.914269,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 6,
       "topic": "RLVR",
       "ideas": [
         "critique"
@@ -4497,6 +5186,7 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "RLVR",
       "ideas": [
         "critique"
@@ -4529,6 +5219,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.502199,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [],
       "tags": [
@@ -4558,6 +5253,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.124459,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 2,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [
         "self-refine"
@@ -4590,6 +5290,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.230242,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [],
       "tags": [
@@ -4618,6 +5323,11 @@ window.GRAPH_DATA = {
       "bib_items": 53,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.093205,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Interp",
       "ideas": [],
       "tags": [
@@ -4647,6 +5357,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.209558,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [],
       "tags": [
@@ -4676,6 +5391,11 @@ window.GRAPH_DATA = {
       "bib_items": 51,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.304659,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Dynamics",
       "ideas": [],
       "tags": [
@@ -4704,6 +5424,11 @@ window.GRAPH_DATA = {
       "bib_items": 33,
       "lit_cites": 18,
       "lit_refs": 28,
+      "quality": -0.15834,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Interp",
       "ideas": [
         "arithmetic"
@@ -4737,6 +5462,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 353,
       "lit_refs": 0,
+      "quality": 0.22229,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Latent",
       "ideas": [],
       "tags": [
@@ -4767,6 +5497,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.2647,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Reasoning",
       "ideas": [],
       "tags": [
@@ -4794,6 +5529,11 @@ window.GRAPH_DATA = {
       "bib_items": 44,
       "lit_cites": 95,
       "lit_refs": 0,
+      "quality": 0.390884,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Interp",
       "ideas": [
         "arithmetic"
@@ -4827,6 +5567,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.394374,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Reasoning",
       "ideas": [],
       "tags": [
@@ -4857,6 +5602,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.667151,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 0,
+      "quality_models": 7,
       "topic": "Reasoning",
       "ideas": [],
       "tags": [
@@ -4887,6 +5637,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 814,
       "lit_refs": 79,
+      "quality": 0.144742,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Latent",
       "ideas": [],
       "tags": [
@@ -4916,6 +5671,11 @@ window.GRAPH_DATA = {
       "bib_items": 42,
       "lit_cites": 130,
       "lit_refs": 49,
+      "quality": 0.603995,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Interp",
       "ideas": [
         "arithmetic"
@@ -4947,6 +5707,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.450559,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Dynamics",
       "ideas": [],
       "tags": [
@@ -4976,6 +5741,11 @@ window.GRAPH_DATA = {
       "bib_items": 23,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.321112,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Dynamics",
       "ideas": [],
       "tags": [
@@ -5003,6 +5773,11 @@ window.GRAPH_DATA = {
       "bib_items": 42,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.20682,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Dynamics",
       "ideas": [],
       "tags": [
@@ -5030,6 +5805,11 @@ window.GRAPH_DATA = {
       "bib_items": 39,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.286758,
+      "quality_conf": 0.828538,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 3,
+      "quality_models": 6,
       "topic": "Dynamics",
       "ideas": [],
       "tags": [
@@ -5057,6 +5837,11 @@ window.GRAPH_DATA = {
       "bib_items": 34,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.361931,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Dynamics",
       "ideas": [],
       "tags": [
@@ -5086,6 +5871,11 @@ window.GRAPH_DATA = {
       "bib_items": 402,
       "lit_cites": 6,
       "lit_refs": 0,
+      "quality": -0.205384,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Interp",
       "ideas": [],
       "tags": [
@@ -5115,6 +5905,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.174636,
+      "quality_conf": 0.653249,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 5,
       "topic": "Consciousness",
       "ideas": [],
       "tags": [
@@ -5144,6 +5939,11 @@ window.GRAPH_DATA = {
       "bib_items": 53,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.097007,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Dynamics",
       "ideas": [],
       "tags": [
@@ -5174,6 +5974,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.095505,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Dynamics",
       "ideas": [],
       "tags": [
@@ -5203,6 +6008,11 @@ window.GRAPH_DATA = {
       "bib_items": 40,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.188697,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Reasoning",
       "ideas": [
         "world models"
@@ -5235,6 +6045,11 @@ window.GRAPH_DATA = {
       "bib_items": 46,
       "lit_cites": 60,
       "lit_refs": 54,
+      "quality": 0.370851,
+      "quality_conf": 0.968509,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Interp",
       "ideas": [
         "arithmetic"
@@ -5267,6 +6082,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.4611,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Dynamics",
       "ideas": [],
       "tags": [
@@ -5296,6 +6116,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.089914,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Latent",
       "ideas": [],
       "tags": [
@@ -5322,6 +6147,11 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.266117,
+      "quality_conf": 0.444953,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 5,
       "topic": "Discovery",
       "ideas": [],
       "tags": [
@@ -5351,6 +6181,11 @@ window.GRAPH_DATA = {
       "bib_items": 67,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.203953,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 2,
+      "quality_models": 7,
       "topic": "Reasoning",
       "ideas": [],
       "tags": [
@@ -5380,6 +6215,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.021445,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Interp",
       "ideas": [],
       "tags": [
@@ -5409,6 +6249,11 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.434806,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Dynamics",
       "ideas": [],
       "tags": [
@@ -5439,6 +6284,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.167638,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Dynamics",
       "ideas": [],
       "tags": [
@@ -5468,6 +6318,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.367752,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Dynamics",
       "ideas": [
         "critique"
@@ -5500,6 +6355,11 @@ window.GRAPH_DATA = {
       "bib_items": 65,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.040568,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Reasoning",
       "ideas": [],
       "tags": [
@@ -5529,6 +6389,11 @@ window.GRAPH_DATA = {
       "bib_items": 218,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.049811,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Consciousness",
       "ideas": [],
       "tags": [
@@ -5558,6 +6423,11 @@ window.GRAPH_DATA = {
       "bib_items": 26,
       "lit_cites": 1227,
       "lit_refs": 32,
+      "quality": 0.650954,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 7,
+      "quality_models": 7,
       "topic": "Dynamics",
       "ideas": [],
       "tags": [
@@ -5586,6 +6456,11 @@ window.GRAPH_DATA = {
       "bib_items": 70,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.129087,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Reasoning",
       "ideas": [],
       "tags": [
@@ -5610,6 +6485,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Dynamics",
       "ideas": [],
       "tags": [
@@ -5640,6 +6516,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.298322,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 2,
+      "quality_models": 7,
       "topic": "Reasoning",
       "ideas": [
         "critique"
@@ -5673,6 +6554,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.249491,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 7,
+      "quality_models": 7,
       "topic": "Reasoning",
       "ideas": [],
       "tags": [
@@ -5700,6 +6586,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 0,
       "lit_refs": 0,
+      "quality": 0.344831,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Optimizers",
       "ideas": [],
       "tags": [
@@ -5729,6 +6620,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 0,
       "lit_refs": 0,
+      "quality": 0.293692,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 7,
+      "quality_models": 7,
       "topic": "Scaling",
       "ideas": [],
       "tags": [
@@ -5759,6 +6655,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.316035,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Scaling",
       "ideas": [
         "self-refine"
@@ -5792,6 +6693,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 95,
       "lit_refs": 155,
+      "quality": -0.645018,
+      "quality_conf": 0.824711,
+      "quality_verdict": "DROP",
+      "quality_accepts": 0,
+      "quality_models": 6,
       "topic": "Continual",
       "ideas": [],
       "tags": [
@@ -5821,6 +6727,11 @@ window.GRAPH_DATA = {
       "bib_items": 35,
       "lit_cites": 67,
       "lit_refs": 38,
+      "quality": 0.064424,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Optimizers",
       "ideas": [],
       "tags": [
@@ -5849,6 +6760,11 @@ window.GRAPH_DATA = {
       "bib_items": 63,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.16179,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [],
       "tags": [
@@ -5876,6 +6792,11 @@ window.GRAPH_DATA = {
       "bib_items": 64,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.240216,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [],
       "tags": [
@@ -5905,6 +6826,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.416117,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "RLVR",
       "ideas": [],
       "tags": [
@@ -5935,6 +6861,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.263421,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Dynamics",
       "ideas": [],
       "tags": [
@@ -5963,6 +6894,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.085494,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Dynamics",
       "ideas": [],
       "tags": [
@@ -5990,6 +6926,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Optimizers",
       "ideas": [],
       "tags": [
@@ -6018,6 +6955,11 @@ window.GRAPH_DATA = {
       "bib_items": 76,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.317282,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Optimizers",
       "ideas": [],
       "tags": [
@@ -6047,6 +6989,11 @@ window.GRAPH_DATA = {
       "bib_items": 65,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.155348,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Scaling",
       "ideas": [],
       "tags": [
@@ -6076,6 +7023,11 @@ window.GRAPH_DATA = {
       "bib_items": 29,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.181556,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Dynamics",
       "ideas": [],
       "tags": [
@@ -6105,6 +7057,11 @@ window.GRAPH_DATA = {
       "bib_items": 72,
       "lit_cites": 0,
       "lit_refs": 0,
+      "quality": 0.241434,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Scaling",
       "ideas": [],
       "tags": [
@@ -6133,6 +7090,7 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Scaling",
       "ideas": [],
       "tags": [
@@ -6159,6 +7117,11 @@ window.GRAPH_DATA = {
       "bib_items": 44,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.042827,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Scaling",
       "ideas": [],
       "tags": [
@@ -6188,6 +7151,11 @@ window.GRAPH_DATA = {
       "bib_items": 64,
       "lit_cites": 9,
       "lit_refs": 0,
+      "quality": 0.34213,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Optimizers",
       "ideas": [],
       "tags": [
@@ -6213,6 +7181,7 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Scaling",
       "ideas": [],
       "tags": [
@@ -6241,6 +7210,11 @@ window.GRAPH_DATA = {
       "bib_items": 181,
       "lit_cites": 172,
       "lit_refs": 286,
+      "quality": -0.273389,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 2,
+      "quality_models": 7,
       "topic": "Continual",
       "ideas": [
         "forgetting"
@@ -6272,6 +7246,11 @@ window.GRAPH_DATA = {
       "bib_items": 61,
       "lit_cites": 8,
       "lit_refs": 76,
+      "quality": -0.212757,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Optimizers",
       "ideas": [],
       "tags": [
@@ -6301,6 +7280,11 @@ window.GRAPH_DATA = {
       "bib_items": 30,
       "lit_cites": 10,
       "lit_refs": 32,
+      "quality": -0.682278,
+      "quality_conf": 0.914269,
+      "quality_verdict": "DROP",
+      "quality_accepts": 1,
+      "quality_models": 6,
       "topic": "Continual",
       "ideas": [],
       "tags": [
@@ -6330,6 +7314,11 @@ window.GRAPH_DATA = {
       "bib_items": 111,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.168069,
+      "quality_conf": 0.952764,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "SSL",
       "ideas": [],
       "tags": [
@@ -6359,6 +7348,11 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": 73,
       "lit_refs": 303,
+      "quality": -0.664785,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 0,
+      "quality_models": 7,
       "topic": "Continual",
       "ideas": [
         "forgetting"
@@ -6391,6 +7385,11 @@ window.GRAPH_DATA = {
       "bib_items": 113,
       "lit_cites": 63,
       "lit_refs": 160,
+      "quality": 0.003658,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Scaling",
       "ideas": [],
       "tags": [
@@ -6421,6 +7420,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 457,
       "lit_refs": 207,
+      "quality": 0.360273,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Continual",
       "ideas": [
         "forgetting"
@@ -6453,6 +7457,11 @@ window.GRAPH_DATA = {
       "bib_items": 81,
       "lit_cites": 378,
       "lit_refs": 120,
+      "quality": 0.044523,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Optimizers",
       "ideas": [],
       "tags": [
@@ -6483,6 +7492,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 851,
       "lit_refs": 190,
+      "quality": 0.416809,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Optimizers",
       "ideas": [
         "evolution"
@@ -6513,6 +7527,11 @@ window.GRAPH_DATA = {
       "bib_items": 133,
       "lit_cites": 152,
       "lit_refs": 209,
+      "quality": -0.084947,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Scaling",
       "ideas": [],
       "tags": [
@@ -6542,6 +7561,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.222008,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Scaling",
       "ideas": [],
       "tags": [
@@ -6570,6 +7594,11 @@ window.GRAPH_DATA = {
       "bib_items": 26,
       "lit_cites": 153,
       "lit_refs": 50,
+      "quality": -0.304477,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 1,
+      "quality_models": 7,
       "topic": "Dynamics",
       "ideas": [],
       "tags": [
@@ -6598,6 +7627,11 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": 2,
       "lit_refs": 0,
+      "quality": -0.48235,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 0,
+      "quality_models": 7,
       "topic": "Continual",
       "ideas": [],
       "tags": [
@@ -6627,6 +7661,11 @@ window.GRAPH_DATA = {
       "bib_items": 63,
       "lit_cites": 2614,
       "lit_refs": 107,
+      "quality": 0.578684,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Optimizers",
       "ideas": [],
       "tags": [
@@ -6656,6 +7695,11 @@ window.GRAPH_DATA = {
       "bib_items": 94,
       "lit_cites": 488,
       "lit_refs": 185,
+      "quality": 0.241592,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Dynamics",
       "ideas": [],
       "tags": [
@@ -6686,6 +7730,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.514347,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Optimizers",
       "ideas": [],
       "tags": [
@@ -6716,6 +7765,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.388922,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Scaling",
       "ideas": [],
       "tags": [
@@ -6740,6 +7794,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Dynamics",
       "ideas": [],
       "tags": [
@@ -6768,6 +7823,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Optimizers",
       "ideas": [],
       "tags": [
@@ -6797,6 +7853,11 @@ window.GRAPH_DATA = {
       "bib_items": 33,
       "lit_cites": 1649,
       "lit_refs": 53,
+      "quality": 0.482803,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Optimizers",
       "ideas": [],
       "tags": [
@@ -6825,6 +7886,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.15593,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Dynamics",
       "ideas": [],
       "tags": [
@@ -6849,6 +7915,11 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.012496,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Dynamics",
       "ideas": [],
       "tags": [
@@ -6876,6 +7947,11 @@ window.GRAPH_DATA = {
       "bib_items": 40,
       "lit_cites": 26,
       "lit_refs": 0,
+      "quality": -0.010865,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Optimizers",
       "ideas": [],
       "tags": [
@@ -6905,6 +7981,11 @@ window.GRAPH_DATA = {
       "bib_items": 37,
       "lit_cites": 1147,
       "lit_refs": 65,
+      "quality": -0.492333,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 2,
+      "quality_models": 7,
       "topic": "Continual",
       "ideas": [
         "forgetting"
@@ -6937,6 +8018,11 @@ window.GRAPH_DATA = {
       "bib_items": 44,
       "lit_cites": 14150,
       "lit_refs": 75,
+      "quality": 0.031337,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Continual",
       "ideas": [
         "forgetting"
@@ -6966,6 +8052,11 @@ window.GRAPH_DATA = {
       "bib_items": 29,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.400284,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 1,
+      "quality_models": 7,
       "topic": "Optimizers",
       "ideas": [],
       "tags": [
@@ -6995,6 +8086,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 0,
       "lit_refs": 83,
+      "quality": 0.337016,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "SSL",
       "ideas": [],
       "tags": [
@@ -7024,6 +8120,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 2,
       "lit_refs": 139,
+      "quality": 0.624236,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "SSL",
       "ideas": [
         "world models"
@@ -7057,6 +8158,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.051156,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Latent",
       "ideas": [],
       "tags": [
@@ -7085,6 +8191,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 153,
       "lit_refs": 169,
+      "quality": 0.326529,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "SSL",
       "ideas": [],
       "tags": [
@@ -7115,6 +8226,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.027118,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "SSL",
       "ideas": [],
       "tags": [
@@ -7144,6 +8260,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "SSL",
       "ideas": [],
       "tags": [
@@ -7174,6 +8291,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.192266,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "SSL",
       "ideas": [],
       "tags": [
@@ -7203,6 +8325,11 @@ window.GRAPH_DATA = {
       "bib_items": 39,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.185944,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "SSL",
       "ideas": [],
       "tags": [
@@ -7232,6 +8359,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "SSL",
       "ideas": [],
       "tags": [
@@ -7262,6 +8390,7 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "SSL",
       "ideas": [],
       "tags": [
@@ -7291,6 +8420,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "SSL",
       "ideas": [],
       "tags": [
@@ -7320,6 +8450,11 @@ window.GRAPH_DATA = {
       "bib_items": 330,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.566623,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 1,
+      "quality_models": 7,
       "topic": "SSL",
       "ideas": [],
       "tags": [
@@ -7347,6 +8482,11 @@ window.GRAPH_DATA = {
       "bib_items": 176,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.405425,
+      "quality_conf": 0.914269,
+      "quality_verdict": "DROP",
+      "quality_accepts": 1,
+      "quality_models": 6,
       "topic": "SSL",
       "ideas": [],
       "tags": [
@@ -7376,6 +8516,11 @@ window.GRAPH_DATA = {
       "bib_items": 137,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.195205,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "SSL",
       "ideas": [],
       "tags": [
@@ -7405,6 +8550,11 @@ window.GRAPH_DATA = {
       "bib_items": 68,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.427609,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "SSL",
       "ideas": [],
       "tags": [
@@ -7433,6 +8583,11 @@ window.GRAPH_DATA = {
       "bib_items": 53,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.035838,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "SSL",
       "ideas": [],
       "tags": [
@@ -7463,6 +8618,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.184912,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "SSL",
       "ideas": [],
       "tags": [
@@ -7492,6 +8652,11 @@ window.GRAPH_DATA = {
       "bib_items": 53,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.248665,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "SSL",
       "ideas": [],
       "tags": [
@@ -7522,6 +8687,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.236856,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "SSL",
       "ideas": [],
       "tags": [
@@ -7546,6 +8716,11 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.605277,
+      "quality_conf": 0.914269,
+      "quality_verdict": "DROP",
+      "quality_accepts": 2,
+      "quality_models": 6,
       "topic": "SSL",
       "ideas": [],
       "tags": [
@@ -7575,6 +8750,11 @@ window.GRAPH_DATA = {
       "bib_items": 56,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.143166,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "SSL",
       "ideas": [],
       "tags": [
@@ -7604,6 +8784,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 1697,
       "lit_refs": 93,
+      "quality": -0.075443,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "SSL",
       "ideas": [],
       "tags": [
@@ -7633,6 +8818,11 @@ window.GRAPH_DATA = {
       "bib_items": 114,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.481571,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "SSL",
       "ideas": [],
       "tags": [
@@ -7662,6 +8852,11 @@ window.GRAPH_DATA = {
       "bib_items": 68,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.429871,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "SSL",
       "ideas": [],
       "tags": [
@@ -7690,6 +8885,11 @@ window.GRAPH_DATA = {
       "bib_items": 51,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.171094,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Open-ended",
       "ideas": [
         "critique"
@@ -7723,6 +8923,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.312417,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Discovery",
       "ideas": [
         "critique"
@@ -7753,6 +8958,11 @@ window.GRAPH_DATA = {
       "bib_items": 38,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.280209,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 1,
+      "quality_models": 7,
       "topic": "Other",
       "ideas": [],
       "tags": [
@@ -7783,6 +8993,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.384367,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Safety",
       "ideas": [],
       "tags": [
@@ -7812,6 +9027,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.041158,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Reasoning",
       "ideas": [
         "critique"
@@ -7844,6 +9064,11 @@ window.GRAPH_DATA = {
       "bib_items": 40,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.054153,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Reasoning",
       "ideas": [
         "prompts"
@@ -7876,6 +9101,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Harness",
       "ideas": [],
       "tags": [
@@ -7906,6 +9132,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 719,
       "lit_refs": 97,
+      "quality": -0.200988,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Self-improve",
       "ideas": [
         "evolution",
@@ -7936,6 +9167,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.284129,
+      "quality_conf": 0.912356,
+      "quality_verdict": "DROP",
+      "quality_accepts": 2,
+      "quality_models": 7,
       "topic": "Other",
       "ideas": [],
       "tags": [
@@ -7964,6 +9200,11 @@ window.GRAPH_DATA = {
       "bib_items": 43,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.078898,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Architectures",
       "ideas": [
         "priming"
@@ -7997,6 +9238,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.302775,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Harness",
       "ideas": [
         "prompts"
@@ -8029,6 +9275,11 @@ window.GRAPH_DATA = {
       "bib_items": 81,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.525201,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Other",
       "ideas": [],
       "tags": [
@@ -8058,6 +9309,11 @@ window.GRAPH_DATA = {
       "bib_items": 706,
       "lit_cites": 3617,
       "lit_refs": 0,
+      "quality": 0.496315,
+      "quality_conf": 0.828538,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 3,
+      "quality_models": 6,
       "topic": "Reasoning",
       "ideas": [
         "critique"
@@ -8091,6 +9347,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.594558,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Other",
       "ideas": [],
       "tags": [
@@ -8120,6 +9381,11 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.099865,
+      "quality_conf": 0.826625,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 6,
       "topic": "Other",
       "ideas": [],
       "tags": [
@@ -8149,6 +9415,11 @@ window.GRAPH_DATA = {
       "bib_items": 32,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.304724,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Other",
       "ideas": [],
       "tags": [
@@ -8179,6 +9450,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.075761,
+      "quality_conf": 0.912356,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Architectures",
       "ideas": [
         "enc-dec"
@@ -8211,6 +9487,11 @@ window.GRAPH_DATA = {
       "bib_items": 27,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.065707,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Reasoning",
       "ideas": [
         "critique"
@@ -8240,6 +9521,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Other",
       "ideas": [],
       "tags": [
@@ -8270,6 +9552,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.565695,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 2,
+      "quality_models": 7,
       "topic": "Open-ended",
       "ideas": [],
       "tags": [
@@ -8300,6 +9587,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 0,
       "lit_refs": 0,
+      "quality": 0.38593,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Open-ended",
       "ideas": [
         "curriculum"
@@ -8331,6 +9623,11 @@ window.GRAPH_DATA = {
       "bib_items": 38,
       "lit_cites": 0,
       "lit_refs": 0,
+      "quality": -0.11804,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Self-improve",
       "ideas": [],
       "tags": [
@@ -8361,6 +9658,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 0,
       "lit_refs": 0,
+      "quality": 0.269719,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Self-improve",
       "ideas": [],
       "tags": [
@@ -8390,6 +9692,11 @@ window.GRAPH_DATA = {
       "bib_items": 42,
       "lit_cites": 4,
       "lit_refs": 48,
+      "quality": 0.05167,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Self-improve",
       "ideas": [
         "evolution"
@@ -8422,6 +9729,11 @@ window.GRAPH_DATA = {
       "bib_items": 101,
       "lit_cites": 13,
       "lit_refs": 0,
+      "quality": 0.015156,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Self-improve",
       "ideas": [
         "evolution"
@@ -8453,6 +9765,11 @@ window.GRAPH_DATA = {
       "bib_items": 88,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.11286,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Continual",
       "ideas": [
         "memory"
@@ -8485,6 +9802,11 @@ window.GRAPH_DATA = {
       "bib_items": 70,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.025887,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Harness",
       "ideas": [
         "prompts"
@@ -8517,6 +9839,11 @@ window.GRAPH_DATA = {
       "bib_items": 50,
       "lit_cites": 44,
       "lit_refs": 61,
+      "quality": 0.049784,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Self-improve",
       "ideas": [],
       "tags": [
@@ -8546,6 +9873,11 @@ window.GRAPH_DATA = {
       "bib_items": 67,
       "lit_cites": 91,
       "lit_refs": 97,
+      "quality": 0.455049,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Harness",
       "ideas": [
         "memory"
@@ -8578,6 +9910,11 @@ window.GRAPH_DATA = {
       "bib_items": 67,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.396766,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Harness",
       "ideas": [
         "memory",
@@ -8612,6 +9949,11 @@ window.GRAPH_DATA = {
       "bib_items": 57,
       "lit_cites": 47,
       "lit_refs": 0,
+      "quality": -0.248521,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Self-improve",
       "ideas": [],
       "tags": [
@@ -8641,6 +9983,11 @@ window.GRAPH_DATA = {
       "bib_items": 44,
       "lit_cites": 6,
       "lit_refs": 48,
+      "quality": 0.107472,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Self-improve",
       "ideas": [],
       "tags": [
@@ -8671,6 +10018,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.454783,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 2,
+      "quality_models": 7,
       "topic": "Discovery",
       "ideas": [],
       "tags": [
@@ -8700,6 +10052,7 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Self-improve",
       "ideas": [
         "evolution"
@@ -8731,6 +10084,11 @@ window.GRAPH_DATA = {
       "bib_items": 35,
       "lit_cites": 7,
       "lit_refs": 37,
+      "quality": 0.053622,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Self-improve",
       "ideas": [
         "evolution"
@@ -8764,6 +10122,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.220691,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Discovery",
       "ideas": [
         "evolution"
@@ -8796,6 +10159,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 16,
       "lit_refs": 0,
+      "quality": 0.051589,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Self-improve",
       "ideas": [
         "evolution"
@@ -8825,6 +10193,11 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": 1,
       "lit_refs": 3,
+      "quality": -0.716859,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 2,
+      "quality_models": 7,
       "topic": "Self-improve",
       "ideas": [],
       "tags": [
@@ -8852,6 +10225,11 @@ window.GRAPH_DATA = {
       "bib_items": 9,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.299181,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Open-ended",
       "ideas": [
         "critique"
@@ -8884,6 +10262,11 @@ window.GRAPH_DATA = {
       "bib_items": 54,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.053709,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Self-improve",
       "ideas": [],
       "tags": [
@@ -8912,6 +10295,11 @@ window.GRAPH_DATA = {
       "bib_items": 114,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.126408,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Harness",
       "ideas": [
         "evolution"
@@ -8944,6 +10332,11 @@ window.GRAPH_DATA = {
       "bib_items": 46,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.42506,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Discovery",
       "ideas": [],
       "tags": [
@@ -8974,6 +10367,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.245365,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 2,
+      "quality_models": 7,
       "topic": "Open-ended",
       "ideas": [],
       "tags": [
@@ -9003,6 +10401,11 @@ window.GRAPH_DATA = {
       "bib_items": 60,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.293443,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Harness",
       "ideas": [],
       "tags": [
@@ -9032,6 +10435,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Harness",
       "ideas": [],
       "tags": [
@@ -9059,6 +10463,11 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.640935,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Deep RL",
       "ideas": [
         "world models"
@@ -9091,6 +10500,11 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": 59,
       "lit_refs": 187,
+      "quality": -0.49035,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 1,
+      "quality_models": 7,
       "topic": "Open-ended",
       "ideas": [],
       "tags": [
@@ -9120,6 +10534,11 @@ window.GRAPH_DATA = {
       "bib_items": 96,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.314174,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 2,
+      "quality_models": 7,
       "topic": "Open-ended",
       "ideas": [],
       "tags": [
@@ -9150,6 +10569,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 33,
       "lit_refs": 82,
+      "quality": -0.094791,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Open-ended",
       "ideas": [],
       "tags": [
@@ -9179,6 +10603,11 @@ window.GRAPH_DATA = {
       "bib_items": 91,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.539854,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Discovery",
       "ideas": [
         "evolution"
@@ -9208,6 +10637,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Harness",
       "ideas": [],
       "tags": [
@@ -9237,6 +10667,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Open-ended",
       "ideas": [],
       "tags": [
@@ -9263,6 +10694,11 @@ window.GRAPH_DATA = {
       "bib_items": 203,
       "lit_cites": 193,
       "lit_refs": 367,
+      "quality": -0.280563,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 1,
+      "quality_models": 7,
       "topic": "Open-ended",
       "ideas": [
         "evolution"
@@ -9295,6 +10731,11 @@ window.GRAPH_DATA = {
       "bib_items": 82,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.024562,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 1,
+      "quality_models": 7,
       "topic": "Open-ended",
       "ideas": [
         "curriculum",
@@ -9329,6 +10770,11 @@ window.GRAPH_DATA = {
       "bib_items": 61,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.042334,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Harness",
       "ideas": [],
       "tags": [
@@ -9353,6 +10799,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Harness",
       "ideas": [],
       "tags": [
@@ -9378,6 +10825,7 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Harness",
       "ideas": [],
       "tags": [
@@ -9407,6 +10855,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Harness",
       "ideas": [
         "memory"
@@ -9436,6 +10885,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Harness",
       "ideas": [],
       "tags": [
@@ -9460,6 +10910,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Harness",
       "ideas": [
         "world models"
@@ -9487,6 +10938,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Self-improve",
       "ideas": [],
       "tags": [
@@ -9513,6 +10965,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Harness",
       "ideas": [],
       "tags": [
@@ -9542,6 +10995,11 @@ window.GRAPH_DATA = {
       "bib_items": 27,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.231087,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Harness",
       "ideas": [
         "self-refine"
@@ -9571,6 +11029,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Harness",
       "ideas": [],
       "tags": [
@@ -9596,6 +11055,7 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Harness",
       "ideas": [],
       "tags": [
@@ -9625,6 +11085,11 @@ window.GRAPH_DATA = {
       "bib_items": 53,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.079021,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Harness",
       "ideas": [],
       "tags": [
@@ -9654,6 +11119,11 @@ window.GRAPH_DATA = {
       "bib_items": 178,
       "lit_cites": 9,
       "lit_refs": 0,
+      "quality": 0.651182,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Discovery",
       "ideas": [],
       "tags": [
@@ -9684,6 +11154,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.200655,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Harness",
       "ideas": [],
       "tags": [
@@ -9714,6 +11189,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 115,
       "lit_refs": 60,
+      "quality": 0.309959,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Harness",
       "ideas": [],
       "tags": [
@@ -9741,6 +11221,11 @@ window.GRAPH_DATA = {
       "bib_items": 13,
       "lit_cites": 0,
       "lit_refs": 0,
+      "quality": 0.080088,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Interp",
       "ideas": [],
       "tags": [
@@ -9768,6 +11253,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 2,
       "lit_refs": 10,
+      "quality": -0.299517,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Interp",
       "ideas": [],
       "tags": [
@@ -9795,6 +11285,7 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 110,
       "lit_refs": 0,
+      "quality": null,
       "topic": "Consciousness",
       "ideas": [],
       "tags": [
@@ -9825,6 +11316,7 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Safety",
       "ideas": [],
       "tags": [
@@ -9849,6 +11341,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Safety",
       "ideas": [],
       "tags": [
@@ -9873,6 +11366,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Interp",
       "ideas": [],
       "tags": [
@@ -9898,6 +11392,7 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Interp",
       "ideas": [],
       "tags": [
@@ -9923,6 +11418,7 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Interp",
       "ideas": [],
       "tags": [
@@ -9949,6 +11445,11 @@ window.GRAPH_DATA = {
       "bib_items": 78,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.724047,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 2,
+      "quality_models": 7,
       "topic": "Consciousness",
       "ideas": [],
       "tags": [
@@ -9978,6 +11479,11 @@ window.GRAPH_DATA = {
       "bib_items": 35,
       "lit_cites": 89,
       "lit_refs": 0,
+      "quality": -0.39628,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Safety",
       "ideas": [],
       "tags": [
@@ -10007,6 +11513,11 @@ window.GRAPH_DATA = {
       "bib_items": 50,
       "lit_cites": 222,
       "lit_refs": 0,
+      "quality": 0.130024,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Safety",
       "ideas": [],
       "tags": [
@@ -10033,6 +11544,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Interp",
       "ideas": [],
       "tags": [
@@ -10058,6 +11570,7 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Safety",
       "ideas": [],
       "tags": [
@@ -10083,6 +11596,7 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Interp",
       "ideas": [],
       "tags": [
@@ -10113,6 +11627,7 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Safety",
       "ideas": [],
       "tags": [
@@ -10142,6 +11657,11 @@ window.GRAPH_DATA = {
       "bib_items": 28,
       "lit_cites": 1802,
       "lit_refs": 35,
+      "quality": 0.094371,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Interp",
       "ideas": [],
       "tags": [
@@ -10171,6 +11691,11 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.030212,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "Consciousness",
       "ideas": [],
       "tags": [
@@ -10199,6 +11724,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.339468,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Safety",
       "ideas": [],
       "tags": [
@@ -10226,6 +11756,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.253556,
+      "quality_conf": 0.914269,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 6,
       "topic": "Consciousness",
       "ideas": [],
       "tags": [
@@ -10254,6 +11789,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.099746,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Safety",
       "ideas": [],
       "tags": [
@@ -10281,6 +11821,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.006801,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Safety",
       "ideas": [],
       "tags": [
@@ -10311,6 +11856,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.065314,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Safety",
       "ideas": [],
       "tags": [
@@ -10338,6 +11888,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.205412,
+      "quality_conf": 0.912356,
+      "quality_verdict": "DROP",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "NeuroAI",
       "ideas": [],
       "tags": [
@@ -10362,6 +11917,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Other",
       "ideas": [],
       "tags": [
@@ -10391,6 +11947,11 @@ window.GRAPH_DATA = {
       "bib_items": 46,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.425243,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 7,
+      "quality_models": 7,
       "topic": "NeuroAI",
       "ideas": [],
       "tags": [
@@ -10415,6 +11976,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Consciousness",
       "ideas": [],
       "tags": [
@@ -10444,6 +12006,11 @@ window.GRAPH_DATA = {
       "bib_items": 74,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.102222,
+      "quality_conf": 0.912356,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "NeuroAI",
       "ideas": [],
       "tags": [
@@ -10473,6 +12040,11 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.015946,
+      "quality_conf": 0.912356,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 2,
+      "quality_models": 7,
       "topic": "NeuroAI",
       "ideas": [],
       "tags": [
@@ -10500,6 +12072,11 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.227256,
+      "quality_conf": 0.824711,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 4,
+      "quality_models": 6,
       "topic": "NeuroAI",
       "ideas": [],
       "tags": [
@@ -10530,6 +12107,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": 34,
       "lit_refs": 107,
+      "quality": 0.115037,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 4,
+      "quality_models": 7,
       "topic": "NeuroAI",
       "ideas": [
         "forgetting"
@@ -10562,6 +12144,11 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.056913,
+      "quality_conf": 0.912356,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "NeuroAI",
       "ideas": [],
       "tags": [
@@ -10590,6 +12177,11 @@ window.GRAPH_DATA = {
       "bib_items": 38,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.008031,
+      "quality_conf": 0.968509,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "NeuroAI",
       "ideas": [
         "memory"
@@ -10620,6 +12212,11 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": 488,
       "lit_refs": 354,
+      "quality": 0.142211,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "NeuroAI",
       "ideas": [],
       "tags": [
@@ -10649,6 +12246,11 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": 45,
       "lit_refs": 76,
+      "quality": -0.316149,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "NeuroAI",
       "ideas": [
         "evolution"
@@ -10676,6 +12278,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": 0,
       "lit_refs": 0,
+      "quality": null,
       "topic": "Repr",
       "ideas": [],
       "tags": [
@@ -10705,6 +12308,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.335964,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Repr",
       "ideas": [],
       "tags": [
@@ -10732,6 +12340,11 @@ window.GRAPH_DATA = {
       "bib_items": 16,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.093455,
+      "quality_conf": 1.0,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 7,
       "topic": "Repr",
       "ideas": [],
       "tags": [
@@ -10761,6 +12374,11 @@ window.GRAPH_DATA = {
       "bib_items": 27,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.497511,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 6,
+      "quality_models": 7,
       "topic": "Repr",
       "ideas": [],
       "tags": [
@@ -10791,6 +12409,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.109141,
+      "quality_conf": 0.824711,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 6,
       "topic": "Repr",
       "ideas": [],
       "tags": [
@@ -10819,6 +12442,11 @@ window.GRAPH_DATA = {
       "bib_items": 36,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.516866,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 1,
+      "quality_models": 7,
       "topic": "Repr",
       "ideas": [],
       "tags": [
@@ -10848,6 +12476,11 @@ window.GRAPH_DATA = {
       "bib_items": 31,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.711313,
+      "quality_conf": 1.0,
+      "quality_verdict": "KEEP",
+      "quality_accepts": 5,
+      "quality_models": 7,
       "topic": "Repr",
       "ideas": [],
       "tags": [
@@ -10874,6 +12507,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Finance",
       "ideas": [],
       "tags": [
@@ -10898,6 +12532,11 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.183194,
+      "quality_conf": 0.912356,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 2,
+      "quality_models": 7,
       "topic": "Finance",
       "ideas": [],
       "tags": [
@@ -10922,6 +12561,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Finance",
       "ideas": [],
       "tags": [
@@ -10948,6 +12588,11 @@ window.GRAPH_DATA = {
       "bib_items": 206,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.719592,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 1,
+      "quality_models": 7,
       "topic": "Finance",
       "ideas": [],
       "tags": [
@@ -10976,6 +12621,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Finance",
       "ideas": [],
       "tags": [
@@ -11005,6 +12651,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Finance",
       "ideas": [],
       "tags": [
@@ -11031,6 +12678,11 @@ window.GRAPH_DATA = {
       "bib_items": 8,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.743374,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 1,
+      "quality_models": 7,
       "topic": "Finance",
       "ideas": [],
       "tags": [
@@ -11059,6 +12711,11 @@ window.GRAPH_DATA = {
       "bib_items": 55,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.646821,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 0,
+      "quality_models": 7,
       "topic": "Finance",
       "ideas": [],
       "tags": [
@@ -11084,6 +12741,7 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Deep RL",
       "ideas": [
         "evolution"
@@ -11113,6 +12771,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "RLVR",
       "ideas": [],
       "tags": [
@@ -11138,6 +12797,7 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Other",
       "ideas": [],
       "tags": [
@@ -11165,6 +12825,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.5873,
+      "quality_conf": 0.618329,
+      "quality_verdict": "DROP",
+      "quality_accepts": 1,
+      "quality_models": 7,
       "topic": "Deep RL",
       "ideas": [],
       "tags": [
@@ -11192,6 +12857,11 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.833022,
+      "quality_conf": 0.432763,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 0,
+      "quality_models": 5,
       "topic": "Other",
       "ideas": [],
       "tags": [
@@ -11222,6 +12892,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.133082,
+      "quality_conf": 0.824711,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 2,
+      "quality_models": 6,
       "topic": "Other",
       "ideas": [],
       "tags": [
@@ -11251,6 +12926,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": -0.768443,
+      "quality_conf": 1.0,
+      "quality_verdict": "DROP",
+      "quality_accepts": 0,
+      "quality_models": 7,
       "topic": "Other",
       "ideas": [],
       "tags": [
@@ -11275,6 +12955,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Other",
       "ideas": [],
       "tags": [
@@ -11305,6 +12986,11 @@ window.GRAPH_DATA = {
       "telegram": true,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": 0.022855,
+      "quality_conf": 0.740894,
+      "quality_verdict": "WATCH",
+      "quality_accepts": 3,
+      "quality_models": 6,
       "topic": "Other",
       "ideas": [],
       "tags": [
@@ -11329,6 +13015,7 @@ window.GRAPH_DATA = {
       "bib_items": 0,
       "lit_cites": null,
       "lit_refs": null,
+      "quality": null,
       "topic": "Other",
       "ideas": [],
       "tags": [

@@ -27,6 +27,7 @@ GRAPH_JS = ASSETS / 'graph_data.js'
 ARXIV_META = ASSETS / 'arxiv_meta.json'
 KNOWN_META = ASSETS / 'known_meta.json'
 LITMAPS = ASSETS / 'litmaps.json'
+SCORES_CSV = ROOT / 'filter' / 'scores.csv'
 
 ARXIV_URL_RE = re.compile(
     r'arxiv\.org/(?:abs|pdf|html|format)/'

@@ -83,9 +83,15 @@ def main() -> None:
                 fills: new Set([...document.querySelectorAll('.nodes circle')]
                     .map(c => c.getAttribute('fill'))).size,
                 legendChips: document.querySelectorAll('#legend span').length,
+                scored: window.GRAPH_DATA.nodes.filter(
+                    n => n.quality != null).length,
             };
         }''')
         print('render:', counts)
+        if counts.get('scored', 0) < 300:
+            errors.append(
+                f'too few nodes carry a quality score ({counts.get("scored")})'
+            )
         if counts.get('fills', 0) < 5:
             errors.append('nodes are not colored by tag')
         if counts.get('legendChips', 0) < 10:
@@ -253,6 +259,94 @@ def main() -> None:
         page.screenshot(path=str(SHOTS / '07-telegram-filter.png'))
         page.uncheck('#tgfilter')
         page.wait_for_timeout(300)
+
+        page.check('#qcolor')
+        page.wait_for_timeout(400)
+        qcolor = page.evaluate('''() => {
+            const circles = [...document.querySelectorAll('.nodes circle')];
+            let hi = null, lo = null, na = null;
+            circles.forEach((c) => {
+                const n = c.__data__;
+                if (!n) return;
+                if (n.quality == null) {
+                    if (!na) na = c;
+                    return;
+                }
+                if (!hi || n.quality > hi.__data__.quality) hi = c;
+                if (!lo || n.quality < lo.__data__.quality) lo = c;
+            });
+            function rgb(el) {
+                if (!el) return {fill: null, r: null, g: null, b: null, opacity: null};
+                const fill = el.getAttribute('fill') || '';
+                const probe = document.createElement('span');
+                probe.style.color = fill;
+                document.body.appendChild(probe);
+                const computed = getComputedStyle(probe).color;
+                probe.remove();
+                const m = computed.match(/\\d+/g) || [];
+                return {
+                    fill,
+                    r: +m[0],
+                    g: +m[1],
+                    b: +m[2],
+                    opacity: +el.getAttribute('fill-opacity'),
+                };
+            }
+            return {
+                hi: rgb(hi),
+                lo: rgb(lo),
+                na: rgb(na),
+                hiQ: hi ? hi.__data__.quality : null,
+                loQ: lo ? lo.__data__.quality : null,
+                hiId: hi ? hi.__data__.id : null,
+                loId: lo ? lo.__data__.id : null,
+                note: document.getElementById('note').textContent,
+                fills: new Set(circles.map(c => c.getAttribute('fill'))).size,
+            };
+        }''')
+        print('quality colour:', qcolor)
+        if 'colour: aggregated quality' not in qcolor.get('note', ''):
+            errors.append('quality colour footer missing')
+        if qcolor.get('hiQ') is None or qcolor.get('loQ') is None:
+            errors.append('quality colour could not find scored endpoints')
+        else:
+            if qcolor['hi']['g'] <= qcolor['hi']['r']:
+                errors.append(
+                    'highest quality node is not greener than red '
+                    f"({qcolor['hi']})"
+                )
+            if qcolor['lo']['r'] <= qcolor['lo']['g']:
+                errors.append(
+                    'lowest quality node is not redder than green '
+                    f"({qcolor['lo']})"
+                )
+            if qcolor['hi']['g'] <= qcolor['lo']['g']:
+                errors.append(
+                    'highest quality fill is not greener than the lowest '
+                    f"({qcolor['hi']} vs {qcolor['lo']})"
+                )
+            if qcolor['lo']['r'] <= qcolor['hi']['r']:
+                errors.append(
+                    'lowest quality fill is not redder than the highest '
+                    f"({qcolor['lo']} vs {qcolor['hi']})"
+                )
+        if qcolor['na']['opacity'] >= 0.5:
+            errors.append('quality colour did not fade unscored papers')
+        if qcolor.get('fills', 0) < 8:
+            errors.append(
+                f"quality colour produced too few fills ({qcolor.get('fills')})"
+            )
+        page.screenshot(path=str(SHOTS / '08-quality-color.png'))
+        page.uncheck('#qcolor')
+        page.wait_for_timeout(300)
+        topic_fills = page.evaluate('''() => new Set(
+            [...document.querySelectorAll('.nodes circle')]
+                .map(c => c.getAttribute('fill'))
+        ).size''')
+        if topic_fills < 5:
+            errors.append(
+                f'topic colours did not return after quality colour ({topic_fills})'
+            )
 
         page.select_option('#labels', 'all')
         page.wait_for_timeout(500)
@@ -487,6 +581,76 @@ def main() -> None:
             )
         if not any(t in cites_num['ticks'] for t in ('1k', '2k', '5k', '10k', '20k')):
             errors.append('citation-count axis missing thousands ticks')
+        page.select_option('#yaxis', 'quality')
+        page.wait_for_timeout(900)
+        if not page.evaluate(
+            '''() => document.getElementById('addcited-wrap').hidden'''
+        ):
+            errors.append('+ cited should be hidden on quality axis')
+        quality_axis = page.evaluate('''() => {
+            const captions = [...document.querySelectorAll('.caption')]
+                .map(t => t.textContent);
+            const nodes = window.GRAPH_DATA.nodes;
+            let hi = -1, lo = -1;
+            nodes.forEach((n, i) => {
+                if (n.quality == null) return;
+                if (hi < 0 || n.quality > nodes[hi].quality) hi = i;
+                if (lo < 0 || n.quality < nodes[lo].quality) lo = i;
+            });
+            const gs = [...document.querySelectorAll('.nodes g')];
+            const ys = gs.map(g => {
+                const m = /translate\\(([^,]+),([^)]+)\\)/.exec(
+                    g.getAttribute('transform'));
+                return +m[2];
+            });
+            const ticks = [...document.querySelectorAll('.axis .tick text')]
+                .map(t => t.textContent);
+            const zeroEl = document.querySelector('.zero-band');
+            const zeroLabel = zeroEl ? zeroEl.textContent : null;
+            return {
+                captions,
+                note: document.getElementById('note').textContent,
+                ys,
+                ticks,
+                zeroLabel,
+                hiY: hi >= 0 ? ys[hi] : null,
+                loY: lo >= 0 ? ys[lo] : null,
+                hiQ: hi >= 0 ? nodes[hi].quality : null,
+                loQ: lo >= 0 ? nodes[lo].quality : null,
+                faded: [...document.querySelectorAll('.nodes circle')]
+                    .filter(c => +c.getAttribute('fill-opacity') < 0.5).length,
+            };
+        }''')
+        moved_q = sum(1 for a, b in zip(cited_axis['ys'], quality_axis['ys'])
+                      if abs(a - b) > 8)
+        print('yaxis quality: ticks', quality_axis['ticks'],
+              'moved', moved_q, 'hi/lo', quality_axis['hiQ'],
+              quality_axis['loQ'], quality_axis['hiY'], quality_axis['loY'])
+        if not any('aggregated quality' in c for c in quality_axis['captions']):
+            errors.append('quality axis caption missing')
+        if 'aggregated quality' not in quality_axis['note']:
+            errors.append('quality footer missing')
+        if moved_q < 20:
+            errors.append(f'quality y-axis barely moved nodes ({moved_q})')
+        needed_ticks = {'+1', '+0.5', '0', '-0.5', '-1'}
+        if not needed_ticks.issubset(set(quality_axis['ticks'])):
+            errors.append(
+                'quality axis missing signed ticks: '
+                + ', '.join(sorted(needed_ticks - set(quality_axis['ticks'])))
+            )
+        if quality_axis['zeroLabel'] != 'n/a':
+            errors.append(
+                f'quality missing-band label is {quality_axis["zeroLabel"]!r}, '
+                'expected n/a'
+            )
+        if (quality_axis['hiY'] is None or quality_axis['loY'] is None
+                or quality_axis['hiY'] >= quality_axis['loY']):
+            errors.append(
+                'highest quality node is not above the lowest '
+                f'({quality_axis["hiY"]} vs {quality_axis["loY"]})'
+            )
+        if quality_axis['faded'] < 20:
+            errors.append('quality axis did not fade unscored papers')
         page.select_option('#yaxis', 'cited')
         page.wait_for_timeout(600)
 

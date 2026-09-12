@@ -2,21 +2,29 @@
    x = publication date, y = cited-by, outgoing cites, parent-only outgoing
    cites, unique nested outgoing cites, outgoing cites plus
    a 1/cited bonus per outgoing target, any of those cites modes plus
-   cited-by, or the Litmaps citation count (toggle). Curved links =
-   "this paper cites that one". Positions are data-driven; a collision pass
-   only nudges overlapping nodes apart. */
+   cited-by, the Litmaps citation count, or the aggregated quality
+   score (toggle). Colour can follow the topic or the aggregated
+   quality score (−1 red, +1 green). Curved links = "this paper
+   cites that one".
+   Positions are data-driven; a collision pass only nudges overlapping
+   nodes apart. */
 (function () {
   'use strict';
 
   var data = window.GRAPH_DATA;
   var MARGIN = { top: 74, right: 96, bottom: 62, left: 62 };
   var GUTTER = 132;          // parking band for entries with no known date
-  var ZERO_BAND = 78;        // breathing room for zeros on the current y-axis
+  var ZERO_BAND = 78;        // breathing room for zeros / missing y-values
   var LABEL_FONT = 10.5;
   var CITE_TICKS = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000,
                     2000, 5000, 10000, 20000, 50000];
+  var QUALITY_TICKS = [-1, -0.5, 0, 0.5, 1];
   var UNTAGGED = '#9aa3ab';
   var IDEA_STROKE = '#74838c';
+  var QUALITY_FILL = d3.scaleLinear()
+    .domain([-1, 0, 1])
+    .range(['#c62828', '#d9d3c5', '#2e7d32'])
+    .clamp(true);
   var taxonomy = data.taxonomy || { fields: [], ideas: [] };
   var TOPIC_COLOR = {};
   var FIELD_SET = {};
@@ -28,11 +36,43 @@
     return (d.topic && TOPIC_COLOR[d.topic]) || UNTAGGED;
   }
 
+  function qualityColorOn() {
+    var el = document.getElementById('qcolor');
+    return Boolean(el && el.checked);
+  }
+
+  function qualityColor(q) {
+    return QUALITY_FILL(q);
+  }
+
+  function nodeFill(d) {
+    if (qualityColorOn()) {
+      return d.quality == null ? UNTAGGED : qualityColor(d.quality);
+    }
+    return topicColor(d);
+  }
+
+  function nodeFillOpacity(d) {
+    if (qualityColorOn() && d.quality == null) return 0.4;
+    return hasY(d) ? 0.88 : 0.4;
+  }
+
   function formatCount(n) {
     if (n == null) return null;
     if (n >= 100000) return String(Math.round(n / 1000)) + 'k';
     if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
     return String(n);
+  }
+
+  function formatQuality(q) {
+    if (q == null) return null;
+    return (q > 0 ? '+' : '') + q.toFixed(2);
+  }
+
+  function formatQualityTick(v) {
+    if (v === 0) return '0';
+    var mag = Math.abs(v) === 1 ? '1' : Math.abs(v).toFixed(1);
+    return (v > 0 ? '+' : '-') + mag;
   }
 
   var svg = d3.select('#map');
@@ -147,10 +187,14 @@
     var el = document.getElementById('yaxis');
     var value = el ? el.value : 'cited';
     if (value === 'cites' || value === 'parents' || value === 'children'
-        || value === 'bonus' || value === 'citations') {
+        || value === 'bonus' || value === 'citations' || value === 'quality') {
       return value;
     }
     return 'cited';
+  }
+
+  function qualityMode() {
+    return yMode() === 'quality';
   }
 
   function citeModeOn() {
@@ -184,6 +228,11 @@
     return n;
   }
 
+  function hasY(d) {
+    if (qualityMode()) return d.quality != null;
+    return yCount(d) > 0;
+  }
+
   function yAxisCaption() {
     if (yMode() === 'cites') {
       return addCitedOn()
@@ -206,6 +255,7 @@
         : '\u2192 more cites, with a larger bonus for less-cited targets';
     }
     if (yMode() === 'citations') return '\u2192 more citations';
+    if (yMode() === 'quality') return '\u2192 higher aggregated quality';
     return '\u2192 cited by more papers on this list';
   }
 
@@ -232,10 +282,21 @@
         : 'y: outgoing cites plus a 1/cited bonus for each target';
     }
     if (yMode() === 'citations') return 'y: Litmaps citation count';
+    if (yMode() === 'quality') return 'y: aggregated quality score';
     return 'y: cited by other entries on this list';
   }
 
   function applyMetric() {
+    if (qualityMode()) {
+      radius = d3.scaleSqrt().domain([0, 2]).range([4, 21]);
+      nodes.forEach(function (d) {
+        var q = d.quality;
+        d.r = q == null ? 4 : radius(q + 1);
+        d.score = (q == null ? 0 : q + 1) * 2 + (d.cites + d.refs) * 0.5;
+      });
+      maxY = 1;
+      return;
+    }
     maxY = d3.max(nodes, yCount) || 1;
     radius = d3.scaleSqrt().domain([0, maxY]).range([4, 21]);
     nodes.forEach(function (d) {
@@ -277,6 +338,7 @@
         edges: document.getElementById('edges').checked,
         citefilter: document.getElementById('citefilter').checked,
         tgfilter: document.getElementById('tgfilter').checked,
+        qcolor: document.getElementById('qcolor').checked,
         tag: tagFilter
       }));
     } catch (err) {
@@ -305,6 +367,9 @@
     }
     if (typeof prefs.tgfilter === 'boolean') {
       document.getElementById('tgfilter').checked = prefs.tgfilter;
+    }
+    if (typeof prefs.qcolor === 'boolean') {
+      document.getElementById('qcolor').checked = prefs.qcolor;
     }
     if (prefs.tag === 'untagged' || (prefs.tag && nodes.some(function (d) {
       return (d.tags || []).indexOf(prefs.tag) >= 0;
@@ -349,11 +414,15 @@
       .domain([new Date(+span[0] - padMs), new Date(+span[1] + padMs)])
       .range([timeLeft, plot.right]);
     applyMetric();
-    yBase = d3.scaleLinear()
-      .domain([yEncode(1), 1])
-      .range([plot.bottom - ZERO_BAND, plot.top + 72]);
+    yBase = qualityMode()
+      ? d3.scaleLinear()
+          .domain([-1, 1])
+          .range([plot.bottom - ZERO_BAND, plot.top + 72])
+      : d3.scaleLinear()
+          .domain([yEncode(1), 1])
+          .range([plot.bottom - ZERO_BAND, plot.top + 72]);
 
-    // Uncited entries would otherwise pile onto a single pixel row.
+    // Uncited / unscored entries would otherwise pile onto a single pixel row.
     plot.zeroLow = plot.bottom - 12;
     plot.zeroHigh = plot.bottom - ZERO_BAND + 16;
     plot.zeroRule = plot.bottom - ZERO_BAND + 6;
@@ -362,8 +431,9 @@
     nodes.forEach(function (d, i) {
       var wobble = ((i * 2654435761) % 1000) / 1000 - 0.5;
       d.tx = d.time ? xBase(d.time) : gutterMid + wobble * (GUTTER - 26);
-      d.ty = yCount(d)
-        ? yBase(yEncode(yCount(d))) + wobble * 4
+      d.ty = hasY(d)
+        ? (qualityMode() ? yBase(d.quality) : yBase(yEncode(yCount(d))))
+          + wobble * 4
         : plot.zeroLow - (wobble + 0.5) * (plot.zeroLow - plot.zeroHigh);
       d.x = d.tx;
       d.y = d.ty;
@@ -403,7 +473,11 @@
   function redrawAxes() {
     var x = transform.rescaleX(xBase);
     var y = transform.rescaleY(yBase);
-    var ticks = CITE_TICKS.filter(function (c) { return c <= maxY * 1.3; });
+    var quality = qualityMode();
+    var ticks = quality
+      ? QUALITY_TICKS
+      : CITE_TICKS.filter(function (c) { return c <= maxY * 1.3; });
+    var tickAt = function (c) { return quality ? y(c) : y(yEncode(c)); };
     gAxes.selectAll('*').remove();
 
     gAxes.append('g')
@@ -412,8 +486,8 @@
       .data(ticks)
       .join('line')
       .attr('x1', plot.timeLeft - 22).attr('x2', plot.right)
-      .attr('y1', function (c) { return y(yEncode(c)); })
-      .attr('y2', function (c) { return y(yEncode(c)); });
+      .attr('y1', tickAt)
+      .attr('y2', tickAt);
 
     gAxes.append('g')
       .attr('class', 'axis')
@@ -425,8 +499,10 @@
       .attr('class', 'axis')
       .attr('transform', 'translate(' + (plot.timeLeft - 22) + ',0)')
       .call(d3.axisLeft(y)
-        .tickValues(ticks.map(yEncode))
-        .tickFormat(function (v, i) { return formatCount(ticks[i]); }))
+        .tickValues(quality ? ticks : ticks.map(yEncode))
+        .tickFormat(function (v, i) {
+          return quality ? formatQualityTick(ticks[i]) : formatCount(ticks[i]);
+        }))
       .call(function (g) { g.select('.domain').remove(); });
 
     gAxes.append('line')
@@ -436,12 +512,13 @@
       .attr('y2', transform.applyY(plot.zeroRule));
 
     gAxes.append('text')
+      .attr('class', 'zero-band')
       .attr('text-anchor', 'end')
       .attr('fill', 'var(--muted)')
       .attr('font-size', 11)
       .attr('x', plot.timeLeft - 27)
       .attr('y', transform.applyY((plot.zeroLow + plot.zeroHigh) / 2) + 4)
-      .text('0');
+      .text(qualityMode() ? 'n/a' : '0');
 
     gAxes.append('text')
       .attr('class', 'caption')
@@ -487,9 +564,9 @@
       });
     nodeSel.selectAll('circle').data(function (d) { return [d]; }).join('circle')
       .attr('r', function (d) { return d.r; })
-      .attr('fill', topicColor)
+      .attr('fill', nodeFill)
       .attr('stroke', '#fff')
-      .attr('fill-opacity', function (d) { return yCount(d) ? 0.88 : 0.4; })
+      .attr('fill-opacity', nodeFillOpacity)
       .on('mouseenter', function (event, d) { enter(d, event); })
       .on('mousemove', function (event) { if (!locked) moveTip(event); })
       .on('mouseleave', leave)
@@ -653,9 +730,14 @@
 
   function highlight(d) {
     var set = related(d);
-    nodeSel.classed('dim', function (n) { return !set[n.index]; })
+    var hit = matches ? new Set(matches) : null;
+    function isDim(n) {
+      if (hit && !hit.has(n.index)) return true;
+      return !set[n.index];
+    }
+    nodeSel.classed('dim', isDim)
       .classed('held', function (n) { return locked && n.index === locked.index; });
-    labelSel.classed('dim', function (n) { return !set[n.index]; });
+    labelSel.classed('dim', isDim);
     styleEdges();
     edgeSel.filter(function (e) { return touches(e, d); }).raise();
     nodeSel.filter(function (n) { return n.index === d.index; }).raise();
@@ -663,16 +745,21 @@
   }
 
   function clearHighlight() {
-    nodeSel.classed('dim', false).classed('held', false);
-    labelSel.classed('dim', false);
+    nodeSel.classed('held', false);
     restyleForZoom();
+    if (matches || tagFilter || citeFilterOn() || telegramFilterOn()) {
+      applyFilters();
+      return;
+    }
+    nodeSel.classed('dim', false);
+    labelSel.classed('dim', false);
     scheduleLabels();
   }
 
   function enter(d, event) {
     if (locked) return;
     hovered = d;
-    highlight(d);
+    if (!matches || matches.indexOf(d.index) >= 0) highlight(d);
     showTip(d, event);
   }
 
@@ -747,6 +834,16 @@
         ? '<span class="meta">Litmaps ' + formatCount(d.lit_cites)
           + ' citations \u00b7 ' + formatCount(d.lit_refs) + ' refs</span>'
         : '')
+      + (d.quality != null
+        ? '<span class="meta">quality ' + formatQuality(d.quality)
+          + (d.quality_models
+            ? ' \u00b7 ' + (d.quality_accepts || 0) + '/' + d.quality_models
+            : '')
+          + (d.quality_verdict && d.quality_verdict !== 'KEEP'
+            ? ' \u00b7 ' + d.quality_verdict
+            : '')
+          + '</span>'
+        : '')
       + '<span class="meta">' + hint + '</span></div>');
     tip.style('opacity', 1);
     if (locked) pinTip(d);
@@ -812,13 +909,22 @@
         ideaCounts[idea] = (ideaCounts[idea] || 0) + 1;
       });
     });
-    var fields = (taxonomy.fields || []).map(function (field) {
-      return field.id;
-    }).filter(function (id) { return fieldCounts[id]; });
+    var seenFields = {};
+    var families = [];
+    (taxonomy.fields || []).forEach(function (field) {
+      if (!fieldCounts[field.id]) return;
+      seenFields[field.id] = true;
+      var fam = field.family || 'Other';
+      var group = families.find(function (g) { return g.name === fam; });
+      if (!group) {
+        group = {name: fam, ids: []};
+        families.push(group);
+      }
+      group.ids.push(field.id);
+    });
     var extraFields = Object.keys(fieldCounts).filter(function (id) {
-      return fields.indexOf(id) < 0;
+      return !seenFields[id];
     }).sort();
-    fields = fields.concat(extraFields);
     var ideas = (taxonomy.ideas || []).filter(function (idea) {
       return ideaCounts[idea];
     });
@@ -852,13 +958,29 @@
       });
       parent.appendChild(span);
     }
+    function famLabel(parent, name) {
+      var b = document.createElement('b');
+      b.className = 'fam';
+      b.textContent = name;
+      parent.appendChild(b);
+    }
     var fieldRow = row('fields');
     chip(fieldRow, 'all', '#8b959c', null, false);
     if (untagged) chip(fieldRow, 'untagged ' + untagged, UNTAGGED, 'untagged', false);
-    fields.forEach(function (field) {
-      chip(fieldRow, field + ' ' + fieldCounts[field],
-           TOPIC_COLOR[field] || UNTAGGED, field, false);
+    families.forEach(function (group) {
+      famLabel(fieldRow, group.name);
+      group.ids.forEach(function (field) {
+        chip(fieldRow, field + ' ' + fieldCounts[field],
+             TOPIC_COLOR[field] || UNTAGGED, field, false);
+      });
     });
+    if (extraFields.length) {
+      famLabel(fieldRow, 'extra');
+      extraFields.forEach(function (field) {
+        chip(fieldRow, field + ' ' + fieldCounts[field],
+             TOPIC_COLOR[field] || UNTAGGED, field, false);
+      });
+    }
     if (ideas.length) {
       var ideaRow = row('ideas');
       ideas.forEach(function (idea) {
@@ -920,6 +1042,7 @@
 
   function note(hitCount) {
     var base = 'x: publication date  \u00b7  ' + yNote()
+      + (qualityColorOn() ? '  \u00b7  colour: aggregated quality' : '')
       + '  \u00b7  edges parsed from arXiv/ar5iv HTML, page HTML and'
       + ' Crossref  \u00b7  built ' + data.generated;
     return hitCount == null ? base : hitCount + ' matching entries  \u00b7  ' + base;
@@ -975,6 +1098,19 @@
     savePrefs();
     runSearch();
   });
+  document.getElementById('qcolor').addEventListener('change', function () {
+    savePrefs();
+    restyleFills();
+    document.getElementById('note').textContent = note(
+      matches ? matches.length : null);
+  });
+
+  function restyleFills() {
+    if (!nodeSel) return;
+    nodeSel.selectAll('circle')
+      .attr('fill', nodeFill)
+      .attr('fill-opacity', nodeFillOpacity);
+  }
   document.getElementById('reset').addEventListener('click', function () {
     unlock();
     svg.transition().duration(350).call(zoom.transform, d3.zoomIdentity);

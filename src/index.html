@@ -37,6 +37,14 @@
   }
   input[type=search] { width: 210px; }
   label.check { color: var(--muted); display: flex; align-items: center; gap: 5px; }
+  .qscale {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 10px; letter-spacing: .2px;
+  }
+  .qscale b {
+    display: inline-block; width: 52px; height: 7px; border-radius: 4px;
+    background: linear-gradient(90deg, #c62828, #d9d3c5, #2e7d32);
+  }
   button {
     font: inherit; background: #fff; color: var(--ink); cursor: pointer;
     border: 1px solid var(--rule); border-radius: 5px; padding: 4px 9px;
@@ -57,6 +65,10 @@
   .legend-label {
     font-size: 10px; letter-spacing: .8px; text-transform: uppercase;
     color: var(--muted); min-width: 42px;
+  }
+  .legend .fam {
+    font-size: 10px; letter-spacing: .8px; text-transform: uppercase;
+    color: var(--muted); margin-left: 8px;
   }
   .legend span { display: flex; align-items: center; gap: 5px; cursor: pointer;
                  user-select: none; }
@@ -124,6 +136,7 @@
       <option value="children">y: cites (nested)</option>
       <option value="bonus">y: cites (bonus)</option>
       <option value="citations">y: citation count</option>
+      <option value="quality">y: aggregated quality</option>
     </select>
     <label class="check" id="addcited-wrap" hidden
            title="Add the in-list cited-by count on top of the selected cites axis">
@@ -132,6 +145,10 @@
     <label class="check"><input type="checkbox" id="edges" checked> citation links</label>
     <label class="check" title="Llama 3, OLMo 2, Spurious Rewards, Spurious Rewards Paradox, LiveMathematicianBench"><input type="checkbox" id="citefilter"> cites LLaMA / OLMo / Spurious Rewards / LiveMath</label>
     <label class="check" title="Papers that have a Telegram badge on the list"><input type="checkbox" id="tgfilter"> telegram</label>
+    <label class="check" title="Override topic colours with aggregated quality (−1 red, +1 green)">
+      <input type="checkbox" id="qcolor"> color by quality
+      <span class="qscale" aria-hidden="true">−1<b></b>+1</span>
+    </label>
     <button id="reset">reset view</button>
   </div>
   <div class="key">
