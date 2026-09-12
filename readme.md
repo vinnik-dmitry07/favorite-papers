@@ -1,14 +1,14 @@
 # Key papers of AI/AGI/ASI
 
-Score badges: [⚖ final · accepts/models · WATCH|DROP](filter/report.md) — aggregated quality in [-1, +1]. 0 is where reviewer Accept/Reject votes split 50/50. accepts/models are raw reviewer votes, not the aggregated score. WATCH/DROP is appended when the verdict is not KEEP. Older landmark papers can be inflated (pretrain leakage).
-
 ![Own citation map](assets/preview.png)
 
-Own version of the Litmaps map (preferred), with the links parsed straight out of the papers (arXiv/ar5iv HTML, page HTML, Crossref) instead of a hosted service: [live map](https://vinnik-dmitry07.github.io/favorite-papers/) or open [src/index.html](src/index.html) locally (`python -m http.server` from the repo root). Rebuild with `python src/parse_readme.py`, then `python src/fetch_refs.py`, then `python src/build_graph.py`. Telegram posts: put `TG_API_ID` and `TG_API_HASH` in `.env`, then `python tg/export.py` (interactive first login; the local index is hundreds of MB). Look up with `python tg/find.py <url>`.
+Own version of the Litmaps map (preferred), with the links parsed straight out of the papers (arXiv/ar5iv HTML, page HTML, Crossref) instead of a hosted service: [->live map<-](https://vinnik-dmitry07.github.io/favorite-papers/) or open src/index.html locally (`python -m http.server` from the repo root). Rebuild with `python src/parse_readme.py`, then `python src/fetch_refs.py`, then `python src/build_graph.py`. Telegram posts: put `TG_API_ID` and `TG_API_HASH` in `.env`, then `python tg/export.py` (interactive first login; the local index is hundreds of MB). Look up with `python tg/find.py <url>`.
 
 ![Litmaps](assets/map.png)
 
 Litmaps — [https://app.litmaps.com/shared/5bb436d0-a026-493a-a765-f48fda77ad0c](https://app.litmaps.com/shared/5bb436d0-a026-493a-a765-f48fda77ad0c)
+
+Score badges: [⚖ final · accepts/models · WATCH|DROP](filter/report.md) — aggregated quality in [-1, +1]. 0 is where reviewer Accept/Reject votes split 50/50. accepts/models are raw reviewer votes, not the aggregated score. WATCH/DROP is appended when the verdict is not KEEP. Older landmark papers can be inflated (pretrain leakage).
 
 ## Reinforcement learning
 
