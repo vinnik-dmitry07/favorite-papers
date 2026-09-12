@@ -3,11 +3,12 @@
    cites, unique nested outgoing cites, outgoing cites plus
    a 1/cited bonus per outgoing target, any of those cites modes plus
    cited-by, the Litmaps citation count, or the aggregated quality
-   score (toggle). Colour can follow the topic or the aggregated
-   quality score (−1 red, +1 green). Curved links = "this paper
-   cites that one".
+   score (toggle). Circle size is in-list cited-by (Litmaps count on
+   the citation-count axis). Colour can follow the topic or the
+   aggregated quality score (−1 red, +1 green). Curved links =
+   "this paper cites that one".
    Positions are data-driven; a collision pass only nudges overlapping
-   nodes apart. */
+   nodes apart inside a per-node box. */
 (function () {
   'use strict';
 
@@ -286,22 +287,28 @@
     return 'y: cited by other entries on this list';
   }
 
+  function sizeValue(d) {
+    if (yMode() === 'citations') return d.lit_cites || 0;
+    return d.cites;
+  }
+
   function applyMetric() {
+    radius = d3.scaleSqrt()
+      .domain([0, d3.max(nodes, sizeValue) || 1])
+      .range([4, 21]);
     if (qualityMode()) {
-      radius = d3.scaleSqrt().domain([0, 2]).range([4, 21]);
+      maxY = 1;
       nodes.forEach(function (d) {
         var q = d.quality;
-        d.r = q == null ? 4 : radius(q + 1);
+        d.r = radius(sizeValue(d));
         d.score = (q == null ? 0 : q + 1) * 2 + (d.cites + d.refs) * 0.5;
       });
-      maxY = 1;
       return;
     }
     maxY = d3.max(nodes, yCount) || 1;
-    radius = d3.scaleSqrt().domain([0, maxY]).range([4, 21]);
     nodes.forEach(function (d) {
       var yv = yCount(d);
-      d.r = radius(yv);
+      d.r = radius(sizeValue(d));
       d.score = yv * 2 + (d.cites + d.refs - yv) * 0.5;
     });
   }
@@ -428,6 +435,27 @@
     plot.zeroRule = plot.bottom - ZERO_BAND + 6;
 
     var gutterMid = plot.left + GUTTER / 2;
+    function yRow(v) {
+      if (v <= 0) return plot.zeroRule;
+      return yBase(yEncode(v));
+    }
+    function clampNudge(gap) {
+      return Math.max(6, Math.min(24, 0.45 * gap));
+    }
+    function rowGap(fromY, yv, dir) {
+      var step = 1;
+      var gap = dir * (fromY - yRow(yv + dir * step));
+      while (gap < 12 && step < 24) {
+        step += 1;
+        var next = yv + dir * step;
+        if (dir < 0 && next <= 0) {
+          gap = dir * (fromY - plot.zeroRule);
+          break;
+        }
+        gap = dir * (fromY - yRow(next));
+      }
+      return gap;
+    }
     nodes.forEach(function (d, i) {
       var wobble = ((i * 2654435761) % 1000) / 1000 - 0.5;
       d.tx = d.time ? xBase(d.time) : gutterMid + wobble * (GUTTER - 26);
@@ -438,23 +466,54 @@
       d.x = d.tx;
       d.y = d.ty;
       d.undated = !d.time;
+      if (d.undated) {
+        d.xLo = plot.left + d.r;
+        d.xHi = plot.left + GUTTER - d.r;
+      } else {
+        var dxMax = Math.max(24, d.r * 2.2);
+        d.xLo = Math.max(timeLeft - 14, d.tx - dxMax);
+        d.xHi = Math.min(plot.right + 26, d.tx + dxMax);
+      }
+      var up = 6;
+      var down = 10;
+      if (hasY(d)) {
+        if (qualityMode()) {
+          up = 12;
+          down = 12;
+        } else {
+          var yv = yCount(d);
+          var near = Math.abs(d.ty - yRow(yv + 1)) < 12
+            || Math.abs(yRow(yv - 1) - d.ty) < 12;
+          if (near) {
+            up = 20;
+            down = 20;
+          } else {
+            up = clampNudge(rowGap(d.ty, yv, 1));
+            down = clampNudge(rowGap(d.ty, yv, -1));
+          }
+        }
+      }
+      d.yLo = Math.max(plot.top, d.ty - up);
+      d.yHi = Math.min(plot.bottom, d.ty + down);
     });
 
     var sim = d3.forceSimulation(nodes)
-      .force('x', d3.forceX(function (d) { return d.tx; }).strength(0.92))
-      .force('y', d3.forceY(function (d) { return d.ty; }).strength(0.96))
-      .force('collide', d3.forceCollide(function (d) { return d.r + 1.0; })
-                          .strength(0.4).iterations(2))
+      .force('x', d3.forceX(function (d) { return d.tx; }).strength(0.3))
+      .force('y', d3.forceY(function (d) { return d.ty; }).strength(0.35))
+      .force('collide', d3.forceCollide(function (d) { return d.r + 1.2; })
+                          .strength(0.9).iterations(5))
+      .force('bounds', function () {
+        nodes.forEach(function (d) {
+          if (d.x < d.xLo) { d.x = d.xLo; d.vx = 0; }
+          else if (d.x > d.xHi) { d.x = d.xHi; d.vx = 0; }
+          if (d.y < d.yLo) { d.y = d.yLo; d.vy = 0; }
+          else if (d.y > d.yHi) { d.y = d.yHi; d.vy = 0; }
+        });
+      })
       .stop();
     for (var t = 0; t < 300; t += 1) sim.tick();
 
     nodes.forEach(function (d) {
-      var lo = d.undated ? plot.left + d.r : timeLeft - 14;
-      var hi = d.undated ? plot.left + GUTTER - d.r : plot.right + 26;
-      d.x = Math.max(lo, Math.min(hi, d.x));
-      // Keep score rows intact so the last parents stay separable; only
-      // a small collide nudge is allowed.
-      d.y = Math.max(d.ty - 6, Math.min(d.ty + 10, d.y));
       d.y = Math.max(plot.top, Math.min(plot.bottom, d.y));
     });
     plot.timeLeft = timeLeft;
@@ -1040,8 +1099,15 @@
     else scheduleLabels();
   }
 
+  function sizeNote() {
+    var mode = yMode();
+    if (mode === 'cited' || mode === 'citations') return '';
+    return '  \u00b7  size: cited by on this list';
+  }
+
   function note(hitCount) {
     var base = 'x: publication date  \u00b7  ' + yNote()
+      + sizeNote()
       + (qualityColorOn() ? '  \u00b7  colour: aggregated quality' : '')
       + '  \u00b7  edges parsed from arXiv/ar5iv HTML, page HTML and'
       + ' Crossref  \u00b7  built ' + data.generated;

@@ -37,6 +37,42 @@ def map_url(server: ThreadingHTTPServer) -> str:
     return f'http://127.0.0.1:{server.server_address[1]}/src/index.html'
 
 
+OVERLAP_JS = '''() => {
+    const gs = [...document.querySelectorAll('.nodes g')];
+    const pts = gs.map(g => {
+        const c = g.querySelector('circle');
+        const t = g.getAttribute('transform').slice(10, -1).split(',').map(Number);
+        return {x: t[0], y: t[1], r: +c.getAttribute('r')};
+    });
+    let pairs = 0;
+    for (let i = 0; i < pts.length; i++) {
+        for (let j = i + 1; j < pts.length; j++) {
+            const a = pts[i], b = pts[j];
+            if (Math.hypot(a.x - b.x, a.y - b.y) < a.r + b.r - 0.5) pairs += 1;
+        }
+    }
+    const rs = pts.map(p => p.r).sort((a, b) => a - b);
+    return {
+        pairs,
+        medianR: rs.length ? rs[Math.floor(rs.length / 2)] : 0,
+    };
+}'''
+
+
+def overlap_pairs(page) -> dict:
+    return page.evaluate(OVERLAP_JS)
+
+
+def check_overlap(page, errors: list, mode: str) -> dict:
+    stats = overlap_pairs(page)
+    print(f'{mode}: pairs {stats["pairs"]}, median r {stats["medianR"]}')
+    if stats['pairs'] > 50:
+        errors.append(
+            f'{mode} has {stats["pairs"]} overlapping pairs (max 50)'
+        )
+    return stats
+
+
 def preview() -> None:
     '''Render the still that readme.md links to.'''
     server = start_server()
@@ -378,6 +414,7 @@ def main() -> None:
                 ys,
             };
         }''')
+        check_overlap(page, errors, 'cited')
         page.select_option('#yaxis', 'cites')
         page.wait_for_timeout(900)
         cites_axis = page.evaluate('''() => {
@@ -401,6 +438,7 @@ def main() -> None:
         print('yaxis cited:', cited_axis['captions'], cited_axis['note'][:72])
         print('yaxis cites:', cites_axis['captions'], cites_axis['note'][:72],
               'moved', moved, 'r', cites_axis['biggestRadius'])
+        check_overlap(page, errors, 'cites')
         if not any('cited by more' in c for c in cited_axis['captions']):
             errors.append('cited-by axis caption missing')
         if not any('cites more' in c for c in cites_axis['captions']):
@@ -430,6 +468,7 @@ def main() -> None:
         moved_par = sum(1 for a, b in zip(cites_axis['ys'], parents_axis['ys'])
                         if abs(a - b) > 8)
         print('yaxis parents: moved vs cites', moved_par)
+        check_overlap(page, errors, 'parents')
         if not any('parent papers' in c for c in parents_axis['captions']):
             errors.append('parent-cites axis caption missing')
         if 'parent cites' not in parents_axis['note']:
@@ -457,6 +496,7 @@ def main() -> None:
         moved_ch = sum(1 for a, b in zip(cites_axis['ys'], children_axis['ys'])
                        if abs(a - b) > 8)
         print('yaxis children: moved vs cites', moved_ch)
+        check_overlap(page, errors, 'children')
         if not any('nested outgoing' in c for c in children_axis['captions']):
             errors.append('nested-cites axis caption missing')
         if 'nested outgoing' not in children_axis['note']:
@@ -484,6 +524,7 @@ def main() -> None:
         moved_bo = sum(1 for a, b in zip(cites_axis['ys'], bonus_axis['ys'])
                        if abs(a - b) > 8)
         print('yaxis bonus: moved vs cites', moved_bo)
+        check_overlap(page, errors, 'bonus')
         if not any('less-cited targets' in c for c in bonus_axis['captions']):
             errors.append('bonus-cites axis caption missing')
         if '1/cited' not in bonus_axis['note']:
@@ -571,6 +612,7 @@ def main() -> None:
                         if abs(a - b) > 8)
         print('yaxis citations: ticks', cites_num['ticks'],
               'moved', moved_cit, 'r', cites_num['biggestRadius'])
+        check_overlap(page, errors, 'citations')
         if not any('more citations' in c for c in cites_num['captions']):
             errors.append('citation-count axis caption missing')
         if 'Litmaps citation count' not in cites_num['note']:
@@ -626,6 +668,7 @@ def main() -> None:
         print('yaxis quality: ticks', quality_axis['ticks'],
               'moved', moved_q, 'hi/lo', quality_axis['hiQ'],
               quality_axis['loQ'], quality_axis['hiY'], quality_axis['loY'])
+        check_overlap(page, errors, 'quality')
         if not any('aggregated quality' in c for c in quality_axis['captions']):
             errors.append('quality axis caption missing')
         if 'aggregated quality' not in quality_axis['note']:
