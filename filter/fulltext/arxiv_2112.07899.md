@@ -1,0 +1,273 @@
+##### Report GitHub Issue
+
+Content selection saved. Describe the issue below:
+
+# Large Dual Encoders Are Generalizable Retrievers
+
+###### Abstract
+
+It has been shown that dual encoders trained on one domain often fail to generalize to other domains for retrieval tasks. One widespread belief is that the bottleneck layer of a dual encoder, where the final score is simply a dot-product between a query vector and a passage vector, is too limited to make dual encoders an effective retrieval model for out-of-domain generalization. In this paper, we challenge this belief by scaling up the size of the dual encoder model while keeping the bottleneck embedding size fixed. With multi-stage training, surprisingly, scaling up the model size brings significant improvement on a variety of retrieval tasks, especially for out-of-domain generalization. Experimental results show that our dual encoders, G eneralizable T 5-based dense R etrievers (GTR), outperform existing sparse and dense retrievers on the BEIR dataset Thakur et al. (2021) significantly. Most surprisingly, our ablation study finds that GTR is very data efficient, as it only needs 10% of MS Marco supervised data to achieve the best out-of-domain performance. 1 1 1 All the GTR models are released at https://tfhub.dev/google/collections/gtr/1 .
+
+## 1 Introduction
+
+Typical neural retrieval models follow a dual encoder paradigm Gillick et al. (2018) ; Yang et al. (2020) ; Karpukhin et al. (2020) . In this setup, queries and documents are encoded separately into a shared fixed-dimensional embedding space where relevant queries and documents are represented in each other’s proximity. Then, approximated nearest neighbor search Vanderkam et al. (2013) ; Johnson et al. (2021) is applied to efficiently retrieve relevant documents given an encoded input query.
+
+While dual encoders are popular neural retrievers, the expressiveness of the model is limited by a bottleneck layer consisting of only a simple dot-product between query embeddings and passage embeddings. Several papers Lu et al. (2021) ; Khattab and Zaharia (2020) have discussed that the simple dot-product (or cosine similarity) between the embeddings might not be powerful enough to capture semantic relevance. Thakur et al. (2021) studied whether the retriever models can generalize to other domains and conclude that dual encoder models have “issues for out-of-distribution data”, and showed that models with more interactions between queries and documents have better generalization ability.
+
+In this paper, we challenge this belief by scaling up the dual encoder model size while keeping the bottleneck embedding size fixed. Note that scaling up a dual encoder is different from scaling up pretrained language models such as BERT Devlin et al. (2019) and T5 Raffel et al. (2020) because of the presence of the bottleneck layer. While increasing the model size can greatly increase the capacity of the model, for dual encoders, where the embedding size is fixed, the interactions between queries and documents are still limited by a simple dot-product.
+
+In order to test this hypothesis, we take advantage of the existing T5 model architecture and checkpoints, which allows us to build encoders of up to 5 billion parameters while keeping the bottleneck embedding dimension of 768 in all configurations, as illustrated in Figure 2 . Following Ni et al. (2021) , we build dual encoders by taking the encoder part of T5. For effectively using the power of large models, we collect roughly two billion community question-answer pairs as generic pre-training data. By combining pre-training using generic training data and fine-tuning using MS Marco Nguyen et al. (2016) , we are able to train large-scale dual encoder retrieval models. We call the resulting models G eneralizable T 5-based dense R etrievers ( GTR ).
+
+We evaluate the zero-shot performance of GTR on the BEIR benchmark Thakur et al. (2021) , which consists of 18 selected information retrieval tasks across 9 domains. 2 2 2 We focus on evaluating the performance on the 18 BEIR Thakur et al. (2021) tasks other than MS Marco and we did not use in-domain training data or question generation Ma et al. (2021) . Our results show that, surprisingly, scaling up of dual encoders leads to better generalizability despite the fixed bottleneck embedding dimension. Second, pre-training on community question-answer pairs and fine-tuning on human curated data are both important to fully utilize the power of the scaled up model. In addition, with scaling and pre-training, we found GTR to be highly data efficient in terms of human annotated queries, as it only needs to use 10% of MS Marco to match the overall out-of-domain performance.
+
+## 2 Background
+
+### 2.1 Dual Encoder and dense retrieval
+
+Classic retrieval models such as BM25 Robertson and Zaragoza (2009) relies on lexical overlap, term frequency heuristics, inverse document frequency and document length. This type of retrieval models does not require any training and can generalize reasonably well due to its emphasis on lexical match. However, these retrieval models fall short of finding documents that are only semantically related to the query and have low lexical overlap.
+
+This is where the dense retrieval models come into play. The retrieval process is dense because both queries and documents are embedded into low-dimensional dense representations, in contrast to the high-dimensional sparse representations used in lexical based retrieval functions. Such an encoding process is often accomplished by a dual encoder architecture, with one of the encoders tailored to the queries and the other to the documents. Matching using dense representations enables dense retrieval models to go beyond lexical overlap to retrieve semantically similar documents. This powerful capability of semantic matching, however, often requires relatively large amounts of training data.
+
+Another critical challenge for dual encoder models is that the performance is possibly bounded by the dot-product similarity function. As such, there is growing interest in applying lightweight interaction layers to replace the single dot-product function. On the one hand, Luan et al. (2020) proposes a multi-vector encoding model, which represents each document as a fixed-size set of multiple vectors, and calculate the relevance scores as the maximum inner product over this set. This model combines the efficiency of dual encoders with some of the expressiveness of attention based architectures. On the other hand, ColBERT ( Khattab and Zaharia, 2020 ) proposes to learn embeddings for each token and then use a “MaxSim” operation to select the best candidate. These models achieve significant improvement but also introduce a large latency overhead. In this paper, we take a step back and aim to empirically study how to improve the performance of single dot-product based methods. Specifically, we study whether simply scaling up the model capacity can lead to better fixed embeddings to improve the performance of single dot-product retrievers.
+
+### 2.2 BEIR generalization task
+
+For evaluation in this paper we use BEIR, a heterogenous benchmark for zero-shot evaluation of information retrieval models. The BEIR zero-short evaluation suit contains 18 information retrieval datasets 3 3 3 MS Marco is excluded from the zero-shot comparison as many baseline model used it as training data. across 9 domains, including Bio-Medical , Finance , News , Twitter , Wikipedia , StackExchange , Quora , Scientific , and Misc . The majority of the datasets have binary relevancy labels indicating whether a document is relevant to a given query or not. A small part of the datasets have 3-level or 5-level relevancy judgements. We refer readers to the original BEIR paper Thakur et al. (2021) for more details.
+
+## 3 Generalizable T5 Retriever
+
+### 3.1 T5 dual encoder
+
+We use the dual encoder framework to train dense retrieval models. We follow prior work ( Xiong et al., 2020 ; Hofstätter et al., 2021 ) to initialize dual encoders from pre-trained language models. In this work, we found convenient to use the pre-trained T5 model family as our backbone encoder because the T5 model family provides off-the-shelf pre-trained models (e.g. T5, mT5, byT5) with a wide range of model capacity from millions to billions of parameters ( Raffel et al., 2020 ; Xue et al., 2020 ; Xue et al., 2021 ) . The architectures of our models are illustrated in fig. 2 .
+
+Let paired examples 𝒟 = { ( q i , p i + ) } \mathcal{D}=\{(q_{i},p_{i}^{+})\} be the training set, where q i q_{i} is an input question and p i + p_{i}^{+} is a related passage (e.g., a semantically relevant passage to the question). Following Ni et al. (2021) , we encode the question q i q_{i} and passage p i + p_{i}^{+} into embeddings by feeding them to the T5 encoder and taking the mean pooling of the encoder as output. In all outr experiments, we fix the output embeddings to be of size 768.
+
+We train the model using an in-batch sampled softmax loss ( Henderson et al., 2017 ) : ℒ = e sim ​ ( q i , p i + ) / τ ∑ j ∈ ℬ e sim ​ ( q i , p j + ) / τ , \mathcal{L}=\frac{e^{\text{sim}(q_{i},p_{i}^{+})/\tau}}{\sum_{j\in\mathcal{B}}{e^{\text{sim}(q_{i},p_{j}^{+})/\tau}}}, (1) where the similarity scoring function sim is the cosine similarity between the embeddings of q i q_{i} and p i + p_{i}^{+} . ℬ \mathcal{B} is a mini-batch of examples and τ \tau is the softmax temperature.
+
+Additional negatives p j − p_{j}^{-} can be given for input question q q . The loss is computed by including them in the denominator: ℒ = e sim ​ ( q i , p i + ) / τ ∑ j ∈ ℬ e sim ​ ( q i , p j + ) / τ + e sim ​ ( q i , p j − ) / τ . \mathcal{L}=\frac{e^{\text{sim}(q_{i},p_{i}^{+})/\tau}}{\sum_{j\in\mathcal{B}}{e^{\text{sim}(q_{i},p_{j}^{+})/\tau}+e^{\text{sim}(q_{i},p_{j}^{-})/\tau}}}. (2)
+
+We also apply a bi-directional in-batch sampled softmax loss, where we compute losses for both question to document matching and document to question matching.
+
+### 3.2 Multi-stage training
+
+As shown in fig. 3 , we use a multi-stage dual encoder training approach to achieve generalizable retrieval models.
+
+The training process includes a pre-training stage on a web-mined corpus and a fine-tuning stage on search datasets. The web-mined corpus provides a large amount of semi-structured data pairs (such as question-answer pairs and conversations), which can provide rich semantic relevance information. It is easy to collect but it is often not well annotated, if at all. The search datasets are often annotated by humans, and the queries and documents are also authored by humans. These datasets are of high quality but costly to collect.
+
+In this work, for dual encoder pre-training, we initialize the dual encoders from the T5 models and train on question-answer pairs collected from the Web. Recently, Sentence-T5 ( Ni et al., 2021 ) explored different ways to extract strong text embeddings and achieved remarkable performance on SentEval and Sentence Textual Similarity tasks. We follow that setting to encode queries and passages via mean pooling from the T5 encoders and focus on the dense retrieval tasks.
+
+For fine-tuning, our aim is to adapt the model to retrieval using a high quality search corpus so the model can learn to better match generic queries to documents. In this paper, we consider two datasets for fine-tuning: MS Marco ( Nguyen et al., 2016 ) and Natural Questions ( Kwiatkowski et al., 2019 ) .
+
+## 4 Experimental setup
+
+### 4.1 Training Data
+
+#### Community QA.
+
+In order to leverage most of the power from the large scale models, we collect input-response pairs and question-answer pairs from online forums and QA websites including Reddit, Stack-Overflow, etc. This results in 2 billion question-answer pairs that we use to pre-train the dual encoder.
+
+#### MS Marco.
+
+We consider the MS Marco dataset Nguyen et al. (2016) , which includes 532K query and document pairs, as search data for fine-tuning. The dataset is sampled from Bing search logs, which covers a broad range of domains and concepts. Most of the neural models compared in Thakur et al. (2021) are trained on MS Marco, including DeepCT Dai and Callan (2020) , DocT5Query Nogueira (2019) , ANCE Xiong et al. (2020) and ColBERT Khattab and Zaharia (2020) . Some of these models have shown great generalization with comparable or even better performance relative to BM25.
+
+#### Natural Questions.
+
+In the fine-tuning stage, we also consider the Natural Questions dataset ( Kwiatkowski et al., 2019 ) , which has been widely used in the dense retrieval literature ( Karpukhin et al., 2020 ; Xiong et al., 2020 ) . It consists of 130k query and passage pairs which are also human-annotated.
+
+### 4.2 Configurations
+
+We implement GTR models in JAX 4 4 4 https://github.com/google/jax and train them on Cloud TPU-V8. We consider different sizes of the T5 transformer Vaswani et al. (2017) architecture including Base, Large, XL and XXL. Their number of parameters are listed in table 1 .
+
+Note that we only use the encoder portion of the T5 models and thus the number of parameters are less than half of the full model size. We use the off-the-shelf checkpoints as the initial parameters and use the same sentencepiece vocabulary model. 5 5 5 https://github.com/google-research/text-to-text-transfer-transformer
+
+During pre-training and fine-tuning, we set the batch size to 2048 and use a softmax temperature τ \tau of 0.01. We use Adafactor optimizer ( Shazeer and Stern, 2018 ) and set the initial learning rate to 1e-3 with a linear decay. We train the model for 800K steps and 20K steps for the pre-training and fine-tuning stages, respectively.
+
+For fine-tuning, we use the hard negatives released by RocketQA ( Qu et al., 2021 ) when fine-tuning with MS Marco data and the hard negatives release by ( Lu et al., 2021 ) for Natural Questions, which were proven to lead to better retriever performance. By default, we use the complete MS Marco dataset and the NQ dataset for fine-tuning.
+
+When evaluating on the BEIR benchmark, we use sequences of 64 tokens for the questions and 512 for the documents in all datasets except Trec-News, Robust-04 and ArguAna. In particular, we set the document length to 768 for Trec-News and Robust-04 while setting the question length to 512 for ArguAna, in accordance to the average query and document lengths in these datasets.
+
+### 4.3 Models for comparison
+
+We consider various baselines, including sparse retrieval models: BM25, DocT5Query, and dense retrieval models: DPR, ANCE, TAS-B, and GenQ ( Thakur et al., 2021 ) .
+
+We conduct experiments on four different sizes of our GTR models (GTR-Base, GTR-Large, GTR-XL, and GTR-XXL). We consider three different settings for GTR to investigate the scaling up effect for different training stages: • GTR. This is the full GTR model that conducts both pre-training and fine-tuning.
+
+• GTR-FT. This is a fine-tune only version of GTR where the T5 dual encoders on the MS Marco dataset.
+
+• GTR-PT. This is a pre-training only version of GTR where the T5 dual encoders is only pre-trained on the CommunityQA dataset.
+
+We evaluate baseline and our models on the BEIR generalization task Thakur et al. (2021) as discussed in section 2.2 ,. We consider two main retrieval metrics: NDCG@10 and Recall@100 following BEIR Thakur et al. (2021) . Due to space limitations, we report NDCG@10 in the main section of the paper and include Recall@100 results in appendix A .
+
+## 5 Evaluation Results
+
+We present three groups of experiments to study the a) in-domain performance of the GTR models on MS Marco, b) their out-of-domain generalization performance on BEIR, and c) their data efficiency.
+
+### 5.1 Results on MS Marco
+
+We first analyze in-domain performance based on the evaluation results on MS Marco. As show in table 3 , with scaling up, the models achieve consistent improvement on NDCG@10. We observe similar improvements on other evaluation metrics including MRR@10 and Recall@1000 and reported the numbers in table 7 of appendix A . This shows that increasing model capacity leads to better in-domain performance.
+
+### 5.2 Results on BEIR generalization tasks
+
+The next set of experiments investigates the effect of increasing model capacity on out-of-domain (OOD) performance.
+
+As shown in table 3 , we observe a clear gain on out-of-domain performance in terms of NDCG@10 when the model size increases. The GTR-Large model already outperforms the previous best dense retrieval model TAS-B as well as the best sparse model DocT5Query. Scaling up to GTR-XXL leads to another jump in retrieval performance. Similar improvements are found on Recall@100 as shown in the Appendix’s table 8 . On average, the scaling up process demonstrates an encouraging ascending trend that eventually outperforms all baseline methods on all evaluation metrics. This confirms that scaling up is a valid path towards generalizability.
+
+Previously, dual encoders failed to match the performance of BM25 for tasks that require better lexical matching capabilities. Thus, we wanted to investigate what kind of tasks can get improved by scaling up the model size. Figure 4 presents a detailed comparison of all sizes of GTR models against the BM25 baseline.
+
+For tasks like NQ where dual encoders have been previously shown to be more effective than BM25, increasing the model size continues to advance the performance of dual encoders. This suggests scaling up can further boost the head start of dense models over sparse models on these datasets.
+
+For tasks like BioASQ and NFCorpus, where dual encoders previously struggled to match the performance of BM25 for inherent reasons, we discovered that scaling up consistently improves the retrieval performance. In particular, for NFCorpus, our Base model under-performs BM25 but the XL model outperforms BM25 by 5.5% (0.343 vs. 0.325). This exciting finding verifies our assumption that scaling up can further exploit the powerful semantic matching capabilities of the dual encoder models and enable them to ultimately outperform BM25.
+
+### 5.3 Data efficiency for large retrievers
+
+To better understand the data efficiency for large dual encoders, we trained models using different portions of the MS Marco dataset during fine-tuning. In particular, we sampled a subset of the training data by keeping only 10% of the training queries as well as their relevant (positive) passages and irrelevant (hard negative) passages.
+
+As shown in table 4 , using 10% of training data reduces the in-domain performance of the GTR models on MS Marco. For the GTR-FT (fine-tuning only) models, using 10% of the data leads to a mixed result of out-of-domain performance.
+
+On the other hand, for full GTR models, using 10% of the MS Marco dataset is sufficient for fine-tuning. In particular, the GTR-Large, XL and XXL models achieve comparable or even better OOD performance than fine-tuning on the complete MS Marco dataset. This might suggest that GTR models have the benefit of data efficiency and could use less training data for domain adaptation.
+
+## 6 Ablation Study and Analysis
+
+In this section we present ablations and analysis to further understand the effects of scaling up, the impact of fine-tuning and pre-training, and the trends of the GTR model on different experimental conditions.
+
+### 6.1 Effect of scaling up for different training stages
+
+The first ablation study aims to investigate how scaling up effects dual encoder pre-training and fine-tuning. Results are listed in table 5 .
+
+For fine-tuning only models, scaling up benefits both in-domain and out-of-domain performance. For pre-training only models, the improvement on in-domain performance is not obvious; meanwhile for out-of-domain tasks, scaling up also improves the generalization. Finally with both pre-training and fine-tuning, GTR models consistently improve over GTR-FT models of all sizes. This shows the power of combining scaling up and a generic pre-training stage.
+
+### 6.2 Importance of the fine-tuning dataset
+
+In table 5 , we compare GTR and GTR-PT on the BEIR benchmark to understand the importance of fine-tuning on MS Marco. The table shows that there is a clear gap between GTR models before and after fine-tuning. The result shows the necessity of leveraging a high quality dataset (e.g. search data) to fine-tune the dual encoders.
+
+In table 6 , we compare fine-tuning GTR on NQ instead of MS Marco. Compared to MS Marco, NQ only covers Wikipedia documents and is much smaller in size, which allows us to investigate the performance of GTR when fine-tuned on a less generalizable dataset. In addition, fine-tuning on NQ can give us a fair comparison with DPR.
+
+As shown in table 6 , the GTR-base model fine-tuned on NQ outperforms the original DPR model, which uses a BERT-Base model as the encoder backbone. This demonstrates the effectiveness of our pre-training on the Web dataset as well as the hard negatives introduced from Lu et al. (2021) for NQ. Fine-tuning on NQ leads to inferior performance compared to fine-tuning on MS Marco, which is consistent with prior work Thakur et al. (2021) . However, importantly, scaling up GTR size improves zero-shot performance on BEIR when fine-tuning on NQ. This shows that the benefit of scaling up holds for different fine-tuning datasets. Furthermore, when scaling from Large to XL, we observe a larger gain when fine-tuning with NQ than with MS Marco, indicating that scaling up helps more when using weaker fine-tuning data.
+
+### 6.3 Document length vs model capacity
+
+Previously, BEIR has shown that models trained with cosine similarity prefer short documents while those trained with dot-product prefer long documents Thakur et al. (2021) . We investigate whether scaling up affect this observation. Specifically, we compute the median lengths (in words) of the top-10 retrieved documents for all queries. Results are shown in fig. 5 .
+
+Though all GTR models are trained using cosine similarity, we found that scaling up the model size has influence over the lengths of retrieved documents. We observe an increasing trend of document length for DB-Pedia, Fever, HotpotQA, Signal-1M, Trec-News, and Web-Touche2020 with scaling up. In particular, for Web-Touche2020, the lengths of the retrieved documents grow drastically as the models scale up: The largest GTR-XXL retrieves documents that are on average twice as long compared with the smallest GTR-Base. This plays in our favor since Thakur et al. (2021) show that the majority of relevant documents in Web-Touche2020 are longer.
+
+On the other hand, the only exception we observe is the Trec-Covid dataset, where GTR-XXL model retrieves much shorter documents than those retrieved by the smaller size counterparts. This may explain the inferior performance of GTR-XXL on Trec-Covid shown in table 3 and table 8 . We leave it as future work to explore the effects of using the dot-product as similarity function for large dual encoders.
+
+## 7 Related Work
+
+#### Neural information retrieval.
+
+Document retrieval is an important task in the NLP and information retrieval (IR) communities. The goal is to find the relevant document from a large corpus given a query. Traditionally, lexical based approaches trying to match the query and document based on term overlap, such as TF-IDF and BM25 Robertson and Zaragoza (2009) , have achieved great success in this task. Recently, neural based approaches, which go beyond the simple term matching, are being quickly adopted by the community and achieve state-of-the-art performance on multiple retrieval tasks, such as passage retrieval Karpukhin et al. (2020) , question answering Ahmad et al. (2019) , conversational question answering Qu et al. (2020) and bitext retrieval Feng et al. (2020) .
+
+#### Dual encoders for neural retrieval.
+
+Dual encoders have demonstrated to be one type of neural retrievers that can achieve great performance compared to traditional sparse models such as BM25 for a wide range of retrieval tasks ( Karpukhin et al., 2020 ; Gillick et al., 2018 ) . One key aspect to their success is the adoption of pre-trained language models, which enables the dual encoders to have backbone contextual embeddings to initialize from. Other techniques such as negative mining ( Xiong et al., 2020 ; Lu et al., 2021 ; Sachan et al., 2021 ) and large training batch sizes ( Qu et al., 2021 ) have also shown great effectiveness. However, few of the previous works have discussed the effect of the backbone model’s capacity.
+
+#### Zero-shot neural retrieval.
+
+Recent works have shown great improvement under the zero-shot setting for dual encoders by leveraging distillation and synthetic data generation ( Thakur et al., 2021 ; Hofstätter et al., 2021 ; Ma et al., 2020 ) . Both of these techniques, and scaling up backbone models, are effective ways to close the gap between dual encoders and the upper bound of the single-product approaches with fixed-dimension embeddings. On the other hand, multi-vector approaches introduce more interactions between dense embeddings, which could also benefit from scaling up the backbone multi-vector encoders. We hope that our observation about scaling up model sizes for single dot-product based methods can be combined with these techniques and further push the frontier of neural retrieval models.
+
+## 8 Inference latency
+
+One caveat for scaling up model size is the increment in the latency overhead. We investigate the inference speed in terms of microseconds (ms) for all GTR models with batch size 1 and input length 128. We found the latency increases from 17 ms, 34 ms, 96 ms to 349 ms. The GTR-Base model has close latency compared to TAS-B while the largest GTR-XXL model has a similar latency to the re-ranking models ( Thakur et al., 2021 ) . With the recent work towards making large models efficient from angles such as sparsity, distillation and prompt-tuning, we hope the inference time for large dual encoders can be significantly reduced in the future.
+
+## 9 Conclusion
+
+This paper presents the Generalizable T5 Retriever (GTR), a scaled-up dual encoder model with a fixed-size bottleneck layer. We show that scaling up the model size brings significant improvement on retrieval performance across the board on the BEIR zero-shot retrieval benchmark, especially for out-of-domain generalization. The GTR-XXL model achieves state-of-the-art performance on the BEIR benchmark, outperforming many models that use earlier interactions between queries and documents. This sheds light on the research direction to keep improving the single vector representation model through better backbone encoders. The findings here are also complementary with other recent works that improve the dual encoder training, including distilling from a ranker / scorer model, using a better contrasting pre-training objective and scaling up the encoders for multi-vector retrieval models.
+
+## Acknowledgments
+
+We thank Chris Tar and Don Metzler for feedback and suggestions.
+
+## References
+
+Ahmad et al. (2019) Amin Ahmad, Noah Constant, Yinfei Yang, and Daniel Cer. 2019. ReQA: An evaluation for end-to-end answer retrieval models . In Workshop on Machine Reading for Question Answering .
+
+Anonymous (2022) Anonymous. 2022. Contrastive pre-training for zero-shot information retrieval . In Submitted to The Tenth International Conference on Learning Representations . Under review.
+
+Dai and Callan (2020) Zhuyun Dai and Jamie Callan. 2020. Context-aware term weighting for first stage passage retrieval . In Proceedings of the 43rd International ACM SIGIR Conference on Research and Development in Information Retrieval , SIGIR ’20, page 1533–1536, New York, NY, USA. Association for Computing Machinery.
+
+Devlin et al. (2019) Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. 2019. Bert: Pre-training of deep bidirectional transformers for language understanding. In NAACL .
+
+Feng et al. (2020) Fangxiaoyu Feng, Yinfei Yang, Daniel Cer, Naveen Arivazhagan, and Wei Wang. 2020. Language-agnostic bert sentence embedding .
+
+Gillick et al. (2018) D. Gillick, A. Presta, and Gaurav Singh Tomar. 2018. End-to-end retrieval in continuous space. ArXiv , abs/1811.08008.
+
+Henderson et al. (2017) Matthew Henderson, Rami Al-Rfou, B. Strope, Yun-Hsuan Sung, László Lukács, Ruiqi Guo, Sanjiv Kumar, Balint Miklos, and R. Kurzweil. 2017. Efficient natural language response suggestion for smart reply. ArXiv , abs/1705.00652.
+
+Hofstätter et al. (2021) Sebastian Hofstätter, Sheng-Chieh Lin, Jheng-Hong Yang, Jimmy Lin, and Allan Hanbury. 2021. Efficiently teaching an effective dense retriever with balanced topic aware sampling. arXiv preprint arXiv:2104.06967 .
+
+Johnson et al. (2021) Jeff Johnson, Matthijs Douze, and Hervé Jégou. 2021. Billion-scale similarity search with gpus . IEEE Transactions on Big Data , 7(3):535–547.
+
+Karpukhin et al. (2020) Vladimir Karpukhin, Barlas Oguz, Sewon Min, Patrick Lewis, Ledell Wu, Sergey Edunov, Danqi Chen, and Wen-tau Yih. 2020. Dense passage retrieval for open-domain question answering . In Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing (EMNLP) , pages 6769–6781, Online. Association for Computational Linguistics.
+
+Khattab and Zaharia (2020) Omar Khattab and Matei Zaharia. 2020. Colbert: Efficient and effective passage search via contextualized late interaction over bert. In Proceedings of the 43rd International ACM SIGIR conference on research and development in Information Retrieval , pages 39–48.
+
+Kwiatkowski et al. (2019) Tom Kwiatkowski, Jennimaria Palomaki, Olivia Redfield, Michael Collins, Ankur Parikh, Chris Alberti, Danielle Epstein, Illia Polosukhin, Jacob Devlin, Kenton Lee, et al. 2019. Natural questions: a benchmark for question answering research. Transactions of the Association for Computational Linguistics , 7:453–466.
+
+Lu et al. (2021) Jing Lu, Gustavo Hernández Ábrego, Ji Ma, Jianmo Ni, and Yinfei Yang. 2021. Multi-stage training with improved negative contrast for neural passage retrieval. In Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing , pages 6091–6103.
+
+Luan et al. (2020) Yi Luan, Jacob Eisenstein, Kristina Toutanova, and Michael Collins. 2020. Sparse, dense, and attentional representations for text retrieval. arXiv preprint arXiv:2005.00181 .
+
+Ma et al. (2020) Ji Ma, Ivan Korotkov, Yinfei Yang, Keith Hall, and Ryan McDonald. 2020. Zero-shot neural retrieval via domain-targeted synthetic query generation. arXiv e-prints , pages arXiv–2004.
+
+Ma et al. (2021) Ji Ma, Ivan Korotkov, Yinfei Yang, Keith Hall, and Ryan McDonald. 2021. Zero-shot neural passage retrieval via domain-targeted synthetic question generation . In Proceedings of the 16th Conference of the European Chapter of the Association for Computational Linguistics: Main Volume , pages 1075–1088, Online. Association for Computational Linguistics.
+
+Nguyen et al. (2016) Tri Nguyen, Mir Rosenberg, Xia Song, Jianfeng Gao, Saurabh Tiwary, Rangan Majumder, and Li Deng. 2016. Ms marco: A human generated machine reading comprehension dataset .
+
+Ni et al. (2021) Jianmo Ni, Gustavo Hernández Ábrego, Noah Constant, Ji Ma, Keith B Hall, Daniel Cer, and Yinfei Yang. 2021. Sentence-t5: Scalable sentence encoders from pre-trained text-to-text models. arXiv preprint arXiv:2108.08877 .
+
+Nogueira (2019) Rodrigo Nogueira. 2019. From doc2query to doctttttquery.
+
+Qu et al. (2020) Chen Qu, Liu Yang, Cen Chen, Minghui Qiu, W. Bruce Croft, and Mohit Iyyer. 2020. Open-retrieval conversational question answering. In Proceedings of the 43rd International ACM SIGIR Conference on Research and Development in Information Retrieval .
+
+Qu et al. (2021) Yingqi Qu, Yuchen Ding, Jing Liu, Kai Liu, Ruiyang Ren, Wayne Xin Zhao, Daxiang Dong, Hua Wu, and Haifeng Wang. 2021. Rocketqa: An optimized training approach to dense passage retrieval for open-domain question answering. In Proceedings of the 2021 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies , pages 5835–5847.
+
+Raffel et al. (2020) Colin Raffel, Noam M. Shazeer, Adam Roberts, Katherine Lee, Sharan Narang, Michael Matena, Yanqi Zhou, W. Li, and Peter J. Liu. 2020. Exploring the limits of transfer learning with a unified text-to-text transformer. JMLR , 21/140.
+
+Robertson and Zaragoza (2009) Stephen Robertson and Hugo Zaragoza. 2009. The probabilistic relevance framework: Bm25 and beyond . Found. Trends Inf. Retr. , 3(4):333–389.
+
+Sachan et al. (2021) Devendra Sachan, Mostofa Patwary, Mohammad Shoeybi, Neel Kant, Wei Ping, William L. Hamilton, and Bryan Catanzaro. 2021. End-to-end training of neural retrievers for open-domain question answering . In Proceedings of the 59th Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language Processing (Volume 1: Long Papers) , pages 6648–6662, Online. Association for Computational Linguistics.
+
+Shazeer and Stern (2018) Noam Shazeer and Mitchell Stern. 2018. Adafactor: Adaptive learning rates with sublinear memory cost. In International Conference on Machine Learning , pages 4596–4604. PMLR.
+
+Thakur et al. (2021) Nandan Thakur, Nils Reimers, Andreas Rücklé, Abhishek Srivastava, and Iryna Gurevych. 2021. BEIR: A heterogeneous benchmark for zero-shot evaluation of information retrieval models . In Thirty-fifth Conference on Neural Information Processing Systems Datasets and Benchmarks Track (Round 2) .
+
+Vanderkam et al. (2013) Dan Vanderkam, Rob Schonberger, Henry Rowley, and Sanjiv Kumar. 2013. Nearest neighbor search in google correlate . Technical report, Google.
+
+Vaswani et al. (2017) Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Ł ukasz Kaiser, and Illia Polosukhin. 2017. Attention is all you need . In Advances in Neural Information Processing Systems , volume 30. Curran Associates, Inc.
+
+Xiong et al. (2020) Lee Xiong, Chenyan Xiong, Ye Li, Kwok-Fung Tang, Jialin Liu, Paul Bennett, Junaid Ahmed, and Arnold Overwijk. 2020. Approximate nearest neighbor negative contrastive learning for dense text retrieval. arXiv preprint arXiv:2007.00808 .
+
+Xue et al. (2021) Linting Xue, Aditya Barua, Noah Constant, Rami Al-Rfou, Sharan Narang, Mihir Kale, Adam Roberts, and Colin Raffel. 2021. Byt5: Towards a token-free future with pre-trained byte-to-byte models. arXiv preprint arXiv:2105.13626 .
+
+Xue et al. (2020) Linting Xue, Noah Constant, Adam Roberts, Mihir Kale, Rami Al-Rfou, Aditya Siddhant, Aditya Barua, and Colin Raffel. 2020. mt5: A massively multilingual pre-trained text-to-text transformer. arXiv preprint arXiv:2010.11934 .
+
+Yang et al. (2020) Yinfei Yang, Daniel Matthew Cer, Amin Ahmad, Mandy Guo, Jax Law, Noah Constant, G. Ábrego, Steve Yuan, C. Tar, Yun-Hsuan Sung, B. Strope, and R. Kurzweil. 2020. Multilingual universal sentence encoder for semantic retrieval. In ACL .
+
+## Appendix A More results
+
+### A.1 Comparisons on MS Marco
+
+Table 7 shows the comparisons of GTR models and the baselines. Note that the best RocketQA model used additional augmented data other than MS Marco to improve the model performance while all others do not. Our best GTR-XXL models outperforms RocketQA on both MRR and recall.
+
+### A.2 Comparison of different dual encoder pre-training strategies
+
+In a concurrent work ( Anonymous, 2022 ) , researchers proposed to conduct contrastive learning (CL) pre-training for improving the generalizability of neural retrievers. The paired data for contrastive training is constructed from C4 and Wiki dataset in an unsupervised way. In particular, they construct pairs by randomly choosing two spans from a single document and conduct word deletion or replacement to each span. We compare the performance of our GTR models to their models to gain insights into different pretraining strategies for dual encoders.
+
+As shown in Figure 6 , on over half of the datasets, models with our pre-training approach under-perform CL-Pretrain with the base size; while as the model size increases, GTR-Large and -XXL models show significant gains over CL-Pretrain. The best GTR-XXL model achieves 0.49 for NDCG@10 on average while CL-Pretrain achieves 0.46. This demonstrates that scaling up can mitigate the disadvantage of the potentially inferior pre-training approach. Note that our pre-training is additive to CL-Pretrain and we can leverage the pre-training on C4 and Wiki to further improve the results. We leave this exploration as future work.
+
+### A.3 Recall on BEIR
+
+Table 8 presents the Recall@100 of GTR models and the baselines. Similar to NDCG@10, we observe that scaling up dual encoders lead to significant gains on the BEIR benchmark in terms of recall.
+
+## Instructions for reporting errors
+
+We are continuing to improve HTML versions of papers, and your feedback helps enhance accessibility and mobile support. To report errors in the HTML that will help us improve conversion and rendering, choose any of the methods listed below:
+
+Click the "Report Issue" ( ) button, located in the page header.
+
+Tip: You can select the relevant text first, to include it in your report.
+
+Our team has already identified the following issues . We appreciate your time reviewing and reporting rendering errors we may not have found yet. Your efforts will help us improve the HTML versions for all readers, because disability should not be a barrier to accessing research. Thank you for your continued support in championing open access for all.
+
+Have a free development cycle? Help support accessibility at arXiv! Our collaborators at LaTeXML maintain a list of packages that need conversion , and welcome developer contributions .

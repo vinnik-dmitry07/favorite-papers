@@ -26,9 +26,8 @@ assets/tg/
 cache/
 shots/
 
-# Paper filter pipeline intermediates (scripts + scores.csv + report.md + official reviews are committed)
+# Paper filter pipeline intermediates (scripts + scores.csv + report.md + official reviews + fulltext md are committed)
 filter/*.jsonl
-filter/fulltext/
 filter/fulltext.zip
 filter/reviews/*.seed1/
 filter/reviews/*.bad/
