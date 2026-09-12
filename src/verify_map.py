@@ -174,7 +174,7 @@ def main() -> None:
 
         page.evaluate('''() => {
             const chip = [...document.querySelectorAll('#legend span')]
-                .find(s => s.dataset.topic === 'RL');
+                .find(s => s.dataset.topic === 'RLVR');
             if (chip) chip.click();
         }''')
         page.wait_for_timeout(400)
@@ -184,7 +184,7 @@ def main() -> None:
             on: [...document.querySelectorAll('#legend span.on')]
                 .map(s => s.dataset.topic),
         })''')
-        print('tag RL:', tag_filter)
+        print('tag RLVR:', tag_filter)
         if tag_filter['dimmed'] < 200:
             errors.append('tag filter did not dim other topics')
         page.evaluate('''() => {

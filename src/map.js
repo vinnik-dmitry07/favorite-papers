@@ -16,32 +16,14 @@
   var CITE_TICKS = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000,
                     2000, 5000, 10000, 20000, 50000];
   var UNTAGGED = '#9aa3ab';
-  var TOPIC_COLOR = {
-    'RL': '#2f7d8f',
-    'Scaling': '#3d7aa6',
-    'Math reasoning': '#d4782a',
-    'Self-improve': '#8d6e63',
-    'Feedback': '#c06a4a',
-    'Generalization': '#c9a227',
-    'Interp': '#7b5ea7',
-    'Optimizers': '#4a8f5c',
-    'Architecture': '#5c6bc0',
-    'Stepping stone': '#78909c',
-    'Self-distill': '#a65d7c',
-    'Environments': '#2e7d6f',
-    'Evolution': '#8a7a3d',
-    'Recurrent': '#5e738b',
-    'Forgetting': '#c45c48',
-    'Prompts': '#a1887f',
-    'Continual': '#5b8a6b',
-    'JEPA': '#00897b',
-    'Heuristics': '#b56b3d',
-    'Discovery': '#6a7d3d',
-    'Self-refine': '#9c6b8a',
-    'Enc-dec': '#547a9c',
-    'Recursive': '#7a6a9c'
-  };
-
+  var IDEA_STROKE = '#74838c';
+  var taxonomy = data.taxonomy || { fields: [], ideas: [] };
+  var TOPIC_COLOR = {};
+  var FIELD_SET = {};
+  (taxonomy.fields || []).forEach(function (field) {
+    TOPIC_COLOR[field.id] = field.color;
+    FIELD_SET[field.id] = true;
+  });
   function topicColor(d) {
     return (d.topic && TOPIC_COLOR[d.topic]) || UNTAGGED;
   }
@@ -69,7 +51,8 @@
       score: 0,
       tag: n.keyword || n.label,
       haystack: [n.keyword, n.label, n.title, n.entry, n.section, n.kind,
-                 n.topic || '', (n.tags || []).join(' '),
+                 n.topic || '', (n.ideas || []).join(' '),
+                 (n.tags || []).join(' '),
                  (n.authors || []).join(' '),
                  n.telegram ? 'telegram' : ''].join(' ').toLowerCase()
     });
@@ -744,8 +727,12 @@
       + '<div class="meta">' + escapeHtml(d.section) + ' &middot; ' + d.kind
       + (d.telegram ? ' &middot; telegram' : '')
       + (d.doc ? '' : ' &middot; no document retrieved') + '</div>'
-      + ((d.tags || []).length
-        ? '<div class="meta">' + d.tags.map(escapeHtml).join(' \u00b7 ') + '</div>'
+      + (d.topic
+        ? '<div class="meta">' + escapeHtml(d.topic)
+          + ((d.ideas || []).length
+            ? ' \u00b7 ' + d.ideas.map(escapeHtml).join(' \u00b7 ')
+            : '')
+          + '</div>'
         : '')
       + '<div class="counts">'
       + '<span class="in">cited by ' + d.cites + '</span>'
@@ -802,7 +789,7 @@
   function markLegend() {
     var el = document.getElementById('legend');
     if (!el) return;
-    Array.prototype.forEach.call(el.children, function (span) {
+    Array.prototype.forEach.call(el.querySelectorAll('span'), function (span) {
       var value = span.dataset.topic;
       var active = tagFilter == null
         ? value === ''
@@ -815,22 +802,46 @@
   function buildLegend() {
     var el = document.getElementById('legend');
     if (!el) return;
-    var counts = {};
+    var fieldCounts = {};
+    var ideaCounts = {};
+    var untagged = 0;
     nodes.forEach(function (d) {
-      (d.tags || []).forEach(function (topic) {
-        counts[topic] = (counts[topic] || 0) + 1;
+      if (d.topic) fieldCounts[d.topic] = (fieldCounts[d.topic] || 0) + 1;
+      else untagged += 1;
+      (d.ideas || []).forEach(function (idea) {
+        ideaCounts[idea] = (ideaCounts[idea] || 0) + 1;
       });
     });
-    var topics = Object.keys(counts).sort(function (a, b) {
-      return counts[b] - counts[a] || a.localeCompare(b);
+    var fields = (taxonomy.fields || []).map(function (field) {
+      return field.id;
+    }).filter(function (id) { return fieldCounts[id]; });
+    var extraFields = Object.keys(fieldCounts).filter(function (id) {
+      return fields.indexOf(id) < 0;
+    }).sort();
+    fields = fields.concat(extraFields);
+    var ideas = (taxonomy.ideas || []).filter(function (idea) {
+      return ideaCounts[idea];
     });
     el.innerHTML = '';
-    function chip(label, color, value) {
+    function row(title) {
+      var wrap = document.createElement('div');
+      wrap.className = 'legend-row';
+      if (title) {
+        var label = document.createElement('b');
+        label.className = 'legend-label';
+        label.textContent = title;
+        wrap.appendChild(label);
+      }
+      el.appendChild(wrap);
+      return wrap;
+    }
+    function chip(parent, label, color, value, isIdea) {
       var span = document.createElement('span');
       span.dataset.topic = value == null ? '' : value;
       var swatch = document.createElement('i');
-      swatch.className = 'swatch';
-      swatch.style.background = color;
+      swatch.className = isIdea ? 'swatch idea' : 'swatch';
+      if (isIdea) swatch.style.borderColor = color || IDEA_STROKE;
+      else swatch.style.background = color;
       span.appendChild(swatch);
       span.appendChild(document.createTextNode(label));
       span.addEventListener('click', function () {
@@ -839,13 +850,22 @@
         markLegend();
         savePrefs();
       });
-      el.appendChild(span);
+      parent.appendChild(span);
     }
-    chip('all', '#8b959c', null);
-    chip('untagged', UNTAGGED, 'untagged');
-    topics.forEach(function (topic) {
-      chip(topic + ' ' + counts[topic], TOPIC_COLOR[topic] || UNTAGGED, topic);
+    var fieldRow = row('fields');
+    chip(fieldRow, 'all', '#8b959c', null, false);
+    if (untagged) chip(fieldRow, 'untagged ' + untagged, UNTAGGED, 'untagged', false);
+    fields.forEach(function (field) {
+      chip(fieldRow, field + ' ' + fieldCounts[field],
+           TOPIC_COLOR[field] || UNTAGGED, field, false);
     });
+    if (ideas.length) {
+      var ideaRow = row('ideas');
+      ideas.forEach(function (idea) {
+        chip(ideaRow, idea + ' ' + ideaCounts[idea],
+             IDEA_STROKE, idea, true);
+      });
+    }
     markLegend();
   }
 
@@ -875,7 +895,11 @@
         if (tgOn && !d.telegram) return false;
         if (term && d.haystack.indexOf(term) < 0) return false;
         if (tagFilter === 'untagged') return !d.topic;
-        if (tagFilter) return (d.tags || []).indexOf(tagFilter) >= 0;
+        if (tagFilter && FIELD_SET[tagFilter]) return d.topic === tagFilter;
+        if (tagFilter) {
+          return (d.ideas || []).indexOf(tagFilter) >= 0
+            || (d.tags || []).indexOf(tagFilter) >= 0;
+        }
         return true;
       }).map(function (d) { return d.index; });
     }

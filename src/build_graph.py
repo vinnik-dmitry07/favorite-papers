@@ -20,6 +20,7 @@ from common import (  # noqa: E402
     clean_doi, DOI_RE,
     dump_json, load_json, node_arxiv_ids, norm_title, url_slug,
 )
+from topics import apply_topics, print_coverage, print_mixing, taxonomy  # noqa: E402
 
 # A cited work published long after the citing paper means the title matcher
 # latched onto the wrong entry; genuine late citations come from revisions.
@@ -379,11 +380,12 @@ def litmaps_score(node: dict, paper: dict) -> float:
 
 
 def attach_litmaps(nodes_out: list[dict]) -> None:
-    '''Copy Litmaps citations, references, and tags onto matched nodes.'''
+    '''Copy Litmaps global citation / reference counts onto matched nodes.
+
+    Topic tags come from src/topics.py, not from the Litmaps list.
+    '''
     papers = load_json(LITMAPS, {}).get('papers') or []
     for node in nodes_out:
-        node['tags'] = []
-        node['topic'] = None
         node['lit_cites'] = None
         node['lit_refs'] = None
     used: set[int] = set()
@@ -401,8 +403,6 @@ def attach_litmaps(nodes_out: list[dict]) -> None:
         ranked.sort(reverse=True)
         node = nodes_out[ranked[0][1]]
         used.add(ranked[0][1])
-        node['tags'] = list(paper.get('tags') or [])
-        node['topic'] = node['tags'][0] if node['tags'] else None
         node['lit_cites'] = paper.get('lit_cites')
         node['lit_refs'] = paper.get('lit_refs')
         matched += 1
@@ -480,11 +480,13 @@ def main() -> None:
         if node.get('telegram'):
             nodes_out[-1]['telegram'] = True
     attach_litmaps(nodes_out)
+    apply_topics(nodes_out)
 
     graph = {
         'generated': date.today().isoformat(),
         'source': 'readme.md + references parsed from arXiv/ar5iv HTML, '
                   'page HTML and Crossref',
+        'taxonomy': taxonomy(),
         'nodes': nodes_out,
         'edges': [[order[s], order[d], e] for s, d, e in edges],
     }
@@ -510,6 +512,8 @@ def main() -> None:
           + ', '.join(f'{k}={v}' for k, v in sorted(by_evidence.items())) + ')')
     print(f'edges dropped (target >2y newer) {len(dropped_future)}')
     print(f'\nwrote {GRAPH.relative_to(ROOT)} and {GRAPH_JS.relative_to(ROOT)}')
+    print_coverage(nodes_out)
+    print_mixing(nodes_out, edges)
 
     top = sorted(nodes_out, key=lambda n: -n['cites'])[:12]
     print('\nmost cited inside the corpus:')

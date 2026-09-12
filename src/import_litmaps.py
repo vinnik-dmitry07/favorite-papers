@@ -1,7 +1,8 @@
 '''Build assets/litmaps.json from the Litmaps CSV + the tagged paper list.
 
-CSV supplies global citation / reference counts. The pasted list supplies tags
-(the CSV Tags column is empty).
+CSV supplies global citation / reference counts. Map colours and idea tags
+come from src/topics.py; tags parsed here are kept only as a historical
+overlay and are not written onto graph nodes.
 
 Run:  python src/import_litmaps.py [csv] [list.txt]
 '''

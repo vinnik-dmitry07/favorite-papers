@@ -1,6 +1,140 @@
 {
-  "generated": "2026-09-11",
+  "generated": "2026-09-12",
   "source": "readme.md + references parsed from arXiv/ar5iv HTML, page HTML and Crossref",
+  "taxonomy": {
+    "fields": [
+      {
+        "id": "Deep RL",
+        "color": "#2f7d8f",
+        "family": "RL"
+      },
+      {
+        "id": "RLVR",
+        "color": "#148f96",
+        "family": "RL"
+      },
+      {
+        "id": "Reasoning",
+        "color": "#d4782a",
+        "family": "Reasoning"
+      },
+      {
+        "id": "Latent",
+        "color": "#c45a12",
+        "family": "Reasoning"
+      },
+      {
+        "id": "Architectures",
+        "color": "#5c6bc0",
+        "family": "Models"
+      },
+      {
+        "id": "Diffusion",
+        "color": "#7e57c2",
+        "family": "Models"
+      },
+      {
+        "id": "Inter-model",
+        "color": "#3949ab",
+        "family": "Models"
+      },
+      {
+        "id": "Optimizers",
+        "color": "#4a8f5c",
+        "family": "Training"
+      },
+      {
+        "id": "Scaling",
+        "color": "#3d8a6e",
+        "family": "Training"
+      },
+      {
+        "id": "Dynamics",
+        "color": "#8a9a3d",
+        "family": "Training"
+      },
+      {
+        "id": "Continual",
+        "color": "#5b8a6b",
+        "family": "Training"
+      },
+      {
+        "id": "Interp",
+        "color": "#7b5ea7",
+        "family": "Understanding"
+      },
+      {
+        "id": "Repr",
+        "color": "#9c6b8a",
+        "family": "Understanding"
+      },
+      {
+        "id": "Open-ended",
+        "color": "#2e7d6f",
+        "family": "Agents"
+      },
+      {
+        "id": "Self-improve",
+        "color": "#8d6e63",
+        "family": "Agents"
+      },
+      {
+        "id": "Harness",
+        "color": "#6d4c41",
+        "family": "Agents"
+      },
+      {
+        "id": "Discovery",
+        "color": "#6a7d3d",
+        "family": "Agents"
+      },
+      {
+        "id": "Safety",
+        "color": "#c45c48",
+        "family": "Mind"
+      },
+      {
+        "id": "Consciousness",
+        "color": "#a15a9c",
+        "family": "Mind"
+      },
+      {
+        "id": "NeuroAI",
+        "color": "#00897b",
+        "family": "Mind"
+      },
+      {
+        "id": "SSL",
+        "color": "#00838f",
+        "family": "SSL"
+      },
+      {
+        "id": "Finance",
+        "color": "#78909c",
+        "family": "Other"
+      },
+      {
+        "id": "Other",
+        "color": "#9aa3ab",
+        "family": "Other"
+      }
+    ],
+    "ideas": [
+      "self-distill",
+      "self-refine",
+      "evolution",
+      "world models",
+      "memory",
+      "curriculum",
+      "forgetting",
+      "priming",
+      "prompts",
+      "enc-dec",
+      "arithmetic",
+      "critique",
+      "GRPO"
+    ]
+  },
   "nodes": [
     {
       "id": "arxiv:2608.17163",
@@ -23,12 +157,16 @@
       "refs": 4,
       "doc": true,
       "bib_items": 66,
-      "tags": [
-        "RL"
-      ],
-      "topic": "RL",
       "lit_cites": 0,
-      "lit_refs": 0
+      "lit_refs": 0,
+      "topic": "Deep RL",
+      "ideas": [
+        "world models"
+      ],
+      "tags": [
+        "Deep RL",
+        "world models"
+      ]
     },
     {
       "id": "arxiv:2509.09675",
@@ -51,10 +189,13 @@
       "refs": 4,
       "doc": true,
       "bib_items": 61,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "RLVR",
+      "ideas": [],
+      "tags": [
+        "RLVR"
+      ]
     },
     {
       "id": "arxiv:2503.14858",
@@ -78,10 +219,13 @@
       "doc": true,
       "bib_items": 66,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Deep RL",
+      "ideas": [],
+      "tags": [
+        "Deep RL"
+      ]
     },
     {
       "id": "arxiv:2501.16142",
@@ -104,10 +248,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Deep RL",
+      "ideas": [],
+      "tags": [
+        "Deep RL"
+      ]
     },
     {
       "id": "arxiv:2411.03820",
@@ -130,10 +277,13 @@
       "refs": 8,
       "doc": true,
       "bib_items": 56,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Deep RL",
+      "ideas": [],
+      "tags": [
+        "Deep RL"
+      ]
     },
     {
       "id": "url:diamond-wm.github.io",
@@ -157,10 +307,16 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Deep RL",
+      "ideas": [
+        "world models"
+      ],
+      "tags": [
+        "Deep RL",
+        "world models"
+      ]
     },
     {
       "id": "arxiv:2312.13327",
@@ -184,10 +340,13 @@
       "doc": true,
       "bib_items": 56,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Deep RL",
+      "ideas": [],
+      "tags": [
+        "Deep RL"
+      ]
     },
     {
       "id": "arxiv:2312.00276",
@@ -210,12 +369,13 @@
       "doc": true,
       "bib_items": 114,
       "telegram": true,
+      "lit_cites": 13,
+      "lit_refs": 167,
+      "topic": "Continual",
+      "ideas": [],
       "tags": [
         "Continual"
-      ],
-      "topic": "Continual",
-      "lit_cites": 13,
-      "lit_refs": 167
+      ]
     },
     {
       "id": "arxiv:2306.02451",
@@ -238,10 +398,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Deep RL",
+      "ideas": [],
+      "tags": [
+        "Deep RL"
+      ]
     },
     {
       "id": "arxiv:2305.19452",
@@ -265,10 +428,13 @@
       "doc": true,
       "bib_items": 72,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Deep RL",
+      "ideas": [],
+      "tags": [
+        "Deep RL"
+      ]
     },
     {
       "id": "arxiv:2301.04104",
@@ -291,10 +457,16 @@
       "refs": 4,
       "doc": true,
       "bib_items": 66,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Deep RL",
+      "ideas": [
+        "world models"
+      ],
+      "tags": [
+        "Deep RL",
+        "world models"
+      ]
     },
     {
       "id": "openreview:XyGJJ4FPoX",
@@ -317,10 +489,13 @@
       "refs": 0,
       "doc": false,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Deep RL",
+      "ideas": [],
+      "tags": [
+        "Deep RL"
+      ]
     },
     {
       "id": "openreview:OpC-9aBBVJe",
@@ -339,10 +514,13 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Deep RL",
+      "ideas": [],
+      "tags": [
+        "Deep RL"
+      ]
     },
     {
       "id": "arxiv:2205.07802",
@@ -365,10 +543,13 @@
       "refs": 4,
       "doc": true,
       "bib_items": 70,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Deep RL",
+      "ideas": [],
+      "tags": [
+        "Deep RL"
+      ]
     },
     {
       "id": "arxiv:2106.06860",
@@ -389,10 +570,13 @@
       "refs": 4,
       "doc": true,
       "bib_items": 63,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Deep RL",
+      "ideas": [],
+      "tags": [
+        "Deep RL"
+      ]
     },
     {
       "id": "arxiv:2011.14826",
@@ -413,10 +597,13 @@
       "refs": 5,
       "doc": true,
       "bib_items": 39,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Deep RL",
+      "ideas": [],
+      "tags": [
+        "Deep RL"
+      ]
     },
     {
       "id": "arxiv:2005.01643",
@@ -439,10 +626,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 190,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Deep RL",
+      "ideas": [],
+      "tags": [
+        "Deep RL"
+      ]
     },
     {
       "id": "arxiv:2004.12919",
@@ -465,10 +655,13 @@
       "refs": 2,
       "doc": true,
       "bib_items": 182,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Deep RL",
+      "ideas": [],
+      "tags": [
+        "Deep RL"
+      ]
     },
     {
       "id": "arxiv:1910.01708",
@@ -491,10 +684,13 @@
       "refs": 4,
       "doc": true,
       "bib_items": 46,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Deep RL",
+      "ideas": [],
+      "tags": [
+        "Deep RL"
+      ]
     },
     {
       "id": "arxiv:1802.09477",
@@ -516,10 +712,13 @@
       "refs": 4,
       "doc": true,
       "bib_items": 44,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Deep RL",
+      "ideas": [],
+      "tags": [
+        "Deep RL"
+      ]
     },
     {
       "id": "url:lilianweng.github.io/lil-log/2018/01/23/the-multi-armed-bandit-problem-and-its-solutions.html",
@@ -539,10 +738,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Deep RL",
+      "ideas": [],
+      "tags": [
+        "Deep RL"
+      ]
     },
     {
       "id": "arxiv:1801.01290",
@@ -565,10 +767,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 36,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Deep RL",
+      "ideas": [],
+      "tags": [
+        "Deep RL"
+      ]
     },
     {
       "id": "arxiv:1712.06567",
@@ -591,13 +796,16 @@
       "refs": 5,
       "doc": true,
       "bib_items": 57,
-      "tags": [
-        "Scaling",
-        "Evolution"
-      ],
-      "topic": "Scaling",
       "lit_cites": 1018,
-      "lit_refs": 98
+      "lit_refs": 98,
+      "topic": "Deep RL",
+      "ideas": [
+        "evolution"
+      ],
+      "tags": [
+        "Deep RL",
+        "evolution"
+      ]
     },
     {
       "id": "arxiv:1710.02298",
@@ -621,10 +829,13 @@
       "doc": true,
       "bib_items": 32,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Deep RL",
+      "ideas": [],
+      "tags": [
+        "Deep RL"
+      ]
     },
     {
       "id": "arxiv:1707.06887",
@@ -647,10 +858,13 @@
       "doc": true,
       "bib_items": 44,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Deep RL",
+      "ideas": [],
+      "tags": [
+        "Deep RL"
+      ]
     },
     {
       "id": "arxiv:1511.06581",
@@ -674,10 +888,13 @@
       "doc": true,
       "bib_items": 26,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Deep RL",
+      "ideas": [],
+      "tags": [
+        "Deep RL"
+      ]
     },
     {
       "id": "arxiv:1511.05952",
@@ -701,10 +918,13 @@
       "doc": true,
       "bib_items": 37,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Deep RL",
+      "ideas": [],
+      "tags": [
+        "Deep RL"
+      ]
     },
     {
       "id": "arxiv:1509.06461",
@@ -727,10 +947,13 @@
       "doc": true,
       "bib_items": 27,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Deep RL",
+      "ideas": [],
+      "tags": [
+        "Deep RL"
+      ]
     },
     {
       "id": "arxiv:2608.13040",
@@ -753,10 +976,16 @@
       "refs": 8,
       "doc": true,
       "bib_items": 44,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "RLVR",
+      "ideas": [
+        "self-distill"
+      ],
+      "tags": [
+        "RLVR",
+        "self-distill"
+      ]
     },
     {
       "id": "arxiv:2608.09888",
@@ -778,13 +1007,13 @@
       "refs": 4,
       "doc": true,
       "bib_items": 34,
-      "tags": [
-        "Recurrent",
-        "Discovery"
-      ],
-      "topic": "Recurrent",
       "lit_cites": 0,
-      "lit_refs": 0
+      "lit_refs": 0,
+      "topic": "Latent",
+      "ideas": [],
+      "tags": [
+        "Latent"
+      ]
     },
     {
       "id": "arxiv:2607.07847",
@@ -807,13 +1036,13 @@
       "doc": true,
       "bib_items": 61,
       "telegram": true,
-      "tags": [
-        "Self-improve",
-        "RL"
-      ],
-      "topic": "Self-improve",
       "lit_cites": 0,
-      "lit_refs": 0
+      "lit_refs": 0,
+      "topic": "Continual",
+      "ideas": [],
+      "tags": [
+        "Continual"
+      ]
     },
     {
       "id": "arxiv:2607.05609",
@@ -837,10 +1066,13 @@
       "doc": true,
       "bib_items": 66,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Continual",
+      "ideas": [],
+      "tags": [
+        "Continual"
+      ]
     },
     {
       "id": "arxiv:2606.23740",
@@ -863,12 +1095,13 @@
       "refs": 4,
       "doc": true,
       "bib_items": 18,
-      "tags": [
-        "Feedback"
-      ],
-      "topic": "Feedback",
       "lit_cites": 0,
-      "lit_refs": 0
+      "lit_refs": 0,
+      "topic": "Dynamics",
+      "ideas": [],
+      "tags": [
+        "Dynamics"
+      ]
     },
     {
       "id": "arxiv:2606.18810",
@@ -891,14 +1124,16 @@
       "refs": 8,
       "doc": true,
       "bib_items": 37,
-      "tags": [
-        "Stepping stone",
-        "Self-improve",
-        "RL"
-      ],
-      "topic": "Stepping stone",
       "lit_cites": 0,
-      "lit_refs": 0
+      "lit_refs": 0,
+      "topic": "RLVR",
+      "ideas": [
+        "GRPO"
+      ],
+      "tags": [
+        "RLVR",
+        "GRPO"
+      ]
     },
     {
       "id": "arxiv:2606.06021",
@@ -921,10 +1156,16 @@
       "refs": 10,
       "doc": true,
       "bib_items": 49,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "RLVR",
+      "ideas": [
+        "self-distill"
+      ],
+      "tags": [
+        "RLVR",
+        "self-distill"
+      ]
     },
     {
       "id": "arxiv:2605.22074",
@@ -947,12 +1188,16 @@
       "refs": 5,
       "doc": true,
       "bib_items": 49,
-      "tags": [
-        "Environments"
-      ],
-      "topic": "Environments",
       "lit_cites": 0,
-      "lit_refs": 54
+      "lit_refs": 54,
+      "topic": "RLVR",
+      "ideas": [
+        "curriculum"
+      ],
+      "tags": [
+        "RLVR",
+        "curriculum"
+      ]
     },
     {
       "id": "arxiv:2605.12969",
@@ -975,12 +1220,13 @@
       "refs": 7,
       "doc": true,
       "bib_items": 40,
-      "tags": [
-        "RL"
-      ],
-      "topic": "RL",
       "lit_cites": 0,
-      "lit_refs": 54
+      "lit_refs": 54,
+      "topic": "RLVR",
+      "ideas": [],
+      "tags": [
+        "RLVR"
+      ]
     },
     {
       "id": "arxiv:2605.06241",
@@ -1002,14 +1248,13 @@
       "refs": 6,
       "doc": true,
       "bib_items": 36,
-      "tags": [
-        "Stepping stone",
-        "Scaling",
-        "RL"
-      ],
-      "topic": "Stepping stone",
       "lit_cites": 0,
-      "lit_refs": 40
+      "lit_refs": 40,
+      "topic": "RLVR",
+      "ideas": [],
+      "tags": [
+        "RLVR"
+      ]
     },
     {
       "id": "arxiv:2604.20659",
@@ -1032,14 +1277,16 @@
       "refs": 6,
       "doc": true,
       "bib_items": 39,
-      "tags": [
-        "Stepping stone",
-        "Feedback",
-        "RL"
-      ],
-      "topic": "Stepping stone",
       "lit_cites": 1,
-      "lit_refs": 41
+      "lit_refs": 41,
+      "topic": "RLVR",
+      "ideas": [
+        "GRPO"
+      ],
+      "tags": [
+        "RLVR",
+        "GRPO"
+      ]
     },
     {
       "id": "arxiv:2604.13016",
@@ -1062,12 +1309,16 @@
       "refs": 8,
       "doc": true,
       "bib_items": 47,
-      "tags": [
-        "Self-distill"
-      ],
-      "topic": "Self-distill",
       "lit_cites": 117,
-      "lit_refs": 71
+      "lit_refs": 71,
+      "topic": "RLVR",
+      "ideas": [
+        "self-distill"
+      ],
+      "tags": [
+        "RLVR",
+        "self-distill"
+      ]
     },
     {
       "id": "arxiv:2604.08690",
@@ -1090,12 +1341,13 @@
       "refs": 14,
       "doc": true,
       "bib_items": 63,
-      "tags": [
-        "Scaling"
-      ],
-      "topic": "Scaling",
       "lit_cites": 2,
-      "lit_refs": 72
+      "lit_refs": 72,
+      "topic": "RLVR",
+      "ideas": [],
+      "tags": [
+        "RLVR"
+      ]
     },
     {
       "id": "arxiv:2604.02288",
@@ -1118,12 +1370,18 @@
       "refs": 10,
       "doc": true,
       "bib_items": 46,
-      "tags": [
-        "Self-distill"
-      ],
-      "topic": "Self-distill",
       "lit_cites": 52,
-      "lit_refs": 60
+      "lit_refs": 60,
+      "topic": "RLVR",
+      "ideas": [
+        "self-distill",
+        "GRPO"
+      ],
+      "tags": [
+        "RLVR",
+        "self-distill",
+        "GRPO"
+      ]
     },
     {
       "id": "arxiv:2604.01375",
@@ -1146,12 +1404,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 31,
-      "tags": [
-        "Scaling"
-      ],
-      "topic": "Scaling",
       "lit_cites": 0,
-      "lit_refs": 36
+      "lit_refs": 36,
+      "topic": "RLVR",
+      "ideas": [],
+      "tags": [
+        "RLVR"
+      ]
     },
     {
       "id": "arxiv:2603.25562",
@@ -1174,12 +1433,16 @@
       "refs": 5,
       "doc": true,
       "bib_items": 45,
-      "tags": [
-        "Self-distill"
-      ],
-      "topic": "Self-distill",
       "lit_cites": 78,
-      "lit_refs": 57
+      "lit_refs": 57,
+      "topic": "RLVR",
+      "ideas": [
+        "self-distill"
+      ],
+      "tags": [
+        "RLVR",
+        "self-distill"
+      ]
     },
     {
       "id": "arxiv:2603.24472",
@@ -1202,12 +1465,16 @@
       "refs": 4,
       "doc": true,
       "bib_items": 25,
-      "tags": [
-        "Self-distill"
-      ],
-      "topic": "Self-distill",
       "lit_cites": 70,
-      "lit_refs": 34
+      "lit_refs": 34,
+      "topic": "RLVR",
+      "ideas": [
+        "self-distill"
+      ],
+      "tags": [
+        "RLVR",
+        "self-distill"
+      ]
     },
     {
       "id": "arxiv:2602.18037",
@@ -1229,13 +1496,13 @@
       "refs": 7,
       "doc": true,
       "bib_items": 50,
-      "tags": [
-        "Optimizers",
-        "Feedback"
-      ],
-      "topic": "Optimizers",
       "lit_cites": 5,
-      "lit_refs": 45
+      "lit_refs": 45,
+      "topic": "RLVR",
+      "ideas": [],
+      "tags": [
+        "RLVR"
+      ]
     },
     {
       "id": "arxiv:2602.09000",
@@ -1258,10 +1525,18 @@
       "refs": 7,
       "doc": true,
       "bib_items": 42,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "RLVR",
+      "ideas": [
+        "GRPO",
+        "self-refine"
+      ],
+      "tags": [
+        "RLVR",
+        "GRPO",
+        "self-refine"
+      ]
     },
     {
       "id": "arxiv:2601.20861",
@@ -1285,10 +1560,18 @@
       "doc": true,
       "bib_items": 36,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Continual",
+      "ideas": [
+        "evolution",
+        "forgetting"
+      ],
+      "tags": [
+        "Continual",
+        "evolution",
+        "forgetting"
+      ]
     },
     {
       "id": "arxiv:2601.20802",
@@ -1311,15 +1594,16 @@
       "doc": true,
       "bib_items": 130,
       "telegram": true,
-      "tags": [
-        "Self-distill",
-        "Scaling",
-        "Self-improve",
-        "RL"
-      ],
-      "topic": "Self-distill",
       "lit_cites": 241,
-      "lit_refs": 185
+      "lit_refs": 185,
+      "topic": "RLVR",
+      "ideas": [
+        "self-distill"
+      ],
+      "tags": [
+        "RLVR",
+        "self-distill"
+      ]
     },
     {
       "id": "arxiv:2601.19897",
@@ -1342,12 +1626,16 @@
       "refs": 7,
       "doc": true,
       "bib_items": 61,
-      "tags": [
-        "Self-distill"
-      ],
-      "topic": "Self-distill",
       "lit_cites": 178,
-      "lit_refs": 73
+      "lit_refs": 73,
+      "topic": "Continual",
+      "ideas": [
+        "self-distill"
+      ],
+      "tags": [
+        "Continual",
+        "self-distill"
+      ]
     },
     {
       "id": "arxiv:2601.18734",
@@ -1370,12 +1658,16 @@
       "refs": 7,
       "doc": true,
       "bib_items": 52,
-      "tags": [
-        "Self-distill"
-      ],
-      "topic": "Self-distill",
       "lit_cites": 255,
-      "lit_refs": 47
+      "lit_refs": 47,
+      "topic": "RLVR",
+      "ideas": [
+        "self-distill"
+      ],
+      "tags": [
+        "RLVR",
+        "self-distill"
+      ]
     },
     {
       "id": "arxiv:2601.16175",
@@ -1398,13 +1690,13 @@
       "doc": true,
       "bib_items": 88,
       "telegram": true,
-      "tags": [
-        "Scaling",
-        "Discovery"
-      ],
-      "topic": "Scaling",
       "lit_cites": 100,
-      "lit_refs": 0
+      "lit_refs": 0,
+      "topic": "Discovery",
+      "ideas": [],
+      "tags": [
+        "Discovery"
+      ]
     },
     {
       "id": "arxiv:2601.14525",
@@ -1427,13 +1719,13 @@
       "doc": true,
       "bib_items": 55,
       "telegram": true,
-      "tags": [
-        "Scaling",
-        "Discovery"
-      ],
-      "topic": "Scaling",
       "lit_cites": 14,
-      "lit_refs": 71
+      "lit_refs": 71,
+      "topic": "Discovery",
+      "ideas": [],
+      "tags": [
+        "Discovery"
+      ]
     },
     {
       "id": "arxiv:2601.11061",
@@ -1457,14 +1749,16 @@
       "doc": true,
       "bib_items": 30,
       "telegram": true,
-      "tags": [
-        "Stepping stone",
-        "Math reasoning",
-        "Feedback"
-      ],
-      "topic": "Stepping stone",
       "lit_cites": 8,
-      "lit_refs": 33
+      "lit_refs": 33,
+      "topic": "RLVR",
+      "ideas": [
+        "critique"
+      ],
+      "tags": [
+        "RLVR",
+        "critique"
+      ]
     },
     {
       "id": "url:cameronrwolfe.substack.com/p/grpo-tricks",
@@ -1485,10 +1779,16 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "RLVR",
+      "ideas": [
+        "GRPO"
+      ],
+      "tags": [
+        "RLVR",
+        "GRPO"
+      ]
     },
     {
       "id": "arxiv:2512.02807",
@@ -1510,12 +1810,16 @@
       "doc": true,
       "bib_items": 51,
       "telegram": true,
-      "tags": [
-        "Generalization"
-      ],
-      "topic": "Generalization",
       "lit_cites": 0,
-      "lit_refs": 57
+      "lit_refs": 57,
+      "topic": "RLVR",
+      "ideas": [
+        "GRPO"
+      ],
+      "tags": [
+        "RLVR",
+        "GRPO"
+      ]
     },
     {
       "id": "arxiv:2512.00499",
@@ -1538,15 +1842,13 @@
       "refs": 6,
       "doc": true,
       "bib_items": 26,
-      "tags": [
-        "Scaling",
-        "Math reasoning",
-        "Feedback",
-        "RL"
-      ],
-      "topic": "Scaling",
       "lit_cites": 12,
-      "lit_refs": 25
+      "lit_refs": 25,
+      "topic": "RLVR",
+      "ideas": [],
+      "tags": [
+        "RLVR"
+      ]
     },
     {
       "id": "arxiv:2511.20347",
@@ -1569,14 +1871,13 @@
       "refs": 2,
       "doc": true,
       "bib_items": 12,
-      "tags": [
-        "Scaling",
-        "Math reasoning",
-        "RL"
-      ],
-      "topic": "Scaling",
       "lit_cites": 101,
-      "lit_refs": 12
+      "lit_refs": 12,
+      "topic": "RLVR",
+      "ideas": [],
+      "tags": [
+        "RLVR"
+      ]
     },
     {
       "id": "arxiv:2511.07317",
@@ -1599,12 +1900,16 @@
       "refs": 6,
       "doc": true,
       "bib_items": 64,
-      "tags": [
-        "Environments"
-      ],
-      "topic": "Environments",
       "lit_cites": 37,
-      "lit_refs": 74
+      "lit_refs": 74,
+      "topic": "RLVR",
+      "ideas": [
+        "curriculum"
+      ],
+      "tags": [
+        "RLVR",
+        "curriculum"
+      ]
     },
     {
       "id": "arxiv:2510.14901",
@@ -1625,15 +1930,13 @@
       "refs": 3,
       "doc": true,
       "bib_items": 41,
-      "tags": [
-        "Scaling",
-        "Math reasoning",
-        "Feedback",
-        "RL"
-      ],
-      "topic": "Scaling",
       "lit_cites": 111,
-      "lit_refs": 57
+      "lit_refs": 57,
+      "topic": "Reasoning",
+      "ideas": [],
+      "tags": [
+        "Reasoning"
+      ]
     },
     {
       "id": "arxiv:2510.13786",
@@ -1655,12 +1958,13 @@
       "refs": 7,
       "doc": true,
       "bib_items": 53,
-      "tags": [
-        "Scaling"
-      ],
-      "topic": "Scaling",
       "lit_cites": 135,
-      "lit_refs": 52
+      "lit_refs": 52,
+      "topic": "RLVR",
+      "ideas": [],
+      "tags": [
+        "RLVR"
+      ]
     },
     {
       "id": "arxiv:2510.00977",
@@ -1683,14 +1987,16 @@
       "doc": true,
       "bib_items": 49,
       "telegram": true,
-      "tags": [
-        "Math reasoning",
-        "Feedback",
-        "RL"
-      ],
-      "topic": "Math reasoning",
       "lit_cites": 29,
-      "lit_refs": 73
+      "lit_refs": 73,
+      "topic": "RLVR",
+      "ideas": [
+        "GRPO"
+      ],
+      "tags": [
+        "RLVR",
+        "GRPO"
+      ]
     },
     {
       "id": "arxiv:2509.25123",
@@ -1713,14 +2019,13 @@
       "refs": 8,
       "doc": true,
       "bib_items": 41,
-      "tags": [
-        "Stepping stone",
-        "Generalization",
-        "RL"
-      ],
-      "topic": "Stepping stone",
       "lit_cites": 52,
-      "lit_refs": 48
+      "lit_refs": 48,
+      "topic": "RLVR",
+      "ideas": [],
+      "tags": [
+        "RLVR"
+      ]
     },
     {
       "id": "arxiv:2509.14234",
@@ -1743,10 +2048,16 @@
       "refs": 8,
       "doc": true,
       "bib_items": 46,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "RLVR",
+      "ideas": [
+        "self-refine"
+      ],
+      "tags": [
+        "RLVR",
+        "self-refine"
+      ]
     },
     {
       "id": "arxiv:2509.13232",
@@ -1767,15 +2078,13 @@
       "refs": 6,
       "doc": true,
       "bib_items": 45,
-      "tags": [
-        "Scaling",
-        "Self-improve",
-        "Generalization",
-        "RL"
-      ],
-      "topic": "Scaling",
       "lit_cites": 31,
-      "lit_refs": 50
+      "lit_refs": 50,
+      "topic": "RLVR",
+      "ideas": [],
+      "tags": [
+        "RLVR"
+      ]
     },
     {
       "id": "arxiv:2509.03646",
@@ -1797,14 +2106,13 @@
       "refs": 4,
       "doc": true,
       "bib_items": 44,
-      "tags": [
-        "Math reasoning",
-        "Feedback",
-        "RL"
-      ],
-      "topic": "Math reasoning",
       "lit_cites": 54,
-      "lit_refs": 55
+      "lit_refs": 55,
+      "topic": "RLVR",
+      "ideas": [],
+      "tags": [
+        "RLVR"
+      ]
     },
     {
       "id": "arxiv:2508.07629",
@@ -1827,13 +2135,13 @@
       "refs": 3,
       "doc": true,
       "bib_items": 28,
-      "tags": [
-        "Math reasoning",
-        "Feedback"
-      ],
-      "topic": "Math reasoning",
       "lit_cites": 54,
-      "lit_refs": 24
+      "lit_refs": 24,
+      "topic": "RLVR",
+      "ideas": [],
+      "tags": [
+        "RLVR"
+      ]
     },
     {
       "id": "arxiv:2508.05629",
@@ -1856,15 +2164,13 @@
       "doc": true,
       "bib_items": 96,
       "telegram": true,
-      "tags": [
-        "Scaling",
-        "Self-improve",
-        "Generalization",
-        "Prompts"
-      ],
-      "topic": "Scaling",
       "lit_cites": 152,
-      "lit_refs": 122
+      "lit_refs": 122,
+      "topic": "RLVR",
+      "ideas": [],
+      "tags": [
+        "RLVR"
+      ]
     },
     {
       "id": "arxiv:2507.19457",
@@ -1887,12 +2193,18 @@
       "refs": 7,
       "doc": true,
       "bib_items": 80,
-      "tags": [
-        "Self-refine"
-      ],
-      "topic": "Self-refine",
       "lit_cites": 344,
-      "lit_refs": 0
+      "lit_refs": 0,
+      "topic": "RLVR",
+      "ideas": [
+        "evolution",
+        "prompts"
+      ],
+      "tags": [
+        "RLVR",
+        "evolution",
+        "prompts"
+      ]
     },
     {
       "id": "arxiv:2507.18071",
@@ -1916,13 +2228,16 @@
       "doc": true,
       "bib_items": 8,
       "telegram": true,
-      "tags": [
-        "Scaling",
-        "RL"
-      ],
-      "topic": "Scaling",
       "lit_cites": 862,
-      "lit_refs": 6
+      "lit_refs": 6,
+      "topic": "RLVR",
+      "ideas": [
+        "GRPO"
+      ],
+      "tags": [
+        "RLVR",
+        "GRPO"
+      ]
     },
     {
       "id": "arxiv:2506.13585",
@@ -1945,12 +2260,13 @@
       "refs": 5,
       "doc": true,
       "bib_items": 85,
-      "tags": [
-        "Architecture"
-      ],
-      "topic": "Architecture",
       "lit_cites": 285,
-      "lit_refs": 98
+      "lit_refs": 98,
+      "topic": "Reasoning",
+      "ideas": [],
+      "tags": [
+        "Reasoning"
+      ]
     },
     {
       "id": "arxiv:2506.06632",
@@ -1973,12 +2289,16 @@
       "refs": 5,
       "doc": true,
       "bib_items": 54,
-      "tags": [
-        "Environments"
-      ],
-      "topic": "Environments",
       "lit_cites": 103,
-      "lit_refs": 73
+      "lit_refs": 73,
+      "topic": "RLVR",
+      "ideas": [
+        "curriculum"
+      ],
+      "tags": [
+        "RLVR",
+        "curriculum"
+      ]
     },
     {
       "id": "arxiv:2506.03106",
@@ -2001,14 +2321,16 @@
       "refs": 8,
       "doc": true,
       "bib_items": 69,
-      "tags": [
-        "Math reasoning",
-        "Feedback",
-        "RL"
-      ],
-      "topic": "Math reasoning",
       "lit_cites": 105,
-      "lit_refs": 53
+      "lit_refs": 53,
+      "topic": "RLVR",
+      "ideas": [
+        "GRPO"
+      ],
+      "tags": [
+        "RLVR",
+        "GRPO"
+      ]
     },
     {
       "id": "arxiv:2506.01939",
@@ -2030,14 +2352,13 @@
       "refs": 6,
       "doc": true,
       "bib_items": 42,
-      "tags": [
-        "Math reasoning",
-        "Feedback",
-        "RL"
-      ],
-      "topic": "Math reasoning",
       "lit_cites": 706,
-      "lit_refs": 51
+      "lit_refs": 51,
+      "topic": "RLVR",
+      "ideas": [],
+      "tags": [
+        "RLVR"
+      ]
     },
     {
       "id": "arxiv:2505.19590",
@@ -2061,14 +2382,13 @@
       "doc": true,
       "bib_items": 58,
       "telegram": true,
-      "tags": [
-        "Math reasoning",
-        "Feedback",
-        "RL"
-      ],
-      "topic": "Math reasoning",
       "lit_cites": 259,
-      "lit_refs": 66
+      "lit_refs": 66,
+      "topic": "RLVR",
+      "ideas": [],
+      "tags": [
+        "RLVR"
+      ]
     },
     {
       "id": "arxiv:2505.10978",
@@ -2091,12 +2411,16 @@
       "refs": 3,
       "doc": true,
       "bib_items": 78,
-      "tags": [
-        "RL"
-      ],
-      "topic": "RL",
       "lit_cites": 434,
-      "lit_refs": 99
+      "lit_refs": 99,
+      "topic": "RLVR",
+      "ideas": [
+        "GRPO"
+      ],
+      "tags": [
+        "RLVR",
+        "GRPO"
+      ]
     },
     {
       "id": "arxiv:2504.16084",
@@ -2118,14 +2442,13 @@
       "refs": 9,
       "doc": true,
       "bib_items": 64,
-      "tags": [
-        "Stepping stone",
-        "Self-improve",
-        "RL"
-      ],
-      "topic": "Stepping stone",
       "lit_cites": 299,
-      "lit_refs": 84
+      "lit_refs": 84,
+      "topic": "Reasoning",
+      "ideas": [],
+      "tags": [
+        "Reasoning"
+      ]
     },
     {
       "id": "arxiv:2504.13837",
@@ -2148,14 +2471,16 @@
       "refs": 6,
       "doc": true,
       "bib_items": 63,
-      "tags": [
-        "Scaling",
-        "Math reasoning",
-        "RL"
-      ],
-      "topic": "Scaling",
       "lit_cites": 1202,
-      "lit_refs": 71
+      "lit_refs": 71,
+      "topic": "RLVR",
+      "ideas": [
+        "critique"
+      ],
+      "tags": [
+        "RLVR",
+        "critique"
+      ]
     },
     {
       "id": "arxiv:2503.20783",
@@ -2178,13 +2503,16 @@
       "refs": 3,
       "doc": true,
       "bib_items": 36,
-      "tags": [
-        "Math reasoning",
-        "RL"
-      ],
-      "topic": "Math reasoning",
       "lit_cites": 1536,
-      "lit_refs": 34
+      "lit_refs": 34,
+      "topic": "RLVR",
+      "ideas": [
+        "GRPO"
+      ],
+      "tags": [
+        "RLVR",
+        "GRPO"
+      ]
     },
     {
       "id": "url:oatllm.notion.site/oat-zero",
@@ -2203,10 +2531,13 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "RLVR",
+      "ideas": [],
+      "tags": [
+        "RLVR"
+      ]
     },
     {
       "id": "arxiv:2503.14476",
@@ -2229,13 +2560,13 @@
       "refs": 2,
       "doc": true,
       "bib_items": 39,
-      "tags": [
-        "Scaling",
-        "RL"
-      ],
-      "topic": "Scaling",
       "lit_cites": 2961,
-      "lit_refs": 41
+      "lit_refs": 41,
+      "topic": "RLVR",
+      "ideas": [],
+      "tags": [
+        "RLVR"
+      ]
     },
     {
       "id": "arxiv:2503.02875",
@@ -2259,10 +2590,16 @@
       "doc": true,
       "bib_items": 39,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "RLVR",
+      "ideas": [
+        "priming"
+      ],
+      "tags": [
+        "RLVR",
+        "priming"
+      ]
     },
     {
       "id": "arxiv:2503.00735",
@@ -2284,14 +2621,16 @@
       "doc": true,
       "bib_items": 15,
       "telegram": true,
-      "tags": [
-        "Scaling",
-        "Self-improve",
-        "Math reasoning"
-      ],
-      "topic": "Scaling",
       "lit_cites": 19,
-      "lit_refs": 0
+      "lit_refs": 0,
+      "topic": "RLVR",
+      "ideas": [
+        "self-refine"
+      ],
+      "tags": [
+        "RLVR",
+        "self-refine"
+      ]
     },
     {
       "id": "arxiv:2402.13669",
@@ -2314,12 +2653,16 @@
       "refs": 4,
       "doc": true,
       "bib_items": 53,
-      "tags": [
-        "Self-distill"
-      ],
-      "topic": "Self-distill",
       "lit_cites": 149,
-      "lit_refs": 59
+      "lit_refs": 59,
+      "topic": "RLVR",
+      "ideas": [
+        "self-distill"
+      ],
+      "tags": [
+        "RLVR",
+        "self-distill"
+      ]
     },
     {
       "id": "arxiv:2402.03300",
@@ -2342,12 +2685,16 @@
       "refs": 1,
       "doc": true,
       "bib_items": 61,
-      "tags": [
-        "Math reasoning"
-      ],
-      "topic": "Math reasoning",
       "lit_cites": 10145,
-      "lit_refs": 86
+      "lit_refs": 86,
+      "topic": "RLVR",
+      "ideas": [
+        "GRPO"
+      ],
+      "tags": [
+        "RLVR",
+        "GRPO"
+      ]
     },
     {
       "id": "arxiv:2303.17651",
@@ -2370,12 +2717,16 @@
       "refs": 1,
       "doc": true,
       "bib_items": 52,
-      "tags": [
-        "Self-refine"
-      ],
-      "topic": "Self-refine",
       "lit_cites": 179,
-      "lit_refs": 0
+      "lit_refs": 0,
+      "topic": "Reasoning",
+      "ideas": [
+        "self-refine"
+      ],
+      "tags": [
+        "Reasoning",
+        "self-refine"
+      ]
     },
     {
       "id": "arxiv:2608.11676",
@@ -2398,10 +2749,13 @@
       "refs": 3,
       "doc": true,
       "bib_items": 21,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Inter-model",
+      "ideas": [],
+      "tags": [
+        "Inter-model"
+      ]
     },
     {
       "id": "arxiv:2608.03893",
@@ -2425,10 +2779,13 @@
       "doc": true,
       "bib_items": 30,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Inter-model",
+      "ideas": [],
+      "tags": [
+        "Inter-model"
+      ]
     },
     {
       "id": "arxiv:2608.00146",
@@ -2452,12 +2809,13 @@
       "doc": true,
       "bib_items": 150,
       "telegram": true,
-      "tags": [
-        "Enc-dec"
-      ],
-      "topic": "Enc-dec",
       "lit_cites": 0,
-      "lit_refs": 0
+      "lit_refs": 0,
+      "topic": "Diffusion",
+      "ideas": [],
+      "tags": [
+        "Diffusion"
+      ]
     },
     {
       "id": "arxiv:2607.02303",
@@ -2478,10 +2836,16 @@
       "doc": true,
       "bib_items": 42,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Architectures",
+      "ideas": [
+        "memory"
+      ],
+      "tags": [
+        "Architectures",
+        "memory"
+      ]
     },
     {
       "id": "arxiv:2606.06574",
@@ -2504,12 +2868,13 @@
       "doc": true,
       "bib_items": 30,
       "telegram": true,
-      "tags": [
-        "Recurrent"
-      ],
-      "topic": "Recurrent",
       "lit_cites": 2,
-      "lit_refs": 42
+      "lit_refs": 42,
+      "topic": "Latent",
+      "ideas": [],
+      "tags": [
+        "Latent"
+      ]
     },
     {
       "id": "arxiv:2605.22863",
@@ -2531,10 +2896,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 17,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Inter-model",
+      "ideas": [],
+      "tags": [
+        "Inter-model"
+      ]
     },
     {
       "id": "arxiv:2604.08302",
@@ -2558,10 +2926,13 @@
       "doc": true,
       "bib_items": 110,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Diffusion",
+      "ideas": [],
+      "tags": [
+        "Diffusion"
+      ]
     },
     {
       "id": "arxiv:2603.05454",
@@ -2584,10 +2955,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 31,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Diffusion",
+      "ideas": [],
+      "tags": [
+        "Diffusion"
+      ]
     },
     {
       "id": "arxiv:2602.08676",
@@ -2610,10 +2984,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 49,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Diffusion",
+      "ideas": [],
+      "tags": [
+        "Diffusion"
+      ]
     },
     {
       "id": "arxiv:2512.24601",
@@ -2635,12 +3012,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 51,
-      "tags": [
-        "Recursive"
-      ],
-      "topic": "Recursive",
       "lit_cites": 87,
-      "lit_refs": 46
+      "lit_refs": 46,
+      "topic": "Latent",
+      "ideas": [],
+      "tags": [
+        "Latent"
+      ]
     },
     {
       "id": "arxiv:2512.14856",
@@ -2664,12 +3042,16 @@
       "doc": true,
       "bib_items": 68,
       "telegram": true,
-      "tags": [
-        "Enc-dec"
-      ],
-      "topic": "Enc-dec",
       "lit_cites": 11,
-      "lit_refs": 109
+      "lit_refs": 109,
+      "topic": "Architectures",
+      "ideas": [
+        "enc-dec"
+      ],
+      "tags": [
+        "Architectures",
+        "enc-dec"
+      ]
     },
     {
       "id": "arxiv:2512.13961",
@@ -2693,10 +3075,13 @@
       "doc": true,
       "bib_items": 257,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Architectures",
+      "ideas": [],
+      "tags": [
+        "Architectures"
+      ]
     },
     {
       "id": "arxiv:2512.15745",
@@ -2719,10 +3104,13 @@
       "refs": 2,
       "doc": true,
       "bib_items": 77,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Diffusion",
+      "ideas": [],
+      "tags": [
+        "Diffusion"
+      ]
     },
     {
       "id": "arxiv:2511.09149",
@@ -2745,10 +3133,13 @@
       "refs": 6,
       "doc": true,
       "bib_items": 46,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Inter-model",
+      "ideas": [],
+      "tags": [
+        "Inter-model"
+      ]
     },
     {
       "id": "arxiv:2510.26622",
@@ -2771,10 +3162,16 @@
       "refs": 4,
       "doc": true,
       "bib_items": 59,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Architectures",
+      "ideas": [
+        "enc-dec"
+      ],
+      "tags": [
+        "Architectures",
+        "enc-dec"
+      ]
     },
     {
       "id": "arxiv:2510.03215",
@@ -2798,10 +3195,13 @@
       "doc": true,
       "bib_items": 55,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Inter-model",
+      "ideas": [],
+      "tags": [
+        "Inter-model"
+      ]
     },
     {
       "id": "arxiv:2507.10524",
@@ -2825,10 +3225,13 @@
       "doc": true,
       "bib_items": 111,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Latent",
+      "ideas": [],
+      "tags": [
+        "Latent"
+      ]
     },
     {
       "id": "url:pub.sakana.ai/ctm",
@@ -2852,13 +3255,13 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [
-        "Recurrent",
-        "Architecture"
-      ],
-      "topic": "Recurrent",
       "lit_cites": 23,
-      "lit_refs": 101
+      "lit_refs": 101,
+      "topic": "Latent",
+      "ideas": [],
+      "tags": [
+        "Latent"
+      ]
     },
     {
       "id": "arxiv:2504.06225",
@@ -2881,12 +3284,16 @@
       "refs": 1,
       "doc": true,
       "bib_items": 55,
-      "tags": [
-        "Enc-dec"
-      ],
-      "topic": "Enc-dec",
       "lit_cites": 24,
-      "lit_refs": 85
+      "lit_refs": 85,
+      "topic": "Architectures",
+      "ideas": [
+        "enc-dec"
+      ],
+      "tags": [
+        "Architectures",
+        "enc-dec"
+      ]
     },
     {
       "id": "arxiv:2502.09992",
@@ -2909,10 +3316,13 @@
       "refs": 6,
       "doc": true,
       "bib_items": 125,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Diffusion",
+      "ideas": [],
+      "tags": [
+        "Diffusion"
+      ]
     },
     {
       "id": "arxiv:2501.14082",
@@ -2933,10 +3343,13 @@
       "refs": 6,
       "doc": true,
       "bib_items": 51,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Inter-model",
+      "ideas": [],
+      "tags": [
+        "Inter-model"
+      ]
     },
     {
       "id": "arxiv:2501.00656",
@@ -2959,10 +3372,13 @@
       "refs": 5,
       "doc": true,
       "bib_items": 140,
-      "tags": [],
-      "topic": null,
       "lit_cites": 312,
-      "lit_refs": 0
+      "lit_refs": 0,
+      "topic": "Architectures",
+      "ideas": [],
+      "tags": [
+        "Architectures"
+      ]
     },
     {
       "id": "arxiv:2412.13663",
@@ -2985,10 +3401,16 @@
       "refs": 4,
       "doc": true,
       "bib_items": 99,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Architectures",
+      "ideas": [
+        "enc-dec"
+      ],
+      "tags": [
+        "Architectures",
+        "enc-dec"
+      ]
     },
     {
       "id": "url:ai.meta.com/research/publications/large-concept-models-language-modeling-in-a-sentence-representation-space",
@@ -3012,10 +3434,13 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Inter-model",
+      "ideas": [],
+      "tags": [
+        "Inter-model"
+      ]
     },
     {
       "id": "arxiv:2407.21783",
@@ -3038,10 +3463,13 @@
       "refs": 11,
       "doc": true,
       "bib_items": 277,
-      "tags": [],
-      "topic": null,
       "lit_cites": 22308,
-      "lit_refs": 0
+      "lit_refs": 0,
+      "topic": "Architectures",
+      "ideas": [],
+      "tags": [
+        "Architectures"
+      ]
     },
     {
       "id": "arxiv:2405.12250",
@@ -3065,10 +3493,13 @@
       "doc": true,
       "bib_items": 29,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Dynamics",
+      "ideas": [],
+      "tags": [
+        "Dynamics"
+      ]
     },
     {
       "id": "arxiv:2405.04517",
@@ -3092,10 +3523,13 @@
       "doc": true,
       "bib_items": 127,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Architectures",
+      "ideas": [],
+      "tags": [
+        "Architectures"
+      ]
     },
     {
       "id": "arxiv:2404.09173",
@@ -3119,10 +3553,16 @@
       "doc": true,
       "bib_items": 84,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Architectures",
+      "ideas": [
+        "memory"
+      ],
+      "tags": [
+        "Architectures",
+        "memory"
+      ]
     },
     {
       "id": "arxiv:2404.07143",
@@ -3145,10 +3585,13 @@
       "doc": true,
       "bib_items": 64,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Architectures",
+      "ideas": [],
+      "tags": [
+        "Architectures"
+      ]
     },
     {
       "id": "arxiv:2312.04927",
@@ -3171,10 +3614,13 @@
       "refs": 3,
       "doc": true,
       "bib_items": 79,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Architectures",
+      "ideas": [],
+      "tags": [
+        "Architectures"
+      ]
     },
     {
       "id": "arxiv:2311.06242",
@@ -3197,10 +3643,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 100,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Architectures",
+      "ideas": [],
+      "tags": [
+        "Architectures"
+      ]
     },
     {
       "id": "url:ai.meta.com/research/publications/code-llama-open-foundation-models-for-code",
@@ -3224,10 +3673,13 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Architectures",
+      "ideas": [],
+      "tags": [
+        "Architectures"
+      ]
     },
     {
       "id": "arxiv:2306.13575",
@@ -3250,10 +3702,13 @@
       "doc": true,
       "bib_items": 83,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Architectures",
+      "ideas": [],
+      "tags": [
+        "Architectures"
+      ]
     },
     {
       "id": "url:google-research.github.io/seanet/audiopalm/examples",
@@ -3276,10 +3731,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Architectures",
+      "ideas": [],
+      "tags": [
+        "Architectures"
+      ]
     },
     {
       "id": "arxiv:2305.01625",
@@ -3303,10 +3761,13 @@
       "doc": true,
       "bib_items": 53,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Architectures",
+      "ideas": [],
+      "tags": [
+        "Architectures"
+      ]
     },
     {
       "id": "arxiv:2302.14045",
@@ -3329,10 +3790,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 61,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Architectures",
+      "ideas": [],
+      "tags": [
+        "Architectures"
+      ]
     },
     {
       "id": "arxiv:2302.10866",
@@ -3355,10 +3819,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 59,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Architectures",
+      "ideas": [],
+      "tags": [
+        "Architectures"
+      ]
     },
     {
       "id": "arxiv:2302.07253",
@@ -3381,12 +3848,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 66,
-      "tags": [
-        "Self-improve"
-      ],
-      "topic": "Self-improve",
       "lit_cites": 2,
-      "lit_refs": 0
+      "lit_refs": 0,
+      "topic": "Architectures",
+      "ideas": [],
+      "tags": [
+        "Architectures"
+      ]
     },
     {
       "id": "arxiv:2207.02098",
@@ -3410,10 +3878,13 @@
       "doc": true,
       "bib_items": 94,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Dynamics",
+      "ideas": [],
+      "tags": [
+        "Dynamics"
+      ]
     },
     {
       "id": "arxiv:2203.08913",
@@ -3437,10 +3908,16 @@
       "doc": true,
       "bib_items": 49,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Architectures",
+      "ideas": [
+        "memory"
+      ],
+      "tags": [
+        "Architectures",
+        "memory"
+      ]
     },
     {
       "id": "arxiv:2006.16236",
@@ -3463,10 +3940,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 39,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Architectures",
+      "ideas": [],
+      "tags": [
+        "Architectures"
+      ]
     },
     {
       "id": "url:people.idsia.ch/~juergen/most-cited-neural-nets.html",
@@ -3484,10 +3964,13 @@
       "refs": 2,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Other",
+      "ideas": [],
+      "tags": [
+        "Other"
+      ]
     },
     {
       "id": "arxiv:2002.05202",
@@ -3507,10 +3990,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 11,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Architectures",
+      "ideas": [],
+      "tags": [
+        "Architectures"
+      ]
     },
     {
       "id": "arxiv:1710.05941",
@@ -3532,10 +4018,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 53,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Architectures",
+      "ideas": [],
+      "tags": [
+        "Architectures"
+      ]
     },
     {
       "id": "doi:10.1073/pnas.2520095123",
@@ -3558,10 +4047,13 @@
       "refs": 2,
       "doc": true,
       "bib_items": 268,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Consciousness",
+      "ideas": [],
+      "tags": [
+        "Consciousness"
+      ]
     },
     {
       "id": "arxiv:2606.31779",
@@ -3584,10 +4076,13 @@
       "doc": true,
       "bib_items": 93,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Latent",
+      "ideas": [],
+      "tags": [
+        "Latent"
+      ]
     },
     {
       "id": "arxiv:2606.25010",
@@ -3611,10 +4106,13 @@
       "doc": true,
       "bib_items": 26,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Dynamics",
+      "ideas": [],
+      "tags": [
+        "Dynamics"
+      ]
     },
     {
       "id": "arxiv:2606.03982",
@@ -3637,13 +4135,16 @@
       "refs": 5,
       "doc": true,
       "bib_items": 28,
-      "tags": [
-        "Heuristics",
-        "Math reasoning"
-      ],
-      "topic": "Heuristics",
       "lit_cites": 0,
-      "lit_refs": 28
+      "lit_refs": 28,
+      "topic": "Interp",
+      "ideas": [
+        "arithmetic"
+      ],
+      "tags": [
+        "Interp",
+        "arithmetic"
+      ]
     },
     {
       "id": "arxiv:2605.07654",
@@ -3666,10 +4167,16 @@
       "refs": 2,
       "doc": true,
       "bib_items": 51,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Reasoning",
+      "ideas": [
+        "priming"
+      ],
+      "tags": [
+        "Reasoning",
+        "priming"
+      ]
     },
     {
       "id": "arxiv:2604.11791",
@@ -3693,12 +4200,13 @@
       "doc": true,
       "bib_items": 51,
       "telegram": true,
-      "tags": [
-        "Recurrent"
-      ],
-      "topic": "Recurrent",
       "lit_cites": 19,
-      "lit_refs": 59
+      "lit_refs": 59,
+      "topic": "Latent",
+      "ideas": [],
+      "tags": [
+        "Latent"
+      ]
     },
     {
       "id": "arxiv:2604.01754",
@@ -3721,10 +4229,16 @@
       "refs": 0,
       "doc": true,
       "bib_items": 29,
-      "tags": [],
-      "topic": null,
       "lit_cites": 3,
-      "lit_refs": 0
+      "lit_refs": 0,
+      "topic": "Reasoning",
+      "ideas": [
+        "critique"
+      ],
+      "tags": [
+        "Reasoning",
+        "critique"
+      ]
     },
     {
       "id": "arxiv:2602.10416",
@@ -3747,12 +4261,16 @@
       "refs": 4,
       "doc": true,
       "bib_items": 48,
-      "tags": [
-        "Math reasoning"
-      ],
-      "topic": "Math reasoning",
       "lit_cites": 0,
-      "lit_refs": 46
+      "lit_refs": 46,
+      "topic": "Interp",
+      "ideas": [
+        "arithmetic"
+      ],
+      "tags": [
+        "Interp",
+        "arithmetic"
+      ]
     },
     {
       "id": "openreview:klU4737opt",
@@ -3770,10 +4288,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Reasoning",
+      "ideas": [],
+      "tags": [
+        "Reasoning"
+      ]
     },
     {
       "id": "arxiv:2512.16902",
@@ -3796,12 +4317,13 @@
       "refs": 7,
       "doc": true,
       "bib_items": 88,
-      "tags": [
-        "Math reasoning"
-      ],
-      "topic": "Math reasoning",
       "lit_cites": 2,
-      "lit_refs": 111
+      "lit_refs": 111,
+      "topic": "Reasoning",
+      "ideas": [],
+      "tags": [
+        "Reasoning"
+      ]
     },
     {
       "id": "arxiv:2510.00184",
@@ -3824,13 +4346,16 @@
       "refs": 6,
       "doc": true,
       "bib_items": 21,
-      "tags": [
-        "Heuristics",
-        "Math reasoning"
-      ],
-      "topic": "Heuristics",
       "lit_cites": 10,
-      "lit_refs": 24
+      "lit_refs": 24,
+      "topic": "Interp",
+      "ideas": [
+        "arithmetic"
+      ],
+      "tags": [
+        "Interp",
+        "arithmetic"
+      ]
     },
     {
       "id": "arxiv:2509.25239",
@@ -3851,12 +4376,13 @@
       "refs": 3,
       "doc": true,
       "bib_items": 44,
-      "tags": [
-        "Recurrent"
-      ],
-      "topic": "Recurrent",
       "lit_cites": 12,
-      "lit_refs": 77
+      "lit_refs": 77,
+      "topic": "Latent",
+      "ideas": [],
+      "tags": [
+        "Latent"
+      ]
     },
     {
       "id": "arxiv:2509.20317",
@@ -3880,10 +4406,13 @@
       "doc": true,
       "bib_items": 61,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Latent",
+      "ideas": [],
+      "tags": [
+        "Latent"
+      ]
     },
     {
       "id": "arxiv:2508.02513",
@@ -3906,13 +4435,16 @@
       "refs": 7,
       "doc": true,
       "bib_items": 25,
-      "tags": [
-        "Generalization",
-        "RL"
-      ],
-      "topic": "Generalization",
       "lit_cites": 7,
-      "lit_refs": 27
+      "lit_refs": 27,
+      "topic": "Interp",
+      "ideas": [
+        "arithmetic"
+      ],
+      "tags": [
+        "Interp",
+        "arithmetic"
+      ]
     },
     {
       "id": "arxiv:2506.10947",
@@ -3935,15 +4467,16 @@
       "doc": true,
       "bib_items": 39,
       "telegram": true,
-      "tags": [
-        "Stepping stone",
-        "Math reasoning",
-        "Feedback",
-        "RL"
-      ],
-      "topic": "Stepping stone",
       "lit_cites": 258,
-      "lit_refs": 51
+      "lit_refs": 51,
+      "topic": "RLVR",
+      "ideas": [
+        "critique"
+      ],
+      "tags": [
+        "RLVR",
+        "critique"
+      ]
     },
     {
       "id": "url:safe-lip-9a8.notion.site/incorrect-baseline-evaluations-call-into-question-recent-llm-rl-claims-2012f1fbf0ee8094ab8ded1953c15a37",
@@ -3962,10 +4495,16 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "RLVR",
+      "ideas": [
+        "critique"
+      ],
+      "tags": [
+        "RLVR",
+        "critique"
+      ]
     },
     {
       "id": "arxiv:2505.21493",
@@ -3988,10 +4527,13 @@
       "doc": true,
       "bib_items": 52,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "RLVR",
+      "ideas": [],
+      "tags": [
+        "RLVR"
+      ]
     },
     {
       "id": "arxiv:2505.21444",
@@ -4014,10 +4556,16 @@
       "doc": true,
       "bib_items": 96,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "RLVR",
+      "ideas": [
+        "self-refine"
+      ],
+      "tags": [
+        "RLVR",
+        "self-refine"
+      ]
     },
     {
       "id": "arxiv:2505.15134",
@@ -4040,10 +4588,13 @@
       "doc": true,
       "bib_items": 99,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "RLVR",
+      "ideas": [],
+      "tags": [
+        "RLVR"
+      ]
     },
     {
       "id": "arxiv:2505.13763",
@@ -4065,10 +4616,13 @@
       "refs": 3,
       "doc": true,
       "bib_items": 53,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Interp",
+      "ideas": [],
+      "tags": [
+        "Interp"
+      ]
     },
     {
       "id": "arxiv:2504.20571",
@@ -4091,10 +4645,13 @@
       "doc": true,
       "bib_items": 69,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "RLVR",
+      "ideas": [],
+      "tags": [
+        "RLVR"
+      ]
     },
     {
       "id": "arxiv:2503.21676",
@@ -4117,10 +4674,13 @@
       "refs": 8,
       "doc": true,
       "bib_items": 51,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Dynamics",
+      "ideas": [],
+      "tags": [
+        "Dynamics"
+      ]
     },
     {
       "id": "arxiv:2502.19981",
@@ -4142,13 +4702,16 @@
       "refs": 4,
       "doc": true,
       "bib_items": 33,
-      "tags": [
-        "Heuristics",
-        "Math reasoning"
-      ],
-      "topic": "Heuristics",
       "lit_cites": 18,
-      "lit_refs": 28
+      "lit_refs": 28,
+      "topic": "Interp",
+      "ideas": [
+        "arithmetic"
+      ],
+      "tags": [
+        "Interp",
+        "arithmetic"
+      ]
     },
     {
       "id": "arxiv:2502.05171",
@@ -4172,12 +4735,13 @@
       "doc": true,
       "bib_items": 187,
       "telegram": true,
-      "tags": [
-        "Recurrent"
-      ],
-      "topic": "Recurrent",
       "lit_cites": 353,
-      "lit_refs": 0
+      "lit_refs": 0,
+      "topic": "Latent",
+      "ideas": [],
+      "tags": [
+        "Latent"
+      ]
     },
     {
       "id": "arxiv:2502.06807",
@@ -4201,10 +4765,13 @@
       "doc": true,
       "bib_items": 16,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Reasoning",
+      "ideas": [],
+      "tags": [
+        "Reasoning"
+      ]
     },
     {
       "id": "arxiv:2502.00873",
@@ -4225,12 +4792,16 @@
       "refs": 5,
       "doc": true,
       "bib_items": 44,
-      "tags": [
-        "Math reasoning"
-      ],
-      "topic": "Math reasoning",
       "lit_cites": 95,
-      "lit_refs": 0
+      "lit_refs": 0,
+      "topic": "Interp",
+      "ideas": [
+        "arithmetic"
+      ],
+      "tags": [
+        "Interp",
+        "arithmetic"
+      ]
     },
     {
       "id": "arxiv:2501.04519",
@@ -4254,10 +4825,13 @@
       "doc": true,
       "bib_items": 63,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Reasoning",
+      "ideas": [],
+      "tags": [
+        "Reasoning"
+      ]
     },
     {
       "id": "arxiv:2412.14135",
@@ -4281,10 +4855,13 @@
       "doc": true,
       "bib_items": 229,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Reasoning",
+      "ideas": [],
+      "tags": [
+        "Reasoning"
+      ]
     },
     {
       "id": "arxiv:2412.06769",
@@ -4308,12 +4885,13 @@
       "doc": true,
       "bib_items": 55,
       "telegram": true,
-      "tags": [
-        "Recurrent"
-      ],
-      "topic": "Recurrent",
       "lit_cites": 814,
-      "lit_refs": 79
+      "lit_refs": 79,
+      "topic": "Latent",
+      "ideas": [],
+      "tags": [
+        "Latent"
+      ]
     },
     {
       "id": "arxiv:2410.21272",
@@ -4336,14 +4914,16 @@
       "refs": 3,
       "doc": true,
       "bib_items": 42,
+      "lit_cites": 130,
+      "lit_refs": 49,
+      "topic": "Interp",
+      "ideas": [
+        "arithmetic"
+      ],
       "tags": [
         "Interp",
-        "Heuristics",
-        "Math reasoning"
-      ],
-      "topic": "Interp",
-      "lit_cites": 130,
-      "lit_refs": 49
+        "arithmetic"
+      ]
     },
     {
       "id": "arxiv:2305.13673",
@@ -4365,10 +4945,13 @@
       "doc": true,
       "bib_items": 40,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Dynamics",
+      "ideas": [],
+      "tags": [
+        "Dynamics"
+      ]
     },
     {
       "id": "arxiv:2407.20311",
@@ -4391,10 +4974,13 @@
       "refs": 5,
       "doc": true,
       "bib_items": 23,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Dynamics",
+      "ideas": [],
+      "tags": [
+        "Dynamics"
+      ]
     },
     {
       "id": "arxiv:2309.14316",
@@ -4415,10 +5001,13 @@
       "refs": 4,
       "doc": true,
       "bib_items": 42,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Dynamics",
+      "ideas": [],
+      "tags": [
+        "Dynamics"
+      ]
     },
     {
       "id": "arxiv:2309.14402",
@@ -4439,10 +5028,13 @@
       "refs": 6,
       "doc": true,
       "bib_items": 39,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Dynamics",
+      "ideas": [],
+      "tags": [
+        "Dynamics"
+      ]
     },
     {
       "id": "arxiv:2404.05405",
@@ -4463,10 +5055,13 @@
       "refs": 5,
       "doc": true,
       "bib_items": 34,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Dynamics",
+      "ideas": [],
+      "tags": [
+        "Dynamics"
+      ]
     },
     {
       "id": "arxiv:2407.15017",
@@ -4489,12 +5084,13 @@
       "refs": 14,
       "doc": true,
       "bib_items": 402,
+      "lit_cites": 6,
+      "lit_refs": 0,
+      "topic": "Interp",
+      "ideas": [],
       "tags": [
         "Interp"
-      ],
-      "topic": "Interp",
-      "lit_cites": 6,
-      "lit_refs": 0
+      ]
     },
     {
       "id": "doi:10.1038/s41586-024-07522-w",
@@ -4517,10 +5113,13 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Consciousness",
+      "ideas": [],
+      "tags": [
+        "Consciousness"
+      ]
     },
     {
       "id": "arxiv:2406.11813",
@@ -4543,10 +5142,13 @@
       "refs": 4,
       "doc": true,
       "bib_items": 53,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Dynamics",
+      "ideas": [],
+      "tags": [
+        "Dynamics"
+      ]
     },
     {
       "id": "arxiv:2406.11741",
@@ -4570,10 +5172,13 @@
       "doc": true,
       "bib_items": 37,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Dynamics",
+      "ideas": [],
+      "tags": [
+        "Dynamics"
+      ]
     },
     {
       "id": "arxiv:2406.03689",
@@ -4596,10 +5201,16 @@
       "refs": 0,
       "doc": true,
       "bib_items": 40,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Reasoning",
+      "ideas": [
+        "world models"
+      ],
+      "tags": [
+        "Reasoning",
+        "world models"
+      ]
     },
     {
       "id": "arxiv:2406.03445",
@@ -4622,12 +5233,16 @@
       "refs": 2,
       "doc": true,
       "bib_items": 46,
-      "tags": [
-        "Math reasoning"
-      ],
-      "topic": "Math reasoning",
       "lit_cites": 60,
-      "lit_refs": 54
+      "lit_refs": 54,
+      "topic": "Interp",
+      "ideas": [
+        "arithmetic"
+      ],
+      "tags": [
+        "Interp",
+        "arithmetic"
+      ]
     },
     {
       "id": "arxiv:2405.15071",
@@ -4650,10 +5265,13 @@
       "doc": true,
       "bib_items": 78,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Dynamics",
+      "ideas": [],
+      "tags": [
+        "Dynamics"
+      ]
     },
     {
       "id": "arxiv:2405.14838",
@@ -4676,10 +5294,13 @@
       "doc": true,
       "bib_items": 20,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Latent",
+      "ideas": [],
+      "tags": [
+        "Latent"
+      ]
     },
     {
       "id": "doi:10.1038/d41586-024-01413-w",
@@ -4699,10 +5320,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Discovery",
+      "ideas": [],
+      "tags": [
+        "Discovery"
+      ]
     },
     {
       "id": "arxiv:2402.01817",
@@ -4725,10 +5349,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 67,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Reasoning",
+      "ideas": [],
+      "tags": [
+        "Reasoning"
+      ]
     },
     {
       "id": "arxiv:2312.13558",
@@ -4751,10 +5378,13 @@
       "doc": true,
       "bib_items": 43,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Interp",
+      "ideas": [],
+      "tags": [
+        "Interp"
+      ]
     },
     {
       "id": "openreview:hcQfTsVnBo",
@@ -4777,10 +5407,13 @@
       "refs": 0,
       "doc": false,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Dynamics",
+      "ideas": [],
+      "tags": [
+        "Dynamics"
+      ]
     },
     {
       "id": "arxiv:2309.12288",
@@ -4804,10 +5437,13 @@
       "doc": true,
       "bib_items": 38,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Dynamics",
+      "ideas": [],
+      "tags": [
+        "Dynamics"
+      ]
     },
     {
       "id": "arxiv:2304.15004",
@@ -4830,10 +5466,16 @@
       "doc": true,
       "bib_items": 34,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Dynamics",
+      "ideas": [
+        "critique"
+      ],
+      "tags": [
+        "Dynamics",
+        "critique"
+      ]
     },
     {
       "id": "arxiv:2302.00923",
@@ -4856,10 +5498,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 65,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Reasoning",
+      "ideas": [],
+      "tags": [
+        "Reasoning"
+      ]
     },
     {
       "id": "arxiv:2301.06627",
@@ -4882,10 +5527,13 @@
       "refs": 2,
       "doc": true,
       "bib_items": 218,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Consciousness",
+      "ideas": [],
+      "tags": [
+        "Consciousness"
+      ]
     },
     {
       "id": "arxiv:2301.05217",
@@ -4908,12 +5556,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 26,
-      "tags": [
-        "Math reasoning"
-      ],
-      "topic": "Math reasoning",
       "lit_cites": 1227,
-      "lit_refs": 32
+      "lit_refs": 32,
+      "topic": "Dynamics",
+      "ideas": [],
+      "tags": [
+        "Dynamics"
+      ]
     },
     {
       "id": "arxiv:2212.09196",
@@ -4935,10 +5584,13 @@
       "refs": 2,
       "doc": true,
       "bib_items": 70,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Reasoning",
+      "ideas": [],
+      "tags": [
+        "Reasoning"
+      ]
     },
     {
       "id": "url:ai.googleblog.com/2022/11/characterizing-emergent-phenomena-in.html",
@@ -4956,10 +5608,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Dynamics",
+      "ideas": [],
+      "tags": [
+        "Dynamics"
+      ]
     },
     {
       "id": "openreview:wUU-7XTL5XO",
@@ -4983,10 +5638,16 @@
       "doc": false,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Reasoning",
+      "ideas": [
+        "critique"
+      ],
+      "tags": [
+        "Reasoning",
+        "critique"
+      ]
     },
     {
       "id": "arxiv:2203.11171",
@@ -5010,10 +5671,13 @@
       "doc": true,
       "bib_items": 65,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Reasoning",
+      "ideas": [],
+      "tags": [
+        "Reasoning"
+      ]
     },
     {
       "id": "arxiv:2608.05136",
@@ -5034,12 +5698,13 @@
       "doc": true,
       "bib_items": 61,
       "telegram": true,
+      "lit_cites": 0,
+      "lit_refs": 0,
+      "topic": "Optimizers",
+      "ideas": [],
       "tags": [
         "Optimizers"
-      ],
-      "topic": "Optimizers",
-      "lit_cites": 0,
-      "lit_refs": 0
+      ]
     },
     {
       "id": "arxiv:2607.27372",
@@ -5062,12 +5727,13 @@
       "doc": true,
       "bib_items": 105,
       "telegram": true,
+      "lit_cites": 0,
+      "lit_refs": 0,
+      "topic": "Scaling",
+      "ideas": [],
       "tags": [
         "Scaling"
-      ],
-      "topic": "Scaling",
-      "lit_cites": 0,
-      "lit_refs": 0
+      ]
     },
     {
       "id": "arxiv:2601.21343",
@@ -5091,10 +5757,16 @@
       "doc": true,
       "bib_items": 90,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Scaling",
+      "ideas": [
+        "self-refine"
+      ],
+      "tags": [
+        "Scaling",
+        "self-refine"
+      ]
     },
     {
       "id": "arxiv:2512.24695",
@@ -5118,12 +5790,13 @@
       "doc": true,
       "bib_items": 180,
       "telegram": true,
-      "tags": [
-        "Architecture"
-      ],
-      "topic": "Architecture",
       "lit_cites": 95,
-      "lit_refs": 155
+      "lit_refs": 155,
+      "topic": "Continual",
+      "ideas": [],
+      "tags": [
+        "Continual"
+      ]
     },
     {
       "id": "arxiv:2510.05491",
@@ -5146,12 +5819,13 @@
       "refs": 3,
       "doc": true,
       "bib_items": 35,
+      "lit_cites": 67,
+      "lit_refs": 38,
+      "topic": "Optimizers",
+      "ideas": [],
       "tags": [
         "Optimizers"
-      ],
-      "topic": "Optimizers",
-      "lit_cites": 67,
-      "lit_refs": 38
+      ]
     },
     {
       "id": "arxiv:2508.11408",
@@ -5173,10 +5847,13 @@
       "refs": 9,
       "doc": true,
       "bib_items": 63,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "RLVR",
+      "ideas": [],
+      "tags": [
+        "RLVR"
+      ]
     },
     {
       "id": "arxiv:2507.12856",
@@ -5197,10 +5874,13 @@
       "refs": 4,
       "doc": true,
       "bib_items": 64,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "RLVR",
+      "ideas": [],
+      "tags": [
+        "RLVR"
+      ]
     },
     {
       "id": "arxiv:2506.08007",
@@ -5223,10 +5903,13 @@
       "doc": true,
       "bib_items": 23,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "RLVR",
+      "ideas": [],
+      "tags": [
+        "RLVR"
+      ]
     },
     {
       "id": "arxiv:2505.24832",
@@ -5250,10 +5933,13 @@
       "doc": true,
       "bib_items": 57,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Dynamics",
+      "ideas": [],
+      "tags": [
+        "Dynamics"
+      ]
     },
     {
       "id": "arxiv:2410.07041",
@@ -5275,10 +5961,13 @@
       "doc": true,
       "bib_items": 41,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Dynamics",
+      "ideas": [],
+      "tags": [
+        "Dynamics"
+      ]
     },
     {
       "id": "url:iclr.cc/virtual/2025/poster/30565",
@@ -5299,10 +5988,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Optimizers",
+      "ideas": [],
+      "tags": [
+        "Optimizers"
+      ]
     },
     {
       "id": "arxiv:2409.03137",
@@ -5324,10 +6016,13 @@
       "refs": 7,
       "doc": true,
       "bib_items": 76,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Optimizers",
+      "ideas": [],
+      "tags": [
+        "Optimizers"
+      ]
     },
     {
       "id": "arxiv:2405.20541",
@@ -5350,10 +6045,13 @@
       "refs": 2,
       "doc": true,
       "bib_items": 65,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Scaling",
+      "ideas": [],
+      "tags": [
+        "Scaling"
+      ]
     },
     {
       "id": "arxiv:2405.20233",
@@ -5376,10 +6074,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 29,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Dynamics",
+      "ideas": [],
+      "tags": [
+        "Dynamics"
+      ]
     },
     {
       "id": "arxiv:2405.18392",
@@ -5402,14 +6103,13 @@
       "refs": 6,
       "doc": true,
       "bib_items": 72,
-      "tags": [
-        "Scaling",
-        "Architecture",
-        "RL"
-      ],
-      "topic": "Scaling",
       "lit_cites": 0,
-      "lit_refs": 0
+      "lit_refs": 0,
+      "topic": "Scaling",
+      "ideas": [],
+      "tags": [
+        "Scaling"
+      ]
     },
     {
       "id": "url:epochai.org/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year",
@@ -5431,10 +6131,13 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Scaling",
+      "ideas": [],
+      "tags": [
+        "Scaling"
+      ]
     },
     {
       "id": "arxiv:2405.16684",
@@ -5454,10 +6157,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 44,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Scaling",
+      "ideas": [],
+      "tags": [
+        "Scaling"
+      ]
     },
     {
       "id": "arxiv:2405.15682",
@@ -5480,12 +6186,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 64,
-      "tags": [
-        "Generalization"
-      ],
-      "topic": "Generalization",
       "lit_cites": 9,
-      "lit_refs": 0
+      "lit_refs": 0,
+      "topic": "Optimizers",
+      "ideas": [],
+      "tags": [
+        "Optimizers"
+      ]
     },
     {
       "id": "url:educatingsilicon.com/2024/05/09/how-much-llm-training-data-is-there-in-the-limit",
@@ -5504,10 +6211,13 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Scaling",
+      "ideas": [],
+      "tags": [
+        "Scaling"
+      ]
     },
     {
       "id": "arxiv:2403.05175",
@@ -5529,12 +6239,16 @@
       "refs": 2,
       "doc": true,
       "bib_items": 181,
-      "tags": [
-        "Forgetting"
-      ],
-      "topic": "Forgetting",
       "lit_cites": 172,
-      "lit_refs": 286
+      "lit_refs": 286,
+      "topic": "Continual",
+      "ideas": [
+        "forgetting"
+      ],
+      "tags": [
+        "Continual",
+        "forgetting"
+      ]
     },
     {
       "id": "arxiv:2402.02342",
@@ -5556,12 +6270,13 @@
       "refs": 4,
       "doc": true,
       "bib_items": 61,
-      "tags": [
-        "Architecture"
-      ],
-      "topic": "Architecture",
       "lit_cites": 8,
-      "lit_refs": 76
+      "lit_refs": 76,
+      "topic": "Optimizers",
+      "ideas": [],
+      "tags": [
+        "Optimizers"
+      ]
     },
     {
       "id": "arxiv:2401.17401",
@@ -5584,13 +6299,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 30,
-      "tags": [
-        "Optimizers",
-        "Continual"
-      ],
-      "topic": "Optimizers",
       "lit_cites": 10,
-      "lit_refs": 32
+      "lit_refs": 32,
+      "topic": "Continual",
+      "ideas": [],
+      "tags": [
+        "Continual"
+      ]
     },
     {
       "id": "arxiv:2312.17742",
@@ -5613,10 +6328,13 @@
       "refs": 5,
       "doc": true,
       "bib_items": 111,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "SSL",
+      "ideas": [],
+      "tags": [
+        "SSL"
+      ]
     },
     {
       "id": "arxiv:2312.10549",
@@ -5639,12 +6357,16 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [
-        "Forgetting"
-      ],
-      "topic": "Forgetting",
       "lit_cites": 73,
-      "lit_refs": 303
+      "lit_refs": 303,
+      "topic": "Continual",
+      "ideas": [
+        "forgetting"
+      ],
+      "tags": [
+        "Continual",
+        "forgetting"
+      ]
     },
     {
       "id": "arxiv:2307.06440",
@@ -5667,12 +6389,13 @@
       "refs": 8,
       "doc": true,
       "bib_items": 113,
-      "tags": [
-        "Optimizers"
-      ],
-      "topic": "Optimizers",
       "lit_cites": 63,
-      "lit_refs": 160
+      "lit_refs": 160,
+      "topic": "Scaling",
+      "ideas": [],
+      "tags": [
+        "Scaling"
+      ]
     },
     {
       "id": "doi:10.1038/s41586-024-07711-7",
@@ -5696,13 +6419,16 @@
       "doc": true,
       "bib_items": 126,
       "telegram": true,
-      "tags": [
-        "Evolution",
-        "Continual"
-      ],
-      "topic": "Evolution",
       "lit_cites": 457,
-      "lit_refs": 207
+      "lit_refs": 207,
+      "topic": "Continual",
+      "ideas": [
+        "forgetting"
+      ],
+      "tags": [
+        "Continual",
+        "forgetting"
+      ]
     },
     {
       "id": "arxiv:2305.14342",
@@ -5725,12 +6451,13 @@
       "refs": 3,
       "doc": true,
       "bib_items": 81,
+      "lit_cites": 378,
+      "lit_refs": 120,
+      "topic": "Optimizers",
+      "ideas": [],
       "tags": [
         "Optimizers"
-      ],
-      "topic": "Optimizers",
-      "lit_cites": 378,
-      "lit_refs": 120
+      ]
     },
     {
       "id": "arxiv:2302.06675",
@@ -5754,15 +6481,16 @@
       "doc": true,
       "bib_items": 107,
       "telegram": true,
-      "tags": [
-        "Scaling",
-        "Optimizers",
-        "Self-improve",
-        "Prompts"
-      ],
-      "topic": "Scaling",
       "lit_cites": 851,
-      "lit_refs": 190
+      "lit_refs": 190,
+      "topic": "Optimizers",
+      "ideas": [
+        "evolution"
+      ],
+      "tags": [
+        "Optimizers",
+        "evolution"
+      ]
     },
     {
       "id": "arxiv:2212.14034",
@@ -5783,12 +6511,13 @@
       "refs": 3,
       "doc": true,
       "bib_items": 133,
+      "lit_cites": 152,
+      "lit_refs": 209,
+      "topic": "Scaling",
+      "ideas": [],
       "tags": [
         "Scaling"
-      ],
-      "topic": "Scaling",
-      "lit_cites": 152,
-      "lit_refs": 209
+      ]
     },
     {
       "id": "arxiv:2210.10760",
@@ -5811,10 +6540,13 @@
       "doc": true,
       "bib_items": 56,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Scaling",
+      "ideas": [],
+      "tags": [
+        "Scaling"
+      ]
     },
     {
       "id": "arxiv:2110.09485",
@@ -5836,12 +6568,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 26,
-      "tags": [
-        "Generalization"
-      ],
-      "topic": "Generalization",
       "lit_cites": 153,
-      "lit_refs": 50
+      "lit_refs": 50,
+      "topic": "Dynamics",
+      "ideas": [],
+      "tags": [
+        "Dynamics"
+      ]
     },
     {
       "id": "arxiv:2108.06325",
@@ -5863,12 +6596,13 @@
       "refs": 2,
       "doc": true,
       "bib_items": 0,
-      "tags": [
-        "Scaling"
-      ],
-      "topic": "Scaling",
       "lit_cites": 2,
-      "lit_refs": 0
+      "lit_refs": 0,
+      "topic": "Continual",
+      "ideas": [],
+      "tags": [
+        "Continual"
+      ]
     },
     {
       "id": "arxiv:2010.01412",
@@ -5891,15 +6625,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 63,
-      "tags": [
-        "Optimizers",
-        "Generalization",
-        "Architecture",
-        "Prompts"
-      ],
-      "topic": "Optimizers",
       "lit_cites": 2614,
-      "lit_refs": 107
+      "lit_refs": 107,
+      "topic": "Optimizers",
+      "ideas": [],
+      "tags": [
+        "Optimizers"
+      ]
     },
     {
       "id": "arxiv:2009.11848",
@@ -5922,12 +6654,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 94,
-      "tags": [
-        "Generalization"
-      ],
-      "topic": "Generalization",
       "lit_cites": 488,
-      "lit_refs": 185
+      "lit_refs": 185,
+      "topic": "Dynamics",
+      "ideas": [],
+      "tags": [
+        "Dynamics"
+      ]
     },
     {
       "id": "arxiv:2009.11243",
@@ -5951,10 +6684,13 @@
       "doc": true,
       "bib_items": 77,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Optimizers",
+      "ideas": [],
+      "tags": [
+        "Optimizers"
+      ]
     },
     {
       "id": "arxiv:2001.08361",
@@ -5978,10 +6714,13 @@
       "doc": true,
       "bib_items": 50,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Scaling",
+      "ideas": [],
+      "tags": [
+        "Scaling"
+      ]
     },
     {
       "id": "url:openai.com/index/deep-double-descent",
@@ -5999,10 +6738,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Dynamics",
+      "ideas": [],
+      "tags": [
+        "Dynamics"
+      ]
     },
     {
       "id": "url:paperswithcode.com/paper/optimizing-millions-of-hyperparameters-by",
@@ -6024,10 +6766,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Optimizers",
+      "ideas": [],
+      "tags": [
+        "Optimizers"
+      ]
     },
     {
       "id": "arxiv:1904.00962",
@@ -6050,12 +6795,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 33,
+      "lit_cites": 1649,
+      "lit_refs": 53,
+      "topic": "Optimizers",
+      "ideas": [],
       "tags": [
         "Optimizers"
-      ],
-      "topic": "Optimizers",
-      "lit_cites": 1649,
-      "lit_refs": 53
+      ]
     },
     {
       "id": "arxiv:1803.03635",
@@ -6077,10 +6823,13 @@
       "doc": true,
       "bib_items": 56,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Dynamics",
+      "ideas": [],
+      "tags": [
+        "Dynamics"
+      ]
     },
     {
       "id": "openreview:ry_WPG-A-",
@@ -6098,10 +6847,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Dynamics",
+      "ideas": [],
+      "tags": [
+        "Dynamics"
+      ]
     },
     {
       "id": "arxiv:1708.07120",
@@ -6122,12 +6874,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 40,
+      "lit_cites": 26,
+      "lit_refs": 0,
+      "topic": "Optimizers",
+      "ideas": [],
       "tags": [
         "Optimizers"
-      ],
-      "topic": "Optimizers",
-      "lit_cites": 26,
-      "lit_refs": 0
+      ]
     },
     {
       "id": "arxiv:1708.02072",
@@ -6150,12 +6903,16 @@
       "refs": 1,
       "doc": true,
       "bib_items": 37,
-      "tags": [
-        "Forgetting"
-      ],
-      "topic": "Forgetting",
       "lit_cites": 1147,
-      "lit_refs": 65
+      "lit_refs": 65,
+      "topic": "Continual",
+      "ideas": [
+        "forgetting"
+      ],
+      "tags": [
+        "Continual",
+        "forgetting"
+      ]
     },
     {
       "id": "doi:10.1073/pnas.1611835114",
@@ -6178,12 +6935,16 @@
       "refs": 1,
       "doc": true,
       "bib_items": 44,
-      "tags": [
-        "Forgetting"
-      ],
-      "topic": "Forgetting",
       "lit_cites": 14150,
-      "lit_refs": 75
+      "lit_refs": 75,
+      "topic": "Continual",
+      "ideas": [
+        "forgetting"
+      ],
+      "tags": [
+        "Continual",
+        "forgetting"
+      ]
     },
     {
       "id": "arxiv:1506.01186",
@@ -6203,10 +6964,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 29,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Optimizers",
+      "ideas": [],
+      "tags": [
+        "Optimizers"
+      ]
     },
     {
       "id": "arxiv:2606.02572",
@@ -6229,12 +6993,13 @@
       "doc": true,
       "bib_items": 62,
       "telegram": true,
-      "tags": [
-        "JEPA"
-      ],
-      "topic": "JEPA",
       "lit_cites": 0,
-      "lit_refs": 83
+      "lit_refs": 83,
+      "topic": "SSL",
+      "ideas": [],
+      "tags": [
+        "SSL"
+      ]
     },
     {
       "id": "arxiv:2605.26379",
@@ -6257,12 +7022,16 @@
       "doc": true,
       "bib_items": 96,
       "telegram": true,
-      "tags": [
-        "JEPA"
-      ],
-      "topic": "JEPA",
       "lit_cites": 2,
-      "lit_refs": 139
+      "lit_refs": 139,
+      "topic": "SSL",
+      "ideas": [
+        "world models"
+      ],
+      "tags": [
+        "SSL",
+        "world models"
+      ]
     },
     {
       "id": "arxiv:2604.09168",
@@ -6286,10 +7055,13 @@
       "doc": true,
       "bib_items": 84,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Latent",
+      "ideas": [],
+      "tags": [
+        "Latent"
+      ]
     },
     {
       "id": "arxiv:2511.08544",
@@ -6311,12 +7083,13 @@
       "doc": true,
       "bib_items": 121,
       "telegram": true,
-      "tags": [
-        "JEPA"
-      ],
-      "topic": "JEPA",
       "lit_cites": 153,
-      "lit_refs": 169
+      "lit_refs": 169,
+      "topic": "SSL",
+      "ideas": [],
+      "tags": [
+        "SSL"
+      ]
     },
     {
       "id": "arxiv:2501.05441",
@@ -6340,10 +7113,13 @@
       "doc": true,
       "bib_items": 101,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "SSL",
+      "ideas": [],
+      "tags": [
+        "SSL"
+      ]
     },
     {
       "id": "url:ai.meta.com/blog/emu-text-to-video-generation-image-editing-research",
@@ -6366,10 +7142,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "SSL",
+      "ideas": [],
+      "tags": [
+        "SSL"
+      ]
     },
     {
       "id": "arxiv:2310.04378",
@@ -6393,10 +7172,13 @@
       "doc": true,
       "bib_items": 35,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "SSL",
+      "ideas": [],
+      "tags": [
+        "SSL"
+      ]
     },
     {
       "id": "arxiv:2309.15807",
@@ -6419,10 +7201,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 39,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "SSL",
+      "ideas": [],
+      "tags": [
+        "SSL"
+      ]
     },
     {
       "id": "url:research.nvidia.com/labs/par/perfusion",
@@ -6445,10 +7230,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "SSL",
+      "ideas": [],
+      "tags": [
+        "SSL"
+      ]
     },
     {
       "id": "url:hyperdreambooth.github.io",
@@ -6472,10 +7260,13 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "SSL",
+      "ideas": [],
+      "tags": [
+        "SSL"
+      ]
     },
     {
       "id": "url:ai.facebook.com/blog/voicebox-generative-ai-model-speech",
@@ -6498,10 +7289,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "SSL",
+      "ideas": [],
+      "tags": [
+        "SSL"
+      ]
     },
     {
       "id": "arxiv:2304.12210",
@@ -6524,10 +7318,13 @@
       "refs": 7,
       "doc": true,
       "bib_items": 330,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "SSL",
+      "ideas": [],
+      "tags": [
+        "SSL"
+      ]
     },
     {
       "id": "arxiv:2304.09355",
@@ -6548,10 +7345,13 @@
       "refs": 3,
       "doc": true,
       "bib_items": 176,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "SSL",
+      "ideas": [],
+      "tags": [
+        "SSL"
+      ]
     },
     {
       "id": "arxiv:2304.07193",
@@ -6574,10 +7374,13 @@
       "refs": 6,
       "doc": true,
       "bib_items": 137,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "SSL",
+      "ideas": [],
+      "tags": [
+        "SSL"
+      ]
     },
     {
       "id": "arxiv:2304.05977",
@@ -6600,10 +7403,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 68,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "SSL",
+      "ideas": [],
+      "tags": [
+        "SSL"
+      ]
     },
     {
       "id": "arxiv:2302.10174",
@@ -6625,10 +7431,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 53,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "SSL",
+      "ideas": [],
+      "tags": [
+        "SSL"
+      ]
     },
     {
       "id": "arxiv:2301.08243",
@@ -6652,10 +7461,13 @@
       "doc": true,
       "bib_items": 79,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "SSL",
+      "ideas": [],
+      "tags": [
+        "SSL"
+      ]
     },
     {
       "id": "arxiv:2212.11565",
@@ -6678,10 +7490,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 53,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "SSL",
+      "ideas": [],
+      "tags": [
+        "SSL"
+      ]
     },
     {
       "id": "arxiv:2208.10442",
@@ -6705,10 +7520,13 @@
       "doc": true,
       "bib_items": 68,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "SSL",
+      "ideas": [],
+      "tags": [
+        "SSL"
+      ]
     },
     {
       "id": "openreview:BZ5a1r-kVsf",
@@ -6726,10 +7544,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "SSL",
+      "ideas": [],
+      "tags": [
+        "SSL"
+      ]
     },
     {
       "id": "arxiv:2111.07832",
@@ -6752,10 +7573,13 @@
       "refs": 2,
       "doc": true,
       "bib_items": 56,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "SSL",
+      "ideas": [],
+      "tags": [
+        "SSL"
+      ]
     },
     {
       "id": "arxiv:2105.04906",
@@ -6778,12 +7602,13 @@
       "doc": true,
       "bib_items": 57,
       "telegram": true,
-      "tags": [
-        "JEPA"
-      ],
-      "topic": "JEPA",
       "lit_cites": 1697,
-      "lit_refs": 93
+      "lit_refs": 93,
+      "topic": "SSL",
+      "ideas": [],
+      "tags": [
+        "SSL"
+      ]
     },
     {
       "id": "arxiv:2104.14294",
@@ -6806,10 +7631,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 114,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "SSL",
+      "ideas": [],
+      "tags": [
+        "SSL"
+      ]
     },
     {
       "id": "arxiv:2006.09882",
@@ -6832,10 +7660,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 68,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "SSL",
+      "ideas": [],
+      "tags": [
+        "SSL"
+      ]
     },
     {
       "id": "arxiv:2606.18543",
@@ -6857,10 +7688,16 @@
       "refs": 3,
       "doc": true,
       "bib_items": 51,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Open-ended",
+      "ideas": [
+        "critique"
+      ],
+      "tags": [
+        "Open-ended",
+        "critique"
+      ]
     },
     {
       "id": "arxiv:2410.07095",
@@ -6884,10 +7721,16 @@
       "doc": true,
       "bib_items": 32,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Discovery",
+      "ideas": [
+        "critique"
+      ],
+      "tags": [
+        "Discovery",
+        "critique"
+      ]
     },
     {
       "id": "arxiv:2405.08007",
@@ -6908,10 +7751,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 38,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Other",
+      "ideas": [],
+      "tags": [
+        "Other"
+      ]
     },
     {
       "id": "arxiv:2402.16822",
@@ -6935,10 +7781,13 @@
       "doc": true,
       "bib_items": 74,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Safety",
+      "ideas": [],
+      "tags": [
+        "Safety"
+      ]
     },
     {
       "id": "arxiv:2402.12483",
@@ -6961,10 +7810,16 @@
       "doc": true,
       "bib_items": 63,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Reasoning",
+      "ideas": [
+        "critique"
+      ],
+      "tags": [
+        "Reasoning",
+        "critique"
+      ]
     },
     {
       "id": "arxiv:2311.16452",
@@ -6987,10 +7842,16 @@
       "refs": 3,
       "doc": true,
       "bib_items": 40,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Reasoning",
+      "ideas": [
+        "prompts"
+      ],
+      "tags": [
+        "Reasoning",
+        "prompts"
+      ]
     },
     {
       "id": "url:selfrag.github.io",
@@ -7013,10 +7874,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Harness",
+      "ideas": [],
+      "tags": [
+        "Harness"
+      ]
     },
     {
       "id": "arxiv:2309.16797",
@@ -7040,14 +7904,18 @@
       "doc": true,
       "bib_items": 76,
       "telegram": true,
+      "lit_cites": 719,
+      "lit_refs": 97,
+      "topic": "Self-improve",
+      "ideas": [
+        "evolution",
+        "prompts"
+      ],
       "tags": [
         "Self-improve",
-        "Generalization",
-        "Prompts"
-      ],
-      "topic": "Self-improve",
-      "lit_cites": 719,
-      "lit_refs": 97
+        "evolution",
+        "prompts"
+      ]
     },
     {
       "id": "acl:2023.acl-demo.51",
@@ -7066,10 +7934,13 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Other",
+      "ideas": [],
+      "tags": [
+        "Other"
+      ]
     },
     {
       "id": "arxiv:2304.08467",
@@ -7091,10 +7962,16 @@
       "refs": 2,
       "doc": true,
       "bib_items": 43,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Architectures",
+      "ideas": [
+        "priming"
+      ],
+      "tags": [
+        "Architectures",
+        "priming"
+      ]
     },
     {
       "id": "arxiv:2212.14024",
@@ -7118,10 +7995,16 @@
       "doc": true,
       "bib_items": 61,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Harness",
+      "ideas": [
+        "prompts"
+      ],
+      "tags": [
+        "Harness",
+        "prompts"
+      ]
     },
     {
       "id": "arxiv:2212.09741",
@@ -7144,10 +8027,13 @@
       "refs": 2,
       "doc": true,
       "bib_items": 81,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Other",
+      "ideas": [],
+      "tags": [
+        "Other"
+      ]
     },
     {
       "id": "arxiv:2206.04615",
@@ -7170,12 +8056,16 @@
       "refs": 2,
       "doc": true,
       "bib_items": 706,
-      "tags": [
-        "Interp"
-      ],
-      "topic": "Interp",
       "lit_cites": 3617,
-      "lit_refs": 0
+      "lit_refs": 0,
+      "topic": "Reasoning",
+      "ideas": [
+        "critique"
+      ],
+      "tags": [
+        "Reasoning",
+        "critique"
+      ]
     },
     {
       "id": "arxiv:2205.13147",
@@ -7199,10 +8089,13 @@
       "doc": true,
       "bib_items": 102,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Other",
+      "ideas": [],
+      "tags": [
+        "Other"
+      ]
     },
     {
       "id": "acl:2022.emnlp-main.340",
@@ -7225,10 +8118,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Other",
+      "ideas": [],
+      "tags": [
+        "Other"
+      ]
     },
     {
       "id": "arxiv:2112.07899",
@@ -7251,10 +8147,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 32,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Other",
+      "ideas": [],
+      "tags": [
+        "Other"
+      ]
     },
     {
       "id": "acl:2022.acl-long.360",
@@ -7278,10 +8177,16 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Architectures",
+      "ideas": [
+        "enc-dec"
+      ],
+      "tags": [
+        "Architectures",
+        "enc-dec"
+      ]
     },
     {
       "id": "arxiv:2101.02235",
@@ -7304,10 +8209,16 @@
       "refs": 0,
       "doc": true,
       "bib_items": 27,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Reasoning",
+      "ideas": [
+        "critique"
+      ],
+      "tags": [
+        "Reasoning",
+        "critique"
+      ]
     },
     {
       "id": "url:lilianweng.github.io/posts/2020-10-29-odqa",
@@ -7327,10 +8238,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Other",
+      "ideas": [],
+      "tags": [
+        "Other"
+      ]
     },
     {
       "id": "arxiv:2608.23875",
@@ -7354,10 +8268,13 @@
       "doc": true,
       "bib_items": 256,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Open-ended",
+      "ideas": [],
+      "tags": [
+        "Open-ended"
+      ]
     },
     {
       "id": "arxiv:2608.19197",
@@ -7381,13 +8298,16 @@
       "doc": true,
       "bib_items": 141,
       "telegram": true,
-      "tags": [
-        "Environments",
-        "Stepping stone"
-      ],
-      "topic": "Environments",
       "lit_cites": 0,
-      "lit_refs": 0
+      "lit_refs": 0,
+      "topic": "Open-ended",
+      "ideas": [
+        "curriculum"
+      ],
+      "tags": [
+        "Open-ended",
+        "curriculum"
+      ]
     },
     {
       "id": "arxiv:2608.08311",
@@ -7409,12 +8329,13 @@
       "refs": 4,
       "doc": true,
       "bib_items": 38,
+      "lit_cites": 0,
+      "lit_refs": 0,
+      "topic": "Self-improve",
+      "ideas": [],
       "tags": [
         "Self-improve"
-      ],
-      "topic": "Self-improve",
-      "lit_cites": 0,
-      "lit_refs": 0
+      ]
     },
     {
       "id": "arxiv:2607.13104",
@@ -7438,12 +8359,13 @@
       "doc": true,
       "bib_items": 443,
       "telegram": true,
+      "lit_cites": 0,
+      "lit_refs": 0,
+      "topic": "Self-improve",
+      "ideas": [],
       "tags": [
         "Self-improve"
-      ],
-      "topic": "Self-improve",
-      "lit_cites": 0,
-      "lit_refs": 0
+      ]
     },
     {
       "id": "arxiv:2605.13821",
@@ -7466,13 +8388,16 @@
       "refs": 8,
       "doc": true,
       "bib_items": 42,
+      "lit_cites": 4,
+      "lit_refs": 48,
+      "topic": "Self-improve",
+      "ideas": [
+        "evolution"
+      ],
       "tags": [
         "Self-improve",
-        "Evolution"
-      ],
-      "topic": "Self-improve",
-      "lit_cites": 4,
-      "lit_refs": 48
+        "evolution"
+      ]
     },
     {
       "id": "arxiv:2603.19461",
@@ -7495,12 +8420,16 @@
       "refs": 12,
       "doc": true,
       "bib_items": 101,
-      "tags": [
-        "Self-improve"
-      ],
-      "topic": "Self-improve",
       "lit_cites": 13,
-      "lit_refs": 0
+      "lit_refs": 0,
+      "topic": "Self-improve",
+      "ideas": [
+        "evolution"
+      ],
+      "tags": [
+        "Self-improve",
+        "evolution"
+      ]
     },
     {
       "id": "arxiv:2602.07755",
@@ -7522,10 +8451,16 @@
       "refs": 6,
       "doc": true,
       "bib_items": 88,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Continual",
+      "ideas": [
+        "memory"
+      ],
+      "tags": [
+        "Continual",
+        "memory"
+      ]
     },
     {
       "id": "arxiv:2601.21557",
@@ -7548,10 +8483,16 @@
       "refs": 6,
       "doc": true,
       "bib_items": 70,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Harness",
+      "ideas": [
+        "prompts"
+      ],
+      "tags": [
+        "Harness",
+        "prompts"
+      ]
     },
     {
       "id": "arxiv:2601.07055",
@@ -7574,12 +8515,13 @@
       "refs": 5,
       "doc": true,
       "bib_items": 50,
-      "tags": [
-        "Environments"
-      ],
-      "topic": "Environments",
       "lit_cites": 44,
-      "lit_refs": 61
+      "lit_refs": 61,
+      "topic": "Self-improve",
+      "ideas": [],
+      "tags": [
+        "Self-improve"
+      ]
     },
     {
       "id": "arxiv:2601.03192",
@@ -7602,12 +8544,16 @@
       "refs": 3,
       "doc": true,
       "bib_items": 67,
-      "tags": [
-        "Environments"
-      ],
-      "topic": "Environments",
       "lit_cites": 91,
-      "lit_refs": 97
+      "lit_refs": 97,
+      "topic": "Harness",
+      "ideas": [
+        "memory"
+      ],
+      "tags": [
+        "Harness",
+        "memory"
+      ]
     },
     {
       "id": "arxiv:2512.18746",
@@ -7630,10 +8576,18 @@
       "refs": 1,
       "doc": true,
       "bib_items": 67,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Harness",
+      "ideas": [
+        "memory",
+        "evolution"
+      ],
+      "tags": [
+        "Harness",
+        "memory",
+        "evolution"
+      ]
     },
     {
       "id": "arxiv:2512.18552",
@@ -7656,12 +8610,13 @@
       "refs": 3,
       "doc": true,
       "bib_items": 57,
-      "tags": [
-        "Environments"
-      ],
-      "topic": "Environments",
       "lit_cites": 47,
-      "lit_refs": 0
+      "lit_refs": 0,
+      "topic": "Self-improve",
+      "ideas": [],
+      "tags": [
+        "Self-improve"
+      ]
     },
     {
       "id": "arxiv:2512.18160",
@@ -7684,12 +8639,13 @@
       "refs": 2,
       "doc": true,
       "bib_items": 44,
-      "tags": [
-        "Environments"
-      ],
-      "topic": "Environments",
       "lit_cites": 6,
-      "lit_refs": 48
+      "lit_refs": 48,
+      "topic": "Self-improve",
+      "ideas": [],
+      "tags": [
+        "Self-improve"
+      ]
     },
     {
       "id": "arxiv:2511.15593",
@@ -7713,10 +8669,13 @@
       "doc": true,
       "bib_items": 66,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Discovery",
+      "ideas": [],
+      "tags": [
+        "Discovery"
+      ]
     },
     {
       "id": "url:sakana.ai/shinka-evolve",
@@ -7739,10 +8698,16 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Self-improve",
+      "ideas": [
+        "evolution"
+      ],
+      "tags": [
+        "Self-improve",
+        "evolution"
+      ]
     },
     {
       "id": "arxiv:2508.16204",
@@ -7764,12 +8729,16 @@
       "refs": 0,
       "doc": true,
       "bib_items": 35,
-      "tags": [
-        "Continual"
-      ],
-      "topic": "Continual",
       "lit_cites": 7,
-      "lit_refs": 37
+      "lit_refs": 37,
+      "topic": "Self-improve",
+      "ideas": [
+        "evolution"
+      ],
+      "tags": [
+        "Self-improve",
+        "evolution"
+      ]
     },
     {
       "id": "arxiv:2507.18074",
@@ -7793,10 +8762,16 @@
       "doc": true,
       "bib_items": 44,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Discovery",
+      "ideas": [
+        "evolution"
+      ],
+      "tags": [
+        "Discovery",
+        "evolution"
+      ]
     },
     {
       "id": "arxiv:2505.22954",
@@ -7819,13 +8794,16 @@
       "doc": true,
       "bib_items": 184,
       "telegram": true,
+      "lit_cites": 16,
+      "lit_refs": 0,
+      "topic": "Self-improve",
+      "ideas": [
+        "evolution"
+      ],
       "tags": [
         "Self-improve",
-        "Evolution"
-      ],
-      "topic": "Self-improve",
-      "lit_cites": 16,
-      "lit_refs": 0
+        "evolution"
+      ]
     },
     {
       "id": "doi:10.21203/rs.3.rs-6688473/v1",
@@ -7845,12 +8823,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [
-        "Self-refine"
-      ],
-      "topic": "Self-refine",
       "lit_cites": 1,
-      "lit_refs": 3
+      "lit_refs": 3,
+      "topic": "Self-improve",
+      "ideas": [],
+      "tags": [
+        "Self-improve"
+      ]
     },
     {
       "id": "arxiv:2502.15840",
@@ -7871,10 +8850,16 @@
       "refs": 0,
       "doc": true,
       "bib_items": 9,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Open-ended",
+      "ideas": [
+        "critique"
+      ],
+      "tags": [
+        "Open-ended",
+        "critique"
+      ]
     },
     {
       "id": "arxiv:2410.04444",
@@ -7897,10 +8882,13 @@
       "refs": 4,
       "doc": true,
       "bib_items": 54,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Self-improve",
+      "ideas": [],
+      "tags": [
+        "Self-improve"
+      ]
     },
     {
       "id": "arxiv:2408.08435",
@@ -7922,10 +8910,16 @@
       "refs": 5,
       "doc": true,
       "bib_items": 114,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Harness",
+      "ideas": [
+        "evolution"
+      ],
+      "tags": [
+        "Harness",
+        "evolution"
+      ]
     },
     {
       "id": "arxiv:2407.00695",
@@ -7948,10 +8942,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 46,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Discovery",
+      "ideas": [],
+      "tags": [
+        "Discovery"
+      ]
     },
     {
       "id": "arxiv:2406.04268",
@@ -7975,10 +8972,13 @@
       "doc": true,
       "bib_items": 152,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Open-ended",
+      "ideas": [],
+      "tags": [
+        "Open-ended"
+      ]
     },
     {
       "id": "arxiv:2402.16823",
@@ -8001,10 +9001,13 @@
       "refs": 2,
       "doc": true,
       "bib_items": 60,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Harness",
+      "ideas": [],
+      "tags": [
+        "Harness"
+      ]
     },
     {
       "id": "url:research.google/blog/few-shot-tool-use-doesnt-really-work-yet",
@@ -8027,10 +9030,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Harness",
+      "ideas": [],
+      "tags": [
+        "Harness"
+      ]
     },
     {
       "id": "openreview:pOoKI3ouv1",
@@ -8051,10 +9057,16 @@
       "refs": 0,
       "doc": false,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Deep RL",
+      "ideas": [
+        "world models"
+      ],
+      "tags": [
+        "Deep RL",
+        "world models"
+      ]
     },
     {
       "id": "doi:10.1038/s42256-023-00754-x",
@@ -8077,13 +9089,13 @@
       "refs": 3,
       "doc": true,
       "bib_items": 0,
-      "tags": [
-        "Self-improve",
-        "Evolution"
-      ],
-      "topic": "Self-improve",
       "lit_cites": 59,
-      "lit_refs": 187
+      "lit_refs": 187,
+      "topic": "Open-ended",
+      "ideas": [],
+      "tags": [
+        "Open-ended"
+      ]
     },
     {
       "id": "arxiv:2311.02462",
@@ -8106,10 +9118,13 @@
       "refs": 3,
       "doc": true,
       "bib_items": 96,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Open-ended",
+      "ideas": [],
+      "tags": [
+        "Open-ended"
+      ]
     },
     {
       "id": "arxiv:2311.00344",
@@ -8133,12 +9148,13 @@
       "doc": true,
       "bib_items": 64,
       "telegram": true,
-      "tags": [
-        "Continual"
-      ],
-      "topic": "Continual",
       "lit_cites": 33,
-      "lit_refs": 82
+      "lit_refs": 82,
+      "topic": "Open-ended",
+      "ideas": [],
+      "tags": [
+        "Open-ended"
+      ]
     },
     {
       "id": "doi:10.1038/s41586-023-06924-6",
@@ -8161,10 +9177,16 @@
       "refs": 1,
       "doc": true,
       "bib_items": 91,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Discovery",
+      "ideas": [
+        "evolution"
+      ],
+      "tags": [
+        "Discovery",
+        "evolution"
+      ]
     },
     {
       "id": "url:lilianweng.github.io/posts/2023-06-23-agent",
@@ -8184,10 +9206,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Harness",
+      "ideas": [],
+      "tags": [
+        "Harness"
+      ]
     },
     {
       "id": "url:minedojo.org",
@@ -8210,10 +9235,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Open-ended",
+      "ideas": [],
+      "tags": [
+        "Open-ended"
+      ]
     },
     {
       "id": "arxiv:1905.10985",
@@ -8233,13 +9261,16 @@
       "refs": 4,
       "doc": true,
       "bib_items": 203,
-      "tags": [
-        "Scaling",
-        "Evolution"
-      ],
-      "topic": "Scaling",
       "lit_cites": 193,
-      "lit_refs": 367
+      "lit_refs": 367,
+      "topic": "Open-ended",
+      "ideas": [
+        "evolution"
+      ],
+      "tags": [
+        "Open-ended",
+        "evolution"
+      ]
     },
     {
       "id": "arxiv:1901.01753",
@@ -8262,10 +9293,18 @@
       "refs": 1,
       "doc": true,
       "bib_items": 82,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Open-ended",
+      "ideas": [
+        "curriculum",
+        "evolution"
+      ],
+      "tags": [
+        "Open-ended",
+        "curriculum",
+        "evolution"
+      ]
     },
     {
       "id": "arxiv:2609.01437",
@@ -8288,10 +9327,13 @@
       "refs": 4,
       "doc": true,
       "bib_items": 61,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Harness",
+      "ideas": [],
+      "tags": [
+        "Harness"
+      ]
     },
     {
       "id": "url:openai.com/index/harness-engineering",
@@ -8309,10 +9351,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Harness",
+      "ideas": [],
+      "tags": [
+        "Harness"
+      ]
     },
     {
       "id": "url:github.com/deepseek-ai/deepseek-harness",
@@ -8331,10 +9376,13 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Harness",
+      "ideas": [],
+      "tags": [
+        "Harness"
+      ]
     },
     {
       "id": "url:github.com/alexisfox7/rgb-agent",
@@ -8357,10 +9405,16 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Harness",
+      "ideas": [
+        "memory"
+      ],
+      "tags": [
+        "Harness",
+        "memory"
+      ]
     },
     {
       "id": "url:alexzhang13.github.io/blog/2026/harness",
@@ -8380,10 +9434,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Harness",
+      "ideas": [],
+      "tags": [
+        "Harness"
+      ]
     },
     {
       "id": "url:schema-harness.github.io",
@@ -8401,10 +9458,16 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Harness",
+      "ideas": [
+        "world models"
+      ],
+      "tags": [
+        "Harness",
+        "world models"
+      ]
     },
     {
       "id": "url:weco.ai/blog/first-evidence-of-recursive-self-improvement",
@@ -8422,10 +9485,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Self-improve",
+      "ideas": [],
+      "tags": [
+        "Self-improve"
+      ]
     },
     {
       "id": "url:lilianweng.github.io/posts/2026-07-04-harness",
@@ -8445,10 +9511,13 @@
       "refs": 12,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Harness",
+      "ideas": [],
+      "tags": [
+        "Harness"
+      ]
     },
     {
       "id": "arxiv:2606.01770",
@@ -8471,10 +9540,16 @@
       "refs": 2,
       "doc": true,
       "bib_items": 27,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Harness",
+      "ideas": [
+        "self-refine"
+      ],
+      "tags": [
+        "Harness",
+        "self-refine"
+      ]
     },
     {
       "id": "url:tufalabs.ai/research/duck-harness",
@@ -8494,10 +9569,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Harness",
+      "ideas": [],
+      "tags": [
+        "Harness"
+      ]
     },
     {
       "id": "url:github.com/primeintellect-ai/prime-agent",
@@ -8516,10 +9594,13 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Harness",
+      "ideas": [],
+      "tags": [
+        "Harness"
+      ]
     },
     {
       "id": "arxiv:2604.25850",
@@ -8542,10 +9623,13 @@
       "refs": 5,
       "doc": true,
       "bib_items": 53,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Harness",
+      "ideas": [],
+      "tags": [
+        "Harness"
+      ]
     },
     {
       "id": "arxiv:2604.19341",
@@ -8568,13 +9652,13 @@
       "refs": 11,
       "doc": true,
       "bib_items": 178,
-      "tags": [
-        "Discovery",
-        "RL"
-      ],
-      "topic": "Discovery",
       "lit_cites": 9,
-      "lit_refs": 0
+      "lit_refs": 0,
+      "topic": "Discovery",
+      "ideas": [],
+      "tags": [
+        "Discovery"
+      ]
     },
     {
       "id": "arxiv:2604.08224",
@@ -8598,10 +9682,13 @@
       "doc": true,
       "bib_items": 204,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Harness",
+      "ideas": [],
+      "tags": [
+        "Harness"
+      ]
     },
     {
       "id": "arxiv:2603.28052",
@@ -8625,13 +9712,13 @@
       "doc": true,
       "bib_items": 60,
       "telegram": true,
-      "tags": [
-        "Scaling",
-        "Architecture"
-      ],
-      "topic": "Scaling",
       "lit_cites": 115,
-      "lit_refs": 60
+      "lit_refs": 60,
+      "topic": "Harness",
+      "ideas": [],
+      "tags": [
+        "Harness"
+      ]
     },
     {
       "id": "arxiv:2607.23379",
@@ -8652,12 +9739,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 13,
+      "lit_cites": 0,
+      "lit_refs": 0,
+      "topic": "Interp",
+      "ideas": [],
       "tags": [
         "Interp"
-      ],
-      "topic": "Interp",
-      "lit_cites": 0,
-      "lit_refs": 0
+      ]
     },
     {
       "id": "arxiv:2603.19426",
@@ -8678,12 +9766,13 @@
       "doc": true,
       "bib_items": 8,
       "telegram": true,
+      "lit_cites": 2,
+      "lit_refs": 10,
+      "topic": "Interp",
+      "ideas": [],
       "tags": [
         "Interp"
-      ],
-      "topic": "Interp",
-      "lit_cites": 2,
-      "lit_refs": 10
+      ]
     },
     {
       "id": "url:transformer-circuits.pub/2025/introspection",
@@ -8704,12 +9793,13 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [
-        "Interp"
-      ],
-      "topic": "Interp",
       "lit_cites": 110,
-      "lit_refs": 0
+      "lit_refs": 0,
+      "topic": "Consciousness",
+      "ideas": [],
+      "tags": [
+        "Consciousness"
+      ]
     },
     {
       "id": "url:anthropic.com/research/reasoning-models-dont-say-think",
@@ -8733,10 +9823,13 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Safety",
+      "ideas": [],
+      "tags": [
+        "Safety"
+      ]
     },
     {
       "id": "url:ai-2027.com",
@@ -8754,10 +9847,13 @@
       "refs": 5,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Safety",
+      "ideas": [],
+      "tags": [
+        "Safety"
+      ]
     },
     {
       "id": "url:anthropic.com/research/tracing-thoughts-language-model",
@@ -8775,10 +9871,13 @@
       "refs": 2,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Interp",
+      "ideas": [],
+      "tags": [
+        "Interp"
+      ]
     },
     {
       "id": "url:transformer-circuits.pub/2025/attribution-graphs/methods.html",
@@ -8797,10 +9896,13 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Interp",
+      "ideas": [],
+      "tags": [
+        "Interp"
+      ]
     },
     {
       "id": "url:transformer-circuits.pub/2025/attribution-graphs/biology.html",
@@ -8819,10 +9921,13 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Interp",
+      "ideas": [],
+      "tags": [
+        "Interp"
+      ]
     },
     {
       "id": "arxiv:2503.16348",
@@ -8842,10 +9947,13 @@
       "refs": 2,
       "doc": true,
       "bib_items": 78,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Consciousness",
+      "ideas": [],
+      "tags": [
+        "Consciousness"
+      ]
     },
     {
       "id": "arxiv:2502.03407",
@@ -8868,13 +9976,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 35,
-      "tags": [
-        "Interp",
-        "Generalization"
-      ],
-      "topic": "Interp",
       "lit_cites": 89,
-      "lit_refs": 0
+      "lit_refs": 0,
+      "topic": "Safety",
+      "ideas": [],
+      "tags": [
+        "Safety"
+      ]
     },
     {
       "id": "arxiv:2501.18837",
@@ -8897,15 +10005,13 @@
       "refs": 2,
       "doc": true,
       "bib_items": 50,
-      "tags": [
-        "Interp",
-        "Scaling",
-        "Generalization",
-        "Prompts"
-      ],
-      "topic": "Interp",
       "lit_cites": 222,
-      "lit_refs": 0
+      "lit_refs": 0,
+      "topic": "Safety",
+      "ideas": [],
+      "tags": [
+        "Safety"
+      ]
     },
     {
       "id": "url:alignmentforum.org/posts/nffst5mio7bcaqhpa/an-extremely-opinionated-annotated-list-of-my-favourite-1",
@@ -8925,10 +10031,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Interp",
+      "ideas": [],
+      "tags": [
+        "Interp"
+      ]
     },
     {
       "id": "url:situational-awareness.ai",
@@ -8947,10 +10056,13 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Safety",
+      "ideas": [],
+      "tags": [
+        "Safety"
+      ]
     },
     {
       "id": "url:anthropic.com/news/mapping-mind-language-model",
@@ -8969,10 +10081,13 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Interp",
+      "ideas": [],
+      "tags": [
+        "Interp"
+      ]
     },
     {
       "id": "url:openai.com/research/weak-to-strong-generalization",
@@ -8996,10 +10111,13 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Safety",
+      "ideas": [],
+      "tags": [
+        "Safety"
+      ]
     },
     {
       "id": "arxiv:2309.08600",
@@ -9022,12 +10140,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 28,
+      "lit_cites": 1802,
+      "lit_refs": 35,
+      "topic": "Interp",
+      "ideas": [],
       "tags": [
         "Interp"
-      ],
-      "topic": "Interp",
-      "lit_cites": 1802,
-      "lit_refs": 35
+      ]
     },
     {
       "id": "arxiv:2308.08708",
@@ -9050,10 +10169,13 @@
       "refs": 2,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Consciousness",
+      "ideas": [],
+      "tags": [
+        "Consciousness"
+      ]
     },
     {
       "id": "arxiv:2304.06528",
@@ -9075,10 +10197,13 @@
       "doc": true,
       "bib_items": 9,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Safety",
+      "ideas": [],
+      "tags": [
+        "Safety"
+      ]
     },
     {
       "id": "arxiv:2303.07103",
@@ -9099,10 +10224,13 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Consciousness",
+      "ideas": [],
+      "tags": [
+        "Consciousness"
+      ]
     },
     {
       "id": "arxiv:2206.13477",
@@ -9124,10 +10252,13 @@
       "doc": true,
       "bib_items": 15,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Safety",
+      "ideas": [],
+      "tags": [
+        "Safety"
+      ]
     },
     {
       "id": "arxiv:2206.13353",
@@ -9148,10 +10279,13 @@
       "doc": true,
       "bib_items": 96,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Safety",
+      "ideas": [],
+      "tags": [
+        "Safety"
+      ]
     },
     {
       "id": "arxiv:1912.01683",
@@ -9175,10 +10309,13 @@
       "doc": true,
       "bib_items": 39,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Safety",
+      "ideas": [],
+      "tags": [
+        "Safety"
+      ]
     },
     {
       "id": "arxiv:2606.08720",
@@ -9199,10 +10336,13 @@
       "doc": false,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "NeuroAI",
+      "ideas": [],
+      "tags": [
+        "NeuroAI"
+      ]
     },
     {
       "id": "url:herasight-project.webflow.io/technical-paper/cogpgt-1",
@@ -9220,10 +10360,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Other",
+      "ideas": [],
+      "tags": [
+        "Other"
+      ]
     },
     {
       "id": "arxiv:2505.17117",
@@ -9246,10 +10389,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 46,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "NeuroAI",
+      "ideas": [],
+      "tags": [
+        "NeuroAI"
+      ]
     },
     {
       "id": "url:cell.com/iscience/fulltext/s2589-0042(25)00289-5",
@@ -9267,10 +10413,13 @@
       "refs": 0,
       "doc": false,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Consciousness",
+      "ideas": [],
+      "tags": [
+        "Consciousness"
+      ]
     },
     {
       "id": "doi:10.1101/2024.02.22.581686",
@@ -9293,10 +10442,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 74,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "NeuroAI",
+      "ideas": [],
+      "tags": [
+        "NeuroAI"
+      ]
     },
     {
       "id": "doi:10.1101/2023.04.04.535512",
@@ -9319,10 +10471,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "NeuroAI",
+      "ideas": [],
+      "tags": [
+        "NeuroAI"
+      ]
     },
     {
       "id": "doi:10.1371/journal.pcbi.1011005",
@@ -9343,10 +10498,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "NeuroAI",
+      "ideas": [],
+      "tags": [
+        "NeuroAI"
+      ]
     },
     {
       "id": "doi:10.1371/journal.pcbi.1010628",
@@ -9370,12 +10528,16 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [
-        "Forgetting"
-      ],
-      "topic": "Forgetting",
       "lit_cites": 34,
-      "lit_refs": 107
+      "lit_refs": 107,
+      "topic": "NeuroAI",
+      "ideas": [
+        "forgetting"
+      ],
+      "tags": [
+        "NeuroAI",
+        "forgetting"
+      ]
     },
     {
       "id": "arxiv:2210.08340",
@@ -9398,10 +10560,13 @@
       "refs": 0,
       "doc": false,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "NeuroAI",
+      "ideas": [],
+      "tags": [
+        "NeuroAI"
+      ]
     },
     {
       "id": "arxiv:2112.04035",
@@ -9423,10 +10588,16 @@
       "refs": 0,
       "doc": true,
       "bib_items": 38,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "NeuroAI",
+      "ideas": [
+        "memory"
+      ],
+      "tags": [
+        "NeuroAI",
+        "memory"
+      ]
     },
     {
       "id": "arxiv:2112.03978",
@@ -9447,12 +10618,13 @@
       "refs": 0,
       "doc": false,
       "bib_items": 0,
-      "tags": [
-        "Architecture"
-      ],
-      "topic": "Architecture",
       "lit_cites": 488,
-      "lit_refs": 354
+      "lit_refs": 354,
+      "topic": "NeuroAI",
+      "ideas": [],
+      "tags": [
+        "NeuroAI"
+      ]
     },
     {
       "id": "doi:10.1038/s41467-021-26568-2",
@@ -9475,13 +10647,16 @@
       "refs": 1,
       "doc": true,
       "bib_items": 0,
-      "tags": [
-        "Scaling",
-        "Evolution"
-      ],
-      "topic": "Scaling",
       "lit_cites": 45,
-      "lit_refs": 76
+      "lit_refs": 76,
+      "topic": "NeuroAI",
+      "ideas": [
+        "evolution"
+      ],
+      "tags": [
+        "NeuroAI",
+        "evolution"
+      ]
     },
     {
       "id": "url:transformer-circuits.pub/2026/workspace",
@@ -9499,12 +10674,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [
-        "Interp"
-      ],
-      "topic": "Interp",
       "lit_cites": 0,
-      "lit_refs": 0
+      "lit_refs": 0,
+      "topic": "Repr",
+      "ideas": [],
+      "tags": [
+        "Repr"
+      ]
     },
     {
       "id": "arxiv:2602.14486",
@@ -9527,10 +10703,13 @@
       "doc": true,
       "bib_items": 53,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Repr",
+      "ideas": [],
+      "tags": [
+        "Repr"
+      ]
     },
     {
       "id": "arxiv:2507.01098",
@@ -9551,10 +10730,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 16,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Repr",
+      "ideas": [],
+      "tags": [
+        "Repr"
+      ]
     },
     {
       "id": "arxiv:2502.15104",
@@ -9577,10 +10759,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 27,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Repr",
+      "ideas": [],
+      "tags": [
+        "Repr"
+      ]
     },
     {
       "id": "arxiv:2405.07987",
@@ -9604,10 +10789,13 @@
       "doc": true,
       "bib_items": 144,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Repr",
+      "ideas": [],
+      "tags": [
+        "Repr"
+      ]
     },
     {
       "id": "arxiv:2405.01012",
@@ -9629,10 +10817,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 36,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Repr",
+      "ideas": [],
+      "tags": [
+        "Repr"
+      ]
     },
     {
       "id": "arxiv:2007.02789",
@@ -9655,10 +10846,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 31,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Repr",
+      "ideas": [],
+      "tags": [
+        "Repr"
+      ]
     },
     {
       "id": "url:thinkingmachines.ai/news/learning-to-replicate-expert-judgment-in-financial-tasks",
@@ -9678,10 +10872,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Finance",
+      "ideas": [],
+      "tags": [
+        "Finance"
+      ]
     },
     {
       "id": "acl:2025.acl-long.126",
@@ -9699,10 +10896,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Finance",
+      "ideas": [],
+      "tags": [
+        "Finance"
+      ]
     },
     {
       "id": "url:papers.ssrn.com/sol3/papers.cfm?abstract_id=5239006",
@@ -9720,10 +10920,13 @@
       "refs": 0,
       "doc": false,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Finance",
+      "ideas": [],
+      "tags": [
+        "Finance"
+      ]
     },
     {
       "id": "arxiv:2003.01859",
@@ -9743,10 +10946,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 206,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Finance",
+      "ideas": [],
+      "tags": [
+        "Finance"
+      ]
     },
     {
       "id": "url:groundai.com/project/an-intelligent-financial-portfolio-trading-strategy-using-deep-q-learning8432/3",
@@ -9768,10 +10974,13 @@
       "refs": 0,
       "doc": false,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Finance",
+      "ideas": [],
+      "tags": [
+        "Finance"
+      ]
     },
     {
       "id": "url:researchgate.net/publication/331273826",
@@ -9794,10 +11003,13 @@
       "refs": 0,
       "doc": false,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Finance",
+      "ideas": [],
+      "tags": [
+        "Finance"
+      ]
     },
     {
       "id": "arxiv:1807.02787",
@@ -9817,10 +11029,13 @@
       "refs": 1,
       "doc": true,
       "bib_items": 8,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Finance",
+      "ideas": [],
+      "tags": [
+        "Finance"
+      ]
     },
     {
       "id": "arxiv:1706.10059",
@@ -9842,10 +11057,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 55,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Finance",
+      "ideas": [],
+      "tags": [
+        "Finance"
+      ]
     },
     {
       "id": "url:neuroevolutionbook.com",
@@ -9864,10 +11082,16 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Deep RL",
+      "ideas": [
+        "evolution"
+      ],
+      "tags": [
+        "Deep RL",
+        "evolution"
+      ]
     },
     {
       "id": "url:rlhfbook.com",
@@ -9887,10 +11111,13 @@
       "refs": 0,
       "doc": true,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "RLVR",
+      "ideas": [],
+      "tags": [
+        "RLVR"
+      ]
     },
     {
       "id": "url:link.springer.com/book/10.1007/978-3-031-45468-4",
@@ -9909,10 +11136,13 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Other",
+      "ideas": [],
+      "tags": [
+        "Other"
+      ]
     },
     {
       "id": "arxiv:2201.09746",
@@ -9933,10 +11163,13 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Deep RL",
+      "ideas": [],
+      "tags": [
+        "Deep RL"
+      ]
     },
     {
       "id": "arxiv:2201.00650",
@@ -9957,10 +11190,13 @@
       "refs": 0,
       "doc": false,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Other",
+      "ideas": [],
+      "tags": [
+        "Other"
+      ]
     },
     {
       "id": "doi:10.1038/s41566-024-01394-2",
@@ -9984,10 +11220,13 @@
       "doc": true,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Other",
+      "ideas": [],
+      "tags": [
+        "Other"
+      ]
     },
     {
       "id": "arxiv:2309.10232",
@@ -10010,10 +11249,13 @@
       "doc": true,
       "bib_items": 37,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Other",
+      "ideas": [],
+      "tags": [
+        "Other"
+      ]
     },
     {
       "id": "url:direct.mit.edu/coli/article/doi/10.1162/coli_a_00481/116160",
@@ -10031,10 +11273,13 @@
       "refs": 0,
       "doc": false,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Other",
+      "ideas": [],
+      "tags": [
+        "Other"
+      ]
     },
     {
       "id": "arxiv:2304.01433",
@@ -10058,10 +11303,13 @@
       "doc": false,
       "bib_items": 0,
       "telegram": true,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Other",
+      "ideas": [],
+      "tags": [
+        "Other"
+      ]
     },
     {
       "id": "url:semanticscholar.org/paper/4165542ba777ea63facc7ea9866f43ba63f054ae",
@@ -10079,10 +11327,13 @@
       "refs": 0,
       "doc": false,
       "bib_items": 0,
-      "tags": [],
-      "topic": null,
       "lit_cites": null,
-      "lit_refs": null
+      "lit_refs": null,
+      "topic": "Other",
+      "ideas": [],
+      "tags": [
+        "Other"
+      ]
     }
   ],
   "edges": [
