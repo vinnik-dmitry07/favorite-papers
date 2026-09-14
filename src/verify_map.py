@@ -39,21 +39,54 @@ def map_url(server: ThreadingHTTPServer) -> str:
 
 OVERLAP_JS = '''() => {
     const gs = [...document.querySelectorAll('.nodes g')];
-    const pts = gs.map(g => {
+    const re = /translate\\(([^,]+),([^)]+)\\)/;
+    const pts = [];
+    let bad = 0;
+    let boxOut = 0;
+    let bandBleed = 0;
+    gs.forEach((g) => {
         const c = g.querySelector('circle');
-        const t = g.getAttribute('transform').slice(10, -1).split(',').map(Number);
-        return {x: t[0], y: t[1], r: +c.getAttribute('r')};
+        const m = re.exec(g.getAttribute('transform') || '');
+        if (!c || !m) {
+            bad += 1;
+            return;
+        }
+        const x = +m[1];
+        const y = +m[2];
+        const r = +c.getAttribute('r');
+        if (!Number.isFinite(x) || !Number.isFinite(y) || !Number.isFinite(r)) {
+            bad += 1;
+            return;
+        }
+        const d = g.__data__ || {};
+        if (d.xLo != null && (
+            x < d.xLo - 0.51 || x > d.xHi + 0.51
+            || y < d.yLo - 0.51 || y > d.yHi + 0.51
+        )) {
+            boxOut += 1;
+        }
+        if (d.zeroEdge != null && y + r > d.zeroEdge + 0.51) {
+            bandBleed += 1;
+        }
+        pts.push({x, y, r});
     });
     let pairs = 0;
+    let stacks = 0;
     for (let i = 0; i < pts.length; i++) {
         for (let j = i + 1; j < pts.length; j++) {
             const a = pts[i], b = pts[j];
-            if (Math.hypot(a.x - b.x, a.y - b.y) < a.r + b.r - 0.5) pairs += 1;
+            const dist = Math.hypot(a.x - b.x, a.y - b.y);
+            if (dist < a.r + b.r - 0.5) pairs += 1;
+            if (dist < 2) stacks += 1;
         }
     }
     const rs = pts.map(p => p.r).sort((a, b) => a - b);
     return {
         pairs,
+        stacks,
+        bad,
+        boxOut,
+        bandBleed,
         medianR: rs.length ? rs[Math.floor(rs.length / 2)] : 0,
     };
 }'''
@@ -63,12 +96,30 @@ def overlap_pairs(page) -> dict:
     return page.evaluate(OVERLAP_JS)
 
 
-def check_overlap(page, errors: list, mode: str) -> dict:
+def check_overlap(page, errors: list, mode: str, max_pairs: int = 10) -> dict:
     stats = overlap_pairs(page)
-    print(f'{mode}: pairs {stats["pairs"]}, median r {stats["medianR"]}')
-    if stats['pairs'] > 50:
+    print(
+        f'{mode}: pairs {stats["pairs"]}, stacks {stats["stacks"]}, '
+        f'boxOut {stats["boxOut"]}, bandBleed {stats["bandBleed"]}, '
+        f'bad {stats["bad"]}, median r {stats["medianR"]}'
+    )
+    if stats['bad']:
+        errors.append(f'{mode} overlap parser dropped {stats["bad"]} nodes')
+    if stats['pairs'] > max_pairs:
         errors.append(
-            f'{mode} has {stats["pairs"]} overlapping pairs (max 50)'
+            f'{mode} has {stats["pairs"]} overlapping pairs (max {max_pairs})'
+        )
+    if stats['stacks'] > 3:
+        errors.append(
+            f'{mode} has {stats["stacks"]} near-coincident stacks (max 3)'
+        )
+    if stats['boxOut']:
+        errors.append(
+            f'{mode} has {stats["boxOut"]} nodes outside their layout box'
+        )
+    if stats['bandBleed']:
+        errors.append(
+            f'{mode} has {stats["bandBleed"]} disks crossing the zero / n/a rule'
         )
     return stats
 
@@ -96,8 +147,11 @@ def main() -> None:
     with sync_playwright() as pw:
         browser = pw.chromium.launch(channel='chrome')
         page = browser.new_page(viewport={'width': 1440, 'height': 860})
-        page.on('console', lambda m: errors.append(f'console.{m.type}: {m.text}')
-                if m.type in ('error', 'warning') else None)
+        def on_console(msg):
+            if msg.type not in ('error', 'warning'):
+                return
+            errors.append(f'console.{msg.type}: {msg.text}')
+        page.on('console', on_console)
         page.on('pageerror', lambda e: errors.append(f'pageerror: {e}'))
         page.goto(target, wait_until='load')
         page.wait_for_timeout(1200)
@@ -139,9 +193,17 @@ def main() -> None:
             const els = [...document.querySelectorAll('.nodes circle')];
             let best = null, bestR = -1;
             els.forEach((c, i) => {
+                const n = c.__data__ || {};
+                if (n.lit_cites == null) return;
                 const r = +c.getAttribute('r');
                 if (r > bestR) { bestR = r; best = i; }
             });
+            if (best == null) {
+                els.forEach((c, i) => {
+                    const r = +c.getAttribute('r');
+                    if (r > bestR) { bestR = r; best = i; }
+                });
+            }
             const box = els[best].getBoundingClientRect();
             return {i: best, x: box.x + box.width / 2, y: box.y + box.height / 2};
         }''')
@@ -245,8 +307,8 @@ def main() -> None:
             ];
             const gs = [...document.querySelectorAll('.nodes g')];
             const brightIds = gs
-                .map((g, i) => g.classList.contains('dim')
-                    ? null : window.GRAPH_DATA.nodes[i].id)
+                .filter(g => !g.classList.contains('dim'))
+                .map(g => g.__data__ && g.__data__.id)
                 .filter(Boolean);
             return {
                 dimmed: gs.filter(g => g.classList.contains('dim')).length,
@@ -447,6 +509,10 @@ def main() -> None:
             errors.append('cited-by footer missing')
         if 'outgoing cites' not in cites_axis['note']:
             errors.append('cites footer missing')
+        if 'size: cited by on this list' in cited_axis['note']:
+            errors.append('cited-by footer should not restate size')
+        if 'size: cited by on this list' not in cites_axis['note']:
+            errors.append('cites footer missing size rule')
         if moved < 20:
             errors.append(f'y-axis mode barely moved nodes ({moved})')
         page.select_option('#yaxis', 'parents')
@@ -473,6 +539,8 @@ def main() -> None:
             errors.append('parent-cites axis caption missing')
         if 'parent cites' not in parents_axis['note']:
             errors.append('parent-cites footer missing')
+        if 'size: cited by on this list' not in parents_axis['note']:
+            errors.append('parent-cites footer missing size rule')
         if moved_par < 10:
             errors.append(
                 f'parent-cites y-axis barely moved vs cites ({moved_par})'
@@ -501,6 +569,8 @@ def main() -> None:
             errors.append('nested-cites axis caption missing')
         if 'nested outgoing' not in children_axis['note']:
             errors.append('nested-cites footer missing')
+        if 'size: cited by on this list' not in children_axis['note']:
+            errors.append('nested-cites footer missing size rule')
         if moved_ch < 10:
             errors.append(
                 f'child-rollup y-axis barely moved vs cites ({moved_ch})'
@@ -529,6 +599,8 @@ def main() -> None:
             errors.append('bonus-cites axis caption missing')
         if '1/cited' not in bonus_axis['note']:
             errors.append('bonus-cites footer missing')
+        if 'size: cited by on this list' not in bonus_axis['note']:
+            errors.append('bonus-cites footer missing size rule')
         if moved_bo < 5:
             errors.append(
                 f'bonus-cites y-axis barely moved vs cites ({moved_bo})'
@@ -569,6 +641,7 @@ def main() -> None:
             errors.append(
                 f'+ cited barely moved nodes vs cites-only ({moved_add})'
             )
+        check_overlap(page, errors, 'cites+addcited')
         page.select_option('#yaxis', 'parents')
         page.wait_for_timeout(900)
         cited_par = page.evaluate('''() => ({
@@ -582,6 +655,13 @@ def main() -> None:
             errors.append('cited+parents axis caption missing')
         if 'cited by plus outgoing parent' not in cited_par['note']:
             errors.append('cited+parents footer missing')
+        check_overlap(page, errors, 'parents+addcited')
+        page.select_option('#yaxis', 'children')
+        page.wait_for_timeout(900)
+        check_overlap(page, errors, 'children+addcited')
+        page.select_option('#yaxis', 'bonus')
+        page.wait_for_timeout(900)
+        check_overlap(page, errors, 'bonus+addcited')
         page.uncheck('#addcited')
         page.select_option('#yaxis', 'citations')
         page.wait_for_timeout(900)
@@ -617,6 +697,8 @@ def main() -> None:
             errors.append('citation-count axis caption missing')
         if 'Litmaps citation count' not in cites_num['note']:
             errors.append('citation-count footer missing')
+        if 'size: cited by on this list' in cites_num['note']:
+            errors.append('citation-count footer should not restate size')
         if moved_cit < 20:
             errors.append(
                 f'citation-count y-axis barely moved nodes ({moved_cit})'
@@ -673,6 +755,8 @@ def main() -> None:
             errors.append('quality axis caption missing')
         if 'aggregated quality' not in quality_axis['note']:
             errors.append('quality footer missing')
+        if 'size: cited by on this list' not in quality_axis['note']:
+            errors.append('quality footer missing size rule')
         if moved_q < 20:
             errors.append(f'quality y-axis barely moved nodes ({moved_q})')
         needed_ticks = {'+1', '+0.5', '0', '-0.5', '-1'}
@@ -736,7 +820,14 @@ def main() -> None:
                         || b.y > innerHeight + 30;
                 }).length,
         })'''))
+        check_overlap(page, errors, 'narrow-cited')
         page.screenshot(path=str(SHOTS / '05-narrow.png'))
+        page.select_option('#yaxis', 'children')
+        page.wait_for_timeout(900)
+        check_overlap(page, errors, 'narrow-children')
+        page.select_option('#yaxis', 'quality')
+        page.wait_for_timeout(900)
+        check_overlap(page, errors, 'narrow-quality')
         browser.close()
     server.shutdown()
 

@@ -8,7 +8,10 @@
    aggregated quality score (−1 red, +1 green). Curved links =
    "this paper cites that one".
    Positions are data-driven; a collision pass only nudges overlapping
-   nodes apart inside a per-node box. */
+   nodes apart inside a per-node box. Crowded rows (same y, neighbours
+   a few pixels away) get a wider box; leftovers are separated after
+   the last tick, then shrunk if the box cannot fit. Scored / counted
+   disks stay above the zero / n/a rule (edge, not just center). */
 (function () {
   'use strict';
 
@@ -292,15 +295,22 @@
     return d.cites;
   }
 
+  function plotScale() {
+    if (!plot || !plot.width || !plot.height) return 1;
+    return Math.min(1, (plot.width / 1440) * (plot.height / 860));
+  }
+
   function applyMetric() {
+    var s = plotScale();
     radius = d3.scaleSqrt()
       .domain([0, d3.max(nodes, sizeValue) || 1])
-      .range([4, 21]);
+      .range([4 * s, 21 * s]);
     if (qualityMode()) {
       maxY = 1;
       nodes.forEach(function (d) {
         var q = d.quality;
         d.r = radius(sizeValue(d));
+        if (!hasY(d)) d.r = Math.min(d.r, 6 * s);
         d.score = (q == null ? 0 : q + 1) * 2 + (d.cites + d.refs) * 0.5;
       });
       return;
@@ -309,6 +319,7 @@
     nodes.forEach(function (d) {
       var yv = yCount(d);
       d.r = radius(sizeValue(d));
+      if (!hasY(d)) d.r = Math.min(d.r, 6 * s);
       d.score = yv * 2 + (d.cites + d.refs - yv) * 0.5;
     });
   }
@@ -411,7 +422,8 @@
       width: box.width,
       height: box.height
     };
-    var timeLeft = plot.left + GUTTER + 30;
+    plot.gutter = nodes.some(function (d) { return !d.time; }) ? GUTTER : 0;
+    var timeLeft = plot.left + plot.gutter + (plot.gutter ? 30 : 0);
     var dates = nodes.filter(function (d) { return d.time; })
                      .map(function (d) { return d.time; });
     var span = [d3.min(dates), d3.max(dates)];
@@ -434,72 +446,151 @@
     plot.zeroHigh = plot.bottom - ZERO_BAND + 16;
     plot.zeroRule = plot.bottom - ZERO_BAND + 6;
 
-    var gutterMid = plot.left + GUTTER / 2;
+    var gutterMid = plot.left + plot.gutter / 2;
+    var s = plotScale();
+    var timeW = plot.right - timeLeft;
+    var monthMs = 30 * 24 * 3600 * 1000;
+    var dxMonth = Math.abs(
+      xBase(new Date(+span[0] + monthMs)) - xBase(new Date(+span[0]))
+    );
+    if (!isFinite(dxMonth)) dxMonth = 12 * s;
+    var dxMax = Math.min(24 * s, Math.max(12 * s, dxMonth, 0.022 * timeW));
+    var dxZero = Math.min(48 * s, Math.max(dxMax, 0.04 * timeW));
     function yRow(v) {
       if (v <= 0) return plot.zeroRule;
       return yBase(yEncode(v));
     }
-    function clampNudge(gap) {
-      return Math.max(6, Math.min(24, 0.45 * gap));
+    var PACK_GAP = 0.65;
+    var OVERLAP_EPS = 0.5;
+    var occ = {};
+    var occKeys = [];
+    if (!qualityMode()) {
+      nodes.forEach(function (d) {
+        if (!hasY(d)) return;
+        var v = yCount(d);
+        occ[v] = (occ[v] || 0) + 1;
+      });
+      occKeys = Object.keys(occ).map(Number).sort(function (a, b) {
+        return a - b;
+      });
     }
-    function rowGap(fromY, yv, dir) {
-      var step = 1;
-      var gap = dir * (fromY - yRow(yv + dir * step));
-      while (gap < 12 && step < 24) {
-        step += 1;
-        var next = yv + dir * step;
-        if (dir < 0 && next <= 0) {
-          gap = dir * (fromY - plot.zeroRule);
-          break;
+    function occIndex(yv) {
+      var best = 0;
+      var bestD = Infinity;
+      for (var i = 0; i < occKeys.length; i++) {
+        var dlt = Math.abs(occKeys[i] - yv);
+        if (dlt < bestD) {
+          bestD = dlt;
+          best = i;
         }
-        gap = dir * (fromY - yRow(next));
       }
-      return gap;
+      return best;
+    }
+    function nearestOccGap(yv, fromY) {
+      var idx = occIndex(yv);
+      var best = Infinity;
+      if (idx > 0) {
+        best = Math.min(best, Math.abs(fromY - yRow(occKeys[idx - 1])));
+      }
+      if (idx + 1 < occKeys.length) {
+        best = Math.min(best, Math.abs(fromY - yRow(occKeys[idx + 1])));
+      }
+      return best;
+    }
+    // Walk occupied y-values, not yv±1, so fractional bonusRefs
+    // neighbours are the next papers, not empty integer ticks.
+    function visualGap(fromY, yv, dir, minPx) {
+      if (minPx == null) minPx = 40 * s;
+      if (dir < 0 && yv <= 1) return Math.max(0, plot.zeroRule - fromY);
+      if (!occKeys.length) return 0;
+      var idx = occIndex(yv);
+      var step = 1;
+      var gap = 0;
+      while (step <= occKeys.length && gap < minPx) {
+        var ni = idx + dir * step;
+        if (ni < 0) return Math.max(0, plot.zeroRule - fromY);
+        if (ni >= occKeys.length) return Math.max(0, fromY - plot.top);
+        gap = dir * (fromY - yRow(occKeys[ni]));
+        step += 1;
+      }
+      return Math.max(0, gap);
+    }
+    function clampNode(d) {
+      d.x = Math.max(d.xLo, Math.min(d.xHi, d.x));
+      d.y = Math.max(Math.max(plot.top, d.yLo),
+                     Math.min(Math.min(plot.bottom, d.yHi), d.y));
+    }
+    // Keep the disk, not just the center, out of the 0 / n/a gutter.
+    function fitAboveZero(d) {
+      if (!hasY(d)) {
+        d.zeroEdge = null;
+        return;
+      }
+      d.zeroEdge = plot.zeroRule;
+      d.yHi = d.yHiBand;
+      var room = plot.zeroRule - d.yLo;
+      if (room > 2 * s) d.r = Math.min(d.r, room - 0.5);
+      d.yHi = Math.min(d.yHiBand, plot.zeroRule - d.r);
+      if (d.yHi < d.yLo) d.yHi = d.yLo;
     }
     nodes.forEach(function (d, i) {
       var wobble = ((i * 2654435761) % 1000) / 1000 - 0.5;
-      d.tx = d.time ? xBase(d.time) : gutterMid + wobble * (GUTTER - 26);
+      d.tx = d.time ? xBase(d.time) : gutterMid + wobble * (plot.gutter - 26);
       d.ty = hasY(d)
         ? (qualityMode() ? yBase(d.quality) : yBase(yEncode(yCount(d))))
           + wobble * 4
         : plot.zeroLow - (wobble + 0.5) * (plot.zeroLow - plot.zeroHigh);
       d.x = d.tx;
       d.y = d.ty;
+      d.vx = 0;
+      d.vy = 0;
       d.undated = !d.time;
+      var yv = hasY(d) && !qualityMode() ? yCount(d) : 0;
+      var occN = occ[yv] || 1;
+      var tight = Boolean(yv) && occN >= 6 && nearestOccGap(yv, d.ty) < 16 * s;
       if (d.undated) {
         d.xLo = plot.left + d.r;
-        d.xHi = plot.left + GUTTER - d.r;
+        d.xHi = plot.left + plot.gutter - d.r;
       } else {
-        var dxMax = Math.max(24, d.r * 2.2);
-        d.xLo = Math.max(timeLeft - 14, d.tx - dxMax);
-        d.xHi = Math.min(plot.right + 26, d.tx + dxMax);
-      }
-      var up = 6;
-      var down = 10;
-      if (hasY(d)) {
-        if (qualityMode()) {
-          up = 12;
-          down = 12;
-        } else {
-          var yv = yCount(d);
-          var near = Math.abs(d.ty - yRow(yv + 1)) < 12
-            || Math.abs(yRow(yv - 1) - d.ty) < 12;
-          if (near) {
-            up = 20;
-            down = 20;
-          } else {
-            up = clampNudge(rowGap(d.ty, yv, 1));
-            down = clampNudge(rowGap(d.ty, yv, -1));
-          }
+        var dx = hasY(d) ? dxMax : dxZero;
+        if (tight) {
+          dx = Math.min(dxMax * 1.85, dx * (1 + 0.1 * Math.sqrt(occN)));
         }
+        d.xLo = Math.max(timeLeft - 14, d.tx - dx);
+        d.xHi = Math.min(plot.right + 26, d.tx + dx);
       }
-      d.yLo = Math.max(plot.top, d.ty - up);
-      d.yHi = Math.min(plot.bottom, d.ty + down);
+      if (!hasY(d)) {
+        d.yLo = plot.zeroHigh;
+        d.yHi = plot.zeroLow;
+      } else if (qualityMode()) {
+        // zeroRule, not plot.bottom: scored dots must not enter the n/a band.
+        var qPad = 16 * s;
+        d.yLo = Math.max(plot.top, d.ty - qPad);
+        d.yHi = Math.min(plot.zeroRule, d.ty + qPad);
+      } else {
+        var minPx = tight ? Math.max(40 * s, 18 * s * Math.sqrt(occN)) : 40 * s;
+        var cap = tight
+          ? Math.min(42 * s, Math.max(24 * s, 11 * s * Math.sqrt(occN)))
+          : 24 * s;
+        var frac = tight ? 0.78 : 0.5;
+        var up = Math.min(frac * visualGap(d.ty, yv, 1, minPx), cap);
+        var down = yv <= 1
+          ? Math.max(0, Math.min(plot.zeroRule - d.ty, 6 * s))
+          : Math.min(frac * visualGap(d.ty, yv, -1, minPx), cap);
+        d.yLo = Math.max(plot.top, d.ty - up);
+        d.yHi = Math.min(plot.zeroRule, d.ty + down);
+      }
+      d.yHiBand = d.yHi;
+      var box = Math.min(d.xHi - d.xLo, d.yHi - d.yLo);
+      if (box > 0) {
+        d.r = Math.min(d.r, Math.max(2 * s, Math.min(0.3 * box, box / 2)));
+      }
+      fitAboveZero(d);
     });
 
     var sim = d3.forceSimulation(nodes)
-      .force('x', d3.forceX(function (d) { return d.tx; }).strength(0.3))
-      .force('y', d3.forceY(function (d) { return d.ty; }).strength(0.35))
+      .force('x', d3.forceX(function (d) { return d.tx; }).strength(0.25))
+      .force('y', d3.forceY(function (d) { return d.ty; }).strength(0.22))
       .force('collide', d3.forceCollide(function (d) { return d.r + 1.2; })
                           .strength(0.9).iterations(5))
       .force('bounds', function () {
@@ -512,9 +603,69 @@
       })
       .stop();
     for (var t = 0; t < 300; t += 1) sim.tick();
+    nodes.forEach(clampNode);
 
+    function separatePairs(maxPass) {
+      var leftover = 0;
+      for (var pass = 0; pass < maxPass; pass++) {
+        leftover = 0;
+        for (var i = 0; i < nodes.length; i++) {
+          var a = nodes[i];
+          for (var j = i + 1; j < nodes.length; j++) {
+            var b = nodes[j];
+            var dx = b.x - a.x;
+            var dy = b.y - a.y;
+            var dist = Math.hypot(dx, dy);
+            var need = a.r + b.r + PACK_GAP;
+            if (dist >= need) continue;
+            leftover += 1;
+            if (dist < 0.05) {
+              var ang = ((i * 57 + j * 13) % 360) * Math.PI / 180;
+              dx = Math.cos(ang);
+              dy = Math.sin(ang);
+              dist = 1;
+            }
+            var push = (need - dist) / 2;
+            var ux = dx / dist;
+            var uy = dy / dist;
+            a.x -= ux * push;
+            a.y -= uy * push;
+            b.x += ux * push;
+            b.y += uy * push;
+            clampNode(a);
+            clampNode(b);
+          }
+        }
+        if (!leftover) return 0;
+      }
+      return leftover;
+    }
+    separatePairs(40);
+    for (var shrink = 0; shrink < 12; shrink++) {
+      var hit = {};
+      var stubborn = 0;
+      for (var i = 0; i < nodes.length; i++) {
+        var a = nodes[i];
+        for (var j = i + 1; j < nodes.length; j++) {
+          var b = nodes[j];
+          if (Math.hypot(b.x - a.x, b.y - a.y) < a.r + b.r - OVERLAP_EPS) {
+            hit[i] = true;
+            hit[j] = true;
+            stubborn += 1;
+          }
+        }
+      }
+      if (!stubborn) break;
+      Object.keys(hit).forEach(function (k) {
+        var n = nodes[+k];
+        n.r = Math.max(2 * s, n.r * 0.88);
+        fitAboveZero(n);
+      });
+      separatePairs(16);
+    }
     nodes.forEach(function (d) {
-      d.y = Math.max(plot.top, Math.min(plot.bottom, d.y));
+      fitAboveZero(d);
+      clampNode(d);
     });
     plot.timeLeft = timeLeft;
   }
@@ -593,19 +744,13 @@
       .attr('text-anchor', 'middle')
       .text(yAxisCaption());
 
-    // The gutter holds real nodes, so it has to travel with the zoom.
-    var gutterEnd = transform.applyX(plot.left + GUTTER + 12);
-    gAxes.append('line')
-      .attr('class', 'gutter-rule')
-      .attr('x1', gutterEnd).attr('x2', gutterEnd)
-      .attr('y1', plot.top - 12).attr('y2', plot.bottom);
-
-    gAxes.append('text')
-      .attr('class', 'caption')
-      .attr('text-anchor', 'middle')
-      .attr('x', transform.applyX(plot.left + GUTTER / 2))
-      .attr('y', plot.bottom + 18)
-      .text('date unknown');
+    if (plot.gutter) {
+      var gutterEnd = transform.applyX(plot.left + plot.gutter + 12);
+      gAxes.append('line')
+        .attr('class', 'gutter-rule')
+        .attr('x1', gutterEnd).attr('x2', gutterEnd)
+        .attr('y1', plot.top - 12).attr('y2', plot.bottom);
+    }
   }
 
   var nodeSel, edgeSel, labelSel;
@@ -863,13 +1008,14 @@
     var when = d.date
       ? d.date + (d.date_source && d.date_source !== 'arxiv-api'
           ? ' (' + d.date_source.replace('-', ' ') + ')' : '')
-      : 'date unknown';
+      : '';
     var hint = locked
       ? 'held \u00b7 double-click to open \u00b7 Esc to release'
       : 'click to hold \u00b7 double-click to open';
+    var whoWhen = [authors ? escapeHtml(authors) : '', when]
+      .filter(Boolean).join(' &middot; ');
     tip.html('<b>' + escapeHtml(d.title) + '</b>'
-      + '<div class="meta">' + (authors ? escapeHtml(authors) + ' &middot; ' : '')
-      + when + '</div>'
+      + (whoWhen ? '<div class="meta">' + whoWhen + '</div>' : '')
       + '<div class="meta">' + escapeHtml(d.section) + ' &middot; ' + d.kind
       + (d.telegram ? ' &middot; telegram' : '')
       + (d.doc ? '' : ' &middot; no document retrieved') + '</div>'
