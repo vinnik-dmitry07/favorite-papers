@@ -21,6 +21,7 @@ FILTER_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(FILTER_DIR))
 
 import build_llm_models as blm  # noqa: E402
+import llm_gains_ood as ood  # noqa: E402
 from paths import (  # noqa: E402
     FILTER_DIR as ROOT,
     FULLTEXT_INDEX,
@@ -65,12 +66,23 @@ ROW_FIELDS = (
     'gain_ref',
     'source',
     'ood',
+    'ood_basis',
+    'ckpt_select',
+    'train_data',
+    'teacher',
+    'unit',
+    'bench_span',
 )
 
 FROM_SCRATCH_RE = re.compile(
     r'\b(pretrain|next-token|autoregressive|mlm|causal\s+lm)\b',
     re.I,
 )
+CONTINUED_PRETRAIN_RE = re.compile(
+    r'\b(continual|continued|mid-?train)\b',
+    re.I,
+)
+METHOD_CELL_LIMIT = 40
 VANILLA_GRPO_RE = re.compile(r'^(online\s+)?grpo$', re.I)
 BASE_CODES = frozenset({
     'base',
@@ -100,7 +112,8 @@ CODE_ALIASES = {
     'teacher top-K local support matching': 'top-K OPD',
     'RLVE (DAPO)': 'RLVE',
     'DrGRPO (RL mid-training)': 'DrGRPO-mid',
-    'thinking SFT + DrGRPO (RL mid-training)': 'SFT+DrGRPO',
+    'thinking SFT + DrGRPO (RL mid-training)': 'SFT(think) 10k + RLMT 5k + RLPT',
+    'SFT+DrGRPO': 'SFT(think) 10k + RLMT 5k + RLPT',
     'online DPO / RF-NLL (Self-Improving Pretraining)': 'online-DPO',
     'SPADE (GRPO)': 'SPADE',
     'OPRD-Vanilla': 'OPRD',
@@ -239,11 +252,12 @@ def load_json(path: Path):
     return json.loads(path.read_text(encoding='utf-8'))
 
 
-def fold_model(name: str | None) -> str:
+def fold_model(name: str | None, key: str = '') -> str:
     text = blm.norm_model(name) or ''
     for pattern, repl in MODEL_FIXES:
         text = pattern.sub(repl, text)
-    return MODEL_CANON.get(blm.alias_key(text), text)
+    text = MODEL_CANON.get(blm.alias_key(text), text)
+    return ood.alias_paper_model(key, text)
 
 
 def model_core(name: str) -> str:
@@ -311,16 +325,19 @@ def method_to_code(method: str, explicit: str = '') -> str:
             return code
     if explicit:
         return explicit
-    if len(text) <= 18:
+    if len(text) <= METHOD_CELL_LIMIT:
         return text
     prefix = re.split(r'\s*\(|\s+/', text, maxsplit=1)[0].strip()
-    if prefix and len(prefix) <= 18:
+    if prefix and len(prefix) <= METHOD_CELL_LIMIT:
         return prefix
-    return text[:18]
+    return text[:METHOD_CELL_LIMIT]
 
 
 def is_from_scratch_method(method: str) -> bool:
-    return bool(FROM_SCRATCH_RE.search(method or ''))
+    blob = method or ''
+    if CONTINUED_PRETRAIN_RE.search(blob):
+        return False
+    return bool(FROM_SCRATCH_RE.search(blob))
 
 
 def is_base_code(code: str, method: str = '') -> bool:
@@ -478,7 +495,7 @@ def iter_candidates(
             'rel_path': fulltext_rel(key, index_row),
             'expected': [
                 {
-                    'model': fold_model(row.get('model')),
+                    'model': fold_model(row.get('model'), key),
                     'method': row.get('method') or '',
                     'eval_ood': list(row.get('eval_ood') or []),
                     'eval_id': list(row.get('eval_id') or []),
@@ -520,7 +537,7 @@ def load_index_by_key() -> dict[str, dict]:
 
 def normalize_gain_row(raw: dict) -> dict | None:
     key = blm.norm_space(raw.get('key') or '')
-    model = fold_model(raw.get('model'))
+    model = fold_model(raw.get('model'), key)
     bench = resolve_gain_bench(raw.get('bench') or '')
     method = blm.norm_space(raw.get('method') or '')
     code = method_to_code(method, raw.get('code') or '')
@@ -531,13 +548,21 @@ def normalize_gain_row(raw: dict) -> dict | None:
     score = parse_score(raw.get('score'))
     gain = parse_score(raw.get('gain'))
     gain_ref = parse_score(raw.get('gain_ref'))
+    unit = blm.norm_space(raw.get('unit') or '').lower()
+    if unit not in {'pp', 'frac', ''}:
+        unit = ''
+    ood_basis = blm.norm_space(raw.get('ood_basis') or '')
+    if ood_basis not in ood.OOD_BASES:
+        ood_basis = ''
     ood_raw = raw.get('ood')
     if isinstance(ood_raw, str):
         ood_val = ood_raw.strip().lower() in {'1', 'true', 'yes'}
     elif ood_raw is None:
-        ood_val = False
+        ood_val = ood_basis == 'temporal'
     else:
         ood_val = bool(ood_raw)
+    if ood_val and not ood_basis:
+        ood_basis = 'temporal'
     return {
         'key': key,
         'code': code,
@@ -553,6 +578,16 @@ def normalize_gain_row(raw: dict) -> dict | None:
         'gain_ref': gain_ref,
         'source': blm.norm_space(raw.get('source') or ''),
         'ood': ood_val,
+        'ood_basis': ood_basis,
+        'ckpt_select': ood.default_ckpt_select(
+            key, blm.norm_space(raw.get('ckpt_select') or ''),
+        ),
+        'train_data': blm.norm_space(raw.get('train_data') or ''),
+        'teacher': ood.default_teacher(
+            key, code, method, blm.norm_space(raw.get('teacher') or ''),
+        ),
+        'unit': unit,
+        'bench_span': blm.norm_space(raw.get('bench_span') or ''),
     }
 
 
@@ -629,7 +664,7 @@ def build_ood_index(model_rows: list[dict]) -> dict[tuple[str, str], dict]:
             continue
         if blm.is_omitted_row(row):
             continue
-        pair = (row['key'], fold_model(row['model']))
+        pair = (row['key'], fold_model(row['model'], row['key']))
         slot = index.setdefault(pair, {
             'ood': set(),
             'id': set(),
@@ -697,67 +732,80 @@ def pick_method_slot(slot: dict, method: str) -> dict:
     return slot
 
 
-def trains_on_deepscaler(train_sets: set[str]) -> bool:
-    return bool(re.search(r'deepscaler', ' '.join(train_sets).lower()))
-
-
-def trains_on_named_math(train_sets: set[str]) -> bool:
-    return bool(re.search(r'\bmath\b', ' '.join(train_sets).lower()))
-
-
-def math500_is_ood(
-    train_sets: set[str],
-    listed_id: bool,
-    listed_ood: bool = False,
-) -> bool:
-    deep = trains_on_deepscaler(train_sets)
-    math_named = trains_on_named_math(train_sets)
-    if deep and not math_named:
-        return True
-    if math_named or listed_id:
-        return False
-    return listed_ood
-
-
-def lookup_ood(
+def lookup_ood_slot(
     index: dict[tuple[str, str], dict],
     key: str,
     model: str,
-    bench: str,
     method: str = '',
-) -> bool:
+) -> dict | None:
     pair = resolve_index_pair(index, key, model)
     if pair is None:
-        return False
-    slot = pick_method_slot(index[pair], method)
-    ids = slot.get('id') or set()
-    oods = slot.get('ood') or set()
-    train = slot.get('train') or set()
-    if bench == 'MATH-500':
-        return math500_is_ood(train, bench in ids, bench in oods)
-    if bench in ids:
-        return False
-    return bench in oods
+        return None
+    return pick_method_slot(index[pair], method)
+
+
+def attach_train_data(rows: list[dict], model_rows: list[dict]) -> list[dict]:
+    index = build_ood_index(model_rows)
+    out = []
+    for row in rows:
+        item = dict(row)
+        if item.get('train_data'):
+            out.append(item)
+            continue
+        slot = lookup_ood_slot(
+            index, item['key'], item['model'], item.get('method') or '',
+        )
+        trains = sorted(slot.get('train') or set()) if slot else []
+        if len(trains) == 1:
+            item['train_data'] = trains[0]
+        out.append(item)
+    return out
+
+
+def classify_row(row: dict, slot: dict | None) -> str:
+    ids = (slot or {}).get('id') or set()
+    oods = (slot or {}).get('ood') or set()
+    bench = row['bench']
+    return ood.classify_ood_basis(
+        key=row['key'],
+        model=row['model'],
+        bench=bench,
+        code=row.get('code') or '',
+        method=row.get('method') or '',
+        train_data=row.get('train_data') or '',
+        teacher=row.get('teacher') or '',
+        bench_span=row.get('bench_span') or '',
+        listed_id=bench in ids,
+        listed_ood=bench in oods,
+        hmmt_month=ood.PAPER_HMMT_MONTH.get(row['key']),
+    )
 
 
 def attach_ood(rows: list[dict], model_rows: list[dict]) -> list[dict]:
     index = build_ood_index(model_rows)
     out = []
     unmatched = 0
+    n_temporal = 0
     for row in rows:
         item = dict(row)
-        pair = resolve_index_pair(index, item['key'], item['model'])
-        if pair is None:
-            unmatched += 1
-        item['ood'] = lookup_ood(
-            index,
-            item['key'],
-            item['model'],
-            item['bench'],
-            item.get('method') or '',
+        slot = lookup_ood_slot(
+            index, item['key'], item['model'], item.get('method') or '',
         )
+        if slot is None:
+            unmatched += 1
+        item['ood_basis'] = classify_row(item, slot)
+        item['ood'] = item['ood_basis'] == 'temporal'
+        item['ckpt_select'] = ood.default_ckpt_select(
+            item['key'], item.get('ckpt_select') or '',
+        )
+        if item['ood']:
+            n_temporal += 1
         out.append(item)
-    print(f'ood attach: rows={len(out)} unmatched_models={unmatched}', flush=True)
+    print(
+        f'ood attach: rows={len(out)} unmatched_models={unmatched} '
+        f'temporal={n_temporal}',
+        flush=True,
+    )
     return out
 
 
@@ -768,34 +816,52 @@ def row_numeric_fields(row: dict) -> list[float]:
     return [row[field] for field in SCORE_FIELDS if row.get(field) is not None]
 
 
-def rescale_unit_papers(rows: list[dict]) -> list[dict]:
-    by_key: dict[str, list[dict]] = defaultdict(list)
-    for row in rows:
-        by_key[row['key']].append(row)
+def row_looks_fraction(row: dict) -> bool:
+    nums = [
+        row[field] for field in ('base', 'ref', 'score')
+        if row.get(field) is not None
+    ]
+    if not nums:
+        return False
+    if max(abs(value) for value in nums) > 1.0:
+        return False
+    if min(value for value in nums) < 0:
+        return False
+    return True
+
+
+def coerce_pp_rows(rows: list[dict]) -> list[dict]:
     out = []
-    for key, group in by_key.items():
-        nums = [value for row in group for value in row_numeric_fields(row)]
-        if nums and max(abs(value) for value in nums) <= 1.0:
-            for row in group:
-                item = dict(row)
-                for field in SCORE_FIELDS:
-                    if item.get(field) is not None:
-                        item[field] = item[field] * 100.0
-                out.append(item)
-            print(f'rescaled 0-1 paper {key} x100 ({len(group)} rows)', flush=True)
-            continue
-        unit_rows = [
-            row for row in group
-            if row_numeric_fields(row)
-            and max(abs(value) for value in row_numeric_fields(row)) <= 1.0
+    n_scaled = 0
+    for row in rows:
+        item = dict(row)
+        nums = [
+            item[field] for field in ('base', 'ref', 'score')
+            if item.get(field) is not None
         ]
-        if nums and unit_rows and max(abs(value) for value in nums) > 1.5:
+        mixed = bool(nums) and min(abs(v) for v in nums) <= 1.0 and max(abs(v) for v in nums) > 1.5
+        if mixed:
             print(
-                f'mixed-scale paper {key}: {len(unit_rows)} unit-scale rows left as-is',
+                f'mixed-scale row {item["key"]} {item["model"]} {item["bench"]} '
+                f'left as-is',
                 flush=True,
             )
-        out.extend(group)
+        elif item.get('unit') == 'frac' or row_looks_fraction(item):
+            for field in SCORE_FIELDS:
+                if item.get(field) is not None:
+                    item[field] = item[field] * 100.0
+            item['unit'] = 'pp'
+            n_scaled += 1
+        elif item.get('unit') != 'frac':
+            item['unit'] = item.get('unit') or 'pp'
+        out.append(item)
+    if n_scaled:
+        print(f'rescaled {n_scaled} fraction rows x100', flush=True)
     return out
+
+
+def rescale_unit_papers(rows: list[dict]) -> list[dict]:
+    return coerce_pp_rows(rows)
 
 
 def ref_rank(code: str, method: str) -> tuple[int, str] | None:
@@ -807,15 +873,21 @@ def ref_rank(code: str, method: str) -> tuple[int, str] | None:
     return None
 
 
+def experiment_key(row: dict) -> tuple:
+    return (
+        row['key'],
+        row['model'],
+        row['bench'],
+        row.get('metric') or '',
+        row.get('train_data') or '',
+        row.get('source') or '',
+    )
+
+
 def fill_baselines(rows: list[dict]) -> list[dict]:
-    groups: dict[tuple[str, str, str, str], list[dict]] = defaultdict(list)
+    groups: dict[tuple, list[dict]] = defaultdict(list)
     for row in rows:
-        groups[(
-            row['key'],
-            row['model'],
-            row['bench'],
-            row.get('metric') or '',
-        )].append(row)
+        groups[experiment_key(row)].append(row)
     out = []
     for group in groups.values():
         bases = []
@@ -873,10 +945,16 @@ def delta_over_ref(row: dict) -> float | None:
     return row.get('gain_ref')
 
 
-def format_gain_cell(delta: float | None, starred: bool = False) -> str:
+def format_gain_cell(
+    delta: float | None,
+    starred: bool = False,
+    dagger: bool = False,
+) -> str:
     if delta is None:
         return ''
     text = f'{round(delta, 1):+.1f}'
+    if dagger:
+        text += '†'
     if starred:
         text += '*'
     return text
@@ -887,9 +965,6 @@ def fold_ref_name(text: str) -> str:
 
 
 def is_self_ref(row: dict) -> bool:
-    if row.get('ref') is not None and row.get('score') is not None:
-        if abs(row['ref'] - row['score']) < 1e-6:
-            return True
     ref_method = (row.get('ref_method') or '').strip()
     if not ref_method:
         return False
@@ -912,6 +987,8 @@ def dedupe_rows(rows: list[dict]) -> list[dict]:
             row['model'],
             row['bench'],
             row.get('metric') or '',
+            row.get('train_data') or '',
+            row.get('source') or '',
         )
         prev = best.get(pair)
         if prev is None:
@@ -963,17 +1040,27 @@ def split_row_groups(groups: list[list[dict]], cap: int = MAX_ROWS) -> list[tupl
 
 def code_cell(row: dict) -> str:
     url = blm.paper_url(row['key'])
-    return blm.md_link(row['code'] or row['method'] or row['key'], url, limit=18)
+    return blm.md_link(
+        row['code'] or row['method'] or row['key'],
+        url,
+        limit=METHOD_CELL_LIMIT,
+    )
+
+
+def metric_cell(group: list[dict]) -> str:
+    return blm.md_escape(group[0].get('metric') or '')
 
 
 def pivot_groups(rows: list[dict]) -> list[list[dict]]:
-    grouped: dict[tuple[str, str, str, str], list[dict]] = defaultdict(list)
+    grouped: dict[tuple, list[dict]] = defaultdict(list)
     for row in rows:
         grouped[(
             row['key'],
             row['code'],
             row['model'],
             row.get('metric') or '',
+            row.get('train_data') or '',
+            row.get('source') or '',
         )].append(row)
     return list(grouped.values())
 
@@ -1005,7 +1092,9 @@ def render_checkpoint_table(
     benches = filled_benches(groups, cell_fn)
     if not benches or not groups:
         return [], 0, 0
-    headers = ['code', 'id'] + extra_headers + [bench_short(name) for name in benches]
+    headers = ['method', 'id', 'metric'] + extra_headers + [
+        bench_short(name) for name in benches
+    ]
     lines = [
         f'### {title}',
         '',
@@ -1015,7 +1104,7 @@ def render_checkpoint_table(
     for group in groups:
         row0 = group[0]
         by_bench = {row['bench']: row for row in group}
-        cells = [code_cell(row0), paper_id(row0['key'])]
+        cells = [code_cell(row0), paper_id(row0['key']), metric_cell(group)]
         if extra_fn:
             cells.append(extra_fn(group))
         for bench in benches:
@@ -1051,7 +1140,7 @@ def render_other_table(
     n_rows = 0
     for i, chunk in enumerate(chunks):
         label = title if len(chunks) == 1 else f'{title} ({i + 1})'
-        headers = ['code', 'id'] + extra_headers + chunk
+        headers = ['method', 'id', 'metric'] + extra_headers + chunk
         lines.append(f'### {label}')
         lines.append('')
         lines.append('| ' + ' | '.join(headers) + ' |')
@@ -1069,7 +1158,7 @@ def render_other_table(
                 continue
             used_groups.append(group)
             row0 = group[0]
-            cells = [code_cell(row0), paper_id(row0['key'])]
+            cells = [code_cell(row0), paper_id(row0['key']), metric_cell(group)]
             if extra_fn:
                 cells.append(extra_fn(group))
             for col in chunk:
@@ -1104,12 +1193,20 @@ def starred_ref(row: dict) -> bool:
     return bool(row.get('ref_method')) and not is_vanilla_grpo_ref(row['ref_method'])
 
 
+def best_ckpt_mark(row: dict) -> bool:
+    return (row.get('ckpt_select') or '') == 'best-every-100'
+
+
 def base_cell(row: dict) -> str:
-    return format_gain_cell(delta_over_base(row))
+    return format_gain_cell(delta_over_base(row), dagger=best_ckpt_mark(row))
 
 
 def grpo_cell(row: dict) -> str:
-    return format_gain_cell(delta_over_ref(row), starred=starred_ref(row))
+    return format_gain_cell(
+        delta_over_ref(row),
+        starred=starred_ref(row),
+        dagger=best_ckpt_mark(row),
+    )
 
 
 def group_has_cell(group: list[dict], cell_fn) -> bool:
@@ -1120,10 +1217,16 @@ def print_table_stats(label: str, title: str, n_rows: int, n_cols: int) -> None:
     print(f'table {label} / {title}: rows={n_rows} cols={n_cols}', flush=True)
 
 
+def is_temporal_row(row: dict) -> bool:
+    if row.get('ood_basis'):
+        return row['ood_basis'] == 'temporal'
+    return bool(row.get('ood'))
+
+
 def table_gain_rows(rows: list[dict], skip_self_ref: bool = False) -> list[dict]:
     usable = [
         row for row in rows
-        if row.get('ood')
+        if is_temporal_row(row)
         and not is_base_code(row.get('code') or '', row.get('method') or '')
         and row.get('bench') in CORE_BENCHES
         and not is_omitted_gain(row)
@@ -1215,24 +1318,29 @@ def render_md(
         '',
         'Per-paper numbers from `filter/fulltext/*.md`, stored in '
         '`filter/llm_gains.jsonl`. One jsonl row is one '
-        '(paper × method × model × bench). Tables keep only **OOD** benches '
-        '(from `filter/llm_models.jsonl`). API and GPT-family models are omitted. '
-        'Model inventory and reliability notes: [`llm_models.md`](llm_models.md).',
+        '(paper × method × model × bench × train data × source table). '
+        'Markdown keeps only **temporal OOD**: the bench date is after the '
+        'full training-chain cutoff. Historical benches and version-only LCB '
+        'slices stay in the jsonl as `rl_stage` / `id` / `unverified` and are '
+        'not drawn. API and GPT-family models are omitted. '
+        'Model inventory: [`llm_models.md`](llm_models.md).',
         '',
         '## Summary',
         '',
-        f'- Papers with at least one OOD number: **{len(keys)}**',
-        f'- OOD gain cells vs untrained: **{n_cells_base}**',
-        f'- OOD gain cells vs GRPO / nearest RLVR: **{n_cells_ref}**',
-        f'- From-scratch papers (no untrained checkpoint): **{len(not_applicable)}**',
+        f'- Papers with at least one temporal OOD number: **{len(keys)}**',
+        f'- Temporal gain cells vs starting checkpoint: **{n_cells_base}**',
+        f'- Temporal gain cells vs GRPO / nearest RLVR: **{n_cells_ref}**',
+        f'- From-scratch papers (no starting checkpoint): **{len(not_applicable)}**',
         '',
     ]
     out.extend(render_section(
-        'Gain over the untrained checkpoint',
-        'Cell = method − untrained checkpoint, percentage points, one decimal. '
+        'Gain over the starting checkpoint',
+        'Cell = method − the paper\'s starting checkpoint (pretrained, instruct, '
+        'or distilled), percentage points, one decimal. '
+        '`avg@k` is not `pass@k`. A trailing `†` means the paper picked the '
+        'best checkpoint (ConSPO: eval every 100 steps). '
         'Blank if that paper does not report the starting checkpoint on that bench. '
-        'Numbers stay inside one paper and one metric (`pass@1` / `avg@k`); '
-        'deltas are never mixed across tables or papers.',
+        'Numbers stay inside one experiment (same table, train data, and metric).',
         rows,
         papers,
         base_cell,
@@ -1242,8 +1350,10 @@ def render_md(
         'Cell = method − the paper\'s vanilla GRPO, or the nearest vanilla RLVR '
         'baseline when GRPO is absent (`vs` column). A trailing `*` means the '
         'reference is not vanilla GRPO (Dr. GRPO, DAPO, PPO, RLOO, REINFORCE++). '
-        'The reference method itself is omitted. Blank if no RLVR baseline is '
-        'reported on that bench. Same-table, same-metric only.',
+        '`†` is a best-every-100 checkpoint. The reference method itself is '
+        'omitted. Equal scores of different methods show `+0.0`. '
+        'Blank if no RLVR baseline is reported on that bench. '
+        'Same experiment only.',
         rows,
         papers,
         grpo_cell,
@@ -1260,7 +1370,8 @@ def render_md(
     out.append(
         'Trained open models with an OOD list, but only from-scratch pretraining '
         '(`pretrain` / `next-token` / `autoregressive` / `MLM` / `causal LM`). '
-        'There is no untrained starting checkpoint to subtract.'
+        'Continued / mid-training pretrain is not from-scratch. '
+        'There is no starting checkpoint to subtract.'
     )
     out.append('')
     out.append('| id | paper | methods |')
@@ -1281,7 +1392,9 @@ def renormalize_rows(rows: list[dict], model_rows: list[dict]) -> list[dict]:
         item = normalize_gain_row(raw)
         if item:
             out.append(item)
-    out = rescale_unit_papers(out)
+    out = ood.apply_gain_overrides(out)
+    out = attach_train_data(out, model_rows)
+    out = coerce_pp_rows(out)
     out = attach_ood(out, model_rows)
     out = fill_baselines(out)
     return dedupe_rows(out)
@@ -1322,6 +1435,8 @@ def sort_rows(rows: list[dict], papers: list[dict]) -> list[dict]:
             row.get('code') or '',
             row.get('bench') or '',
             row.get('metric') or '',
+            row.get('train_data') or '',
+            row.get('source') or '',
         ),
     )
 
@@ -1411,7 +1526,9 @@ def main(argv: list[str] | None = None) -> int:
                 rows.append(item)
         print_progress(i, n, key)
 
-    rows = rescale_unit_papers(rows)
+    rows = ood.apply_gain_overrides(rows)
+    rows = attach_train_data(rows, model_rows)
+    rows = coerce_pp_rows(rows)
     rows = attach_ood(rows, model_rows)
     rows = fill_baselines(rows)
     rows = dedupe_rows(rows)

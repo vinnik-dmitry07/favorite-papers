@@ -279,7 +279,7 @@ python filter/add_score_badges.py    # rewrites every [⚖ …] badge in readme.
 | fulltext | `filter/extract_fulltext.py --only-keys` | `filter/fulltext/`, `fulltext_index.jsonl`, `fulltext.zip` |
 | versions | `filter/check_versions.py [--only-keys] [--refresh]` | `filter/versions.jsonl` |
 | llm inventory | `filter/build_llm_models.py` (or `--extract-dir`) | `filter/llm_models.jsonl`, `llm_models.md` |
-| llm gains | `filter/build_llm_gains.py` (or `--extract-dir`) | `filter/llm_gains.jsonl`, `llm_gains.md` |
+| llm gains | `filter/build_llm_gains.py` (or `--extract-dir`) | `filter/llm_gains.jsonl`, `llm_gains.md` (markdown is temporal OOD only) |
 | abstract scorers (GPU) | `filter/remote/score_naip.py`, `score_scijudge.py` | `scores_naipv1/naipv2/scijudge.jsonl` |
 | full-paper reviewers (GPU) | `filter/remote/score_reviewers.py --model … --only-keys …` | `scores_<model>.jsonl`, `reviews/<model>/` |
 | abstract scorer (CPU) | `filter/score_dgcbert.py --device cpu` | `scores_dgcbert.jsonl` |

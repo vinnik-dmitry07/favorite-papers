@@ -57,14 +57,16 @@ class DeltaTest(unittest.TestCase):
         self.assertAlmostEqual(row['score'], 0.83)
         self.assertEqual(blg.format_delta(row['score'], row['base']), '+0.4')
 
-    def test_mixed_scale_paper_keeps_unit_aime(self):
-        rows = blg.rescale_unit_papers([
+    def test_mixed_scale_paper_scales_fraction_row(self):
+        rows = blg.coerce_pp_rows([
             _gain(base=0.41, ref=None, score=0.83, bench='AIME 2024'),
             _gain(base=49.4, ref=None, score=70.8, bench='MATH-500'),
         ])
         aime = next(row for row in rows if row['bench'] == 'AIME 2024')
-        self.assertAlmostEqual(aime['base'], 0.41)
-        self.assertAlmostEqual(aime['score'], 0.83)
+        math = next(row for row in rows if row['bench'] == 'MATH-500')
+        self.assertAlmostEqual(aime['base'], 41.0)
+        self.assertAlmostEqual(aime['score'], 83.0)
+        self.assertAlmostEqual(math['base'], 49.4)
 
     def test_unit_scale_paper_times_100(self):
         rows = blg.rescale_unit_papers([
@@ -89,8 +91,10 @@ class RefMarkerTest(unittest.TestCase):
         paper = _paper()
         markdown = blg.render_md([row], [paper], [])
         self.assertIn('| vs |', markdown)
+        self.assertIn('| metric |', markdown)
         self.assertIn('| DAPO |', markdown)
         self.assertIn('+5.0*', markdown)
+        self.assertIn('## Gain over the starting checkpoint', markdown)
 
     def test_skips_self_ref_grpo_row(self):
         grpo = _gain(code='GRPO', method='GRPO', score=20, ref=20, ref_method='GRPO')
@@ -100,7 +104,7 @@ class RefMarkerTest(unittest.TestCase):
         self.assertNotIn('[GRPO](', grpo_section)
         self.assertIn('[SC-GRPO](', grpo_section)
         self.assertIn('+5.0', grpo_section)
-        base_section = markdown.split('## Gain over the untrained checkpoint', 1)[1]
+        base_section = markdown.split('## Gain over the starting checkpoint', 1)[1]
         self.assertIn('[GRPO](', base_section.split('## Gain over GRPO', 1)[0])
 
     def test_drgrpo_matches_dotted_name(self):
@@ -113,15 +117,16 @@ class RefMarkerTest(unittest.TestCase):
         )
         self.assertTrue(blg.is_self_ref(row))
 
-    def test_equal_ref_and_score_is_self_ref(self):
+    def test_equal_ref_and_score_shows_zero(self):
         row = _gain(
-            code='GRPO-DAPO',
-            method='GRPO-DAPO',
+            code='LOPD',
+            method='LOPD',
             ref_method='GRPO',
-            score=20,
-            ref=20,
+            score=45.8,
+            ref=45.8,
         )
-        self.assertTrue(blg.is_self_ref(row))
+        self.assertFalse(blg.is_self_ref(row))
+        self.assertEqual(blg.grpo_cell(row), '+0.0')
 
     def test_r1_grpo_is_not_vanilla_code(self):
         row = _gain(code='GRPO', method='R1-GRPO', score=20, ref=None, ref_method='')
@@ -145,12 +150,14 @@ class OodFilterTest(unittest.TestCase):
             _gain(bench='MATH-500', score=70.8, base=49.4),
             _gain(bench='AIME 2024', score=20, base=10),
         ], models)
-        by_bench = {row['bench']: row['ood'] for row in rows}
-        self.assertFalse(by_bench['MATH-500'])
-        self.assertTrue(by_bench['AIME 2024'])
+        by_bench = {row['bench']: row for row in rows}
+        self.assertEqual(by_bench['MATH-500']['ood_basis'], 'id')
+        self.assertFalse(by_bench['MATH-500']['ood'])
+        self.assertEqual(by_bench['AIME 2024']['ood_basis'], 'rl_stage')
+        self.assertFalse(by_bench['AIME 2024']['ood'])
         markdown = blg.render_md(rows, [_paper()], [])
-        self.assertIn('AIME24', markdown)
         self.assertNotIn('MATH500', markdown)
+        self.assertNotIn('AIME24', markdown.split('## Not applicable', 1)[0])
 
     def test_math500_ood_when_trained_on_deepscaler(self):
         models = [
@@ -167,7 +174,11 @@ class OodFilterTest(unittest.TestCase):
         rows = blg.attach_ood([
             _gain(key='arxiv:2506.10947', bench='MATH-500', score=70.8, base=49.4),
         ], models)
-        self.assertTrue(rows[0]['ood'])
+        self.assertFalse(rows[0]['ood'])
+        self.assertEqual(rows[0]['ood_basis'], 'id')
+        markdown = blg.render_md(rows, [_paper(key='arxiv:2506.10947')], [])
+        self.assertNotIn('+21.4', markdown)
+        self.assertNotIn('MATH500', markdown)
 
     def test_math500_intersection_is_id_when_trained_on_math(self):
         models = [
@@ -185,9 +196,11 @@ class OodFilterTest(unittest.TestCase):
             _gain(bench='MATH-500', score=70.8, base=49.4),
             _gain(bench='AIME 2024', score=20, base=10),
         ], models)
-        by_bench = {row['bench']: row['ood'] for row in rows}
-        self.assertFalse(by_bench['MATH-500'])
-        self.assertTrue(by_bench['AIME 2024'])
+        by_bench = {row['bench']: row for row in rows}
+        self.assertEqual(by_bench['MATH-500']['ood_basis'], 'id')
+        self.assertEqual(by_bench['AIME 2024']['ood_basis'], 'rl_stage')
+        self.assertFalse(by_bench['MATH-500']['ood'])
+        self.assertFalse(by_bench['AIME 2024']['ood'])
 
     def test_openr1_does_not_force_math500_ood(self):
         models = [
@@ -223,6 +236,8 @@ class OodFilterTest(unittest.TestCase):
         ], models)
         self.assertFalse(rows[0]['ood'])
         self.assertFalse(rows[1]['ood'])
+        self.assertEqual(rows[0]['ood_basis'], 'rl_stage')
+        self.assertEqual(rows[1]['ood_basis'], 'rl_stage')
 
     def test_fuzzy_model_alias_matches(self):
         models = [
@@ -231,13 +246,65 @@ class OodFilterTest(unittest.TestCase):
                 'start_point': 'instruct',
                 'role': 'trained',
                 'method': 'GRPO',
+                'eval_ood': ['AIME 2025'],
+            }, _paper()),
+        ]
+        rows = blg.attach_ood([
+            _gain(model='Qwen2.5-7B-Instruct', bench='AIME 2025', score=20, base=10),
+        ], models)
+        self.assertTrue(rows[0]['ood'])
+        self.assertEqual(rows[0]['ood_basis'], 'temporal')
+
+    def test_aime24_never_auto_temporal(self):
+        models = [
+            blm.normalize_row({
+                'model': 'Qwen2.5-Math-7B',
+                'start_point': 'base',
+                'role': 'trained',
+                'method': 'GRPO',
                 'eval_ood': ['AIME 2024'],
             }, _paper()),
         ]
         rows = blg.attach_ood([
-            _gain(model='Qwen2.5-7B-Instruct', bench='AIME 2024', score=20, base=10),
+            _gain(bench='AIME 2024', score=20, base=10),
         ], models)
-        self.assertTrue(rows[0]['ood'])
+        self.assertEqual(rows[0]['ood_basis'], 'rl_stage')
+
+    def test_qwen3_aime25_not_temporal(self):
+        models = [
+            blm.normalize_row({
+                'model': 'Qwen3-8B',
+                'start_point': 'base',
+                'role': 'trained',
+                'method': 'GRPO',
+                'eval_ood': ['AIME 2025'],
+            }, _paper()),
+        ]
+        rows = blg.attach_ood([
+            _gain(model='Qwen3-8B', bench='AIME 2025', score=20, base=10),
+        ], models)
+        self.assertEqual(rows[0]['ood_basis'], 'unverified')
+        self.assertFalse(rows[0]['ood'])
+
+    def test_lcb_version_only_not_temporal(self):
+        models = [
+            blm.normalize_row({
+                'model': 'Qwen2.5-1.5B',
+                'start_point': 'base',
+                'role': 'trained',
+                'method': 'Intuitor',
+                'eval_ood': ['LiveCodeBench v6'],
+            }, _paper()),
+        ]
+        rows = blg.attach_ood([
+            _gain(
+                model='Qwen2.5-1.5B',
+                bench='LiveCodeBench v6',
+                score=9.9,
+                base=0.0,
+            ),
+        ], models)
+        self.assertEqual(rows[0]['ood_basis'], 'unverified')
 
     def test_amc_unifies_to_2023(self):
         self.assertEqual(_gain(bench='AMC')['bench'], 'AMC 2023')
@@ -314,6 +381,24 @@ class CandidateTest(unittest.TestCase):
         self.assertEqual([item['key'] for item in cands], [paper['key']])
         self.assertEqual(skipped, [])
 
+    def test_continued_pretrain_is_not_from_scratch(self):
+        self.assertFalse(blg.is_from_scratch_method('math continued pretrain'))
+        self.assertFalse(blg.is_from_scratch_method('continual pre-training (CMS)'))
+        self.assertTrue(blg.is_from_scratch_method('autoregressive pretrain from scratch'))
+        paper = _paper(key='arxiv:2402.03300')
+        models = [
+            blm.normalize_row({
+                'model': 'DeepSeekMath-7B',
+                'start_point': 'base',
+                'role': 'trained',
+                'method': 'math continued pretrain',
+                'eval_ood': ['MATH-500'],
+            }, paper),
+        ]
+        cands, skipped = blg.iter_candidates(models, {})
+        self.assertEqual([item['key'] for item in cands], [paper['key']])
+        self.assertEqual(skipped, [])
+
 
 class FillRefTest(unittest.TestCase):
     def test_fills_grpo_from_sibling(self):
@@ -351,6 +436,60 @@ class FillRefTest(unittest.TestCase):
         ])
         sc = next(row for row in rows if row['code'] == 'SC-GRPO')
         self.assertIsNone(sc['ref'])
+
+    def test_does_not_share_base_across_train_data(self):
+        rows = blg.fill_baselines([
+            _gain(
+                key='arxiv:2605.12969',
+                code='GRPO',
+                method='GRPO',
+                model='DeepSeek-R1-Distill-Qwen-1.5B',
+                bench='AIME 2025',
+                metric='avg@32',
+                source='Table 4 / §5.2',
+                train_data='DAPO-Math-17k',
+                score=22.7,
+                base=20.7,
+                ref=None,
+                ref_method='',
+            ),
+            _gain(
+                key='arxiv:2605.12969',
+                code='ConSPO',
+                method='ConSPO',
+                model='DeepSeek-R1-Distill-Qwen-1.5B',
+                bench='AIME 2025',
+                metric='avg@32',
+                source='Table 1 / §5.2',
+                train_data='DeepScaleR-Preview-Dataset',
+                score=26.7,
+                base=None,
+                ref=None,
+                ref_method='',
+            ),
+        ])
+        conspo = next(row for row in rows if row['code'] == 'ConSPO')
+        self.assertIsNone(conspo['base'])
+        self.assertIsNone(conspo['ref'])
+
+
+class AliasTest(unittest.TestCase):
+    def test_espo_qwen3_is_14b_base(self):
+        row = _gain(key='arxiv:2512.00499', model='Qwen3', bench='AIME 2025')
+        self.assertEqual(row['model'], 'Qwen3-14B-Base')
+
+    def test_dft_math_is_7b(self):
+        row = _gain(key='arxiv:2508.05629', model='Qwen2.5-Math', bench='AIME 2024')
+        self.assertEqual(row['model'], 'Qwen2.5-Math-7B')
+
+    def test_midtrain_method_keeps_stages(self):
+        row = _gain(
+            key='arxiv:2601.21343',
+            code='SFT+DrGRPO',
+            method='SFT+DrGRPO',
+            bench='GSM8K',
+        )
+        self.assertEqual(row['code'], 'SFT(think) 10k + RLMT 5k + RLPT')
 
 
 class WriteGuardTest(unittest.TestCase):
