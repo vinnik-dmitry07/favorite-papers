@@ -134,6 +134,7 @@ CODE_ALIASES = {
     'FLAN instruction tuning': 'FLAN',
     'Offline GRPO': 'Off-GRPO',
     'Online GRPO': 'GRPO',
+    'Online DAPO': 'DAPO',
     'Intuitor-Code': 'Intuitor-Code',
     '2-GRPO': '2-GRPO',
     'Critique-GRPO': 'Critique-GRPO',
@@ -762,6 +763,34 @@ def attach_train_data(rows: list[dict], model_rows: list[dict]) -> list[dict]:
     return out
 
 
+def inventory_teachers(model_rows: list[dict]) -> dict[str, list[str]]:
+    by_key: dict[str, list[str]] = defaultdict(list)
+    for rec in model_rows:
+        if rec.get('role') != 'teacher':
+            continue
+        name = rec.get('model') or ''
+        key = rec.get('key') or ''
+        if key and name and name not in by_key[key]:
+            by_key[key].append(name)
+    return by_key
+
+
+def attach_teacher(rows: list[dict], model_rows: list[dict]) -> list[dict]:
+    by_key = inventory_teachers(model_rows)
+    out = []
+    for row in rows:
+        item = dict(row)
+        item['teacher'] = ood.resolve_teacher(
+            item['key'],
+            item.get('code') or '',
+            item.get('method') or '',
+            explicit=item.get('teacher') or '',
+            inventory=by_key.get(item['key']) or [],
+        )
+        out.append(item)
+    return out
+
+
 def classify_row(row: dict, slot: dict | None) -> str:
     ids = (slot or {}).get('id') or set()
     oods = (slot or {}).get('ood') or set()
@@ -839,13 +868,18 @@ def coerce_pp_rows(rows: list[dict]) -> list[dict]:
             item[field] for field in ('base', 'ref', 'score')
             if item.get(field) is not None
         ]
-        mixed = bool(nums) and min(abs(v) for v in nums) <= 1.0 and max(abs(v) for v in nums) > 1.5
+        mixed = (
+            any(0 < abs(value) <= 1.0 for value in nums)
+            and any(abs(value) > 1.5 for value in nums)
+        )
         if mixed:
             print(
                 f'mixed-scale row {item["key"]} {item["model"]} {item["bench"]} '
                 f'left as-is',
                 flush=True,
             )
+        if item.get('unit') == 'pp' or mixed:
+            pass
         elif item.get('unit') == 'frac' or row_looks_fraction(item):
             for field in SCORE_FIELDS:
                 if item.get(field) is not None:
@@ -1038,17 +1072,39 @@ def split_row_groups(groups: list[list[dict]], cap: int = MAX_ROWS) -> list[tupl
     return out
 
 
-def code_cell(row: dict) -> str:
-    url = blm.paper_url(row['key'])
+def code_cell(row: dict, train_pairs: set[tuple[str, str]] | None = None) -> str:
+    label = row['code'] or row['method'] or row['key']
+    pair = (row['key'], row['model'])
+    if train_pairs and pair in train_pairs and row.get('train_data'):
+        tag = ood.short_train_tag(row['train_data'])
+        if tag:
+            label = f'{label} · {tag}'
     return blm.md_link(
-        row['code'] or row['method'] or row['key'],
-        url,
+        label,
+        blm.paper_url(row['key']),
         limit=METHOD_CELL_LIMIT,
     )
 
 
 def metric_cell(group: list[dict]) -> str:
     return blm.md_escape(group[0].get('metric') or '')
+
+
+def row_richness(row: dict) -> int:
+    return sum(
+        row.get(field) is not None
+        for field in ('base', 'ref', 'score', 'gain', 'gain_ref')
+    )
+
+
+def scores_disagree(left: dict, right: dict) -> bool:
+    for field in ('base', 'ref', 'score', 'gain', 'gain_ref'):
+        a, b = left.get(field), right.get(field)
+        if a is None or b is None:
+            continue
+        if abs(a - b) > 1e-6:
+            return True
+    return False
 
 
 def pivot_groups(rows: list[dict]) -> list[list[dict]]:
@@ -1060,9 +1116,37 @@ def pivot_groups(rows: list[dict]) -> list[list[dict]]:
             row['model'],
             row.get('metric') or '',
             row.get('train_data') or '',
-            row.get('source') or '',
         )].append(row)
-    return list(grouped.values())
+    out = []
+    for group in grouped.values():
+        by_bench: dict[str, dict] = {}
+        seen: dict[str, list[dict]] = defaultdict(list)
+        for row in group:
+            seen[row['bench']].append(row)
+            prev = by_bench.get(row['bench'])
+            if prev is None or row_richness(row) >= row_richness(prev):
+                by_bench[row['bench']] = row
+        for bench, items in seen.items():
+            kept = by_bench[bench]
+            if any(item is not kept and scores_disagree(item, kept) for item in items):
+                print(
+                    f'pivot source clash {kept["key"]} {kept["code"]} '
+                    f'{kept["model"]} {bench}',
+                    flush=True,
+                )
+        out.append(list(by_bench.values()))
+    return out
+
+
+def multi_train_pairs(rows: list[dict]) -> set[tuple[str, str]]:
+    seen: dict[tuple[str, str], set[str]] = defaultdict(set)
+    for row in rows:
+        train = row.get('train_data') or ''
+        if train:
+            seen[(row['key'], row['model'])].add(
+                ood.short_train_tag(train) or train,
+            )
+    return {pair for pair, trains in seen.items() if len(trains) > 1}
 
 
 def filled_benches(groups: list[list[dict]], cell_fn) -> list[str]:
@@ -1087,6 +1171,7 @@ def render_checkpoint_table(
     cell_fn,
     extra_headers: list[str] | None = None,
     extra_fn=None,
+    train_pairs: set[tuple[str, str]] | None = None,
 ) -> tuple[list[str], int, int]:
     extra_headers = extra_headers or []
     benches = filled_benches(groups, cell_fn)
@@ -1104,7 +1189,11 @@ def render_checkpoint_table(
     for group in groups:
         row0 = group[0]
         by_bench = {row['bench']: row for row in group}
-        cells = [code_cell(row0), paper_id(row0['key']), metric_cell(group)]
+        cells = [
+            code_cell(row0, train_pairs),
+            paper_id(row0['key']),
+            metric_cell(group),
+        ]
         if extra_fn:
             cells.append(extra_fn(group))
         for bench in benches:
@@ -1121,6 +1210,7 @@ def render_other_table(
     cell_fn,
     extra_headers: list[str] | None = None,
     extra_fn=None,
+    train_pairs: set[tuple[str, str]] | None = None,
 ) -> tuple[list[str], int, int]:
     extra_headers = extra_headers or []
     columns = []
@@ -1158,7 +1248,11 @@ def render_other_table(
                 continue
             used_groups.append(group)
             row0 = group[0]
-            cells = [code_cell(row0), paper_id(row0['key']), metric_cell(group)]
+            cells = [
+                code_cell(row0, train_pairs),
+                paper_id(row0['key']),
+                metric_cell(group),
+            ]
             if extra_fn:
                 cells.append(extra_fn(group))
             for col in chunk:
@@ -1194,7 +1288,7 @@ def starred_ref(row: dict) -> bool:
 
 
 def best_ckpt_mark(row: dict) -> bool:
-    return (row.get('ckpt_select') or '') == 'best-every-100'
+    return (row.get('ckpt_select') or '') in ood.EVAL_CKPT
 
 
 def base_cell(row: dict) -> str:
@@ -1247,6 +1341,7 @@ def render_section(
     skip_self_ref: bool = False,
 ) -> list[str]:
     usable = table_gain_rows(rows, skip_self_ref=skip_self_ref)
+    train_pairs = multi_train_pairs(usable)
     groups = [
         group for group in pivot_groups(usable)
         if group_has_cell(group, cell_fn)
@@ -1269,7 +1364,7 @@ def render_section(
         for suffix, chunk in split_row_groups(own[model]):
             title = model if not suffix else f'{model} ({suffix})'
             lines, n_rows, n_cols = render_checkpoint_table(
-                title, chunk, cell_fn, extra_headers, extra_fn,
+                title, chunk, cell_fn, extra_headers, extra_fn, train_pairs,
             )
             out.extend(lines)
             print_table_stats(heading, title, n_rows, n_cols)
@@ -1277,7 +1372,7 @@ def render_section(
         for suffix, chunk in split_row_groups(other):
             title = 'Other checkpoints' if not suffix else f'Other checkpoints ({suffix})'
             lines, n_rows, n_cols = render_other_table(
-                title, chunk, cell_fn, extra_headers, extra_fn,
+                title, chunk, cell_fn, extra_headers, extra_fn, train_pairs,
             )
             out.extend(lines)
             print_table_stats(heading, title, n_rows, n_cols)
@@ -1337,8 +1432,10 @@ def render_md(
         'Gain over the starting checkpoint',
         'Cell = method − the paper\'s starting checkpoint (pretrained, instruct, '
         'or distilled), percentage points, one decimal. '
-        '`avg@k` is not `pass@k`. A trailing `†` means the paper picked the '
-        'best checkpoint (ConSPO: eval every 100 steps). '
+        '`avg@k` is not `pass@k`. A trailing `†` means the paper picked a '
+        'checkpoint using eval benches (ConSPO: every 100 steps; 1-shot RLVR: '
+        'best mean on six benches including AIME25). Temporal OOD of the tasks '
+        'still holds; the final score is not an independent hold-out. '
         'Blank if that paper does not report the starting checkpoint on that bench. '
         'Numbers stay inside one experiment (same table, train data, and metric).',
         rows,
@@ -1350,7 +1447,9 @@ def render_md(
         'Cell = method − the paper\'s vanilla GRPO, or the nearest vanilla RLVR '
         'baseline when GRPO is absent (`vs` column). A trailing `*` means the '
         'reference is not vanilla GRPO (Dr. GRPO, DAPO, PPO, RLOO, REINFORCE++). '
-        '`†` is a best-every-100 checkpoint. The reference method itself is '
+        '`†` means a checkpoint chosen on eval benches (ConSPO every 100 '
+        'steps; 1-shot RLVR best mean on six benches including AIME25). '
+        'The reference method itself is '
         'omitted. Equal scores of different methods show `+0.0`. '
         'Blank if no RLVR baseline is reported on that bench. '
         'Same experiment only.',
@@ -1394,6 +1493,7 @@ def renormalize_rows(rows: list[dict], model_rows: list[dict]) -> list[dict]:
             out.append(item)
     out = ood.apply_gain_overrides(out)
     out = attach_train_data(out, model_rows)
+    out = attach_teacher(out, model_rows)
     out = coerce_pp_rows(out)
     out = attach_ood(out, model_rows)
     out = fill_baselines(out)
@@ -1528,6 +1628,7 @@ def main(argv: list[str] | None = None) -> int:
 
     rows = ood.apply_gain_overrides(rows)
     rows = attach_train_data(rows, model_rows)
+    rows = attach_teacher(rows, model_rows)
     rows = coerce_pp_rows(rows)
     rows = attach_ood(rows, model_rows)
     rows = fill_baselines(rows)

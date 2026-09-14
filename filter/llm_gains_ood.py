@@ -14,9 +14,27 @@ WEIGHT_GEO = 'arxiv:2606.23740'
 ESPO = 'arxiv:2512.00499'
 DFT = 'arxiv:2508.05629'
 MIDTRAIN = 'arxiv:2601.21343'
+HICRA = 'arxiv:2509.03646'
+ONESHOT = 'arxiv:2504.20571'
+OPRD_PAPER = 'arxiv:2606.06021'
+REVISIT_OPD = 'arxiv:2603.25562'
 
 OOD_BASES = ('temporal', 'rl_stage', 'id', 'unverified')
-CKPT_SELECT = ('final', 'best-every-100', 'unspecified')
+CKPT_SELECT = (
+    'final',
+    'last',
+    'best-every-100',
+    'validation-avg',
+    'mixed-avg-and-per-bench',
+    'per-bench-best',
+    'unspecified',
+)
+EVAL_CKPT = frozenset({
+    'best-every-100',
+    'validation-avg',
+    'mixed-avg-and-per-bench',
+    'per-bench-best',
+})
 
 HISTORICAL_BENCHES = frozenset({
     'AIME 2024',
@@ -67,12 +85,27 @@ PAPER_HMMT_MONTH = {
 
 PAPER_CKPT_SELECT = {
     CONSPO: 'best-every-100',
+    ONESHOT: 'validation-avg',
 }
 
 PAPER_MODEL_ALIASES = {
     (ESPO, 'Qwen3'): 'Qwen3-14B-Base',
     (DFT, 'Qwen2.5-Math'): 'Qwen2.5-Math-7B',
+    (HICRA, 'Llama-3.1-Instruct'): 'Llama-3.1-8B-Instruct',
 }
+
+CONSPO_CODE_ALIASES = {
+    'ConSPO-DAPO': 'ConSPO',
+    'DAPO-DAPO': 'DAPO',
+    'GRPO-DAPO': 'GRPO',
+}
+
+# Empty teacher is a hole, not “no teacher”.
+REQUIRE_TEACHER = frozenset({
+    OPRD_PAPER,
+    REVISIT_OPD,
+    WEIGHT_GEO,
+})
 
 # Teacher with unknown cutoff: student date is not enough.
 UNKNOWN_TEACHER = {
@@ -84,16 +117,48 @@ UNKNOWN_TEACHER = {
     }),
 }
 
-TEACHER_NAME = {
+PAPER_TEACHERS = {
     WEIGHT_GEO: 'DeepSeek-V4-Flash',
+    OPRD_PAPER: 'JustRL-Deepseek-1.5B',
+    REVISIT_OPD: 'OpenThinker3-7B',
 }
+
+PAPER_TEACHERS_BY_CODE = {
+    (REVISIT_OPD, 'top-K OPD-MT'): (
+        'OpenThinker3-7B; GiGPO-Qwen2.5-7B-Instruct-ALFWorld'
+    ),
+}
+
+TEACHER_NAME = PAPER_TEACHERS
+
+# Known train-data cutoffs. Unknown datasets must not fail closed
+# (ConSPO DeepScaleR would drop). Fill dates only when verified.
+DATASET_CUTOFFS = ()
 
 # (key, model, code, bench) -> temporal. Overrides the classifier.
 TEMPORAL_ADMITS = {
     (WEIGHT_GEO, 'Qwen3-4B-Instruct-2507', 'GRPO', 'AIME26'),
+    (WEIGHT_GEO, 'Qwen3-4B-Instruct-2507', 'DAPO', 'AIME26'),
     (CONSPO, 'Qwen3-4B-Base', 'ConSPO', 'AIME26'),
     (CONSPO, 'Qwen3-4B-Base', 'GRPO', 'AIME26'),
     (CONSPO, 'Qwen3-4B-Base', 'DAPO', 'AIME26'),
+}
+
+# Fold raw Online names before TEMPORAL_ADMITS lookup.
+ADMIT_CODE_ALIASES = {
+    'Online GRPO': 'GRPO',
+    'Online DAPO': 'DAPO',
+}
+
+# Already-scaled pp victims from the first coerce pass. Divide if > 1.5.
+# Each inner tuple is an AND of tokens; outer tuples are OR alternatives.
+UNSCALE_MODELS = {
+    (HICRA, 'AIME 2025'): (('llama-3.1', 'instruct'),),
+    (DFT, 'AIME 2024'): (
+        ('llama-3.2-3b',),
+        ('llama-3.1-8b-base',),
+        ('deepseekmath-7b',),
+    ),
 }
 
 DROP_ROWS = {
@@ -217,11 +282,41 @@ def parse_bench_span(text: str) -> date | None:
     return date(year, month, day)
 
 
+def split_teachers(teacher: str) -> list[str]:
+    return [part.strip() for part in (teacher or '').split(';') if part.strip()]
+
+
 def has_unknown_teacher(key: str, code: str, method: str, teacher: str) -> bool:
-    if teacher and not model_cutoff(teacher):
+    names = split_teachers(teacher)
+    if key in REQUIRE_TEACHER and not names:
         return True
+    for name in names:
+        if not model_cutoff(name):
+            return True
     blocked = UNKNOWN_TEACHER.get(key) or set()
     return (code or '') in blocked or (method or '') in blocked
+
+
+def dataset_cutoff(train_data: str) -> date | None:
+    text = (train_data or '').lower()
+    if not text:
+        return None
+    for prefix, cutoff in DATASET_CUTOFFS:
+        if prefix.lower() in text:
+            return cutoff
+    return None
+
+
+def admit_names(code: str, method: str) -> tuple[str, ...]:
+    names = []
+    for name in (code, method, code or method):
+        if not name or name in names:
+            continue
+        names.append(name)
+        aliased = ADMIT_CODE_ALIASES.get(name)
+        if aliased and aliased not in names:
+            names.append(aliased)
+    return tuple(names)
 
 
 def classify_ood_basis(
@@ -237,9 +332,9 @@ def classify_ood_basis(
     listed_ood: bool = False,
     hmmt_month: date | None = None,
 ) -> str:
-    admit = (key, model, code or method, bench)
-    if admit in TEMPORAL_ADMITS or (key, model, method, bench) in TEMPORAL_ADMITS:
-        return 'temporal'
+    for name in admit_names(code, method):
+        if (key, model, name, bench) in TEMPORAL_ADMITS:
+            return 'temporal'
     if bench in HISTORICAL_BENCHES:
         if listed_id:
             return 'id'
@@ -287,30 +382,106 @@ def chain_cutoff(
     student = model_cutoff(model)
     if student:
         dates.append(student)
-    if teacher:
-        taught = model_cutoff(teacher)
+    for name in split_teachers(teacher):
+        taught = model_cutoff(name)
         if taught:
             dates.append(taught)
-        elif teacher:
+        elif name:
             return None
+    trained = dataset_cutoff(train_data)
+    if trained:
+        dates.append(trained)
     if not dates:
         return None
     return max(dates)
 
 
 def default_ckpt_select(key: str, explicit: str = '') -> str:
-    if explicit in CKPT_SELECT:
+    if explicit and explicit != 'unspecified':
         return explicit
-    return PAPER_CKPT_SELECT.get(key, 'unspecified')
+    return PAPER_CKPT_SELECT.get(key, explicit or 'unspecified')
+
+
+def resolve_teacher(
+    key: str,
+    code: str,
+    method: str,
+    explicit: str = '',
+    inventory: list[str] | None = None,
+) -> str:
+    if explicit:
+        return explicit
+    named = PAPER_TEACHERS_BY_CODE.get((key, code or ''))
+    if named:
+        return named
+    named = PAPER_TEACHERS_BY_CODE.get((key, method or ''))
+    if named:
+        return named
+    if key in PAPER_TEACHERS:
+        return PAPER_TEACHERS[key]
+    names = []
+    for item in inventory or []:
+        if item and item not in names:
+            names.append(item)
+    if names:
+        return '; '.join(names)
+    blocked = UNKNOWN_TEACHER.get(key)
+    if blocked and ((code in blocked) or (method in blocked)):
+        return PAPER_TEACHERS.get(key, '')
+    return ''
 
 
 def default_teacher(key: str, code: str, method: str, explicit: str = '') -> str:
-    if explicit:
-        return explicit
-    blocked = UNKNOWN_TEACHER.get(key)
-    if blocked and ((code in blocked) or (method in blocked)):
-        return TEACHER_NAME.get(key, '')
-    return ''
+    return resolve_teacher(key, code, method, explicit=explicit)
+
+
+def short_train_tag(text: str) -> str:
+    blob = (text or '').lower()
+    if 'dapo-math' in blob or 'dapo math' in blob:
+        return 'DAPO-Math'
+    if 'deepscaler' in blob:
+        return 'DeepScaleR'
+    compact = (text or '').split('(')[0].strip()
+    return compact[:18] if compact else ''
+
+
+def should_unscale(row: dict) -> bool:
+    specs = UNSCALE_MODELS.get((row.get('key'), row.get('bench')))
+    if not specs:
+        return False
+    model = (row.get('model') or '').lower()
+    return any(all(token in model for token in tokens) for tokens in specs)
+
+
+def unscale_row(row: dict) -> dict:
+    item = dict(row)
+    if not should_unscale(item):
+        return item
+    nums = [
+        item[field]
+        for field in ('base', 'ref', 'score')
+        if item.get(field) is not None
+    ]
+    if not nums or max(abs(value) for value in nums) <= 1.5:
+        return item
+    for field in ('base', 'ref', 'score', 'gain', 'gain_ref'):
+        value = item.get(field)
+        if value is not None and abs(value) > 1.5:
+            item[field] = value / 100.0
+    item['unit'] = 'pp'
+    return item
+
+
+def alias_conspo_code(row: dict) -> dict:
+    item = dict(row)
+    if item.get('key') != CONSPO:
+        return item
+    chosen = item.get('code') or item.get('method') or ''
+    aliased = CONSPO_CODE_ALIASES.get(chosen)
+    if aliased:
+        item['code'] = aliased
+        item['method'] = aliased
+    return item
 
 
 def alias_paper_model(key: str, model: str) -> str:
@@ -336,7 +507,7 @@ def apply_gain_overrides(rows: list[dict]) -> list[dict]:
     out = []
     have = set()
     for row in rows:
-        item = dict(row)
+        item = alias_conspo_code(unscale_row(dict(row)))
         if item.get('key') == CONSPO:
             item['train_data'] = item.get('train_data') or conspo_train_data(
                 item.get('source') or '',
@@ -357,7 +528,45 @@ def apply_gain_overrides(rows: list[dict]) -> list[dict]:
         ))
     out.extend(_conspo_table1_rows(have))
     out.extend(_conspo_extra_rows(have))
+    out.extend(_weight_geo_dapo_rows(have))
     return out
+
+
+def _weight_geo_dapo_rows(have: set[tuple]) -> list[dict]:
+    model = 'Qwen3-4B-Instruct-2507'
+    source = 'Table 2 (Online DAPO)'
+    train = (
+        'DeepScaleR prompts (on-policy; Table 2 adapters, '
+        'same protocol as Online GRPO)'
+    )
+    pair = (WEIGHT_GEO, model, 'DAPO', 'AIME26', train, source)
+    alt = (WEIGHT_GEO, model, 'DAPO', 'AIME26')
+    if pair in have or any(
+        item[:4] == alt for item in have
+    ):
+        return []
+    return [{
+        'key': WEIGHT_GEO,
+        'code': 'DAPO',
+        'method': 'DAPO',
+        'model': model,
+        'bench': 'AIME26',
+        'metric': 'pass@1',
+        'base': 16.7,
+        'ref': 20.0,
+        'ref_method': 'GRPO',
+        'score': 16.7,
+        'gain': None,
+        'gain_ref': None,
+        'source': source,
+        'train_data': train,
+        'teacher': '',
+        'unit': 'pp',
+        'bench_span': '',
+        'ckpt_select': 'unspecified',
+        'ood_basis': '',
+        'ood': False,
+    }]
 
 
 def _conspo_table1_rows(have: set[tuple]) -> list[dict]:

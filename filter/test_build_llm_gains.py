@@ -7,12 +7,14 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 FILTER_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(FILTER_DIR))
 
 import build_llm_gains as blg
 import build_llm_models as blm
+import llm_gains_ood as ood
 from llm_reliability import SHAO_MATH500_GT_PP, SHAO_MATH500_RANDOM_PP
 
 
@@ -76,6 +78,159 @@ class DeltaTest(unittest.TestCase):
         self.assertAlmostEqual(rows[0]['base'], 30.0)
         self.assertAlmostEqual(rows[0]['score'], 60.0)
         self.assertAlmostEqual(rows[1]['ref'], 15.0)
+
+    def test_explicit_pp_does_not_scale(self):
+        rows = blg.coerce_pp_rows([
+            _gain(
+                key='arxiv:2509.03646',
+                model='Llama-3.1-8B-Instruct',
+                bench='AIME 2025',
+                code='HICRA',
+                method='HICRA',
+                base=0.6,
+                ref=0.5,
+                score=0.8,
+                unit='pp',
+            ),
+        ])
+        self.assertAlmostEqual(rows[0]['base'], 0.6)
+        self.assertAlmostEqual(rows[0]['score'], 0.8)
+        self.assertEqual(blg.format_delta(0.5, 0.6), '-0.1')
+        self.assertEqual(blg.format_delta(0.8, 0.6), '+0.2')
+        self.assertEqual(blg.format_delta(0.8, 0.5), '+0.3')
+
+    def test_dft_pp_stays_sub_percent(self):
+        rows = blg.coerce_pp_rows([
+            _gain(
+                key='arxiv:2508.05629',
+                model='Llama-3.2-3B',
+                bench='AIME 2024',
+                base=0.41,
+                score=0.83,
+                unit='pp',
+            ),
+        ])
+        self.assertAlmostEqual(rows[0]['base'], 0.41)
+        self.assertAlmostEqual(rows[0]['score'], 0.83)
+
+    def test_unscale_already_multiplied_hicra(self):
+        row = _gain(
+            key='arxiv:2509.03646',
+            model='Llama-3.1-8B-Instruct',
+            bench='AIME 2025',
+            code='HICRA',
+            method='HICRA',
+            base=60.0,
+            ref=50.0,
+            score=80.0,
+            unit='pp',
+        )
+        out = ood.apply_gain_overrides([row])
+        hit = next(item for item in out if item['code'] == 'HICRA')
+        self.assertAlmostEqual(hit['base'], 0.6)
+        self.assertAlmostEqual(hit['ref'], 0.5)
+        self.assertAlmostEqual(hit['score'], 0.8)
+
+    def test_renormalize_twice_leaves_hicra(self):
+        raw = {
+            'key': 'arxiv:2509.03646',
+            'code': 'HICRA',
+            'method': 'HICRA',
+            'model': 'Llama-3.1-8B-Instruct',
+            'bench': 'AIME 2025',
+            'metric': 'avg@32',
+            'base': 60.0,
+            'ref': 50.0,
+            'score': 80.0,
+            'unit': 'pp',
+        }
+        once = blg.renormalize_rows([raw], [])
+        twice = blg.renormalize_rows(once, [])
+        first = next(row for row in once if row['code'] == 'HICRA')
+        second = next(row for row in twice if row['code'] == 'HICRA')
+        self.assertAlmostEqual(first['base'], 0.6)
+        self.assertAlmostEqual(first['ref'], 0.5)
+        self.assertAlmostEqual(first['score'], 0.8)
+        self.assertAlmostEqual(second['base'], first['base'])
+        self.assertAlmostEqual(second['ref'], first['ref'])
+        self.assertAlmostEqual(second['score'], first['score'])
+
+    def test_qwen_hicra_aime25_stays_thirteen(self):
+        row = _gain(
+            key='arxiv:2509.03646',
+            model='Qwen2.5-7B-Base',
+            bench='AIME 2025',
+            code='HICRA',
+            method='HICRA',
+            base=1.7,
+            ref=11.4,
+            score=14.8,
+            unit='pp',
+        )
+        out = ood.apply_gain_overrides(blg.coerce_pp_rows([row]))
+        hit = next(
+            item for item in out
+            if item['code'] == 'HICRA' and item['model'] == 'Qwen2.5-7B-Base'
+        )
+        self.assertAlmostEqual(blg.delta_over_base(hit), 13.1)
+        self.assertAlmostEqual(blg.delta_over_ref(hit), 3.4)
+
+    def test_pp_mixed_scale_warns(self):
+        row = _gain(
+            key='arxiv:2509.03646',
+            model='Llama-3.1-8B-Instruct',
+            bench='AIME 2025',
+            base=60.0,
+            ref=0.5,
+            score=0.8,
+            unit='pp',
+        )
+        with patch('builtins.print') as printed:
+            out = blg.coerce_pp_rows([row])
+        self.assertAlmostEqual(out[0]['base'], 60.0)
+        self.assertAlmostEqual(out[0]['score'], 0.8)
+        self.assertTrue(any(
+            'mixed-scale' in ' '.join(str(arg) for arg in call.args)
+            for call in printed.call_args_list
+        ))
+
+    def test_zero_base_is_not_mixed_scale(self):
+        row = _gain(base=0.0, ref=None, score=16.7, unit='pp')
+        with patch('builtins.print') as printed:
+            out = blg.coerce_pp_rows([row])
+        self.assertAlmostEqual(out[0]['score'], 16.7)
+        self.assertFalse(any(
+            'mixed-scale' in ' '.join(str(arg) for arg in call.args)
+            for call in printed.call_args_list
+        ))
+
+    def test_unscale_skips_lone_gain(self):
+        row = {
+            'key': 'arxiv:2509.03646',
+            'model': 'Llama-3.1-8B-Instruct',
+            'bench': 'AIME 2025',
+            'base': 0.6,
+            'ref': 0.5,
+            'score': 0.8,
+            'gain': 20.0,
+        }
+        out = ood.unscale_row(row)
+        self.assertAlmostEqual(out['base'], 0.6)
+        self.assertAlmostEqual(out['gain'], 20.0)
+
+    def test_unscale_leaves_small_gain(self):
+        row = {
+            'key': 'arxiv:2509.03646',
+            'model': 'Llama-3.1-8B-Instruct',
+            'bench': 'AIME 2025',
+            'base': 60.0,
+            'ref': 50.0,
+            'score': 80.0,
+            'gain': 0.2,
+        }
+        out = ood.unscale_row(row)
+        self.assertAlmostEqual(out['base'], 0.6)
+        self.assertAlmostEqual(out['gain'], 0.2)
 
 
 class RefMarkerTest(unittest.TestCase):
@@ -490,6 +645,259 @@ class AliasTest(unittest.TestCase):
             bench='GSM8K',
         )
         self.assertEqual(row['code'], 'SFT(think) 10k + RLMT 5k + RLPT')
+
+    def test_hicra_llama_is_8b_instruct(self):
+        row = _gain(
+            key='arxiv:2509.03646',
+            model='Llama-3.1-Instruct',
+            bench='AIME 2025',
+        )
+        self.assertEqual(row['model'], 'Llama-3.1-8B-Instruct')
+
+
+class TeacherChainTest(unittest.TestCase):
+    def test_opd_teacher_makes_aime25_unverified(self):
+        row = _gain(
+            key='arxiv:2606.06021',
+            code='OPD-top1',
+            method='OPD-top1',
+            model='DeepSeek-R1-Distill-Qwen-1.5B',
+            bench='AIME 2025',
+            score=33.5,
+            base=21.9,
+            ood=False,
+        )
+        rows = blg.attach_teacher([row], [])
+        self.assertEqual(rows[0]['teacher'], 'JustRL-Deepseek-1.5B')
+        rows = blg.attach_ood(rows, [])
+        self.assertEqual(rows[0]['ood_basis'], 'unverified')
+        self.assertFalse(rows[0]['ood'])
+
+    def test_revisit_opd_teacher_unverified(self):
+        row = _gain(
+            key='arxiv:2603.25562',
+            code='OPD',
+            method='sampled-token OPD',
+            model='Qwen2.5-7B-Instruct',
+            bench='AIME 2025',
+            score=16.7,
+            base=0.0,
+            ood=False,
+        )
+        rows = blg.attach_ood(blg.attach_teacher([row], []), [])
+        self.assertEqual(rows[0]['teacher'], 'OpenThinker3-7B')
+        self.assertEqual(rows[0]['ood_basis'], 'unverified')
+
+    def test_chain_cutoff_uses_unknown_teacher(self):
+        self.assertIsNone(ood.chain_cutoff(
+            'DeepSeek-R1-Distill-Qwen-1.5B',
+            'JustRL-Deepseek-1.5B',
+            'DAPO-Math-17K',
+            'arxiv:2606.06021',
+            'OPD-top1',
+            'OPD-top1',
+        ))
+        self.assertIsNotNone(ood.chain_cutoff(
+            'Qwen2.5-Math-7B',
+            '',
+            '',
+            'arxiv:2501.00001',
+            'GRPO',
+            'GRPO',
+        ))
+
+
+class ConspoDisplayTest(unittest.TestCase):
+    def test_aliases_merge_and_label_train_data(self):
+        shared = dict(
+            key='arxiv:2605.12969',
+            model='DeepSeek-R1-Distill-Qwen-1.5B',
+            bench='AIME 2025',
+            metric='avg@32',
+            ckpt_select='best-every-100',
+        )
+        rows = ood.apply_gain_overrides([
+            _gain(
+                **shared,
+                code='ConSPO',
+                method='ConSPO',
+                source='Table 1 / §5.2',
+                train_data='DeepScaleR-Preview-Dataset',
+                base=20.7,
+                score=26.7,
+                ref=22.9,
+                ref_method='GRPO',
+            ),
+            _gain(
+                **shared,
+                code='ConSPO',
+                method='ConSPO',
+                source='Table 4 / §5.2',
+                train_data='DAPO-Math-17k',
+                base=20.7,
+                score=25.8,
+                ref=22.7,
+                ref_method='GRPO',
+            ),
+            _gain(
+                **shared,
+                code='ConSPO-DAPO',
+                method='ConSPO (DAPO-Math-17k)',
+                source='Table 4 / §5.2',
+                train_data='DAPO-Math-17k',
+                base=20.7,
+                score=25.8,
+                ref=22.7,
+                ref_method='GRPO',
+            ),
+            _gain(
+                **shared,
+                code='GRPO-DAPO',
+                method='GRPO (DAPO-Math-17k)',
+                source='Table 4 / §5.2',
+                train_data='DAPO-Math-17k',
+                base=20.7,
+                score=22.7,
+                ref=22.7,
+                ref_method='GRPO',
+            ),
+            _gain(
+                **shared,
+                code='GRPO',
+                method='GRPO',
+                source='Table 4 / §5.2',
+                train_data='DAPO-Math-17k',
+                base=20.7,
+                score=22.7,
+                ref=22.7,
+                ref_method='GRPO',
+            ),
+        ])
+        rows = blg.dedupe_rows(rows)
+        codes = {
+            (row['code'], row.get('train_data') or '')
+            for row in rows
+            if row['bench'] == 'AIME 2025' and row['model'].endswith('1.5B')
+        }
+        self.assertIn(('ConSPO', 'DeepScaleR-Preview-Dataset'), codes)
+        self.assertIn(('ConSPO', 'DAPO-Math-17k'), codes)
+        self.assertNotIn('ConSPO-DAPO', {code for code, _ in codes})
+        self.assertNotIn('GRPO-DAPO', {code for code, _ in codes})
+        grpo = next(
+            row for row in rows
+            if row['code'] == 'GRPO'
+            and row.get('train_data') == 'DAPO-Math-17k'
+            and row['bench'] == 'AIME 2025'
+        )
+        self.assertTrue(blg.is_self_ref(grpo))
+        markdown = blg.render_md(rows, [_paper(key='arxiv:2605.12969')], [])
+        self.assertNotIn('ConSPO-DAPO', markdown)
+        self.assertNotIn('GRPO-DAPO', markdown)
+        self.assertIn('DeepScaleR', markdown)
+        self.assertIn('DAPO-Math', markdown)
+        grpo_section = markdown.split('## Gain over GRPO', 1)[1]
+        self.assertNotIn('[GRPO](', grpo_section.split('## Not applicable', 1)[0])
+
+    def test_two_grpo_dapo_other_paper_kept(self):
+        row = _gain(
+            key='arxiv:2510.00977',
+            code='2-GRPO-DAPO',
+            method='2-GRPO-DAPO',
+            bench='AIME 2025',
+        )
+        self.assertEqual(row['code'], '2-GRPO-DAPO')
+
+    def test_dapo_code_not_stolen_by_conspo_method(self):
+        row = ood.alias_conspo_code({
+            'key': ood.CONSPO,
+            'code': 'DAPO',
+            'method': 'ConSPO-DAPO',
+        })
+        self.assertEqual(row['code'], 'DAPO')
+        self.assertEqual(row['method'], 'ConSPO-DAPO')
+
+
+class CkptAndAdmitTest(unittest.TestCase):
+    def test_oneshot_validation_avg_gets_dagger(self):
+        row = _gain(
+            key='arxiv:2504.20571',
+            code='1-shot RLVR',
+            method='1-shot RLVR (GRPO)',
+            model='Qwen2.5-Math-7B',
+            bench='AIME 2025',
+            metric='avg@8',
+            base=6.7,
+            score=10.8,
+            ckpt_select='unspecified',
+        )
+        self.assertEqual(row['ckpt_select'], 'validation-avg')
+        self.assertTrue(blg.best_ckpt_mark(row))
+        markdown = blg.render_md([row], [_paper(key='arxiv:2504.20571')], [])
+        self.assertIn('+4.1†', markdown)
+
+    def test_online_dapo_is_temporal(self):
+        row = _gain(
+            key='arxiv:2606.23740',
+            code='DAPO',
+            method='Online DAPO',
+            model='Qwen3-4B-Instruct-2507',
+            bench='AIME26',
+            base=16.7,
+            ref=20.0,
+            ref_method='GRPO',
+            score=16.7,
+            ood=False,
+        )
+        rows = blg.attach_ood([row], [])
+        self.assertEqual(rows[0]['ood_basis'], 'temporal')
+        self.assertEqual(blg.format_gain_cell(blg.delta_over_base(rows[0])), '+0.0')
+        self.assertEqual(blg.format_gain_cell(blg.delta_over_ref(rows[0])), '-3.3')
+
+    def test_online_dapo_raw_name_is_temporal(self):
+        self.assertEqual(
+            ood.classify_ood_basis(
+                key='arxiv:2606.23740',
+                model='Qwen3-4B-Instruct-2507',
+                bench='AIME26',
+                code='Online DAPO',
+                method='Online DAPO',
+            ),
+            'temporal',
+        )
+
+    def test_explicit_ckpt_not_overwritten(self):
+        self.assertEqual(ood.default_ckpt_select(ood.ONESHOT, 'final'), 'final')
+        self.assertEqual(ood.default_ckpt_select(ood.ONESHOT, 'best'), 'best')
+        self.assertEqual(
+            ood.default_ckpt_select(ood.ONESHOT, 'unspecified'),
+            'validation-avg',
+        )
+        self.assertEqual(
+            ood.default_ckpt_select(ood.ONESHOT, ''),
+            'validation-avg',
+        )
+
+
+class PivotGroupTest(unittest.TestCase):
+    def test_richness_tie_keeps_later_row(self):
+        rows = [
+            _gain(score=1.0, source='Table 1'),
+            _gain(score=2.0, source='Table 2'),
+        ]
+        groups = blg.pivot_groups(rows)
+        self.assertAlmostEqual(groups[0][0]['score'], 2.0)
+
+    def test_source_clash_warns(self):
+        rows = [
+            _gain(score=1.0, base=0.0, source='Table 1'),
+            _gain(score=2.0, base=0.0, source='Table 2'),
+        ]
+        with patch('builtins.print') as printed:
+            blg.pivot_groups(rows)
+        self.assertTrue(any(
+            'pivot source clash' in ' '.join(str(arg) for arg in call.args)
+            for call in printed.call_args_list
+        ))
 
 
 class WriteGuardTest(unittest.TestCase):

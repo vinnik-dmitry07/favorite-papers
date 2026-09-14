@@ -4,34 +4,28 @@ Per-paper numbers from `filter/fulltext/*.md`, stored in `filter/llm_gains.jsonl
 
 ## Summary
 
-- Papers with at least one temporal OOD number: **10**
-- Temporal gain cells vs starting checkpoint: **70**
-- Temporal gain cells vs GRPO / nearest RLVR: **46**
+- Papers with at least one temporal OOD number: **8**
+- Temporal gain cells vs starting checkpoint: **59**
+- Temporal gain cells vs GRPO / nearest RLVR: **40**
 - From-scratch papers (no starting checkpoint): **13**
 
 ## Gain over the starting checkpoint
 
-Cell = method − the paper's starting checkpoint (pretrained, instruct, or distilled), percentage points, one decimal. `avg@k` is not `pass@k`. A trailing `†` means the paper picked the best checkpoint (ConSPO: eval every 100 steps). Blank if that paper does not report the starting checkpoint on that bench. Numbers stay inside one experiment (same table, train data, and metric).
+Cell = method − the paper's starting checkpoint (pretrained, instruct, or distilled), percentage points, one decimal. `avg@k` is not `pass@k`. A trailing `†` means the paper picked a checkpoint using eval benches (ConSPO: every 100 steps; 1-shot RLVR: best mean on six benches including AIME25). Temporal OOD of the tasks still holds; the final score is not an independent hold-out. Blank if that paper does not report the starting checkpoint on that bench. Numbers stay inside one experiment (same table, train data, and metric).
 
 ### DeepSeek-R1-Distill-Qwen-1.5B
 
 | method | id | metric | AIME25 | AIME26 | HMMT25 |
 |---|---|---|---|---|---|
-| [OPD-top1](https://arxiv.org/abs/2606.06021) | 2606.06021 | avg@16 | +11.6 |  |  |
-| [OPD-top16](https://arxiv.org/abs/2606.06021) | 2606.06021 | avg@16 | +12.1 |  |  |
-| [OPRD](https://arxiv.org/abs/2606.06021) | 2606.06021 | avg@16 | +12.7 |  |  |
-| [ConSPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | +5.1† | +10.9† |  |
-| [ConSPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | +6.0† | +10.0† | +5.2† |
-| [ConSPO-DAPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | +5.1† | +10.9† | +4.5† |
-| [DAPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | +1.7† | +5.7† |  |
-| [DAPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | +2.2† | +6.9† | +3.8† |
-| [DAPO-DAPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | +1.7† | +5.7† | +3.1† |
-| [GRPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | +2.0† | +7.7† |  |
-| [GRPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | +2.2† | +6.5† | +2.0† |
-| [GRPO-DAPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | +2.0† | +7.7† | +3.4† |
+| [ConSPO · DAPO-Math](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | +5.1† | +10.9† | +4.5† |
+| [ConSPO · DeepScaleR](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | +6.0† | +10.0† | +5.2† |
+| [DAPO · DAPO-Math](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | +1.7† | +5.7† | +3.1† |
+| [DAPO · DeepScaleR](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | +2.2† | +6.9† | +3.8† |
+| [GRPO · DAPO-Math](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | +2.0† | +7.7† | +3.4† |
+| [GRPO · DeepScaleR](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | +2.2† | +6.5† | +2.0† |
 | [SR-GRPO](https://arxiv.org/abs/2512.02807) | 2512.02807 | pass@1 | +6.7 |  |  |
-| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@64 | +0.2 |  |  |
-| [GRPO](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@64 | +3.9 |  |  |
+| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@64 | +0.2† |  |  |
+| [GRPO](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@64 | +3.9† |  |  |
 
 ### Qwen2.5-Math-7B
 
@@ -43,9 +37,9 @@ Cell = method − the paper's starting checkpoint (pretrained, instruct, or dist
 | [2-GRPO-DAPO](https://arxiv.org/abs/2510.00977) | 2510.00977 | Mean@32 | +9.6 |
 | [GRPO](https://arxiv.org/abs/2510.00977) | 2510.00977 | Mean@32 | +8.2 |
 | [GRPO-DAPO](https://arxiv.org/abs/2510.00977) | 2510.00977 | Mean@32 | +9.3 |
-| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | +4.1 |
-| [GRPO](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | +7.9 |
-| [GRPO-format](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | +0.0 |
+| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | +4.1† |
+| [GRPO](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | +7.9† |
+| [GRPO-format](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | +0.0† |
 
 ### DeepSeek-R1-Distill-Qwen-7B
 
@@ -66,56 +60,36 @@ Cell = method − the paper's starting checkpoint (pretrained, instruct, or dist
 | [DAPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | +4.4† |  |  |
 | [GRPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | +5.0† |  |  |
 
-### Qwen2.5-7B-Instruct
-
-| method | id | metric | AIME25 |
-|---|---|---|---|
-| [OPD](https://arxiv.org/abs/2603.25562) | 2603.25562 | pass@1 | +16.7 |
-| [top-K OPD](https://arxiv.org/abs/2603.25562) | 2603.25562 | pass@1 | +26.7 |
-| [top-K OPD-MT](https://arxiv.org/abs/2603.25562) | 2603.25562 | pass@1 | +16.7 |
-
 ### Qwen2.5-Math-1.5B
 
 | method | id | metric | AIME25 |
 |---|---|---|---|
-| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | +2.5 |
-| [GRPO](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | +3.7 |
-| [GRPO-format](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | +0.8 |
+| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | +2.5† |
+| [GRPO](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | +3.7† |
+| [GRPO-format](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | +0.8† |
 
 ### Other checkpoints
 
-| method | id | metric | Llama-3.1-Instruct · AIME25 | Llama-3.2-3B-Instruct · AIME25 | Qwen2.5-1.5B · AIME25 | Qwen2.5-7B-Base · AIME25 | Qwen2.5-Math-1.5B-Instruct · AIME25 | Qwen2.5-1.5B-Instruct · AIME25 | Qwen3-4B-Base · AIME26 | Qwen3-4B-Instruct-2507 · AIME26 |
+| method | id | metric | Llama-3.1-8B-Instruct · AIME25 | Llama-3.2-3B-Instruct · AIME25 | Qwen2.5-1.5B · AIME25 | Qwen2.5-7B-Base · AIME25 | Qwen2.5-Math-1.5B-Instruct · AIME25 | Qwen3-4B-Instruct-2507 · AIME26 | Qwen2.5-1.5B-Instruct · AIME25 | Qwen3-4B-Base · AIME26 |
 |---|---|---|---|---|---|---|---|---|---|---|
-| [GRPO](https://arxiv.org/abs/2606.23740) | 2606.23740 | pass@1 |  |  |  |  |  |  |  | +3.3 |
-| [ConSPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 |  |  |  |  |  |  | +8.0† |  |
-| [SR-GRPO](https://arxiv.org/abs/2512.02807) | 2512.02807 | pass@1 |  |  |  |  |  | +10.0 |  |  |
-| [GRPO](https://arxiv.org/abs/2509.03646) | 2509.03646 | avg@32 | -10.0 |  |  |  |  |  |  |  |
-| [HICRA](https://arxiv.org/abs/2509.03646) | 2509.03646 | avg@32 | +20.0 |  |  |  |  |  |  |  |
+| [DAPO](https://arxiv.org/abs/2606.23740) | 2606.23740 | pass@1 |  |  |  |  |  | +0.0 |  |  |
+| [GRPO](https://arxiv.org/abs/2606.23740) | 2606.23740 | pass@1 |  |  |  |  |  | +3.3 |  |  |
+| [ConSPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 |  |  |  |  |  |  |  | +8.0† |
+| [SR-GRPO](https://arxiv.org/abs/2512.02807) | 2512.02807 | pass@1 |  |  |  |  |  |  | +10.0 |  |
+| [GRPO](https://arxiv.org/abs/2509.03646) | 2509.03646 | avg@32 | -0.1 |  |  |  |  |  |  |  |
+| [HICRA](https://arxiv.org/abs/2509.03646) | 2509.03646 | avg@32 | +0.2 |  |  |  |  |  |  |  |
 | [GRPO](https://arxiv.org/abs/2509.03646) | 2509.03646 | avg@32 |  |  |  | +9.7 |  |  |  |  |
 | [HICRA](https://arxiv.org/abs/2509.03646) | 2509.03646 | avg@32 |  |  |  | +13.1 |  |  |  |  |
-| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 |  | -0.5 |  |  |  |  |  |  |
-| [GRPO](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 |  | -0.9 |  |  |  |  |  |  |
-| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 |  |  | -1.3 |  |  |  |  |  |
-| [GRPO](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 |  |  | -0.9 |  |  |  |  |  |
-| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 |  |  |  |  | +5.4 |  |  |  |
-| [GRPO](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 |  |  |  |  | +5.4 |  |  |  |
+| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 |  | -0.5† |  |  |  |  |  |  |
+| [GRPO](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 |  | -0.9† |  |  |  |  |  |  |
+| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 |  |  | -1.3† |  |  |  |  |  |
+| [GRPO](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 |  |  | -0.9† |  |  |  |  |  |
+| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 |  |  |  |  | +5.4† |  |  |  |
+| [GRPO](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 |  |  |  |  | +5.4† |  |  |  |
 
 ## Gain over GRPO
 
-Cell = method − the paper's vanilla GRPO, or the nearest vanilla RLVR baseline when GRPO is absent (`vs` column). A trailing `*` means the reference is not vanilla GRPO (Dr. GRPO, DAPO, PPO, RLOO, REINFORCE++). `†` is a best-every-100 checkpoint. The reference method itself is omitted. Equal scores of different methods show `+0.0`. Blank if no RLVR baseline is reported on that bench. Same experiment only.
-
-### DeepSeek-R1-Distill-Qwen-1.5B
-
-| method | id | metric | vs | AIME25 | AIME26 | HMMT25 |
-|---|---|---|---|---|---|---|
-| [ConSPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | GRPO | +3.1† | +3.2† |  |
-| [ConSPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | GRPO | +3.8† | +3.5† | +3.2† |
-| [ConSPO-DAPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | GRPO | +3.1† | +3.2† | +1.1† |
-| [DAPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | GRPO | -0.3† | -2.0† |  |
-| [DAPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | GRPO | +0.0† | +0.4† | +1.8† |
-| [DAPO-DAPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | GRPO | -0.3† | -2.0† | -0.3† |
-| [GRPO-DAPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | GRPO | +0.0† | +0.0† | +0.0† |
-| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@64 | GRPO | -3.7 |  |  |
+Cell = method − the paper's vanilla GRPO, or the nearest vanilla RLVR baseline when GRPO is absent (`vs` column). A trailing `*` means the reference is not vanilla GRPO (Dr. GRPO, DAPO, PPO, RLOO, REINFORCE++). `†` means a checkpoint chosen on eval benches (ConSPO every 100 steps; 1-shot RLVR best mean on six benches including AIME25). The reference method itself is omitted. Equal scores of different methods show `+0.0`. Blank if no RLVR baseline is reported on that bench. Same experiment only.
 
 ### Qwen2.5-Math-7B
 
@@ -126,8 +100,18 @@ Cell = method − the paper's vanilla GRPO, or the nearest vanilla RLVR baseline
 | [2-GRPO+RS-DAPO](https://arxiv.org/abs/2510.00977) | 2510.00977 | Mean@32 | GRPO | +2.4 |
 | [2-GRPO-DAPO](https://arxiv.org/abs/2510.00977) | 2510.00977 | Mean@32 | GRPO | +0.3 |
 | [GRPO-DAPO](https://arxiv.org/abs/2510.00977) | 2510.00977 | Mean@32 | GRPO | +0.0 |
-| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | GRPO | -3.8 |
-| [GRPO-format](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | GRPO | -7.9 |
+| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | GRPO | -3.8† |
+| [GRPO-format](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | GRPO | -7.9† |
+
+### DeepSeek-R1-Distill-Qwen-1.5B
+
+| method | id | metric | vs | AIME25 | AIME26 | HMMT25 |
+|---|---|---|---|---|---|---|
+| [ConSPO · DAPO-Math](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | GRPO | +3.1† | +3.2† | +1.1† |
+| [ConSPO · DeepScaleR](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | GRPO | +3.8† | +3.5† | +3.2† |
+| [DAPO · DAPO-Math](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | GRPO | -0.3† | -2.0† | -0.3† |
+| [DAPO · DeepScaleR](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | GRPO | +0.0† | +0.4† | +1.8† |
+| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@64 | GRPO | -3.7† |  |  |
 
 ### DeepSeek-R1-Distill-Qwen-7B
 
@@ -138,21 +122,27 @@ Cell = method − the paper's vanilla GRPO, or the nearest vanilla RLVR baseline
 | [Self-Verification](https://arxiv.org/abs/2602.09000) | 2602.09000 | pass@1 | GRPO | +0.6 |  |
 | [iGRPO](https://arxiv.org/abs/2602.09000) | 2602.09000 | pass@1 | GRPO | +1.3 |  |
 
-### Other checkpoints
+### Other checkpoints (1)
 
-| method | id | metric | vs | DeepSeek-R1-Distill-Llama-8B · HMMT25 | Qwen2.5-Math-1.5B · AIME25 | DeepSeek-R1-Distill-Llama-8B · AIME25 | DeepSeek-R1-Distill-Llama-8B · AIME26 | DeepSeek-R1-Distill-Qwen-32B · AIME25 | DeepSeek-R1-Distill-Qwen-32B · AIME26 | Llama-3.1-Instruct · AIME25 | Llama-3.2-3B-Instruct · AIME25 | Qwen2.5-1.5B · AIME25 | Qwen2.5-7B-Base · AIME25 | Qwen2.5-Math-1.5B-Instruct · AIME25 | Qwen3-4B-Base · AIME26 |
+| method | id | metric | vs | DeepSeek-R1-Distill-Llama-8B · HMMT25 | Qwen2.5-Math-1.5B · AIME25 | DeepSeek-R1-Distill-Llama-8B · AIME25 | DeepSeek-R1-Distill-Llama-8B · AIME26 | DeepSeek-R1-Distill-Qwen-32B · AIME25 | DeepSeek-R1-Distill-Qwen-32B · AIME26 | Llama-3.1-8B-Instruct · AIME25 | Llama-3.2-3B-Instruct · AIME25 | Qwen2.5-1.5B · AIME25 | Qwen2.5-7B-Base · AIME25 | Qwen2.5-Math-1.5B-Instruct · AIME25 | Qwen3-4B-Base · AIME26 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | [ConSPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | GRPO | +4.1† |  | +4.1† | +1.3† |  |  |  |  |  |  |  |  |
 | [DAPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | GRPO | -0.6† |  |  |  |  |  |  |  |  |  |  |  |
 | [ConSPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | GRPO |  |  |  |  | +3.2† | +2.9† |  |  |  |  |  |  |
 | [ConSPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | GRPO |  |  |  |  |  |  |  |  |  |  |  | +2.3† |
-| [HICRA](https://arxiv.org/abs/2509.03646) | 2509.03646 | avg@32 | GRPO |  |  |  |  |  |  | +30.0 |  |  |  |  |  |
+| [HICRA](https://arxiv.org/abs/2509.03646) | 2509.03646 | avg@32 | GRPO |  |  |  |  |  |  | +0.3 |  |  |  |  |  |
 | [HICRA](https://arxiv.org/abs/2509.03646) | 2509.03646 | avg@32 | GRPO |  |  |  |  |  |  |  |  |  | +3.4 |  |  |
-| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | GRPO |  |  |  |  |  |  |  | +0.4 |  |  |  |  |
-| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | GRPO |  |  |  |  |  |  |  |  | -0.4 |  |  |  |
-| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | GRPO |  | -1.2 |  |  |  |  |  |  |  |  |  |  |
-| [GRPO-format](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | GRPO |  | -2.9 |  |  |  |  |  |  |  |  |  |  |
-| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | GRPO |  |  |  |  |  |  |  |  |  |  | +0.0 |  |
+| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | GRPO |  |  |  |  |  |  |  | +0.4† |  |  |  |  |
+| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | GRPO |  |  |  |  |  |  |  |  | -0.4† |  |  |  |
+| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | GRPO |  | -1.2† |  |  |  |  |  |  |  |  |  |  |
+| [GRPO-format](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | GRPO |  | -2.9† |  |  |  |  |  |  |  |  |  |  |
+| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | GRPO |  |  |  |  |  |  |  |  |  |  | +0.0† |  |
+
+### Other checkpoints (2)
+
+| method | id | metric | vs | Qwen3-4B-Instruct-2507 · AIME26 |
+|---|---|---|---|---|
+| [DAPO](https://arxiv.org/abs/2606.23740) | 2606.23740 | pass@1 | GRPO | -3.3 |
 
 ## Not applicable
 
