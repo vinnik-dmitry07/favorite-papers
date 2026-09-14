@@ -174,14 +174,159 @@ class RenderTest(unittest.TestCase):
             line for line in markdown.splitlines()
             if line.startswith('| [Demo]')
         )
-        self.assertIn('| AIME 2024 |', paper_row)
-        self.assertNotIn('MATH-500, AIME', paper_row)
+        self.assertIn('AIME 2024', paper_row)
+        self.assertIn('MATH-500', paper_row)
         self.assertIn('- Verbalizable Representations — Alignment', markdown)
         self.assertNotIn('[]()', markdown)
+        self.assertIn('## How to read OOD', markdown)
+
+    def test_omits_api_models_from_tables(self):
+        papers = [_paper()]
+        rows = [
+            _norm({
+                'model': 'GPT-4o',
+                'start_point': 'api',
+                'role': 'judge/reward',
+                'eval_ood': ['HiddenBench'],
+            }),
+            _norm({
+                'model': 'GPT-4o',
+                'family': 'GPT',
+                'generation': '4o',
+                'start_point': 'base',
+                'role': 'analyzed',
+            }),
+            _norm({
+                'model': 'Claude 3.5 Sonnet',
+                'family': 'Claude',
+                'generation': '3.5',
+                'start_point': 'unknown',
+                'role': 'baseline',
+            }),
+            _norm({
+                'model': 'Qwen3-8B',
+                'start_point': 'instruct',
+                'role': 'trained',
+                'eval_ood': ['AIME 2024'],
+            }),
+            _norm({
+                'model': 'GPT-OSS-120B',
+                'family': 'GPT-OSS',
+                'start_point': 'unknown',
+                'role': 'baseline',
+                'sizes': ['120B'],
+            }),
+        ]
+        markdown = blm.render_md(rows, papers, [], [])
+        self.assertNotIn('GPT-4o', markdown)
+        self.assertNotIn('Claude 3.5 Sonnet', markdown)
+        self.assertNotIn('HiddenBench', markdown)
+        self.assertIn('Qwen3-8B', markdown)
+        self.assertNotIn('GPT-OSS-120B', markdown)
+        self.assertNotIn('| GPT |', markdown)
+        self.assertNotIn('| GPT-OSS |', markdown)
+        self.assertIn('AIME 2024', markdown)
+        self.assertIn('API / GPT rows omitted from tables: **4**', markdown)
 
     def test_md_link_truncates_before_escape(self):
         text = blm.md_link('A|B' * 20, 'https://example.com', limit=3)
         self.assertEqual(text, '[A\\|B](https://example.com)')
+
+
+class ReliabilityTest(unittest.TestCase):
+    def test_keeps_experiment_ood_separate(self):
+        paper = _paper(key='arxiv:2511.07317', title='RLVE')
+        rows = [
+            _norm({
+                'model': 'OpenThinker3-1.5B',
+                'start_point': 'instruct',
+                'role': 'trained',
+                'method': 'RLVE (DAPO)',
+                'train_data': ['RLVE-Gym (400 environments)'],
+                'eval_ood': ['D_ood (2,500 problems from 50 held-out RLVE-Gym environments)'],
+                'ood_basis': 'paper',
+                'notes': 'held-out environments',
+            }, paper),
+            _norm({
+                'model': 'OpenThinker3-1.5B',
+                'start_point': 'instruct',
+                'role': 'trained',
+                'method': 'DAPO',
+                'train_data': ['DeepMath-103K'],
+                'eval_id': ['AIME 2024', 'MATH-500'],
+                'eval_ood': ['LiveCodeBench'],
+                'notes': 'DeepMath run',
+            }, paper),
+        ]
+        markdown = blm.render_md(rows, [paper], [], [])
+        rlve_row = next(line for line in markdown.splitlines() if 'RLVE (DAPO)' in line)
+        deep_row = next(
+            line for line in markdown.splitlines()
+            if '| DAPO |' in line and 'DeepMath' in line
+        )
+        self.assertIn('D_ood', rlve_row)
+        self.assertNotIn('MATH-500', rlve_row)
+        self.assertIn('MATH-500', deep_row)
+        self.assertNotIn('D_ood', deep_row)
+
+    def test_does_not_hide_later_notes(self):
+        paper = _paper(key='arxiv:2601.11061', title='Paradox')
+        rows = [
+            _norm({
+                'model': 'Claude',
+                'start_point': 'api',
+                'role': 'baseline',
+                'notes': 'API name one',
+            }, paper),
+            _norm({
+                'model': 'GPT-4o',
+                'start_point': 'api',
+                'role': 'baseline',
+                'notes': 'API name two',
+            }, paper),
+            _norm({
+                'model': 'Gemini',
+                'start_point': 'api',
+                'role': 'baseline',
+                'notes': 'API name three',
+            }, paper),
+            _norm({
+                'model': 'Qwen3-8B',
+                'start_point': 'unknown',
+                'role': 'analyzed',
+                'notes': 'weaker memory activation on this checkpoint',
+            }, paper),
+        ]
+        markdown = blm.render_md(rows, [paper], [], [])
+        self.assertIn('weaker memory activation on this checkpoint', markdown)
+
+    def test_appends_appendix_j_and_splits_math(self):
+        paper = _paper(
+            key='arxiv:2506.10947',
+            title='Spurious Rewards: Rethinking Training Signals in RLVR',
+        )
+        raw = [_norm({
+            'model': 'Qwen2.5-Math-7B',
+            'sizes': ['1.5B', '7B'],
+            'start_point': 'base',
+            'role': 'trained',
+            'method': 'GRPO',
+            'train_data': ['DeepScaleR'],
+            'eval_id': ['MATH-500'],
+            'eval_ood': ['AMC'],
+        }, paper)]
+        rows = blm.apply_reliability(raw, {paper['key']: paper}, blm.normalize_row)
+        models = {row['model'] for row in rows}
+        self.assertIn('Qwen2.5-Math-7B', models)
+        self.assertIn('Qwen2.5-Math-1.5B', models)
+        self.assertIn('Qwen2.5-Math-7B-Instruct', models)
+        self.assertIn('Qwen2.5-7B-Instruct', models)
+        self.assertIn('Llama-3.1-Tulu-3-8B', models)
+        math7 = next(row for row in rows if row['model'] == 'Qwen2.5-Math-7B')
+        self.assertEqual(math7['sizes'], ['7B'])
+        self.assertEqual(math7['contamination'], 'direct-memorization')
+        math15 = next(row for row in rows if row['model'] == 'Qwen2.5-Math-1.5B')
+        self.assertEqual(math15['contamination'], 'spurious-gains')
 
 
 class WriteGuardTest(unittest.TestCase):

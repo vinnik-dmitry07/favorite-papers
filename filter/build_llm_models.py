@@ -21,6 +21,17 @@ from pathlib import Path
 FILTER_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(FILTER_DIR))
 
+from llm_reliability import (  # noqa: E402
+    CKPT_SELECT,
+    CONTAMINATION,
+    MODEL_STATUS,
+    PAPER_READINGS,
+    REWARD_TYPES,
+    SHAO_MATH500_GT_PP,
+    SHAO_MATH500_RANDOM_PP,
+    SPURIOUS_CONTROLS,
+    apply_reliability,
+)
 from paths import (  # noqa: E402
     FILTER_DIR as ROOT,
     PAPERS_JSONL,
@@ -238,6 +249,11 @@ ROW_FIELDS = (
     'eval_ood',
     'ood_basis',
     'notes',
+    'checkpoint_origin',
+    'reward_type',
+    'spurious_controls',
+    'contamination',
+    'ckpt_select',
 )
 META_KEEP = ('key', 'safe_key', 'title', 'section', 'rel_path', 'n_tokens', 'urls')
 
@@ -515,6 +531,18 @@ def normalize_row(raw: dict, paper: dict) -> dict:
         ood_basis = 'inferred' if eval_ood else ''
     if not eval_ood:
         ood_basis = ''
+    contamination = (raw.get('contamination') or '').strip()
+    if contamination not in CONTAMINATION:
+        contamination = ''
+    reward_type = (raw.get('reward_type') or '').strip()
+    if reward_type not in REWARD_TYPES:
+        reward_type = ''
+    spurious_controls = (raw.get('spurious_controls') or '').strip()
+    if spurious_controls not in SPURIOUS_CONTROLS:
+        spurious_controls = ''
+    ckpt_select = (raw.get('ckpt_select') or '').strip()
+    if ckpt_select not in CKPT_SELECT:
+        ckpt_select = ''
     row = {
         'key': paper['key'],
         'title': paper.get('line_title') or raw.get('title') or '',
@@ -532,6 +560,11 @@ def normalize_row(raw: dict, paper: dict) -> dict:
         'eval_ood': eval_ood,
         'ood_basis': ood_basis,
         'notes': norm_space(raw.get('notes') or ''),
+        'checkpoint_origin': norm_space(raw.get('checkpoint_origin') or ''),
+        'reward_type': reward_type,
+        'spurious_controls': spurious_controls,
+        'contamination': contamination,
+        'ckpt_select': ckpt_select,
     }
     if model is None:
         row['role'] = ''
@@ -540,6 +573,11 @@ def normalize_row(raw: dict, paper: dict) -> dict:
         row['generation'] = ''
         row['variant'] = ''
         row['sizes'] = []
+        row['checkpoint_origin'] = ''
+        row['reward_type'] = ''
+        row['spurious_controls'] = ''
+        row['contamination'] = ''
+        row['ckpt_select'] = ''
     return {field: row[field] for field in ROW_FIELDS}
 
 
@@ -628,6 +666,90 @@ def md_link(title: str, url: str, limit: int | None = None) -> str:
     return shown
 
 
+def note_cell(text: str, limit: int = 500) -> str:
+    shown = norm_space(text)
+    if len(shown) > limit:
+        shown = shown[: limit - 1] + '…'
+    return md_escape(shown)
+
+
+def reliability_cell(row: dict) -> str:
+    bits = []
+    if row.get('contamination'):
+        bits.append(row['contamination'])
+    if row.get('spurious_controls'):
+        bits.append(f'controls: {row["spurious_controls"]}')
+    if row.get('reward_type'):
+        bits.append(f'reward: {row["reward_type"]}')
+    if row.get('ckpt_select'):
+        bits.append(f'ckpt: {row["ckpt_select"]}')
+    if row.get('checkpoint_origin'):
+        bits.append(row['checkpoint_origin'])
+    if row.get('ood_basis'):
+        bits.append(f'ood: {row["ood_basis"]}')
+    return md_escape('; '.join(bits))
+
+
+def render_reliability_section(rows: list[dict]) -> list[str]:
+    n_labeled = sum(1 for row in rows if row.get('contamination'))
+    out = []
+    out.append('## How to read OOD')
+    out.append('')
+    out.append(
+        'The OOD column is **not** evidence of clean generalization. '
+        'It records what a paper evaluated or labeled as out-of-distribution. '
+        'An alternative explanation for many RLVR math gains — especially on '
+        '**Qwen2.5-Math-7B** — is that training activates already-learned '
+        'answers or format, not new reasoning. Spurious reward is a property '
+        'of the training signal on a checkpoint. Contamination and reward '
+        'hacking need their own evidence.'
+    )
+    out.append('')
+    out.append(
+        f'Shao et al. ([2506.10947v2](https://arxiv.org/html/2506.10947v2)): '
+        f'on Qwen2.5-Math-7B, MATH-500 rises **+{SHAO_MATH500_RANDOM_PP:g} pp** '
+        f'with a random reward and **+{SHAO_MATH500_GT_PP:g} pp** with a '
+        f'correct reward. The gap between those two gains is not a share of '
+        f'"real reasoning". Comparing only to the untuned checkpoint is not '
+        f'enough to justify a new reward. Yan et al. '
+        f'([2601.11061v2](https://arxiv.org/html/2601.11061v2)) add '
+        f'mechanistic probes; their **wrong→right** slice is the analysis '
+        f'set, not proof of leakage by itself. Text-recovery and intervention '
+        f'checks are the evidence. Do not copy that conclusion onto every '
+        f'improved item or every Qwen checkpoint.'
+    )
+    out.append('')
+    out.append(
+        f'{n_labeled} experiment rows below carry a contamination label from '
+        f'those two papers plus a few closely related RLVR setups. '
+        f'An empty Reliability cell means **untested by these sources**, '
+        f'not "clean".'
+    )
+    out.append('')
+    out.append('| Checkpoint | Label | What is actually shown |')
+    out.append('|---|---|---|')
+    for name, label, evidence in MODEL_STATUS:
+        out.append(
+            f'| {md_escape(name)} | `{label}` | {md_escape(evidence)} |'
+        )
+    out.append('')
+    out.append('| Paper | How to read it |')
+    out.append('|---|---|')
+    for name, key, reading in PAPER_READINGS:
+        out.append(
+            f'| {md_link(name, paper_url(key))} | {md_escape(reading)} |'
+        )
+    out.append('')
+    out.append(
+        'Unit of a check is **model × method × train data × eval protocol**, '
+        'not one OOD bag per paper. Per-paper tables keep one row per '
+        'experiment. Do not drop Qwen papers; do not treat their OOD lists '
+        'as clean-generalization certificates.'
+    )
+    out.append('')
+    return out
+
+
 def join_cells(items: list[str], limit: int = 8) -> str:
     if not items:
         return ''
@@ -667,6 +789,46 @@ def model_line_key(row: dict) -> tuple:
         row.get('variant') or '',
         row.get('start_point') or '',
     )
+
+
+API_FAMILIES = frozenset({
+    'Claude', 'Gemini', 'o1', 'o3', 'o4', 'InstructGPT',
+})
+GPT_API_GEN_RE = re.compile(r'^(3\.5|4|4o|4\.1|5)\b', re.I)
+GPT_API_NAME_RE = re.compile(r'GPT-?(3\.5|4|4o|4\.1|5)\b', re.I)
+
+
+def is_api_row(row: dict) -> bool:
+    if (row.get('start_point') or '') == 'api':
+        return True
+    family = row.get('family') or ''
+    if family in API_FAMILIES:
+        return True
+    model = row.get('model') or ''
+    variant = row.get('variant') or ''
+    if re.search(r'davinci|chatgpt', f'{model} {variant}', re.I):
+        return True
+    if family == 'GPT' or GPT_API_NAME_RE.search(model):
+        generation = row.get('generation') or ''
+        if GPT_API_GEN_RE.match(generation) or GPT_API_NAME_RE.search(model):
+            return True
+    return False
+
+
+def is_gpt_family_row(row: dict) -> bool:
+    family = row.get('family') or ''
+    model = row.get('model') or ''
+    if family.startswith('GPT') or family == 'InstructGPT':
+        return True
+    return bool(re.match(r'gpt', model, re.I))
+
+
+def is_omitted_row(row: dict) -> bool:
+    return is_api_row(row) or is_gpt_family_row(row)
+
+
+def table_rows(rows: list[dict]) -> list[dict]:
+    return [row for row in rows if not is_omitted_row(row)]
 
 
 def slim_meta_record(rec: dict, papers_by_title: dict[str, dict] | None = None) -> dict:
@@ -749,29 +911,47 @@ def render_md(
     no_fulltext: list[dict],
 ) -> str:
     papers_by_key = {paper['key']: paper for paper in papers}
-    rows_by_key: dict[str, list[dict]] = defaultdict(list)
+    all_by_key: dict[str, list[dict]] = defaultdict(list)
     for row in rows:
+        all_by_key[row['key']].append(row)
+    shown = table_rows(rows)
+    n_api = sum(1 for row in rows if is_omitted_row(row))
+    rows_by_key: dict[str, list[dict]] = defaultdict(list)
+    for row in shown:
         rows_by_key[row['key']].append(row)
     keys_with_rows = set(rows_by_key)
-    n_papers = len(keys_with_rows)
-    n_with_model = len({row['key'] for row in rows if row.get('model')})
-    n_null = n_papers - n_with_model
-    lines_set = {model_line_key(row) for row in rows if row.get('model')}
+    n_papers = len(all_by_key)
+    n_with_model = len({row['key'] for row in shown if row.get('model')})
+    n_null = sum(
+        1 for recs in all_by_key.values()
+        if recs and all(row.get('model') is None for row in recs)
+    )
+    n_api_only = sum(
+        1 for recs in all_by_key.values()
+        if any(row.get('model') and is_omitted_row(row) for row in recs)
+        and not any(row.get('model') and not is_omitted_row(row) for row in recs)
+    )
+    lines_set = {model_line_key(row) for row in shown if row.get('model')}
     ood_names = sorted({
-        bench for row in rows for bench in row.get('eval_ood') or []
+        bench for row in shown for bench in row.get('eval_ood') or []
     })
     n_trained_no_size = sum(
-        1 for row in rows
+        1 for row in shown
         if row.get('role') == 'trained' and row.get('model') and not row.get('sizes')
     )
+    n_labeled = sum(1 for row in shown if row.get('contamination'))
 
     out = []
     out.append('# LLM inventory from key-papers')
     out.append('')
     out.append(
         'Per-paper extraction from `filter/fulltext/*.md`. '
-        'One row in `filter/llm_models.jsonl` is one model line '
-        '(family / generation / variant / start-point); size sweeps stay in `sizes`.'
+        'One row in `filter/llm_models.jsonl` is one experiment '
+        '(model × method × train data). '
+        '**OOD is not a clean-generalization certificate** — see below. '
+        'API and GPT-family rows stay in the jsonl and are omitted from the tables. '
+        'Numeric OOD gains over the untrained checkpoint and over GRPO: '
+        '[`llm_gains.md`](llm_gains.md).'
     )
     out.append('')
     out.append('## Summary')
@@ -781,16 +961,20 @@ def render_md(
     out.append(f'- Papers read but no LLM experiment: **{n_null}**')
     out.append(f'- Distinct model lines: **{len(lines_set)}**')
     out.append(f'- Distinct OOD benchmarks: **{len(ood_names)}**')
+    out.append(f'- Experiment rows with a contamination label: **{n_labeled}**')
     out.append(f'- Trained rows with no size: **{n_trained_no_size}**')
+    out.append(f'- API / GPT rows omitted from tables: **{n_api}**')
+    out.append(f'- Papers with only API / GPT models (hidden): **{n_api_only}**')
     out.append(
         f'- Fulltexts excluded (no LLM name, not Post-training/Reasoning): '
         f'**{len(excluded)}**'
     )
     out.append(f'- Readme entries without fulltext: **{len(no_fulltext)}**')
     out.append('')
+    out.extend(render_reliability_section(rows))
 
     groups: dict[tuple, list[dict]] = defaultdict(list)
-    for row in rows:
+    for row in shown:
         if row.get('model'):
             groups[model_line_key(row)].append(row)
 
@@ -832,6 +1016,11 @@ def render_md(
             f'{join_cells(train, 6)} | {join_cells(evals, 8)} |'
         )
     out.append('')
+    out.append(
+        'The model-index OOD cell is a bag across papers. '
+        'It is not a claim that those checkpoints generalize cleanly.'
+    )
+    out.append('')
 
     out.append('## Per-paper')
     out.append('')
@@ -847,15 +1036,9 @@ def render_md(
         if all(row.get('model') is None for row in paper_rows):
             notes = paper_rows[0].get('notes') or 'no LLM experiment'
             by_section[section].append(
-                f'| {link} | — | — | — | — | — | {md_escape(notes)} |'
+                f'| {link} | — | — | — | — | — | — | {note_cell(notes)} |'
             )
             continue
-        models = []
-        methods = []
-        trains = []
-        ids = []
-        oods = []
-        notes = []
         for row in paper_rows:
             if not row.get('model'):
                 continue
@@ -870,29 +1053,14 @@ def render_md(
                 extra_bits.append(row['role'])
             if extra_bits:
                 bit += f' ({", ".join(extra_bits)})'
-            if bit not in models:
-                models.append(bit)
-            if row.get('method') and row['method'] not in methods:
-                methods.append(row['method'])
-            for item in row.get('train_data') or []:
-                if item not in trains:
-                    trains.append(item)
-            for item in row.get('eval_id') or []:
-                if item not in ids:
-                    ids.append(item)
-            for item in row.get('eval_ood') or []:
-                if item not in oods:
-                    oods.append(item)
-            if row.get('notes') and row['notes'] not in notes:
-                notes.append(row['notes'])
-        id_set = set(ids)
-        oods = [item for item in oods if item not in id_set]
-        by_section[section].append(
-            f'| {link} | {md_escape("; ".join(models))} | '
-            f'{md_escape("; ".join(methods))} | {join_cells(trains, 6)} | '
-            f'{join_cells(ids, 6)} | {join_cells(oods, 8)} | '
-            f'{join_cells(notes, 3)} |'
-        )
+            by_section[section].append(
+                f'| {link} | {md_escape(bit)} | '
+                f'{md_escape(row.get("method") or "")} | '
+                f'{join_cells(row.get("train_data") or [], 6)} | '
+                f'{join_cells(row.get("eval_id") or [], 6)} | '
+                f'{join_cells(row.get("eval_ood") or [], 8)} | '
+                f'{reliability_cell(row)} | {note_cell(row.get("notes") or "")} |'
+            )
 
     seen_sections = []
     for paper in papers:
@@ -904,15 +1072,14 @@ def render_md(
         out.append(f'### {section}')
         out.append('')
         out.append(
-            '| Paper | Models | Method | Post-training data | '
-            'ID eval | OOD eval | Notes |'
+            '| Paper | Model | Method | Train | ID | OOD | Reliability | Notes |'
         )
-        out.append('|---|---|---|---|---|---|---|')
+        out.append('|---|---|---|---|---|---|---|---|')
         out.extend(by_section[section])
         out.append('')
 
     ood_map: dict[str, list[str]] = defaultdict(list)
-    for row in rows:
+    for row in shown:
         for bench in row.get('eval_ood') or []:
             if row['key'] not in ood_map[bench]:
                 ood_map[bench].append(row['key'])
@@ -1018,8 +1185,13 @@ def renormalize_rows(rows: list[dict], papers: list[dict]) -> list[dict]:
         out.append(normalize_row(raw, paper))
         if i == n or i % 200 == 0:
             print_progress(i, n, raw.get('key') or '')
+    out = apply_reliability(out, papers_by_key, normalize_row)
     order = {paper['key']: i for i, paper in enumerate(papers)}
-    out.sort(key=lambda row: (order.get(row['key'], 10**6), row.get('model') or ''))
+    out.sort(key=lambda row: (
+        order.get(row['key'], 10**6),
+        row.get('model') or '',
+        row.get('method') or '',
+    ))
     return out
 
 
@@ -1099,6 +1271,7 @@ def main(argv: list[str] | None = None) -> int:
         print('refusing to overwrite outputs', flush=True)
         return 1
 
+    rows = apply_reliability(rows, papers_by_key, normalize_row)
     existing_n = existing_row_count(JSONL_PATH)
     if refuse_shrink(existing_n, len(rows), args.force):
         print(
@@ -1109,7 +1282,11 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     order = {paper['key']: i for i, paper in enumerate(papers)}
-    rows.sort(key=lambda row: (order.get(row['key'], 10**6), row.get('model') or ''))
+    rows.sort(key=lambda row: (
+        order.get(row['key'], 10**6),
+        row.get('model') or '',
+        row.get('method') or '',
+    ))
     excluded, no_fulltext = load_inventory_lists(extract_dir, papers)
     write_outputs(rows, papers, excluded, no_fulltext)
     return 0
