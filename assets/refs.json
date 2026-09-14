@@ -1300,7 +1300,7 @@
     "bib_items": 36,
     "has_bibliography": true,
     "search_chars": 8181,
-    "status": "cached",
+    "status": "fetched",
     "source": "https://arxiv.org/html/2605.06241"
   },
   "arxiv:2604.20659": {
@@ -18300,7 +18300,7 @@
     "bib_items": 74,
     "has_bibliography": true,
     "search_chars": 2905,
-    "status": "cached",
+    "status": "fetched",
     "source": "https://api.crossref.org/works/10.1101/2024.02.22.581686"
   },
   "doi:10.1371/journal.pcbi.1011005": {

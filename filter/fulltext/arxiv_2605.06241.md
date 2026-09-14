@@ -236,7 +236,7 @@ Shao et al. (2024) Z. Shao, P. Wang, Q. Zhu, R. Xu, J. Cao, S. Ma, Y. Shi, et al
 
 Silver et al. (2017) D. Silver, J. Schrittwieser, K. Simonyan, I. Antonoglou, A. Huang, A. Guez, T. Hubert, L. Baker, M. Lai, A. Bolton, et al. Mastering the game of go without human knowledge . Nature 550 ( 7676 ), pp. 354–359 . Cited by: §1 .
 
-Sui et al. (2025) Y. Sui, Y. Chuang, G. Zhang, J. Wang, L. Zhang, J. Chen, X. Pan, W. Li, N. Shah, M. Jiang, et al. Stop overthinking: a survey on efficient reasoning for large language models . arXiv preprint arXiv:2503.16419 . Cited by: §7 .
+Sui et al. (2025) Y. Sui, Y. Chuang, G. Wang, J. Zhang, T. Zhang, J. Yuan, H. Liu, A. Wen, S. Zhong, N. Zou, et al. Stop overthinking: a survey on efficient reasoning for large language models . arXiv preprint arXiv:2503.16419 . Cited by: §7 .
 
 Wang et al. (2025a) S. Wang, J. Asilis, Ö. F. Akgül, E. B. Bilgin, O. Liu, D. Fu, and W. Neiswanger Resa: transparent reasoning models via SAEs . arXiv preprint arXiv:2506.09967 . Cited by: §7 .
 

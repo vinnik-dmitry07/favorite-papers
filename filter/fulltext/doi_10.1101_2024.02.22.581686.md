@@ -1,625 +1,618 @@
-MetaWorm: A Complete Model Bridging Brain, Body and 
-Environment of C. elegans 
-Mengdi Zhao1†, Ning Wang1†, Xinrui Jiang1, Xiaoyang Ma1, Haixin Ma1, Gan He1,3, Kai Du1,4, Lei 
-Ma1,2,3*, Tiejun Huang1,3,4 
- 
-1 Beijing Academy of Artificial Intelligence, Beijing 100084, China 
-2 National Biomedical Imaging Center, College of Future Technology, Peking University, Beijing 
-100871, China 
-3 National Key Laboratory for Multimedia Information Processing, School of Computer Science, 
-Peking University, Beijing, 100871, China 
-4 Institute for Artificial Intelligence, Peking University, Beijing 100871, China 
- 
-*Corresponding author: Email: malei@baai.ac.cn (Lei Ma) 
-†These authors contributed equally to this work. 
-Abstract 
-The intricate interplay between an organism's brain, body, and environment fundamentally 
-shapes its behavior. Existing detailed models focusing on either the brain or the body-environment 
-separately. A complete model that bridges these two components is yet to be developed. Here, we 
-present MetaWorm, a data-driven model of a widely studied organism, C. elegans . This model 
-consists of two sub-models: the brain model and the body & environment model. The brain model 
-was built by multi- compartment models with realistic morphology, connectome,  and neural 
-population dynamics based on experimental data. Simultaneously, the body & environment model 
-employed a lifelike body and a 3D physical environment, facilitating easy behavior quantification. 
-Through the closed- loop interaction between two  sub-models, MetaWorm faithfully reproduce d 
-the realistic zigzag movement towards attractors observed in C. elegans. Moreover, leveraging this 
-model, we investigate d the impact of neural system structure on both neural activities  and 
-behaviors. Consequently, MetaWorm can enhance our understanding of how the brain controls the 
-body to interact with its surrounding environment.  
- 
-Introduction 
-The behaviors of an animal are not simply the product of brain activity but rather, emerge from 
-a dynamic interplay among the brain, body, and environment. To study neural control mechanisms, 
-it is crucial to build  a complete s imulation that incorporating detailed models of the  brain, body 
-and environment , to both validate theories and make predictions for biological experiments. 
-Currently, there are specific models that simulate either the brain, e.g., the mouse primary visual 
-cortex1, the mouse striatum 2, and the rat somatosensory cortex 3, or  exclusively the body and 
-environment to reproduce animal behaviors, such as neuromechanical models for Drosophila4 and 
-rodent5. OpenWorm project6 aimed to simulate C. elegans  years ago,  despite its detailed brain 
-model and body model worked  separately. So far, no complete model exists that successfully 
-bridges these elements, although such integration is urgently needed to progress our understanding 
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+MetaWorm: An Integrative Data-Driven Model Simulating C.
+elegans Brain, Body and Environment Interactions
+Mengdi Zhao1†, Ning Wang1†, Xinrui Jiang1, Xiaoyang Ma1, Haixin Ma1, Gan He1,3, Kai Du1,4, Lei
+Ma1,2,3*, Tiejun Huang1,3,4
+1 Beijing Academy of Artificial Intelligence, Beijing 100084, China
+2 National Biomedical Imaging Center, College of Future Technology, Peking University, Beijing
+100871, China
+3 National Key Laboratory for Multimedia Information Processing, School of Computer Science,
+Peking University, Beijing, 100871, China
+4 Institute for Artificial Intelligence, Peking University, Beijing 100871, China
+*Corresponding author: Email: malei@baai.ac.cn (Lei Ma)
+†These authors contributed equally to this work.
+Abstract
+The behavior of an organism is profoundly influenced by the complex interplay between its
+brain, body, and environment. Existing data-driven models focusing on either the brain or the
+body-environment separately. A model that integrates these two components is yet to be developed.
+Here, we present MetaWorm, an integrative data-driven model of a widely studied organism, C.
+elegans. This model consists of two sub-models: the brain model and the body & environment
+model. The brain model was built by multi-compartment models with realistic morphology,
+connectome, and neural population dynamics based on experimental data. Simultaneously, the
+body & environment model employed a lifelike body and a 3D physical environment, facilitating
+easy behavior quantification. Through the closed-loop interaction between two sub-models,
+MetaWorm faithfully reproduced the realistic zigzag movement towards attractors observed in C.
+elegans. Notably, MetaWorm is the first model to achieve seamless integration of detailed brain,
+body, and environment simulations, enabling unprecedented insights into the intricate
+relationships between neural structures, neural activities, and behaviors. Leveraging this model,
+we investigated the impact of neural system structure on both neural activities and behaviors.
+Consequently, MetaWorm can enhance our understanding of how the brain controls the body to
+interact with its surrounding environment.
+Introduction
+The behaviors of an organism are not simply the product of brain activity but rather, emerge
+from a dynamic interplay among the brain, body, and environment. To unravel the underlying
+neural control mechanisms, it is crucial to develop an integrative simulation that incorporates
+detailed models of the brain, body and environment, to both validate theories and make
+predictions for biological experiments. Currently, there are specific data-driven models that
+simulate either the brain, e.g., the mouse primary visual cortex1, the mouse striatum2, and the rat
+somatosensory cortex3, or exclusively the body and environment to reproduce animal behaviors,
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
-of neural control mechanisms7. 
-Specifically, a complete model must meet certain  requirements. First, it should incorporate a 
-biophysically detailed brain model that has similar neural structures and neural activity patterns as 
-real organism. Secondly, it should consist of a body and environment model, which is realistic, 
-high-performance, and easy for behavior quantification. Thirdly, the brain model should not only 
-control the body model interacting with the virtual environment, but also get the feedback from 
-the body and environment model, achieving a closed-loop interaction8,9.  
-C. elegans stands out as an exemplary model for developing such a complete model that bridges 
-brain, body and environment. It has completely mapped morphologies of all 302 neurons10,11 (in 
-adult hermaphrodite), along with the connectome and synapse-level structure12-14. Recordings of 
-single neural activity15-23, as well as brain -wide neural dynamics18,20,24 are available. Its body is 
-simple yet well- reconstructed, consisting of only 95 muscle cells. It also  exhibits easily 
-quantifiable behaviors, such as crawling, swimming, foraging, and various social behaviors 25,26. 
-Therefore, these simple structures and abundant data provide significant advantages for creating a 
-complete model. 
-In this study, we present a complete data-driven model of C. elegans, MetaWorm (Fig. 1). First, 
-we developed a neural network model (brain model) of a C. elegans foraging neural circuit. It was 
-built using biophysically detailed compartmental neuronal models, with compartments under 2 μm 
-in length, encoding neural activity similar to live C. elegans . Second, we developed a body & 
-environment model of C. elegans. The body model contained  96 muscles and enabled efficient 
-real-time simulation at 30 frames per second and easy quanti fication of behaviors. Third, we 
-established a closed-loop interaction between the brain model and the body-environment model to 
-simulate C. elegans moving towards an attractor in a zig-zag shape. Sensory neurons in the neural 
-network model were activated by attractor’s concentration in environment . Muscles in the body 
-model were controlled by motor neurons in  the neural network model. Finally, we performed 
-synthetic perturbations on the neural network model and suggested that neurite or synaptic/gap 
-junction' absence disrupts global neural dynamics and hampers accurate forward motion. This 
-highlights the importance  of network structure in shaping both network dynamics and behavior 
-patterns.  
-Undoubtedly, MetaWorm will contribute to a deeper understanding of the intricate relationships 
-between neural structures , neural activities, and behaviors. This work also provides a valuable  
-framework for developing brain-body-environment model of other organisms. This innovative 
-approach paves the way for new avenues of systems biology and has the potential to revolutionize 
-traditional neural mechanism research.  
- 
-Results 
-Constructing a data-driven biophysically detailed neural network model of C. elegans 
-Our neural network model of C. elegans contained 136 neurons that participated in sensory and 
-locomotion functions, as indicated by published studies 24,27-31. To construct this model, we first 
-collected the necessary data including neural morphology, ion channel models, electrophysiology 
-of single neurons, connectome, connection models and network activities  (Fig. 2A). Next, we 
-constructed the individual neuron models and their connections (Fig. 2B). Subsequently, a 
-biophysically detailed model without functions was established (Fig. 2C). Finally, we optimized 
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+such as neuromechanical models for Drosophila4 and rodent5. OpenWorm project6 aimed to
+simulate C. elegans years ago, despite its detailed brain model and body model worked separately.
+So far, no data-driven model exists that successfully integrates these elements, although such
+integration is urgently needed to progress our understanding of neural control mechanisms7.
+An integrative data-driven model must meet certain requirements. First, it should incorporate a
+biophysically detailed brain model that has similar neural structures and neural activity patterns as
+real organism. Secondly, it should consist of a realistic and high-performance body and
+environment model that facilitates easy behavior quantification. Thirdly, and most crucially, the
+brain model should not only control the body model interacting with the virtual environment, but
+also receive the feedback from the body and environment model, establishing a closed-loop
+interaction8,9.
+C. elegans stands out as an exemplary model for developing such an integrative data-driven
+model that bridges brain, body and environment. It has completely mapped morphologies of all
+302 neurons10,11 (in adult hermaphrodite), along with the connectome and synapse-level
+structure12-14. Recordings of single neural activity15-23, as well as brain-wide neural dynamics18,20,24
+are available. Its body is well-reconstructed, consisting of only 95 muscle cells. It also exhibits
+easily quantifiable behaviors, such as crawling, swimming and foraging25,26. Therefore, these
+simple structures and abundant data provide solid foundations for creating an integrative data-
+driven model.
+In this study, we present an integrative data-driven model of C. elegans, MetaWorm (Fig. 1).
+First, we developed a neural network model (brain model) of a C. elegans foraging neural circuit.
+It was built using biophysically detailed compartmental neuronal models, with compartments
+under 2 μm in length, encoding neural activity similar to live C. elegans. Second, we developed a
+body & environment model of C. elegans. The body model contained 96 muscles and enabled
+efficient real-time simulation at 30 frames per second and easy quantification of behaviors. Third,
+we established a closed-loop interaction between the brain model and the body-environment
+model to simulate C. elegans moving towards an attractor in a zigzag shape. Sensory neurons in
+the neural network model were activated by attractor’s concentration in environment. Muscles in
+the body model were controlled by motor neurons in the neural network model. Finally, we
+performed synthetic perturbations on the neural network model and suggested that neurite or
+synaptic/gap junction' absence disrupts global neural dynamics and hampers accurate forward
+motion. This highlights the importance of network structure in shaping both network dynamics
+and behavior patterns.
+MetaWorm is open-source and modular as the brain, body, environment models and their
+interactions can be independently modified, improved or extended by the scientific community.
+MetaWorm will contribute to a deeper understanding of the intricate relationships between neural
+structures, neural activities, and behaviors. This work also provides a valuable framework for
+developing brain-body-environment model of other organisms. This innovative approach paves
+the way for new avenues of systems biology and has the potential to revolutionize traditional
+neural mechanism research.
+Results
+Constructing a data-driven biophysically detailed neural network model of C. elegans
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
-the weights and polarit ies of the connections to obtain  a model that reflected realistic dynamics 
-(Fig. 2D). An overview of the model construction is illustrated in Figure 2.  
-To achieve a high level of biophysical and morphological realism in our model, we employed 
-multi-compartment models to represent individual neurons. The morphologies of neuron models 
-were constructed based on published morphological data 32,33. S oma and neurite sections were 
-further divided into several segments , where each segment was  less than 2 μm  in length. We 
-combined 14 known classes of ion channels ( Supplementary Table S1-2)34 in neuron models, and 
-tuned the passive parameters and ion channel conductance densities  by an optimization 
-algorithm35 to reproduced electrophysiological traces  in the experiments36-39. Based on the few 
-available electrophysiological data, w e digitally reconstructed models of five representative 
-neurons: AWC, AIY , A V A, RIM and VD5. The I-V curves of our neuron models  perfectly match 
-that in the experiment s (Fig. 3) . The optimized parameters of neur on models are listed in 
-Supplementary Table S3. 
-These five neurons are representative for  five different functional group: sensory neuron, 
-interneuron, command neuron, head motor neuron and body motor neuron. They serve as the 
-initial pool of digital neuron models to reconstruct other neurons in the neural network model. For 
-neurons that are not representative neurons, their biophysical parameters were set the same as the 
-representative neuron models that belonged to the same functional group. The referenced neurons 
-of all neurons  are listed in Supplementary Table S4. This approach allows us to achieve a high 
-level of biophysical and morphological realism in our C. elegans  neural network model with  
-limited accessible experimental data. 
-For connections, we first modeled gap junctions as simple ohmic resistances, and synapses as 
-continuously transmitting synapse , according to  published models32,40-43. Then, we developed an 
-algorithm to determine the number and locations of  connections. The number of connections 
-between two cells was from  the cell adjacency matrix 10,11 (Fig. 4 A). For each connection, we 
-randomly assigned a distance following the neurite centroids distance distributions of synapse/gap 
-junction in experiment 13 (Fig. 4 B). Each connection linked  two segments whose  distance was 
-closest to the randomly assigned distance. This approach allowed us to generate connections that 
-were constrained by experimental connection numbers and distance distributions (Fig. 4C). Figure 
-4D-F show some examples of the connections between neurons  in our neural network model. 
-Most synapses and gap junctions were located on neurites that were relatively close to each other. 
-Also, as shown in Fig. 4 F, the constructed connections tended to cluster together, which followed 
-the clustered organization principle in published research13,14. 
-To determine the polarities of synapses  (excitatory or inhibitory) and the connection weight s, 
-we employed a gradient -descend-based algorithm  to minimize the mean squared error (MSE) 
-between simulation results and the optimization target. In this study, our optimization target was a 
-Pearson correlation matrix of 65 identified neurons in a prior study 24, where activity series were 
-recorded through whole -brain single -cell-resolution Ca 2+ imaging. Figure 5A illustrates the 
-correlation matrices generated from our simulation and the experimental data. These two maps 
-exhibited similar correlation strengths, whose mean squared error was only 0.076. 
-To further analyze the optimized neural network model, w e conducted principal components 
-analysis (PCA) on the membrane potential of the 65 identified neurons, involving the calculation 
-of principal components (PCs) based on the covariance structure in the normalized data (Fig. 5B). 
-Our analysis unveiled that PC1 exhibits an opposite dynamic to that of PC2 (Fig. 5C). Upon 
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+Our neural network model of C. elegans contained 136 neurons that participated in sensory and
+locomotion functions, as indicated by published studies24,27-31. To construct this model, we first
+collected the necessary data including neural morphology, ion channel models, electrophysiology
+of single neurons, connectome, connection models and network activities (Fig. 2A). Next, we
+constructed the individual neuron models and their connections (Fig. 2B). Subsequently, a
+biophysically detailed model without functions was established (Fig. 2C). Finally, we optimized
+the weights and polarities of the connections to obtain a model that reflected realistic dynamics
+(Fig. 2D). An overview of the model construction is illustrated in Figure 2.
+To achieve a high level of biophysical and morphological realism in our model, we employed
+multi-compartment models to represent individual neurons. The morphologies of neuron models
+were constructed based on published morphological data32,33. Soma and neurite sections were
+further divided into several segments, where each segment was less than 2 μm in length. We
+combined 14 known classes of ion channels (Supplementary Table S1-2)34 in neuron models, and
+tuned the passive parameters and ion channel conductance densities by an optimization
+algorithm35 to reproduced electrophysiological traces in the experiments36-39. Based on the few
+available electrophysiological data, we digitally reconstructed models of five representative
+neurons: AWC, AIY ,A V A,RIM and VD5. The I-V curves of our neuron models perfectly match
+that in the experiments (Fig. 3). The optimized parameters of neuron models are listed in
+Supplementary Table S3.
+These five neurons are representative for five different functional group: sensory neuron,
+interneuron, command neuron, head motor neuron and body motor neuron. They serve as the
+initial pool of digital neuron models to reconstruct other neurons in the neural network model. For
+neurons that are not representative neurons, their biophysical parameters were set the same as the
+representative neuron models that belonged to the same functional group. The referenced neurons
+of all neurons are listed in Supplementary Table S4. This approach allows us to achieve a high
+level of biophysical and morphological realism in our C. elegans neural network model with
+limited accessible experimental data.
+For connections, we first modeled gap junctions as simple ohmic resistances, and synapses as
+continuously transmitting synapse, according to published models32,40-43. Then, we developed an
+algorithm to determine the number and locations of connections. The number of connections
+between two cells was from the cell adjacency matrix10,11 (Fig. 4A). For each connection, we
+randomly assigned a distance following the neurite centroids distance distributions of synapse/gap
+junction in experiment13 (Fig. 4B). Each connection linked two segments whose distance was
+closest to the randomly assigned distance. This approach allowed us to generate connections that
+were constrained by experimental connection numbers and distance distributions (Fig. 4C). Figure
+4D-F show some examples of the connections between neurons in our neural network model.
+Most synapses and gap junctions were located on neurites that were relatively close to each other.
+Also, as shown in Fig. 4F, the constructed connections tended to cluster together, which followed
+the clustered organization principle in published research13,14.
+To determine the polarities of synapses (excitatory or inhibitory) and the connection weights,
+we employed a gradient-descend-based algorithm to minimize the mean squared error (MSE)
+between simulation results and the optimization target. In this study, our optimization target was a
+Pearson correlation matrix of 65 identified neurons in a prior study24, where activity series were
+recorded through whole-brain single-cell-resolution Ca2+ imaging. Figure 5A illustrates the
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
-sorting based on PC1, most neurons controlling forward locomotion (e.g., A VB, VB, DB neurons) 
-and backward locomotion (e.g., A V A, V A, DA neurons) were distinctly classified into two groups 
-(Fig. 5B). Th is indicates  that our neural network model accurately captures realistic neural 
-dynamical relationships, and the dynamics of neurons encode functions similar to those observed 
-in real C. elegans, to some extent. 
- 
-Constructing a high-performance body & environment model of C. elegans 
-Next, we developed the body & environment model  of the C. elegans . Our primary 
-contributions are:  1) modelling the soft body , muscles, and solving soft body deformation, 2) 
-creating the 3D simulation environment and solving soft body- fluid interaction , 3) proposed a 
-novel reference coordinate system for behavior analysis. The framework of this model is 
-illustrated in Figure 6A and B. 
-The body model was built with tetrahedral mesh, including 984 vertices, 3341 tetrahedrons and 
-1466 triangles on the body surface  (Fig. 6C). Also, it had four muscle strings: ventral right (VR), 
-ventral left (VL), dorsal right (DR) and dorsal left (DL). Each string had 24 muscle cells arranged 
-from head to tail ( Fig. 6D). Tetrahedrons were controlled by their near muscle strings. The 
-corresponding strings were visualized with different color s in Figure 6E. We used Finite Element 
-Method (FEM) solver to compute positions and velocities of all vertices on the deformable body 
-at any given time. In the computation, the solver used 4558 muscle constraints and 3341 corotated 
-elasticity constraints. Thus, our soft -body simulation engaged a sum of 7,899 mechanical 
-constraints. After the geometry construction, we need to solve the body deformation efficiently. In 
-our model, we selected a real-time, highly robust, and accura te approach named projective 
-dynamics as the FEM solver for calculation. The solved body state was visualized in Fig.6F. 
-We constructed a large 3D fluid simulation environment, where the body, foods were embedded. 
-This environment was essentially a large cube, with each edge equating to approximately 1200 
-times the length of a C. elegans. The mechanic of the body movement in fluid is essentially a soft 
-body-fluid coupling problem. To simplify this problem, we only calculated  the thrust force (Fig. 
-6G) and drag force (Fig. 6H) on the body surface44. This simplification allowed for the simulation 
-of a much larger space and improved computational efficiency.  To achieve forward locomotion 
-behavior, we used projective dynamics to calculate real-time bending waves that propagated from 
-head to tail. The interaction between these bending waves and the fluid  generated impetus for 
-forward locomotion (Fig.6I). 
-C. elegans is an animal with soft body that exhibits special patterns during locomotion, wherein 
-every point on its body oscillates continuously. Therefore, it is difficult to quantify the trajectory 
-and body state during locomotion. Here, we proposed an effective and simple method to measure 
-C. elegans  locomotion. The  main idea  of this method is to establish a numerically stable 
-coordinate system relative to the body itself, named T arget Body Reference Coordinate System 
-(TBRCS) ( Fig. 7A) . First, we d efined the target body , standard body and Standard Body 
-Coordinate System (SBCS). Then, we computed transformation M between the target body and 
-the standard body. Finally, we used M to perform three-dimensional transformation on the S BCS 
-to obtain the TBRCS. Details of this method are described in Methods. Using this method, we can 
-stably quantify not only the body’s locomotion trajectory ( Fig. 7A), but also the body state s 
-including the relative position and velocities of any points on the C. elegans body (Fig. 7B and Fig. 
-7C) and steering angle (Fig. 7D) . For example, figure 7E displays the relative positions of 17 
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+correlation matrices generated from our simulation and the experimental data. These two maps
+exhibited similar correlation strengths, whose mean squared error was only 0.076.
+To further analyze the optimized neural network model, we conducted principal components
+analysis (PCA) on the membrane potential of the 65 identified neurons, involving the calculation
+of principal components (PCs) based on the covariance structure in the normalized data (Fig. 5B).
+Our analysis unveiled that PC1 exhibits an opposite dynamic to that of PC2 (Fig. 5C). Upon
+sorting based on PC1, most neurons controlling forward locomotion (e.g., A VB,VB, DB neurons)
+and backward locomotion (e.g., A V A,V A,DA neurons) were distinctly classified into two groups
+(Fig. 5B). This indicates that our neural network model accurately captures realistic neural
+dynamical relationships, and the dynamics of neurons encode functions similar to those observed
+in real C. elegans, to some extent.
+Constructing a high-performance body & environment model of C. elegans
+Next, we developed the body & environment model of the C. elegans. Our primary
+contributions are: 1) modelling the soft body, muscles, and solving soft body deformation, 2)
+creating the 3D simulation environment and solving soft body-fluid interaction, 3) proposed a
+novel reference coordinate system for behavior analysis. The framework of this model is
+illustrated in Figure 6A and B.
+The body model was built with tetrahedral mesh, including 984 vertices, 3341 tetrahedrons and
+1466 triangles on the body surface (Fig. 6C). Also, it had four muscle strings: ventral right (VR),
+ventral left (VL), dorsal right (DR) and dorsal left (DL). Each string had 24 muscle cells arranged
+from head to tail (Fig. 6D). Tetrahedrons were controlled by their near muscle strings. The
+corresponding strings were visualized with different colors in Figure 6E. We used Finite Element
+Method (FEM) solver to compute positions and velocities of all vertices on the deformable body
+at any given time. In the computation, the solver used 4558 muscle constraints and 3341 corotated
+elasticity constraints. Thus, our soft-body simulation engaged a sum of 7,899 mechanical
+constraints. After the geometry construction, we need to solve the body deformation efficiently. In
+our model, we selected a real-time, highly robust, and accurate approach named projective
+dynamics as the FEM solver for calculation. The solved body state was visualized in Fig.6F.
+We constructed a large 3D fluid simulation environment, where the body, foods were embedded.
+This environment was essentially a large cube, with each edge equating to approximately 1200
+times the length of a C. elegans. The mechanic of the body movement in fluid is essentially a soft
+body-fluid coupling problem. To simplify this problem, we only calculated the thrust force (Fig.
+6G) and drag force (Fig. 6H) on the body surface44. This simplification allowed for the simulation
+of a much larger space and improved computational efficiency. To achieve forward locomotion
+behavior, we used projective dynamics to calculate real-time bending waves that propagated from
+head to tail. The interaction between these bending waves and the fluid generated impetus for
+forward locomotion (Fig.6I).
+C. elegans is an animal with soft body that exhibits special patterns during locomotion, wherein
+every point on its body oscillates continuously. Therefore, it is difficult to quantify the trajectory
+and body state during locomotion. Here, we proposed an effective and simple method to measure
+C. elegans locomotion. The main idea of this method is to establish a numerically stable
+coordinate system relative to the body itself, named Target Body Reference Coordinate System
+(TBRCS) (Fig. 7A). First, we defined the target body, standard body and Standard Body
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
-sampled 3D tracking points, while Figure 7F illustrates their corresponding velocities.  In Figure 
-7E, the swing direction of body was Z direction of the TBRCS (dorsal-ventral direction). Also, 
-there was a spring movement in X direction of the TBRCS (head-tail direction) during forward 
-locomotion. Locomotion in Y direction of the TBRCS  (left-right direction) wa s nearly flat since 
-muscle activations were approximately symmetric in this direction. Figure 7F shows that, in this 
-case, the primary propulsion of forward locomotion originated from tail (pink line), since speed 
-represented power. Moreover, our method enables the quantification of the body's steering. Figure 
-7D shows an example of a steering angle θ, which was defined as the angle  between TBRCS x-
-axis and the direction of velocity. The steering angle θ was also numerically stable. 
-In summary, our body model is simple yet preserving anatomical authenticity. Our environment 
-model provides a large -scale 3D scene for simulations. Our simulation is real- time and  allows 
-simulations of C. elegans  populations. Importantly, our model  facilitates easy quantification of 
-behaviors. 
- 
-Replicating locomotion behavior of C. elegans 
-In our complete model, we successfully replicated the locomotion behavior of C. elegans by a 
-closed-loop interaction between the neural network model and the body & environment model. 
-Specifically, the neural network model sensed the dynamic food concentration in the environment 
-by sensory neurons. This sensory information was used to calculate the membrane potentials of 
-motor neurons . T he membrane potentials of motor neurons  were subsequently translated into 
-muscle activation signals, which controlled the movement of C. elegans' body to navigate towards 
-the food in the environment. An overview of this closed-loop simulation is illustrated in Figure 8A. 
-Notably, w e observed that the trajectory of the C. elegans  movement in our model closely 
-resembled the trajectory recorded in the experiments45, with both exhibiting a zigzag pattern (Fig. 
-8B). Additionally, C. elegans  in both the simulation s (Supplementary Movie S1 and 
-Supplementary Movie S2) and experiments exhibited a dorsoventral fluctuation during 3D 
-movement46,47. 
-Regarding sensation, w e assumed that the food concentration in the environment follows a  
-linearly distribution . T o incorporate this sensory information into our model, we used the 
-derivative of the food concentration as the amplitude of an external current injected into the soma 
-of all sensory neurons. Regarding neuromuscular coupling, we employed a  linear transformation, 
-treating the neural network model as a reservoir to generate muscle activities (Methods 3.6). 
-During locomotion, the input of sensory neurons  exhibit ed fluctuations due to the zig -zag 
-movement of the body’s head (Fig. 8C). The membrane potentials of each individual motor neuron 
-also oscillated in response to the sensory input, especially the head motor neurons (Fig. 8D). The 
-activation of muscle  cells reveal ed traveling waves from the head to the tail, accompanied by  
-alternating contractions and relaxations of dorsal and ventral muscle cells  ( Fig. 8E) . These 
-findings closely resemble observations in biological experiments48. To facilitate visualization, we 
-have incorporated the locomotion of C. elegans, the activities of its neural network model, and 
-muscle activities into our graphical user interface (GUI) (Fig. 9).  
-In s ummary, our model successfully reproduced locomotion behavior in this closed -loop 
-simulation and facilitated the visualization and analysis of neuron dynamics, muscle activities, and 
-behavioral patterns. 
- 
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+Coordinate System (SBCS). Then, we computed transformation M between the target body and
+the standard body. Finally, we used M to perform three-dimensional transformation on the SBCS
+to obtain the TBRCS. Details of this method are described in Methods. Using this method, we can
+stably quantify not only the body’s locomotion trajectory (Fig. 7A), but also the body states
+including the relative position and velocities of any points on the C. elegans body (Fig. 7B and Fig.
+7C) and steering angle (Fig. 7D). For example, figure 7E displays the relative positions of 17
+sampled 3D tracking points, while Figure 7F illustrates their corresponding velocities. In Figure
+7E, the swing direction of body was Z direction of the TBRCS (dorsal-ventral direction). Also,
+there was a spring movement in X direction of the TBRCS (head-tail direction) during forward
+locomotion. Locomotion in Y direction of the TBRCS (left-right direction) was nearly flat since
+muscle activations were approximately symmetric in this direction. Figure 7F shows that, in this
+case, the primary propulsion of forward locomotion originated from tail (pink line), since speed
+represented power. Moreover, our method enables the quantification of the body's steering. Figure
+7D shows an example of a steering angle θ, which was defined as the angle between TBRCS x-
+axis and the direction of velocity. The steering angle θ was also numerically stable.
+In summary, our body model is simple yet preserving anatomical authenticity. Our environment
+model provides a large-scale 3D scene for simulations. Our simulation is real-time and allows
+simulations of C. elegans populations. Importantly, our model facilitates easy quantification of
+behaviors.
+Replicating locomotion behavior of C. elegans
+In our model, we successfully replicated the locomotion behavior of C. elegans by a closed-
+loop interaction between the neural network model and the body & environment model.
+Specifically, the neural network model sensed the dynamic food concentration in the environment
+by sensory neurons. This sensory information was used to calculate the membrane potentials of
+motor neurons. The membrane potentials of motor neurons were subsequently translated into
+muscle activation signals, which controlled the movement of C. elegans' body to navigate towards
+the food in the environment. An overview of this closed-loop simulation is illustrated in Figure 8A.
+Notably, we observed that the trajectory of the C. elegans movement in our model closely
+resembled the trajectory recorded in the experiments45, with both exhibiting a zigzag pattern (Fig.
+8B). Additionally, C. elegans in both the simulations (Supplementary Movie S1 and
+Supplementary Movie S2) and experiments exhibited a dorsoventral fluctuation during 3D
+movement46,47.
+Regarding sensation, we assumed that the food concentration in the environment follows a
+linearly distribution. To incorporate this sensory information into our model, we used the
+derivative of the food concentration as the amplitude of an external current injected into the soma
+of all sensory neurons. Regarding neuromuscular coupling, we employed a linear transformation,
+treating the neural network model as a reservoir to generate muscle activities48 (Methods 3.6).
+During locomotion, the input of sensory neurons exhibited fluctuations due to the zigzag
+movement of the body’s head (Fig. 8C). The membrane potentials of each individual motor neuron
+also oscillated in response to the sensory input, especially the head motor neurons (Fig. 8D). The
+activation of muscle cells revealed traveling waves from the head to the tail, accompanied by
+alternating contractions and relaxations of dorsal and ventral muscle cells (Fig. 8E). These
+findings closely resemble observations in biological experiments49. To facilitate visualization, we
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
-Exploring the impact of neural network structure on dynamics and behaviors 
-We are interested in exploring the extent to which network structure influences the neural 
-dynamics and behaviors, thus we conducted synthetic perturbations on the structure of our  neural 
-network model. Synthetic perturbations of the neural system often exceed individual tolerance 
-level in animals . However, our model enables researchers to carry out experiments without 
-concerns about experimental technique limitations or animal tolerance.  Based on MetaWorm, we 
-performed experiments involving synthetic perturbations to quantitatively examine the impact of 
-network structure on network dynamics and behaviors. 
-In the absence of neurites, the body exhibits a higher degree of  twisting during locomotion, as 
-indicated by the larger relative locations of tracking points on the head and tail compared to the  
-control group. This suggests that neurites play a crucial role in the computations associated with 
-network information processing (Fig. 10B). Moreover, shuffling connection locations within the 
-model leads to faster oscillations of the head and tail but slower forward locomotion (Fig. 10C) . 
-This suggests that the specific locations of connections along the neurites  are important, 
-potentially facilitating local ized computations within neurons. Additionally, despite the neural 
-network model contains fewer gap junctions than synapses, the role of gap junctions in C. elegans 
-neural network appears to be  more important than that of synapses  (Fig. 10D- G), because 
-perturbations on gap junctions result in more obvious changes in the  Pearson Correlation matrix 
-compared to perturbations on synapses . Perturbations on gap junctions accelerate the twisting of 
-the body compared to the control group, whereas perturbations on synapses result in slower 
-twisting. These results emphasize the importance of network structure in shaping network 
-dynamics and behavior patterns. By utilizing our model, researchers can gain valuable insights 
-into the contributions of network structure to neural network. 
-Discussion 
-In this study , we present  MetaWorm, a complete model of C. elegans  that integrates detailed 
-models of neural network, body and environment . The neural network model  of MetaWorm is 
-highly detailed and  data-driven, capturing neural population activity patterns and encoding 
-functions observed in real C. elegans. The body & environment model  of MetaWorm is realistic, 
-efficient, and allows for the quantification of behaviors. Based on the interaction of these two sub-
-models, w e achieved locomotion behavior in C. elegans . This represents the first time that a 
-detailed complete model replays a behavior with motor control and sensory feedback.  
-The neural network model of MetaWorm integrated experimental data including ion channel 
-dynamics, neural morphologies, electrophysiology, connectome, synaptic organization rules on 
-neurites, as well as neural activities . Although we collected and integrate d as much data as 
-possible up until 2023, there remain ed a substantial amount of detail that could not be fully 
-implemented due to lack of data. Also, the physical parameters in body & environment model did 
-not correspond precisely to those of actual C. elegans , because they were difficult to measure  
-accurately. However, with the influx of new experimental data, these models can be enhanced and 
-refined. 
-For the neuromechanical connection between these two sub-models, the neural network model 
-served as a reservoir that processed data in a complex  and nonlinear way. The input was mapped 
-onto an output linear layer to produce muscle activation. With only one linear readout layer, the 
-neural network model successfully controlled the body’s locomotion. This demonstrates the great 
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+have incorporated the locomotion of C. elegans, the activities of its neural network model, and
+muscle activities into our graphical user interface (GUI) (Fig. 9).
+In summary, our model successfully reproduced locomotion behavior in this closed-loop
+simulation and facilitated the visualization and analysis of neuron dynamics, muscle activities, and
+behavioral patterns.
+Exploring the impact of neural network structure on dynamics and behaviors
+We are interested in exploring the extent to which network structure influences the neural
+dynamics and behaviors, thus we conducted synthetic perturbations on the structure of our neural
+network model. Synthetic perturbations of the neural system often exceed individual tolerance
+level in animals. However, our model enables researchers to carry out experiments without
+concerns about experimental technique limitations or animal tolerance. Based on MetaWorm, we
+performed experiments involving synthetic perturbations to quantitatively examine the impact of
+network structure on network dynamics and behaviors.
+In the absence of neurites, the body exhibits a higher degree of twisting during locomotion, as
+indicated by the larger relative locations of tracking points on the head and tail compared to the
+control group. This suggests that neurites play a crucial role in the computations associated with
+network information processing (Fig. 10B). Moreover, shuffling connection locations within the
+model leads to faster oscillations of the head and tail but slower forward locomotion (Fig. 10C).
+This suggests that the specific locations of connections along the neurites are important,
+potentially facilitating localized computations within neurons. Additionally, despite the neural
+network model contains fewer gap junctions than synapses, the role of gap junctions in C. elegans
+neural network appears to be more important than that of synapses (Fig. 10D-G), because
+perturbations on gap junctions result in more obvious changes in the Pearson Correlation matrix
+compared to perturbations on synapses. Perturbations on gap junctions accelerate the twisting of
+the body compared to the control group, whereas perturbations on synapses result in slower
+twisting. These results emphasize the importance of network structure in shaping network
+dynamics and behavior patterns. By utilizing our model, researchers can gain valuable insights
+into the contributions of network structure to neural network.
+Discussion
+In this study, we present MetaWorm, a data-driven model of C. elegans that integrates models
+of neural network, body and environment. The neural network model of MetaWorm is highly
+detailed and data-driven, capturing neural population activity patterns and encoding functions
+observed in real C. elegans. The body & environment model of MetaWorm is realistic, efficient,
+and allows for the quantification of behaviors. Based on the interaction of these two sub-models,
+we achieved locomotion behavior in C. elegans. This represents the first time that an integrative
+data-driven model replays a behavior with motor control and sensory feedback.
+The neural network model of MetaWorm integrated experimental data including ion channel
+dynamics, neural morphologies, electrophysiology, connectome, synaptic organization rules on
+neurites, as well as neural activities. Although we collected and integrated as much data as
+possible up until 2023, there remained a substantial amount of detail that could not be fully
+implemented due to lack of data. Also, the physical parameters in body & environment model did
+not correspond precisely to those of actual C. elegans, because they were difficult to measure
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
-information processing ability of our neural network model. 
-When the input of the neural network model was a periodic standard signal, i.e. without sensory 
-feedback from the environment, the membrane potentials of motor neurons and the activations of 
-muscle cells were periodic (Supplementary Figure S1) . This resulted in the movement trajectory 
-of the C. elegans  body following a standard Z- shape, which was extremely similar to the 
-trajectory in the experiment 45,49 (Supplementary Figure S1B and Supplementary Movie S3). 
-Conversely, When the input wa s a sensory signal dependent  on the body’s location in the 
-environment ( Fig. 8 ), the input was not periodic, leading to non -periodic dynamics  in both 
-neurons and muscle cells. Therefore, the trajectory of the body was not as regular as that observed 
-in the experiment (Fig. 8B). Future studies will focus on designing  more reasonable Central 
-Pattern Generators (CPGs) or motor control systems to achieve more realistic movement.  
-MetaWorm serves as a white box model of C. elegans. Its two sub-models can be independently 
-enhanced with the influx of new additional data from experimental studies. We  provide 
-researchers with user-friendly interfaces to design their own model based on their experimental 
-data. Moreover, our model serves as a valuable reference for designing complete models for other 
-animals. In this era of exponential growth in experimental data, these complete models will enable 
-us to gain a deeper understanding of the neural computation that underlies specific behaviors. 
-  
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+accurately. However, with the influx of new experimental data, these models can be enhanced and
+refined.
+For the neuromechanical connections from motor neuron to muscle, the neural network model
+served as a reservoir that processed data in a complex and nonlinear way. The input was mapped
+onto an output linear layer to produce muscle activation. With only one linear readout layer, the
+neural network model successfully controlled the body’s locomotion. This demonstrates the great
+information processing ability of our neural network model. In the future, more realistic models of
+the neuromuscular junction can be used in our neural network model, reflecting the real synaptic
+properties from motor neuron to muscle.
+When the input of the neural network model was a periodic standard signal, i.e. without sensory
+feedback from the environment, the membrane potentials of motor neurons and the activations of
+muscle cells were periodic (Supplementary Figure S1). This resulted in the movement trajectory
+of the C. elegans body following a standard Z-shape, which was extremely similar to the
+trajectory in the experiment45,50 (Supplementary Figure S1B and Supplementary Movie S3).
+Conversely, When the input was a sensory signal dependent on the body’s location in the
+environment (Fig. 8), the input was not periodic, leading to non-periodic dynamics in both
+neurons and muscle cells. Therefore, the trajectory of the body was not as regular as that observed
+in the experiment (Fig. 8B). Future studies will focus on designing more reasonable Central
+Pattern Generators (CPGs) or motor control systems to achieve more realistic movement.
+Training biophysically detailed neural network model is challenging and consumes much time
+and GPU memory resources. In the future, we will improve the optimization algorithm to
+effectively train larger detailed neural network that contains all 302 neurons, with more constrains
+such as single neuron voltages, and reproduce more behaviors beyond zigzag locomotion.
+MetaWorm serves as a white box model of C. elegans. Its two sub-models and their interaction
+can be independently modified or extended. We provide researchers with user-friendly interfaces
+to design their own model based on their experimental data. Moreover, our model serves as a
+valuable reference for designing integrative data-driven models for other animals. In this era of
+exponential growth in experimental data, these integrative data-driven models will enable us to
+gain a deeper understanding of the neural computation that underlies specific behaviors.
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
-Figures 
- 
-Fig 1. Overview of MetaWorm. 
-MetaWorm comprises two sub -models: the neural network model and the body & environment 
-model. The neural network model is a biophysically  detailed. Its neuron models are multi -
-compartmental, exhibiting electrophysiological features similar to real C. elegans  neurons. These 
-neuron models are connected by synapses and gap junctions on neurites. An optimization tool is 
-employed to tune the weights and polarities of these connections. The body & environment model 
-consists of a biomechanical body, a 3D fluid environment and a real-time simulation engine. The 
-soft body is constructed using 3341 tetrahedrons, with 96 muscles arranged from head to tail as 
-actuators. The large-scale 3D environment allows for the integration of various agents and 
-elements including C. elegans, E. coli (food), and fluid. And it provides  a range of auxiliary tools 
-for dynamic lighting, visualization, tracking, and behavior analysis. Real-time simulation is 
-achieved through a Finite Element Method (FEM) solver and simplified hydrodynamics. To 
-achieve foraging behavior in C. elegans, the neural network senses attractor’s concentration in the 
-environment, performs neural computations to control muscle s’ contraction and relaxation, and 
-ultimately deforms the body to propel it towards the attractor. 
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+Figures
+Fig 1. Overview of MetaWorm.
+MetaWorm comprises two sub-models: the neural network model and the body & environment
+model. The neural network model is a biophysically detailed. Its neuron models are multi-
+compartmental, exhibiting electrophysiological features similar to real C. elegans neurons. These
+neuron models are connected by synapses and gap junctions on neurites. An optimization tool is
+employed to tune the weights and polarities of these connections. The body & environment model
+consists of a biomechanical body, a 3D fluid environment and a real-time simulation engine. The
+soft body is constructed using 3341 tetrahedrons, with 96 muscles arranged from head to tail as
+actuators. The large-scale 3D environment allows for the integration of various agents and
+elements including C. elegans, E. coli (food), and fluid. And it provides a range of auxiliary tools
+for dynamic lighting, visualization, tracking, and behavior analysis. Real-time simulation is
+achieved through a Finite Element Method (FEM) solver and simplified hydrodynamics. To
+achieve foraging behavior in C. elegans, the neural network senses attractor’s concentration in the
+environment, performs neural computations to control muscles’ contraction and relaxation, and
+ultimately deforms the body to propel it towards the attractor.
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
-Fig 2. Construction of biophysically-detailed neural network model of C. elegans. 
-A. Experimental data collection to constrain models. These data include neural morphologies, ion 
-channel models, electrophysiological recordings of  single neurons, connectome, connection 
-models, and neural network activities. B. Construction of multi-compartmental neuron models and 
-connection models (synapses and gap junctions) . C. The biophysically detailed C. elegans neural 
-network model without functional neural activities. D. Optimization of the biophysically detailed 
-C. elegans neural network model to achieve realistic network dynamics. Neurons are color-coded 
-to represent membrane potential. 
-  
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+Fig 2. Construction of biophysically-detailed neural network model of C. elegans.
+A. Experimental data collection to constrain models. These data include neural morphologies, ion
+channel models, electrophysiological recordings of single neurons, connectome, connection
+models, and neural network activities. B. Construction of multi-compartmental neuron models and
+connection models (synapses and gap junctions). C. The biophysically detailed C. elegans neural
+network model without functional neural activities. D. Optimization of the biophysically detailed
+C. elegans neural network model to achieve realistic network dynamics. Neurons are color-coded
+to represent membrane potential.
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
-Fig 3. Models of five representative neurons fitted to e lectrophysiological recordings in 
-experiments. 
-AWC(L), AIY(L), A V A(L), RIM(L), VD5 were selected as the representative neurons for each of 
-the five functional groups, respectively. Left, 3D morphology of each neuron 32,33. Middle, 
-membrane voltage/current dynamics induced by current or voltage clamp  steps. The simulated 
-responses (blue lines) are  overlayed with biological experiment al data (gray lines ). The 
-corresponding current or voltage clamp protocol are shown in left . AWC(L): voltage clamp 
-protocol, in spans of 0.1 s, starting from -10 mV and increasing to 110 mV by 20 mV increments. 
-AIY(L): current clamp protocol, in spans of 5 s, starting from -15 pA and increasing to 35 pA by 5 
-pA increments. A V A(L): current clamp protocol, in spans of 5 s , starting  from -20 pA and 
-increasing to 20 pA by 5 pA increments. RIM(L): current clamp protocol, in spans of 5 s , starting 
-from -15 pA and increasing to 25 pA by 5 pA increments. VD5: voltage clamp protocol, in spans 
-of 1.2 s, starting from -10 mV and increasing to 40 mV by 10 mV increments. Right, comparison 
-between experimental (red  dot ) and simulated (black  star) I- V curves , including I- V curve at 
-steady-state (left) and I-V curve at the time when the rates of voltages/currents  change reach a 
-certain threshold (right). Experimental data are from published articles36-39. 
-  
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+Fig 3. Models of five representative neurons fitted to electrophysiological recordings in
+experiments.
+AWC(L), AIY(L), A V A(L),RIM(L), VD5 were selected as the representative neurons for each of
+the five functional groups, respectively. Left, 3D morphology of each neuron32,33. Middle,
+membrane voltage/current dynamics induced by current or voltage clamp steps. The simulated
+responses (blue lines) are overlayed with biological experimental data (gray lines). The
+corresponding current or voltage clamp protocol are shown in left. AWC(L): voltage clamp
+protocol, in spans of 0.1 s, starting from -10 mV and increasing to 110 mV by 20 mV increments.
+AIY(L): current clamp protocol, in spans of 5 s, starting from -15 pA and increasing to 35 pA by 5
+pA increments. A V A(L):current clamp protocol, in spans of 5 s, starting from -20 pA and
+increasing to 20 pA by 5 pA increments. RIM(L): current clamp protocol, in spans of 5 s, starting
+from -15 pA and increasing to 25 pA by 5 pA increments. VD5: voltage clamp protocol, in spans
+of 1.2 s, starting from -10 mV and increasing to 40 mV by 10 mV increments. Right, comparison
+between experimental (red dot) and simulated (black star) I-V curves, including I-V curve at
+steady-state (left) and I-V curve at the time when the rates of voltages/currents change reach a
+certain threshold (right). Experimental data are from published articles36-39.
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
-Fig 4. Connecting multi-compartmental neuron models in the neural network model. 
-A. Synapse and gap junction adjacency matrices  of the neurons from published data 10,11. Matrix 
-elements represent the total number of electron microscopy series capturing synapses (or gap 
-junctions) between two neurons. The color indicates the series number. The order of cells in rows 
-and columns corresponds to Supplementary Table S4. B. Distribution of distances between 
-centroids coordinates of neurites at connected synapse (upper) and gap junction (lower) locations. 
-Experimental d ata (red/blue bars)  from a published paper 13 is fitted by two inverse Gaussian 
-distributions (black/red lines). Random data (yellow/green bars) is produced following the fitted 
-inverse G aussian distributions. C. Similar to B, with red and blue histograms indicating 
-distributions in our neural network model constructed in our model . D. 3D v isualization of a 
-synapse (cyan) between RIB R (pre-synaptic, yellow) and AIBL (post -synaptic, blue) . E. 3D 
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+Fig 4. Connecting multi-compartmental neuron models in the neural network model.
+A. Synapse and gap junction adjacency matrices of the neurons from published data10,11. Matrix
+elements represent the total number of electron microscopy series capturing synapses (or gap
+junctions) between two neurons. The color indicates the series number. The order of cells in rows
+and columns corresponds to Supplementary Table S4. B. Distribution of distances between
+centroids coordinates of neurites at connected synapse (upper) and gap junction (lower) locations.
+Experimental data (red/blue bars) from a published paper13 is fitted by two inverse Gaussian
+distributions (black/red lines). Random data (yellow/green bars) is produced following the fitted
+inverse Gaussian distributions. C. Similar to B, with red and blue histograms indicating
+distributions in our neural network model constructed in our model. D. 3D visualization of a
+synapse (cyan) between RIBR (pre-synaptic, yellow) and AIBL (post-synaptic, blue). E. 3D
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
-visualization of a gap junction (yellow) between RIVR (red) and SMDVR (blue) . F. 3D 
-visualization of clusters of synapses (cyan) and gap junctions  (yellow) between PQR (blue) and 
-AVA R  ( r e d ). 
-  
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+visualization of a gap junction (yellow) between RIVR (red) and SMDVR (blue). F. 3D
+visualization of clusters of synapses (cyan) and gap junctions (yellow) between PQR (blue) and
+A V AR(red).
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
-Fig 5. Neural network model of C. elegans fitted to functional map in biological experiment. 
-A. Pearson correlation matrix of neurons in simulation and experiment 24. The simulation matrix 
-was derived from our optimized neural network model . Red and cyan color indicate positive and 
-negative correlation coefficients, which were calculated by membrane potentials of two neurons . 
-B. Membrane potentials of 65 neurons , each represented in a separate row . Principal component 
-(PC0, PC1, PC2) weights of each neuron are shown by the bar plots on the right. Neurons were 
-sorted by PC1 weights. Color of the bars indicates the reported role of the neuron in locomotion  
-from published research 24 (blue: forward neurons, red: backward neurons, green: turning motor 
-neurons, black: no clear role).  
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+Fig 5. Neural network model of C. elegans fitted to functional map in biological experiment.
+A. Pearson correlation matrix of neurons in simulation and experiment24. The simulation matrix
+was derived from our optimized neural network model. Red and cyan color indicate positive and
+negative correlation coefficients, which were calculated by membrane potentials of two neurons.
+B. Membrane potentials of 65 neurons, each represented in a separate row. Principal component
+(PC0, PC1, PC2) weights of each neuron are shown by the bar plots on the right. Neurons were
+sorted by PC1 weights. Color of the bars indicates the reported role of the neuron in locomotion
+from published research24 (blue: forward neurons, red: backward neurons, green: turning motor
+neurons, black: no clear role).
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
-Fig 6. A biomechanical body model of C. elegans.  
-A. Schematic diagram of  C. elegans body model. The body was composed of tetrahedrons. 96 
-muscle cells along 4 muscle strings were serving as actuators for soft body deformation. Different 
-colors on muscles indicate distinct muscle cells.  The body was situated in a large 3D fluid 
-environment and can move  in the environment . Projective dynamics functions were used as  the 
-soft body solver, and simplified hydrodynamics calculated thrust force and drag force on the body 
-surface. B. Internal view of the  body model, consisting of 4 muscle strings: ventral right (VR), 
-ventral left (VL), dorsal right (DR), dorsal left (DL). C. Triangulated tetrahedron mesh of the body. 
-D. Four muscle strings: VR (green), VL (yellow), DR (red) and DL (blue). Color intensity reflects 
-the strength of muscle contraction, with high intensity indicating contraction and transparent 
-intensity indicating relaxation.  E. Tetrahedrons driven by four muscle strings : VR (green), VL 
-(yellow), DR (red) and DL (blue). F. Deformation of the soft body. Blue tetrahedrons are increase 
-their volume, while red ones are decreas ing. G-H. Thrust force (G) and drag force  (H) on body 
-surface. Red indicates strong force and blue indicates weak force. I. Positions and velocities of the 
-body at four moments. The body was moving from left to right. Color indicates velocities,  with 
-red representing fast, blue representing slow. 
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+Fig 6. A biomechanical body model of C. elegans.
+A. Schematic diagram of C. elegans body model. The body was composed of tetrahedrons. 96
+muscle cells along 4 muscle strings were serving as actuators for soft body deformation. Different
+colors on muscles indicate distinct muscle cells. The body was situated in a large 3D fluid
+environment and can move in the environment. Projective dynamics functions were used as the
+soft body solver, and simplified hydrodynamics calculated thrust force and drag force on the body
+surface. B. Internal view of the body model, consisting of 4 muscle strings: ventral right (VR),
+ventral left (VL), dorsal right (DR), dorsal left (DL). C. Triangulated tetrahedron mesh of the body.
+D. Four muscle strings: VR (green), VL (yellow), DR (red) and DL (blue). Color intensity reflects
+the strength of muscle contraction, with high intensity indicating contraction and transparent
+intensity indicating relaxation. E. Tetrahedrons driven by four muscle strings: VR (green), VL
+(yellow), DR (red) and DL (blue). F. Deformation of the soft body. Blue tetrahedrons are increase
+their volume, while red ones are decreasing. G-H. Thrust force (G) and drag force (H) on body
+surface. Red indicates strong force and blue indicates weak force. I. Positions and velocities of the
+body at four moments. The body was moving from left to right. Color indicates velocities, with
+red representing fast, blue representing slow.
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
-Fig 7. Quantification of body’s behavior.  
-A. Schematic diagram of Target Body Reference Coordinate System (TBRCS)  to quantify 
-behavior stably. The standard body and SBCS  are depicted on the left . T he target body and 
-TBRCS are illustrated on the right. Matching points (magenta dots) are positioned on both the 
-standard and target  body . Magenta lines links the corresponding points on two body. The 
-transformation matrix M is obtained through singular value decomposition, enabling the 
-conversion from SBCS to TBRCS. The trajectory of the target body center (orange line) exhibits a 
-zig-zag pattern, whereas the trajectory of TBRCS (green line) is smooth.  B. Tracking body 
-movement with TBRCS. 17 tracking points were defined on the surface of both the standard body 
-and the target body. Magenta lines represent relative positions, while blue arrows indicate relative 
-velocities. Coordinate systems of the  head on standard body and target body are drawn out  to 
-display translation and rotation of the head on target body. C. Trajectories of 17 tracking points on 
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+Fig 7. Quantification of body’s behavior.
+A. Schematic diagram of Target Body Reference Coordinate System (TBRCS) to quantify
+behavior stably. The standard body and SBCS are depicted on the left. The target body and
+TBRCS are illustrated on the right. Matching points (magenta dots) are positioned on both the
+standard and target body. Magenta lines links the corresponding points on two body. The
+transformation matrix M is obtained through singular value decomposition, enabling the
+conversion from SBCS to TBRCS. The trajectory of the target body center (orange line) exhibits a
+zigzag pattern, whereas the trajectory of TBRCS (green line) is smooth. B. Tracking body
+movement with TBRCS. 17 tracking points were defined on the surface of both the standard body
+and the target body. Magenta lines represent relative positions, while blue arrows indicate relative
+velocities. Coordinate systems of the head on standard body and target body are drawn out to
+display translation and rotation of the head on target body. C. Trajectories of 17 tracking points on
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
-the body. D. Steering angle θ of the body. The velocity vector is depicted as the yellow arrow, and 
-the XYZ axes of TBRCS are represented by red -green-blue arrows. θ  is defined as the angle 
-between the red arrow and the yellow arrow and remains stable over time.  E-F. Relative positions 
-(E) and velocities (F) of 17 tracking points on the body during the movement.  
-  
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+the body. D. Steering angle θ of the body. The velocity vector is depicted as the yellow arrow, and
+the XYZ axes of TBRCS are represented by red-green-blue arrows. θ is defined as the angle
+between the red arrow and the yellow arrow and remains stable over time. E-F. Relative positions
+(E) and velocities (F) of 17 tracking points on the body during the movement.
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
-Fig 8. The closed-loop 3D simulation of C. elegans locomotion behavior. 
-A. The information flow diagram  of the closed -loop interaction between neural network model 
-and body & environment model . B. Comparison of C. elegans  t rajectory during forward 
-locomotion in simulation (left) and experiment (right, from a published article45). C. Input current 
-injected to sensory neurons during locomotion. D. Left, neural network model of C. elegans. Right, 
-membrane potential s of all motor neurons  in the model during locomotion. E. Left, the body 
-model with 96 muscle cells. Right, the activation signals of all muscle cells during locomotion. 
-The dashed red line indicates that the activation signal shifting from head to tail. 
-  
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+Fig 8. The closed-loop 3D simulation of C. elegans locomotion behavior.
+A. The information flow diagram of the closed-loop interaction between neural network model
+and body & environment model. B. Comparison of C. elegans trajectory during forward
+locomotion in simulation (left) and experiment (right, from a published article45). C. Input current
+injected to sensory neurons during locomotion. D. Left, neural network model of C. elegans. Right,
+membrane potentials of all motor neurons in the model during locomotion. E. Left, the body
+model with 96 muscle cells. Right, the activation signals of all muscle cells during locomotion.
+The dashed red line indicates that the activation signal shifting from head to tail.
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
-Fig 9. Graphical User Interface (GUI) of MetaWorm. 
-Graphical User Interface (GUI) of MetaWorm, including: the neural network of C. elegans where 
-the color indicates membrane potentials, a C. elegans body actively moving towards a food source 
-(E. coli  population) in the 3D fluid environment, the locomotion trajectory, activations  of four 
-muscle strings extending from head to tail.  
-  
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+Fig 9. Graphical User Interface (GUI) of MetaWorm.
+Graphical User Interface (GUI) of MetaWorm, including: the neural network of C. elegans where
+the color indicates membrane potentials, a C. elegans body actively moving towards a food source
+(E. coli population) in the 3D fluid environment, the locomotion trajectory, activations of four
+muscle strings extending from head to tail.
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
-Fig 10. Synthetic perturbation of on the neural network model in MetaWorm. 
-A. Column 1: Schematic diagram illustrates connections between two neurons in the neural 
-network model. Ball and stick denote soma and neurite , respectively. Rectangles with solid 
-and dashed lines indicate synapses and gap junctions. Rectangles with different colors 
-represent different connections. The w idth of rectangles signifies connection weights. The 
-depicted connections between this neuron pair represent all connections in the neural network  
-model. Column 2 : Pearson correlation matrix of neurons during simulation of the neural 
-network model . Column 3: L ocomotion behavior of the C. elegans body controlled by the 
-neural network model in Column 1. Column 4: R elative position of 3D tracking points on 
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+Fig 10. Synthetic perturbation of on the neural network model in MetaWorm.
+A. Column 1: Schematic diagram illustrates connections between two neurons in the neural
+network model. Ball and stick denote soma and neurite, respectively. Rectangles with solid
+and dashed lines indicate synapses and gap junctions. Rectangles with different colors
+represent different connections. The width of rectangles signifies connection weights. The
+depicted connections between this neuron pair represent all connections in the neural network
+model. Column 2: Pearson correlation matrix of neurons during simulation of the neural
+network model. Column 3: Locomotion behavior of the C. elegans body controlled by the
+neural network model in Column 1. Column 4: Relative position of 3D tracking points on
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
-head (blue), center (orange) and tail (green) of  the C. elegans  body. Column 5: R elative 
-velocity of a 3D tracking point on head of C. elegans body. B-G. Diagrams represented as in 
-A, but with different perturbation types: ( B) Removal of neurites from all neurons in the 
-neural network model, relocating c onnections onto the soma , ( C) shuffling the location of 
-connections on neurites while fixing source and target neurons , (D) shuffling the weights of 
-synapses while fixing their locations, (E) shuffling the weights of gap junctions while fixing 
-their locations, (F) removal of all synapses in the neural network model , (G) removal of all 
-gap junctions in the neural network model. These perturbations are sequenced based on the ir 
-distance to the control group in terms of the  Pearson Correlation matrix ( B: closest, G : 
-farthest). 
- 
- 
- 
- 
-Acknowledgements  
-Funding: this research was funded by National Key R&D Program of China (2020AAA0105200) 
-Author Information 
-Contributions 
-M.D.Z. developed the neural network model module, designed and conducted experiments, and 
-interpreted results. N.W. developed the body & environment module. H.X.M. and L.M. developed 
-the 3D neural visualization software. X.R.J. and M.D.Z. collected experimental data for 
-constructing the neural network model. X.Y .M. and M.D.Z. optimized the connection algorithm 
-and rewrote the code of the neural network model module for open source. G.H. developed the 
-optimization algorithm for the multi- compartmental neural network model. M.D.Z., N.W., and 
-X.R.J. wrote the article. K.D. reviewed the research and provided advice. L.M. supervised the 
-research, coordinated and conceptualized the study, and contributed to writing the article. All 
-authors participated in the paper revision process. 
-Corresponding authors 
-Correspondence to Lei Ma (malei@baai.ac.cn) 
-Ethics declarations 
-The authors declare no competing interests. 
- 
-Reference 
-1 Billeh, Y. N. et al. Systematic integration of structural and functional data into multi- scale 
-models of mouse primary visual cortex. Neuron 106, 388-403. e318 (2020). 
-2 Hjorth, J. J.  et al.  The microcircuits of striatum in silico. Proceedings of the National 
-Academy of Sciences 117, 9554-9565 (2020). 
-3 Markram, H. et al. Reconstruction and simulation of neocortical microcircuitry. Cell 163, 
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+head (blue), center (orange) and tail (green) of the C. elegans body. Column 5: Relative
+velocity of a 3D tracking point on head of C. elegans body. B-G. Diagrams represented as in
+A, but with different perturbation types: (B) Removal of neurites from all neurons in the
+neural network model, relocating connections onto the soma, (C) shuffling the location of
+connections on neurites while fixing source and target neurons, (D) shuffling the weights of
+synapses while fixing their locations, (E) shuffling the weights of gap junctions while fixing
+their locations, (F) removal of all synapses in the neural network model, (G) removal of all
+gap junctions in the neural network model. These perturbations are sequenced based on their
+distance to the control group in terms of the Pearson Correlation matrix (B: closest, G:
+farthest).
+Acknowledgements
+Funding: this research was funded by National Key R&D Program of China (2020AAA0105200)
+Author Information
+Contributions
+M.D.Z. developed the neural network model module, designed and conducted experiments, and
+interpreted results. N.W. developed the body & environment module. H.X.M. and L.M. developed
+the 3D neural visualization software. X.R.J. and M.D.Z. collected experimental data for
+constructing the neural network model. X.Y .M.and M.D.Z. optimized the connection algorithm
+and rewrote the code of the neural network model module for open source. G.H. developed the
+optimization algorithm for the multi-compartmental neural network model. M.D.Z., N.W., and
+X.R.J. wrote the article. K.D. reviewed the research and provided advice. L.M. supervised the
+research, coordinated and conceptualized the study, and contributed to writing the article. All
+authors participated in the paper revision process.
+Corresponding authors
+Correspondence to Lei Ma (malei@baai.ac.cn)
+Ethics declarations
+The authors declare no competing interests.
+Reference
+1 Billeh, Y. N. et al. Systematic integration of structural and functional data into multi-scale
+models of mouse primary visual cortex. Neuron 106, 388-403. e318 (2020).
+2 Hjorth, J. J. et al. The microcircuits of striatum in silico. Proceedings of the National
+Academy of Sciences 117, 9554-9565 (2020).
+3 Markram, H. et al. Reconstruction and simulation of neocortical microcircuitry. Cell 163,
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
-456-492 (2015). 
-4 Lobato-Rios, V.  et al.  NeuroMechFly, a neuromechanical model of adult Drosophila 
-melanogaster. Nature Methods 19, 620-627 (2022). 
-5 Merel, J. et al. in International Conference on Learning Representations    (2020). 
-6 Sarma, G. P.  et al. OpenWorm: overview and recent advances in integrative biological 
-simulation of <i>Caenorhabditis elegans</i>. Philosophical Transactions of the Royal 
-Society B: Biological Sciences 373, 20170382, doi:doi:10.1098/rstb.2017.0382 (2018). 
-7 Urai, A. E., Doiron, B., Leifer, A. M. & Churchland, A. K. Large -scale neural recordings call 
-for new insights to link brain and behavior. Nature Neuroscience  25, 11 -19, 
-doi:10.1038/s41593-021-00980-9 (2022). 
-8 Zador, A.  et al.  Catalyzing next -generation Artificial Intelligence through NeuroAI. 
-Nature Communications 14, 1597 (2023). 
-9 Roth, E., Sponberg, S. & Cowan, N. J. A comparative approach to closed -loop 
-computation. Current Opinion in Neurobiology  25, 54 -62, 
-doi:https://doi.org/10.1016/j.conb.2013.11.005 (2014). 
-10 White, J. G., Southgate, E., Thomson, J. N. & Brenner, S. The structure of the nervous 
-system of the nematode Caenorhabditis elegans. Philos Trans R Soc Lond B Biol Sci  314, 
-1-340 (1986). 
-11 Cook, S. J.  et al.  Whole-animal connectomes of both Caenorhabditis elegans sexes. 
-Nature 571, 63-71, doi:10.1038/s41586-019-1352-7 (2019). 
-12 Witvliet, D. et al. Connectomes across development reveal principles of brain maturation. 
-Nature 596, 257-261, doi:10.1038/s41586-021-03778-8 (2021). 
-13 Ruach, R., Ratner, N., Emmons, S. W. & Zaslaver, A. The synaptic organization in the 
-<i>Caenorhabditis elegans</i> neural network suggests significant local 
-compartmentalized computations. Proceedings of the National Academy of Sciences  
-120, e2201699120, doi:doi:10.1073/pnas.2201699120 (2023). 
-14 Brittin, C. A., Cook, S. J., Hall, D. H., Emmons, S. W. & Cohen, N. A multi -scale brain map 
-derived from whole- brain volumetric reconstructions. Nature 591, 105 -110, 
-doi:10.1038/s41586-021-03284-x (2021). 
-15 Venkatachalam, V.  et al.  Pan-neuronal imaging in roaming Caenorhabditis elegans. 
-Proceedings of the National Academy of Sciences 113, E1082-E1088 (2016). 
-16 Li, H.  et al.  Fast whole - b ody motor neuron calcium imaging of freely moving 
-Caenorhabditis elegans without coverslip pressed. Cytometry Part A  99, 1143- 1157 
-(2021). 
-17 Chronis, N., Zimmer, M. & Bargmann, C. I. Microfluidics for in vivo imaging of neuronal 
-and behavioral activity in Caenorhabditis elegans. Nature methods 4, 727-731 (2007). 
-18 Kato, S.  et al.  Global Brain Dynamics Embed the Motor Command Sequence of 
-<em>Caenorhabditis elegans</em>. Cell 163, 656- 669, doi:10.1016/j.cell.2015.09.034 
-(2015). 
-19 Husson, S. J., Gottschalk, A. & Leifer, A. M. Optogenetic manipulation of neural activity in 
-C. elegans: From synapse to circuits and behaviour. Biology of the Cell  105, 235-250, 
-doi:https://doi.org/10.1111/boc.201200069 (2013). 
-20 Randi, F., Sharma, A., Dvali, S. & Leifer, A. A functional connectivity atlas of C. elegans 
-measured by neural activation. Bulletin of the American Physical Society (2023). 
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+456-492 (2015).
+4 Lobato-Rios, V. et al. NeuroMechFly, a neuromechanical model of adult Drosophila
+melanogaster. Nature Methods 19, 620-627 (2022).
+5 Merel, J. et al. in International Conference on Learning Representations (2020).
+6 Sarma, G. P. et al. OpenWorm: overview and recent advances in integrative biological
+simulation of <i>Caenorhabditis elegans</i>. Philosophical Transactions of the Royal
+Society B: Biological Sciences 373, 20170382, doi:doi:10.1098/rstb.2017.0382 (2018).
+7 Urai, A. E., Doiron, B., Leifer, A. M. & Churchland, A. K. Large-scale neural recordings call
+for new insights to link brain and behavior. Nature Neuroscience 25, 11-19,
+doi:10.1038/s41593-021-00980-9 (2022).
+8 Zador, A. et al. Catalyzing next-generation Artificial Intelligence through NeuroAI.
+Nature Communications 14, 1597 (2023).
+9 Roth, E., Sponberg, S. & Cowan, N. J. A comparative approach to closed-loop
+computation. Current Opinion in Neurobiology 25, 54-62,
+doi:https://doi.org/10.1016/j.conb.2013.11.005 (2014).
+10 White, J. G., Southgate, E., Thomson, J. N. & Brenner, S. The structure of the nervous
+system of the nematode Caenorhabditis elegans. Philos Trans R Soc Lond B Biol Sci 314,
+1-340 (1986).
+11 Cook, S. J. et al. Whole-animal connectomes of both Caenorhabditis elegans sexes.
+Nature 571, 63-71, doi:10.1038/s41586-019-1352-7 (2019).
+12 Witvliet, D. et al. Connectomes across development reveal principles of brain maturation.
+Nature 596, 257-261, doi:10.1038/s41586-021-03778-8 (2021).
+13 Ruach, R., Ratner, N., Emmons, S. W. & Zaslaver, A. The synaptic organization in the
+<i>Caenorhabditis elegans</i> neural network suggests significant local
+compartmentalized computations. Proceedings of the National Academy of Sciences
+120, e2201699120, doi:doi:10.1073/pnas.2201699120 (2023).
+14 Brittin, C. A., Cook, S. J., Hall, D. H., Emmons, S. W. & Cohen, N. A multi-scale brain map
+derived from whole-brain volumetric reconstructions. Nature 591, 105-110,
+doi:10.1038/s41586-021-03284-x (2021).
+15 Venkatachalam, V. et al. Pan-neuronal imaging in roaming Caenorhabditis elegans.
+Proceedings of the National Academy of Sciences 113, E1082-E1088 (2016).
+16 Li, H. et al. Fast whole - body motor neuron calcium imaging of freely moving
+Caenorhabditis elegans without coverslip pressed. Cytometry Part A 99, 1143-1157
+(2021).
+17 Chronis, N., Zimmer, M. & Bargmann, C. I. Microfluidics for in vivo imaging of neuronal
+and behavioral activity in Caenorhabditis elegans. Nature methods 4, 727-731 (2007).
+18 Kato, S. et al. Global Brain Dynamics Embed the Motor Command Sequence of
+<em>Caenorhabditis elegans</em>. Cell 163, 656-669, doi:10.1016/j.cell.2015.09.034
+(2015).
+19 Husson, S. J., Gottschalk, A. & Leifer, A. M. Optogenetic manipulation of neural activity in
+C. elegans: From synapse to circuits and behaviour. Biology of the Cell 105, 235-250,
+doi:https://doi.org/10.1111/boc.201200069 (2013).
+20 Randi, F., Sharma, A., Dvali, S. & Leifer, A. A functional connectivity atlas of C. elegans
+measured by neural activation. Bulletin of the American Physical Society (2023).
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
-21 Bergs, A. C.  et al. All-optical closed-loop voltage clamp for precise control of muscles 
-and neurons in live animals. bioRxiv, 2022.2006. 2003.494532 (2022). 
-22 Leifer, A. M., Fang -Yen, C., Gershow, M., Alkema, M. J. & Samuel, A. D. Optogenetic 
-manipulation of neural activity in freely moving Caenorhabditis elegans. Nature 
-methods 8, 147-152 (2011). 
-23 Schrödel, T., Prevedel, R., Aumayr, K., Zimmer, M. & Vaziri, A. Brain -wide 3D imaging of 
-neuronal activity in Caenorhabditis elegans with sculpted light. Nature methods  10, 
-1013-1020 (2013). 
-24 Uzel, K., Kato, S. & Zimmer, M. A set of hub neurons and non- local connectivity features 
-support global brain dynamics in C.  elegans. Current Biology  32, 3443- 3459, 
-doi:https://doi.org/10.1016/j.cub.2022.06.039 (2022). 
-25 Bargmann, C. I. Genetic and Cellular Analysis of Behavior in C. Elegans. Annual Review of 
-Neuroscience 16, 47-71, doi:10.1146/annurev.ne.16.030193.000403 (1993). 
-26 Rankin, C. H. From gene to identified neuron to behaviour in Caenorhabditis elegans. 
-Nature Reviews Genetics 3, 622-630, doi:10.1038/nrg864 (2002). 
-27 Gray, J. M., Hill, J. J. & Bargmann, C. I. A circuit for navigation in <i>Caenorhabditis 
-elegans</i>. Proceedings of the National Academy of Sciences  102, 3184- 3191, 
-doi:doi:10.1073/pnas.0409009101 (2005). 
-28 Chalasani, S. H.  et al.  Dissecting a circuit for olfactory behaviour in Caenorhabditis 
-elegans. Nature 450, 63-70 (2007). 
-29 Larsch, J. et al. A circuit for gradient climbing in C. elegans chemotaxis. Cell reports 12, 
-1748-1760 (2015). 
-30 Bargmann, C. I., Hartwieg, E. & Horvitz, H. R. Odorant -selective genes and neurons 
-mediate olfaction in C. elegans. Cell 74, 515-527 (1993). 
-31 Piggott, B. J., Liu, J., Feng, Z., Wescott, S. A. & Xu, X. S. The neural circuits and synaptic 
-mechanisms underlying motor initiation in C. elegans. Cell 147, 922-933 (2011). 
-32 Gleeson, P., Lung, D., Grosu, R., Hasani, R. & Larson, S. D. c302: a multiscale framework 
-for modelling the nervous system of <i>Caenorhabditis elegans</i>. Philosophical 
-Transactions of the Royal Society B: Biological Sciences  373, 20170379, 
-doi:doi:10.1098/rstb.2017.0379 (2018). 
-33 Grove, C. & Sternberg, P. in 18th International C. elegans Meeting. 
-34 Nicoletti, M. et al. Biophysical modeling of C. elegans neurons: Single ion currents and 
-whole-cell dynamics of AWCon and RMD. PLOS ONE  14, e0218738, 
-doi:10.1371/journal.pone.0218738 (2019). 
-35 Sheng, K.  et al.  Domain Adaptive Neural Inference for Neurons, Microcircuits and 
-Networks. bioRxiv 2022.2010. 2003.510694 (2022). 
-36 Ramot, D., MacInnis, B. L. & Goodman, M. B. Bidirectional temperature -sensing by a 
-single thermosensory neuron in C. elegans. Nature neuroscience 11, 908-915 (2008). 
-37 Liu, Q., Kidd, P. B., Dobosiewicz, M. & Bargmann, C. I. C. elegans AWA Olfactory 
-Neurons Fire Calcium -Mediated All -or-None Action Potentials. Cell 175, 57 -70.e17 
-(2018). 
-38 Mellem, J. E., Brockie, P. J., Madsen, D. M. & Maricq, A. V. Action potentials contribute to 
-neuronal signaling in C. elegans. Nature neuroscience 11, 865-867 (2008). 
-39 Liu, P., Chen, B. & Wang, Z.- W. SLO-2 potassium channel is an important regulator of 
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+21 Bergs, A. C. et al. All-optical closed-loop voltage clamp for precise control of muscles
+and neurons in live animals. bioRxiv, 2022.2006. 2003.494532 (2022).
+22 Leifer, A. M., Fang-Yen, C., Gershow, M., Alkema, M. J. & Samuel, A. D. Optogenetic
+manipulation of neural activity in freely moving Caenorhabditis elegans. Nature
+methods 8, 147-152 (2011).
+23 Schrödel, T., Prevedel, R., Aumayr, K., Zimmer, M. & Vaziri, A. Brain-wide 3D imaging of
+neuronal activity in Caenorhabditis elegans with sculpted light. Nature methods 10,
+1013-1020 (2013).
+24 Uzel, K., Kato, S. & Zimmer, M. A set of hub neurons and non-local connectivity features
+support global brain dynamics in C. elegans. Current Biology 32, 3443-3459,
+doi:https://doi.org/10.1016/j.cub.2022.06.039 (2022).
+25 Bargmann, C. I. Genetic and Cellular Analysis of Behavior in C. Elegans. Annual Review of
+Neuroscience 16, 47-71, doi:10.1146/annurev.ne.16.030193.000403 (1993).
+26 Rankin, C. H. From gene to identified neuron to behaviour in Caenorhabditis elegans.
+Nature Reviews Genetics 3, 622-630, doi:10.1038/nrg864 (2002).
+27 Gray, J. M., Hill, J. J. & Bargmann, C. I. A circuit for navigation in <i>Caenorhabditis
+elegans</i>. Proceedings of the National Academy of Sciences 102, 3184-3191,
+doi:doi:10.1073/pnas.0409009101 (2005).
+28 Chalasani, S. H. et al. Dissecting a circuit for olfactory behaviour in Caenorhabditis
+elegans. Nature 450, 63-70 (2007).
+29 Larsch, J. et al. A circuit for gradient climbing in C. elegans chemotaxis. Cell reports 12,
+1748-1760 (2015).
+30 Bargmann, C. I., Hartwieg, E. & Horvitz, H. R. Odorant-selective genes and neurons
+mediate olfaction in C. elegans. Cell 74, 515-527 (1993).
+31 Piggott, B. J., Liu, J., Feng, Z., Wescott, S. A. & Xu, X. S. The neural circuits and synaptic
+mechanisms underlying motor initiation in C. elegans. Cell 147, 922-933 (2011).
+32 Gleeson, P., Lung, D., Grosu, R., Hasani, R. & Larson, S. D. c302: a multiscale framework
+for modelling the nervous system of <i>Caenorhabditis elegans</i>. Philosophical
+Transactions of the Royal Society B: Biological Sciences 373, 20170379,
+doi:doi:10.1098/rstb.2017.0379 (2018).
+33 Grove, C. & Sternberg, P. in 18th International C. elegans Meeting.
+34 Nicoletti, M. et al. Biophysical modeling of C. elegans neurons: Single ion currents and
+whole-cell dynamics of AWCon and RMD. PLOS ONE 14, e0218738,
+doi:10.1371/journal.pone.0218738 (2019).
+35 Sheng, K. et al. Domain Adaptive Neural Inference for Neurons, Microcircuits and
+Networks. bioRxiv 2022.2010. 2003.510694 (2022).
+36 Ramot, D., MacInnis, B. L. & Goodman, M. B. Bidirectional temperature-sensing by a
+single thermosensory neuron in C. elegans. Nature neuroscience 11, 908-915 (2008).
+37 Liu, Q., Kidd, P. B., Dobosiewicz, M. & Bargmann, C. I. C. elegans AWA Olfactory
+Neurons Fire Calcium-Mediated All-or-None Action Potentials. Cell 175, 57-70.e17
+(2018).
+38 Mellem, J. E., Brockie, P. J., Madsen, D. M. & Maricq, A. V. Action potentials contribute to
+neuronal signaling in C. elegans. Nature neuroscience 11, 865-867 (2008).
+39 Liu, P., Chen, B. & Wang, Z.-W. SLO-2 potassium channel is an important regulator of
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
-neurotransmitter release in Caenorhabditis elegans. Nature communications  5, 5155 
-(2014). 
-40 Mainen, Z. F. & Sejnowski, T. J. Influence of dendritic structure on firing pattern in model 
-neocortical neurons. Nature 382, 363 (1996). 
-41 Wicks, S. R., Roehrig, C. J. & Rankin, C. H. A dynamic network simulation of the 
-nematode tap withdrawal circuit: predictions concerning synaptic function using 
-behavioral criteria. Journal of Neuroscience 16, 4017-4031 (1996). 
-42 Prinz, A. A., Bucher, D. & Marder, E. Similar network activity from disparate circuit 
-parameters. Nature Neuroscience 7, 1345-1352, doi:10.1038/nn1352 (2004). 
-43 Sakata, K. & Shingai, R. Neural network model to generate head swing in locomotion of 
-Caenorhabditis elegans. Network: Computation in Neural Systems 15, 199 (2004). 
-44 Min, S., Won, J., Lee, S., Park, J. & Lee, J. Softcon: Simulation and control of soft -bodied 
-animals with biomimetic actuators. ACM Transactions on Graphics (TOG)  38, 1 -12 
-(2019). 
-45 Sznitman, J., Purohit, P. K., Krajacic, P., Lamitina, T. & Arratia, P. E. Material Properties of 
-<em>Caenorhabditis elegans</em> Swimming at Low Reynolds Number. Biophysical 
-Journal 98, 617-626, doi:10.1016/j.bpj.2009.11.010 (2010). 
-46 Bilbao, A., Patel, A. K., Rahman, M., Vanapalli, S. A. & Blawzdziewicz, J. Roll maneuvers 
-are essential for active reorientation of Caenorhabditis elegans in 3D media. 
-Proceedings of the National Academy of Sciences 115, E3616-E3625 (2018). 
-47 Salfelder, F.  et al.  Markerless 3D spatio -temporal reconstruction of microscopic 
-swimmers from video. visual observation and analysis of vertebrate and insect behavior  
-(2020). 
-48 Wen, Q. et al. Proprioceptive coupling within motor neurons drives C. elegans forward 
-locomotion. Neuron 76, 750-761 (2012). 
-49 Kwon, N., Pyo, J., Lee, S.- J. & Je, J. H. 3 -D worm tracker for freely moving C. elegans. 
-PloS one 8, e57484 (2013). 
- 
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+neurotransmitter release in Caenorhabditis elegans. Nature communications 5, 5155
+(2014).
+40 Mainen, Z. F. & Sejnowski, T. J. Influence of dendritic structure on firing pattern in model
+neocortical neurons. Nature 382, 363 (1996).
+41 Wicks, S. R., Roehrig, C. J. & Rankin, C. H. A dynamic network simulation of the
+nematode tap withdrawal circuit: predictions concerning synaptic function using
+behavioral criteria. Journal of Neuroscience 16, 4017-4031 (1996).
+42 Prinz, A. A., Bucher, D. & Marder, E. Similar network activity from disparate circuit
+parameters. Nature Neuroscience 7, 1345-1352, doi:10.1038/nn1352 (2004).
+43 Sakata, K. & Shingai, R. Neural network model to generate head swing in locomotion of
+Caenorhabditis elegans. Network: Computation in Neural Systems 15, 199 (2004).
+44 Min, S., Won, J., Lee, S., Park, J. & Lee, J. Softcon: Simulation and control of soft-bodied
+animals with biomimetic actuators. ACM Transactions on Graphics (TOG) 38, 1-12
+(2019).
+45 Sznitman, J., Purohit, P. K., Krajacic, P., Lamitina, T. & Arratia, P. E. Material Properties of
+<em>Caenorhabditis elegans</em> Swimming at Low Reynolds Number. Biophysical
+Journal 98, 617-626, doi:10.1016/j.bpj.2009.11.010 (2010).
+46 Bilbao, A., Patel, A. K., Rahman, M., Vanapalli, S. A. & Blawzdziewicz, J. Roll maneuvers
+are essential for active reorientation of Caenorhabditis elegans in 3D media.
+Proceedings of the National Academy of Sciences 115, E3616-E3625 (2018).
+47 Salfelder, F. et al. Markerless 3D spatio-temporal reconstruction of microscopic
+swimmers from video. visual observation and analysis of vertebrate and insect behavior
+(2020).
+48 Bhovad, P. & Li, S. Physical reservoir computing with origami and its application to
+robotic crawling. Scientific Reports 11, 13002, doi:10.1038/s41598-021-92257-1 (2021).
+49 Wen, Q. et al. Proprioceptive coupling within motor neurons drives C. elegans forward
+locomotion. Neuron 76, 750-761 (2012).
+50 Kwon, N., Pyo, J., Lee, S.-J. & Je, J. H. 3-D worm tracker for freely moving C. elegans.
+PloS one 8, e57484 (2013).
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
 Methods 
 1 Details of Neural Network Model 
@@ -660,8 +653,8 @@ The neuron models were connected by graded synapses8,11 and gap junctions12 in C
 neural network. Graded synapses, include excitatory and inhibitory synapses, were modeled 
 according to published C. elegans  models 4,13,14. The synaptic conductance is continuously 
 changed with presynaptic membrane potential. Postsynaptic current is given by: 
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
 ⎩
 ⎪
@@ -720,8 +713,8 @@ Input:
 𝐵𝐵�𝑏𝑏0, 𝑏𝑏1, … ,𝑏𝑏𝑁𝑁𝑏𝑏−1�: set of all compartments of another neuron B. 
 𝑁𝑁𝑠𝑠 �𝑁𝑁𝑔𝑔�: desired synapses (gap junctions) number between these two neurons. 
 𝐷𝐷𝑠𝑠 �𝐷𝐷𝑔𝑔� : Inverse Gaussian distribution of synapses (gap junctions) fitted 
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
 above. 
 𝑑𝑑𝑡𝑡ℎ: distance threshold of one synapse (gap junction).  
@@ -791,8 +784,8 @@ nd if
 end while 
 return 𝐶𝐶𝑠𝑠, 𝐶𝐶𝑔𝑔 
 1.4 C. elegans neural network model 
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
 Our neural network model consists of 136 neurons, including 15 sensory neurons for inputs 
 and 80 motor neurons for outputs (Supplement Table S5). Here are the reasons why we chose 
@@ -839,8 +832,8 @@ consistent with real C. elegans.
 muscles were grouped into longitudinal string, marked as ventral right (VR), ventral left 
 (VL), dorsal right (DR), dorsal left (DL) in four quadrants (Fig.6B)19. We imported body 
 membrane mesh into blender21 and modeled VR, VL, DR, DL by four Bezier curves. Then 
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
 muscle geometry was exported as wavefront obj file. We used Finite Element Method (FEM) 
 to simulate the soft body, and used finite element constraints to simulate elastic muscle cells 
@@ -886,8 +879,8 @@ no external force acting on the standard body surface. The S BCS is a three-dime
 orthogonal coordinate system used to reflect the overall structure and function of the standard 
 body. In this case, we define the SBCS with origin at the standard body center. X-axis of the 
 SBCS is towards the head of the standard body. Z- axis of the S BCS is towards ventral to 
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
 dorsal direction of the standard body. Three axes of the SBCS form a right-handed coordinate 
 system. Schematic diagram of the target body, the standard body and the SBCS can been seen 
@@ -948,8 +941,8 @@ as the orthogonal coordinate axis.
 2.6 Numerically stable measurements of body movement 
 1) Measurement of body trajectory 
 During behavior analysis, C. elegans  can be seen as a deformable biology composed of 
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
 multiple points. When studying the locomotion of a deformable body, generally one or more 
 points of biology body is defined as tracking object, and locomotion of deformable body is 
@@ -1002,8 +995,8 @@ a measurement of steering, as shown in Fig ure 7D. Both 𝑣𝑣𝑖𝑖 and the
 stable over time, thus θ is also numerically stable. 
 3 Locomotion Behavior Simulation of C. elegans  
 3.1 Simulation configuration 
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
 The neural network simulation was coupled with the physical body & environment 
 simulation to achieve closed-loop interaction. Food was at the center of the simulated 
@@ -1049,8 +1042,8 @@ application to conduction and excitation in nerve. The Journal of physiology  11
 2 Nicoletti, M. et al. Biophysical modeling of C. elegans neurons: Single ion currents and 
 whole-cell dynamics of AWCon and RMD. PLOS ONE  14, e0218738, 
 doi:10.1371/journal.pone.0218738 (2019). 
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
 3 Grove, C. & Sternberg, P. in 18th International C. elegans Meeting. 
 4 Gleeson, P., Lung, D., Grosu, R., Hasani, R. & Larson, S. D. c302: a multiscale framework 
@@ -1096,8 +1089,8 @@ doi:https://doi.org/10.1016/j.cub.2022.06.039 (2022).
 18 Chalasani, S. H.  et al.  Dissecting a circuit for olfactory behaviour in Caenorhabditis 
 elegans. Nature 450, 63-70 (2007). 
 19 Palyanov, A., Khayrulin, S. & Larson, S. D. Three- dimensional simulation of the 
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
 
 Caenorhabditis elegans body and muscle cells in liquid and gel environments for 
 behavioural analysis. Philosophical Transactions of the Royal Society B: Biological 
@@ -1114,5 +1107,5 @@ animals with biomimetic actuators. ACM Transactions on Graphics (TOG)  38, 1 -12
 24 Hines, M. L. & Carnevale, N. T. NEURON: a tool for neuroscientists. The Neuroscientist 7, 
 123-135 (2001). 
  
-preprint (which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
-The copyright holder for thisthis version posted February 26, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint
+(which was not certified by peer review) is the author/funder. All rights reserved. No reuse allowed without permission. 
+The copyright holder for this preprintthis version posted March 10, 2024. ; https://doi.org/10.1101/2024.02.22.581686doi: bioRxiv preprint

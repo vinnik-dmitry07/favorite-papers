@@ -229,6 +229,11 @@ def fetch_acl(acl_id: str) -> dict:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument('--force', action='store_true', help='refetch every paper')
+    parser.add_argument(
+        '--only-keys',
+        default='',
+        help='comma-separated keys to refetch (implies force for those keys)',
+    )
     return parser.parse_args()
 
 
@@ -249,11 +254,17 @@ def main() -> None:
     papers = read_jsonl(PAPERS_JSONL)
     if not papers:
         raise SystemExit('run filter/collect_readme.py first')
+    wanted = {part.strip() for part in args.only_keys.split(',') if part.strip()}
     cached = {row['key']: row for row in read_jsonl(META_JSONL)}
-    pending = [
-        paper for paper in papers
-        if args.force or not meta_complete(cached.get(paper['key']))
-    ]
+    if wanted:
+        pending = [paper for paper in papers if paper['key'] in wanted]
+        if not pending:
+            raise SystemExit(f'no papers match --only-keys {sorted(wanted)}')
+    else:
+        pending = [
+            paper for paper in papers
+            if args.force or not meta_complete(cached.get(paper['key']))
+        ]
     print(f'{len(cached)} cached, {len(pending)} to fetch', flush=True)
 
     arxiv_ids = []

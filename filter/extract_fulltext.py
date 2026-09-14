@@ -12,6 +12,7 @@ import io
 import json
 import re
 import sys
+import time
 import urllib.request
 import zipfile
 from pathlib import Path
@@ -246,8 +247,69 @@ def local_pdf_text(key: str) -> str | None:
     return None
 
 
-BIORXIV_RE = re.compile(r'biorxiv\.org/content/(10\.1101/[\d.]+?)(v\d+)?(?:\.full)?(?:\.pdf)?/?$')
+BIORXIV_RE = re.compile(
+    r'biorxiv\.org/content/(10\.1101/[\d.]+)(v\d+)?(?:\.full)?(?:\.pdf)?/?$'
+)
 RS_RE = re.compile(r'^10\.21203/rs\.3\.(rs-\d+)/(v\d+)$')
+ARXIV_WATERMARK_RE = re.compile(r'arXiv:(\d{4}\.\d{4,5})v(\d+)')
+_BIORXIV_VER_CACHE: dict[str, int] = {}
+
+
+def biorxiv_latest_version(doi: str) -> str:
+    '''Latest bioRxiv version tag (`v2`), cached per run. Falls back to `v1`.'''
+    if doi in _BIORXIV_VER_CACHE:
+        return f'v{_BIORXIV_VER_CACHE[doi]}'
+    version = 1
+    raw = download_bytes(
+        f'https://api.biorxiv.org/details/biorxiv/{doi}',
+        timeout=30,
+        browser=True,
+    )
+    if raw:
+        try:
+            coll = json.loads(raw.decode('utf-8', 'replace')).get('collection') or []
+            versions = [int(c.get('version') or 0) for c in coll]
+            if versions:
+                version = max(versions)
+        except json.JSONDecodeError:
+            pass
+    _BIORXIV_VER_CACHE[doi] = version
+    print(f'  biorxiv {doi} -> v{version}', flush=True)
+    return f'v{version}'
+
+
+def detect_arxiv_version(text: str, aid: str) -> int | None:
+    if not text or not aid:
+        return None
+    esc = re.escape(aid)
+    for pattern in (
+        rf'arXiv:{esc}v(\d+)\s*\[',
+        rf'/abs/{esc}v(\d+)',
+        rf'/html/{esc}v(\d+)',
+        rf'/pdf/{esc}v(\d+)',
+        rf'arXiv:{esc}v(\d+)',
+    ):
+        match = re.search(pattern, text)
+        if match:
+            return int(match.group(1))
+    match = ARXIV_WATERMARK_RE.search(text)
+    if match and match.group(1) == aid:
+        return int(match.group(2))
+    return None
+
+
+def detect_source_version(key: str, text: str) -> int | None:
+    kind, value = key.split(':', 1)
+    if kind == 'arxiv':
+        return detect_arxiv_version(text, value)
+    if kind == 'doi' and value.startswith('10.1101/'):
+        cached = _BIORXIV_VER_CACHE.get(value)
+        if cached:
+            return cached
+        match = ARXIV_WATERMARK_RE.search(text or '')
+        if match:
+            return int(match.group(2))
+    return None
 
 
 def pdf_fallback_urls(paper: dict) -> list[str]:
@@ -260,7 +322,10 @@ def pdf_fallback_urls(paper: dict) -> list[str]:
         urls.append(f'https://aclanthology.org/{value}.pdf')
     elif kind == 'doi':
         if value.startswith('10.1101/'):
-            urls.append(f'https://www.biorxiv.org/content/{value}v1.full.pdf')
+            urls.append(
+                f'https://www.biorxiv.org/content/{value}'
+                f'{biorxiv_latest_version(value)}.full.pdf'
+            )
         match = RS_RE.match(value)
         if match:
             urls.append(
@@ -269,8 +334,9 @@ def pdf_fallback_urls(paper: dict) -> list[str]:
     for url in paper.get('urls') or []:
         match = BIORXIV_RE.search(url)
         if match:
+            ver = match.group(2) or biorxiv_latest_version(match.group(1))
             urls.append(
-                f'https://www.biorxiv.org/content/{match.group(1)}{match.group(2) or "v1"}.full.pdf'
+                f'https://www.biorxiv.org/content/{match.group(1)}{ver}.full.pdf'
             )
     seen, out = set(), []
     for url in urls:
@@ -282,19 +348,24 @@ def pdf_fallback_urls(paper: dict) -> list[str]:
 
 def fetch_pdf(urls: list[str]) -> str | None:
     for url in urls:
-        print(f'  pdf {url}', flush=True)
-        data = download_bytes(url, timeout=90, browser=True)
-        if not data or not data.startswith(b'%PDF'):
-            print(f'  not a pdf ({0 if not data else len(data)} bytes)', flush=True)
-            continue
-        try:
-            text = pdf_to_text(data)
-        except Exception as exc:  # noqa: BLE001
-            print(f'  pdf parse fail: {exc}', flush=True)
-            continue
-        if text and not is_garbage_text(text):
-            return text
-        print(f'  pdf text garbage or empty ({len(text or "")} chars)', flush=True)
+        for attempt in range(3):
+            print(f'  pdf {url}', flush=True)
+            data = download_bytes(url, timeout=90, browser=True)
+            if not data or not data.startswith(b'%PDF'):
+                print(f'  not a pdf ({0 if not data else len(data)} bytes)', flush=True)
+                if attempt < 2:
+                    time.sleep(8 * (attempt + 1))
+                    continue
+                break
+            try:
+                text = pdf_to_text(data)
+            except Exception as exc:  # noqa: BLE001
+                print(f'  pdf parse fail: {exc}', flush=True)
+                break
+            if text and not is_garbage_text(text):
+                return text
+            print(f'  pdf text garbage or empty ({len(text or "")} chars)', flush=True)
+            break
     return None
 
 
@@ -324,6 +395,7 @@ def missing_entry(key: str) -> dict:
         'has_refs': False,
         'source': 'missing',
         'incomplete': True,
+        'version': None,
     }
 
 
@@ -331,6 +403,7 @@ def extract_paper(paper: dict) -> dict:
     key = paper['key']
     kind, value = key.split(':', 1)
     source = 'cache'
+    version_text = ''
     markup = load_cached_html(key)
     if markup is not None and (len(markup) <= 2000 or is_garbage_text(markup)):
         markup = None
@@ -346,12 +419,15 @@ def extract_paper(paper: dict) -> dict:
         markdown = html_to_markdown(markup)
         if is_garbage_text(markdown):
             markdown = ''
+        else:
+            version_text = markup
     # Abstract-only HTML (arXiv stubs, ACL landing pages) loses to a real PDF.
     if not markdown or estimate_tokens(markdown) < 3000:
         local = local_pdf_text(key)
         if local and len(local) > len(markdown):
             source = 'local-pdf'
             markdown = local
+            version_text = local
     if not markdown or estimate_tokens(markdown) < 3000:
         urls = list(EXTRA_PDF_URLS.get(key, ()))
         if kind == 'openreview':
@@ -362,6 +438,7 @@ def extract_paper(paper: dict) -> dict:
         if remote and len(remote) > len(markdown):
             source = 'pdf'
             markdown = remote
+            version_text = remote
     path = FULLTEXT_DIR / f'{safe_key(key)}.md'
     if not markdown:
         if path.exists():
@@ -370,6 +447,7 @@ def extract_paper(paper: dict) -> dict:
     body, refs, appendix = split_sections(markdown)
     write_markdown(key, body, refs, appendix)
     tokens = estimate_tokens(path.read_text(encoding='utf-8'))
+    version = detect_source_version(key, version_text or markdown)
     return {
         'key': key,
         'n_tokens': tokens,
@@ -377,6 +455,7 @@ def extract_paper(paper: dict) -> dict:
         'source': source,
         'incomplete': tokens < 3000,
         'path': path.name,
+        'version': version,
     }
 
 
@@ -434,7 +513,8 @@ def main() -> None:
             short += 1
         print(
             f'progress: {done}/{total} ({100 * done / total:.0f}%) '
-            f'{paper["key"]} source={entry["source"]} tokens={entry["n_tokens"]}',
+            f'{paper["key"]} source={entry["source"]} tokens={entry["n_tokens"]} '
+            f'version={entry.get("version")}',
             flush=True,
         )
     if wanted:

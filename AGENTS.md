@@ -13,6 +13,9 @@ including the mistakes.
 1. readme      one bullet per paper, right section, newest first, first URL = key
 2. filter      collect_readme -> fetch_meta -> extract_fulltext --only-keys ...
    CHECK       fulltext '#' title == readme title for every new key
+2b. versions   check_versions.py --only-keys ... (new keys); bare run before every GPU session
+   CHECK       status ok / mirror / ok-publisher for every new key; unknown means no watermark -> fetch arxiv.org/pdf
+               stale -> --refresh -> rescore the key
 3. telegram    tg/find.py per paper -> prepend a section to tg_link_choices.md -> wait for picks
 4. map         parse_readme -> fetch_refs -> build_graph -> import_litmaps <csv>
 5. gpu         rsync inputs -> run queue with --only-keys -> pull scores_*.jsonl + reviews
@@ -103,6 +106,53 @@ python filter/extract_fulltext.py --only-keys k1,k2 # filter/fulltext/<safe_key>
 - `safe_key` replaces `:` and `/` with `_`:
   `arxiv_2410.04444.md`, `doi_10.1038_s41586-023-06924-6.md`.
 
+## 2b. Version check
+
+Cached HTML and scored markdown go stale when arXiv / bioRxiv publish a new
+`vN`. Readme links stay versionless on purpose — they always resolve to latest;
+only the cached text goes stale.
+
+```powershell
+python filter/check_versions.py --only-keys k1,k2   # new papers, seconds
+python filter/check_versions.py                     # incremental, skip rows checked < 7 days (~7 min cold)
+python filter/check_versions.py --force             # ignore the age cache
+python filter/check_versions.py --refresh           # re-download stale keys, then re-check
+```
+
+Writes `filter/versions.jsonl` (`key, aid, source, used, latest, latest_date,
+status, checked`). Exit code 1 if any `stale`.
+
+Statuses:
+
+- `ok` — watermark / index version equals the `/abs` or bioRxiv latest
+- `stale` — used `vN` is behind latest
+- `unknown` — no watermark (ar5iv HTML, publisher/OpenReview PDF). Fetch
+  `arxiv.org/pdf/<id>` or add a local PDF and re-extract
+- `mirror` — OpenReview / DOI scored from an arXiv extra URL; informational,
+  never treated as stale (camera-ready is the catalog identity)
+- `ok-publisher` — allowlisted publisher PDF (Boston Review, Neuron, Nature
+  Reviews, TPU v4 local)
+- `no-fetch` — `/abs` or bioRxiv API failed after retries
+
+`stale` requires: `--refresh` (deletes `cache/<key>.html.gz`, then
+`src/fetch_refs.py --refresh --only`, `extract_fulltext.py --only-keys`,
+`fetch_meta.py --only-keys`) → rescore with the `_rescore_eight.sh` pattern
+(drop rows + review file first) → `build_report.py` → `add_score_badges.py`.
+Abstract scorers only if `meta.jsonl` abstract changed. Ask before GPU spend;
+SciJudge shifts every existing score.
+
+Traps (they all happened):
+
+- Never batch `export.arxiv.org/api/query` — 100-id batches get 429 and stay
+  429. The checker scrapes `arxiv.org/abs/<id>` at 1.2 s/page.
+- ar5iv HTML and local publisher PDFs have no `arXiv:<id>vN` watermark.
+  `extract_fulltext.py` now writes `version` into `fulltext_index.jsonl` from
+  the source text before markdown conversion.
+- bioRxiv PDF fallback used to pin `v1`. It now asks `api.biorxiv.org` and
+  caches the latest `vN` per run. DOI regex must be greedy with explicit
+  terminators (`v\d`, `.full`, `.pdf`) — `[\d.]+?` truncated
+  `10.1101/2025.07.26.666979` to `10.1101/2`.
+
 ## 3. Telegram candidates
 
 Index: `tg/ml_folder.sqlite` (~410 MB, untracked). Refresh with
@@ -172,8 +222,9 @@ Ask before spending. `vastai show user --raw` → `credit`; RTX PRO 6000 WS is
   with `nohup bash … > logs/<name>.nohup 2>&1 &`, poll with
   `grep -E '\[step\]|cached,|FAILED' logs/<name>.log`.
 - Every scorer is incremental (`scored_keys()` skips cached keys), so running
-  the whole queue for one new key is safe. To rescore a key, drop its rows and
-  review file first (pattern in `filter/remote/_rescore_eight.sh`).
+  the whole queue for one new key is safe. To rescore a key (including one
+  that `check_versions.py` marked `stale` after `--refresh`), drop its rows
+  and review file first (pattern in `filter/remote/_rescore_eight.sh`).
 - Timings for one paper: NAIP < 1 min; SciJudge ~1 min load + ~1.5 min for
   ~60 new pairs; each reviewer 1–4 min including vLLM boot; DR-7B Standard is
   the slowest. Seven papers took ~50 min wall, ~40 of them SciJudge.
@@ -226,6 +277,8 @@ python filter/add_score_badges.py    # rewrites every [⚖ …] badge in readme.
 | papers | `filter/collect_readme.py` | `filter/papers.jsonl` |
 | meta | `filter/fetch_meta.py` | `filter/meta.jsonl` |
 | fulltext | `filter/extract_fulltext.py --only-keys` | `filter/fulltext/`, `fulltext_index.jsonl`, `fulltext.zip` |
+| versions | `filter/check_versions.py [--only-keys] [--refresh]` | `filter/versions.jsonl` |
+| llm inventory | `filter/build_llm_models.py` (or `--extract-dir`) | `filter/llm_models.jsonl`, `llm_models.md` |
 | abstract scorers (GPU) | `filter/remote/score_naip.py`, `score_scijudge.py` | `scores_naipv1/naipv2/scijudge.jsonl` |
 | full-paper reviewers (GPU) | `filter/remote/score_reviewers.py --model … --only-keys …` | `scores_<model>.jsonl`, `reviews/<model>/` |
 | abstract scorer (CPU) | `filter/score_dgcbert.py --device cpu` | `scores_dgcbert.jsonl` |
