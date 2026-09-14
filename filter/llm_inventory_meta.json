@@ -1,0 +1,1073 @@
+{
+  "excluded": [
+    {
+      "key": "arxiv:2608.17163",
+      "safe_key": "arxiv_2608.17163",
+      "title": "Q-Learning With World Models (QWM)",
+      "section": "Reinforcement learning",
+      "rel_path": "filter/fulltext/arxiv_2608.17163.md",
+      "n_tokens": 16555
+    },
+    {
+      "key": "arxiv:2501.16142",
+      "safe_key": "arxiv_2501.16142",
+      "title": "Towards General-Purpose Model-Free RL (MR.Q)",
+      "section": "Reinforcement learning",
+      "rel_path": "filter/fulltext/arxiv_2501.16142.md",
+      "n_tokens": 3946
+    },
+    {
+      "key": "arxiv:2411.03820",
+      "safe_key": "arxiv_2411.03820",
+      "title": "Beyond The Rainbow: High Performance Deep RL on a Desktop PC",
+      "section": "Reinforcement learning",
+      "rel_path": "filter/fulltext/arxiv_2411.03820.md",
+      "n_tokens": 15091
+    },
+    {
+      "key": "arxiv:2312.13327",
+      "safe_key": "arxiv_2312.13327",
+      "title": "In-Context RL for Variable Action Spaces",
+      "section": "Reinforcement learning",
+      "rel_path": "filter/fulltext/arxiv_2312.13327.md",
+      "n_tokens": 15286
+    },
+    {
+      "key": "arxiv:2312.00276",
+      "safe_key": "arxiv_2312.00276",
+      "title": "Metalearning Continual Learning Algorithms",
+      "section": "Reinforcement learning",
+      "rel_path": "filter/fulltext/arxiv_2312.00276.md",
+      "n_tokens": 24367
+    },
+    {
+      "key": "arxiv:2306.02451",
+      "safe_key": "arxiv_2306.02451",
+      "title": "For SALE: State-Action Representation Learning",
+      "section": "Reinforcement learning",
+      "rel_path": "filter/fulltext/arxiv_2306.02451.md",
+      "n_tokens": 10966
+    },
+    {
+      "key": "arxiv:2305.19452",
+      "safe_key": "arxiv_2305.19452",
+      "title": "BBF: Bigger, Better, Faster — Human-level Atari with human-level efficiency",
+      "section": "Reinforcement learning",
+      "rel_path": "filter/fulltext/arxiv_2305.19452.md",
+      "n_tokens": 12747
+    },
+    {
+      "key": "arxiv:2301.04104",
+      "safe_key": "arxiv_2301.04104",
+      "title": "DreamerV3: Mastering Diverse Domains through World Models",
+      "section": "Reinforcement learning",
+      "rel_path": "filter/fulltext/arxiv_2301.04104.md",
+      "n_tokens": 16987
+    },
+    {
+      "key": "arxiv:2205.07802",
+      "safe_key": "arxiv_2205.07802",
+      "title": "The Primacy Bias in Deep RL",
+      "section": "Reinforcement learning",
+      "rel_path": "filter/fulltext/arxiv_2205.07802.md",
+      "n_tokens": 15278
+    },
+    {
+      "key": "arxiv:2011.14826",
+      "safe_key": "arxiv_2011.14826",
+      "title": "Revisiting Rainbow",
+      "section": "Reinforcement learning",
+      "rel_path": "filter/fulltext/arxiv_2011.14826.md",
+      "n_tokens": 13380
+    },
+    {
+      "key": "arxiv:2004.12919",
+      "safe_key": "arxiv_2004.12919",
+      "title": "First return, then explore (Go-Explore, Nature)",
+      "section": "Reinforcement learning",
+      "rel_path": "filter/fulltext/arxiv_2004.12919.md",
+      "n_tokens": 30824
+    },
+    {
+      "key": "arxiv:1910.01708",
+      "safe_key": "arxiv_1910.01708",
+      "title": "Benchmarking Batch Deep RL Algorithms",
+      "section": "Reinforcement learning",
+      "rel_path": "filter/fulltext/arxiv_1910.01708.md",
+      "n_tokens": 11406
+    },
+    {
+      "key": "arxiv:1802.09477",
+      "safe_key": "arxiv_1802.09477",
+      "title": "Addressing Function Approximation Error in Actor-Critic (TD3)",
+      "section": "Reinforcement learning",
+      "rel_path": "filter/fulltext/arxiv_1802.09477.md",
+      "n_tokens": 15426
+    },
+    {
+      "key": "arxiv:1801.01290",
+      "safe_key": "arxiv_1801.01290",
+      "title": "Soft Actor-Critic (SAC)",
+      "section": "Reinforcement learning",
+      "rel_path": "filter/fulltext/arxiv_1801.01290.md",
+      "n_tokens": 14446
+    },
+    {
+      "key": "arxiv:1712.06567",
+      "safe_key": "arxiv_1712.06567",
+      "title": "Deep Neuroevolution: GAs as an alternative to training RL networks",
+      "section": "Reinforcement learning",
+      "rel_path": "filter/fulltext/arxiv_1712.06567.md",
+      "n_tokens": 15409
+    },
+    {
+      "key": "arxiv:1710.02298",
+      "safe_key": "arxiv_1710.02298",
+      "title": "Rainbow: Combining Improvements in Deep RL",
+      "section": "Reinforcement learning",
+      "rel_path": "filter/fulltext/arxiv_1710.02298.md",
+      "n_tokens": 10325
+    },
+    {
+      "key": "arxiv:1511.06581",
+      "safe_key": "arxiv_1511.06581",
+      "title": "Dueling Network Architectures for Deep RL",
+      "section": "Reinforcement learning",
+      "rel_path": "filter/fulltext/arxiv_1511.06581.md",
+      "n_tokens": 11063
+    },
+    {
+      "key": "arxiv:1509.06461",
+      "safe_key": "arxiv_1509.06461",
+      "title": "Deep Reinforcement Learning with Double Q-learning",
+      "section": "Reinforcement learning",
+      "rel_path": "filter/fulltext/arxiv_1509.06461.md",
+      "n_tokens": 11332
+    },
+    {
+      "key": "arxiv:2302.07253",
+      "safe_key": "arxiv_2302.07253",
+      "title": "Energy Transformer",
+      "section": "LLMs: architectures, context, training",
+      "rel_path": "filter/fulltext/arxiv_2302.07253.md",
+      "n_tokens": 21679
+    },
+    {
+      "key": "arxiv:2203.08913",
+      "safe_key": "arxiv_2203.08913",
+      "title": "Memorizing Transformers",
+      "section": "LLMs: architectures, context, training",
+      "rel_path": "filter/fulltext/arxiv_2203.08913.md",
+      "n_tokens": 13130
+    },
+    {
+      "key": "arxiv:2006.16236",
+      "safe_key": "arxiv_2006.16236",
+      "title": "Transformers are RNNs: Fast Autoregressive Transformers with Linear Attention",
+      "section": "LLMs: architectures, context, training",
+      "rel_path": "filter/fulltext/arxiv_2006.16236.md",
+      "n_tokens": 13625
+    },
+    {
+      "key": "arxiv:2002.05202",
+      "safe_key": "arxiv_2002.05202",
+      "title": "GLU Variants Improve Transformer (SwiGLU)",
+      "section": "LLMs: architectures, context, training",
+      "rel_path": "filter/fulltext/arxiv_2002.05202.md",
+      "n_tokens": 3053
+    },
+    {
+      "key": "arxiv:1710.05941",
+      "safe_key": "arxiv_1710.05941",
+      "title": "Searching for Activation Functions (Swish)",
+      "section": "LLMs: architectures, context, training",
+      "rel_path": "filter/fulltext/arxiv_1710.05941.md",
+      "n_tokens": 10387
+    },
+    {
+      "key": "arxiv:2405.15682",
+      "safe_key": "arxiv_2405.15682",
+      "title": "The Road Less Scheduled (Schedule-Free)",
+      "section": "Data, training, optimization",
+      "rel_path": "filter/fulltext/arxiv_2405.15682.md",
+      "n_tokens": 26272
+    },
+    {
+      "key": "arxiv:2401.17401",
+      "safe_key": "arxiv_2401.17401",
+      "title": "Step-size Optimization for Continual Learning",
+      "section": "Data, training, optimization",
+      "rel_path": "filter/fulltext/arxiv_2401.17401.md",
+      "n_tokens": 8459
+    },
+    {
+      "key": "arxiv:2312.10549",
+      "safe_key": "arxiv_2312.10549",
+      "title": "Catastrophic Forgetting in Deep Learning: A Comprehensive Taxonomy",
+      "section": "Data, training, optimization",
+      "rel_path": "filter/fulltext/arxiv_2312.10549.md",
+      "n_tokens": 33178
+    },
+    {
+      "key": "arxiv:2108.06325",
+      "safe_key": "arxiv_2108.06325",
+      "title": "Continual Backprop: SGD with Persistent Randomness",
+      "section": "Data, training, optimization",
+      "rel_path": "filter/fulltext/arxiv_2108.06325.md",
+      "n_tokens": 13272
+    },
+    {
+      "key": "arxiv:2009.11243",
+      "safe_key": "arxiv_2009.11243",
+      "title": "Learned optimizers: training an optimizer with itself",
+      "section": "Data, training, optimization",
+      "rel_path": "filter/fulltext/arxiv_2009.11243.md",
+      "n_tokens": 21435
+    },
+    {
+      "key": "arxiv:2001.08361",
+      "safe_key": "arxiv_2001.08361",
+      "title": "Scaling Laws for Neural Language Models",
+      "section": "Data, training, optimization",
+      "rel_path": "filter/fulltext/arxiv_2001.08361.md",
+      "n_tokens": 20413
+    },
+    {
+      "key": "arxiv:1904.00962",
+      "safe_key": "arxiv_1904.00962",
+      "title": "LAMB: Training BERT in 76 minutes",
+      "section": "Data, training, optimization",
+      "rel_path": "filter/fulltext/arxiv_1904.00962.md",
+      "n_tokens": 16647
+    },
+    {
+      "key": "arxiv:1803.03635",
+      "safe_key": "arxiv_1803.03635",
+      "title": "The Lottery Ticket Hypothesis",
+      "section": "Data, training, optimization",
+      "rel_path": "filter/fulltext/arxiv_1803.03635.md",
+      "n_tokens": 25639
+    },
+    {
+      "key": "openreview:ry_WPG-A-",
+      "safe_key": "openreview_ry_WPG-A-",
+      "title": "On the Information Bottleneck Theory of Deep Learning (Saxe et al.)",
+      "section": "Data, training, optimization",
+      "rel_path": "filter/fulltext/openreview_ry_WPG-A-.md",
+      "n_tokens": 19150
+    },
+    {
+      "key": "arxiv:1708.07120",
+      "safe_key": "arxiv_1708.07120",
+      "title": "Super-Convergence (one-cycle)",
+      "section": "Data, training, optimization",
+      "rel_path": "filter/fulltext/arxiv_1708.07120.md",
+      "n_tokens": 13058
+    },
+    {
+      "key": "arxiv:1708.02072",
+      "safe_key": "arxiv_1708.02072",
+      "title": "Measuring Catastrophic Forgetting in Neural Networks",
+      "section": "Data, training, optimization",
+      "rel_path": "filter/fulltext/arxiv_1708.02072.md",
+      "n_tokens": 13386
+    },
+    {
+      "key": "arxiv:1506.01186",
+      "safe_key": "arxiv_1506.01186",
+      "title": "Cyclical Learning Rates",
+      "section": "Data, training, optimization",
+      "rel_path": "filter/fulltext/arxiv_1506.01186.md",
+      "n_tokens": 9484
+    },
+    {
+      "key": "arxiv:2606.02572",
+      "safe_key": "arxiv_2606.02572",
+      "title": "VISReg: Variance-Invariance-Sketching Regularization for JEPA",
+      "section": "Self-supervised learning and vision",
+      "rel_path": "filter/fulltext/arxiv_2606.02572.md",
+      "n_tokens": 15125
+    },
+    {
+      "key": "arxiv:2605.26379",
+      "safe_key": "arxiv_2605.26379",
+      "title": "When Does LeJEPA Learn a World Model?",
+      "section": "Self-supervised learning and vision",
+      "rel_path": "filter/fulltext/arxiv_2605.26379.md",
+      "n_tokens": 37428
+    },
+    {
+      "key": "arxiv:2604.09168",
+      "safe_key": "arxiv_2604.09168",
+      "title": "ELT: Elastic Looped Transformers for Visual Generation",
+      "section": "Self-supervised learning and vision",
+      "rel_path": "filter/fulltext/arxiv_2604.09168.md",
+      "n_tokens": 13776
+    },
+    {
+      "key": "arxiv:2310.04378",
+      "safe_key": "arxiv_2310.04378",
+      "title": "Latent Consistency Models",
+      "section": "Self-supervised learning and vision",
+      "rel_path": "filter/fulltext/arxiv_2310.04378.md",
+      "n_tokens": 17501
+    },
+    {
+      "key": "arxiv:2304.12210",
+      "safe_key": "arxiv_2304.12210",
+      "title": "A Cookbook of Self-Supervised Learning",
+      "section": "Self-supervised learning and vision",
+      "rel_path": "filter/fulltext/arxiv_2304.12210.md",
+      "n_tokens": 49296
+    },
+    {
+      "key": "arxiv:2302.10174",
+      "safe_key": "arxiv_2302.10174",
+      "title": "Towards Universal Fake Image Detectors",
+      "section": "Self-supervised learning and vision",
+      "rel_path": "filter/fulltext/arxiv_2302.10174.md",
+      "n_tokens": 15481
+    },
+    {
+      "key": "arxiv:2301.08243",
+      "safe_key": "arxiv_2301.08243",
+      "title": "I-JEPA (Self-Supervised Learning from Images with JEPA)",
+      "section": "Self-supervised learning and vision",
+      "rel_path": "filter/fulltext/arxiv_2301.08243.md",
+      "n_tokens": 15457
+    },
+    {
+      "key": "arxiv:2212.11565",
+      "safe_key": "arxiv_2212.11565",
+      "title": "Tune-A-Video",
+      "section": "Self-supervised learning and vision",
+      "rel_path": "filter/fulltext/arxiv_2212.11565.md",
+      "n_tokens": 10864
+    },
+    {
+      "key": "arxiv:2111.07832",
+      "safe_key": "arxiv_2111.07832",
+      "title": "iBOT: Image BERT Pre-Training with Online Tokenizer",
+      "section": "Self-supervised learning and vision",
+      "rel_path": "filter/fulltext/arxiv_2111.07832.md",
+      "n_tokens": 17745
+    },
+    {
+      "key": "arxiv:2105.04906",
+      "safe_key": "arxiv_2105.04906",
+      "title": "VICReg: Variance-Invariance-Covariance Regularization",
+      "section": "Self-supervised learning and vision",
+      "rel_path": "filter/fulltext/arxiv_2105.04906.md",
+      "n_tokens": 17242
+    },
+    {
+      "key": "arxiv:2104.14294",
+      "safe_key": "arxiv_2104.14294",
+      "title": "DINO: Emerging Properties in Self-Supervised ViT",
+      "section": "Self-supervised learning and vision",
+      "rel_path": "filter/fulltext/arxiv_2104.14294.md",
+      "n_tokens": 25765
+    },
+    {
+      "key": "arxiv:2006.09882",
+      "safe_key": "arxiv_2006.09882",
+      "title": "SwAV: Unsupervised Learning by Contrasting Cluster Assignments",
+      "section": "Self-supervised learning and vision",
+      "rel_path": "filter/fulltext/arxiv_2006.09882.md",
+      "n_tokens": 17698
+    },
+    {
+      "key": "arxiv:2212.09741",
+      "safe_key": "arxiv_2212.09741",
+      "title": "INSTRUCTOR: One Embedder, Any Task",
+      "section": "Retrieval, embeddings, benchmarks",
+      "rel_path": "filter/fulltext/arxiv_2212.09741.md",
+      "n_tokens": 13311
+    },
+    {
+      "key": "arxiv:2205.13147",
+      "safe_key": "arxiv_2205.13147",
+      "title": "Matryoshka Representation Learning",
+      "section": "Retrieval, embeddings, benchmarks",
+      "rel_path": "filter/fulltext/arxiv_2205.13147.md",
+      "n_tokens": 24442
+    },
+    {
+      "key": "arxiv:2112.07899",
+      "safe_key": "arxiv_2112.07899",
+      "title": "Large Dual Encoders Are Generalizable Retrievers (GTR)",
+      "section": "Retrieval, embeddings, benchmarks",
+      "rel_path": "filter/fulltext/arxiv_2112.07899.md",
+      "n_tokens": 9446
+    },
+    {
+      "key": "acl:2022.acl-long.360",
+      "safe_key": "acl_2022.acl-long.360",
+      "title": "PRIMERA: Pyramid-based Masked Sentence Pre-training",
+      "section": "Retrieval, embeddings, benchmarks",
+      "rel_path": "filter/fulltext/acl_2022.acl-long.360.md",
+      "n_tokens": 20233
+    },
+    {
+      "key": "arxiv:2101.02235",
+      "safe_key": "arxiv_2101.02235",
+      "title": "StrategyQA: Did Aristotle Use a Laptop?",
+      "section": "Retrieval, embeddings, benchmarks",
+      "rel_path": "filter/fulltext/arxiv_2101.02235.md",
+      "n_tokens": 13610
+    },
+    {
+      "key": "arxiv:2407.00695",
+      "safe_key": "arxiv_2407.00695",
+      "title": "Learning Formal Mathematics From Intrinsic Motivation",
+      "section": "Agents, open-endedness, AGI",
+      "rel_path": "filter/fulltext/arxiv_2407.00695.md",
+      "n_tokens": 21120
+    },
+    {
+      "key": "arxiv:2311.00344",
+      "safe_key": "arxiv_2311.00344",
+      "title": "A Definition of Open-Ended Learning Problems",
+      "section": "Agents, open-endedness, AGI",
+      "rel_path": "filter/fulltext/arxiv_2311.00344.md",
+      "n_tokens": 15828
+    },
+    {
+      "key": "arxiv:1905.10985",
+      "safe_key": "arxiv_1905.10985",
+      "title": "AI-GAs: AI-generating algorithms, an alternate paradigm for producing general AI (Clune)",
+      "section": "Agents, open-endedness, AGI",
+      "rel_path": "filter/fulltext/arxiv_1905.10985.md",
+      "n_tokens": 37173
+    },
+    {
+      "key": "arxiv:1901.01753",
+      "safe_key": "arxiv_1901.01753",
+      "title": "POET: Endlessly Generating Increasingly Complex and Diverse Learning Environments",
+      "section": "Agents, open-endedness, AGI",
+      "rel_path": "filter/fulltext/arxiv_1901.01753.md",
+      "n_tokens": 24520
+    },
+    {
+      "key": "arxiv:2304.06528",
+      "safe_key": "arxiv_2304.06528",
+      "title": "Power-seeking can be probable and predictive for trained agents",
+      "section": "AI safety and consciousness",
+      "rel_path": "filter/fulltext/arxiv_2304.06528.md",
+      "n_tokens": 6809
+    },
+    {
+      "key": "arxiv:2206.13477",
+      "safe_key": "arxiv_2206.13477",
+      "title": "Parametrically Retargetable Decision-Makers Tend To Seek Power",
+      "section": "AI safety and consciousness",
+      "rel_path": "filter/fulltext/arxiv_2206.13477.md",
+      "n_tokens": 48432
+    },
+    {
+      "key": "arxiv:2206.13353",
+      "safe_key": "arxiv_2206.13353",
+      "title": "Is Power-Seeking AI an Existential Risk?",
+      "section": "AI safety and consciousness",
+      "rel_path": "filter/fulltext/arxiv_2206.13353.md",
+      "n_tokens": 62508
+    },
+    {
+      "key": "arxiv:1912.01683",
+      "safe_key": "arxiv_1912.01683",
+      "title": "Optimal Policies Tend to Seek Power",
+      "section": "AI safety and consciousness",
+      "rel_path": "filter/fulltext/arxiv_1912.01683.md",
+      "n_tokens": 61089
+    },
+    {
+      "key": "arxiv:2606.08720",
+      "safe_key": "arxiv_2606.08720",
+      "title": "This is how the Neocortex Learns (O'Reilly)",
+      "section": "NeuroAI",
+      "rel_path": "filter/fulltext/arxiv_2606.08720.md",
+      "n_tokens": 10656
+    },
+    {
+      "key": "doi:10.1101/2024.02.22.581686",
+      "safe_key": "doi_10.1101_2024.02.22.581686",
+      "title": "MetaWorm: an integrative model of the C. elegans brain and body (bioRxiv)",
+      "section": "NeuroAI",
+      "rel_path": "filter/fulltext/doi_10.1101_2024.02.22.581686.md",
+      "n_tokens": 20333
+    },
+    {
+      "key": "doi:10.1371/journal.pcbi.1011005",
+      "safe_key": "doi_10.1371_journal.pcbi.1011005",
+      "title": "Neural spiking for causal inference and learning (PLOS Comp Biol 2023)",
+      "section": "NeuroAI",
+      "rel_path": "filter/fulltext/doi_10.1371_journal.pcbi.1011005.md",
+      "n_tokens": 20092
+    },
+    {
+      "key": "doi:10.1371/journal.pcbi.1010628",
+      "safe_key": "doi_10.1371_journal.pcbi.1010628",
+      "title": "Sleep prevents catastrophic forgetting in spiking neural networks (PLOS Comp Biol 2022)",
+      "section": "NeuroAI",
+      "rel_path": "filter/fulltext/doi_10.1371_journal.pcbi.1010628.md",
+      "n_tokens": 19814
+    },
+    {
+      "key": "arxiv:2210.08340",
+      "safe_key": "arxiv_2210.08340",
+      "title": "Toward Next-Generation AI: Catalyzing the NeuroAI Revolution",
+      "section": "NeuroAI",
+      "rel_path": "filter/fulltext/arxiv_2210.08340.md",
+      "n_tokens": 10427
+    },
+    {
+      "key": "arxiv:2112.04035",
+      "safe_key": "arxiv_2112.04035",
+      "title": "Relating transformers to models and neural representations of the hippocampal formation (Whittington et al.)",
+      "section": "NeuroAI",
+      "rel_path": "filter/fulltext/arxiv_2112.04035.md",
+      "n_tokens": 16766
+    },
+    {
+      "key": "doi:10.1038/s41467-021-26568-2",
+      "safe_key": "doi_10.1038_s41467-021-26568-2",
+      "title": "Correspondence between neuroevolution and gradient descent (Nat Commun 2021)",
+      "section": "NeuroAI",
+      "rel_path": "filter/fulltext/doi_10.1038_s41467-021-26568-2.md",
+      "n_tokens": 13176
+    },
+    {
+      "key": "arxiv:2602.14486",
+      "safe_key": "arxiv_2602.14486",
+      "title": "Revisiting the Platonic Representation Hypothesis: An Aristotelian View",
+      "section": "Representation alignment",
+      "rel_path": "filter/fulltext/arxiv_2602.14486.md",
+      "n_tokens": 32283
+    },
+    {
+      "key": "arxiv:2507.01098",
+      "safe_key": "arxiv_2507.01098",
+      "title": "Proof of a perfect platonic representation hypothesis",
+      "section": "Representation alignment",
+      "rel_path": "filter/fulltext/arxiv_2507.01098.md",
+      "n_tokens": 14911
+    },
+    {
+      "key": "arxiv:2502.15104",
+      "safe_key": "arxiv_2502.15104",
+      "title": "Estimating Neural Representation Alignment from Sparsely Sampled Inputs",
+      "section": "Representation alignment",
+      "rel_path": "filter/fulltext/arxiv_2502.15104.md",
+      "n_tokens": 20901
+    },
+    {
+      "key": "arxiv:2405.01012",
+      "safe_key": "arxiv_2405.01012",
+      "title": "Correcting Biased Centered Kernel Alignment Measures",
+      "section": "Representation alignment",
+      "rel_path": "filter/fulltext/arxiv_2405.01012.md",
+      "n_tokens": 11024
+    },
+    {
+      "key": "arxiv:2007.02789",
+      "safe_key": "arxiv_2007.02789",
+      "title": "Comparing representational geometries using whitened unbiased-distance-matrix similarity",
+      "section": "Representation alignment",
+      "rel_path": "filter/fulltext/arxiv_2007.02789.md",
+      "n_tokens": 22651
+    },
+    {
+      "key": "arxiv:2003.01859",
+      "safe_key": "arxiv_2003.01859",
+      "title": "Deep Learning for Financial Applications: A Survey",
+      "section": "Finance",
+      "rel_path": "filter/fulltext/arxiv_2003.01859.md",
+      "n_tokens": 29185
+    },
+    {
+      "key": "arxiv:1807.02787",
+      "safe_key": "arxiv_1807.02787",
+      "title": "Financial Trading as a Game: A Deep Reinforcement Learning Approach",
+      "section": "Finance",
+      "rel_path": "filter/fulltext/arxiv_1807.02787.md",
+      "n_tokens": 7188
+    },
+    {
+      "key": "arxiv:1706.10059",
+      "safe_key": "arxiv_1706.10059",
+      "title": "A Deep Reinforcement Learning Framework for the Financial Portfolio Management Problem",
+      "section": "Finance",
+      "rel_path": "filter/fulltext/arxiv_1706.10059.md",
+      "n_tokens": 21843
+    },
+    {
+      "key": "arxiv:2201.09746",
+      "safe_key": "arxiv_2201.09746",
+      "title": "Reinforcement Learning Textbook (Sergey Ivanov)",
+      "section": "Books",
+      "rel_path": "filter/fulltext/arxiv_2201.09746.md",
+      "n_tokens": 2153
+    },
+    {
+      "key": "arxiv:2201.00650",
+      "safe_key": "arxiv_2201.00650",
+      "title": "Deep Learning Interviews (problem collection)",
+      "section": "Books",
+      "rel_path": "filter/fulltext/arxiv_2201.00650.md",
+      "n_tokens": 273
+    },
+    {
+      "key": "doi:10.1038/s41566-024-01394-2",
+      "safe_key": "doi_10.1038_s41566-024-01394-2",
+      "title": "Photonic computing",
+      "section": "Other",
+      "rel_path": "filter/fulltext/doi_10.1038_s41566-024-01394-2.md",
+      "n_tokens": 22372
+    },
+    {
+      "key": "arxiv:2309.10232",
+      "safe_key": "arxiv_2309.10232",
+      "title": "Optical matrix multiplication",
+      "section": "Other",
+      "rel_path": "filter/fulltext/arxiv_2309.10232.md",
+      "n_tokens": 4138
+    }
+  ],
+  "no_fulltext": [
+    {
+      "key": "url:diamond-wm.github.io",
+      "title": "DIAMOND: a diffusion world model that plays CS:GO",
+      "section": "Reinforcement learning",
+      "urls": [
+        "https://diamond-wm.github.io/"
+      ]
+    },
+    {
+      "key": "url:lilianweng.github.io/lil-log/2018/01/23/the-multi-armed-bandit-problem-and-its-solutions.html",
+      "title": "The Multi-Armed Bandit Problem and Its Solutions (Lilian Weng)",
+      "section": "Reinforcement learning",
+      "urls": [
+        "https://lilianweng.github.io/lil-log/2018/01/23/the-multi-armed-bandit-problem-and-its-solutions.html"
+      ]
+    },
+    {
+      "title": "Litmaps",
+      "section": "Post-training",
+      "urls": [
+        "https://app.litmaps.com/shared/9f68a972-570d-48c9-9895-8d4979d52df0"
+      ]
+    },
+    {
+      "key": "url:cameronrwolfe.substack.com/p/grpo-tricks",
+      "title": "GRPO++: Tricks for Making RL Actually Work (Cameron Wolfe)",
+      "section": "Post-training",
+      "urls": [
+        "https://cameronrwolfe.substack.com/p/grpo-tricks"
+      ]
+    },
+    {
+      "key": "url:oatllm.notion.site/oat-zero",
+      "title": "Oat-Zero: reproducing R1-Zero and analyzing self-reflection",
+      "section": "Post-training",
+      "urls": [
+        "https://oatllm.notion.site/oat-zero"
+      ]
+    },
+    {
+      "key": "url:pub.sakana.ai/ctm",
+      "title": "Continuous Thought Machines (Sakana AI)",
+      "section": "LLMs: architectures, context, training",
+      "urls": [
+        "https://pub.sakana.ai/ctm/"
+      ]
+    },
+    {
+      "key": "url:ai.meta.com/research/publications/large-concept-models-language-modeling-in-a-sentence-representation-space",
+      "title": "Large Concept Models (Meta)",
+      "section": "LLMs: architectures, context, training",
+      "urls": [
+        "https://ai.meta.com/research/publications/large-concept-models-language-modeling-in-a-sentence-representation-space/"
+      ]
+    },
+    {
+      "key": "url:ai.meta.com/research/publications/code-llama-open-foundation-models-for-code",
+      "title": "Code Llama (Meta)",
+      "section": "LLMs: architectures, context, training",
+      "urls": [
+        "https://ai.meta.com/research/publications/code-llama-open-foundation-models-for-code/"
+      ]
+    },
+    {
+      "key": "url:google-research.github.io/seanet/audiopalm/examples",
+      "title": "AudioPaLM: an LLM that can speak and listen",
+      "section": "LLMs: architectures, context, training",
+      "urls": [
+        "https://google-research.github.io/seanet/audiopalm/examples/"
+      ]
+    },
+    {
+      "key": "url:people.idsia.ch/~juergen/most-cited-neural-nets.html",
+      "title": "The most cited neural nets of the 20th century (Schmidhuber)",
+      "section": "LLMs: architectures, context, training",
+      "urls": [
+        "https://people.idsia.ch/~juergen/most-cited-neural-nets.html"
+      ]
+    },
+    {
+      "key": "url:safe-lip-9a8.notion.site/incorrect-baseline-evaluations-call-into-question-recent-llm-rl-claims-2012f1fbf0ee8094ab8ded1953c15a37",
+      "title": "Incorrect Baseline Evaluations Call into Question Recent LLM-RL Claims",
+      "section": "Reasoning and the \"physics\" of language models",
+      "urls": [
+        "https://safe-lip-9a8.notion.site/Incorrect-Baseline-Evaluations-Call-into-Question-Recent-LLM-RL-Claims-2012f1fbf0ee8094ab8ded1953c15a37"
+      ]
+    },
+    {
+      "key": "url:ai.googleblog.com/2022/11/characterizing-emergent-phenomena-in.html",
+      "title": "Characterizing emergent phenomena in LLMs (Google Research)",
+      "section": "Reasoning and the \"physics\" of language models",
+      "urls": [
+        "https://ai.googleblog.com/2022/11/characterizing-emergent-phenomena-in.html"
+      ]
+    },
+    {
+      "key": "url:iclr.cc/virtual/2025/poster/30565",
+      "title": "ADAM Optimization with Adaptive Batch Selection / AdamCB",
+      "section": "Data, training, optimization",
+      "urls": [
+        "https://iclr.cc/virtual/2025/poster/30565"
+      ]
+    },
+    {
+      "key": "url:epochai.org/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year",
+      "title": "Training compute of frontier models grows 4–5x/year (Epoch AI)",
+      "section": "Data, training, optimization",
+      "urls": [
+        "https://epochai.org/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year"
+      ]
+    },
+    {
+      "key": "url:educatingsilicon.com/2024/05/09/how-much-llm-training-data-is-there-in-the-limit",
+      "title": "How much LLM training data is there, in the limit?",
+      "section": "Data, training, optimization",
+      "urls": [
+        "https://www.educatingsilicon.com/2024/05/09/how-much-llm-training-data-is-there-in-the-limit/"
+      ]
+    },
+    {
+      "key": "url:openai.com/index/deep-double-descent",
+      "title": "Deep Double Descent (OpenAI)",
+      "section": "Data, training, optimization",
+      "urls": [
+        "https://openai.com/index/deep-double-descent/"
+      ]
+    },
+    {
+      "key": "url:paperswithcode.com/paper/optimizing-millions-of-hyperparameters-by",
+      "title": "Optimizing Millions of Hyperparameters by Implicit Differentiation",
+      "section": "Data, training, optimization",
+      "urls": [
+        "https://paperswithcode.com/paper/optimizing-millions-of-hyperparameters-by"
+      ]
+    },
+    {
+      "key": "url:ai.meta.com/blog/emu-text-to-video-generation-image-editing-research",
+      "title": "EMU Video: Factorizing Text-to-Video Generation (Meta)",
+      "section": "Self-supervised learning and vision",
+      "urls": [
+        "https://ai.meta.com/blog/emu-text-to-video-generation-image-editing-research/"
+      ]
+    },
+    {
+      "key": "url:research.nvidia.com/labs/par/perfusion",
+      "title": "Perfusion (NVIDIA)",
+      "section": "Self-supervised learning and vision",
+      "urls": [
+        "https://research.nvidia.com/labs/par/Perfusion/"
+      ]
+    },
+    {
+      "key": "url:ai.facebook.com/blog/voicebox-generative-ai-model-speech",
+      "title": "Voicebox (Meta, speech generation)",
+      "section": "Self-supervised learning and vision",
+      "urls": [
+        "https://ai.facebook.com/blog/voicebox-generative-ai-model-speech/"
+      ]
+    },
+    {
+      "key": "url:selfrag.github.io",
+      "title": "Self-RAG",
+      "section": "Retrieval, embeddings, benchmarks",
+      "urls": [
+        "https://selfrag.github.io/"
+      ]
+    },
+    {
+      "key": "url:lilianweng.github.io/posts/2020-10-29-odqa",
+      "title": "Open Domain Question Answering (Lilian Weng)",
+      "section": "Retrieval, embeddings, benchmarks",
+      "urls": [
+        "https://lilianweng.github.io/posts/2020-10-29-odqa/"
+      ]
+    },
+    {
+      "key": "url:sakana.ai/shinka-evolve",
+      "title": "ShinkaEvolve (Sakana AI)",
+      "section": "Agents, open-endedness, AGI",
+      "urls": [
+        "https://sakana.ai/shinka-evolve/"
+      ]
+    },
+    {
+      "key": "url:research.google/blog/few-shot-tool-use-doesnt-really-work-yet",
+      "title": "Few-shot tool use doesn't really work yet (Google Research)",
+      "section": "Agents, open-endedness, AGI",
+      "urls": [
+        "https://research.google/blog/few-shot-tool-use-doesnt-really-work-yet/"
+      ]
+    },
+    {
+      "key": "url:lilianweng.github.io/posts/2023-06-23-agent",
+      "title": "LLM Powered Autonomous Agents (Lilian Weng)",
+      "section": "Agents, open-endedness, AGI",
+      "urls": [
+        "https://lilianweng.github.io/posts/2023-06-23-agent/"
+      ]
+    },
+    {
+      "key": "url:minedojo.org",
+      "title": "MineDojo",
+      "section": "Agents, open-endedness, AGI",
+      "urls": [
+        "https://minedojo.org/"
+      ]
+    },
+    {
+      "key": "url:openai.com/index/harness-engineering",
+      "title": "Harness Engineering (OpenAI)",
+      "section": "Harness",
+      "urls": [
+        "https://openai.com/index/harness-engineering/"
+      ]
+    },
+    {
+      "key": "url:github.com/deepseek-ai/deepseek-harness",
+      "title": "DeepSeek Harness",
+      "section": "Harness",
+      "urls": [
+        "https://github.com/deepseek-ai/deepseek-harness"
+      ]
+    },
+    {
+      "key": "url:alexzhang13.github.io/blog/2026/harness",
+      "title": "Language model harnesses are compositional generalizers (Alex Zhang)",
+      "section": "Harness",
+      "urls": [
+        "https://alexzhang13.github.io/blog/2026/harness/"
+      ]
+    },
+    {
+      "key": "url:schema-harness.github.io",
+      "title": "Schema: a symbolic world model for ARC-AGI-3",
+      "section": "Harness",
+      "urls": [
+        "http://schema-harness.github.io"
+      ]
+    },
+    {
+      "key": "url:weco.ai/blog/first-evidence-of-recursive-self-improvement",
+      "title": "First evidence of recursive self-improvement (AIDE2, Weco)",
+      "section": "Harness",
+      "urls": [
+        "https://www.weco.ai/blog/first-evidence-of-recursive-self-improvement"
+      ]
+    },
+    {
+      "key": "url:lilianweng.github.io/posts/2026-07-04-harness",
+      "title": "Harnesses for models (Lilian Weng, 2026)",
+      "section": "Harness",
+      "urls": [
+        "https://lilianweng.github.io/posts/2026-07-04-harness/"
+      ]
+    },
+    {
+      "key": "url:tufalabs.ai/research/duck-harness",
+      "title": "Duck Harness: Winning Solution for ARC-AGI-3 Milestone 1 (Tufa Labs)",
+      "section": "Harness",
+      "urls": [
+        "https://tufalabs.ai/research/duck-harness/"
+      ]
+    },
+    {
+      "key": "url:github.com/primeintellect-ai/prime-agent",
+      "title": "Prime Agent: a self-improving RLM agent (Prime Intellect)",
+      "section": "Harness",
+      "urls": [
+        "https://github.com/PrimeIntellect-ai/prime-agent"
+      ]
+    },
+    {
+      "key": "url:transformer-circuits.pub/2025/introspection",
+      "title": "Emergent Introspective Awareness in Large Language Models (Anthropic, October 2025)",
+      "section": "AI safety and consciousness",
+      "urls": [
+        "https://transformer-circuits.pub/2025/introspection/index.html"
+      ]
+    },
+    {
+      "key": "url:anthropic.com/research/reasoning-models-dont-say-think",
+      "title": "Reasoning Models Don't Always Say What They Think (Anthropic)",
+      "section": "AI safety and consciousness",
+      "urls": [
+        "https://www.anthropic.com/research/reasoning-models-dont-say-think"
+      ]
+    },
+    {
+      "key": "url:ai-2027.com",
+      "title": "AI 2027 (Kokotajlo)",
+      "section": "AI safety and consciousness",
+      "urls": [
+        "https://ai-2027.com/"
+      ]
+    },
+    {
+      "key": "url:anthropic.com/research/tracing-thoughts-language-model",
+      "title": "Tracing thoughts of a language model / Circuit tracing (Anthropic)",
+      "section": "AI safety and consciousness",
+      "urls": [
+        "https://www.anthropic.com/research/tracing-thoughts-language-model"
+      ]
+    },
+    {
+      "key": "url:transformer-circuits.pub/2025/attribution-graphs/methods.html",
+      "title": "Circuit tracing / attribution graphs (methods)",
+      "section": "AI safety and consciousness",
+      "urls": [
+        "https://transformer-circuits.pub/2025/attribution-graphs/methods.html"
+      ]
+    },
+    {
+      "key": "url:transformer-circuits.pub/2025/attribution-graphs/biology.html",
+      "title": "Attribution graphs, the biology of the model",
+      "section": "AI safety and consciousness",
+      "urls": [
+        "https://transformer-circuits.pub/2025/attribution-graphs/biology.html"
+      ]
+    },
+    {
+      "key": "url:alignmentforum.org/posts/nffst5mio7bcaqhpa/an-extremely-opinionated-annotated-list-of-my-favourite-1",
+      "title": "An Extremely Opinionated Annotated List of My Favourite Mechanistic Interpretability Papers v2 (Alignment Forum)",
+      "section": "AI safety and consciousness",
+      "urls": [
+        "https://www.alignmentforum.org/posts/NfFST5Mio7BCAQHPA/an-extremely-opinionated-annotated-list-of-my-favourite-1"
+      ]
+    },
+    {
+      "key": "url:situational-awareness.ai",
+      "title": "Situational Awareness (Aschenbrenner)",
+      "section": "AI safety and consciousness",
+      "urls": [
+        "https://situational-awareness.ai"
+      ]
+    },
+    {
+      "key": "url:anthropic.com/news/mapping-mind-language-model",
+      "title": "Mapping the mind of a large language model (Anthropic)",
+      "section": "AI safety and consciousness",
+      "urls": [
+        "https://www.anthropic.com/news/mapping-mind-language-model"
+      ]
+    },
+    {
+      "key": "url:openai.com/research/weak-to-strong-generalization",
+      "title": "Weak-to-strong generalization (OpenAI SuperAlignment)",
+      "section": "AI safety and consciousness",
+      "urls": [
+        "https://openai.com/research/weak-to-strong-generalization"
+      ]
+    },
+    {
+      "key": "url:herasight-project.webflow.io/technical-paper/cogpgt-1",
+      "title": "CogPGT: a genetic predictor of IQ",
+      "section": "NeuroAI",
+      "urls": [
+        "https://herasight-project.webflow.io/technical-paper/cogpgt-1"
+      ]
+    },
+    {
+      "title": "Verbalizable Representations Form a Global Workspace in Language Models",
+      "section": "Representation alignment"
+    },
+    {
+      "key": "url:thinkingmachines.ai/news/learning-to-replicate-expert-judgment-in-financial-tasks",
+      "title": "Learning to Replicate Expert Judgment in Financial Tasks (Thinking Machines)",
+      "section": "Finance",
+      "urls": [
+        "https://thinkingmachines.ai/news/learning-to-replicate-expert-judgment-in-financial-tasks/"
+      ]
+    },
+    {
+      "key": "url:papers.ssrn.com/sol3/papers.cfm?abstract_id=5239006",
+      "title": "The Virtue of Complexity debate (Kelly, Malamud & Zhou versus Nagel)",
+      "section": "Finance",
+      "urls": [
+        "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5239006"
+      ]
+    },
+    {
+      "key": "url:groundai.com/project/an-intelligent-financial-portfolio-trading-strategy-using-deep-q-learning8432/3",
+      "title": "An Intelligent Financial Portfolio Trading Strategy using Deep Q-Learning",
+      "section": "Finance",
+      "urls": [
+        "https://www.groundai.com/project/an-intelligent-financial-portfolio-trading-strategy-using-deep-q-learning8432/3"
+      ]
+    },
+    {
+      "key": "url:researchgate.net/publication/331273826",
+      "title": "Deep Adaptive Input Normalization for price forecasting from Limit Order Book data",
+      "section": "Finance",
+      "urls": [
+        "https://www.researchgate.net/publication/331273826"
+      ]
+    },
+    {
+      "key": "url:neuroevolutionbook.com",
+      "title": "Neuroevolution book",
+      "section": "Books",
+      "urls": [
+        "https://neuroevolutionbook.com/"
+      ]
+    },
+    {
+      "key": "url:rlhfbook.com",
+      "title": "RLHF book",
+      "section": "Books",
+      "urls": [
+        "https://rlhfbook.com/"
+      ]
+    },
+    {
+      "key": "url:link.springer.com/book/10.1007/978-3-031-45468-4",
+      "title": "Deep Learning: Foundations and Concepts (Bishop & Bishop)",
+      "section": "Books",
+      "urls": [
+        "https://link.springer.com/book/10.1007/978-3-031-45468-4"
+      ]
+    },
+    {
+      "key": "url:direct.mit.edu/coli/article/doi/10.1162/coli_a_00481/116160",
+      "title": "Machine Learning for Ancient Languages: A Survey",
+      "section": "Other",
+      "urls": [
+        "https://direct.mit.edu/coli/article/doi/10.1162/coli_a_00481/116160/"
+      ]
+    },
+    {
+      "key": "url:semanticscholar.org/paper/4165542ba777ea63facc7ea9866f43ba63f054ae",
+      "title": "Orbifold Tutte embeddings (geometry processing)",
+      "section": "Other",
+      "urls": [
+        "https://www.semanticscholar.org/paper/4165542ba777ea63facc7ea9866f43ba63f054ae"
+      ]
+    }
+  ]
+}

@@ -28,6 +28,7 @@ shots/
 
 # Paper filter pipeline intermediates (scripts + scores.csv + report.md + official reviews + fulltext md are committed)
 filter/*.jsonl
+!filter/llm_models.jsonl
 filter/fulltext.zip
 filter/reviews/*.seed1/
 filter/reviews/*.bad/
