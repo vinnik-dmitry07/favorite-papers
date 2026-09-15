@@ -303,6 +303,78 @@ class RefMarkerTest(unittest.TestCase):
         self.assertIsNone(blg.ref_rank(row['code'], row['method']))
 
 
+class GrpoOnlyTableTest(unittest.TestCase):
+    def test_ablation_predicate(self):
+        self.assertTrue(blg.is_grpo_ablation('GRPO', 'GRPO'))
+        self.assertTrue(blg.is_grpo_ablation('GRPO-format', 'GRPO (format reward)'))
+        self.assertTrue(blg.is_grpo_ablation('GRPO-random', ''))
+        self.assertFalse(blg.is_grpo_ablation('2-GRPO', '2-GRPO'))
+        self.assertFalse(blg.is_grpo_ablation('Dr.GRPO', 'Dr.GRPO'))
+        self.assertFalse(blg.is_grpo_ablation('1-shot RLVR', '1-shot RLVR'))
+
+    def test_omits_grpo_reward_ablation_table(self):
+        rows = blg.attach_ood([
+            _gain(
+                key=ood.SHAO,
+                code=code,
+                method=method,
+                model='OLMo-2-1124-7B',
+                bench='AIME 2025',
+                train_data='DeepScaleR',
+                base=0.4,
+                score=score,
+            )
+            for code, method, score in (
+                ('GRPO', 'GRPO (ground-truth reward)', 0.4),
+                ('GRPO-format', 'GRPO (format reward)', 0.4),
+                ('GRPO-random', 'GRPO (random reward)', 0.4),
+            )
+        ], [])
+        markdown = blg.render_md(rows, [_paper(key=ood.SHAO)], [])
+        self.assertNotIn('### OLMo-2-1124-7B', markdown)
+
+    def test_keeps_mixed_grpo_and_other_method(self):
+        rows = blg.attach_ood([
+            _gain(
+                key=ood.SHAO,
+                code='GRPO',
+                method='GRPO (ground-truth reward)',
+                model='Qwen2.5-Math-7B',
+                bench='AIME 2025',
+                train_data='DeepScaleR',
+                base=6.3,
+                score=13.7,
+            ),
+            _gain(
+                key=ood.ONESHOT,
+                code='1-shot RLVR',
+                method='1-shot RLVR',
+                model='Qwen2.5-Math-7B',
+                bench='AIME 2025',
+                train_data='DeepScaleR subset',
+                base=6.7,
+                score=10.8,
+            ),
+            _gain(
+                key=ood.SHAO,
+                code='GRPO-format',
+                method='GRPO (format reward)',
+                model='Qwen2.5-Math-7B',
+                bench='AIME 2025',
+                train_data='DeepScaleR',
+                base=6.3,
+                score=5.9,
+            ),
+        ], [])
+        markdown = blg.render_md(
+            rows,
+            [_paper(key=ood.SHAO), _paper(key=ood.ONESHOT)],
+            [],
+        )
+        self.assertIn('### Qwen2.5-Math-7B', markdown)
+        self.assertIn('1-shot RLVR', markdown)
+
+
 class OodFilterTest(unittest.TestCase):
     def test_math500_id_is_dropped(self):
         models = [
@@ -1287,6 +1359,13 @@ class StrictTemporalOodTest(unittest.TestCase):
         self.assertIn('−0.4…+4.5', markdown)
         self.assertIn('2506.10947', markdown)
         self.assertIn('2601.11061', markdown)
+        self.assertIn('Leakage-free', markdown)
+        self.assertIn('Llama-3.1-8B', markdown)
+        self.assertIn('OLMo-2-1124-7B', markdown)
+        self.assertIn('LiveMathBench', markdown)
+        self.assertIn('leakage_free: true', markdown)
+        self.assertIn('Figure 3', markdown)
+        self.assertIn('id` / `rl_stage', markdown)
         self.assertIn('step 300', markdown)
         self.assertIn('‡', markdown)
         self.assertIn('**1**', markdown.split('## Notes', 1)[0])
@@ -1490,9 +1569,8 @@ class ShaoAime25PlotTest(unittest.TestCase):
         markdown = blg.render_md(
             self._plot_rows(), [_paper(key=ood.SHAO)], [],
         )
-        self.assertIn('-0.4‡', markdown)
-        self.assertIn('+4.5', markdown)
-        self.assertIn('+2.8', markdown)
+        self.assertNotIn('### Qwen2.5-Math-7B', markdown)
+        self.assertIn('−0.4…+4.5', markdown)
         table_cells = ''.join(
             line for line in markdown.splitlines()
             if line.startswith('|') and '---' not in line and 'method' not in line
@@ -1642,6 +1720,68 @@ class CutoffProvenanceTest(unittest.TestCase):
             raw = path.read_bytes()
             self.assertNotIn(b'\r', raw)
             self.assertTrue(raw.endswith(b'\n'))
+
+
+class LeakageFreeTest(unittest.TestCase):
+    def test_leakage_free_models_and_benches(self):
+        self.assertTrue(ood.leakage_free('Llama-3.2-3B-Instruct', 'MATH-500'))
+        self.assertTrue(ood.leakage_free('Llama-3.1-8B-Base', 'AMC 2023'))
+        self.assertTrue(ood.leakage_free('OLMo-2-1124-7B-SFT', 'Minerva Math'))
+        self.assertFalse(ood.leakage_free('Qwen2.5-Math-7B', 'MATH-500'))
+        self.assertFalse(ood.leakage_free('Llama-3-8B', 'MATH-500'))
+        self.assertFalse(ood.leakage_free('Llama-3.1-8B', 'OlympiadBench'))
+        self.assertFalse(ood.leakage_free('Llama-3.1-8B', 'AIME 2025'))
+
+    def test_attach_ood_sets_flag_without_changing_basis(self):
+        rows = blg.attach_ood([
+            _gain(
+                model='Llama-3.2-3B-Instruct',
+                bench='MATH-500',
+                train_data='DeepScaleR',
+                base=26.4,
+                score=52.8,
+            ),
+        ], [])
+        self.assertTrue(rows[0]['leakage_free'])
+        self.assertIn('leakage_free', blg.ROW_FIELDS)
+        self.assertEqual(rows[0]['ood_basis'], 'rl_stage')
+        self.assertFalse(rows[0]['ood'])
+
+    def test_render_md_places_llama_not_qwen(self):
+        llama = blg.attach_ood([
+            _gain(
+                key=ood.CONSPO,
+                code='ConSPO',
+                method='ConSPO',
+                model='Llama-3.2-3B-Instruct',
+                bench='MATH-500',
+                train_data='DeepScaleR-Preview-Dataset',
+                base=26.4,
+                score=52.8,
+            ),
+        ], [])
+        qwen = blg.attach_ood([
+            _gain(
+                bench='MATH-500',
+                train_data='MATH',
+                base=49.4,
+                score=70.8,
+            ),
+        ], [])
+        markdown = blg.render_md(
+            llama + qwen,
+            [_paper(key=ood.CONSPO, title='ConSPO'), _paper()],
+            [],
+        )
+        leak, rest = markdown.split('## Gain over the starting checkpoint', 1)
+        self.assertIn(
+            'Leakage-free: gain over the starting checkpoint', leak,
+        )
+        self.assertIn('MATH500', leak)
+        self.assertIn('+26.4', leak)
+        temporal = rest.split('## Not applicable', 1)[0]
+        self.assertNotIn('MATH500', temporal)
+        self.assertNotIn('+21.4', markdown)
 
 
 if __name__ == '__main__':

@@ -63,6 +63,33 @@ LCB_BENCHES = frozenset({
     'LiveCodeBench v6',
 })
 
+# Shao §3 + Paradox App C: non-Qwen checkpoints with no memorization shortcut
+# on the benches both papers treat as historical / contaminated for Qwen.
+LEAKAGE_FREE_MODELS = frozenset({
+    'Llama-3.1-8B',
+    'Llama-3.1-8B-Base',
+    'Llama-3.1-8B-Instruct',
+    'Llama-3.2-3B',
+    'Llama-3.2-3B-Instruct',
+    'OLMo-2-1124-7B',
+    'OLMo-2-1124-7B-SFT',
+})
+LEAKAGE_FREE_BENCHES = frozenset({
+    'MATH-500',
+    'AMC 2023',
+    'AIME 2024',
+    'Minerva Math',
+})
+LEAKAGE_FREE_SOURCE = (
+    'https://arxiv.org/html/2506.10947v2#S3',
+    'https://arxiv.org/html/2601.11061v1#A3',
+)
+
+
+def leakage_free(model: str, bench: str) -> bool:
+    return model in LEAKAGE_FREE_MODELS and bench in LEAKAGE_FREE_BENCHES
+
+
 @dataclass(frozen=True)
 class Cutoff:
     '''A dated bound. Empty source is unknown: the date cannot admit a row.'''

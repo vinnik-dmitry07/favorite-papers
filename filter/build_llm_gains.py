@@ -67,6 +67,7 @@ ROW_FIELDS = (
     'source',
     'ood',
     'ood_basis',
+    'leakage_free',
     'ckpt_select',
     'train_data',
     'teacher',
@@ -363,6 +364,22 @@ def is_vanilla_grpo_ref(ref_method: str) -> bool:
     return bool(VANILLA_GRPO_RE.match((ref_method or '').strip()))
 
 
+def is_grpo_ablation(code: str, method: str = '') -> bool:
+    blob = (code or method or '').strip()
+    if is_vanilla_grpo_name(blob):
+        return True
+    return bool(re.match(r'^grpo[- ]', blob, re.I))
+
+
+def is_grpo_only_groups(groups: list[list[dict]]) -> bool:
+    if not groups:
+        return False
+    return all(
+        is_grpo_ablation(group[0].get('code') or '', group[0].get('method') or '')
+        for group in groups
+    )
+
+
 def parse_score(value) -> float | None:
     if value is None or value == '':
         return None
@@ -607,6 +624,7 @@ def normalize_gain_row(raw: dict) -> dict | None:
         'unit': unit,
         'bench_span': blm.norm_space(raw.get('bench_span') or ''),
         'source_precision': precision,
+        'leakage_free': False,
     }
 
 
@@ -854,6 +872,7 @@ def attach_ood(rows: list[dict], model_rows: list[dict]) -> list[dict]:
         # on unverified / rl_stage / id rows (empty field = the hole).
         item['ood_basis'] = classify_row(item, slot, proof)
         item['ood'] = item['ood_basis'] == 'temporal'
+        item['leakage_free'] = ood.leakage_free(item['model'], item['bench'])
         item['model_cutoff'] = proof['model_cutoff']
         item['train_cutoff'] = proof['train_cutoff']
         item['teacher_cutoff'] = proof['teacher_cutoff']
@@ -1376,10 +1395,20 @@ def is_temporal_row(row: dict) -> bool:
     return bool(row.get('ood'))
 
 
-def table_gain_rows(rows: list[dict], skip_self_ref: bool = False) -> list[dict]:
+def is_leakage_free_row(row: dict) -> bool:
+    return bool(row.get('leakage_free')) and row.get('ood_basis') in {
+        'id', 'rl_stage',
+    }
+
+
+def table_gain_rows(
+    rows: list[dict],
+    skip_self_ref: bool = False,
+    admit=is_temporal_row,
+) -> list[dict]:
     usable = [
         row for row in rows
-        if is_temporal_row(row)
+        if admit(row)
         and not is_base_code(row.get('code') or '', row.get('method') or '')
         and row.get('bench') in CORE_BENCHES
         and not is_omitted_gain(row)
@@ -1398,8 +1427,9 @@ def render_section(
     extra_headers: list[str] | None = None,
     extra_fn=None,
     skip_self_ref: bool = False,
+    admit=is_temporal_row,
 ) -> list[str]:
-    usable = table_gain_rows(rows, skip_self_ref=skip_self_ref)
+    usable = table_gain_rows(rows, skip_self_ref=skip_self_ref, admit=admit)
     train_pairs = multi_train_pairs(usable)
     groups = [
         group for group in pivot_groups(usable)
@@ -1409,12 +1439,16 @@ def render_section(
     by_model: dict[str, list[list[dict]]] = defaultdict(list)
     for group in groups:
         by_model[group[0]['model']].append(group)
-    own = {
+    keep = {
         model: items for model, items in by_model.items()
+        if not is_grpo_only_groups(items)
+    }
+    own = {
+        model: items for model, items in keep.items()
         if len(items) >= MIN_CHECKPOINT_ROWS
     }
     other = [
-        group for model, items in by_model.items()
+        group for model, items in keep.items()
         if len(items) < MIN_CHECKPOINT_ROWS
         for group in items
     ]
@@ -1436,7 +1470,7 @@ def render_section(
             out.extend(lines)
             print_table_stats(heading, title, n_rows, n_cols)
     if len(out) == 4:
-        out.append('_No numeric OOD cells._')
+        out.append('_No numeric cells._')
         out.append('')
     return out
 
@@ -1464,9 +1498,17 @@ def render_md(
 ) -> str:
     base_rows = table_gain_rows(rows)
     ref_rows = table_gain_rows(rows, skip_self_ref=True)
+    leak_base = table_gain_rows(rows, admit=is_leakage_free_row)
+    leak_ref = table_gain_rows(
+        rows, skip_self_ref=True, admit=is_leakage_free_row,
+    )
     keys = {row['key'] for row in base_rows} | {row['key'] for row in ref_rows}
     n_cells_base = sum(1 for row in base_rows if delta_over_base(row) is not None)
     n_cells_ref = sum(1 for row in ref_rows if delta_over_ref(row) is not None)
+    n_leak_base = sum(
+        1 for row in leak_base if delta_over_base(row) is not None
+    )
+    n_leak_ref = sum(1 for row in leak_ref if delta_over_ref(row) is not None)
     out = [
         '# Compact OOD gains',
         '',
@@ -1474,9 +1516,10 @@ def render_md(
         '`filter/llm_gains.jsonl`. One jsonl row is one '
         '(paper × method × model × bench × train data × source table). '
         'Markdown keeps only **temporal OOD**: the bench date is after the '
-        'full training-chain cutoff. Historical benches and version-only LCB '
-        'slices stay in the jsonl as `rl_stage` / `id` / `unverified` and are '
-        'not drawn. API and GPT-family models are omitted. '
+        'full training-chain cutoff, plus one leakage-free historical block '
+        '(Llama / OLMo, see below). Other historical benches and version-only '
+        'LCB slices stay in the jsonl as `rl_stage` / `id` / `unverified` and '
+        'are not drawn. API and GPT-family models are omitted. '
         'Model inventory: [`llm_models.md`](llm_models.md).',
         '',
         '## Summary',
@@ -1484,6 +1527,8 @@ def render_md(
         f'- Papers with at least one temporal OOD number: **{len(keys)}**',
         f'- Temporal gain cells vs starting checkpoint: **{n_cells_base}**',
         f'- Temporal gain cells vs GRPO / nearest RLVR: **{n_cells_ref}**',
+        f'- Leakage-free historical cells vs starting checkpoint: **{n_leak_base}**',
+        f'- Leakage-free historical cells vs GRPO / nearest RLVR: **{n_leak_ref}**',
         f'- From-scratch papers (no starting checkpoint): **{len(not_applicable)}**',
         '',
         '## Notes',
@@ -1503,7 +1548,64 @@ def render_md(
         'AIME 2025 cells. Qwen2.5 rows still share `2506.10947` with the '
         'MATH-500 / AIME 2024 jsonl rows (those stay `id` / `rl_stage`).',
         '',
+        '## Leakage-free (both papers)',
+        '',
+        'Intersection of [Spurious Rewards](https://arxiv.org/abs/2506.10947) '
+        'and [Paradox](https://arxiv.org/abs/2601.11061): the model already '
+        'has the answers (Qwen2.5-Math / Qwen3) vs it does not (Llama / OLMo).',
+        '',
+        '- Models with no memorization shortcut: **Llama-3.1-8B** and '
+        '**OLMo-2-1124-7B**. Paradox: partial prompts do not complete to the '
+        'answer; spurious RLVR raises perplexity without unlocking stored '
+        'solutions. Shao: spurious rewards stay flat; gains need ground-truth. '
+        'Shao only (same family pattern): Llama-3.1-8B-Instruct, '
+        'Llama-3.2-3B, Llama-3.2-3B-Instruct, OLMo-2-1124-7B-SFT.',
+        '- Bench both treat as fresh: **AIME 2025**. Shao: written after the '
+        'cutoff of every model they train. Paradox: the memorization gate '
+        'fires on 0/30 AIME-2025 items (same as 0/100 on LiveMathBench).',
+        '- Paradox-only clean bench: LiveMathBench (not in these tables). '
+        'Leaked on Qwen2.5-Math-7B and Qwen3-8B: MATH-500 and MinervaMath.',
+        '- Drawn below: Shao\'s six non-Qwen checkpoints '
+        '(Llama-3.1-8B / -Instruct / -Base, Llama-3.2-3B / -Instruct, '
+        'OLMo-2-1124-7B / -SFT) '
+        '× MATH-500, AMC 2023, AIME 2024, Minerva Math '
+        f'([Shao §3]({ood.LEAKAGE_FREE_SOURCE[0]}), '
+        f'[Paradox App C]({ood.LEAKAGE_FREE_SOURCE[1]})). '
+        'Every jsonl row with `leakage_free: true` on those benches, from '
+        'every paper (basis stays `id` / `rl_stage`). Shao Figure 3 '
+        'MATH-500 curves are not extracted.',
+        '',
     ]
+    out.extend(render_section(
+        'Leakage-free: gain over the starting checkpoint',
+        'Cell = method − the paper\'s starting checkpoint (pretrained, '
+        'instruct, or distilled), percentage points, one decimal. '
+        '`avg@k` is not `pass@k`. A trailing `†` means the paper picked a '
+        'checkpoint using eval benches. Blank if that paper does not report '
+        'the starting checkpoint on that bench. '
+        'Numbers stay inside one experiment (same table, train data, and '
+        'metric).',
+        rows,
+        papers,
+        base_cell,
+        admit=is_leakage_free_row,
+    ))
+    out.extend(render_section(
+        'Leakage-free: gain over GRPO',
+        'Cell = method − the paper\'s vanilla GRPO, or the nearest vanilla '
+        'RLVR baseline when GRPO is absent (`vs` column). A trailing `*` '
+        'means the reference is not vanilla GRPO. The reference method '
+        'itself is omitted. Equal scores of different methods show `+0.0`. '
+        'Blank if no RLVR baseline is reported on that bench. Same '
+        'experiment only.',
+        rows,
+        papers,
+        grpo_cell,
+        extra_headers=['vs'],
+        extra_fn=ref_cell,
+        skip_self_ref=True,
+        admit=is_leakage_free_row,
+    ))
     out.extend(render_section(
         'Gain over the starting checkpoint',
         'Cell = method − the paper\'s starting checkpoint (pretrained, instruct, '
@@ -1513,6 +1615,8 @@ def render_md(
         'best mean on six benches including AIME25). Temporal OOD of the tasks '
         'still holds; the final score is not an independent hold-out. '
         'A trailing `‡` marks |Δ| < 2 pp on last-point SVG curves (AIME n=30). '
+        'Tables that only vary the GRPO reward (format / random / incorrect / '
+        'majority) are omitted. '
         'Blank if that paper does not report the starting checkpoint on that bench. '
         'Numbers stay inside one experiment (same table, train data, and metric).',
         rows,
@@ -1527,6 +1631,8 @@ def render_md(
         '`†` means a checkpoint chosen on eval benches (ConSPO every 100 '
         'steps; 1-shot RLVR best mean on six benches including AIME25). '
         '`‡` marks |Δ| < 2 pp on last-point SVG curves (AIME n=30). '
+        'Tables that only vary the GRPO reward (format / random / incorrect / '
+        'majority) are omitted. '
         'The reference method itself is '
         'omitted. Equal scores of different methods show `+0.0`. '
         'Blank if no RLVR baseline is reported on that bench. '
