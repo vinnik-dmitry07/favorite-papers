@@ -5,10 +5,10 @@ Per-paper numbers from `filter/fulltext/*.md`, stored in `filter/llm_gains.jsonl
 ## Summary
 
 - Papers with at least one temporal OOD number: **6**
-- Temporal gain cells vs starting checkpoint: **137**
-- Temporal gain cells vs GRPO / nearest RLVR: **109**
-- Leakage-free historical cells vs starting checkpoint: **63**
-- Leakage-free historical cells vs GRPO / nearest RLVR: **31**
+- Temporal gain cells vs starting checkpoint: **94**
+- Temporal gain cells vs GRPO / nearest RLVR: **66**
+- Leakage-free historical cells vs starting checkpoint: **60**
+- Leakage-free historical cells vs GRPO / nearest RLVR: **28**
 - From-scratch papers (no starting checkpoint): **13**
 
 ## Notes
@@ -57,7 +57,6 @@ Cell = method − the paper's starting checkpoint (pretrained, instruct, or dist
 | [DAPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | pass@1 | +26.4† |  |  |  |
 | [GRPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | pass@1 | +26.4† |  |  |  |
 | [Critique-GRPO](https://arxiv.org/abs/2506.03106) | 2506.03106 | pass@1 |  | +6.7 | +7.5 | +8.4 |
-| [R1-GRPO](https://arxiv.org/abs/2506.03106) | 2506.03106 | pass@1 |  | +0.0 | +0.0 | +2.2 |
 | [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 |  | -0.4† | +0.0† |  |
 | [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | pass@1 | +5.0† |  |  | +0.7† |
 | [GRPO](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 |  | +2.9† | +2.5† |  |
@@ -84,17 +83,16 @@ Cell = method − the paper's vanilla GRPO, or the nearest vanilla RLVR baseline
 
 ### Llama-3.2-3B-Instruct
 
-| method | id | metric | vs | AIME24 | AMC23 | MATH500 | Minerva |
+| method | id | metric | vs | AIME24 | MATH500 | AMC23 | Minerva |
 |---|---|---|---|---|---|---|---|
-| [ConSPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | pass@1 | GRPO |  |  | +4.6† |  |
-| [DAPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | pass@1 | GRPO |  |  | +0.0† |  |
+| [ConSPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | pass@1 | GRPO |  | +4.6† |  |  |
+| [DAPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | pass@1 | GRPO |  | +0.0† |  |  |
 | [E2H-C](https://arxiv.org/abs/2506.06632) | 2506.06632 | pass@1 | GRPO | +6.7 |  |  |  |
 | [E2H-G](https://arxiv.org/abs/2506.06632) | 2506.06632 | pass@1 | GRPO | +3.3 |  |  |  |
 | [Self-Evolve](https://arxiv.org/abs/2506.06632) | 2506.06632 | pass@1 | GRPO | +3.3 |  |  |  |
-| [Critique-GRPO](https://arxiv.org/abs/2506.03106) | 2506.03106 | pass@1 | GRPO | +6.7 | +7.5 |  | +6.2 |
-| [R1-GRPO](https://arxiv.org/abs/2506.03106) | 2506.03106 | pass@1 | GRPO | +0.0 | +0.0 |  | +0.0 |
-| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | GRPO | -3.3† | -2.5† |  |  |
-| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | pass@1 | GRPO |  |  | +2.6† | -3.0† |
+| [Critique-GRPO](https://arxiv.org/abs/2506.03106) | 2506.03106 | pass@1 | GRPO | +6.7 |  | +7.5 | +6.2 |
+| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | GRPO | -3.3† |  | -2.5† |  |
+| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | pass@1 | GRPO |  | +2.6† |  | -3.0† |
 
 ### Llama-3.1-8B-Instruct
 
@@ -109,7 +107,7 @@ Cell = method − the paper's vanilla GRPO, or the nearest vanilla RLVR baseline
 
 ## Gain over the starting checkpoint
 
-Cell = method − the paper's starting checkpoint (pretrained, instruct, or distilled), percentage points, one decimal. `avg@k` is not `pass@k`. A trailing `†` means the paper picked a checkpoint using eval benches (ConSPO: every 100 steps; 1-shot RLVR: best mean on six benches including AIME25). Temporal OOD of the tasks still holds; the final score is not an independent hold-out. A trailing `‡` marks |Δ| < 2 pp on last-point SVG curves (AIME n=30). Tables that only vary the GRPO reward (format / random / incorrect / majority) are omitted. Blank if that paper does not report the starting checkpoint on that bench. Numbers stay inside one experiment (same table, train data, and metric).
+Cell = method − the paper's starting checkpoint (pretrained, instruct, or distilled), percentage points, one decimal. `avg@k` is not `pass@k`. A trailing `†` means the paper picked a checkpoint using eval benches (ConSPO: every 100 steps; 1-shot RLVR: best mean on six benches including AIME25). Temporal OOD of the tasks still holds; the final score is not an independent hold-out. A trailing `‡` marks |Δ| < 2 pp on last-point SVG curves (AIME n=30). GRPO-format / incorrect / majority / random, 2-GRPO+RS, and R1-GRPO are omitted. Blank if that paper does not report the starting checkpoint on that bench. Numbers stay inside one experiment (same table, train data, and metric).
 
 ### DeepSeek-R1-Distill-Qwen-1.5B
 
@@ -131,22 +129,6 @@ Cell = method − the paper's starting checkpoint (pretrained, instruct, or dist
 | [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@64 |  | +0.2† |  |
 | [GRPO](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@64 |  | +3.9† |  |
 
-### Qwen2.5-Math-7B
-
-| method | id | metric | AIME25 |
-|---|---|---|---|
-| [2-GRPO](https://arxiv.org/abs/2510.00977) | 2510.00977 | Mean@32 | +7.8 |
-| [2-GRPO+RS](https://arxiv.org/abs/2510.00977) | 2510.00977 | Mean@32 | +6.7 |
-| [GRPO](https://arxiv.org/abs/2510.00977) | 2510.00977 | Mean@32 | +8.2 |
-| [GRPO](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | +7.4 |
-| [GRPO-format](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | -0.4‡ |
-| [GRPO-incorrect](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | +2.8 |
-| [GRPO-majority](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | +4.5 |
-| [GRPO-random](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | +2.4 |
-| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | +4.1† |
-| [GRPO](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | +7.9† |
-| [GRPO-format](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | +0.0† |
-
 ### DeepSeek-R1-Distill-Qwen-7B
 
 | method | id | metric | AIME25 | AIME26 | HMMT25 |
@@ -161,43 +143,6 @@ Cell = method − the paper's starting checkpoint (pretrained, instruct, or dist
 | [Self-Verification](https://arxiv.org/abs/2602.09000) | 2602.09000 | pass@1 | +0.9 |  |  |
 | [iGRPO](https://arxiv.org/abs/2602.09000) | 2602.09000 | pass@1 | +1.6 |  |  |
 
-### Qwen2.5-Math-1.5B
-
-| method | id | metric | AIME25 |
-|---|---|---|---|
-| [GRPO](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | +1.5‡ |
-| [GRPO-format](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | -0.7‡ |
-| [GRPO-incorrect](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | +0.7‡ |
-| [GRPO-majority](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | +3.4 |
-| [GRPO-random](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | -0.8‡ |
-| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | +2.5† |
-| [GRPO](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | +3.7† |
-| [GRPO-format](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | +0.8† |
-
-### Llama-3.2-3B-Instruct
-
-| method | id | metric | AIME25 |
-|---|---|---|---|
-| [GRPO](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | +0.2‡ |
-| [GRPO-format](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | -0.2‡ |
-| [GRPO-incorrect](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | -0.3‡ |
-| [GRPO-majority](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | +0.2‡ |
-| [GRPO-random](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | -0.1‡ |
-| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | -0.5† |
-| [GRPO](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | -0.9† |
-
-### Qwen2.5-1.5B
-
-| method | id | metric | AIME25 |
-|---|---|---|---|
-| [GRPO](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | +1.1‡ |
-| [GRPO-format](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | -0.1‡ |
-| [GRPO-incorrect](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | +0.7‡ |
-| [GRPO-majority](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | +1.9‡ |
-| [GRPO-random](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | -0.4‡ |
-| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | -1.3† |
-| [GRPO](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | -0.9† |
-
 ### DeepSeek-R1-Distill-Llama-8B
 
 | method | id | metric | AIME25 | AIME26 | HMMT25 |
@@ -208,6 +153,16 @@ Cell = method − the paper's starting checkpoint (pretrained, instruct, or dist
 | [Dr.GRPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | +5.5† | +11.8† | +6.1† |
 | [GRPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | +4.2† | +13.6† | +5.0† |
 
+### Qwen2.5-Math-7B
+
+| method | id | metric | AIME25 |
+|---|---|---|---|
+| [2-GRPO](https://arxiv.org/abs/2510.00977) | 2510.00977 | Mean@32 | +7.8 |
+| [GRPO](https://arxiv.org/abs/2510.00977) | 2510.00977 | Mean@32 | +8.2 |
+| [GRPO](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | +7.4 |
+| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | +4.1† |
+| [GRPO](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | +7.9† |
+
 ### Qwen3-4B-Base
 
 | method | id | metric | AIME26 |
@@ -217,6 +172,30 @@ Cell = method − the paper's starting checkpoint (pretrained, instruct, or dist
 | [DisCO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | +4.6† |
 | [Dr.GRPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | +7.6† |
 | [GRPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | +5.7† |
+
+### Llama-3.2-3B-Instruct
+
+| method | id | metric | AIME25 |
+|---|---|---|---|
+| [GRPO](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | +0.2‡ |
+| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | -0.5† |
+| [GRPO](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | -0.9† |
+
+### Qwen2.5-1.5B
+
+| method | id | metric | AIME25 |
+|---|---|---|---|
+| [GRPO](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | +1.1‡ |
+| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | -1.3† |
+| [GRPO](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | -0.9† |
+
+### Qwen2.5-Math-1.5B
+
+| method | id | metric | AIME25 |
+|---|---|---|---|
+| [GRPO](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | +1.5‡ |
+| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | +2.5† |
+| [GRPO](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | +3.7† |
 
 ### Other checkpoints
 
@@ -229,7 +208,7 @@ Cell = method − the paper's starting checkpoint (pretrained, instruct, or dist
 
 ## Gain over GRPO
 
-Cell = method − the paper's vanilla GRPO, or the nearest vanilla RLVR baseline when GRPO is absent (`vs` column). A trailing `*` means the reference is not vanilla GRPO (Dr. GRPO, DAPO, PPO, RLOO, REINFORCE++). `†` means a checkpoint chosen on eval benches (ConSPO every 100 steps; 1-shot RLVR best mean on six benches including AIME25). `‡` marks |Δ| < 2 pp on last-point SVG curves (AIME n=30). Tables that only vary the GRPO reward (format / random / incorrect / majority) are omitted. The reference method itself is omitted. Equal scores of different methods show `+0.0`. Blank if no RLVR baseline is reported on that bench. Same experiment only.
+Cell = method − the paper's vanilla GRPO, or the nearest vanilla RLVR baseline when GRPO is absent (`vs` column). A trailing `*` means the reference is not vanilla GRPO (Dr. GRPO, DAPO, PPO, RLOO, REINFORCE++). `†` means a checkpoint chosen on eval benches (ConSPO every 100 steps; 1-shot RLVR best mean on six benches including AIME25). `‡` marks |Δ| < 2 pp on last-point SVG curves (AIME n=30). GRPO-format / incorrect / majority / random, 2-GRPO+RS, and R1-GRPO are omitted. The reference method itself is omitted. Equal scores of different methods show `+0.0`. Blank if no RLVR baseline is reported on that bench. Same experiment only.
 
 ### DeepSeek-R1-Distill-Qwen-1.5B
 
@@ -248,19 +227,6 @@ Cell = method − the paper's vanilla GRPO, or the nearest vanilla RLVR baseline
 | [SAPO · DeepScaleR](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | GRPO | +2.9† | +2.4† | +1.1† |
 | [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@64 | GRPO |  | -3.7† |  |
 
-### Qwen2.5-Math-7B
-
-| method | id | metric | vs | AIME25 |
-|---|---|---|---|---|
-| [2-GRPO](https://arxiv.org/abs/2510.00977) | 2510.00977 | Mean@32 | GRPO | -0.4 |
-| [2-GRPO+RS](https://arxiv.org/abs/2510.00977) | 2510.00977 | Mean@32 | GRPO | -1.6 |
-| [GRPO-format](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | GRPO | -8.7 |
-| [GRPO-incorrect](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | GRPO | -6.8 |
-| [GRPO-majority](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | GRPO | -3.8 |
-| [GRPO-random](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | GRPO | -5.0 |
-| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | GRPO | -3.8† |
-| [GRPO-format](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | GRPO | -7.9† |
-
 ### DeepSeek-R1-Distill-Qwen-7B
 
 | method | id | metric | vs | AIME25 | AIME26 | HMMT25 |
@@ -272,37 +238,6 @@ Cell = method − the paper's vanilla GRPO, or the nearest vanilla RLVR baseline
 | [Critique-GRPO](https://arxiv.org/abs/2602.09000) | 2602.09000 | pass@1 | GRPO | +0.7 |  |  |
 | [Self-Verification](https://arxiv.org/abs/2602.09000) | 2602.09000 | pass@1 | GRPO | +0.6 |  |  |
 | [iGRPO](https://arxiv.org/abs/2602.09000) | 2602.09000 | pass@1 | GRPO | +1.3 |  |  |
-
-### Qwen2.5-Math-1.5B
-
-| method | id | metric | vs | AIME25 |
-|---|---|---|---|---|
-| [GRPO-format](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | GRPO | -2.2 |
-| [GRPO-incorrect](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | GRPO | -0.8‡ |
-| [GRPO-majority](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | GRPO | -0.2‡ |
-| [GRPO-random](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | GRPO | -2.3 |
-| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | GRPO | -1.2† |
-| [GRPO-format](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | GRPO | -2.9† |
-
-### Llama-3.2-3B-Instruct
-
-| method | id | metric | vs | AIME25 |
-|---|---|---|---|---|
-| [GRPO-format](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | GRPO | -0.4‡ |
-| [GRPO-incorrect](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | GRPO | -0.5‡ |
-| [GRPO-majority](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | GRPO | -0.4‡ |
-| [GRPO-random](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | GRPO | -0.3‡ |
-| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | GRPO | +0.4† |
-
-### Qwen2.5-1.5B
-
-| method | id | metric | vs | AIME25 |
-|---|---|---|---|---|
-| [GRPO-format](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | GRPO | -1.2‡ |
-| [GRPO-incorrect](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | GRPO | -0.8‡ |
-| [GRPO-majority](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | GRPO | +0.4‡ |
-| [GRPO-random](https://arxiv.org/abs/2506.10947) | 2506.10947 | avg@8 | GRPO | -1.5‡ |
-| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | GRPO | -0.4† |
 
 ### DeepSeek-R1-Distill-Llama-8B
 
@@ -324,11 +259,16 @@ Cell = method − the paper's vanilla GRPO, or the nearest vanilla RLVR baseline
 
 ### Other checkpoints
 
-| method | id | metric | vs | DeepSeek-R1-Distill-Qwen-32B · AIME25 | DeepSeek-R1-Distill-Qwen-32B · AIME26 | Qwen2.5-Math-1.5B-Instruct · AIME25 | Qwen3-4B-Instruct-2507 · AIME26 |
-|---|---|---|---|---|---|---|---|
-| [DAPO](https://arxiv.org/abs/2606.23740) | 2606.23740 | pass@1 | GRPO |  |  |  | -3.3 |
-| [ConSPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | GRPO | +3.2† | +2.9† |  |  |
-| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | GRPO |  |  | +0.0† |  |
+| method | id | metric | vs | Qwen2.5-Math-7B · AIME25 | DeepSeek-R1-Distill-Qwen-32B · AIME25 | DeepSeek-R1-Distill-Qwen-32B · AIME26 | Llama-3.2-3B-Instruct · AIME25 | Qwen2.5-1.5B · AIME25 | Qwen2.5-Math-1.5B · AIME25 | Qwen2.5-Math-1.5B-Instruct · AIME25 | Qwen3-4B-Instruct-2507 · AIME26 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| [DAPO](https://arxiv.org/abs/2606.23740) | 2606.23740 | pass@1 | GRPO |  |  |  |  |  |  |  | -3.3 |
+| [ConSPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | GRPO |  | +3.2† | +2.9† |  |  |  |  |  |
+| [2-GRPO](https://arxiv.org/abs/2510.00977) | 2510.00977 | Mean@32 | GRPO | -0.4 |  |  |  |  |  |  |  |
+| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | GRPO | -3.8† |  |  |  |  |  |  |  |
+| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | GRPO |  |  |  | +0.4† |  |  |  |  |
+| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | GRPO |  |  |  |  | -0.4† |  |  |  |
+| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | GRPO |  |  |  |  |  | -1.2† |  |  |
+| [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | GRPO |  |  |  |  |  |  | +0.0† |  |
 
 ## Not applicable
 

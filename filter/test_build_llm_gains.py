@@ -312,6 +312,56 @@ class GrpoOnlyTableTest(unittest.TestCase):
         self.assertFalse(blg.is_grpo_ablation('Dr.GRPO', 'Dr.GRPO'))
         self.assertFalse(blg.is_grpo_ablation('1-shot RLVR', '1-shot RLVR'))
 
+    def test_omits_listed_method_codes(self):
+        self.assertTrue(blg.is_omitted_method('GRPO-format', ''))
+        self.assertTrue(blg.is_omitted_method('GRPO-incorrect', ''))
+        self.assertTrue(blg.is_omitted_method('GRPO-majority', ''))
+        self.assertTrue(blg.is_omitted_method('GRPO-random', ''))
+        self.assertTrue(blg.is_omitted_method('2-GRPO+RS', '2-GRPO+RS'))
+        self.assertTrue(blg.is_omitted_method('R1-GRPO', 'R1-GRPO'))
+        self.assertFalse(blg.is_omitted_method('GRPO', 'GRPO'))
+        self.assertFalse(blg.is_omitted_method('2-GRPO', '2-GRPO'))
+        rows = blg.attach_ood([
+            _gain(
+                key=ood.TWO_GRPO,
+                code='2-GRPO+RS',
+                method='2-GRPO+RS',
+                model='Qwen2.5-Math-7B',
+                bench='AIME 2025',
+                train_data='MATH',
+                base=5.0,
+                score=11.67,
+            ),
+            _gain(
+                key=ood.TWO_GRPO,
+                code='2-GRPO',
+                method='2-GRPO',
+                model='Qwen2.5-Math-7B',
+                bench='AIME 2025',
+                train_data='MATH',
+                base=5.0,
+                score=12.8,
+            ),
+            _gain(
+                key=ood.SHAO,
+                code='GRPO-format',
+                method='GRPO (format reward)',
+                model='Qwen2.5-Math-7B',
+                bench='AIME 2025',
+                train_data='DeepScaleR',
+                base=6.3,
+                score=5.9,
+            ),
+        ], [])
+        markdown = blg.render_md(
+            rows,
+            [_paper(key=ood.TWO_GRPO), _paper(key=ood.SHAO)],
+            [],
+        )
+        self.assertNotIn('[GRPO-format]', markdown)
+        self.assertNotIn('[2-GRPO+RS]', markdown)
+        self.assertIn('[2-GRPO](', markdown)
+
     def test_omits_grpo_reward_ablation_table(self):
         rows = blg.attach_ood([
             _gain(
@@ -371,8 +421,9 @@ class GrpoOnlyTableTest(unittest.TestCase):
             [_paper(key=ood.SHAO), _paper(key=ood.ONESHOT)],
             [],
         )
-        self.assertIn('### Qwen2.5-Math-7B', markdown)
+        self.assertIn('### Other checkpoints', markdown)
         self.assertIn('1-shot RLVR', markdown)
+        self.assertIn('Qwen2.5-Math-7B', markdown)
 
 
 class OodFilterTest(unittest.TestCase):

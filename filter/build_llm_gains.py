@@ -48,6 +48,14 @@ SKIP_EXTRACT_NAMES = frozenset({
 MAX_ROWS = 45
 MIN_CHECKPOINT_ROWS = 3
 MAX_OTHER_COLS = 12
+OMITTED_GAIN_CODES = frozenset({
+    'GRPO-format',
+    'GRPO-incorrect',
+    'GRPO-majority',
+    'GRPO-random',
+    '2-GRPO+RS',
+    'R1-GRPO',
+})
 MAX_BATCH_TOKENS = 120_000
 MAX_BATCH_PAPERS = 6
 
@@ -362,6 +370,13 @@ def is_base_code(code: str, method: str = '') -> bool:
 
 def is_vanilla_grpo_ref(ref_method: str) -> bool:
     return bool(VANILLA_GRPO_RE.match((ref_method or '').strip()))
+
+
+def is_omitted_method(code: str, method: str = '') -> bool:
+    return (
+        (code or '').strip() in OMITTED_GAIN_CODES
+        or (method or '').strip() in OMITTED_GAIN_CODES
+    )
 
 
 def is_grpo_ablation(code: str, method: str = '') -> bool:
@@ -1412,6 +1427,7 @@ def table_gain_rows(
         and not is_base_code(row.get('code') or '', row.get('method') or '')
         and row.get('bench') in CORE_BENCHES
         and not is_omitted_gain(row)
+        and not is_omitted_method(row.get('code') or '', row.get('method') or '')
     ]
     if skip_self_ref:
         return [row for row in usable if not is_self_ref(row)]
@@ -1615,8 +1631,8 @@ def render_md(
         'best mean on six benches including AIME25). Temporal OOD of the tasks '
         'still holds; the final score is not an independent hold-out. '
         'A trailing `‡` marks |Δ| < 2 pp on last-point SVG curves (AIME n=30). '
-        'Tables that only vary the GRPO reward (format / random / incorrect / '
-        'majority) are omitted. '
+        'GRPO-format / incorrect / majority / random, 2-GRPO+RS, and R1-GRPO '
+        'are omitted. '
         'Blank if that paper does not report the starting checkpoint on that bench. '
         'Numbers stay inside one experiment (same table, train data, and metric).',
         rows,
@@ -1631,8 +1647,8 @@ def render_md(
         '`†` means a checkpoint chosen on eval benches (ConSPO every 100 '
         'steps; 1-shot RLVR best mean on six benches including AIME25). '
         '`‡` marks |Δ| < 2 pp on last-point SVG curves (AIME n=30). '
-        'Tables that only vary the GRPO reward (format / random / incorrect / '
-        'majority) are omitted. '
+        'GRPO-format / incorrect / majority / random, 2-GRPO+RS, and R1-GRPO '
+        'are omitted. '
         'The reference method itself is '
         'omitted. Equal scores of different methods show `+0.0`. '
         'Blank if no RLVR baseline is reported on that bench. '
