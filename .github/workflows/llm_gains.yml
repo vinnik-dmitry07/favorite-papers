@@ -1,0 +1,31 @@
+# Unit tests plus a byte-identical rebuild of the compact OOD tables.
+name: LLM gains
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install test deps
+        run: pip install pytest numpy scipy
+      - name: Unit tests
+        run: python -m pytest filter/
+      - name: Rebuild derived tables
+        env:
+          PYTHONIOENCODING: utf-8
+        run: python filter/build_llm_gains.py --from-jsonl
+      # llm_models.jsonl / llm_models.md are not in this diff: a local
+      # --from-jsonl regen of the inventory is not byte-identical.
+      - name: No generated-file drift
+        run: git diff --exit-code -- filter/llm_gains.jsonl llm_gains.md

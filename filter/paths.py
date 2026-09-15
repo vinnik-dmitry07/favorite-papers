@@ -5,6 +5,7 @@ from __future__ import annotations
 import importlib.util
 import json
 import re
+import sys
 from pathlib import Path
 
 FILTER_DIR = Path(__file__).resolve().parent
@@ -15,6 +16,17 @@ _spec = importlib.util.spec_from_file_location('map_common', SRC / 'common.py')
 map_common = importlib.util.module_from_spec(_spec)
 assert _spec.loader is not None
 _spec.loader.exec_module(map_common)
+
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
+from parse_readme import (  # noqa: E402
+    LABEL_RE,
+    SEGMENT_SPLIT,
+    TG_BADGE_RE,
+    iter_bullets,
+    segment_urls,
+    starts_entry,
+)
 
 CACHE_DIR = map_common.CACHE_DIR
 CATALOG = map_common.CATALOG
@@ -124,10 +136,68 @@ TG_KEY_ALIASES = {
 }
 
 
+def readme_paper_entries(readme: Path | None = None) -> list[tuple[str, str]]:
+    '''Scoreable first-URL keys and readme sections, in file order.'''
+    path = readme or README
+    entries = []
+    seen = set()
+    for section, bullet in iter_bullets(path.read_text(encoding='utf-8')):
+        previous = None
+        for index, segment in enumerate(bullet.split(SEGMENT_SPLIT)):
+            clean = TG_BADGE_RE.sub(' ', segment)
+            urls = segment_urls(clean)
+            if not urls:
+                continue
+            match = LABEL_RE.match(clean)
+            label = match.group('label').strip() if match else None
+            if index and not starts_entry(label) and previous:
+                continue
+            classified = classify(urls[0])
+            if not classified:
+                continue
+            kind, node_id = classified
+            if kind not in SCOREABLE_KINDS:
+                previous = node_id
+                continue
+            if node_id in seen:
+                previous = node_id
+                continue
+            seen.add(node_id)
+            entries.append((node_id, section))
+            previous = node_id
+    return entries
+
+
+def readme_paper_keys(readme: Path | None = None) -> list[str]:
+    '''First-URL catalog keys from readme.md bullets, in file order.'''
+    return [key for key, _section in readme_paper_entries(readme)]
+
+
+def papers_in_readme_order() -> list[dict]:
+    extra = {
+        paper['key']: paper
+        for paper in read_jsonl(PAPERS_JSONL)
+        if paper.get('key')
+    }
+    out = []
+    seen = set()
+    for key, section in readme_paper_entries():
+        item = dict(extra.get(key) or {'key': key})
+        item['key'] = key
+        if not item.get('section'):
+            item['section'] = section
+        out.append(item)
+        seen.add(key)
+    for key, paper in extra.items():
+        if key not in seen:
+            out.append(paper)
+    return out
+
+
 def write_jsonl(path: Path, rows: list[dict], sort_keys: bool = False) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_suffix(path.suffix + '.tmp')
-    with tmp.open('w', encoding='utf-8') as handle:
+    with tmp.open('w', encoding='utf-8', newline='\n') as handle:
         for row in rows:
             handle.write(
                 json.dumps(row, ensure_ascii=False, sort_keys=sort_keys) + '\n'
@@ -137,7 +207,7 @@ def write_jsonl(path: Path, rows: list[dict], sort_keys: bool = False) -> None:
 
 def append_jsonl(path: Path, row: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open('a', encoding='utf-8') as handle:
+    with path.open('a', encoding='utf-8', newline='\n') as handle:
         handle.write(json.dumps(row, ensure_ascii=False) + '\n')
         handle.flush()
 

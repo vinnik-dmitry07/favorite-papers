@@ -404,6 +404,22 @@ class WriteGuardTest(unittest.TestCase):
             self.assertFalse((tmp_path / 'out.md').exists())
 
 
+class PerPaperSectionTest(unittest.TestCase):
+    def test_key_only_papers_still_emit_sections(self):
+        row = _norm(
+            {
+                'model': 'Qwen2.5-7B-Instruct',
+                'start_point': 'instruct',
+                'eval_ood': ['AIME 2025'],
+                'section': 'Post-training',
+            },
+            {'key': 'arxiv:2501.00001'},
+        )
+        markdown = blm.render_md([row], [{'key': 'arxiv:2501.00001'}], [], [])
+        self.assertIn('### Post-training', markdown)
+        self.assertIn('Qwen2.5-7B-Instruct', markdown)
+
+
 class MetaSlimTest(unittest.TestCase):
     def test_drops_absolute_path(self):
         rec = blm.slim_meta_record({

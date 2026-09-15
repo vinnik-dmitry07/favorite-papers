@@ -6,6 +6,7 @@ import json
 import sys
 import tempfile
 import unittest
+from datetime import date
 from pathlib import Path
 from unittest.mock import patch
 
@@ -16,7 +17,15 @@ import build_llm_gains as blg
 import build_llm_models as blm
 import llm_gains_ood as ood
 from llm_reliability import SHAO_MATH500_GT_PP, SHAO_MATH500_RANDOM_PP
-from paths import write_jsonl
+from paths import (
+    PAPERS_JSONL,
+    SCOREABLE_KINDS,
+    append_jsonl,
+    papers_in_readme_order,
+    read_jsonl,
+    readme_paper_keys,
+    write_jsonl,
+)
 
 
 def _paper(key='arxiv:2501.00001', title='Demo', section='Post-training'):
@@ -1056,7 +1065,7 @@ class StrictTemporalOodTest(unittest.TestCase):
             'unverified',
         )
         self.assertEqual(
-            ood.classify_ood_basis(**shared, bench='HMMT 2025', hmmt_month=ood.PAPER_HMMT_MONTH[ood.CONSPO]),
+            ood.classify_ood_basis(**shared, bench='HMMT 2025'),
             'unverified',
         )
         self.assertEqual(
@@ -1256,7 +1265,6 @@ class StrictTemporalOodTest(unittest.TestCase):
                 method=code,
                 train_data=train,
                 teacher=teacher,
-                hmmt_month=ood.PAPER_HMMT_MONTH.get(key),
             )
             self.assertEqual(basis, 'temporal')
             self.assertTrue(ood.temporal_proof(
@@ -1309,15 +1317,15 @@ class StrictTemporalOodTest(unittest.TestCase):
     def test_math_cutoff_is_token_not_substring(self):
         self.assertEqual(
             ood.dataset_cutoff('MATH'),
-            ood.MATH_DATASET_CUTOFF,
+            ood.MATH_DATASET_CUTOFF.day,
         )
         self.assertEqual(
             ood.dataset_cutoff('MATH (7,500 step-by-step competition problems)'),
-            ood.MATH_DATASET_CUTOFF,
+            ood.MATH_DATASET_CUTOFF.day,
         )
         self.assertEqual(
             ood.dataset_cutoff('MATH train'),
-            ood.MATH_DATASET_CUTOFF,
+            ood.MATH_DATASET_CUTOFF.day,
         )
         self.assertIsNone(ood.dataset_cutoff('OpenR1-Math-220k'))
         self.assertIsNone(ood.dataset_cutoff('OpenThoughts mathematical reasoning'))
@@ -1529,6 +1537,111 @@ class ShaoAime25PlotTest(unittest.TestCase):
         ]
         self.assertEqual(len(rows), 1)
         self.assertAlmostEqual(rows[0]['score'], 9.9)
+
+
+class CutoffProvenanceTest(unittest.TestCase):
+    def test_empty_source_cutoff_is_unverified(self):
+        rec = ood.Cutoff(date(2024, 10, 1), '', 'content')
+        self.assertIsNone(ood.usable_day(rec))
+        with patch.object(ood, 'DATASET_CUTOFFS', (('deepscaler', rec),)):
+            self.assertIsNone(ood.dataset_cutoff('DeepScaleR'))
+            self.assertEqual(
+                ood.classify_ood_basis(
+                    key='arxiv:2501.00001',
+                    model='Qwen2.5-Math-7B',
+                    bench='AIME 2025',
+                    train_data='DeepScaleR',
+                ),
+                'unverified',
+            )
+
+    def test_deepscaler_content_bound_admits_aime25(self):
+        self.assertEqual(ood.dataset_cutoff('DeepScaleR'), date(2025, 1, 26))
+        self.assertEqual(
+            ood.classify_ood_basis(
+                key=ood.SHAO,
+                model='Qwen2.5-Math-7B',
+                bench='AIME 2025',
+                train_data='DeepScaleR',
+            ),
+            'temporal',
+        )
+        release = date(2025, 2, 9)
+        self.assertFalse(date(2025, 2, 6) > release)
+
+    def test_sourced_cutoff_dates(self):
+        self.assertEqual(
+            ood.model_cutoff('Qwen3-4B-Instruct-2507'), date(2025, 8, 6),
+        )
+        self.assertEqual(ood.model_cutoff('OLMo-2-1124-7B'), date(2024, 11, 26))
+        self.assertEqual(ood.bench_date('AIME 2025'), date(2025, 2, 6))
+        self.assertEqual(ood.PAPER_HMMT_DATE[ood.CONSPO].day, date(2025, 2, 15))
+        self.assertTrue(ood.model_cutoff_rec('Qwen2.5-Math-7B').source)
+        self.assertTrue(ood.dataset_cutoff_rec('DeepScaleR').source)
+        self.assertTrue(ood.BENCH_DATES['AIME 2025'].source)
+
+    def test_temporal_rows_carry_proof(self):
+        rows = blg.renormalize_rows(read_jsonl(blg.JSONL_PATH), [], [])
+        temporal = [row for row in rows if row.get('ood_basis') == 'temporal']
+        self.assertGreaterEqual(len(temporal), 50)
+        for row in temporal:
+            self.assertTrue(row['model_cutoff'], row)
+            self.assertTrue(row['train_cutoff'], row)
+            self.assertTrue(row['benchmark_date'], row)
+            src = row['cutoff_source']
+            self.assertTrue(src['model'], row)
+            self.assertTrue(src['train'], row)
+            self.assertTrue(src['bench'], row)
+            if row.get('teacher'):
+                self.assertTrue(row['teacher_cutoff'], row)
+                self.assertTrue(src['teacher'], row)
+            else:
+                self.assertFalse(row['teacher_cutoff'])
+            bench = date.fromisoformat(row['benchmark_date'])
+            cuts = [
+                date.fromisoformat(row['model_cutoff']),
+                date.fromisoformat(row['train_cutoff']),
+            ]
+            if row['teacher_cutoff']:
+                cuts.append(date.fromisoformat(row['teacher_cutoff']))
+            self.assertGreater(bench, max(cuts), row)
+
+    def test_readme_paper_keys_are_scoreable(self):
+        keys = readme_paper_keys()
+        self.assertGreater(len(keys), 50)
+        self.assertEqual(len(keys), len(set(keys)))
+        for key in keys:
+            self.assertIn(key.split(':', 1)[0], SCOREABLE_KINDS)
+
+    def test_readme_paper_keys_match_papers_jsonl(self):
+        if not PAPERS_JSONL.exists():
+            self.skipTest('papers.jsonl not checked out')
+        jsonl_keys = [row['key'] for row in read_jsonl(PAPERS_JSONL)]
+        readme_keys = readme_paper_keys()
+        shared = [key for key in readme_keys if key in set(jsonl_keys)]
+        self.assertEqual(shared, jsonl_keys)
+
+    def test_papers_in_readme_order_fills_section_without_jsonl(self):
+        with patch('paths.PAPERS_JSONL', Path('missing-papers.jsonl')):
+            papers = papers_in_readme_order()
+        self.assertGreater(len(papers), 50)
+        self.assertTrue(all(paper.get('section') for paper in papers))
+
+    def test_write_jsonl_lf_only(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'rows.jsonl'
+            write_jsonl(path, [{'a': 1}])
+            raw = path.read_bytes()
+            self.assertNotIn(b'\r', raw)
+            self.assertTrue(raw.endswith(b'\n'))
+
+    def test_append_jsonl_lf_only(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'rows.jsonl'
+            append_jsonl(path, {'a': 1})
+            raw = path.read_bytes()
+            self.assertNotIn(b'\r', raw)
+            self.assertTrue(raw.endswith(b'\n'))
 
 
 if __name__ == '__main__':

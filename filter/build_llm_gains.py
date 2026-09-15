@@ -25,7 +25,7 @@ import llm_gains_ood as ood  # noqa: E402
 from paths import (  # noqa: E402
     FILTER_DIR as ROOT,
     FULLTEXT_INDEX,
-    PAPERS_JSONL,
+    papers_in_readme_order,
     print_progress,
     read_jsonl,
     safe_key,
@@ -73,6 +73,11 @@ ROW_FIELDS = (
     'unit',
     'bench_span',
     'source_precision',
+    'model_cutoff',
+    'train_cutoff',
+    'teacher_cutoff',
+    'benchmark_date',
+    'cutoff_source',
 )
 
 FROM_SCRATCH_RE = re.compile(
@@ -806,9 +811,8 @@ def attach_teacher(rows: list[dict], model_rows: list[dict]) -> list[dict]:
     return out
 
 
-def classify_row(row: dict, slot: dict | None) -> str:
+def classify_row(row: dict, slot: dict | None, proof: dict | None = None) -> str:
     ids = (slot or {}).get('id') or set()
-    oods = (slot or {}).get('ood') or set()
     bench = row['bench']
     return ood.classify_ood_basis(
         key=row['key'],
@@ -820,8 +824,7 @@ def classify_row(row: dict, slot: dict | None) -> str:
         teacher=row.get('teacher') or '',
         bench_span=row.get('bench_span') or '',
         listed_id=bench in ids,
-        listed_ood=bench in oods,
-        hmmt_month=ood.PAPER_HMMT_MONTH.get(row['key']),
+        proof=proof,
     )
 
 
@@ -837,8 +840,25 @@ def attach_ood(rows: list[dict], model_rows: list[dict]) -> list[dict]:
         )
         if slot is None:
             unmatched += 1
-        item['ood_basis'] = classify_row(item, slot)
+        proof = ood.cutoff_proof(
+            item['model'],
+            item.get('teacher') or '',
+            item.get('train_data') or '',
+            item['bench'],
+            item['key'],
+            item.get('code') or '',
+            item.get('method') or '',
+            bench_span=item.get('bench_span') or '',
+        )
+        # ood_basis is the admission gate. Proof dates may be partial
+        # on unverified / rl_stage / id rows (empty field = the hole).
+        item['ood_basis'] = classify_row(item, slot, proof)
         item['ood'] = item['ood_basis'] == 'temporal'
+        item['model_cutoff'] = proof['model_cutoff']
+        item['train_cutoff'] = proof['train_cutoff']
+        item['teacher_cutoff'] = proof['teacher_cutoff']
+        item['benchmark_date'] = proof['benchmark_date']
+        item['cutoff_source'] = proof['cutoff_source']
         item['ckpt_select'] = ood.default_ckpt_select(
             item['key'], item.get('ckpt_select') or '',
         )
@@ -1474,9 +1494,9 @@ def render_md(
         'Llama-3.2-3B random ends at 287), not the curve max — that overstates '
         '(Qwen2.5-Math-7B Incorrect last +2.8 vs peak +6.0). Non-ground-truth '
         'last-point gains on Qwen2.5-Math-7B are **−0.4…+4.5 pp**. A trailing '
-        '`‡` marks |Δ| < 2 pp (AIME has 30 problems). Train data DeepScaleR; '
-        'Qwen2.5 / Llama-3.1 / Llama-3.2 / OLMo-2 cutoffs put AIME 2025 after '
-        'the chain.',
+        '`‡` marks |Δ| < 2 pp (AIME has 30 problems). Train data DeepScaleR: '
+        'the STILL-3 component is dated 2025-01-26, which is before AIME 2025 I '
+        '(2025-02-06). The dataset card itself appeared on 2025-02-09.',
         '- [Paradox](https://arxiv.org/html/2601.11061v1#S4.SS1) (`2601.11061`, '
         'already in `readme.md`): MATH-500 and MinervaMath are contaminated; '
         'LiveMathBench is the leakage-free control. It does not replace these '
@@ -1564,7 +1584,10 @@ def renormalize_rows(
     out = attach_ood(out, model_rows)
     out = fill_baselines(out)
     out = dedupe_rows(out)
-    return sort_rows(out, papers or [])
+    return [
+        {field: row[field] for field in ROW_FIELDS}
+        for row in sort_rows(out, papers or [])
+    ]
 
 
 def write_outputs(
@@ -1576,7 +1599,7 @@ def write_outputs(
     print(f'wrote {len(rows)} rows -> {JSONL_PATH}', flush=True)
     markdown = render_md(rows, papers, not_applicable)
     tmp = MD_PATH.with_suffix(MD_PATH.suffix + '.tmp')
-    tmp.write_text(markdown, encoding='utf-8')
+    tmp.write_text(markdown, encoding='utf-8', newline='\n')
     tmp.replace(MD_PATH)
     print(f'wrote {MD_PATH} ({len(markdown.splitlines())} lines)', flush=True)
     no_base, no_ref = missing_baseline_report(rows)
@@ -1641,7 +1664,7 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(sys.argv[1:] if argv is None else argv)
     extract_dir = args.extract_dir or args.extract_dir_pos
-    papers = read_jsonl(PAPERS_JSONL)
+    papers = papers_in_readme_order()
     model_rows = read_jsonl(MODELS_JSONL)
     _, not_applicable = iter_candidates(model_rows, load_index_by_key())
 

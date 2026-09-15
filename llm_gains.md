@@ -11,7 +11,7 @@ Per-paper numbers from `filter/fulltext/*.md`, stored in `filter/llm_gains.jsonl
 
 ## Notes
 
-- [Spurious Rewards](https://arxiv.org/html/2506.10947v2#A4) (`2506.10947`): AIME 2025 avg@8 from Appendix D Figures 12–13. Last point of the thick 10-step-smoothed SVG curve (usually step 300; Llama-3.2-3B random ends at 287), not the curve max — that overstates (Qwen2.5-Math-7B Incorrect last +2.8 vs peak +6.0). Non-ground-truth last-point gains on Qwen2.5-Math-7B are **−0.4…+4.5 pp**. A trailing `‡` marks |Δ| < 2 pp (AIME has 30 problems). Train data DeepScaleR; Qwen2.5 / Llama-3.1 / Llama-3.2 / OLMo-2 cutoffs put AIME 2025 after the chain.
+- [Spurious Rewards](https://arxiv.org/html/2506.10947v2#A4) (`2506.10947`): AIME 2025 avg@8 from Appendix D Figures 12–13. Last point of the thick 10-step-smoothed SVG curve (usually step 300; Llama-3.2-3B random ends at 287), not the curve max — that overstates (Qwen2.5-Math-7B Incorrect last +2.8 vs peak +6.0). Non-ground-truth last-point gains on Qwen2.5-Math-7B are **−0.4…+4.5 pp**. A trailing `‡` marks |Δ| < 2 pp (AIME has 30 problems). Train data DeepScaleR: the STILL-3 component is dated 2025-01-26, which is before AIME 2025 I (2025-02-06). The dataset card itself appeared on 2025-02-09.
 - [Paradox](https://arxiv.org/html/2601.11061v1#S4.SS1) (`2601.11061`, already in `readme.md`): MATH-500 and MinervaMath are contaminated; LiveMathBench is the leakage-free control. It does not replace these AIME 2025 cells. Qwen2.5 rows still share `2506.10947` with the MATH-500 / AIME 2024 jsonl rows (those stay `id` / `rl_stage`).
 
 ## Gain over the starting checkpoint

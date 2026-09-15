@@ -34,8 +34,8 @@ from llm_reliability import (  # noqa: E402
 )
 from paths import (  # noqa: E402
     FILTER_DIR as ROOT,
-    PAPERS_JSONL,
     classify,
+    papers_in_readme_order,
     print_progress,
     read_jsonl,
     safe_key,
@@ -900,8 +900,17 @@ def write_meta(excluded: list[dict], no_fulltext: list[dict]) -> None:
             indent=2,
         ) + '\n',
         encoding='utf-8',
+        newline='\n',
     )
     tmp.replace(META_PATH)
+
+
+def _paper_section(paper: dict, paper_rows: list[dict]) -> str:
+    if paper.get('section'):
+        return paper['section']
+    if paper_rows:
+        return paper_rows[0].get('section') or ''
+    return ''
 
 
 def render_md(
@@ -1030,7 +1039,7 @@ def render_md(
         if key not in keys_with_rows:
             continue
         paper_rows = rows_by_key[key]
-        section = paper.get('section') or paper_rows[0].get('section') or ''
+        section = _paper_section(paper, paper_rows)
         title = paper.get('line_title') or key
         link = md_link(title, paper_url(key, paper.get('urls')))
         if all(row.get('model') is None for row in paper_rows):
@@ -1064,7 +1073,10 @@ def render_md(
 
     seen_sections = []
     for paper in papers:
-        section = paper.get('section') or ''
+        key = paper['key']
+        if key not in keys_with_rows:
+            continue
+        section = _paper_section(paper, rows_by_key[key])
         if section in by_section and section not in seen_sections:
             seen_sections.append(section)
 
@@ -1167,7 +1179,7 @@ def write_outputs(
     print(f'wrote {META_PATH}', flush=True)
     markdown = render_md(rows, papers, excluded, no_fulltext)
     tmp = MD_PATH.with_suffix(MD_PATH.suffix + '.tmp')
-    tmp.write_text(markdown, encoding='utf-8')
+    tmp.write_text(markdown, encoding='utf-8', newline='\n')
     tmp.replace(MD_PATH)
     print(f'wrote {MD_PATH} ({len(markdown.splitlines())} lines)', flush=True)
 
@@ -1222,7 +1234,7 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(sys.argv[1:] if argv is None else argv)
     extract_dir = args.extract_dir or args.extract_dir_pos
-    papers = read_jsonl(PAPERS_JSONL)
+    papers = papers_in_readme_order()
     papers_by_key = {paper['key']: paper for paper in papers}
 
     if extract_dir is None:

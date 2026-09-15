@@ -7,6 +7,7 @@ eval_ood is not enough. Historical benches never auto-qualify.
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 import re
 from datetime import date
 
@@ -62,33 +63,125 @@ LCB_BENCHES = frozenset({
     'LiveCodeBench v6',
 })
 
-# Contest / problem-window start. HMMT needs an explicit month on the row.
+@dataclass(frozen=True)
+class Cutoff:
+    '''A dated bound. Empty source is unknown: the date cannot admit a row.'''
+
+    day: date
+    source: str
+    basis: str  # release | content | contest
+
+
+# LCB sitting date is the row's bench_span, not a contest URL.
+LCB_SPAN_SOURCE = 'row:bench_span'
+
+_AIME26 = Cutoff(
+    date(2026, 2, 5),
+    'https://maa.org/news/2025-26-aime-thresholds-are-now-available/',
+    'contest',
+)
 BENCH_DATES = {
-    'AIME 2025': date(2025, 2, 1),
-    'AIME26': date(2026, 2, 1),
-    'AIME 2026': date(2026, 2, 1),
+    'AIME 2025': Cutoff(
+        date(2025, 2, 6),
+        'https://maa.org/news/aime-thresholds-are-available/',
+        'contest',
+    ),
+    'AIME26': _AIME26,
+    'AIME 2026': _AIME26,
 }
 
-# Official LiveCodeBench v6 release starts May 2023; version is not a cutoff.
-LCB_DEFAULT_SPAN_START = date(2023, 5, 1)
-
-# Known student data cutoffs. Bare Qwen3 is omitted: AIME25 stays unverified.
-MODEL_CUTOFFS = (
-    ('DeepSeek-R1-Distill', date(2025, 1, 20)),
-    ('Qwen3-4B-Instruct-2507', date(2025, 8, 5)),
-    ('Qwen3-4B-Base', date(2025, 4, 29)),
-    ('Qwen2.5', date(2024, 9, 19)),
-    ('Llama-3.2', date(2024, 9, 25)),
-    ('Llama-3.1', date(2024, 7, 23)),
-    ('Llama-3-', date(2024, 4, 18)),
-    ('Llama-3 ', date(2024, 4, 18)),
-    ('OLMo-3', date(2025, 11, 20)),
-    ('OLMo-2', date(2024, 11, 1)),
-    ('Phi-3.5', date(2024, 8, 20)),
+_LLAMA3 = Cutoff(
+    date(2024, 4, 18),
+    'https://ai.meta.com/blog/meta-llama-3/',
+    'release',
 )
 
-PAPER_HMMT_MONTH = {
-    CONSPO: date(2025, 2, 1),
+# Known student data cutoffs (release = upper bound on training content).
+# Bare Qwen3 is omitted: AIME25 stays unverified.
+MODEL_CUTOFFS = (
+    (
+        'DeepSeek-R1-Distill',
+        Cutoff(
+            date(2025, 1, 20),
+            'https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B',
+            'release',
+        ),
+    ),
+    (
+        'Qwen3-4B-Instruct-2507',
+        Cutoff(
+            date(2025, 8, 6),
+            'https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507',
+            'release',
+        ),
+    ),
+    (
+        'Qwen3-4B-Base',
+        Cutoff(
+            date(2025, 4, 29),
+            'https://qwenlm.github.io/blog/qwen3/',
+            'release',
+        ),
+    ),
+    (
+        'Qwen2.5',
+        Cutoff(
+            date(2024, 9, 19),
+            'https://qwenlm.github.io/blog/qwen2.5/',
+            'release',
+        ),
+    ),
+    (
+        'Llama-3.2',
+        Cutoff(
+            date(2024, 9, 25),
+            'https://ai.meta.com/blog/llama-3-2-connect-2024-vision-edge-mobile-devices/',
+            'release',
+        ),
+    ),
+    (
+        'Llama-3.1',
+        Cutoff(
+            date(2024, 7, 23),
+            'https://ai.meta.com/blog/meta-llama-3-1/',
+            'release',
+        ),
+    ),
+    ('Llama-3-', _LLAMA3),
+    ('Llama-3 ', _LLAMA3),
+    (
+        'OLMo-3',
+        Cutoff(
+            date(2025, 11, 20),
+            'https://allenai.org/blog/olmo3',
+            'release',
+        ),
+    ),
+    (
+        'OLMo-2',
+        Cutoff(
+            date(2024, 11, 26),
+            'https://allenai.org/blog/olmo2',
+            'release',
+        ),
+    ),
+    (
+        'Phi-3.5',
+        Cutoff(
+            date(2024, 8, 20),
+            'https://huggingface.co/microsoft/Phi-3.5-mini-instruct',
+            'release',
+        ),
+    ),
+)
+
+HMMT_FEB_2025 = Cutoff(
+    date(2025, 2, 15),
+    'https://hmmt-archive.s3.amazonaws.com/tournaments/2025/feb/results/short.htm',
+    'contest',
+)
+PAPER_HMMT_DATE = {
+    CONSPO: HMMT_FEB_2025,
 }
 
 PAPER_CKPT_SELECT = {
@@ -143,17 +236,45 @@ PAPER_TEACHERS_BY_CODE = {
 
 TEACHER_NAME = PAPER_TEACHERS
 
-# Known train-data cutoffs. Empty or unknown train_data fail closed.
+# Known train-data cutoffs (content = max dated component). Empty/unknown fail closed.
+# DeepScaleR HF card (commits 2025-02-09/10, no later data) lists AIME 1984–2023,
+# AMC < 2023, Omni-MATH (arXiv 2410.07985 v1 2024-10-10), and STILL-3
+# (MATH + NuminaMathCoT + AIME 1983–2023; all HF commits 2025-01-26).
+# The dataset *release* (2025-02-09) is after AIME 2025 I (2025-02-06); only
+# the component bound admits AIME 2025.
+_DAPO_MATH = Cutoff(
+    date(2025, 3, 17),
+    'https://huggingface.co/datasets/BytedTsinghua-SIA/DAPO-Math-17k/commit/851fd44a728da639d3a8b2c12be5d971f45b360e',
+    'content',
+)
 DATASET_CUTOFFS = (
-    ('dapo-math-17k', date(2025, 3, 17)),
-    ('dapo-math-sub', date(2025, 3, 17)),
-    ('dapo-math', date(2025, 3, 17)),
-    ('deepscaler', date(2024, 10, 1)),
-    ('smoltalk2', date(2025, 7, 11)),
+    ('dapo-math-17k', _DAPO_MATH),
+    ('dapo-math-sub', _DAPO_MATH),
+    ('dapo-math', _DAPO_MATH),
+    (
+        'deepscaler',
+        Cutoff(
+            date(2025, 1, 26),
+            'https://huggingface.co/datasets/RUC-AIBOX/STILL-3-Preview-RL-Data',
+            'content',
+        ),
+    ),
+    (
+        'smoltalk2',
+        Cutoff(
+            date(2025, 7, 10),
+            'https://huggingface.co/datasets/HuggingFaceTB/smoltalk2/commit/cf3d7c37036a55161f2fa02f40a020a109ed757d',
+            'content',
+        ),
+    ),
 )
 
 # Hendrycks MATH as a token, not *Math* compounds or the word "mathematical".
-MATH_DATASET_CUTOFF = date(2021, 3, 5)
+MATH_DATASET_CUTOFF = Cutoff(
+    date(2021, 3, 5),
+    'https://arxiv.org/abs/2103.03874v1',
+    'content',
+)
 MATH_DATASET_RE = re.compile(
     r'(?:^|[\s(/,])math(?:$|[\s]*\(|[\s]+train\b)',
     re.I,
@@ -336,18 +457,34 @@ def is_qwen3(model: str) -> bool:
     return (model or '').replace(' ', '').lower().startswith('qwen3')
 
 
-def model_cutoff(model: str) -> date | None:
+def usable_day(rec: Cutoff | None) -> date | None:
+    if rec is None or not rec.source:
+        return None
+    return rec.day
+
+
+def model_cutoff_rec(model: str) -> Cutoff | None:
     text = model or ''
     for prefix, cutoff in MODEL_CUTOFFS:
         if text.startswith(prefix):
-            return cutoff
+            return cutoff if cutoff.source else None
     return None
 
 
-def bench_date(bench: str, hmmt_month: date | None = None) -> date | None:
+def model_cutoff(model: str) -> date | None:
+    return usable_day(model_cutoff_rec(model))
+
+
+def bench_date_rec(bench: str, key: str = '') -> Cutoff | None:
     if bench in {'HMMT 2025', 'HMMT'}:
-        return hmmt_month
-    return BENCH_DATES.get(bench)
+        rec = PAPER_HMMT_DATE.get(key)
+        return rec if rec and rec.source else None
+    rec = BENCH_DATES.get(bench)
+    return rec if rec and rec.source else None
+
+
+def bench_date(bench: str, key: str = '') -> date | None:
+    return usable_day(bench_date_rec(bench, key=key))
 
 
 def parse_bench_span(text: str) -> date | None:
@@ -380,17 +517,84 @@ def has_unknown_teacher(key: str, code: str, method: str, teacher: str) -> bool:
     return (code or '') in blocked or (method or '') in blocked
 
 
-def dataset_cutoff(train_data: str) -> date | None:
+def dataset_cutoff_rec(train_data: str) -> Cutoff | None:
     text = (train_data or '').lower()
     if not text:
         return None
-    dates = [
+    recs = [
         cutoff for prefix, cutoff in DATASET_CUTOFFS
-        if prefix.lower() in text
+        if prefix.lower() in text and cutoff.source
     ]
-    if MATH_DATASET_RE.search(train_data or ''):
-        dates.append(MATH_DATASET_CUTOFF)
-    return max(dates) if dates else None
+    if MATH_DATASET_RE.search(train_data or '') and MATH_DATASET_CUTOFF.source:
+        recs.append(MATH_DATASET_CUTOFF)
+    if not recs:
+        return None
+    return max(recs, key=lambda rec: rec.day)
+
+
+def dataset_cutoff(train_data: str) -> date | None:
+    return usable_day(dataset_cutoff_rec(train_data))
+
+
+def _parse_iso(text: str) -> date | None:
+    if not text:
+        return None
+    return date.fromisoformat(text)
+
+
+def cutoff_proof(
+    model: str,
+    teacher: str,
+    train_data: str,
+    bench: str,
+    key: str,
+    code: str = '',
+    method: str = '',
+    bench_span: str = '',
+) -> dict:
+    student = model_cutoff_rec(model)
+    train = dataset_cutoff_rec(train_data)
+    names = split_teachers(teacher)
+    teacher_recs = [model_cutoff_rec(name) for name in names]
+    teacher_rec = None
+    if names and all(teacher_recs) and not has_unknown_teacher(
+        key, code, method, teacher,
+    ):
+        teacher_rec = max(teacher_recs, key=lambda rec: rec.day)
+    if bench in LCB_BENCHES:
+        span = parse_bench_span(bench_span)
+        bench_rec = (
+            Cutoff(span, LCB_SPAN_SOURCE, 'contest') if span else None
+        )
+    else:
+        bench_rec = bench_date_rec(bench, key=key)
+    return {
+        'model_cutoff': student.day.isoformat() if student else '',
+        'train_cutoff': train.day.isoformat() if train else '',
+        'teacher_cutoff': teacher_rec.day.isoformat() if teacher_rec else '',
+        'benchmark_date': bench_rec.day.isoformat() if bench_rec else '',
+        'cutoff_source': {
+            'model': student.source if student else '',
+            'train': train.source if train else '',
+            'teacher': teacher_rec.source if teacher_rec else '',
+            'bench': bench_rec.source if bench_rec else '',
+        },
+    }
+
+
+def chain_from_proof(proof: dict, teacher: str, key: str) -> date | None:
+    student = _parse_iso(proof.get('model_cutoff') or '')
+    trained = _parse_iso(proof.get('train_cutoff') or '')
+    if student is None or trained is None:
+        return None
+    dates = [student, trained]
+    taught = _parse_iso(proof.get('teacher_cutoff') or '')
+    names = split_teachers(teacher)
+    if names or key in REQUIRE_TEACHER:
+        if taught is None:
+            return None
+        dates.append(taught)
+    return max(dates)
 
 
 def temporal_proof(
@@ -401,14 +605,8 @@ def temporal_proof(
     code: str,
     method: str,
 ) -> bool:
-    if not model_cutoff(model):
-        return False
-    if not dataset_cutoff(train_data):
-        return False
-    names = split_teachers(teacher)
-    if key in REQUIRE_TEACHER and not names:
-        return False
-    return all(model_cutoff(name) for name in names)
+    proof = cutoff_proof(model, teacher, train_data, '', key, code, method)
+    return chain_from_proof(proof, teacher, key) is not None
 
 
 def classify_ood_basis(
@@ -421,39 +619,30 @@ def classify_ood_basis(
     teacher: str = '',
     bench_span: str = '',
     listed_id: bool = False,
-    listed_ood: bool = False,  # inventory ood is not a cutoff
-    hmmt_month: date | None = None,
+    proof: dict | None = None,
 ) -> str:
     if bench in HISTORICAL_BENCHES:
         if listed_id:
             return 'id'
         return 'rl_stage'
-    if bench in LCB_BENCHES:
-        span = parse_bench_span(bench_span)
-        if span is None:
-            return 'unverified'
-        cutoff = chain_cutoff(model, teacher, train_data, key, code, method)
-        if cutoff is None or not temporal_proof(
-            model, teacher, train_data, key, code, method,
-        ):
-            return 'unverified'
-        if span > cutoff:
-            return 'temporal'
-        return 'rl_stage'
-    contest = bench_date(bench, hmmt_month=hmmt_month)
+    proof = proof or cutoff_proof(
+        model, teacher, train_data, bench, key, code, method,
+        bench_span=bench_span,
+    )
+    contest = _parse_iso(proof.get('benchmark_date') or '')
     if contest is None:
         return 'unverified'
     if is_qwen3(model) and bench == 'AIME 2025':
         return 'unverified'
     if has_unknown_teacher(key, code, method, teacher):
         return 'unverified'
-    cutoff = chain_cutoff(model, teacher, train_data, key, code, method)
-    if cutoff is None or not temporal_proof(
-        model, teacher, train_data, key, code, method,
-    ):
+    cutoff = chain_from_proof(proof, teacher, key)
+    if cutoff is None:
         return 'unverified'
     if contest > cutoff:
         return 'temporal'
+    if bench in LCB_BENCHES:
+        return 'rl_stage'
     return 'unverified'
 
 
@@ -467,21 +656,8 @@ def chain_cutoff(
 ) -> date | None:
     if has_unknown_teacher(key, code, method, teacher):
         return None
-    student = model_cutoff(model)
-    if student is None:
-        return None
-    dates = [student]
-    for name in split_teachers(teacher):
-        taught = model_cutoff(name)
-        if taught:
-            dates.append(taught)
-        elif name:
-            return None
-    trained = dataset_cutoff(train_data)
-    if trained is None:
-        return None
-    dates.append(trained)
-    return max(dates)
+    proof = cutoff_proof(model, teacher, train_data, '', key, code, method)
+    return chain_from_proof(proof, teacher, key)
 
 
 def default_ckpt_select(key: str, explicit: str = '') -> str:
