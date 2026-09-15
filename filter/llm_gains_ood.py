@@ -23,6 +23,13 @@ REVISIT_OPD = 'arxiv:2603.25562'
 TWO_GRPO = 'arxiv:2510.00977'
 SELF_DISTILL = 'arxiv:2603.24472'
 SHAO = 'arxiv:2506.10947'
+SKPO = 'arxiv:2604.08690'
+SCRL = 'arxiv:2605.22074'
+TTRL = 'arxiv:2504.16084'
+UPFT = 'arxiv:2503.02875'
+DR_GRPO = 'arxiv:2503.20783'
+CRITIQUE_GRPO = 'arxiv:2506.03106'
+INTUITOR = 'arxiv:2505.19590'
 
 OOD_BASES = ('temporal', 'rl_stage', 'id', 'unverified')
 CKPT_SELECT = (
@@ -373,8 +380,11 @@ CONSPO_T1_1P5 = {
     ('ConSPO', 'AMC 2023'): (52.8, 70.4, 64.4),
 }
 
-def _conspo_cells(model, source, train, benches, base, scores, ref):
+
+def _conspo_cells(model, source, train, benches, base, scores, ref,
+                  metrics=None):
     rows = []
+    overrides = metrics or {}
     for code, vals in scores.items():
         for bench, score in zip(benches, vals):
             rows.append({
@@ -382,6 +392,7 @@ def _conspo_cells(model, source, train, benches, base, scores, ref):
                 'code': code,
                 'method': code,
                 'bench': bench,
+                'metric': overrides.get(bench, 'avg@32'),
                 'base': base[bench],
                 'score': score,
                 'ref': ref[bench],
@@ -395,6 +406,7 @@ def _conspo_cells(model, source, train, benches, base, scores, ref):
 _T2 = 'Table 2 / §5.2'
 _T3 = 'Table 3 / §5.2'
 _T4 = 'Table 4 / §5.2'
+_T5 = 'Table 5 / §5.2'
 _T9 = 'Table 9 / Appendix D'
 _DS = 'DeepScaleR-Preview-Dataset'
 _DM = 'DAPO-Math-17k'
@@ -476,6 +488,200 @@ CONSPO_EXTRA = tuple(
             'source': _T9,
             'train_data': _DS,
         },
+    )
+    + _conspo_cells(
+        'Llama-3.2-3B-Instruct',
+        _T5,
+        _DS,
+        ('AIME 2024', 'MATH-500', 'AMC 2023'),
+        {'AIME 2024': 3.3, 'MATH-500': 26.4, 'AMC 2023': 12.5},
+        {
+            'GRPO': (12.0, 52.8, 25.9),
+            'DAPO': (10.5, 52.8, 25.0),
+            'Dr.GRPO': (11.1, 54.0, 26.5),
+            'DisCO': (11.4, 56.6, 27.5),
+            'ConSPO': (12.3, 57.4, 26.7),
+        },
+        {'AIME 2024': 12.0, 'MATH-500': 52.8, 'AMC 2023': 25.9},
+        metrics={'MATH-500': 'pass@1'},
+    )
+)
+
+
+def _table_cells(key, model, source, train, metric, benches, base,
+                 scores, ref=None, ref_method='GRPO', methods=None):
+    '''One spec per (code × bench).
+    ref: {bench: value} or None (no RLVR reference in that table).
+    methods: {code: method} for codes whose method text differs.'''
+    rows = []
+    aliases = methods or {}
+    for code, vals in scores.items():
+        for bench, score in zip(benches, vals):
+            if ref is None:
+                cell_ref = None
+                cell_ref_method = ''
+            else:
+                cell_ref = ref[bench]
+                cell_ref_method = ref_method
+            rows.append({
+                'key': key,
+                'model': model,
+                'code': code,
+                'method': aliases.get(code, code),
+                'bench': bench,
+                'metric': metric,
+                'base': base[bench],
+                'score': score,
+                'ref': cell_ref,
+                'ref_method': cell_ref_method,
+                'source': source,
+                'train_data': train,
+            })
+    return tuple(rows)
+
+
+# Leak-free Llama / OLMo cells whose table bodies are missing from
+# `fulltext/*.md`. Copied from the cached arXiv HTML tables (id + table
+# anchor per call). Plot-only papers (80/20 Fig. 11, SRT Fig. 33, Shao
+# Fig. 3) are deliberately absent. SKPO Table 1 column MATH is not
+# labelled MATH-500 in the paper; treated as MATH-500 because every
+# other 2025–26 RLVR paper in this repo that says MATH reports the
+# 500-problem subset.
+_SKPO_SRC = 'Table 1 / §4.1'
+_SKPO_TRAIN = 'dapo-math-17k'
+_SKPO_LLAMA = 'Llama-3.2-3B-Instruct'
+HISTORICAL_EXTRA = (
+    _table_cells(
+        SKPO, _SKPO_LLAMA, _SKPO_SRC, _SKPO_TRAIN, 'avg@32',
+        ('AIME 2024',),
+        {'AIME 2024': 3.4},
+        {
+            'GRPO': (4.7,),
+            'GSPO': (6.9,),
+            'SPO': (5.8,),
+            'SAPO': (7.9,),
+            'PRIME': (5.4,),
+            'DAPO': (13.8,),
+            'CISPO': (10.8,),
+            'SKPO': (14.7,),
+        },
+        {'AIME 2024': 4.7},
+    )
+    + _table_cells(
+        SKPO, _SKPO_LLAMA, _SKPO_SRC, _SKPO_TRAIN, 'avg@3',
+        ('AMC 2023', 'MATH-500'),
+        {'AMC 2023': 20.1, 'MATH-500': 36.3},
+        {
+            'GRPO': (24.8, 39.6),
+            'GSPO': (30.4, 42.1),
+            'SPO': (26.1, 39.2),
+            'SAPO': (38.1, 42.0),
+            'PRIME': (29.7, 34.7),
+            'DAPO': (36.5, 41.1),
+            'CISPO': (25.3, 35.8),
+            'SKPO': (37.9, 44.8),
+        },
+        {'AMC 2023': 24.8, 'MATH-500': 39.6},
+    )
+    + _table_cells(
+        SCRL, 'Llama-3.2-3B-Instruct', 'Table 1 / §5.2', 'hard_1024',
+        'pass@1',
+        ('Minerva Math', 'MATH-500', 'AIME 2024', 'AMC 2023'),
+        {
+            'Minerva Math': 13.7,
+            'MATH-500': 44.0,
+            'AIME 2024': 6.4,
+            'AMC 2023': 20.6,
+        },
+        {
+            'SFT': (11.0, 44.1, 2.5, 18.1),
+            'GRPO': (14.9, 44.5, 10.3, 20.9),
+            'DAPO': (15.1, 45.9, 9.8, 22.2),
+            'QuestA': (14.8, 45.9, 8.5, 21.4),
+            'NuRL': (14.9, 45.2, 10.2, 21.7),
+            'SCRL': (15.2, 45.2, 10.3, 21.4),
+        },
+        {
+            'Minerva Math': 14.9,
+            'MATH-500': 44.5,
+            'AIME 2024': 10.3,
+            'AMC 2023': 20.9,
+        },
+    )
+    + _table_cells(
+        TTRL, 'Llama-3.2-3B-Instruct', 'Table 2', '', 'pass@1',
+        ('AIME 2024', 'AMC 2023', 'MATH-500'),
+        {'AIME 2024': 6.0, 'AMC 2023': 19.4, 'MATH-500': 43.9},
+        {'TTRL': (13.3, 31.3, 61.6)},
+        methods={'TTRL': 'TTRL (GRPO)'},
+    )
+    + _table_cells(
+        CRITIQUE_GRPO, 'Llama-3.2-3B-Instruct', 'Table 5 / §5.5',
+        '4k subset of a reorganized 46k subset of OpenR1-Math-220k',
+        'pass@1',
+        ('MATH-500',),
+        {'MATH-500': 46.6},
+        {
+            'R1-GRPO': (53.6,),
+            'Critique-GRPO': (58.8,),
+        },
+        {'MATH-500': 53.6},
+    )
+    + _table_cells(
+        DFT, 'Llama-3.2-3B', 'Table 1',
+        'NuminaMath-CoT (100,000 random instances)',
+        'avg@16',
+        ('MATH-500',),
+        {'MATH-500': 1.63},
+        {'SFT': (8.65,), 'DFT': (12.79,)},
+    )
+    + _table_cells(
+        DFT, 'Llama-3.1-8B-Base', 'Table 1',
+        'NuminaMath-CoT (100,000 random instances)',
+        'avg@16',
+        ('MATH-500',),
+        {'MATH-500': 1.86},
+        {'SFT': (16.85,), 'DFT': (27.44,)},
+    )
+    + _table_cells(
+        DR_GRPO, 'Llama-3.2-3B', 'Table 4', 'MATH training dataset',
+        'pass@1',
+        ('MATH-500',),
+        {'MATH-500': 6.4},
+        {'Dr.GRPO': (10.0,)},
+        {'MATH-500': 10.0},
+        ref_method='Dr. GRPO',
+        methods={'Dr.GRPO': 'Dr. GRPO'},
+    )
+    + _table_cells(
+        UPFT, 'Llama-3.1-8B-Instruct', 'Table 2 (PRM)', '', 'acc',
+        ('MATH-500',),
+        {'MATH-500': 51.0},
+        {'SFT': (48.4,), 'UPFT': (52.0,)},
+    )
+    + _table_cells(
+        UPFT, 'Llama-3.1-8B-Instruct', 'Table 3 (PRM-12K)', '', 'acc',
+        ('MATH-500',),
+        {'MATH-500': 51.0},
+        {'RFT': (52.0,), 'V-STaR': (52.6,)},
+    )
+    + _table_cells(
+        INTUITOR, 'Llama-3.2-3B-Instruct', 'Table 5',
+        'MATH training split (7,500 problems)',
+        'pass@1',
+        ('MATH-500',),
+        {'MATH-500': 43.6},
+        {'GRPO': (49.4,), 'Intuitor': (47.6,)},
+        {'MATH-500': 49.4},
+    )
+    + _table_cells(
+        INTUITOR, 'OLMo-2-1124-7B-SFT', 'Table 6',
+        'MATH training split (7,500 problems)',
+        'pass@1',
+        ('MATH-500',),
+        {'MATH-500': 30.2},
+        {'GRPO': (37.4,), 'Intuitor': (37.2,)},
+        {'MATH-500': 37.4},
     )
 )
 
@@ -925,6 +1131,7 @@ def apply_gain_overrides(rows: list[dict]) -> list[dict]:
     out = []
     have = set()
     have_scored = set()
+    have_hist = set()
     for row in rows:
         item = alias_conspo_code(unscale_row(dict(row)))
         if item.get('key') == CONSPO:
@@ -949,8 +1156,17 @@ def apply_gain_overrides(rows: list[dict]) -> list[dict]:
         have.add(pair)
         if item.get('score') is not None:
             have_scored.add(pair)
+            have_hist.add((
+                item.get('key'),
+                item.get('model'),
+                item.get('code'),
+                item.get('bench'),
+                item.get('source') or '',
+                item.get('metric') or '',
+            ))
     out.extend(_conspo_table1_rows(have_scored))
-    out.extend(_conspo_extra_rows(have_scored))
+    out.extend(_conspo_extra_rows(have_scored, have))
+    out.extend(_historical_extra_rows(have_hist))
     out.extend(_weight_geo_dapo_rows(have))
     out.extend(_shao_aime25_plot_rows(have_scored))
     return out
@@ -1027,7 +1243,8 @@ def _conspo_table1_rows(have_scored: set[tuple]) -> list[dict]:
     return added
 
 
-def _conspo_extra_rows(have_scored: set[tuple]) -> list[dict]:
+def _conspo_extra_rows(have_scored: set[tuple],
+                       have: set[tuple]) -> list[dict]:
     added = []
     for spec in CONSPO_EXTRA:
         source = spec['source']
@@ -1042,13 +1259,15 @@ def _conspo_extra_rows(have_scored: set[tuple]) -> list[dict]:
         )
         if pair in have_scored:
             continue
+        if spec.get('score') is None and pair in have:
+            continue
         added.append({
             'key': CONSPO,
             'code': spec['code'],
             'method': spec['method'],
             'model': spec['model'],
             'bench': spec['bench'],
-            'metric': 'avg@32',
+            'metric': spec.get('metric') or 'avg@32',
             'base': spec.get('base'),
             'ref': spec.get('ref'),
             'ref_method': 'GRPO',
@@ -1061,6 +1280,47 @@ def _conspo_extra_rows(have_scored: set[tuple]) -> list[dict]:
             'unit': 'pp',
             'bench_span': '',
             'ckpt_select': 'best-every-100',
+            'ood_basis': '',
+            'ood': False,
+        })
+    return added
+
+
+def _historical_extra_rows(have_scored: set[tuple]) -> list[dict]:
+    # Identity is (key, model, code, bench, source, metric). train_data is
+    # omitted so an inventory-filled value cannot re-inject; metric is
+    # required so avg@32 cannot block the avg@3 HTML cell.
+    added = []
+    for spec in HISTORICAL_EXTRA:
+        pair = (
+            spec['key'],
+            spec['model'],
+            spec['code'],
+            spec['bench'],
+            spec['source'],
+            spec.get('metric') or '',
+        )
+        if pair in have_scored:
+            continue
+        added.append({
+            'key': spec['key'],
+            'code': spec['code'],
+            'method': spec['method'],
+            'model': spec['model'],
+            'bench': spec['bench'],
+            'metric': spec['metric'],
+            'base': spec['base'],
+            'ref': spec['ref'],
+            'ref_method': spec['ref_method'],
+            'score': spec['score'],
+            'gain': None,
+            'gain_ref': None,
+            'source': spec['source'],
+            'train_data': spec['train_data'],
+            'teacher': '',
+            'unit': 'pp',
+            'bench_span': '',
+            'ckpt_select': 'unspecified',
             'ood_basis': '',
             'ood': False,
         })

@@ -1835,5 +1835,163 @@ class LeakageFreeTest(unittest.TestCase):
         self.assertNotIn('+21.4', markdown)
 
 
+class HistoricalExtraTest(unittest.TestCase):
+    def test_specs_stay_inside_leakage_free_block(self):
+        for spec in ood.HISTORICAL_EXTRA:
+            self.assertTrue(
+                ood.leakage_free(spec['model'], spec['bench']),
+                spec,
+            )
+            self.assertTrue(spec['metric'])
+            self.assertTrue(spec['source'])
+            self.assertIsNotNone(spec['score'])
+            self.assertIsNotNone(spec['base'])
+            self.assertFalse(spec['model'].startswith('Qwen'))
+        llama_t5 = [
+            spec for spec in ood.CONSPO_EXTRA
+            if spec.get('model') == 'Llama-3.2-3B-Instruct'
+            and spec.get('source') == 'Table 5 / §5.2'
+        ]
+        self.assertTrue(llama_t5)
+        for spec in llama_t5:
+            if spec['bench'] == 'MATH-500':
+                self.assertEqual(spec.get('metric'), 'pass@1')
+            else:
+                self.assertEqual(spec.get('metric'), 'avg@32')
+
+    def test_different_metric_does_not_block_html_cell(self):
+        spec = next(
+            item for item in ood.HISTORICAL_EXTRA
+            if item['key'] == ood.SKPO
+            and item['code'] == 'SKPO'
+            and item['bench'] == 'MATH-500'
+            and item['metric'] == 'avg@3'
+        )
+
+        def _skpo_math(rows, metric):
+            return [
+                row for row in rows
+                if row['key'] == spec['key']
+                and row['code'] == spec['code']
+                and row['model'] == spec['model']
+                and row['bench'] == spec['bench']
+                and row['metric'] == metric
+            ]
+
+        other = _gain(
+            key=spec['key'],
+            code=spec['code'],
+            method=spec['method'],
+            model=spec['model'],
+            bench=spec['bench'],
+            metric='avg@32',
+            source=spec['source'],
+            train_data=spec['train_data'],
+            score=99.0,
+            base=99.0,
+        )
+        rows = ood.apply_gain_overrides([other])
+        avg3 = _skpo_math(rows, 'avg@3')
+        self.assertEqual(len(avg3), 1)
+        self.assertAlmostEqual(avg3[0]['score'], spec['score'])
+        avg32 = _skpo_math(rows, 'avg@32')
+        self.assertEqual(len(avg32), 1)
+        self.assertAlmostEqual(avg32[0]['score'], 99.0)
+
+        same = _gain(
+            key=spec['key'],
+            code=spec['code'],
+            method=spec['method'],
+            model=spec['model'],
+            bench=spec['bench'],
+            metric=spec['metric'],
+            source=spec['source'],
+            train_data='inventory-filled-not-in-spec',
+            score=99.0,
+            base=99.0,
+        )
+        rows = ood.apply_gain_overrides([same])
+        hits = _skpo_math(rows, spec['metric'])
+        self.assertEqual(len(hits), 1)
+        self.assertAlmostEqual(hits[0]['score'], 99.0)
+
+    def test_injects_once_and_is_idempotent(self):
+        hist_keys = {
+            ood.SKPO,
+            ood.SCRL,
+            ood.TTRL,
+            ood.CRITIQUE_GRPO,
+            ood.DFT,
+            ood.DR_GRPO,
+            ood.UPFT,
+            ood.INTUITOR,
+        }
+        rows = ood.apply_gain_overrides([])
+        hist = [row for row in rows if row['key'] in hist_keys]
+        self.assertEqual(len(hist), len(ood.HISTORICAL_EXTRA))
+        again = ood.apply_gain_overrides(rows)
+        self.assertEqual(len(again), len(rows))
+        once = blg.renormalize_rows(rows, [])
+        twice = blg.renormalize_rows(once, [])
+        self.assertEqual(len(twice), len(once))
+
+    def test_skpo_llama_cells(self):
+        rows = blg.renormalize_rows(ood.apply_gain_overrides([]), [])
+        aime = next(
+            row for row in rows
+            if row['key'] == ood.SKPO
+            and row['model'] == 'Llama-3.2-3B-Instruct'
+            and row['code'] == 'SKPO'
+            and row['bench'] == 'AIME 2024'
+        )
+        self.assertEqual(aime['metric'], 'avg@32')
+        self.assertEqual(aime['base'], 3.4)
+        self.assertEqual(aime['ref'], 4.7)
+        self.assertEqual(aime['score'], 14.7)
+        self.assertEqual(aime['ref_method'], 'GRPO')
+        self.assertTrue(aime['leakage_free'])
+        self.assertIn(aime['ood_basis'], {'id', 'rl_stage'})
+        self.assertTrue(blg.is_leakage_free_row(aime))
+        amc = next(
+            row for row in rows
+            if row['key'] == ood.SKPO
+            and row['model'] == 'Llama-3.2-3B-Instruct'
+            and row['code'] == 'SKPO'
+            and row['bench'] == 'AMC 2023'
+        )
+        self.assertEqual(amc['metric'], 'avg@3')
+        self.assertEqual(amc['base'], 20.1)
+        self.assertEqual(amc['score'], 37.9)
+        for row in rows:
+            if row['key'] != ood.SKPO:
+                continue
+            if (row.get('model') or '').startswith('Qwen'):
+                self.assertFalse(row['leakage_free'])
+
+    def test_leakage_free_tables_render_new_cells(self):
+        rows = blg.renormalize_rows(read_jsonl(blg.JSONL_PATH), [], [])
+        markdown = blg.render_md(rows, [], [])
+        leak = markdown.split(
+            '## Leakage-free: gain over the starting checkpoint', 1,
+        )[1]
+        self.assertIn(
+            '[SKPO](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@32 |',
+            leak,
+        )
+        skpo_line = next(
+            line for line in leak.splitlines()
+            if '[SKPO](https://arxiv.org/abs/2604.08690)' in line
+            and 'avg@32' in line
+        )
+        self.assertIn('+11.3', skpo_line)
+        self.assertIn('[SCRL](https://arxiv.org/abs/2605.22074)', leak)
+        self.assertIn(
+            '[TTRL](https://arxiv.org/abs/2504.16084) | 2504.16084 | '
+            'pass@1 | +17.7',
+            leak,
+        )
+        self.assertIn('OLMo-2-1124-7B-SFT · MATH500', leak)
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -7,8 +7,8 @@ Per-paper numbers from `filter/fulltext/*.md`, stored in `filter/llm_gains.jsonl
 - Papers with at least one temporal OOD number: **6**
 - Temporal gain cells vs starting checkpoint: **94**
 - Temporal gain cells vs GRPO / nearest RLVR: **66**
-- Leakage-free historical cells vs starting checkpoint: **60**
-- Leakage-free historical cells vs GRPO / nearest RLVR: **28**
+- Leakage-free historical cells vs starting checkpoint: **137**
+- Leakage-free historical cells vs GRPO / nearest RLVR: **82**
 - From-scratch papers (no starting checkpoint): **13**
 
 ## Notes
@@ -24,58 +24,93 @@ Intersection of [Spurious Rewards](https://arxiv.org/abs/2506.10947) and [Parado
 - Bench both treat as fresh: **AIME 2025**. Shao: written after the cutoff of every model they train. Paradox: the memorization gate fires on 0/30 AIME-2025 items (same as 0/100 on LiveMathBench).
 - Paradox-only clean bench: LiveMathBench (not in these tables). Leaked on Qwen2.5-Math-7B and Qwen3-8B: MATH-500 and MinervaMath.
 - Drawn below: Shao's six non-Qwen checkpoints (Llama-3.1-8B / -Instruct / -Base, Llama-3.2-3B / -Instruct, OLMo-2-1124-7B / -SFT) × MATH-500, AMC 2023, AIME 2024, Minerva Math ([Shao §3](https://arxiv.org/html/2506.10947v2#S3), [Paradox App C](https://arxiv.org/html/2601.11061v1#A3)). Every jsonl row with `leakage_free: true` on those benches, from every paper (basis stays `id` / `rl_stage`). Shao Figure 3 MATH-500 curves are not extracted.
+- Cells whose table bodies were lost in `filter/fulltext/*.md` are backfilled from the cached arXiv HTML tables (SKPO Table 1, ConSPO Table 5, SCRL Table 1, TTRL Table 2, Critique-GRPO Table 5, DFT Table 1, Dr. GRPO Table 4, UPFT Tables 2–3, Intuitor Tables 5–6); see `HISTORICAL_EXTRA` / `CONSPO_EXTRA` in `filter/llm_gains_ood.py`.
 
 ## Leakage-free: gain over the starting checkpoint
 
 Cell = method − the paper's starting checkpoint (pretrained, instruct, or distilled), percentage points, one decimal. `avg@k` is not `pass@k`. A trailing `†` means the paper picked a checkpoint using eval benches. Blank if that paper does not report the starting checkpoint on that bench. Numbers stay inside one experiment (same table, train data, and metric).
 
-### Llama-3.1-8B-Instruct
-
-| method | id | metric | AIME24 | AMC23 | MATH500 | Minerva |
-|---|---|---|---|---|---|---|
-| [GRPO](https://arxiv.org/abs/2509.03646) | 2509.03646 | avg@32 | +4.7 |  |  |  |
-| [GRPO](https://arxiv.org/abs/2509.03646) | 2509.03646 | avg@4 |  | +7.9 |  |  |
-| [GRPO](https://arxiv.org/abs/2509.03646) | 2509.03646 | pass@1 |  |  | +2.8 | +6.3 |
-| [HICRA](https://arxiv.org/abs/2509.03646) | 2509.03646 | avg@32 | +4.1 |  |  |  |
-| [HICRA](https://arxiv.org/abs/2509.03646) | 2509.03646 | avg@4 |  | +10.0 |  |  |
-| [HICRA](https://arxiv.org/abs/2509.03646) | 2509.03646 | pass@1 |  |  | +4.6 | +4.9 |
-| [TTRL](https://arxiv.org/abs/2504.16084) | 2504.16084 | pass@1 | +5.4 | +9.0 | +15.1 |  |
-| [RFT](https://arxiv.org/abs/2503.02875) | 2503.02875 | acc | +3.4 |  |  |  |
-| [SFT](https://arxiv.org/abs/2503.02875) | 2503.02875 | acc | +0.0 |  |  |  |
-| [UPFT](https://arxiv.org/abs/2503.02875) | 2503.02875 | acc | +3.4 |  |  |  |
-| [V-STaR](https://arxiv.org/abs/2503.02875) | 2503.02875 | acc | +3.4 |  |  |  |
-| [EM-FT](https://arxiv.org/abs/2505.15134) | 2505.15134 | pass@1 | +2.3 | +3.6 | +1.6 | -3.6 |
-| [EM-RL](https://arxiv.org/abs/2505.15134) | 2505.15134 | pass@1 | +4.6 | +0.0 | +0.4 | -3.3 |
-| [EM-RL-sequence](https://arxiv.org/abs/2505.15134) | 2505.15134 | pass@1 | +6.8 | +0.0 | +1.0 | -4.0 |
-| [RLOO](https://arxiv.org/abs/2505.15134) | 2505.15134 | pass@1 | +2.3 | +7.2 | +11.4 | +4.4 |
-
 ### Llama-3.2-3B-Instruct
 
 | method | id | metric | MATH500 | AIME24 | AMC23 | Minerva |
 |---|---|---|---|---|---|---|
+| [DAPO](https://arxiv.org/abs/2605.22074) | 2605.22074 | pass@1 | +1.9 | +3.4 | +1.6 | +1.4 |
+| [GRPO](https://arxiv.org/abs/2605.22074) | 2605.22074 | pass@1 | +0.5 | +3.9 | +0.3 | +1.2 |
+| [NuRL](https://arxiv.org/abs/2605.22074) | 2605.22074 | pass@1 | +1.2 | +3.8 | +1.1 | +1.2 |
+| [QuestA](https://arxiv.org/abs/2605.22074) | 2605.22074 | pass@1 | +1.9 | +2.1 | +0.8 | +1.1 |
+| [SCRL](https://arxiv.org/abs/2605.22074) | 2605.22074 | pass@1 | +1.2 | +3.9 | +0.8 | +1.5 |
+| [SFT](https://arxiv.org/abs/2605.22074) | 2605.22074 | pass@1 | +0.1 | -3.9 | -2.5 | -2.7 |
+| [ConSPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 |  | +9.0† | +14.2† |  |
 | [ConSPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | pass@1 | +31.0† |  |  |  |
+| [DAPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 |  | +7.2† | +12.5† |  |
 | [DAPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | pass@1 | +26.4† |  |  |  |
+| [DisCO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 |  | +8.1† | +15.0† |  |
+| [DisCO](https://arxiv.org/abs/2605.12969) | 2605.12969 | pass@1 | +30.2† |  |  |  |
+| [Dr.GRPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 |  | +7.8† | +14.0† |  |
+| [Dr.GRPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | pass@1 | +27.6† |  |  |  |
+| [GRPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 |  | +8.7† | +13.4† |  |
 | [GRPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | pass@1 | +26.4† |  |  |  |
-| [Critique-GRPO](https://arxiv.org/abs/2506.03106) | 2506.03106 | pass@1 |  | +6.7 | +7.5 | +8.4 |
+| [CISPO](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@32 |  | +7.4 |  |  |
+| [CISPO](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@3 | -0.5 |  | +5.2 |  |
+| [DAPO](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@32 |  | +10.4 |  |  |
+| [DAPO](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@3 | +4.8 |  | +16.4 |  |
+| [GRPO](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@32 |  | +1.3 |  |  |
+| [GRPO](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@3 | +3.3 |  | +4.7 |  |
+| [GSPO](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@32 |  | +3.5 |  |  |
+| [GSPO](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@3 | +5.8 |  | +10.3 |  |
+| [PRIME](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@32 |  | +2.0 |  |  |
+| [PRIME](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@3 | -1.6 |  | +9.6 |  |
+| [SAPO](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@32 |  | +4.5 |  |  |
+| [SAPO](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@3 | +5.7 |  | +18.0 |  |
+| [SKPO](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@32 |  | +11.3 |  |  |
+| [SKPO](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@3 | +8.5 |  | +17.8 |  |
+| [SPO](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@32 |  | +2.4 |  |  |
+| [SPO](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@3 | +2.9 |  | +6.0 |  |
+| [Critique-GRPO](https://arxiv.org/abs/2506.03106) | 2506.03106 | pass@1 | +12.2 | +6.7 | +7.5 | +8.4 |
+| [GRPO](https://arxiv.org/abs/2505.19590) | 2505.19590 | pass@1 | +5.8 |  |  |  |
+| [Intuitor](https://arxiv.org/abs/2505.19590) | 2505.19590 | pass@1 | +4.0 |  |  |  |
+| [TTRL](https://arxiv.org/abs/2504.16084) | 2504.16084 | pass@1 | +17.7 | +7.3 | +11.9 |  |
 | [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 |  | -0.4† | +0.0† |  |
 | [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | pass@1 | +5.0† |  |  | +0.7† |
 | [GRPO](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 |  | +2.9† | +2.5† |  |
 | [GRPO](https://arxiv.org/abs/2504.20571) | 2504.20571 | pass@1 | +2.4† |  |  | +3.7† |
 
+### Llama-3.1-8B-Instruct
+
+| method | id | metric | AIME24 | MATH500 | AMC23 | Minerva |
+|---|---|---|---|---|---|---|
+| [GRPO](https://arxiv.org/abs/2509.03646) | 2509.03646 | avg@32 | +4.7 |  |  |  |
+| [GRPO](https://arxiv.org/abs/2509.03646) | 2509.03646 | avg@4 |  |  | +7.9 |  |
+| [GRPO](https://arxiv.org/abs/2509.03646) | 2509.03646 | pass@1 |  | +2.8 |  | +6.3 |
+| [HICRA](https://arxiv.org/abs/2509.03646) | 2509.03646 | avg@32 | +4.1 |  |  |  |
+| [HICRA](https://arxiv.org/abs/2509.03646) | 2509.03646 | avg@4 |  |  | +10.0 |  |
+| [HICRA](https://arxiv.org/abs/2509.03646) | 2509.03646 | pass@1 |  | +4.6 |  | +4.9 |
+| [TTRL](https://arxiv.org/abs/2504.16084) | 2504.16084 | pass@1 | +5.4 | +15.1 | +9.0 |  |
+| [RFT](https://arxiv.org/abs/2503.02875) | 2503.02875 | acc | +3.4 | +1.0 |  |  |
+| [SFT](https://arxiv.org/abs/2503.02875) | 2503.02875 | acc | +0.0 | -2.6 |  |  |
+| [UPFT](https://arxiv.org/abs/2503.02875) | 2503.02875 | acc | +3.4 | +1.0 |  |  |
+| [V-STaR](https://arxiv.org/abs/2503.02875) | 2503.02875 | acc | +3.4 | +1.6 |  |  |
+| [EM-FT](https://arxiv.org/abs/2505.15134) | 2505.15134 | pass@1 | +2.3 | +1.6 | +3.6 | -3.6 |
+| [EM-RL](https://arxiv.org/abs/2505.15134) | 2505.15134 | pass@1 | +4.6 | +0.4 | +0.0 | -3.3 |
+| [EM-RL-sequence](https://arxiv.org/abs/2505.15134) | 2505.15134 | pass@1 | +6.8 | +1.0 | +0.0 | -4.0 |
+| [RLOO](https://arxiv.org/abs/2505.15134) | 2505.15134 | pass@1 | +2.3 | +11.4 | +7.2 | +4.4 |
+
 ### Llama-3.2-3B
 
-| method | id | metric | AIME24 | AMC23 | Minerva |
-|---|---|---|---|---|---|
-| [DFT](https://arxiv.org/abs/2508.05629) | 2508.05629 | avg@16 | +0.4 | +2.4 | +1.5 |
-| [SFT](https://arxiv.org/abs/2508.05629) | 2508.05629 | avg@16 | -0.4 | +1.6 | +1.0 |
-| [Dr.GRPO](https://arxiv.org/abs/2503.20783) | 2503.20783 | pass@1 | +3.3 | +4.8 | +4.7 |
+| method | id | metric | AIME24 | AMC23 | MATH500 | Minerva |
+|---|---|---|---|---|---|---|
+| [DFT](https://arxiv.org/abs/2508.05629) | 2508.05629 | avg@16 | +0.4 | +2.4 | +11.2 | +1.5 |
+| [SFT](https://arxiv.org/abs/2508.05629) | 2508.05629 | avg@16 | -0.4 | +1.6 | +7.0 | +1.0 |
+| [Dr.GRPO](https://arxiv.org/abs/2503.20783) | 2503.20783 | pass@1 | +3.3 | +4.8 | +3.6 | +4.7 |
 
 ### Other checkpoints
 
-| method | id | metric | Llama-3.1-8B-Base · AIME24 | Llama-3.1-8B-Base · AMC23 | Llama-3.1-8B-Base · Minerva |
-|---|---|---|---|---|---|
-| [DFT](https://arxiv.org/abs/2508.05629) | 2508.05629 | avg@16 | +0.2 | +11.0 | +7.3 |
-| [SFT](https://arxiv.org/abs/2508.05629) | 2508.05629 | avg@16 | -0.2 | +4.2 | +4.8 |
+| method | id | metric | Llama-3.1-8B-Base · AIME24 | Llama-3.1-8B-Base · AMC23 | Llama-3.1-8B-Base · MATH500 | Llama-3.1-8B-Base · Minerva | OLMo-2-1124-7B-SFT · MATH500 |
+|---|---|---|---|---|---|---|---|
+| [DFT](https://arxiv.org/abs/2508.05629) | 2508.05629 | avg@16 | +0.2 | +11.0 | +25.6 | +7.3 |  |
+| [SFT](https://arxiv.org/abs/2508.05629) | 2508.05629 | avg@16 | -0.2 | +4.2 | +15.0 | +4.8 |  |
+| [GRPO](https://arxiv.org/abs/2505.19590) | 2505.19590 | pass@1 |  |  |  |  | +7.2 |
+| [Intuitor](https://arxiv.org/abs/2505.19590) | 2505.19590 | pass@1 |  |  |  |  | +7.0 |
 
 ## Leakage-free: gain over GRPO
 
@@ -85,12 +120,38 @@ Cell = method − the paper's vanilla GRPO, or the nearest vanilla RLVR baseline
 
 | method | id | metric | vs | AIME24 | MATH500 | AMC23 | Minerva |
 |---|---|---|---|---|---|---|---|
+| [DAPO](https://arxiv.org/abs/2605.22074) | 2605.22074 | pass@1 | GRPO | -0.5 | +1.4 | +1.3 | +0.2 |
+| [NuRL](https://arxiv.org/abs/2605.22074) | 2605.22074 | pass@1 | GRPO | -0.1 | +0.7 | +0.8 | +0.0 |
+| [QuestA](https://arxiv.org/abs/2605.22074) | 2605.22074 | pass@1 | GRPO | -1.8 | +1.4 | +0.5 | -0.1 |
+| [SCRL](https://arxiv.org/abs/2605.22074) | 2605.22074 | pass@1 | GRPO | +0.0 | +0.7 | +0.5 | +0.3 |
+| [SFT](https://arxiv.org/abs/2605.22074) | 2605.22074 | pass@1 | GRPO | -7.8 | -0.4 | -2.8 | -3.9 |
+| [ConSPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | GRPO | +0.3† |  | +0.8† |  |
 | [ConSPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | pass@1 | GRPO |  | +4.6† |  |  |
+| [DAPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | GRPO | -1.5† |  | -0.9† |  |
 | [DAPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | pass@1 | GRPO |  | +0.0† |  |  |
+| [DisCO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | GRPO | -0.6† |  | +1.6† |  |
+| [DisCO](https://arxiv.org/abs/2605.12969) | 2605.12969 | pass@1 | GRPO |  | +3.8† |  |  |
+| [Dr.GRPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | avg@32 | GRPO | -0.9† |  | +0.6† |  |
+| [Dr.GRPO](https://arxiv.org/abs/2605.12969) | 2605.12969 | pass@1 | GRPO |  | +1.2† |  |  |
+| [CISPO](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@32 | GRPO | +6.1 |  |  |  |
+| [CISPO](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@3 | GRPO |  | -3.8 | +0.5 |  |
+| [DAPO](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@32 | GRPO | +9.1 |  |  |  |
+| [DAPO](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@3 | GRPO |  | +1.5 | +11.7 |  |
+| [GSPO](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@32 | GRPO | +2.2 |  |  |  |
+| [GSPO](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@3 | GRPO |  | +2.5 | +5.6 |  |
+| [PRIME](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@32 | GRPO | +0.7 |  |  |  |
+| [PRIME](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@3 | GRPO |  | -4.9 | +4.9 |  |
+| [SAPO](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@32 | GRPO | +3.2 |  |  |  |
+| [SAPO](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@3 | GRPO |  | +2.4 | +13.3 |  |
+| [SKPO](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@32 | GRPO | +10.0 |  |  |  |
+| [SKPO](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@3 | GRPO |  | +5.2 | +13.1 |  |
+| [SPO](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@32 | GRPO | +1.1 |  |  |  |
+| [SPO](https://arxiv.org/abs/2604.08690) | 2604.08690 | avg@3 | GRPO |  | -0.4 | +1.3 |  |
 | [E2H-C](https://arxiv.org/abs/2506.06632) | 2506.06632 | pass@1 | GRPO | +6.7 |  |  |  |
 | [E2H-G](https://arxiv.org/abs/2506.06632) | 2506.06632 | pass@1 | GRPO | +3.3 |  |  |  |
 | [Self-Evolve](https://arxiv.org/abs/2506.06632) | 2506.06632 | pass@1 | GRPO | +3.3 |  |  |  |
-| [Critique-GRPO](https://arxiv.org/abs/2506.03106) | 2506.03106 | pass@1 | GRPO | +6.7 |  | +7.5 | +6.2 |
+| [Critique-GRPO](https://arxiv.org/abs/2506.03106) | 2506.03106 | pass@1 | GRPO | +6.7 | +5.2 | +7.5 | +6.2 |
+| [Intuitor](https://arxiv.org/abs/2505.19590) | 2505.19590 | pass@1 | GRPO |  | -1.8 |  |  |
 | [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | avg@8 | GRPO | -3.3† |  | -2.5† |  |
 | [1-shot RLVR](https://arxiv.org/abs/2504.20571) | 2504.20571 | pass@1 | GRPO |  | +2.6† |  | -3.0† |
 
@@ -104,6 +165,12 @@ Cell = method − the paper's vanilla GRPO, or the nearest vanilla RLVR baseline
 | [EM-FT](https://arxiv.org/abs/2505.15134) | 2505.15134 | pass@1 | RLOO | +0.0* | -3.6* | -9.8* | -8.0* |
 | [EM-RL](https://arxiv.org/abs/2505.15134) | 2505.15134 | pass@1 | RLOO | +2.3* | -7.2* | -11.0* | -7.7* |
 | [EM-RL-sequence](https://arxiv.org/abs/2505.15134) | 2505.15134 | pass@1 | RLOO | +4.5* | -7.2* | -10.4* | -8.4* |
+
+### Other checkpoints
+
+| method | id | metric | vs | OLMo-2-1124-7B-SFT · MATH500 |
+|---|---|---|---|---|
+| [Intuitor](https://arxiv.org/abs/2505.19590) | 2505.19590 | pass@1 | GRPO | -0.2 |
 
 ## Gain over the starting checkpoint
 

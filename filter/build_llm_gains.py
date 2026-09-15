@@ -1590,6 +1590,12 @@ def render_md(
         'Every jsonl row with `leakage_free: true` on those benches, from '
         'every paper (basis stays `id` / `rl_stage`). Shao Figure 3 '
         'MATH-500 curves are not extracted.',
+        '- Cells whose table bodies were lost in `filter/fulltext/*.md` are '
+        'backfilled from the cached arXiv HTML tables (SKPO Table 1, ConSPO '
+        'Table 5, SCRL Table 1, TTRL Table 2, Critique-GRPO Table 5, DFT '
+        'Table 1, Dr. GRPO Table 4, UPFT Tables 2–3, Intuitor Tables 5–6); '
+        'see `HISTORICAL_EXTRA` / `CONSPO_EXTRA` in '
+        '`filter/llm_gains_ood.py`.',
         '',
     ]
     out.extend(render_section(
