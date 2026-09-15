@@ -72,6 +72,7 @@ ROW_FIELDS = (
     'teacher',
     'unit',
     'bench_span',
+    'source_precision',
 )
 
 FROM_SCRATCH_RE = re.compile(
@@ -108,6 +109,7 @@ CODE_ALIASES = {
     'GRPO (incorrect reward)': 'GRPO-incorrect',
     'GRPO (ground-truth reward)': 'GRPO',
     'GRPO (format reward)': 'GRPO-format',
+    'GRPO (majority vote)': 'GRPO-majority',
     'continual pretrain + Dr. GRPO': 'CPT+DrGRPO',
     'teacher top-K local support matching': 'top-K OPD',
     'RLVE (DAPO)': 'RLVE',
@@ -139,6 +141,12 @@ CODE_ALIASES = {
     '2-GRPO': '2-GRPO',
     'Critique-GRPO': 'Critique-GRPO',
     'GRPO-VPS': 'GRPO-VPS',
+    'Dr. GRPO': 'Dr.GRPO',
+    'Dr.GRPO': 'Dr.GRPO',
+    'DisCO': 'DisCO',
+    'GMPO': 'GMPO',
+    'CISPO': 'CISPO',
+    'SAPO': 'SAPO',
 }
 
 BENCH_SHORT = {
@@ -288,7 +296,7 @@ def is_qualified_grpo_name(text: str) -> bool:
     if is_vanilla_grpo_name(blob):
         return False
     return bool(re.search(
-        r'random|incorrect|format|spurious|r1|2-|sr-|sc-|critique|vps|'
+        r'random|incorrect|format|majority|spurious|r1|2-|sr-|sc-|critique|vps|'
         r'off-?|offline|dapo|i-?grpo',
         blob,
         re.I,
@@ -559,11 +567,14 @@ def normalize_gain_row(raw: dict) -> dict | None:
     if isinstance(ood_raw, str):
         ood_val = ood_raw.strip().lower() in {'1', 'true', 'yes'}
     elif ood_raw is None:
-        ood_val = ood_basis == 'temporal'
+        ood_val = False
     else:
         ood_val = bool(ood_raw)
-    if ood_val and not ood_basis:
-        ood_basis = 'temporal'
+    if ood_basis:
+        ood_val = ood_basis == 'temporal'
+    precision = blm.norm_space(raw.get('source_precision') or '')
+    if precision not in {'plot', 'table'}:
+        precision = ''
     return {
         'key': key,
         'code': code,
@@ -586,9 +597,11 @@ def normalize_gain_row(raw: dict) -> dict | None:
         'train_data': blm.norm_space(raw.get('train_data') or ''),
         'teacher': ood.default_teacher(
             key, code, method, blm.norm_space(raw.get('teacher') or ''),
+            source=blm.norm_space(raw.get('source') or ''),
         ),
         'unit': unit,
         'bench_span': blm.norm_space(raw.get('bench_span') or ''),
+        'source_precision': precision,
     }
 
 
@@ -750,7 +763,8 @@ def attach_train_data(rows: list[dict], model_rows: list[dict]) -> list[dict]:
     out = []
     for row in rows:
         item = dict(row)
-        if item.get('train_data'):
+        item['train_data'] = ood.infer_train_data(item)
+        if item.get('train_data') or item.get('key') == ood.HICRA:
             out.append(item)
             continue
         slot = lookup_ood_slot(
@@ -786,6 +800,7 @@ def attach_teacher(rows: list[dict], model_rows: list[dict]) -> list[dict]:
             item.get('method') or '',
             explicit=item.get('teacher') or '',
             inventory=by_key.get(item['key']) or [],
+            source=item.get('source') or '',
         )
         out.append(item)
     return out
@@ -968,6 +983,9 @@ def fill_baselines(rows: list[dict]) -> list[dict]:
 
 
 def delta_over_base(row: dict) -> float | None:
+    # Plot last-points are rounded independently of the stored endpoints.
+    if (row.get('source_precision') or '') == 'plot' and row.get('gain') is not None:
+        return row['gain']
     if row.get('score') is not None and row.get('base') is not None:
         return row['score'] - row['base']
     return row.get('gain')
@@ -983,6 +1001,7 @@ def format_gain_cell(
     delta: float | None,
     starred: bool = False,
     dagger: bool = False,
+    noisy: bool = False,
 ) -> str:
     if delta is None:
         return ''
@@ -991,7 +1010,17 @@ def format_gain_cell(
         text += '†'
     if starred:
         text += '*'
+    if noisy:
+        text += '‡'
     return text
+
+
+def noisy_plot_mark(row: dict, delta: float | None) -> bool:
+    if (row.get('source_precision') or '') != 'plot':
+        return False
+    if delta is None:
+        return False
+    return abs(delta) < ood.SHAO_PLOT_NOISE_PP
 
 
 def fold_ref_name(text: str) -> str:
@@ -1012,6 +1041,13 @@ def is_self_ref(row: dict) -> bool:
     return bool(folded) and folded in {fold_ref_name(code), fold_ref_name(method)}
 
 
+def row_richness(row: dict) -> int:
+    return sum(
+        row.get(field) is not None
+        for field in ('base', 'ref', 'score', 'gain', 'gain_ref')
+    )
+
+
 def dedupe_rows(rows: list[dict]) -> list[dict]:
     best: dict[tuple, dict] = {}
     for row in rows:
@@ -1025,14 +1061,17 @@ def dedupe_rows(rows: list[dict]) -> list[dict]:
             row.get('source') or '',
         )
         prev = best.get(pair)
-        if prev is None:
-            best[pair] = row
-            continue
-        prev_n = sum(prev.get(field) is not None for field in ('base', 'ref', 'score', 'gain'))
-        new_n = sum(row.get(field) is not None for field in ('base', 'ref', 'score', 'gain'))
-        if new_n >= prev_n:
+        if prev is None or _prefer_row(row, prev):
             best[pair] = row
     return list(best.values())
+
+
+def _prefer_row(new: dict, prev: dict) -> bool:
+    new_score = new.get('score') is not None
+    prev_score = prev.get('score') is not None
+    if new_score != prev_score:
+        return new_score
+    return row_richness(new) >= row_richness(prev)
 
 
 def sort_benches(names: list[str], coverage: dict[str, int]) -> list[str]:
@@ -1088,13 +1127,6 @@ def code_cell(row: dict, train_pairs: set[tuple[str, str]] | None = None) -> str
 
 def metric_cell(group: list[dict]) -> str:
     return blm.md_escape(group[0].get('metric') or '')
-
-
-def row_richness(row: dict) -> int:
-    return sum(
-        row.get(field) is not None
-        for field in ('base', 'ref', 'score', 'gain', 'gain_ref')
-    )
 
 
 def scores_disagree(left: dict, right: dict) -> bool:
@@ -1292,14 +1324,21 @@ def best_ckpt_mark(row: dict) -> bool:
 
 
 def base_cell(row: dict) -> str:
-    return format_gain_cell(delta_over_base(row), dagger=best_ckpt_mark(row))
+    delta = delta_over_base(row)
+    return format_gain_cell(
+        delta,
+        dagger=best_ckpt_mark(row),
+        noisy=noisy_plot_mark(row, delta),
+    )
 
 
 def grpo_cell(row: dict) -> str:
+    delta = delta_over_ref(row)
     return format_gain_cell(
-        delta_over_ref(row),
+        delta,
         starred=starred_ref(row),
         dagger=best_ckpt_mark(row),
+        noisy=noisy_plot_mark(row, delta),
     )
 
 
@@ -1427,6 +1466,23 @@ def render_md(
         f'- Temporal gain cells vs GRPO / nearest RLVR: **{n_cells_ref}**',
         f'- From-scratch papers (no starting checkpoint): **{len(not_applicable)}**',
         '',
+        '## Notes',
+        '',
+        '- [Spurious Rewards](https://arxiv.org/html/2506.10947v2#A4) '
+        '(`2506.10947`): AIME 2025 avg@8 from Appendix D Figures 12–13. Last '
+        'point of the thick 10-step-smoothed SVG curve (usually step 300; '
+        'Llama-3.2-3B random ends at 287), not the curve max — that overstates '
+        '(Qwen2.5-Math-7B Incorrect last +2.8 vs peak +6.0). Non-ground-truth '
+        'last-point gains on Qwen2.5-Math-7B are **−0.4…+4.5 pp**. A trailing '
+        '`‡` marks |Δ| < 2 pp (AIME has 30 problems). Train data DeepScaleR; '
+        'Qwen2.5 / Llama-3.1 / Llama-3.2 / OLMo-2 cutoffs put AIME 2025 after '
+        'the chain.',
+        '- [Paradox](https://arxiv.org/html/2601.11061v1#S4.SS1) (`2601.11061`, '
+        'already in `readme.md`): MATH-500 and MinervaMath are contaminated; '
+        'LiveMathBench is the leakage-free control. It does not replace these '
+        'AIME 2025 cells. Qwen2.5 rows still share `2506.10947` with the '
+        'MATH-500 / AIME 2024 jsonl rows (those stay `id` / `rl_stage`).',
+        '',
     ]
     out.extend(render_section(
         'Gain over the starting checkpoint',
@@ -1436,6 +1492,7 @@ def render_md(
         'checkpoint using eval benches (ConSPO: every 100 steps; 1-shot RLVR: '
         'best mean on six benches including AIME25). Temporal OOD of the tasks '
         'still holds; the final score is not an independent hold-out. '
+        'A trailing `‡` marks |Δ| < 2 pp on last-point SVG curves (AIME n=30). '
         'Blank if that paper does not report the starting checkpoint on that bench. '
         'Numbers stay inside one experiment (same table, train data, and metric).',
         rows,
@@ -1449,6 +1506,7 @@ def render_md(
         'reference is not vanilla GRPO (Dr. GRPO, DAPO, PPO, RLOO, REINFORCE++). '
         '`†` means a checkpoint chosen on eval benches (ConSPO every 100 '
         'steps; 1-shot RLVR best mean on six benches including AIME25). '
+        '`‡` marks |Δ| < 2 pp on last-point SVG curves (AIME n=30). '
         'The reference method itself is '
         'omitted. Equal scores of different methods show `+0.0`. '
         'Blank if no RLVR baseline is reported on that bench. '
@@ -1485,19 +1543,28 @@ def render_md(
     return '\n'.join(out)
 
 
-def renormalize_rows(rows: list[dict], model_rows: list[dict]) -> list[dict]:
+def renormalize_rows(
+    rows: list[dict],
+    model_rows: list[dict],
+    papers: list[dict] | None = None,
+) -> list[dict]:
     out = []
     for raw in rows:
         item = normalize_gain_row(raw)
         if item:
             out.append(item)
     out = ood.apply_gain_overrides(out)
+    out = [
+        item for raw in out
+        if (item := normalize_gain_row(raw))
+    ]
     out = attach_train_data(out, model_rows)
     out = attach_teacher(out, model_rows)
     out = coerce_pp_rows(out)
     out = attach_ood(out, model_rows)
     out = fill_baselines(out)
-    return dedupe_rows(out)
+    out = dedupe_rows(out)
+    return sort_rows(out, papers or [])
 
 
 def write_outputs(
@@ -1505,7 +1572,7 @@ def write_outputs(
     papers: list[dict],
     not_applicable: list[dict],
 ) -> None:
-    write_jsonl(JSONL_PATH, rows)
+    write_jsonl(JSONL_PATH, rows, sort_keys=True)
     print(f'wrote {len(rows)} rows -> {JSONL_PATH}', flush=True)
     markdown = render_md(rows, papers, not_applicable)
     tmp = MD_PATH.with_suffix(MD_PATH.suffix + '.tmp')
@@ -1533,10 +1600,16 @@ def sort_rows(rows: list[dict], papers: list[dict]) -> list[dict]:
             rank.get(row['key'], 10**6),
             row.get('model') or '',
             row.get('code') or '',
+            row.get('method') or '',
             row.get('bench') or '',
             row.get('metric') or '',
             row.get('train_data') or '',
             row.get('source') or '',
+            row.get('ref_method') or '',
+            row.get('teacher') or '',
+            row.get('unit') or '',
+            row.get('ood_basis') or '',
+            row.get('source_precision') or '',
         ),
     )
 
@@ -1580,10 +1653,9 @@ def main(argv: list[str] | None = None) -> int:
             )
             return 1
         print(f'renormalizing {JSONL_PATH}', flush=True)
-        rows = renormalize_rows(read_jsonl(JSONL_PATH), model_rows)
+        rows = renormalize_rows(read_jsonl(JSONL_PATH), model_rows, papers)
         if refuse_output_shrink(JSONL_PATH, rows, args.force):
             return 1
-        rows = sort_rows(rows, papers)
         write_outputs(rows, papers, not_applicable)
         return 0
 
@@ -1614,28 +1686,19 @@ def main(argv: list[str] | None = None) -> int:
         print('refusing to overwrite outputs', flush=True)
         return 1
 
-    rows = []
+    raw_rows = []
     n = len(want_keys)
     for i, key in enumerate(want_keys, start=1):
         for raw in raw_by_key.get(key, []):
             if not raw.get('key'):
                 raw = dict(raw)
                 raw['key'] = key
-            item = normalize_gain_row(raw)
-            if item:
-                rows.append(item)
+            raw_rows.append(raw)
         print_progress(i, n, key)
 
-    rows = ood.apply_gain_overrides(rows)
-    rows = attach_train_data(rows, model_rows)
-    rows = attach_teacher(rows, model_rows)
-    rows = coerce_pp_rows(rows)
-    rows = attach_ood(rows, model_rows)
-    rows = fill_baselines(rows)
-    rows = dedupe_rows(rows)
+    rows = renormalize_rows(raw_rows, model_rows, papers)
     if refuse_output_shrink(JSONL_PATH, rows, args.force):
         return 1
-    rows = sort_rows(rows, papers)
     write_outputs(rows, papers, not_applicable)
     return 0
 

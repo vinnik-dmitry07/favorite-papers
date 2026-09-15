@@ -7,6 +7,7 @@ eval_ood is not enough. Historical benches never auto-qualify.
 
 from __future__ import annotations
 
+import re
 from datetime import date
 
 CONSPO = 'arxiv:2605.12969'
@@ -18,11 +19,16 @@ HICRA = 'arxiv:2509.03646'
 ONESHOT = 'arxiv:2504.20571'
 OPRD_PAPER = 'arxiv:2606.06021'
 REVISIT_OPD = 'arxiv:2603.25562'
+TWO_GRPO = 'arxiv:2510.00977'
+SELF_DISTILL = 'arxiv:2603.24472'
+SHAO = 'arxiv:2506.10947'
 
 OOD_BASES = ('temporal', 'rl_stage', 'id', 'unverified')
 CKPT_SELECT = (
     'final',
     'last',
+    'last@300; 10-step smoothed curve',
+    'last@287; 10-step smoothed curve',
     'best-every-100',
     'validation-avg',
     'mixed-avg-and-per-bench',
@@ -66,9 +72,11 @@ BENCH_DATES = {
 # Official LiveCodeBench v6 release starts May 2023; version is not a cutoff.
 LCB_DEFAULT_SPAN_START = date(2023, 5, 1)
 
-# Known student data cutoffs. Qwen3 has none: AIME25 is not temporal.
+# Known student data cutoffs. Bare Qwen3 is omitted: AIME25 stays unverified.
 MODEL_CUTOFFS = (
     ('DeepSeek-R1-Distill', date(2025, 1, 20)),
+    ('Qwen3-4B-Instruct-2507', date(2025, 8, 5)),
+    ('Qwen3-4B-Base', date(2025, 4, 29)),
     ('Qwen2.5', date(2024, 9, 19)),
     ('Llama-3.2', date(2024, 9, 25)),
     ('Llama-3.1', date(2024, 7, 23)),
@@ -100,11 +108,15 @@ CONSPO_CODE_ALIASES = {
     'GRPO-DAPO': 'GRPO',
 }
 
-# Empty teacher is a hole, not “no teacher”.
+# Empty teacher is a hole, not “no teacher”. Online WeightGeo has none.
 REQUIRE_TEACHER = frozenset({
     OPRD_PAPER,
     REVISIT_OPD,
-    WEIGHT_GEO,
+})
+
+WEIGHT_GEO_ONLINE = frozenset({
+    'Online GRPO',
+    'Online DAPO',
 })
 
 # Teacher with unknown cutoff: student date is not enough.
@@ -131,23 +143,26 @@ PAPER_TEACHERS_BY_CODE = {
 
 TEACHER_NAME = PAPER_TEACHERS
 
-# Known train-data cutoffs. Unknown datasets must not fail closed
-# (ConSPO DeepScaleR would drop). Fill dates only when verified.
-DATASET_CUTOFFS = ()
+# Known train-data cutoffs. Empty or unknown train_data fail closed.
+DATASET_CUTOFFS = (
+    ('dapo-math-17k', date(2025, 3, 17)),
+    ('dapo-math-sub', date(2025, 3, 17)),
+    ('dapo-math', date(2025, 3, 17)),
+    ('deepscaler', date(2024, 10, 1)),
+    ('smoltalk2', date(2025, 7, 11)),
+)
 
-# (key, model, code, bench) -> temporal. Overrides the classifier.
-TEMPORAL_ADMITS = {
-    (WEIGHT_GEO, 'Qwen3-4B-Instruct-2507', 'GRPO', 'AIME26'),
-    (WEIGHT_GEO, 'Qwen3-4B-Instruct-2507', 'DAPO', 'AIME26'),
-    (CONSPO, 'Qwen3-4B-Base', 'ConSPO', 'AIME26'),
-    (CONSPO, 'Qwen3-4B-Base', 'GRPO', 'AIME26'),
-    (CONSPO, 'Qwen3-4B-Base', 'DAPO', 'AIME26'),
-}
+# Hendrycks MATH as a token, not *Math* compounds or the word "mathematical".
+MATH_DATASET_CUTOFF = date(2021, 3, 5)
+MATH_DATASET_RE = re.compile(
+    r'(?:^|[\s(/,])math(?:$|[\s]*\(|[\s]+train\b)',
+    re.I,
+)
 
-# Fold raw Online names before TEMPORAL_ADMITS lookup.
-ADMIT_CODE_ALIASES = {
-    'Online GRPO': 'GRPO',
-    'Online DAPO': 'DAPO',
+PAPER_TRAIN_DATA = {
+    ONESHOT: 'DeepScaleR subset',
+    SELF_DISTILL: 'DAPO-Math-17k',
+    SHAO: 'DeepScaleR',
 }
 
 # Already-scaled pp victims from the first coerce pass. Divide if > 1.5.
@@ -166,86 +181,154 @@ DROP_ROWS = {
     (CONSPO, 'Llama-3.2-3B-Instruct', 'AIME26'),
 }
 
-# 1.5B Table 1 DeepScaleR (avg@32). base from the shared starting checkpoint.
+# 1.5B Table 1 DeepScaleR (avg@32). Tuple is (base, score, ref=GRPO).
 CONSPO_T1_1P5 = {
     ('GRPO', 'AIME 2024'): (20.9, 28.6, 28.6),
     ('GRPO', 'AIME 2025'): (20.7, 22.9, 22.9),
     ('GRPO', 'AIME26'): (13.9, 20.4, 20.4),
+    ('GRPO', 'HMMT 2025'): (9.7, 11.7, 11.7),
     ('GRPO', 'AMC 2023'): (52.8, 64.4, 64.4),
     ('DAPO', 'AIME 2024'): (20.9, 28.6, 28.6),
     ('DAPO', 'AIME 2025'): (20.7, 22.9, 22.9),
     ('DAPO', 'AIME26'): (13.9, 20.8, 20.4),
+    ('DAPO', 'HMMT 2025'): (9.7, 13.5, 11.7),
     ('DAPO', 'AMC 2023'): (52.8, 66.2, 64.4),
+    ('Dr.GRPO', 'AIME 2024'): (20.9, 27.4, 28.6),
+    ('Dr.GRPO', 'AIME 2025'): (20.7, 22.0, 22.9),
+    ('Dr.GRPO', 'AIME26'): (13.9, 19.5, 20.4),
+    ('Dr.GRPO', 'HMMT 2025'): (9.7, 10.7, 11.7),
+    ('Dr.GRPO', 'AMC 2023'): (52.8, 63.5, 64.4),
+    ('DisCO', 'AIME 2024'): (20.9, 28.3, 28.6),
+    ('DisCO', 'AIME 2025'): (20.7, 24.8, 22.9),
+    ('DisCO', 'AIME26'): (13.9, 21.7, 20.4),
+    ('DisCO', 'HMMT 2025'): (9.7, 14.4, 11.7),
+    ('DisCO', 'AMC 2023'): (52.8, 66.5, 64.4),
+    ('GMPO', 'AIME 2024'): (20.9, 31.5, 28.6),
+    ('GMPO', 'AIME 2025'): (20.7, 24.6, 22.9),
+    ('GMPO', 'AIME26'): (13.9, 23.8, 20.4),
+    ('GMPO', 'HMMT 2025'): (9.7, 12.8, 11.7),
+    ('GMPO', 'AMC 2023'): (52.8, 70.0, 64.4),
+    ('CISPO', 'AIME 2024'): (20.9, 31.4, 28.6),
+    ('CISPO', 'AIME 2025'): (20.7, 23.0, 22.9),
+    ('CISPO', 'AIME26'): (13.9, 23.0, 20.4),
+    ('CISPO', 'HMMT 2025'): (9.7, 13.3, 11.7),
+    ('CISPO', 'AMC 2023'): (52.8, 65.2, 64.4),
+    ('SAPO', 'AIME 2024'): (20.9, 30.6, 28.6),
+    ('SAPO', 'AIME 2025'): (20.7, 25.3, 22.9),
+    ('SAPO', 'AIME26'): (13.9, 23.3, 20.4),
+    ('SAPO', 'HMMT 2025'): (9.7, 12.8, 11.7),
+    ('SAPO', 'AMC 2023'): (52.8, 70.1, 64.4),
     ('ConSPO', 'AIME 2024'): (20.9, 34.7, 28.6),
     ('ConSPO', 'AIME 2025'): (20.7, 26.7, 22.9),
     ('ConSPO', 'AIME26'): (13.9, 23.9, 20.4),
+    ('ConSPO', 'HMMT 2025'): (9.7, 14.9, 11.7),
     ('ConSPO', 'AMC 2023'): (52.8, 70.4, 64.4),
 }
 
-# Extra temporal ConSPO cells where the extract omitted Table 1/2/3/9 AIME.
-# gain / gain_ref only when the paper does not give a starting score.
-CONSPO_EXTRA = (
-    {
-        'model': 'DeepSeek-R1-Distill-Qwen-7B',
-        'code': 'ConSPO',
-        'method': 'ConSPO',
-        'bench': 'AIME 2025',
-        'gain': 8.8,
-        'gain_ref': 3.2,
-        'source': 'Table 2 / §5.2',
-    },
-    {
-        'model': 'DeepSeek-R1-Distill-Qwen-7B',
-        'code': 'ConSPO',
-        'method': 'ConSPO',
-        'bench': 'AIME26',
-        'gain': 11.3,
-        'gain_ref': 2.9,
-        'source': 'Table 2 / §5.2',
-    },
-    {
-        'model': 'DeepSeek-R1-Distill-Llama-8B',
-        'code': 'ConSPO',
-        'method': 'ConSPO',
-        'bench': 'AIME 2025',
-        'gain': 8.3,
-        'gain_ref': 4.1,
-        'source': 'Table 2 / §5.2',
-    },
-    {
-        'model': 'DeepSeek-R1-Distill-Llama-8B',
-        'code': 'ConSPO',
-        'method': 'ConSPO',
-        'bench': 'AIME26',
-        'gain': 14.9,
-        'gain_ref': 1.3,
-        'source': 'Table 2 / §5.2',
-    },
-    {
-        'model': 'Qwen3-4B-Base',
-        'code': 'ConSPO',
-        'method': 'ConSPO',
-        'bench': 'AIME26',
-        'gain': 8.0,
-        'gain_ref': 2.3,
-        'source': 'Table 3 / §5.2',
-    },
-    {
-        'model': 'DeepSeek-R1-Distill-Qwen-32B',
-        'code': 'ConSPO',
-        'method': 'ConSPO',
-        'bench': 'AIME 2025',
-        'gain_ref': 3.2,
-        'source': 'Table 9 / Appendix D',
-    },
-    {
-        'model': 'DeepSeek-R1-Distill-Qwen-32B',
-        'code': 'ConSPO',
-        'method': 'ConSPO',
-        'bench': 'AIME26',
-        'gain_ref': 2.9,
-        'source': 'Table 9 / Appendix D',
-    },
+def _conspo_cells(model, source, train, benches, base, scores, ref):
+    rows = []
+    for code, vals in scores.items():
+        for bench, score in zip(benches, vals):
+            rows.append({
+                'model': model,
+                'code': code,
+                'method': code,
+                'bench': bench,
+                'base': base[bench],
+                'score': score,
+                'ref': ref[bench],
+                'source': source,
+                'train_data': train,
+            })
+    return tuple(rows)
+
+
+# Extra ConSPO cells omitted by the extract. Numbers from arxiv HTML tables.
+_T2 = 'Table 2 / §5.2'
+_T3 = 'Table 3 / §5.2'
+_T4 = 'Table 4 / §5.2'
+_T9 = 'Table 9 / Appendix D'
+_DS = 'DeepScaleR-Preview-Dataset'
+_DM = 'DAPO-Math-17k'
+
+CONSPO_EXTRA = tuple(
+    _conspo_cells(
+        'DeepSeek-R1-Distill-Qwen-7B',
+        _T2,
+        _DS,
+        ('AIME 2025', 'AIME26', 'HMMT 2025'),
+        {'AIME 2025': 30.3, 'AIME26': 35.5, 'HMMT 2025': 17.5},
+        {
+            'GRPO': (35.9, 43.9, 20.7),
+            'DAPO': (34.2, 37.9, 20.4),
+            'Dr.GRPO': (35.3, 43.3, 21.7),
+            'DisCO': (36.9, 45.1, 19.6),
+            'ConSPO': (39.1, 46.8, 21.5),
+        },
+        {'AIME 2025': 35.9, 'AIME26': 43.9, 'HMMT 2025': 20.7},
+    )
+    + _conspo_cells(
+        'DeepSeek-R1-Distill-Llama-8B',
+        _T2,
+        _DS,
+        ('AIME 2025', 'AIME26', 'HMMT 2025'),
+        {'AIME 2025': 21.3, 'AIME26': 20.6, 'HMMT 2025': 13.5},
+        {
+            'GRPO': (25.5, 34.2, 18.5),
+            'DAPO': (24.0, 29.9, 17.9),
+            'Dr.GRPO': (26.8, 32.4, 19.6),
+            'DisCO': (28.8, 32.8, 19.7),
+            'ConSPO': (29.6, 35.5, 22.6),
+        },
+        {'AIME 2025': 25.5, 'AIME26': 34.2, 'HMMT 2025': 18.5},
+    )
+    + _conspo_cells(
+        'Qwen3-4B-Base',
+        _T3,
+        _DS,
+        ('AIME26',),
+        {'AIME26': 4.8},
+        {
+            'GRPO': (10.5,),
+            'DAPO': (8.5,),
+            'Dr.GRPO': (12.4,),
+            'DisCO': (9.4,),
+            'ConSPO': (12.8,),
+        },
+        {'AIME26': 10.5},
+    )
+    + _conspo_cells(
+        'DeepSeek-R1-Distill-Qwen-1.5B',
+        _T4,
+        _DM,
+        ('AIME26',),
+        {'AIME26': 13.9},
+        {
+            'Dr.GRPO': (19.6,),
+            'DisCO': (20.2,),
+        },
+        {'AIME26': 21.6},
+    )
+    + (
+        {
+            'model': 'DeepSeek-R1-Distill-Qwen-32B',
+            'code': 'ConSPO',
+            'method': 'ConSPO',
+            'bench': 'AIME 2025',
+            'gain_ref': 3.2,
+            'source': _T9,
+            'train_data': _DS,
+        },
+        {
+            'model': 'DeepSeek-R1-Distill-Qwen-32B',
+            'code': 'ConSPO',
+            'method': 'ConSPO',
+            'bench': 'AIME26',
+            'gain_ref': 2.9,
+            'source': _T9,
+            'train_data': _DS,
+        },
+    )
 )
 
 
@@ -301,22 +384,31 @@ def dataset_cutoff(train_data: str) -> date | None:
     text = (train_data or '').lower()
     if not text:
         return None
-    for prefix, cutoff in DATASET_CUTOFFS:
-        if prefix.lower() in text:
-            return cutoff
-    return None
+    dates = [
+        cutoff for prefix, cutoff in DATASET_CUTOFFS
+        if prefix.lower() in text
+    ]
+    if MATH_DATASET_RE.search(train_data or ''):
+        dates.append(MATH_DATASET_CUTOFF)
+    return max(dates) if dates else None
 
 
-def admit_names(code: str, method: str) -> tuple[str, ...]:
-    names = []
-    for name in (code, method, code or method):
-        if not name or name in names:
-            continue
-        names.append(name)
-        aliased = ADMIT_CODE_ALIASES.get(name)
-        if aliased and aliased not in names:
-            names.append(aliased)
-    return tuple(names)
+def temporal_proof(
+    model: str,
+    teacher: str,
+    train_data: str,
+    key: str,
+    code: str,
+    method: str,
+) -> bool:
+    if not model_cutoff(model):
+        return False
+    if not dataset_cutoff(train_data):
+        return False
+    names = split_teachers(teacher)
+    if key in REQUIRE_TEACHER and not names:
+        return False
+    return all(model_cutoff(name) for name in names)
 
 
 def classify_ood_basis(
@@ -329,12 +421,9 @@ def classify_ood_basis(
     teacher: str = '',
     bench_span: str = '',
     listed_id: bool = False,
-    listed_ood: bool = False,
+    listed_ood: bool = False,  # inventory ood is not a cutoff
     hmmt_month: date | None = None,
 ) -> str:
-    for name in admit_names(code, method):
-        if (key, model, name, bench) in TEMPORAL_ADMITS:
-            return 'temporal'
     if bench in HISTORICAL_BENCHES:
         if listed_id:
             return 'id'
@@ -344,7 +433,9 @@ def classify_ood_basis(
         if span is None:
             return 'unverified'
         cutoff = chain_cutoff(model, teacher, train_data, key, code, method)
-        if cutoff is None:
+        if cutoff is None or not temporal_proof(
+            model, teacher, train_data, key, code, method,
+        ):
             return 'unverified'
         if span > cutoff:
             return 'temporal'
@@ -357,14 +448,12 @@ def classify_ood_basis(
     if has_unknown_teacher(key, code, method, teacher):
         return 'unverified'
     cutoff = chain_cutoff(model, teacher, train_data, key, code, method)
-    if cutoff is None:
+    if cutoff is None or not temporal_proof(
+        model, teacher, train_data, key, code, method,
+    ):
         return 'unverified'
     if contest > cutoff:
         return 'temporal'
-    if listed_id:
-        return 'id'
-    if listed_ood:
-        return 'rl_stage'
     return 'unverified'
 
 
@@ -378,10 +467,10 @@ def chain_cutoff(
 ) -> date | None:
     if has_unknown_teacher(key, code, method, teacher):
         return None
-    dates = []
     student = model_cutoff(model)
-    if student:
-        dates.append(student)
+    if student is None:
+        return None
+    dates = [student]
     for name in split_teachers(teacher):
         taught = model_cutoff(name)
         if taught:
@@ -389,10 +478,9 @@ def chain_cutoff(
         elif name:
             return None
     trained = dataset_cutoff(train_data)
-    if trained:
-        dates.append(trained)
-    if not dates:
+    if trained is None:
         return None
+    dates.append(trained)
     return max(dates)
 
 
@@ -402,13 +490,40 @@ def default_ckpt_select(key: str, explicit: str = '') -> str:
     return PAPER_CKPT_SELECT.get(key, explicit or 'unspecified')
 
 
+def is_weight_geo_online(code: str, method: str, source: str = '') -> bool:
+    blob = f'{code} {method} {source}'.lower()
+    if 'off-grpo' in blob or 'offline' in blob:
+        return False
+    if (code or '') in WEIGHT_GEO_ONLINE or (method or '') in WEIGHT_GEO_ONLINE:
+        return True
+    return 'online grpo' in blob or 'online dapo' in blob
+
+
+def infer_train_data(row: dict) -> str:
+    key = row.get('key') or ''
+    if key == HICRA:
+        return ''
+    if row.get('train_data'):
+        return row['train_data']
+    source = (row.get('source') or '').lower()
+    if key == TWO_GRPO:
+        if 'dapo-math' in source:
+            return 'DAPO-Math-sub'
+        if 'math train' in source:
+            return 'MATH'
+    return PAPER_TRAIN_DATA.get(key, '')
+
+
 def resolve_teacher(
     key: str,
     code: str,
     method: str,
     explicit: str = '',
     inventory: list[str] | None = None,
+    source: str = '',
 ) -> str:
+    if key == WEIGHT_GEO and is_weight_geo_online(code, method, source):
+        return ''
     if explicit:
         return explicit
     named = PAPER_TEACHERS_BY_CODE.get((key, code or ''))
@@ -431,8 +546,16 @@ def resolve_teacher(
     return ''
 
 
-def default_teacher(key: str, code: str, method: str, explicit: str = '') -> str:
-    return resolve_teacher(key, code, method, explicit=explicit)
+def default_teacher(
+    key: str,
+    code: str,
+    method: str,
+    explicit: str = '',
+    source: str = '',
+) -> str:
+    return resolve_teacher(
+        key, code, method, explicit=explicit, source=source,
+    )
 
 
 def short_train_tag(text: str) -> str:
@@ -503,9 +626,102 @@ def conspo_train_data(source: str) -> str:
     return 'DeepScaleR-Preview-Dataset'
 
 
+# Appendix D Figures 12–13, last point of the thick 10-step-smoothed SVG
+# curve (usually step 300). Tuple is (base, score, gain). Gain is the
+# independently rounded last-minus-first from the curve; it can differ
+# from score-base by 0.1. Do not use the curve max.
+SHAO_PLOT_SOURCE = 'Appendix D, Figure 12/13'
+SHAO_PLOT_CKPT = 'last@300; 10-step smoothed curve'
+SHAO_PLOT_CKPT_287 = 'last@287; 10-step smoothed curve'
+SHAO_PLOT_NOISE_PP = 2.0
+SHAO_PLOT_METHODS = (
+    ('gt', 'GRPO', 'GRPO (ground-truth reward)'),
+    ('majority', 'GRPO-majority', 'GRPO (majority vote)'),
+    ('incorrect', 'GRPO-incorrect', 'GRPO (incorrect reward)'),
+    ('format', 'GRPO-format', 'GRPO (format reward)'),
+    ('random', 'GRPO-random', 'GRPO (random reward)'),
+)
+SHAO_AIME25_PLOT = {
+    'Qwen2.5-Math-7B': {
+        'gt': (6.3, 13.7, 7.4),
+        'majority': (5.4, 9.9, 4.5),
+        'incorrect': (4.2, 6.9, 2.8),
+        'format': (5.4, 5.0, -0.4),
+        'random': (6.3, 8.7, 2.4),
+    },
+    'Qwen2.5-Math-1.5B': {
+        'gt': (5.0, 6.5, 1.5),
+        'majority': (2.9, 6.3, 3.4),
+        'incorrect': (5.0, 5.7, 0.7),
+        'format': (5.0, 4.3, -0.7),
+        'random': (5.0, 4.2, -0.8),
+    },
+    'Qwen2.5-1.5B': {
+        'gt': (0.4, 1.5, 1.1),
+        'majority': (0.0, 1.9, 1.9),
+        'incorrect': (0.0, 0.7, 0.7),
+        'format': (0.4, 0.3, -0.1),
+        'random': (0.4, 0.0, -0.4),
+    },
+    'Qwen2.5-7B': {
+        'gt': (0.8, 7.7, 6.8),
+        'majority': (0.4, 3.2, 2.8),
+        'incorrect': (0.0, 3.9, 3.9),
+        'format': (0.8, 2.8, 2.0),
+        'random': (0.8, 5.2, 4.4),
+    },
+    'OLMo-2-1124-7B': {
+        'gt': (0.0, 0.0, 0.0),
+        'majority': (0.0, 0.0, 0.0),
+        'incorrect': (0.4, 0.0, -0.4),
+        'format': (0.0, 0.0, 0.0),
+        'random': (0.0, 0.0, 0.0),
+    },
+    'OLMo-2-1124-7B-SFT': {
+        'gt': (0.4, 0.2, -0.3),
+        'majority': (0.0, 0.1, 0.1),
+        'incorrect': (0.0, 0.2, 0.2),
+        'format': (0.4, 0.4, 0.0),
+        'random': (0.4, 0.2, -0.3),
+    },
+    'Llama-3.2-3B': {
+        'gt': (0.2, 0.0, -0.2),
+        'majority': (0.4, 0.0, -0.4),
+        'incorrect': (0.8, 0.1, -0.7),
+        'format': (0.4, 0.0, -0.4),
+        'random': (0.4, 1.2, 0.8),
+    },
+    'Llama-3.1-8B': {
+        'gt': (0.0, 0.2, 0.2),
+        'majority': (0.0, 0.0, 0.0),
+        'incorrect': (0.0, 0.0, 0.0),
+        'format': (0.0, 0.0, 0.0),
+        'random': (0.0, 0.6, 0.6),
+    },
+    'Llama-3.2-3B-Instruct': {
+        'gt': (0.4, 0.6, 0.2),
+        'majority': (0.0, 0.2, 0.2),
+        'incorrect': (0.4, 0.1, -0.3),
+        'format': (0.4, 0.2, -0.2),
+        'random': (0.4, 0.3, -0.1),
+    },
+    'Llama-3.1-8B-Instruct': {
+        'gt': (0.8, 0.2, -0.7),
+        'majority': (0.8, 0.1, -0.7),
+        'incorrect': (0.0, 0.0, 0.0),
+        'format': (0.8, 0.7, -0.2),
+        'random': (0.8, 0.3, -0.5),
+    },
+}
+SHAO_PLOT_CKPT_OVERRIDE = {
+    ('Llama-3.2-3B', 'random'): SHAO_PLOT_CKPT_287,
+}
+
+
 def apply_gain_overrides(rows: list[dict]) -> list[dict]:
     out = []
     have = set()
+    have_scored = set()
     for row in rows:
         item = alias_conspo_code(unscale_row(dict(row)))
         if item.get('key') == CONSPO:
@@ -515,20 +731,25 @@ def apply_gain_overrides(rows: list[dict]) -> list[dict]:
             item['metric'] = item.get('metric') or 'avg@32'
             if item['bench'] in {'MATH-500', 'OlympiadBench'}:
                 item['metric'] = item.get('metric') or 'pass@1'
+        item['train_data'] = infer_train_data(item)
         if should_drop_row(item):
             continue
         out.append(item)
-        have.add((
+        pair = (
             item.get('key'),
             item.get('model'),
             item.get('code'),
             item.get('bench'),
             item.get('train_data') or '',
             item.get('source') or '',
-        ))
-    out.extend(_conspo_table1_rows(have))
-    out.extend(_conspo_extra_rows(have))
+        )
+        have.add(pair)
+        if item.get('score') is not None:
+            have_scored.add(pair)
+    out.extend(_conspo_table1_rows(have_scored))
+    out.extend(_conspo_extra_rows(have_scored))
     out.extend(_weight_geo_dapo_rows(have))
+    out.extend(_shao_aime25_plot_rows(have_scored))
     return out
 
 
@@ -569,14 +790,14 @@ def _weight_geo_dapo_rows(have: set[tuple]) -> list[dict]:
     }]
 
 
-def _conspo_table1_rows(have: set[tuple]) -> list[dict]:
+def _conspo_table1_rows(have_scored: set[tuple]) -> list[dict]:
     added = []
     model = 'DeepSeek-R1-Distill-Qwen-1.5B'
     source = 'Table 1 / §5.2'
     train = 'DeepScaleR-Preview-Dataset'
     for (code, bench), (base, score, ref) in CONSPO_T1_1P5.items():
         pair = (CONSPO, model, code, bench, train, source)
-        if pair in have:
+        if pair in have_scored:
             continue
         added.append({
             'key': CONSPO,
@@ -603,13 +824,20 @@ def _conspo_table1_rows(have: set[tuple]) -> list[dict]:
     return added
 
 
-def _conspo_extra_rows(have: set[tuple]) -> list[dict]:
+def _conspo_extra_rows(have_scored: set[tuple]) -> list[dict]:
     added = []
-    train = 'DeepScaleR-Preview-Dataset'
     for spec in CONSPO_EXTRA:
         source = spec['source']
-        pair = (CONSPO, spec['model'], spec['code'], spec['bench'], train, source)
-        if pair in have:
+        train = spec.get('train_data') or 'DeepScaleR-Preview-Dataset'
+        pair = (
+            CONSPO,
+            spec['model'],
+            spec['code'],
+            spec['bench'],
+            train,
+            source,
+        )
+        if pair in have_scored:
             continue
         added.append({
             'key': CONSPO,
@@ -625,7 +853,7 @@ def _conspo_extra_rows(have: set[tuple]) -> list[dict]:
             'gain': spec.get('gain'),
             'gain_ref': spec.get('gain_ref'),
             'source': source,
-            'train_data': train,
+            'train_data': spec.get('train_data') or 'DeepScaleR-Preview-Dataset',
             'teacher': '',
             'unit': 'pp',
             'bench_span': '',
@@ -633,4 +861,44 @@ def _conspo_extra_rows(have: set[tuple]) -> list[dict]:
             'ood_basis': '',
             'ood': False,
         })
+    return added
+
+
+def _shao_aime25_plot_rows(have_scored: set[tuple]) -> list[dict]:
+    added = []
+    source = SHAO_PLOT_SOURCE
+    train = 'DeepScaleR'
+    for model, cells in SHAO_AIME25_PLOT.items():
+        gt_final = cells['gt'][1]
+        for key, code, method in SHAO_PLOT_METHODS:
+            pair = (SHAO, model, code, 'AIME 2025', train, source)
+            if pair in have_scored:
+                continue
+            base, score, gain = cells[key]
+            is_gt = key == 'gt'
+            added.append({
+                'key': SHAO,
+                'code': code,
+                'method': method,
+                'model': model,
+                'bench': 'AIME 2025',
+                'metric': 'avg@8',
+                'base': base,
+                'ref': score if is_gt else gt_final,
+                'ref_method': 'GRPO',
+                'score': score,
+                'gain': gain,
+                'gain_ref': None if is_gt else round(score - gt_final, 1),
+                'source': source,
+                'source_precision': 'plot',
+                'train_data': train,
+                'teacher': '',
+                'unit': 'pp',
+                'bench_span': '',
+                'ckpt_select': SHAO_PLOT_CKPT_OVERRIDE.get(
+                    (model, key), SHAO_PLOT_CKPT,
+                ),
+                'ood_basis': '',
+                'ood': False,
+            })
     return added

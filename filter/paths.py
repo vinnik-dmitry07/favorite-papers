@@ -124,12 +124,14 @@ TG_KEY_ALIASES = {
 }
 
 
-def write_jsonl(path: Path, rows: list[dict]) -> None:
+def write_jsonl(path: Path, rows: list[dict], sort_keys: bool = False) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_suffix(path.suffix + '.tmp')
     with tmp.open('w', encoding='utf-8') as handle:
         for row in rows:
-            handle.write(json.dumps(row, ensure_ascii=False) + '\n')
+            handle.write(
+                json.dumps(row, ensure_ascii=False, sort_keys=sort_keys) + '\n'
+            )
     tmp.replace(path)
 
 

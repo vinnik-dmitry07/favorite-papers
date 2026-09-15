@@ -16,6 +16,7 @@ import build_llm_gains as blg
 import build_llm_models as blm
 import llm_gains_ood as ood
 from llm_reliability import SHAO_MATH500_GT_PP, SHAO_MATH500_RANDOM_PP
+from paths import write_jsonl
 
 
 def _paper(key='arxiv:2501.00001', title='Demo', section='Post-training'):
@@ -174,6 +175,10 @@ class DeltaTest(unittest.TestCase):
         )
         self.assertAlmostEqual(blg.delta_over_base(hit), 13.1)
         self.assertAlmostEqual(blg.delta_over_ref(hit), 3.4)
+        classified = blg.attach_ood([hit], [])
+        self.assertEqual(classified[0]['ood_basis'], 'unverified')
+        markdown = blg.render_md(classified, [_paper(key='arxiv:2509.03646')], [])
+        self.assertNotIn('+13.1', markdown)
 
     def test_pp_mixed_scale_warns(self):
         row = _gain(
@@ -405,7 +410,13 @@ class OodFilterTest(unittest.TestCase):
             }, _paper()),
         ]
         rows = blg.attach_ood([
-            _gain(model='Qwen2.5-7B-Instruct', bench='AIME 2025', score=20, base=10),
+            _gain(
+                model='Qwen2.5-7B-Instruct',
+                bench='AIME 2025',
+                score=20,
+                base=10,
+                train_data='DeepScaleR',
+            ),
         ], models)
         self.assertTrue(rows[0]['ood'])
         self.assertEqual(rows[0]['ood_basis'], 'temporal')
@@ -697,10 +708,18 @@ class TeacherChainTest(unittest.TestCase):
             'OPD-top1',
             'OPD-top1',
         ))
-        self.assertIsNotNone(ood.chain_cutoff(
+        self.assertIsNone(ood.chain_cutoff(
             'Qwen2.5-Math-7B',
             '',
             '',
+            'arxiv:2501.00001',
+            'GRPO',
+            'GRPO',
+        ))
+        self.assertIsNotNone(ood.chain_cutoff(
+            'Qwen2.5-Math-7B',
+            '',
+            'DeepScaleR',
             'arxiv:2501.00001',
             'GRPO',
             'GRPO',
@@ -774,6 +793,7 @@ class ConspoDisplayTest(unittest.TestCase):
             ),
         ])
         rows = blg.dedupe_rows(rows)
+        rows = blg.attach_ood(rows, [])
         codes = {
             (row['code'], row.get('train_data') or '')
             for row in rows
@@ -846,6 +866,10 @@ class CkptAndAdmitTest(unittest.TestCase):
             ref=20.0,
             ref_method='GRPO',
             score=16.7,
+            train_data=(
+                'DeepScaleR prompts (on-policy; Table 2 adapters, '
+                'same protocol as Online GRPO)'
+            ),
             ood=False,
         )
         rows = blg.attach_ood([row], [])
@@ -861,6 +885,7 @@ class CkptAndAdmitTest(unittest.TestCase):
                 bench='AIME26',
                 code='Online DAPO',
                 method='Online DAPO',
+                train_data='DeepScaleR prompts (on-policy)',
             ),
             'temporal',
         )
@@ -999,6 +1024,511 @@ class WriteGuardTest(unittest.TestCase):
     def test_doi_stem_restores_slash_from_known_keys(self):
         key = 'doi:10.1038/s41586-023-06924-6'
         self.assertEqual(blg.key_from_stem('doi_10.1038_s41586-023-06924-6', {key}), key)
+
+
+class StrictTemporalOodTest(unittest.TestCase):
+    def test_empty_train_data_is_unverified(self):
+        self.assertFalse(ood.temporal_proof(
+            'Qwen2.5-Math-7B', '', '', 'arxiv:2501.00001', 'GRPO', 'GRPO',
+        ))
+        self.assertEqual(
+            ood.classify_ood_basis(
+                key='arxiv:2501.00001',
+                model='Qwen2.5-Math-7B',
+                bench='AIME 2025',
+                code='GRPO',
+                method='GRPO',
+                train_data='',
+            ),
+            'unverified',
+        )
+
+    def test_conspo_dapo_math_dates(self):
+        shared = dict(
+            key=ood.CONSPO,
+            model='DeepSeek-R1-Distill-Qwen-1.5B',
+            code='ConSPO',
+            method='ConSPO',
+            train_data='DAPO-Math-17k',
+        )
+        self.assertEqual(
+            ood.classify_ood_basis(**shared, bench='AIME 2025'),
+            'unverified',
+        )
+        self.assertEqual(
+            ood.classify_ood_basis(**shared, bench='HMMT 2025', hmmt_month=ood.PAPER_HMMT_MONTH[ood.CONSPO]),
+            'unverified',
+        )
+        self.assertEqual(
+            ood.classify_ood_basis(**shared, bench='AIME26'),
+            'temporal',
+        )
+
+    def test_oneshot_infers_deepscaler_and_stays_temporal(self):
+        self.assertEqual(
+            ood.infer_train_data({'key': ood.ONESHOT}),
+            'DeepScaleR subset',
+        )
+        row = _gain(
+            key=ood.ONESHOT,
+            code='1-shot RLVR',
+            method='1-shot RLVR (GRPO)',
+            model='Qwen2.5-Math-7B',
+            bench='AIME 2025',
+            metric='avg@8',
+            base=6.7,
+            score=10.8,
+            ckpt_select='unspecified',
+        )
+        rows = blg.renormalize_rows([row], [])
+        hit = next(item for item in rows if item['code'] == '1-shot RLVR')
+        self.assertEqual(hit['train_data'], 'DeepScaleR subset')
+        self.assertEqual(hit['ood_basis'], 'temporal')
+        self.assertTrue(blg.best_ckpt_mark(hit))
+        markdown = blg.render_md(rows, [_paper(key=ood.ONESHOT)], [])
+        self.assertIn('+4.1†', markdown)
+
+    def test_two_grpo_math_vs_dapo_sub(self):
+        math_row = {
+            'key': ood.TWO_GRPO,
+            'source': 'Table 1 (MATH train)',
+        }
+        dapo_row = {
+            'key': ood.TWO_GRPO,
+            'source': 'Table 1 (DAPO-Math-Sub)',
+        }
+        self.assertEqual(ood.infer_train_data(math_row), 'MATH')
+        self.assertEqual(ood.infer_train_data(dapo_row), 'DAPO-Math-sub')
+        self.assertEqual(
+            ood.classify_ood_basis(
+                key=ood.TWO_GRPO,
+                model='Qwen2.5-Math-7B',
+                bench='AIME 2025',
+                code='2-GRPO',
+                method='2-GRPO',
+                train_data='MATH',
+            ),
+            'temporal',
+        )
+        self.assertEqual(
+            ood.classify_ood_basis(
+                key=ood.TWO_GRPO,
+                model='Qwen2.5-Math-7B',
+                bench='AIME 2025',
+                code='2-GRPO-DAPO',
+                method='2-GRPO-DAPO',
+                train_data='DAPO-Math-sub',
+            ),
+            'unverified',
+        )
+
+    def test_hicra_aime25_unverified(self):
+        self.assertEqual(ood.infer_train_data({'key': ood.HICRA}), '')
+        self.assertEqual(
+            ood.classify_ood_basis(
+                key=ood.HICRA,
+                model='Llama-3.1-8B-Instruct',
+                bench='AIME 2025',
+                code='HICRA',
+                method='HICRA',
+                train_data='',
+            ),
+            'unverified',
+        )
+
+    def test_sr_grpo_smoltalk2_and_self_distill_unverified(self):
+        self.assertEqual(
+            ood.classify_ood_basis(
+                key='arxiv:2512.02807',
+                model='Qwen2.5-1.5B-Instruct',
+                bench='AIME 2025',
+                code='SR-GRPO',
+                method='SR-GRPO',
+                train_data='SmolTalk2',
+            ),
+            'unverified',
+        )
+        self.assertEqual(ood.infer_train_data({'key': ood.SELF_DISTILL}), 'DAPO-Math-17k')
+        self.assertEqual(
+            ood.classify_ood_basis(
+                key=ood.SELF_DISTILL,
+                model='DeepSeek-R1-Distill-Qwen-7B',
+                bench='AIME 2025',
+                code='SFT',
+                method='SFT',
+                train_data='DAPO-Math-17k',
+            ),
+            'unverified',
+        )
+
+    def test_weight_geo_online_wipes_teacher_and_is_temporal(self):
+        self.assertEqual(
+            ood.resolve_teacher(
+                ood.WEIGHT_GEO,
+                'GRPO',
+                'Online GRPO',
+                explicit='DeepSeek-V4-Flash',
+            ),
+            '',
+        )
+        self.assertEqual(
+            ood.resolve_teacher(
+                ood.WEIGHT_GEO,
+                'GRPO',
+                'GRPO',
+                explicit='DeepSeek-V4-Flash',
+            ),
+            'DeepSeek-V4-Flash',
+        )
+        self.assertEqual(
+            ood.resolve_teacher(
+                ood.WEIGHT_GEO,
+                'DAPO',
+                'DAPO',
+                explicit='DeepSeek-V4-Flash',
+                source='Table 2 (Online DAPO)',
+            ),
+            '',
+        )
+        self.assertNotIn(ood.WEIGHT_GEO, ood.REQUIRE_TEACHER)
+        self.assertEqual(
+            ood.classify_ood_basis(
+                key=ood.WEIGHT_GEO,
+                model='Qwen3-4B-Instruct-2507',
+                bench='AIME26',
+                code='GRPO',
+                method='Online GRPO',
+                train_data='DeepScaleR prompts (on-policy rollouts)',
+                teacher='',
+            ),
+            'temporal',
+        )
+
+    def test_every_temporal_row_has_proof(self):
+        cases = [
+            (
+                'DeepSeek-R1-Distill-Qwen-1.5B',
+                '',
+                'DeepScaleR-Preview-Dataset',
+                ood.CONSPO,
+                'ConSPO',
+                'AIME 2025',
+            ),
+            (
+                'Qwen3-4B-Instruct-2507',
+                '',
+                'DeepScaleR',
+                ood.WEIGHT_GEO,
+                'GRPO',
+                'AIME26',
+            ),
+            (
+                'Qwen2.5-Math-7B',
+                '',
+                'DeepScaleR subset',
+                ood.ONESHOT,
+                '1-shot RLVR',
+                'AIME 2025',
+            ),
+            (
+                'Qwen2.5-Math-7B',
+                '',
+                'DeepScaleR',
+                ood.SHAO,
+                'GRPO-majority',
+                'AIME 2025',
+            ),
+            (
+                'OLMo-2-1124-7B',
+                '',
+                'DeepScaleR',
+                ood.SHAO,
+                'GRPO',
+                'AIME 2025',
+            ),
+        ]
+        for model, teacher, train, key, code, bench in cases:
+            basis = ood.classify_ood_basis(
+                key=key,
+                model=model,
+                bench=bench,
+                code=code,
+                method=code,
+                train_data=train,
+                teacher=teacher,
+                hmmt_month=ood.PAPER_HMMT_MONTH.get(key),
+            )
+            self.assertEqual(basis, 'temporal')
+            self.assertTrue(ood.temporal_proof(
+                model, teacher, train, key, code, code,
+            ))
+
+    def test_notes_range_does_not_change_counts(self):
+        row = _gain(
+            key=ood.ONESHOT,
+            code='1-shot RLVR',
+            method='1-shot RLVR',
+            model='Qwen2.5-Math-7B',
+            bench='AIME 2025',
+            base=6.7,
+            score=10.8,
+            train_data='DeepScaleR subset',
+            ood_basis='temporal',
+        )
+        markdown = blg.render_md([row], [_paper(key=ood.ONESHOT)], [])
+        self.assertIn('−0.4…+4.5', markdown)
+        self.assertIn('2506.10947', markdown)
+        self.assertIn('2601.11061', markdown)
+        self.assertIn('step 300', markdown)
+        self.assertIn('‡', markdown)
+        self.assertIn('**1**', markdown.split('## Notes', 1)[0])
+        self.assertNotIn('source_precision', markdown)
+        self.assertNotIn("'plot'", markdown)
+
+    def test_renormalize_byte_idempotent(self):
+        raw = _gain(
+            key=ood.ONESHOT,
+            code='1-shot RLVR',
+            method='1-shot RLVR (GRPO)',
+            model='Qwen2.5-Math-7B',
+            bench='AIME 2025',
+            base=6.7,
+            score=10.8,
+            source='Table 4',
+        )
+        papers = [_paper(key=ood.ONESHOT)]
+        once = blg.renormalize_rows([raw], [], papers)
+        twice = blg.renormalize_rows(once, [], papers)
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'gains.jsonl'
+            write_jsonl(path, once, sort_keys=True)
+            first = path.read_bytes()
+            write_jsonl(path, twice, sort_keys=True)
+            self.assertEqual(first, path.read_bytes())
+
+    def test_math_cutoff_is_token_not_substring(self):
+        self.assertEqual(
+            ood.dataset_cutoff('MATH'),
+            ood.MATH_DATASET_CUTOFF,
+        )
+        self.assertEqual(
+            ood.dataset_cutoff('MATH (7,500 step-by-step competition problems)'),
+            ood.MATH_DATASET_CUTOFF,
+        )
+        self.assertEqual(
+            ood.dataset_cutoff('MATH train'),
+            ood.MATH_DATASET_CUTOFF,
+        )
+        self.assertIsNone(ood.dataset_cutoff('OpenR1-Math-220k'))
+        self.assertIsNone(ood.dataset_cutoff('OpenThoughts mathematical reasoning'))
+        self.assertIsNone(ood.dataset_cutoff('Qwen2.5-Math-7B trajectories'))
+        self.assertIsNone(ood.dataset_cutoff('math_verify-only corpus'))
+        self.assertIsNone(ood.dataset_cutoff('50 mixed-success math problems'))
+
+    def test_hicra_ignores_single_inventory_train(self):
+        models = [
+            blm.normalize_row({
+                'model': 'Llama-3.1-8B-Instruct',
+                'start_point': 'instruct',
+                'role': 'trained',
+                'method': 'HICRA',
+                'train_data': ['DeepScaleR'],
+                'eval_ood': ['AIME 2025'],
+            }, _paper(key=ood.HICRA)),
+        ]
+        row = _gain(
+            key=ood.HICRA,
+            code='HICRA',
+            method='HICRA',
+            model='Llama-3.1-8B-Instruct',
+            bench='AIME 2025',
+            train_data='',
+            ood=False,
+        )
+        rows = blg.attach_ood(blg.attach_train_data([row], models), models)
+        self.assertEqual(rows[0]['train_data'], '')
+        self.assertEqual(rows[0]['ood_basis'], 'unverified')
+
+    def test_conspo_html_table1_cells(self):
+        self.assertEqual(
+            ood.CONSPO_T1_1P5[('ConSPO', 'AIME 2025')],
+            (20.7, 26.7, 22.9),
+        )
+        self.assertEqual(
+            ood.CONSPO_T1_1P5[('SAPO', 'HMMT 2025')],
+            (9.7, 12.8, 11.7),
+        )
+
+    def test_html_score_beats_gain_only(self):
+        rows = ood.apply_gain_overrides([
+            _gain(
+                key=ood.CONSPO,
+                code='ConSPO',
+                method='ConSPO',
+                model='DeepSeek-R1-Distill-Qwen-7B',
+                bench='AIME 2025',
+                metric='avg@32',
+                source='Table 2 / §5.2',
+                train_data='DeepScaleR-Preview-Dataset',
+                base=30.3,
+                ref=35.9,
+                score=None,
+                gain=8.8,
+                gain_ref=3.2,
+            ),
+        ])
+        rows = blg.dedupe_rows(rows)
+        hit = next(
+            row for row in rows
+            if row['code'] == 'ConSPO'
+            and row['model'].endswith('7B')
+            and row['bench'] == 'AIME 2025'
+        )
+        self.assertAlmostEqual(hit['score'], 39.1)
+        self.assertAlmostEqual(hit['base'], 30.3)
+
+
+class ShaoAime25PlotTest(unittest.TestCase):
+    def _plot_rows(self):
+        rows = [
+            row for row in ood.apply_gain_overrides([])
+            if row.get('key') == ood.SHAO
+            and row.get('source') == ood.SHAO_PLOT_SOURCE
+        ]
+        return blg.attach_ood(blg.coerce_pp_rows(rows), [])
+
+    def test_injects_fifty_temporal_plot_rows(self):
+        rows = self._plot_rows()
+        self.assertEqual(len(rows), 50)
+        self.assertEqual({row['bench'] for row in rows}, {'AIME 2025'})
+        self.assertEqual({row['metric'] for row in rows}, {'avg@8'})
+        self.assertEqual({row['train_data'] for row in rows}, {'DeepScaleR'})
+        self.assertEqual({row['unit'] for row in rows}, {'pp'})
+        self.assertEqual({row['source_precision'] for row in rows}, {'plot'})
+        self.assertTrue(all(row['ood_basis'] == 'temporal' for row in rows))
+        self.assertEqual(
+            sum(1 for row in rows if blg.delta_over_base(row) is not None),
+            50,
+        )
+        self.assertEqual(
+            sum(
+                1 for row in rows
+                if not blg.is_self_ref(row)
+                and blg.delta_over_ref(row) is not None
+            ),
+            40,
+        )
+
+    def test_math7b_last_point_not_curve_max(self):
+        rows = {row['code']: row for row in self._plot_rows()
+                if row['model'] == 'Qwen2.5-Math-7B'}
+        self.assertAlmostEqual(rows['GRPO']['base'], 6.3)
+        self.assertAlmostEqual(rows['GRPO']['score'], 13.7)
+        self.assertAlmostEqual(blg.delta_over_base(rows['GRPO']), 7.4)
+        self.assertAlmostEqual(blg.delta_over_base(rows['GRPO-majority']), 4.5)
+        self.assertAlmostEqual(blg.delta_over_ref(rows['GRPO-majority']), -3.8)
+        self.assertAlmostEqual(blg.delta_over_base(rows['GRPO-incorrect']), 2.8)
+        self.assertAlmostEqual(blg.delta_over_ref(rows['GRPO-incorrect']), -6.8)
+        self.assertAlmostEqual(blg.delta_over_base(rows['GRPO-format']), -0.4)
+        self.assertAlmostEqual(blg.delta_over_ref(rows['GRPO-format']), -8.7)
+        self.assertAlmostEqual(blg.delta_over_base(rows['GRPO-random']), 2.4)
+        self.assertAlmostEqual(blg.delta_over_ref(rows['GRPO-random']), -5.0)
+        self.assertNotAlmostEqual(
+            blg.delta_over_base(rows['GRPO-incorrect']), 6.0,
+        )
+
+    def test_math15b_vs_gt(self):
+        rows = {row['code']: row for row in self._plot_rows()
+                if row['model'] == 'Qwen2.5-Math-1.5B'}
+        self.assertAlmostEqual(blg.delta_over_base(rows['GRPO']), 1.5)
+        self.assertAlmostEqual(blg.delta_over_base(rows['GRPO-majority']), 3.4)
+        self.assertAlmostEqual(blg.delta_over_ref(rows['GRPO-majority']), -0.2)
+        self.assertAlmostEqual(blg.delta_over_base(rows['GRPO-incorrect']), 0.7)
+        self.assertAlmostEqual(blg.delta_over_ref(rows['GRPO-incorrect']), -0.8)
+        self.assertAlmostEqual(blg.delta_over_base(rows['GRPO-format']), -0.7)
+        self.assertAlmostEqual(blg.delta_over_ref(rows['GRPO-format']), -2.2)
+        self.assertAlmostEqual(blg.delta_over_base(rows['GRPO-random']), -0.8)
+        self.assertAlmostEqual(blg.delta_over_ref(rows['GRPO-random']), -2.3)
+
+    def test_llama_random_ends_at_287_without_dagger(self):
+        hit = next(
+            row for row in self._plot_rows()
+            if row['model'] == 'Llama-3.2-3B' and row['code'] == 'GRPO-random'
+        )
+        self.assertEqual(hit['ckpt_select'], ood.SHAO_PLOT_CKPT_287)
+        self.assertFalse(blg.best_ckpt_mark(hit))
+        self.assertTrue(all(
+            not blg.best_ckpt_mark(row) for row in self._plot_rows()
+        ))
+
+    def test_majority_alias_and_noisy_cells(self):
+        self.assertEqual(
+            blg.method_to_code('GRPO (majority vote)', 'GRPO'),
+            'GRPO-majority',
+        )
+        self.assertTrue(blg.is_qualified_grpo_name('GRPO-majority'))
+        fmt = next(
+            row for row in self._plot_rows()
+            if row['model'] == 'Qwen2.5-Math-7B' and row['code'] == 'GRPO-format'
+        )
+        maj = next(
+            row for row in self._plot_rows()
+            if row['model'] == 'Qwen2.5-Math-7B'
+            and row['code'] == 'GRPO-majority'
+        )
+        self.assertEqual(blg.base_cell(fmt), '-0.4‡')
+        self.assertEqual(blg.base_cell(maj), '+4.5')
+        self.assertEqual(blg.grpo_cell(fmt), '-8.7')
+        markdown = blg.render_md(
+            self._plot_rows(), [_paper(key=ood.SHAO)], [],
+        )
+        self.assertIn('-0.4‡', markdown)
+        self.assertIn('+4.5', markdown)
+        self.assertIn('+2.8', markdown)
+        table_cells = ''.join(
+            line for line in markdown.splitlines()
+            if line.startswith('|') and '---' not in line and 'method' not in line
+        )
+        self.assertNotIn('+6.0', table_cells)
+        self.assertNotIn('†', table_cells)
+        self.assertNotIn('source_precision', markdown)
+        self.assertTrue(blg.is_self_ref(next(
+            row for row in self._plot_rows()
+            if row['model'] == 'Qwen2.5-Math-7B' and row['code'] == 'GRPO'
+        )))
+
+    def test_small_pp_values_stay_pp(self):
+        hit = next(
+            row for row in self._plot_rows()
+            if row['model'] == 'Qwen2.5-1.5B' and row['code'] == 'GRPO'
+        )
+        self.assertAlmostEqual(hit['base'], 0.4)
+        self.assertAlmostEqual(hit['score'], 1.5)
+        self.assertEqual(hit['unit'], 'pp')
+
+    def test_skip_if_scored_pair_exists(self):
+        existing = {
+            'key': ood.SHAO,
+            'code': 'GRPO-majority',
+            'method': 'GRPO (majority vote)',
+            'model': 'Qwen2.5-Math-7B',
+            'bench': 'AIME 2025',
+            'metric': 'avg@8',
+            'base': 5.4,
+            'score': 9.9,
+            'source': ood.SHAO_PLOT_SOURCE,
+            'train_data': 'DeepScaleR',
+            'unit': 'pp',
+        }
+        rows = [
+            row for row in ood.apply_gain_overrides([existing])
+            if row.get('key') == ood.SHAO
+            and row.get('source') == ood.SHAO_PLOT_SOURCE
+            and row.get('code') == 'GRPO-majority'
+            and row.get('model') == 'Qwen2.5-Math-7B'
+        ]
+        self.assertEqual(len(rows), 1)
+        self.assertAlmostEqual(rows[0]['score'], 9.9)
 
 
 if __name__ == '__main__':
