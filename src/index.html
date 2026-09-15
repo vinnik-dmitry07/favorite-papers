@@ -51,6 +51,8 @@
     border: 1px solid var(--rule); border-radius: 5px; padding: 4px 9px;
   }
   button:hover { border-color: var(--muted); }
+  button:disabled { color: var(--muted); cursor: default; }
+  button:disabled:hover { border-color: var(--rule); }
   .key { color: var(--muted); display: flex; align-items: center; gap: 12px; }
   .key i { display: inline-block; width: 16px; height: 2px; margin-right: 4px;
            vertical-align: middle; }
@@ -151,11 +153,12 @@
       <span class="qscale" aria-hidden="true">−1<b></b>+1</span>
     </label>
     <button id="reset">reset view</button>
+    <button id="share" title="Copy a link that opens the map with the selected papers" disabled>copy link</button>
   </div>
   <div class="key">
     <span><i class="i-out"></i>cites (held paper &rarr; older work)</span>
     <span><i class="i-in"></i>cited by (newer work &rarr; held paper)</span>
-    <span>click to hold &middot; double-click to open</span>
+    <span>click to hold &middot; shift-click to add &middot; double-click to open</span>
   </div>
   <div id="legend" class="legend"></div>
 </header>

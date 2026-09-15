@@ -11,7 +11,8 @@
    nodes apart inside a per-node box. Crowded rows (same y, neighbours
    a few pixels away) get a wider box; leftovers are separated after
    the last tick, then shrunk if the box cannot fit. Scored / counted
-   disks stay above the zero / n/a rule (edge, not just center). */
+   disks stay above the zero / n/a rule (edge, not just center).
+   Selection is mirrored into #sel=<key>,… and restored on load. */
 (function () {
   'use strict';
 
@@ -327,6 +328,12 @@
 
   var xBase, yBase, transform = d3.zoomIdentity, plot = {};
   var hovered = null, locked = null, matches = null, tagFilter = null;
+  var selected = [];   // ordered node indices; the last one is the held paper (locked)
+  var byId = Object.create(null);
+  nodes.forEach(function (d) { byId[d.id] = d.index; });
+  var HASH_KEY = 'sel';
+  var FOCUS_MAX_K = 4;    // never zoom tighter than this when focusing a selection
+  var FOCUS_PAD = 70;     // screen px kept free around the selection bbox
   var PREFS_KEY = 'key-papers-map-prefs';
 
   function optionExists(select, value) {
@@ -792,30 +799,32 @@
     return e.source.index === d.index || e.target.index === d.index;
   }
 
-  function focused() {
-    return locked || hovered;
-  }
-
   function styleEdges() {
     var k = transform.k;
-    var d = focused();
-    if (!d) {
+    var focus = focusIndices();
+    if (!focus.length) {
       edgeSel.attr('stroke', 'var(--edge)')
         .attr('stroke-width', 0.85 / k)
         .attr('stroke-opacity', Math.min(0.3, 0.17 + 0.05 / k));
       return;
     }
+    var inFocus = {};
+    focus.forEach(function (i) { inFocus[i] = true; });
     edgeSel
       .attr('stroke', function (e) {
-        if (e.target.index === d.index) return 'var(--in)';
-        if (e.source.index === d.index) return 'var(--out)';
+        if (locked && inFocus[e.source.index] && inFocus[e.target.index]) {
+          if (e.target.index === locked.index) return 'var(--in)';
+          if (e.source.index === locked.index) return 'var(--out)';
+        }
+        if (inFocus[e.target.index]) return 'var(--in)';
+        if (inFocus[e.source.index]) return 'var(--out)';
         return 'var(--edge)';
       })
       .attr('stroke-opacity', function (e) {
-        return touches(e, d) ? 0.8 : 0.05;
+        return (inFocus[e.source.index] || inFocus[e.target.index]) ? 0.8 : 0.05;
       })
       .attr('stroke-width', function (e) {
-        return (touches(e, d) ? 1.7 : 0.85) / k;
+        return ((inFocus[e.source.index] || inFocus[e.target.index]) ? 1.7 : 0.85) / k;
       });
   }
 
@@ -823,10 +832,10 @@
     styleEdges();
     nodeSel.selectAll('circle')
       .attr('stroke', function (d) {
-        return (locked && locked.index === d.index) ? 'var(--in)' : '#fff';
+        return isSelected(d.index) ? 'var(--in)' : '#fff';
       })
       .attr('stroke-width', function (d) {
-        return ((locked && locked.index === d.index) ? 2.4 : 1.3) / transform.k;
+        return (isSelected(d.index) ? 2.4 : 1.3) / transform.k;
       });
     if (locked) pinTip(locked);
   }
@@ -856,16 +865,16 @@
     var mode = document.getElementById('labels').value;
     var k = transform.k;
     var forced = {};
-    var focus = focused();
-    if (focus) {
-      forced[focus.index] = true;
-      neighbours[focus.index].inc.forEach(function (i) { forced[i] = true; });
-      neighbours[focus.index].out.forEach(function (i) { forced[i] = true; });
-    }
+    var focus = focusIndices();
+    var inFocus = {};
+    focus.forEach(function (i) {
+      inFocus[i] = true;
+      Object.assign(forced, related(nodes[i]));
+    });
     if (matches) matches.forEach(function (i) { forced[i] = true; });
 
     // While focusing on one paper or a search hit, other labels are noise.
-    var focusing = Boolean(focus) || Boolean(matches);
+    var focusing = focus.length > 0 || Boolean(matches);
     var onlyForced = focusing || mode === 'none';
 
     var visible = {};
@@ -906,7 +915,7 @@
           var box = [sx - half, sy - LABEL_FONT, sx + half, sy + 3];
           var blocked = overlaps(box, boxes)
             || (!forced[d.index] && overlaps(box, obstacles));
-          if (!blocked || d === focus) chosen = { sy: sy, box: box };
+          if (!blocked || inFocus[d.index]) chosen = { sy: sy, box: box };
         });
         if (!chosen) continue;
         boxes.push(chosen.box);
@@ -915,7 +924,7 @@
         placed += 1;
       }
     }
-    if (focus) visible[focus.index] = true;
+    focus.forEach(function (i) { visible[i] = true; });
     labelSel
       .attr('display', function (d) {
         return visible[d.index] ? null : 'none';
@@ -932,19 +941,163 @@
     return set;
   }
 
-  function highlight(d) {
-    var set = related(d);
+  function isSelected(i) { return selected.indexOf(i) >= 0; }
+
+  function sameList(a, b) {
+    if (a.length !== b.length) return false;
+    for (var i = 0; i < a.length; i += 1) {
+      if (a[i] !== b[i]) return false;
+    }
+    return true;
+  }
+
+  function focusIndices() {
+    if (selected.length) return selected;
+    return hovered ? [hovered.index] : [];
+  }
+
+  function setSelection(indices) {
+    selected = indices.slice();
+    locked = selected.length ? nodes[selected[selected.length - 1]] : null;
+    hovered = null;
+    if (locked) {
+      highlight();
+      showTip(locked, null);
+    } else {
+      clearHighlight();
+      tip.style('opacity', 0);
+    }
+    syncHash();
+    syncShareButton();
+  }
+
+  function toggleSelected(d) {
+    var next = selected.filter(function (i) { return i !== d.index; });
+    if (next.length === selected.length) next.push(d.index);
+    setSelection(next);
+  }
+
+  function encodeKey(id) {
+    // : / ~ stay literal. ? is escaped so a chat/proxy that splits on the
+    // first ? does not steal the rest of a url: key as a query string.
+    return encodeURI(id).replace(/[,&#?]/g, function (c) {
+      return encodeURIComponent(c);
+    });
+  }
+
+  function selectionHash() {
+    if (!selected.length) return '';
+    return '#' + HASH_KEY + '=' + selected.map(function (i) {
+      return encodeKey(nodes[i].id);
+    }).join(',');
+  }
+
+  function shareUrl() {
+    return window.location.href.split('#')[0] + selectionHash();
+  }
+
+  function syncHash() {
+    var url = window.location.pathname + window.location.search + selectionHash();
+    window.history.replaceState(null, '', url);
+  }
+
+  function parseHash(hash) {
+    var raw = String(hash || '').replace(/^#/, '');
+    var value = null;
+    raw.split('&').forEach(function (part) {
+      var eq = part.indexOf('=');
+      if (eq > 0 && part.slice(0, eq) === HASH_KEY) value = part.slice(eq + 1);
+    });
+    if (!value) return [];
+    var out = [];
+    value.split(',').forEach(function (piece) {
+      var id;
+      try { id = decodeURIComponent(piece); } catch (err) { return; }
+      if (/^\d{4}\.\d{4,5}$/.test(id)) id = 'arxiv:' + id;
+      var idx = byId[id];
+      if (typeof idx === 'number' && idx === (idx | 0)
+          && idx >= 0 && idx < nodes.length && out.indexOf(idx) < 0) {
+        out.push(idx);
+      }
+    });
+    return out;
+  }
+
+  function applyHash(fromHashChange) {
+    var indices = parseHash(window.location.hash);
+    var same = sameList(indices, selected);
+    if (!same) {
+      setSelection(indices);
+    } else if (window.location.hash !== selectionHash()) {
+      syncHash();
+    }
+    if (fromHashChange && selected.length) focusSelection();
+  }
+
+  window.addEventListener('hashchange', function () { applyHash(true); });
+
+  function focusSelection() {
+    if (!selected.length || !plot.width) return;
+    var x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+    selected.forEach(function (i) {
+      var d = nodes[i];
+      x0 = Math.min(x0, d.x - d.r); x1 = Math.max(x1, d.x + d.r);
+      y0 = Math.min(y0, d.y - d.r); y1 = Math.max(y1, d.y + d.r);
+    });
+    var extent = zoom.scaleExtent();
+    var vw = plot.right - plot.timeLeft, vh = plot.bottom - plot.top;
+    var k = Math.min(FOCUS_MAX_K,
+                     (vw - 2 * FOCUS_PAD) / Math.max(x1 - x0, 1),
+                     (vh - 2 * FOCUS_PAD) / Math.max(y1 - y0, 1));
+    k = Math.max(extent[0], Math.min(extent[1], k));
+    var tx = (plot.timeLeft + plot.right) / 2 - k * (x0 + x1) / 2;
+    var ty = (plot.top + plot.bottom) / 2 - k * (y0 + y1) / 2;
+    svg.transition().duration(500)
+      .call(zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+  }
+
+  function syncShareButton() {
+    var button = document.getElementById('share');
+    button.disabled = !selected.length;
+    if (!selected.length) button.textContent = 'copy link';
+  }
+
+  document.getElementById('share').addEventListener('click', function () {
+    if (!selected.length) return;
+    var button = this;
+    function done(ok) {
+      button.textContent = ok ? 'copied' : 'copy failed';
+      setTimeout(function () { button.textContent = 'copy link'; }, 1400);
+    }
+    var url = shareUrl();
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(function () { done(true); },
+                                             function () { done(false); });
+    } else {
+      window.prompt('Copy this link', url);
+      done(true);
+    }
+  });
+
+  function highlight() {
+    var focus = focusIndices();
+    var set = {};
+    focus.forEach(function (i) { Object.assign(set, related(nodes[i])); });
     var hit = matches ? new Set(matches) : null;
     function isDim(n) {
       if (hit && !hit.has(n.index)) return true;
       return !set[n.index];
     }
     nodeSel.classed('dim', isDim)
-      .classed('held', function (n) { return locked && n.index === locked.index; });
+      .classed('held', function (n) { return isSelected(n.index); });
     labelSel.classed('dim', isDim);
     styleEdges();
-    edgeSel.filter(function (e) { return touches(e, d); }).raise();
-    nodeSel.filter(function (n) { return n.index === d.index; }).raise();
+    edgeSel.filter(function (e) {
+      return focus.some(function (i) { return touches(e, nodes[i]); });
+    }).raise();
+    focus.forEach(function (i) {
+      nodeSel.filter(function (n) { return n.index === i; }).raise();
+    });
     scheduleLabels();
   }
 
@@ -963,7 +1116,7 @@
   function enter(d, event) {
     if (locked) return;
     hovered = d;
-    if (!matches || matches.indexOf(d.index) >= 0) highlight(d);
+    if (!matches || matches.indexOf(d.index) >= 0) highlight();
     showTip(d, event);
   }
 
@@ -974,26 +1127,16 @@
     tip.style('opacity', 0);
   }
 
-  function lock(d, event) {
-    locked = d;
-    hovered = null;
-    highlight(d);
-    showTip(d, event);
-    pinTip(d);
-  }
-
   function unlock() {
-    if (!locked) return;
-    locked = null;
-    hovered = null;
-    clearHighlight();
-    tip.style('opacity', 0);
+    if (!selected.length) return;
+    setSelection([]);
   }
 
   function onClick(event, d) {
     event.preventDefault();
     event.stopPropagation();
-    lock(d, event);
+    if (event.shiftKey || event.ctrlKey || event.metaKey) toggleSelected(d);
+    else setSelection([d.index]);
   }
 
   function onDblClick(event, d) {
@@ -1010,8 +1153,8 @@
           ? ' (' + d.date_source.replace('-', ' ') + ')' : '')
       : '';
     var hint = locked
-      ? 'held \u00b7 double-click to open \u00b7 Esc to release'
-      : 'click to hold \u00b7 double-click to open';
+      ? 'held \u00b7 shift-click adds \u00b7 double-click to open \u00b7 Esc to release'
+      : 'click to hold \u00b7 shift-click to add \u00b7 double-click to open';
     var whoWhen = [authors ? escapeHtml(authors) : '', when]
       .filter(Boolean).join(' &middot; ');
     tip.html('<b>' + escapeHtml(d.title) + '</b>'
@@ -1241,7 +1384,7 @@
         return (hit && hit.has(d.index) ? 2.4 : 1.3) / transform.k;
       });
     document.getElementById('note').textContent = note(hit ? hit.size : null);
-    if (locked) highlight(locked);
+    if (locked) highlight();
     else scheduleLabels();
   }
 
@@ -1276,6 +1419,7 @@
     if (matches || tagFilter || citeFilterOn() || telegramFilterOn()) {
       applyFilters();
     }
+    if (locked) highlight();
   }
 
   document.getElementById('labels').addEventListener('change', function () {
@@ -1332,7 +1476,7 @@
   });
   window.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;
-    if (locked) {
+    if (selected.length) {
       unlock();
       return;
     }
@@ -1360,4 +1504,6 @@
   if (matches || tagFilter || citeFilterOn() || telegramFilterOn()) {
     applyFilters();
   }
+  syncShareButton();
+  applyHash(true);
 }());

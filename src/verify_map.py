@@ -9,6 +9,7 @@ Serves the repo root over HTTP so Chrome can load ../assets/.
 import sys
 import threading
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+from urllib.parse import unquote
 
 from playwright.sync_api import sync_playwright
 
@@ -122,6 +123,60 @@ def check_overlap(page, errors: list, mode: str, max_pairs: int = 10) -> dict:
             f'{mode} has {stats["bandBleed"]} disks crossing the zero / n/a rule'
         )
     return stats
+
+
+DEEP_LINK_JS = '''() => ({
+    held: [...document.querySelectorAll('.nodes g.held')].map(g => g.__data__.id),
+    dimmed: document.querySelectorAll('.nodes g.dim').length,
+    k: d3.zoomTransform(document.getElementById('map')).k,
+    hash: location.hash,
+    tip: getComputedStyle(document.getElementById('tip')).opacity,
+    share: document.getElementById('share').disabled,
+})'''
+
+
+def hash_sel_ids(hash_value: str) -> list:
+    raw = str(hash_value or '')
+    if raw.startswith('#'):
+        raw = raw[1:]
+    value = None
+    for part in raw.split('&'):
+        eq = part.find('=')
+        if eq > 0 and part[:eq] == 'sel':
+            value = part[eq + 1:]
+    if not value:
+        return []
+    return [unquote(piece) for piece in value.split(',') if piece]
+
+
+def copied_sel_ids(url: str) -> list:
+    if not url or '#' not in url:
+        return []
+    return hash_sel_ids('#' + url.split('#', 1)[1])
+
+
+def check_deep_link(page, errors: list, label: str, expected: list) -> dict:
+    linked = page.evaluate(DEEP_LINK_JS)
+    print(f'{label}:', linked)
+    if linked['held'] != expected:
+        errors.append(
+            f'{label} held {linked["held"]!r}, expected {expected!r}'
+        )
+    got_hash = hash_sel_ids(linked['hash'])
+    if got_hash != expected:
+        errors.append(
+            f'{label} hash ids {got_hash!r} from {linked["hash"]!r}, '
+            f'expected {expected!r}'
+        )
+    if not linked['k'] or linked['k'] <= 1:
+        errors.append(f'{label} zoom k={linked["k"]}, expected > 1')
+    if linked['dimmed'] < 200:
+        errors.append(f'{label} dimmed {linked["dimmed"]}, expected >= 200')
+    if linked['tip'] != '1':
+        errors.append(f'{label} tip opacity {linked["tip"]!r}, expected 1')
+    if linked['share']:
+        errors.append(f'{label} share button should be enabled')
+    return linked
 
 
 def preview() -> None:
@@ -828,6 +883,117 @@ def main() -> None:
         page.select_option('#yaxis', 'quality')
         page.wait_for_timeout(900)
         check_overlap(page, errors, 'narrow-quality')
+
+        page.set_viewport_size({'width': 1440, 'height': 860})
+        page.select_option('#yaxis', 'cited')
+        page.wait_for_timeout(600)
+        base_url = map_url(server)
+        seeds = 'arxiv:2407.21783,arxiv:2501.00656'
+        expected = seeds.split(',')
+        page.goto(f'{base_url}#sel={seeds},arxiv:0000.00000')
+        page.wait_for_timeout(1200)
+        check_deep_link(page, errors, 'deep link', expected)
+        page.screenshot(path=str(SHOTS / '09-deep-link.png'))
+
+        alt_seeds = 'arxiv:2506.10947,arxiv:2601.11061'
+        alt_expected = alt_seeds.split(',')
+        page.evaluate(f"() => {{ location.hash = '#sel={alt_seeds}'; }}")
+        page.wait_for_timeout(1200)
+        check_deep_link(page, errors, 'deep link hashchange', alt_expected)
+
+        page.evaluate(
+            f"() => {{ location.hash = '#sel={alt_seeds},no-such-key'; }}"
+        )
+        page.wait_for_timeout(1200)
+        check_deep_link(
+            page, errors, 'deep link hashchange unknown', alt_expected
+        )
+
+        page.reload(wait_until='load')
+        page.wait_for_timeout(1500)
+        check_deep_link(page, errors, 'deep link reload', alt_expected)
+
+        page.evaluate('''() => { window.__copied = null;
+            navigator.clipboard.writeText = (t) => { window.__copied = t; return Promise.resolve(); }; }''')
+        page.click('#share')
+        page.wait_for_timeout(200)
+        copied = page.evaluate('''() => ({
+            url: window.__copied,
+            label: document.getElementById('share').textContent,
+        })''')
+        print('copy link:', copied)
+        if copied_sel_ids(copied['url']) != alt_expected:
+            errors.append(f'copy link wrote {copied["url"]!r}')
+        if copied['label'] != 'copied':
+            errors.append(f'copy link label {copied["label"]!r}, expected copied')
+
+        third = page.evaluate('''() => {
+            const g = [...document.querySelectorAll('.nodes g')].find(g => {
+                if (g.classList.contains('held') || g.classList.contains('dim')) return false;
+                const b = g.querySelector('circle').getBoundingClientRect();
+                return b.y > 260 && b.y < innerHeight - 80 && b.x > 80 && b.x < innerWidth - 80;
+            });
+            if (!g) return null;
+            const b = g.querySelector('circle').getBoundingClientRect();
+            return {id: g.__data__.id, x: b.x + b.width / 2, y: b.y + b.height / 2};
+        }''')
+        print('shift-click third:', third)
+        if not third:
+            errors.append('no bright unselected on-screen node for shift-click')
+        else:
+            page.keyboard.down('Shift')
+            page.mouse.click(third['x'], third['y'])
+            page.keyboard.up('Shift')
+            page.wait_for_timeout(300)
+            after_shift = page.evaluate('''() => ({
+                held: [...document.querySelectorAll('.nodes g.held')].map(g => g.__data__.id),
+                hash: location.hash,
+            })''')
+            print('after shift-click:', after_shift)
+            want = alt_expected + [third['id']]
+            if after_shift['held'] != want:
+                errors.append(
+                    f'shift-click held {after_shift["held"]!r}, expected {want!r}'
+                )
+            if hash_sel_ids(after_shift['hash']) != want:
+                errors.append(
+                    f'shift-click hash {after_shift["hash"]!r} '
+                    f'should decode to {want!r}'
+                )
+
+        page.keyboard.press('Escape')
+        page.wait_for_timeout(300)
+        after_esc = page.evaluate('''() => ({
+            held: document.querySelectorAll('.nodes g.held').length,
+            hash: location.hash,
+            share: document.getElementById('share').disabled,
+        })''')
+        print('deep link Esc:', after_esc)
+        if after_esc['held']:
+            errors.append(f'Esc left {after_esc["held"]} held')
+        if after_esc['hash'] != '':
+            errors.append(f'Esc hash {after_esc["hash"]!r}, expected empty')
+        if not after_esc['share']:
+            errors.append('Esc should disable share button')
+
+        page.evaluate('''() => {
+            location.hash = '#sel=url:papers.ssrn.com/sol3/papers.cfm?abstract_id=5239006';
+        }''')
+        page.wait_for_timeout(1200)
+        ssrn = page.evaluate(DEEP_LINK_JS)
+        ssrn_id = 'url:papers.ssrn.com/sol3/papers.cfm?abstract_id=5239006'
+        print('ssrn hash:', ssrn)
+        if ssrn['held'] != [ssrn_id]:
+            errors.append(f'ssrn held {ssrn["held"]!r}, expected {[ssrn_id]!r}')
+        if hash_sel_ids(ssrn['hash']) != [ssrn_id]:
+            errors.append(
+                f'ssrn hash ids {hash_sel_ids(ssrn["hash"])!r} '
+                f'from {ssrn["hash"]!r}'
+            )
+        href = page.evaluate('() => location.href')
+        if '%3F' not in href:
+            errors.append(f'ssrn share URL left ? unencoded: {href!r}')
+
         browser.close()
     server.shutdown()
 

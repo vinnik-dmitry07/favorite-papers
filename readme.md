@@ -4,7 +4,7 @@
 
 ![Own citation map](assets/preview.png)
 
-Own version of the Litmaps map (preferred), with the links parsed straight out of the papers (arXiv/ar5iv HTML, page HTML, Crossref) instead of a hosted service: [->live map<-](https://vinnik-dmitry07.github.io/favorite-papers/) or open src/index.html locally (`python -m http.server` from the repo root). Rebuild with `python src/parse_readme.py`, then `python src/fetch_refs.py`, then `python src/build_graph.py`. Telegram posts: put `TG_API_ID` and `TG_API_HASH` in `.env`, then `python tg/export.py` (interactive first login; the local index is hundreds of MB). Look up with `python tg/find.py <url>`.
+Own version of the Litmaps map (preferred), with the links parsed straight out of the papers (arXiv/ar5iv HTML, page HTML, Crossref) instead of a hosted service: [->live map<-](https://vinnik-dmitry07.github.io/favorite-papers/) (select papers — shift-click adds — and press *copy link*, or append `#sel=arxiv:2407.21783,doi:10.1038/s41586-023-06924-6` with the readme keys) or open src/index.html locally (`python -m http.server` from the repo root). Rebuild with `python src/parse_readme.py`, then `python src/fetch_refs.py`, then `python src/build_graph.py`. Telegram posts: put `TG_API_ID` and `TG_API_HASH` in `.env`, then `python tg/export.py` (interactive first login; the local index is hundreds of MB). Look up with `python tg/find.py <url>`.
 
 ![Litmaps](assets/map.png)
 
