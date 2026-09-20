@@ -25,6 +25,7 @@ assets/tg/
 # Citation map: raw fetched documents and verification screenshots
 cache/
 shots/
+assets/fulltext_search.js
 
 # Paper filter pipeline intermediates (scripts + scores.csv + report.md + official reviews + fulltext md are committed)
 filter/*.jsonl

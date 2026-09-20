@@ -328,6 +328,7 @@
 
   var xBase, yBase, transform = d3.zoomIdentity, plot = {};
   var hovered = null, locked = null, matches = null, tagFilter = null;
+  var filterKey = '';
   var selected = [];   // ordered node indices; the last one is the held paper (locked)
   var byId = Object.create(null);
   nodes.forEach(function (d) { byId[d.id] = d.index; });
@@ -1339,8 +1340,86 @@
     markLegend();
   }
 
-  function runSearch() {
-    applyFilters();
+  var corpusState = 'idle';
+  var searchTimer = null;
+
+  function compileSlashQuery(trimmed) {
+    var escaped = false;
+    var i;
+    for (i = 1; i < trimmed.length; i++) {
+      var ch = trimmed.charAt(i);
+      if (escaped) {
+        escaped = false;
+        continue;
+      }
+      if (ch === '\\') {
+        escaped = true;
+        continue;
+      }
+      if (ch !== '/') continue;
+      var pattern = trimmed.slice(1, i);
+      var flags = trimmed.slice(i + 1);
+      if (!pattern) return null;
+      if (!/^[dgimsuvy]*$/.test(flags)) {
+        return {kind: 'lit', term: trimmed.toLowerCase()};
+      }
+      if (flags.indexOf('i') < 0) flags += 'i';
+      try {
+        return {kind: 're', re: new RegExp(pattern, flags)};
+      } catch (err) {
+        return {kind: 'lit', term: trimmed.toLowerCase()};
+      }
+    }
+    return {kind: 'lit', term: trimmed.toLowerCase()};
+  }
+
+  function compileQuery(raw) {
+    var trimmed = (raw || '').trim();
+    if (!trimmed) return null;
+    if (trimmed.charAt(0) === '/') return compileSlashQuery(trimmed);
+    if (/[*?]/.test(trimmed)) {
+      var glob = trimmed.toLowerCase()
+        .replace(/[.+^${}()|[\]\\]/g, '\\$&')
+        .replace(/\*/g, '.*')
+        .replace(/\?/g, '.');
+      return {kind: 're', re: new RegExp(glob)};
+    }
+    return {kind: 'lit', term: trimmed.toLowerCase()};
+  }
+
+  function textMatches(text, query) {
+    if (!text) return false;
+    if (query.kind === 'lit') return text.indexOf(query.term) >= 0;
+    query.re.lastIndex = 0;
+    return query.re.test(text);
+  }
+
+  function loadCorpus() {
+    if (corpusState !== 'idle') return;
+    var url = '';
+    var scripts = document.getElementsByTagName('script');
+    for (var i = 0; i < scripts.length; i++) {
+      var src = scripts[i].src || '';
+      if (src.indexOf('graph_data.js') < 0) continue;
+      url = src.replace(/graph_data\.js(?=[?#]|$)/, 'fulltext_search.js');
+      break;
+    }
+    if (!url) {
+      corpusState = 'error';
+      return;
+    }
+    corpusState = 'loading';
+    var script = document.createElement('script');
+    script.src = url;
+    script.onload = function () {
+      corpusState = window.FULLTEXT_SEARCH ? 'ready' : 'error';
+      applyFilters();
+    };
+    script.onerror = function () {
+      corpusState = 'error';
+      applyFilters();
+    };
+    document.head.appendChild(script);
   }
 
   function citeFilterOn() {
@@ -1354,21 +1433,39 @@
   }
 
   function applyFilters() {
-    var term = document.getElementById('search').value.trim().toLowerCase();
+    var raw = document.getElementById('search').value;
+    var query = compileQuery(raw);
+    var termActive = Boolean(query);
+    if (termActive) loadCorpus();
+    var corpus = window.FULLTEXT_SEARCH || null;
     var citeOn = citeFilterOn();
     var tgOn = telegramFilterOn();
-    var filtering = Boolean(term) || Boolean(tagFilter) || citeOn || tgOn;
-    matches = null;
-    if (filtering) {
+    var filtering = termActive || Boolean(tagFilter) || citeOn || tgOn;
+    var key = filtering
+      ? [raw, tagFilter || '', citeOn ? '1' : '', tgOn ? '1' : '',
+         corpus ? '1' : ''].join('\0')
+      : '';
+    if (!filtering) {
+      matches = null;
+      filterKey = '';
+    } else if (key !== filterKey) {
+      filterKey = key;
       matches = nodes.filter(function (d) {
         if (citeOn && !citesSeed[d.index]) return false;
         if (tgOn && !d.telegram) return false;
-        if (term && d.haystack.indexOf(term) < 0) return false;
-        if (tagFilter === 'untagged') return !d.topic;
-        if (tagFilter && FIELD_SET[tagFilter]) return d.topic === tagFilter;
-        if (tagFilter) {
-          return (d.ideas || []).indexOf(tagFilter) >= 0
-            || (d.tags || []).indexOf(tagFilter) >= 0;
+        if (tagFilter === 'untagged') {
+          if (d.topic) return false;
+        } else if (tagFilter && FIELD_SET[tagFilter]) {
+          if (d.topic !== tagFilter) return false;
+        } else if (tagFilter) {
+          if ((d.ideas || []).indexOf(tagFilter) < 0
+              && (d.tags || []).indexOf(tagFilter) < 0) {
+            return false;
+          }
+        }
+        if (termActive && !textMatches(d.haystack, query)
+            && !(corpus && textMatches(corpus[d.id], query))) {
+          return false;
         }
         return true;
       }).map(function (d) { return d.index; });
@@ -1383,7 +1480,14 @@
       .attr('stroke-width', function (d) {
         return (hit && hit.has(d.index) ? 2.4 : 1.3) / transform.k;
       });
-    document.getElementById('note').textContent = note(hit ? hit.size : null);
+    var base = note(hit ? hit.size : null);
+    var prefix = '';
+    if (termActive && corpusState === 'loading') {
+      prefix = 'loading full text\u2026  \u00b7  ';
+    } else if (termActive && corpusState === 'error') {
+      prefix = 'full-text index unavailable  \u00b7  ';
+    }
+    document.getElementById('note').textContent = prefix + base;
     if (locked) highlight();
     else scheduleLabels();
   }
@@ -1445,14 +1549,18 @@
     savePrefs();
     syncEdges();
   });
-  document.getElementById('search').addEventListener('input', runSearch);
+  document.getElementById('search').addEventListener('input', function () {
+    if (corpusState === 'error') corpusState = 'idle';
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(applyFilters, 150);
+  });
   document.getElementById('citefilter').addEventListener('change', function () {
     savePrefs();
-    runSearch();
+    applyFilters();
   });
   document.getElementById('tgfilter').addEventListener('change', function () {
     savePrefs();
-    runSearch();
+    applyFilters();
   });
   document.getElementById('qcolor').addEventListener('change', function () {
     savePrefs();
@@ -1486,7 +1594,7 @@
     tagFilter = null;
     markLegend();
     savePrefs();
-    runSearch();
+    applyFilters();
   });
 
   var resizeTimer = null;

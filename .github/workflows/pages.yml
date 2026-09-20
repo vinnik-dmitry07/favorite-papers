@@ -26,10 +26,13 @@ jobs:
         uses: actions/checkout@v4
       - name: Stage static map
         run: |
+          python3 src/build_fulltext_search.py
+          test -s assets/fulltext_search.js
           mkdir -p site/assets/vendor
           sed 's|\.\./assets/|assets/|g' src/index.html > site/index.html
           cp src/map.js site/
           cp assets/graph_data.js site/assets/
+          cp assets/fulltext_search.js site/assets/
           cp assets/vendor/d3.v7.min.js site/assets/vendor/
           touch site/.nojekyll
       - name: Setup Pages

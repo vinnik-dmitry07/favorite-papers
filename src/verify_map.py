@@ -13,7 +13,7 @@ from urllib.parse import unquote
 
 from playwright.sync_api import sync_playwright
 
-from common import ASSETS, ROOT
+from common import ASSETS, FULLTEXT_DIR, FULLTEXT_SEARCH_JS, GRAPH, ROOT, load_json
 
 SHOTS = ROOT / 'shots'
 PREVIEW = ASSETS / 'preview.png'
@@ -36,6 +36,47 @@ def start_server() -> ThreadingHTTPServer:
 
 def map_url(server: ThreadingHTTPServer) -> str:
     return f'http://127.0.0.1:{server.server_address[1]}/src/index.html'
+
+
+def corpus_is_fresh() -> bool:
+    if not FULLTEXT_SEARCH_JS.exists() or FULLTEXT_SEARCH_JS.stat().st_size < 1:
+        return False
+    js_mtime = FULLTEXT_SEARCH_JS.stat().st_mtime
+    if GRAPH.exists() and GRAPH.stat().st_mtime > js_mtime:
+        return False
+    for path in FULLTEXT_DIR.glob('*.md'):
+        if path.stat().st_mtime > js_mtime:
+            return False
+    return True
+
+
+def ensure_fulltext_search() -> None:
+    from build_fulltext_search import build_and_write, check_corpus
+    if corpus_is_fresh():
+        return
+    graph = load_json(GRAPH, {})
+    ids = [node['id'] for node in graph.get('nodes') or [] if node.get('id')]
+    check_corpus(build_and_write(ids))
+
+
+def pageerrors(errors: list[str]) -> list[str]:
+    return [line for line in errors if line.startswith('pageerror')]
+
+
+SEARCH_JS = '''() => {
+    const gs = [...document.querySelectorAll('.nodes g')];
+    const bright = gs
+        .filter(g => !g.classList.contains('dim'))
+        .map(g => g.__data__ && g.__data__.id)
+        .filter(Boolean);
+    return {
+        dimmed: gs.filter(g => g.classList.contains('dim')).length,
+        bright: bright,
+        note: document.getElementById('note').textContent.slice(0, 44),
+        labelsShown: [...document.querySelectorAll('.labels text')]
+            .filter(t => t.getAttribute('display') !== 'none').length,
+    };
+}'''
 
 
 OVERLAP_JS = '''() => {
@@ -195,6 +236,7 @@ def preview() -> None:
 
 
 def main() -> None:
+    ensure_fulltext_search()
     SHOTS.mkdir(parents=True, exist_ok=True)
     server = start_server()
     target = map_url(server)
@@ -319,14 +361,94 @@ def main() -> None:
 
         page.fill('#search', 'grpo')
         page.wait_for_timeout(500)
-        search = page.evaluate('''() => ({
-            dimmed: document.querySelectorAll('.nodes g.dim').length,
-            note: document.getElementById('note').textContent.slice(0, 44),
-            labelsShown: [...document.querySelectorAll('.labels text')]
-                .filter(t => t.getAttribute('display') !== 'none').length,
-        })''')
-        print('search grpo:', search)
+        search = page.evaluate(SEARCH_JS)
+        print('search grpo:', {
+            'dimmed': search['dimmed'],
+            'bright': len(search['bright']),
+            'note': search['note'],
+            'labelsShown': search['labelsShown'],
+        })
+        if search['dimmed'] < 1:
+            errors.append('grpo search did not dim any nodes')
         page.screenshot(path=str(SHOTS / '03-search.png'))
+
+        page.fill('#search', 'abducti*')
+        page.wait_for_function(
+            '() => Boolean(window.FULLTEXT_SEARCH)', timeout=60_000
+        )
+        page.wait_for_timeout(400)
+        abduct = page.evaluate(SEARCH_JS)
+        print('search abducti*:', {
+            'dimmed': abduct['dimmed'],
+            'bright': len(abduct['bright']),
+        })
+        if 'openreview:klU4737opt' not in abduct['bright']:
+            errors.append('abducti* missed body-only openreview:klU4737opt')
+        if abduct['dimmed'] < 1 or len(abduct['bright']) >= counts['nodes']:
+            errors.append('abducti* should match some papers, not all')
+
+        page.fill('#search', '/abducti(on|ve)/i')
+        page.wait_for_timeout(400)
+        slash = page.evaluate(SEARCH_JS)
+        print('search /abducti(on|ve)/i:', {
+            'dimmed': slash['dimmed'],
+            'bright': len(slash['bright']),
+        })
+        if 'openreview:klU4737opt' not in slash['bright']:
+            errors.append('/abducti(on|ve)/i missed openreview:klU4737opt')
+
+        page.fill('#search', '/GRPO/')
+        page.wait_for_timeout(400)
+        cap = page.evaluate(SEARCH_JS)
+        print('search /GRPO/:', {
+            'dimmed': cap['dimmed'],
+            'bright': len(cap['bright']),
+        })
+        if cap['dimmed'] < 1:
+            errors.append('/GRPO/ without i flag did not match lowercased corpus')
+
+        page.fill('#search', '//')
+        page.wait_for_timeout(400)
+        empty_re = page.evaluate(SEARCH_JS)
+        print('search //:', {
+            'dimmed': empty_re['dimmed'],
+            'bright': len(empty_re['bright']),
+        })
+        if empty_re['dimmed'] != 0:
+            errors.append('"//" should clear the text filter, not match every node')
+
+        before_bad = pageerrors(errors)
+        for bad in ('(', '/(/', '/a/qq'):
+            page.fill('#search', bad)
+            page.wait_for_timeout(400)
+            if pageerrors(errors) != before_bad:
+                errors.append(f'invalid search pattern {bad!r} raised pageerror')
+                before_bad = pageerrors(errors)
+
+        page.fill('#search', 'f(g(x))')
+        page.wait_for_timeout(400)
+        compose = page.evaluate(SEARCH_JS)
+        print('search f(g(x)):', {
+            'dimmed': compose['dimmed'],
+            'bright': len(compose['bright']),
+        })
+        if 'arxiv:2509.25123' not in compose['bright']:
+            errors.append('f(g(x)) missed literal keyword arxiv:2509.25123')
+        if pageerrors(errors) != before_bad:
+            errors.append('f(g(x)) raised pageerror')
+
+        page.fill('#search', 'hyperdreambooth')
+        page.wait_for_timeout(400)
+        hyper = page.evaluate(SEARCH_JS)
+        print('search hyperdreambooth:', {
+            'dimmed': hyper['dimmed'],
+            'bright': len(hyper['bright']),
+        })
+        if 'url:hyperdreambooth.github.io' not in hyper['bright']:
+            errors.append(
+                'hyperdreambooth missed metadata-only url:hyperdreambooth.github.io'
+            )
+
         page.fill('#search', '')
         page.keyboard.press('Escape')
         page.wait_for_timeout(300)

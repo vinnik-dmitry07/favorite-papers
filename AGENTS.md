@@ -185,7 +185,7 @@ python tg/find.py 2410.04444 --badge                       # ready-to-paste badg
 ```powershell
 python src/parse_readme.py                          # assets/catalog.json (fetches new arXiv meta into assets/arxiv_meta.json)
 python src/fetch_refs.py                            # assets/refs.json, assets/page_meta.json — only new nodes hit the network
-python src/build_graph.py                           # assets/graph.json, assets/graph_data.js
+python src/build_graph.py                           # assets/graph.json, assets/graph_data.js, gitignored assets/fulltext_search.js
 python src/import_litmaps.py "D:\Downloads\untitled (3).csv"   # assets/litmaps.json overlay
 ```
 
@@ -272,7 +272,7 @@ python filter/add_score_badges.py    # rewrites every [⚖ …] badge in readme.
 |---|---|---|
 | catalog | `src/parse_readme.py` | `assets/catalog.json`, `assets/arxiv_meta.json` |
 | refs | `src/fetch_refs.py` | `assets/refs.json`, `assets/page_meta.json` |
-| graph | `src/build_graph.py` | `assets/graph.json`, `assets/graph_data.js` |
+| graph | `src/build_graph.py` | `assets/graph.json`, `assets/graph_data.js`, `assets/fulltext_search.js` (gitignored; Pages rebuilds) |
 | overlay | `src/import_litmaps.py <csv>` | `assets/litmaps.json` |
 | papers | `filter/collect_readme.py` | `filter/papers.jsonl` |
 | meta | `filter/fetch_meta.py` | `filter/meta.jsonl` |

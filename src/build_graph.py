@@ -21,6 +21,7 @@ from common import (  # noqa: E402
     clean_arxiv_id, clean_doi, DOI_RE,
     dump_json, load_json, node_arxiv_ids, norm_title, url_slug,
 )
+from build_fulltext_search import build_and_write  # noqa: E402
 from topics import apply_topics, print_coverage, print_mixing, taxonomy  # noqa: E402
 
 # A cited work published long after the citing paper means the title matcher
@@ -519,6 +520,7 @@ def main() -> None:
     attach_litmaps(nodes_out)
     attach_quality(nodes_out)
     apply_topics(nodes_out)
+    build_and_write([node['id'] for node in nodes_out])
 
     graph = {
         'generated': date.today().isoformat(),

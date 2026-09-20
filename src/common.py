@@ -24,6 +24,8 @@ REFS = ASSETS / 'refs.json'
 PAGE_META = ASSETS / 'page_meta.json'
 GRAPH = ASSETS / 'graph.json'
 GRAPH_JS = ASSETS / 'graph_data.js'
+FULLTEXT_DIR = ROOT / 'filter' / 'fulltext'
+FULLTEXT_SEARCH_JS = ASSETS / 'fulltext_search.js'
 ARXIV_META = ASSETS / 'arxiv_meta.json'
 KNOWN_META = ASSETS / 'known_meta.json'
 LITMAPS = ASSETS / 'litmaps.json'
@@ -55,6 +57,7 @@ SKIP_HOSTS = (
 )
 
 _WORD_RE = re.compile(r'[a-z0-9]+')
+SAFE_KEY_RE = re.compile(r'[^A-Za-z0-9._-]+')
 
 
 def clean_arxiv_id(raw: str) -> str:
@@ -193,9 +196,12 @@ def norm_title(text: str) -> str:
     return ' '.join(_WORD_RE.findall(text.lower()))
 
 
+def safe_key(node_id: str) -> str:
+    return SAFE_KEY_RE.sub('_', node_id)[:120]
+
+
 def cache_path(node_id: str, suffix: str) -> Path:
-    safe = re.sub(r'[^A-Za-z0-9._-]+', '_', node_id)[:120]
-    return CACHE_DIR / f'{safe}{suffix}'
+    return CACHE_DIR / f'{safe_key(node_id)}{suffix}'
 
 
 def read_gz(path: Path) -> str:
