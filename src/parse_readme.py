@@ -10,10 +10,7 @@ Run:  python src/parse_readme.py [--offline]
 import re
 import sys
 import time
-import urllib.parse
-import urllib.request
 from pathlib import Path
-from xml.etree import ElementTree
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
@@ -22,10 +19,9 @@ from common import (  # noqa: E402
     apply_date_overrides, arxiv_date, classify, dump_json, is_skippable,
     load_json, node_arxiv_ids,
 )
+from fetch_refs import http_get, parse_meta  # noqa: E402
 
 TITLE_SOURCES = ('papers_titles.json', 'added_titles.json')
-ARXIV_API = 'http://export.arxiv.org/api/query'
-NS = {'a': 'http://www.w3.org/2005/Atom'}
 
 # One level of parentheses is allowed (Cell/Elsevier article ids).
 LINK_RE = re.compile(
@@ -244,41 +240,36 @@ def hinted_arxiv_ids() -> list[str]:
     return ids
 
 
+def given_first(name: str) -> str:
+    family, sep, given = name.partition(',')
+    if not sep or ',' in given:
+        return name
+    return f'{given.strip()} {family.strip()}'
+
+
 def fetch_arxiv_meta(ids: list[str]) -> dict:
-    '''Resolve unknown arXiv ids through the arXiv API, in batches.'''
+    '''Resolve unknown arXiv ids from citation meta on /abs pages.'''
     out: dict[str, dict] = {}
-    size = 40
-    for start in range(0, len(ids), size):
-        batch = ids[start:start + size]
-        query = urllib.parse.urlencode(
-            {'id_list': ','.join(batch), 'max_results': len(batch)}
-        )
-        try:
-            with urllib.request.urlopen(f'{ARXIV_API}?{query}', timeout=60) as resp:
-                root = ElementTree.fromstring(resp.read())
-        except Exception as exc:  # noqa: BLE001
-            print(f'  batch {start} failed: {exc}', flush=True)
+    for index, arxiv_id in enumerate(ids, start=1):
+        if index > 1:
+            time.sleep(1.2)
+        resp = http_get(f'https://arxiv.org/abs/{arxiv_id}', attempts=4)
+        if resp is None:
+            print(f'  abs fail {arxiv_id}', flush=True)
             continue
-        for entry in root.findall('a:entry', NS):
-            url = entry.findtext('a:id', default='', namespaces=NS)
-            match = re.search(r'abs/(.+?)(?:v\d+)?$', url)
-            if not match:
-                continue
-            out[match.group(1)] = {
-                'title': ' '.join(
-                    entry.findtext('a:title', default='', namespaces=NS).split()
-                ),
-                'published': entry.findtext(
-                    'a:published', default='', namespaces=NS
-                )[:10],
+        meta = parse_meta(resp.text)
+        if meta.get('title'):
+            out[arxiv_id] = {
+                'title': meta['title'],
+                'published': meta.get('date') or '',
                 'authors': [
-                    a.findtext('a:name', default='', namespaces=NS)
-                    for a in entry.findall('a:author', NS)
-                ][:4],
+                    given_first(name) for name in meta.get('authors', [])
+                ],
             }
-        print(f'  arxiv api: {min(start + size, len(ids))}/{len(ids)} '
-              f'resolved={len(out)}', flush=True)
-        time.sleep(3)
+        print(
+            f'  arxiv abs: {index}/{len(ids)} resolved={len(out)}',
+            flush=True,
+        )
     return out
 
 
@@ -294,7 +285,7 @@ def main() -> None:
                 if i not in known_ids and i not in missing]
 
     if missing and not offline:
-        print(f'{len(missing)} arXiv ids lack metadata, querying arXiv API')
+        print(f'{len(missing)} arXiv ids lack metadata, reading /abs pages')
         fetched = fetch_arxiv_meta(missing)
         if fetched:
             cache = load_json(ARXIV_META, {})

@@ -1,0 +1,157 @@
+##### Report GitHub Issue
+
+Content selection saved. Describe the issue below:
+
+# Hierarchical Latent Prediction for Language Models
+
+###### Abstract
+
+While standard Next-Token Prediction (NTP) lays the foundation of language model pretraining, its teacher-forced training paradigm may not be optimal for long-horizon reasoning and planning. Recent works such as Multi-Token Prediction (MTP) and Next-Latent prediction (NextLat) try to mitigate the problem through predicting multiple future tokens and self-supervised prediction in the latent space. However, those auxiliary objectives either have a limited horizon or suffer from compounding error from multi-step rollout. We introduce Hi erarchical L atent P rediction (HiLP), which introduces an auxiliary higher-level abstract latent to help reduce the error accumulation effect in latent-space rollouts. Experiments show that HiLP can lead to longer-horizon coherent belief state representation and demonstrate the effectiveness of our method across coding and multi-step reasoning benchmarks, and offers more speculative decoding efficiency.
+
+## 1 Introduction
+
+Next-token prediction (NTP) with teacher forcing has yielded transformers of remarkable capability, yet it also introduces a training-inference mismatch known as exposure bias: during inference time, the auto-regressive token generation relies on its own previous outputs, leading to compounding errors which could degrade long-range generation quality.
+
+Recent work NextLat ( Teoh et al., 2025 ) partially mitigates the issue through enforcing a latent space self-prediction loss. However, its latent dynamics model predicts one step ahead. This means that the self-predictive learning signal, while effective in inducing local transition consistency, provides only indirect gradient pressure to form representations that capture structure at longer temporal scales. In practice, long-horizon dependencies still remain attenuated by sequential dynamics unrolling.
+
+Multi-scale temporal abstraction methods have a long history in sequence modeling and reinforcement learning ( Sutton et al., 1999 ; Bacon et al., 2017 ) . Inherently, language incorporates hierarchical structures at multiple scales, from characters, phrases to sentences, paragraphs and discourses. Therefore, it is reasonable to extend NextLat with hierarchical learning signals at different granularities, for the sake of richer latent transition dynamics. This observation motivates a natural question: can we introduce temporal hierarchy directly into the latent-space self-prediction objective, shaping the representation of a language model transformer to encode multi-scale predictive structure during pretraining?
+
+In this paper, we answer affirmatively by introducing Hierarchical Latent Prediction (HiLP) . Our contributions are as follows: 1. We propose HiLP, a hierarchical representation training method that introduces multi-scale self-predictive learning into transformer pretraining via sliding-window attention over latents, a higher-level dynamics model, and a combined NTP head.
+
+2. We evaluate the resulting models on downstream benchmark accuracy and speculative decoding efficiency, comparing HiLP with MTP and NextLat.
+
+3. We demonstrate that the entire hierarchical apparatus can be removed at inference time with no architectural overhead, preserving NextLat’s option of being a pure training-time intervention.
+
+## 2 Methodology
+
+We use X 1 : T X_{1:T} to denote the token sequence prefix. A transformer G θ G_{\theta} produces lower-level latents 𝐡 t = G θ ( X 1 : t ) \mathbf{h}_{t}=G_{\theta}(X_{1:t}) . A sliding-window attention (SWA) module with window k k produces higher-level abstract latents 𝐮 t = SWA ( 𝐡 t − k + 1 : t ) \mathbf{u}_{t}=\mathrm{SWA}(\mathbf{h}_{t-k+1:t}) , a deterministic function of the last k k lower states.
+
+A higher-level dynamics model is trained to predict k k steps ahead in this abstract space. This explicit coarser-scale prediction objective encourages lookahead planning beyond single-step latent transitions. A combined NTP head then conditions the next-token prediction on both level latents, taking advantage of abstract lookahead information to improve subsequent predictions. Four parameterised maps are jointly learned: output head p θ p_{\theta} , lower dynamics p ψ p_{\psi} , upper dynamics p ϕ p_{\phi} , and combined head p ρ p_{\rho} . An illustration of the architecture is shown in Fig. 1 .
+
+#### Training objectives.
+
+The total training objective is then a weighted sum of five terms: the standard NTP loss, the NextLat (lower-level) transition consistency loss, the KL term, the higher-level transition consistency loss, and the combined NTP loss. At inference time, only the standard NTP head is used, the entire hierarchical apparatus serves purely as an auxiliary training signal.
+
+ℒ ntp \displaystyle\mathcal{L}_{\mathrm{ntp}} = 𝔼 t < T ​ [ − log ⁡ p θ ​ ( X t + 1 ∣ 𝐡 t ) ] \displaystyle=\mathbb{E}_{t<T}\!\left[-\log p_{\theta}(X_{t+1}\mid\mathbf{h}_{t})\right] (A) ℒ h \displaystyle\mathcal{L}_{\mathrm{h}} = 𝔼 t ​ [ 1 d ​ ∑ i = 1 d SL1 ⁡ ( sg ⁡ [ 𝐡 t + i ] , 𝐡 ^ t + i ) ] \displaystyle=\mathbb{E}_{t}\!\left[\tfrac{1}{d}\textstyle\sum_{i=1}^{d}\mathrm{SL1}(\mathrm{sg}[\mathbf{h}_{t+i}],\hat{\mathbf{h}}_{t+i})\right] (B) ℒ KL \displaystyle\mathcal{L}_{\mathrm{KL}} = 𝔼 t [ 1 d ∑ i = 1 d D KL ( p θ sg ( ⋅ ∣ sg [ 𝐡 t + i ] ) ∥ \displaystyle=\mathbb{E}_{t}\!\left[\tfrac{1}{d}\textstyle\sum_{i=1}^{d}D_{\mathrm{KL}}\!\left(p_{\theta}^{\mathrm{sg}}(\cdot\mid\mathrm{sg}[\mathbf{h}_{t+i}])\,\middle\|\right.\right. p θ sg ( ⋅ ∣ 𝐡 ^ t + i ) ) ] \displaystyle\quad\quad\left.\left.p_{\theta}^{\mathrm{sg}}(\cdot\mid\hat{\mathbf{h}}_{t+i})\right)\right] (C) ℒ u \displaystyle\mathcal{L}_{\mathrm{u}} = 𝔼 t ​ [ SmoothL1 ⁡ ( sg ⁡ [ 𝐮 t + k ] , 𝐮 ^ t + k ) ] \displaystyle=\mathbb{E}_{t}\!\left[\mathrm{SmoothL1}(\mathrm{sg}[\mathbf{u}_{t+k}],\,\hat{\mathbf{u}}_{t+k})\right] (D) ℒ cntp \displaystyle\mathcal{L}_{\mathrm{cntp}} = 𝔼 t < T [ \displaystyle=\mathbb{E}_{t<T}\!\bigl[ − log p ρ ( X t + 1 ∣ 𝐡 t , 𝐮 ~ t ) ] \displaystyle\quad-\log p_{\rho}(X_{t+1}\mid\mathbf{h}_{t},\tilde{\mathbf{u}}_{t})\bigr] (E)
+
+Where SL1 ⁡ ( ⋅ , ⋅ ) \mathrm{SL1}(\cdot,\cdot) denotes the SmoothL1 loss, sg ⁡ [ ⋅ ] \mathrm{sg}[\cdot] the stop-gradient operator, and 𝐮 ~ t := SWA ( sg [ 𝐡 t − k + 1 : t ] ) \tilde{\mathbf{u}}_{t}\!:=\!\mathrm{SWA}(\mathrm{sg}[\mathbf{h}_{t-k+1:t}]) the higher-level latent with sg \mathrm{sg} applied inside SWA so gradients do not flow back into 𝐡 \mathbf{h} . We use this stop-gradient in the combined NTP path to keep the token-level representation 𝐡 t \mathbf{h}_{t} governed by the standard NTP and lower-level transition consistency losses, while allowing the combined head to train the SWA module and its higher-level representation. Without this separation, the combined-head cross-entropy would also update the lower latents through the SWA window, double-counting token-level supervision and creating a competing optimization signal for 𝐡 t \mathbf{h}_{t} .
+
+#### Consistency conditions.
+
+At optimality, the losses enforce: p θ ​ ( X t + 1 ∣ 𝐡 t ) \displaystyle p_{\theta}(X_{t+1}\mid\mathbf{h}_{t}) = ℙ ( X t + 1 ∣ X 1 : t ) \displaystyle=\mathbb{P}(X_{t+1}\mid X_{1:t}) (I) p ψ ​ ( 𝐡 t + 1 ∣ 𝐡 t , X t + 1 ) \displaystyle p_{\psi}(\mathbf{h}_{t+1}\mid\mathbf{h}_{t},X_{t+1}) = ℙ ( 𝐡 t + 1 ∣ X 1 : t + 1 ) \displaystyle=\mathbb{P}(\mathbf{h}_{t+1}\mid X_{1:t+1}) (II) p ϕ ​ ( 𝐮 t + k ∣ 𝐮 t ) \displaystyle p_{\phi}(\mathbf{u}_{t+k}\mid\mathbf{u}_{t}) = ℙ ( 𝐮 t + k ∣ X 1 : t ) \displaystyle=\mathbb{P}(\mathbf{u}_{t+k}\mid X_{1:t}) (III) p ρ ​ ( X t + 1 ∣ 𝐡 t , 𝐮 t ) \displaystyle p_{\rho}(X_{t+1}\mid\mathbf{h}_{t},\mathbf{u}_{t}) = ℙ ( X t + 1 ∣ X 1 : t ) \displaystyle=\mathbb{P}(X_{t+1}\mid X_{1:t}) (IV) where (I) and (IV) enforce next-token consistency, (II) and (III) enforce transition consistency.
+
+## 3 Experiments
+
+1B-parameter models are trained on 100B tokens using 8 × \times NVIDIA B200 GPUs.
+
+### 3.1 Coding and Multi-step Reasoning Benchmarks
+
+After pretraining, we use LM Evaluation Harness ( Gao et al., 2024 ) to evaluate the zero-shot performance of the models on HumanEval coding benchmark Chen et al. (2021) , and DataComp for LLMs ( Li et al., 2025 ) to evaluate the models on a set of symbolic and multi-step benchmarks. Results in Tab. 1 and Fig. 2 show that HiLP is improve performance from the multi-scale latent prediction.
+
+### 3.2 Speculative Decoding
+
+We evaluate speculative decoding on held-out validation splits of code and Nemotron-Climbmix data ( Diao et al., 2026 ) . For each model, we report the average number of accepted tokens per drafting step, and Avg match , the per-position draft-verifier argmax agreement averaged over K = 1 ​ … ​ 4 K{=}1{\ldots}4 . Note that K = 0 K{=}0 NTP position is always accepted and is omitted from the per- K K columns;
+
+## 4 Discussion
+
+#### Longer horizon prediction.
+
+The latent prediction cross-entropy losses across rollout horizons up to 8 steps ahead are shown in 3 . As the curves show, HiLP preserves the near-term cross-entropy of NextLat while producing lower future prediction error at longer horizons, suggesting that the hierarchical latent mitigates multi-step error accumulation.
+
+## 5 Related Work
+
+Our work sits at the intersection of several active research threads: pretraining objectives beyond next-token prediction, latent-space language modeling, and hierarchical models.
+
+### 5.1 Pretraining Objectives Beyond Next-Token Prediction
+
+The next-token prediction objective has largely limited the capacity of language models in downstream tasks that require longer-horizon reasoning and planning ( Bachmann and Nagarajan, 2024 ; Nagarajan et al., 2025 ) . Recent works have started to introduce auxiliary learning signals to mitigate this myopic gap through further future prediction ( Gloeckle et al., ; Ahn et al., 2025 ; Teoh et al., 2025 ; Mahajan et al., 2025 ) . However, these approaches usually operate on a single granularity scale and have limited horizon capability due to compounding error. HiLP differs in two ways: it introduces two latent prediction pathways at different temporal scales, so the coarser pathway supervises long-horizon structure directly rather than through repeated single-step unrolling; and all auxiliary heads are dropped at inference, so the longer-horizon signal costs nothing at deployment time.
+
+### 5.2 Latent-Space Language Modeling
+
+Another line of work moves language generation itself into a continuous latent space. Large Concept Models ( Barrault et al., 2024 ) perform autoregressive prediction over sentence-level embeddings, treating each sentence as a “concept” in a shared representation space. CALM ( Shao et al., 2025 ) replaces next-token prediction with next-vector prediction, compressing a chunk of K K tokens into a single continuous vector to raise the semantic bandwidth of each generative step. Coconut Shao et al. (2025) lets the model reason in latent space by feeding its own hidden state back as the next input embedding instead of decoding to tokens. All of these approaches change the inference-time generation process to operate on latents, requiring bespoke decoding procedures or latent-to-text decoders. HiLP is the opposite design point: latent prediction is used purely as an auxiliary training signal to shape representations, while inference remains standard token-level autoregressive decoding with zero added latency.
+
+### 5.3 Hierarchical Models
+
+Hierarchical model design has been researched in both language modeling area and other domains.
+
+MegaByte ( Yu et al., 2023 ) stacks a global patch-level transformer over a local byte-level one, the Byte Latent Transformer ( Pagnoni et al., 2025 ) dynamically segments bytes into entropy-based patches that serve as the units of computation, and H-Net Hwang et al. (2025) learns content-dependent chunking end-to-end within a hierarchical U-Net-like network.
+
+In model-based reinforcement learning, Hierarchical Planning with Latent World Models ( Zhang et al., 2026 ) learns world models at multiple temporal scales within a shared latent space, using long-horizon latent predictions as subgoals for short-horizon control. In representation learning theory, Learning Discrete Concepts in Latent Hierarchical Models ( Kong et al., 2024 ) formalizes concepts as discrete latent variables organized in a hierarchical causal model and derives identifiability conditions for recovering such hierarchical concept structure from high-dimensional unsupervised data. In time series analysis. HiTime Tao et al. (2024) employs a hierarchical feature encoder together with a hybrid prompting strategy to align time series and text modalities, improving multivariate time series classification with large language models. These works demonstrate the benefit of hierarchical latent structure across planning, representation identifiability, and time series domains. HiLP differs in a way that the hierarchy complexity is not consumed at inference time: to our knowledge it is the first to introduce hierarchical latent prediction as a pretraining objective for autoregressive language models, where the hierarchy shapes the representation during training and is then removed entirely.
+
+## 6 Conclusion
+
+HiLP introduces temporal hierarchy into the latent-space self-prediction objective, shaping the representation of language model transformers to encode multi-scale predictive structure during pretraining. Experiments show that it improves both speculative decoding and language models on tasks that need longer-horizon reasoning and planning.
+
+## 7 Future Work
+
+In current work, the abstract latent prediction horizon is a manually set hyperparameter, which limits the flexibility of lookahead planning. Further designs including dynamically choosing the lookahead horizon could be beneficial. Also, the NTP head is used during inference in the current implementation, but combined NTP can also be used if we trade speed for accuracy.
+
+## References
+
+Ahn et al. (2025) K. Ahn, A. Lamb, and J. Langford Efficient joint prediction of multiple future tokens . arXiv preprint arXiv:2503.21801 . Cited by: §5.1 .
+
+Bachmann and Nagarajan (2024) G. Bachmann and V. Nagarajan The pitfalls of next-token prediction . arXiv preprint arXiv:2403.06963 . Cited by: §5.1 .
+
+Bacon et al. (2017) P. Bacon, J. Harb, and D. Precup The option-critic architecture . In Proceedings of the AAAI conference on artificial intelligence , Vol. 31 . Cited by: §1 .
+
+Barrault et al. (2024) L. Barrault, P. Duquenne, M. Elbayad, A. Kozhevnikov, B. Alastruey, P. Andrews, M. Coria, G. Couairon, M. R. Costa-jussà, D. Dale, et al. Large concept models: language modeling in a sentence representation space . arXiv preprint arXiv:2412.08821 . Cited by: §5.2 .
+
+Chen et al. (2021) M. Chen, J. Tworek, H. Jun, Q. Yuan, H. P. de Oliveira Pinto, J. Kaplan, H. Edwards, Y. Burda, N. Joseph, G. Brockman, A. Ray, R. Puri, G. Krueger, M. Petrov, H. Khlaaf, G. Sastry, P. Mishkin, B. Chan, S. Gray, N. Ryder, M. Pavlov, A. Power, L. Kaiser, M. Bavarian, C. Winter, P. Tillet, F. P. Such, D. Cummings, M. Plappert, F. Chantzis, E. Barnes, A. Herbert-Voss, W. H. Guss, A. Nichol, A. Paino, N. Tezak, J. Tang, I. Babuschkin, S. Balaji, S. Jain, W. Saunders, C. Hesse, A. N. Carr, J. Leike, J. Achiam, V. Misra, E. Morikawa, A. Radford, M. Knight, M. Brundage, M. Murati, K. Mayer, P. Welinder, B. McGrew, D. Amodei, S. McCandlish, I. Sutskever, and W. Zaremba Evaluating large language models trained on code . External Links: 2107.03374 Cited by: §3.1 .
+
+Diao et al. (2026) S. Diao, Y. Yang, Y. Fu, X. Dong, D. Su, M. Kliegl, Z. Chen, P. Belcak, Y. Suhara, H. Yin, et al. Nemotron-climb: clustering-based iterative data mixture bootstrapping for language model pre-training . Advances in Neural Information Processing Systems 38 . Cited by: §3.2 .
+
+Gao et al. (2024) L. Gao, J. Tow, B. Abbasi, S. Biderman, S. Black, A. DiPofi, C. Foster, L. Golding, J. Hsu, A. Le Noac’h, H. Li, K. McDonell, N. Muennighoff, C. Ociepa, J. Phang, L. Reynolds, H. Schoelkopf, A. Skowron, L. Sutawika, E. Tang, A. Thite, B. Wang, K. Wang, and A. Zou The language model evaluation harness . Zenodo . External Links: Document , Link Cited by: §3.1 .
+
+[8] F. Gloeckle, B. Y. Idrissi, B. Rozière, D. Lopez-Paz, and G. Synnaeve Better & faster large language models via multi-token prediction, 2024 . URL https://arxiv. org/abs/2404.19737 . Cited by: §5.1 .
+
+Hwang et al. (2025) S. Hwang, B. Wang, and A. Gu Dynamic chunking for end-to-end hierarchical sequence modeling . arXiv preprint arXiv:2507.07955 . Cited by: §5.3 .
+
+Kong et al. (2024) L. Kong, G. Chen, B. Huang, E. Xing, Y. Chi, and K. Zhang Learning discrete concepts in latent hierarchical models . Advances in Neural Information Processing Systems 37 , pp. 36938–36975 . Cited by: §5.3 .
+
+Li et al. (2025) J. Li, A. Fang, G. Smyrnis, M. Ivgi, M. Jordan, S. Gadre, H. Bansal, E. Guha, S. Keh, K. Arora, S. Garg, R. Xin, N. Muennighoff, R. Heckel, J. Mercat, M. Chen, S. Gururangan, M. Wortsman, A. Albalak, Y. Bitton, M. Nezhurina, A. Abbas, C. Hsieh, D. Ghosh, J. Gardner, M. Kilian, H. Zhang, R. Shao, S. Pratt, S. Sanyal, G. Ilharco, G. Daras, K. Marathe, A. Gokaslan, J. Zhang, K. Chandu, T. Nguyen, I. Vasiljevic, S. Kakade, S. Song, S. Sanghavi, F. Faghri, S. Oh, L. Zettlemoyer, K. Lo, A. El-Nouby, H. Pouransari, A. Toshev, S. Wang, D. Groeneveld, L. Soldaini, P. W. Koh, J. Jitsev, T. Kollar, A. G. Dimakis, Y. Carmon, A. Dave, L. Schmidt, and V. Shankar DataComp-lm: in search of the next generation of training sets for language models . External Links: 2406.11794 , Link Cited by: §3.1 .
+
+Mahajan et al. (2025) D. Mahajan, S. Goyal, B. Y. Idrissi, M. Pezeshki, I. Mitliagkas, D. Lopez-Paz, and K. Ahuja Beyond multi-token prediction: pretraining llms with future summaries . arXiv preprint arXiv:2510.14751 . Cited by: §5.1 .
+
+Nagarajan et al. (2025) V. Nagarajan, C. H. Wu, C. Ding, and A. Raghunathan Roll the dice & look before you leap: going beyond the creative limits of next-token prediction . External Links: 2504.15266 , Link Cited by: §5.1 .
+
+Pagnoni et al. (2025) A. Pagnoni, R. Pasunuru, P. Rodriguez, J. Nguyen, B. Muller, M. Li, C. Zhou, L. Yu, J. E. Weston, L. Zettlemoyer, et al. Byte latent transformer: patches scale better than tokens . In Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) , pp. 9238–9258 . Cited by: §5.3 .
+
+Shao et al. (2025) C. Shao, D. Li, F. Meng, and J. Zhou Continuous autoregressive language models . arXiv preprint arXiv:2510.27688 . Cited by: §5.2 .
+
+Sutton et al. (1999) R. S. Sutton, D. Precup, and S. Singh Between mdps and semi-mdps: a framework for temporal abstraction in reinforcement learning . Artificial intelligence 112 ( 1-2 ), pp. 181–211 . Cited by: §1 .
+
+Tao et al. (2024) X. Tao, T. Pan, M. Cheng, Y. Luo, Q. Liu, and E. Chen Hierarchical multimodal llms with semantic space alignment for enhanced time series classification . ACM Transactions on Intelligent Systems and Technology . Cited by: §5.3 .
+
+Teoh et al. (2025) J. Teoh, M. Tomar, K. Ahn, E. S. Hu, T. Pearce, P. Sharma, A. Krishnamurthy, R. Islam, A. Lamb, and J. Langford Next-latent prediction transformers learn compact world models . arXiv preprint arXiv:2511.05963 . Cited by: §1 , §5.1 .
+
+Yu et al. (2023) L. Yu, D. Simig, C. Flaherty, A. Aghajanyan, L. Zettlemoyer, and M. Lewis Megabyte: predicting million-byte sequences with multiscale transformers . Advances in Neural Information Processing Systems 36 , pp. 78808–78823 . Cited by: §5.3 .
+
+Zhang et al. (2026) W. Zhang, B. Terver, A. Zholus, S. Chitnis, H. Sutaria, M. Assran, R. Balestriero, A. Bar, A. Bardes, Y. LeCun, et al. Hierarchical planning with latent world models . arXiv preprint arXiv:2604.03208 . Cited by: §5.3 .
+
+## Appendix A HiLP Training Procedure
+
+Algorithm 1 summarizes one HiLP training step, combining the five objectives into a single backward pass. The SWA module is a causal sliding-window self-attention over the lower latents, so every position t t carries its own higher-level latent 𝐮 t \mathbf{u}_{t} summarizing the last k k lower latents. All latent-space prediction targets are stop-gradiented, and both distributions in the KL term are decoded through a frozen copy of the NTP head ( p θ sg p_{\theta}^{\mathrm{sg}} ), so each auxiliary loss shapes the representation only through its designated pathway: the rollout losses reach 𝐡 \mathbf{h} through p ψ p_{\psi} , the higher-level consistency loss trains p ϕ p_{\phi} and the SWA module, and the combined cross-entropy trains p ρ p_{\rho} and the SWA module alone via the stop-gradient inside 𝐮 ~ t \tilde{\mathbf{u}}_{t} . At inference, only G θ G_{\theta} and p θ p_{\theta} are kept: the SWA module, both dynamics models, and the combined head are discarded.
+
+## Appendix B Experiment hyperparameters
+
+## Appendix C Latent overhead and efficiency.
+
+Table 5 compares the four 100B-token code-data runs along three axes: total parameter count, the subset of parameters actually used during greedy NTP decoding, and training throughput. All four models share the same 1.06 B-parameter trunk and tied-free LM head, so the verifier path used at inference is identical and the additional parameters in MTP, NextLat, and HiLP are auxiliary draft components that are not required to produce the next-token distribution. NextLat adds a small ( ≈ \approx 19 M) next-latent predictor on top of the trunk, while HiLP and MTP each add a ≈ \approx 190–200 M draft module. Training throughput scales inversely with the size of the auxiliary loss graph: the NTP baseline reaches ≈ \approx 126 K tokens/s/GPU, NextLat retains ≈ \approx 83% of that throughput, HiLP retains ≈ \approx 65%, and MTP drops to ≈ \approx 49% because its four future-token heads must each be evaluated against the LM logits at every step.
+
+## Appendix D Input-Combination Modes
+
+We include an implementation-level ablation comparing the historical concat input-combination mode against the current glu_cross mode used by latent prediction modules. Let D D denote the hidden size, m m the latent-head hidden multiplier, and V V the vocabulary size. In the lower next-latent predictor, concat forms [ 𝐡 t ; e t + 1 ] ∈ ℝ 2 ​ D [\mathbf{h}_{t};e_{t+1}]\in\mathbb{R}^{2D} and feeds it directly to the SwiGLU predictor. This gives an intermediate width of 2 ​ m ​ D 2mD and costs 10 ​ m ​ D 2 10mD^{2} parameters and multiply-adds per token for the gate, up, and down projections, ignoring biases. By contrast, glu_cross computes W h ​ 𝐡 t ⊙ σ ⁡ ( W e ​ e t + 1 ) ∈ ℝ D , W_{h}\mathbf{h}_{t}\odot\sigma(W_{e}e_{t+1})\in\mathbb{R}^{D}, adding two D × D D\times D projections but reducing the following SwiGLU width to m ​ D mD . Its corresponding cost is therefore ( 3 ​ m + 2 ) ​ D 2 (3m+2)D^{2} . With the default m = 4 m=4 , this is 14 ​ D 2 14D^{2} versus 40 ​ D 2 40D^{2} , or about 35 % 35\% of the concat predictor cost.
+
+The same distinction appears in the combined NTP head. For concat , the combined head maps [ 𝐡 t ; 𝐮 t ] ∈ ℝ 2 ​ D [\mathbf{h}_{t};\mathbf{u}_{t}]\in\mathbb{R}^{2D} to logits, costing 2 ​ D ​ V 2DV . For glu_cross , the gated fusion costs 2 ​ D 2 2D^{2} and the logits are produced from a D D -dimensional vector, costing D ​ V DV , for a total of D ​ V + 2 ​ D 2 DV+2D^{2} . Thus glu_cross is especially attractive when V ≫ D V\gg D : it approximately halves the combined-head logit computation while also reducing the latent predictor from a 2 ​ D 2D -wide to a D D -wide SwiGLU input.
+
+## Instructions for reporting errors
+
+We are continuing to improve HTML versions of papers, and your feedback helps enhance accessibility and mobile support. To report errors in the HTML that will help us improve conversion and rendering, choose any of the methods listed below:
+
+Click the "Report Issue" ( ) button, located in the page header.
+
+Tip: You can select the relevant text first, to include it in your report.
+
+Our team has already identified the following issues . We appreciate your time reviewing and reporting rendering errors we may not have found yet. Your efforts will help us improve the HTML versions for all readers, because disability should not be a barrier to accessing research. Thank you for your continued support in championing open access for all.
+
+Have a free development cycle? Help support accessibility at arXiv! Our collaborators at LaTeXML maintain a list of packages that need conversion , and welcome developer contributions .

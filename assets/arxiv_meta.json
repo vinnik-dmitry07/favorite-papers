@@ -1617,5 +1617,253 @@
       "Liangming Pan",
       "Li Lin"
     ]
+  },
+  "2602.06130": {
+    "title": "Self-Improving World Modelling with Latent Actions",
+    "published": "2026-02-05",
+    "authors": [
+      "Yifu Qiu",
+      "Zheng Zhao",
+      "Waylon Li",
+      "Yftah Ziser"
+    ]
+  },
+  "2211.10869": {
+    "title": "UniMASK: Unified Inference in Sequential Decision Problems",
+    "published": "2022-11-20",
+    "authors": [
+      "Micah Carroll",
+      "Orr Paradise",
+      "Jessy Lin",
+      "Raluca Georgescu"
+    ]
+  },
+  "2609.16454": {
+    "title": "Fine-Tuning Fixes Mode Collapse and Over-Dispersion in LLMs",
+    "published": "2026-09-15",
+    "authors": [
+      "Kirill Skobelev",
+      "Eric Fithian",
+      "X. Y. Han"
+    ]
+  },
+  "2608.27448": {
+    "title": "TTPO: Test-Time Policy Optimization",
+    "published": "2026-08-27",
+    "authors": [
+      "Aozhe Wang",
+      "Zhengxi Lu",
+      "Jianze Wang",
+      "Shangke Lv"
+    ]
+  },
+  "2601.05053": {
+    "title": "Reinforced Efficient Reasoning via Semantically Diverse Exploration",
+    "published": "2026-01-08",
+    "authors": [
+      "Ziqi Zhao",
+      "Zhaochun Ren",
+      "Jiahong Zou",
+      "Liu Yang"
+    ]
+  },
+  "2510.11686": {
+    "title": "Representation-Based Exploration for Language Models: From Test-Time to Post-Training",
+    "published": "2025-10-13",
+    "authors": [
+      "Jens Tuyls",
+      "Dylan J. Foster",
+      "Akshay Krishnamurthy",
+      "Jordan T. Ash"
+    ]
+  },
+  "2609.02737": {
+    "title": "Language Models Can Control Their Own Attention",
+    "published": "2026-09-02",
+    "authors": [
+      "Namgyu Ho",
+      "Huzama Ahmad",
+      "Woosung Koh",
+      "Se-Young Yun"
+    ]
+  },
+  "2608.17981": {
+    "title": "Recirculation",
+    "published": "2026-08-18",
+    "authors": [
+      "Michael C. Mozer",
+      "Shoaib Ahmed Siddiqui",
+      "Danny Sawyer",
+      "Sunny Sanyal"
+    ]
+  },
+  "2608.05806": {
+    "title": "Hierarchical Latent Prediction for Language Models",
+    "published": "2026-08-06",
+    "authors": [
+      "Chang Shi",
+      "Tim Pearce",
+      "Manan Tomar",
+      "Siddhartha Sen"
+    ]
+  },
+  "1807.03819": {
+    "title": "Universal Transformers",
+    "published": "2018-07-10",
+    "authors": [
+      "Mostafa Dehghani",
+      "Stephan Gouws",
+      "Oriol Vinyals",
+      "Jakob Uszkoreit"
+    ]
+  },
+  "2606.29150": {
+    "title": "Flow Reasoning Models: Turning Flows Into Efficient Recurrent Reasoners",
+    "published": "2026-06-28",
+    "authors": [
+      "Alec Helbling",
+      "Andrey Bryutkin",
+      "Mauro Martino",
+      "Duen Horng Chau"
+    ]
+  },
+  "2606.18206": {
+    "title": "Fixed-Point Reasoners: Stable and Adaptive Deep Looped Transformers",
+    "published": "2026-06-16",
+    "authors": [
+      "Sajad Movahedi",
+      "Vera Milovanović",
+      "Shlomo Libo Feigin",
+      "Alexander Theus"
+    ]
+  },
+  "2605.19376": {
+    "title": "Generative Recursive Reasoning",
+    "published": "2026-05-19",
+    "authors": [
+      "Junyeob Baek",
+      "Mingyu Jo",
+      "Minsu Kim",
+      "Mengye Ren"
+    ]
+  },
+  "2605.12466": {
+    "title": "Solve the Loop: Attractor Models for Language and Reasoning",
+    "published": "2026-05-12",
+    "authors": [
+      "Jacob Fein-Ashley",
+      "Paria Rashidinejad"
+    ]
+  },
+  "2604.21999": {
+    "title": "Universal Transformers Need Memory: Depth-State Trade-offs in Adaptive Recursive Reasoning",
+    "published": "2026-04-23",
+    "authors": [
+      "Grigory Sapunov"
+    ]
+  },
+  "2604.04943": {
+    "title": "The Illusion of Latent Generalization: Bi-directionality and the Reversal Curse",
+    "published": "2026-03-13",
+    "authors": [
+      "Julian Coda-Forno",
+      "Jane X. Wang",
+      "Arslan Chaudhry"
+    ]
+  },
+  "2512.14693": {
+    "title": "Universal Reasoning Model",
+    "published": "2025-12-16",
+    "authors": [
+      "Zitian Gao",
+      "Lynx Chen",
+      "Yihao Xiao",
+      "He Xing"
+    ]
+  },
+  "2510.04871": {
+    "title": "Less is More: Recursive Reasoning with Tiny Networks",
+    "published": "2025-10-06",
+    "authors": [
+      "Alexia Jolicoeur-Martineau"
+    ]
+  },
+  "2506.21734": {
+    "title": "Hierarchical Reasoning Model",
+    "published": "2025-06-26",
+    "authors": [
+      "Guan Wang",
+      "Jin Li",
+      "Yuhao Sun",
+      "Xing Chen"
+    ]
+  },
+  "2504.01928": {
+    "title": "Is the Reversal Curse a Binding Problem? Uncovering Limitations of Transformers from a Basic Generalization Failure",
+    "published": "2025-04-02",
+    "authors": [
+      "Boshi Wang",
+      "Huan Sun"
+    ]
+  },
+  "2502.03387": {
+    "title": "LIMO: Less is More for Reasoning",
+    "published": "2025-02-05",
+    "authors": [
+      "Yixin Ye",
+      "Zhen Huang",
+      "Yang Xiao",
+      "Ethan Chern"
+    ]
+  },
+  "2501.19393": {
+    "title": "s1: Simple test-time scaling",
+    "published": "2025-01-31",
+    "authors": [
+      "Niklas Muennighoff",
+      "Zitong Yang",
+      "Weijia Shi",
+      "Xiang Lisa Li"
+    ]
+  },
+  "2608.27370": {
+    "title": "Puro-2B: Poor Lab's Qwen2-1.5B Trained on RTX 5090 within $5090",
+    "published": "2026-08-27",
+    "authors": [
+      "Kairong Luo",
+      "Jiarui Cui",
+      "Yaorui Yin",
+      "Shengqi Chen"
+    ]
+  },
+  "2403.07714": {
+    "title": "StableToolBench: Towards Stable Large-Scale Benchmarking on Tool Learning of Large Language Models",
+    "published": "2024-03-12",
+    "authors": [
+      "Zhicheng Guo",
+      "Sijie Cheng",
+      "Hao Wang",
+      "Shihao Liang"
+    ]
+  },
+  "2609.14858": {
+    "title": "Dream-RSI: Recursive Self-Improvement through Evolving Worlds",
+    "published": "2026-09-14",
+    "authors": [
+      "Tong Zheng",
+      "Xidong Wu",
+      "Zheng Zhang",
+      "Zhankui He"
+    ]
+  },
+  "2605.05115": {
+    "title": "Manifold Steering Reveals the Shared Geometry of Neural Network Representation and Behavior",
+    "published": "2026-05-06",
+    "authors": [
+      "Daniel Wurgaft",
+      "Can Rager",
+      "Matthew Kowal",
+      "Vasudev Shyam"
+    ]
   }
 }

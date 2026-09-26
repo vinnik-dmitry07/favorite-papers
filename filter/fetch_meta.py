@@ -15,12 +15,12 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from pathlib import Path
-from xml.etree import ElementTree
 
 FILTER_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(FILTER_DIR))
 sys.path.insert(0, str(FILTER_DIR.parent / 'src'))
 
+from fetch_refs import parse_meta  # noqa: E402
 from paths import (  # noqa: E402
     META_JSONL,
     PAPERS_JSONL,
@@ -29,7 +29,6 @@ from paths import (  # noqa: E402
     write_jsonl,
 )
 
-ARXIV_API = 'https://export.arxiv.org/api/query'
 OPENREVIEW_APIS = (
     'https://api2.openreview.net/notes?id={fid}',
     'https://api2.openreview.net/notes?forum={fid}',
@@ -38,33 +37,45 @@ OPENREVIEW_APIS = (
 )
 CROSSREF = 'https://api.crossref.org/works/{doi}'
 ACL_URL = 'https://aclanthology.org/{aid}/'
-NS = {'a': 'http://www.w3.org/2005/Atom'}
 HEADERS = {
     'User-Agent': 'key-papers-filter/0.1 (local research scoring)',
     'Accept': 'application/json, text/html, application/atom+xml;q=0.9,*/*;q=0.8',
 }
 ABSTRACT_META = (
     'citation_abstract', 'dc.description', 'og:description',
-    'description', 'twitter:description',
+    'twitter:description',
 )
 TITLE_META = ('citation_title', 'og:title', 'dc.title')
-DATE_META = ('citation_publication_date', 'citation_date', 'dc.date')
 META_RE = re.compile(r'<meta\b[^>]*>', re.I)
 ATTR_RE = re.compile(r'([\w:.-]+)\s*=\s*["\']([^"\']*)["\']')
 TAG_RE = re.compile(r'<[^>]+>')
+RETRY_STATUSES = {429, 500, 502, 503, 504}
 
 
-def http_get(url: str, timeout: int = 45) -> tuple[int, bytes] | None:
-    request = urllib.request.Request(url, headers=HEADERS)
-    try:
-        with urllib.request.urlopen(request, timeout=timeout) as resp:
-            return resp.status, resp.read()
-    except urllib.error.HTTPError as exc:
-        print(f'  HTTP {exc.code} {url}', flush=True)
-        return exc.code, exc.read() if exc.fp else b''
-    except Exception as exc:  # noqa: BLE001
-        print(f'  fail {url}: {exc}', flush=True)
-        return None
+def http_get(
+    url: str, timeout: int = 45, attempts: int = 4,
+) -> tuple[int, bytes] | None:
+    delay = 8
+    for attempt in range(attempts):
+        request = urllib.request.Request(url, headers=HEADERS)
+        try:
+            with urllib.request.urlopen(request, timeout=timeout) as resp:
+                return resp.status, resp.read()
+        except urllib.error.HTTPError as exc:
+            print(f'  HTTP {exc.code} {url}', flush=True)
+            result: tuple[int, bytes] | None = (
+                exc.code, exc.read() if exc.fp else b''
+            )
+            retry = exc.code in RETRY_STATUSES
+        except Exception as exc:  # noqa: BLE001
+            print(f'  fail {url}: {exc}', flush=True)
+            result = None
+            retry = True
+        if not retry or attempt + 1 == attempts:
+            return result
+        time.sleep(delay)
+        delay = min(delay * 2, 60)
+    return None
 
 
 def parse_meta_tags(markup: str) -> dict[str, list[str]]:
@@ -92,38 +103,29 @@ def strip_jats(text: str) -> str:
     return ' '.join(text.split())
 
 
-def fetch_arxiv_batch(ids: list[str]) -> dict[str, dict]:
-    query = urllib.parse.urlencode(
-        {'id_list': ','.join(ids), 'max_results': len(ids)}
-    )
-    hit = http_get(f'{ARXIV_API}?{query}')
+def citation_meta(raw: bytes, category: str) -> dict:
+    markup = raw.decode('utf-8', 'replace')
+    found = parse_meta_tags(markup)
+    title = first_meta(found, TITLE_META) or ''
+    abstract = first_meta(found, ABSTRACT_META) or ''
+    if not title and not abstract:
+        return {}
+    return {
+        'title': title,
+        'abstract': abstract,
+        'published': parse_meta(markup).get('date') or '',
+        'category': category,
+    }
+
+
+def fetch_page_meta(url: str, category: str) -> dict:
+    hit = http_get(url)
     if hit is None:
         return {}
     status, raw = hit
     if status >= 400:
         return {}
-    root = ElementTree.fromstring(raw)
-    out = {}
-    for entry in root.findall('a:entry', NS):
-        url = entry.findtext('a:id', default='', namespaces=NS)
-        match = re.search(r'abs/(.+?)(?:v\d+)?$', url)
-        if not match:
-            continue
-        category = ''
-        prim = entry.find('a:primary_category', NS)
-        if prim is not None:
-            category = prim.attrib.get('term', '')
-        out[match.group(1)] = {
-            'title': ' '.join(
-                (entry.findtext('a:title', default='', namespaces=NS) or '').split()
-            ),
-            'abstract': ' '.join(
-                (entry.findtext('a:summary', default='', namespaces=NS) or '').split()
-            ),
-            'published': (entry.findtext('a:published', default='', namespaces=NS) or '')[:10],
-            'category': category,
-        }
-    return out
+    return citation_meta(raw, category)
 
 
 def note_value(content: dict, key: str):
@@ -183,11 +185,15 @@ def fetch_crossref(doi: str) -> dict:
     hit = http_get(CROSSREF.format(doi=urllib.parse.quote(doi)))
     if hit is None:
         return {}
-    _status, raw = hit
+    status, raw = hit
+    if status == 404:
+        return fetch_doi_page(doi)
+    if status >= 400:
+        return {}
     try:
         message = json.loads(raw.decode('utf-8', 'replace')).get('message') or {}
     except json.JSONDecodeError:
-        return {}
+        return fetch_doi_page(doi)
     issued = ((message.get('issued') or {}).get('date-parts') or [[]])[0]
     published = ''
     if issued:
@@ -198,32 +204,21 @@ def fetch_crossref(doi: str) -> dict:
     titles = message.get('title') or []
     title = ' '.join(str(titles[0]).split()) if titles else ''
     abstract = strip_jats(message.get('abstract') or '')
-    if not title and not abstract:
-        return {}
-    return {
-        'title': title,
-        'abstract': abstract,
-        'published': published,
-        'category': (message.get('type') or 'doi'),
-    }
+    if title or abstract:
+        return {
+            'title': title,
+            'abstract': abstract,
+            'published': published,
+            'category': (message.get('type') or 'doi'),
+        }
+    return fetch_doi_page(doi)
 
 
-def fetch_acl(acl_id: str) -> dict:
-    hit = http_get(ACL_URL.format(aid=acl_id))
-    if hit is None:
-        return {}
-    _status, raw = hit
-    found = parse_meta_tags(raw.decode('utf-8', 'replace'))
-    title = first_meta(found, TITLE_META) or ''
-    abstract = first_meta(found, ABSTRACT_META) or ''
-    if not title and not abstract:
-        return {}
-    return {
-        'title': title,
-        'abstract': abstract,
-        'published': (first_meta(found, DATE_META) or '')[:10],
-        'category': 'acl',
-    }
+def fetch_doi_page(doi: str) -> dict:
+    '''Citation meta from the DOI landing page when Crossref has no record.'''
+    return fetch_page_meta(
+        f'https://doi.org/{urllib.parse.quote(doi)}', 'doi'
+    )
 
 
 def parse_args() -> argparse.Namespace:
@@ -276,26 +271,22 @@ def main() -> None:
         else:
             other.append(paper)
 
-    size = 100
-    for start in range(0, len(arxiv_ids), size):
-        batch = arxiv_ids[start:start + size]
-        try:
-            fetched = fetch_arxiv_batch(batch)
-        except Exception as exc:  # noqa: BLE001
-            print(f'arxiv batch {start} failed: {exc}', flush=True)
-            fetched = {}
-        for arxiv_id, meta in fetched.items():
-            if useful_meta(meta):
-                cached[f'arxiv:{arxiv_id}'] = {
-                    'key': f'arxiv:{arxiv_id}',
-                    **meta,
-                }
+    # export.arxiv.org/api/query 406s on multi-id queries and 429s under load.
+    resolved = 0
+    for index, arxiv_id in enumerate(arxiv_ids, start=1):
+        meta = fetch_page_meta(f'https://arxiv.org/abs/{arxiv_id}', '')
+        if useful_meta(meta):
+            cached[f'arxiv:{arxiv_id}'] = {
+                'key': f'arxiv:{arxiv_id}',
+                **meta,
+            }
+            resolved += 1
         print(
-            f'arxiv api: {min(start + size, len(arxiv_ids))}/{len(arxiv_ids)} '
-            f'resolved={len(fetched)}',
+            f'arxiv abs: {index}/{len(arxiv_ids)} resolved={resolved}',
             flush=True,
         )
-        time.sleep(3)
+        if index < len(arxiv_ids):
+            time.sleep(1.2)
 
     for index, paper in enumerate(other, start=1):
         kind, value = paper['key'].split(':', 1)
@@ -305,11 +296,12 @@ def main() -> None:
         elif kind == 'doi':
             meta = fetch_crossref(value)
         elif kind == 'acl':
-            meta = fetch_acl(value)
+            meta = fetch_page_meta(ACL_URL.format(aid=value), 'acl')
         if useful_meta(meta):
             cached[paper['key']] = {'key': paper['key'], **meta}
         print_progress(index, len(other), paper['key'])
-        time.sleep(1)
+        if index < len(other):
+            time.sleep(1)
 
     rows = []
     missing = []

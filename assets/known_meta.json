@@ -219,5 +219,10 @@
     "date": "2025-10-29",
     "date_source": "known",
     "authors": ["Jack Lindsey"]
+  },
+  "doi:10.5281/zenodo.21979851": {
+    "date": "2026-08-01",
+    "date_source": "known",
+    "authors": ["Michael Timothy Bennett"]
   }
 }

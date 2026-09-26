@@ -15,6 +15,7 @@ Score badges: [⚖ final · accepts/models · WATCH|DROP](filter/report.md) — 
 ## Reinforcement learning
 
 - Q-Learning With World Models (QWM) — [https://arxiv.org/abs/2608.17163](https://arxiv.org/abs/2608.17163) [⚖ +0.08 · 6/7 · WATCH](filter/report.md#arxiv-2608.17163)
+- Self-Improving World Modelling with Latent Actions — [https://arxiv.org/abs/2602.06130](https://arxiv.org/abs/2602.06130)
 - CDE: Curiosity-Driven Exploration for RL in LLMs — [https://arxiv.org/abs/2509.09675](https://arxiv.org/abs/2509.09675) [⚖ +0.11 · 6/7 · WATCH](filter/report.md#arxiv-2509.09675)
 - 1000 Layer Networks for Self-Supervised RL (NeurIPS 2025 Best Paper) — [https://arxiv.org/abs/2503.14858](https://arxiv.org/abs/2503.14858) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/4277?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) · [https://openreview.net/forum?id=s0JVsx3bx1](https://openreview.net/forum?id=s0JVsx3bx1) · [https://arxiviq.substack.com/p/neurips-2025-1000-layer-networks](https://arxiviq.substack.com/p/neurips-2025-1000-layer-networks) [⚖ +0.01 · 5/7 · WATCH](filter/report.md#arxiv-2503.14858)
 - Towards General-Purpose Model-Free RL (MR.Q) — [https://arxiv.org/abs/2501.16142](https://arxiv.org/abs/2501.16142) [⚖ -0.13 · 5/7 · WATCH](filter/report.md#arxiv-2501.16142)
@@ -27,6 +28,7 @@ Score badges: [⚖ final · accepts/models · WATCH|DROP](filter/report.md) — 
 - DreamerV3: Mastering Diverse Domains through World Models — [https://arxiv.org/abs/2301.04104](https://arxiv.org/abs/2301.04104) [⚖ +0.16 · 5/7 · WATCH](filter/report.md#arxiv-2301.04104)
 - Meta-Reinforcement Learning with Zero-Shot RL — [https://openreview.net/forum?id=XyGJJ4FPoX](https://openreview.net/forum?id=XyGJJ4FPoX) [⚖ -0.47 · 0/7 · DROP](filter/report.md#openreview-XyGJJ4FPoX)
 - Sample-Efficient RL by Breaking the Replay Ratio Barrier (ICLR 2023, precursor of BBF) — [https://openreview.net/forum?id=OpC-9aBBVJe](https://openreview.net/forum?id=OpC-9aBBVJe) [⌲ tg](https://t-me.translate.goog/s/knowledge_accumulator/192?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ +0.16 · 6/7 · WATCH](filter/report.md#openreview-OpC-9aBBVJe)
+- UniMASK: Unified Inference in Sequential Decision Problems — [https://arxiv.org/abs/2211.10869](https://arxiv.org/abs/2211.10869)
 - The Primacy Bias in Deep RL — [https://arxiv.org/abs/2205.07802](https://arxiv.org/abs/2205.07802) [⚖ +0.27 · 6/7](filter/report.md#arxiv-2205.07802)
 - A Minimalist Approach to Offline RL (TD3+BC) — [https://arxiv.org/abs/2106.06860](https://arxiv.org/abs/2106.06860) [⚖ -0.49 · 3/7 · DROP](filter/report.md#arxiv-2106.06860)
 - Revisiting Rainbow — [https://arxiv.org/abs/2011.14826](https://arxiv.org/abs/2011.14826) [⚖ -0.26 · 1/7 · DROP](filter/report.md#arxiv-2011.14826)
@@ -46,6 +48,8 @@ Score badges: [⚖ final · accepts/models · WATCH|DROP](filter/report.md) — 
 ## Post-training
 
 - Litmaps — [https://app.litmaps.com/shared/9f68a972-570d-48c9-9895-8d4979d52df0](https://app.litmaps.com/shared/9f68a972-570d-48c9-9895-8d4979d52df0)
+- Fine-Tuning Fixes Mode Collapse and Over-Dispersion in LLMs — [https://arxiv.org/abs/2609.16454](https://arxiv.org/abs/2609.16454)
+- TTPO: Test-Time Policy Optimization — [https://arxiv.org/abs/2608.27448](https://arxiv.org/abs/2608.27448)
 - Latent On-Policy Self-Distillation (LOPD) — [https://arxiv.org/abs/2608.13040](https://arxiv.org/abs/2608.13040) [⚖ +0.13 · 6/7 · WATCH](filter/report.md#arxiv-2608.13040)
 - BDH-CQ: In-Context Learning with Recurrent Latent Reasoning — [https://arxiv.org/abs/2608.09888](https://arxiv.org/abs/2608.09888) [⚖ -0.35 · 2/7 · DROP](filter/report.md#arxiv-2608.09888)
 - When Does Continual Learning Require Learning — [https://arxiv.org/abs/2607.07847](https://arxiv.org/abs/2607.07847) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5812?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ +0.02 · 4/7 · WATCH](filter/report.md#arxiv-2607.07847)
@@ -72,6 +76,7 @@ Score badges: [⚖ final · accepts/models · WATCH|DROP](filter/report.md) — 
 - Learning to Discover at Test Time (TTT-Discover) — [https://arxiv.org/abs/2601.16175](https://arxiv.org/abs/2601.16175) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/4643?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ +0.27 · 6/7](filter/report.md#arxiv-2601.16175)
 - Towards Execution-Grounded Automated AI Research — [https://arxiv.org/abs/2601.14525](https://arxiv.org/abs/2601.14525) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/4660?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ +0.04 · 5/7 · WATCH](filter/report.md#arxiv-2601.14525)
 - Spurious Rewards Paradox: How RLVR Activates Memorization Shortcuts — [https://arxiv.org/abs/2601.11061](https://arxiv.org/abs/2601.11061) [⌲ tg](https://t-me.translate.goog/s/buckwheat_thoughts/306?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ +0.39 · 6/7](filter/report.md#arxiv-2601.11061)
+- Reinforced Efficient Reasoning via Semantically Diverse Exploration — [https://arxiv.org/abs/2601.05053](https://arxiv.org/abs/2601.05053) · [https://aclanthology.org/2026.acl-long.2216/](https://aclanthology.org/2026.acl-long.2216/)
 - GRPO++: Tricks for Making RL Actually Work (Cameron Wolfe) — [https://cameronrwolfe.substack.com/p/grpo-tricks](https://cameronrwolfe.substack.com/p/grpo-tricks) [⌲ tg](https://t-me.translate.goog/s/AGI_and_RL/1268?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 - SR-GRPO: Stable Rank as an Intrinsic Geometric Reward — [https://arxiv.org/abs/2512.02807](https://arxiv.org/abs/2512.02807) [⌲ tg](https://t-me.translate.goog/s/tech_priestess/2494?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ +0.23 · 6/7](filter/report.md#arxiv-2512.02807)
 - ESPO: Entropy Importance Sampling Policy Optimization — [https://arxiv.org/abs/2512.00499](https://arxiv.org/abs/2512.00499) [⚖ +0.19 · 6/7 · WATCH](filter/report.md#arxiv-2512.00499)
@@ -79,6 +84,7 @@ Score badges: [⚖ final · accepts/models · WATCH|DROP](filter/report.md) — 
 - RLVE: Adaptive Verifiable Environments for LLM RL — [https://arxiv.org/abs/2511.07317](https://arxiv.org/abs/2511.07317) [⚖ +0.37 · 5/7](filter/report.md#arxiv-2511.07317)
 - Reasoning with Sampling: Your Base Model is Smarter Than You Think — [https://arxiv.org/abs/2510.14901](https://arxiv.org/abs/2510.14901) [⚖ +0.21 · 6/7](filter/report.md#arxiv-2510.14901)
 - The Art of Scaling Reinforcement Learning Compute for LLMs — [https://arxiv.org/abs/2510.13786](https://arxiv.org/abs/2510.13786) [⚖ +0.42 · 6/7](filter/report.md#arxiv-2510.13786)
+- Representation-Based Exploration for Language Models: From Test-Time to Post-Training — [https://arxiv.org/abs/2510.11686](https://arxiv.org/abs/2510.11686)
 - It Takes Two: Your GRPO Is Secretly DPO — [https://arxiv.org/abs/2510.00977](https://arxiv.org/abs/2510.00977) [⌲ tg](https://t-me.translate.goog/s/dealerAI/1092?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ -0.10 · 5/7 · WATCH](filter/report.md#arxiv-2510.00977)
 - From f(x) and g(x) to f(g(x)): LLMs Learn New Skills in RL by Composing Old Ones — [https://arxiv.org/abs/2509.25123](https://arxiv.org/abs/2509.25123) · [https://husky-morocco-f72.notion.site/From-f-x-and-g-x-to-f-g-x-LLMs-Learn-New-Skills-in-RL-by-Composing-Old-Ones-2499aba4486f802c8108e76a12af3020](https://husky-morocco-f72.notion.site/From-f-x-and-g-x-to-f-g-x-LLMs-Learn-New-Skills-in-RL-by-Composing-Old-Ones-2499aba4486f802c8108e76a12af3020) [⚖ -0.06 · 5/7 · WATCH](filter/report.md#arxiv-2509.25123)
 - Compute as Teacher: Turning Inference Compute Into Reference-Free Supervision — [https://arxiv.org/abs/2509.14234](https://arxiv.org/abs/2509.14234) [⚖ +0.06 · 5/7 · WATCH](filter/report.md#arxiv-2509.14234)
@@ -107,7 +113,10 @@ Score badges: [⚖ final · accepts/models · WATCH|DROP](filter/report.md) — 
 
 ## LLMs: architectures, context, training
 
+- Language Models Can Control Their Own Attention — [https://arxiv.org/abs/2609.02737](https://arxiv.org/abs/2609.02737)
+- Recirculation — [https://arxiv.org/abs/2608.17981](https://arxiv.org/abs/2608.17981)
 - XBridge: Entity-Grounded Latent Bridge for Heterogeneous LLM Communication — [https://arxiv.org/abs/2608.11676](https://arxiv.org/abs/2608.11676) [⚖ +0.25 · 5/7](filter/report.md#arxiv-2608.11676)
+- Hierarchical Latent Prediction for Language Models — [https://arxiv.org/abs/2608.05806](https://arxiv.org/abs/2608.05806)
 - Cross-Model KV Cache Transfer in LLM Families — [https://arxiv.org/abs/2608.03893](https://arxiv.org/abs/2608.03893) [⌲ tg](https://t-me.translate.goog/s/lovedeathtransformers/10993?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ +0.14 · 5/7 · WATCH](filter/report.md#arxiv-2608.03893)
 - DiffusionGemma Technical Report — [https://arxiv.org/abs/2608.00146](https://arxiv.org/abs/2608.00146) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5942?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ +0.29 · 3/7](filter/report.md#arxiv-2608.00146)
 - HOLA: A Hippocampus for Linear Attention — [https://arxiv.org/abs/2607.02303](https://arxiv.org/abs/2607.02303) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5675?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ +0.24 · 6/7](filter/report.md#arxiv-2607.02303)
@@ -150,24 +159,34 @@ Score badges: [⚖ final · accepts/models · WATCH|DROP](filter/report.md) — 
 - Transformers are RNNs: Fast Autoregressive Transformers with Linear Attention — [https://arxiv.org/abs/2006.16236](https://arxiv.org/abs/2006.16236) [⚖ +0.13 · 5/7 · WATCH](filter/report.md#arxiv-2006.16236)
 - The most cited neural nets of the 20th century (Schmidhuber) — [https://people.idsia.ch/~juergen/most-cited-neural-nets.html](https://people.idsia.ch/~juergen/most-cited-neural-nets.html)
 - GLU Variants Improve Transformer (SwiGLU) — [https://arxiv.org/abs/2002.05202](https://arxiv.org/abs/2002.05202) [⚖ -0.58 · 1/7 · DROP](filter/report.md#arxiv-2002.05202)
+- Universal Transformers — [https://arxiv.org/abs/1807.03819](https://arxiv.org/abs/1807.03819)
 - Searching for Activation Functions (Swish) — [https://arxiv.org/abs/1710.05941](https://arxiv.org/abs/1710.05941) [⚖ +0.13 · 4/7 · WATCH](filter/report.md#arxiv-1710.05941)
 
 ## Reasoning and the "physics" of language models
 
 - Formal logical reasoning suggests the language of thought is not natural language (Kean et al., PNAS 2026) — [https://doi.org/10.1073/pnas.2520095123](https://doi.org/10.1073/pnas.2520095123) · [https://www.biorxiv.org/content/10.1101/2025.07.26.666979v3](https://www.biorxiv.org/content/10.1101/2025.07.26.666979v3) · [https://joshrule.com/files/kean2025evidence.pdf](https://joshrule.com/files/kean2025evidence.pdf) [⚖ -0.08 · 5/7 · WATCH](filter/report.md#doi-10.1073-pnas.2520095123)
 - Bridging the Gap Between Latent and Explicit Reasoning with Looped Transformers — [https://arxiv.org/abs/2606.31779](https://arxiv.org/abs/2606.31779) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5761?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ +0.29 · 5/7](filter/report.md#arxiv-2606.31779)
+- Flow Reasoning Models: Turning Flows Into Efficient Recurrent Reasoners — [https://arxiv.org/abs/2606.29150](https://arxiv.org/abs/2606.29150)
 - Emergent Capabilities Arise Randomly from Sparse Attention Patterns — [https://arxiv.org/abs/2606.25010](https://arxiv.org/abs/2606.25010) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5867?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) · [https://arxiviq.substack.com/p/emergent-capabilities-arise-randomly](https://arxiviq.substack.com/p/emergent-capabilities-arise-randomly) [⚖ +0.03 · 4/7 · WATCH](filter/report.md#arxiv-2606.25010)
+- Fixed-Point Reasoners: Stable and Adaptive Deep Looped Transformers — [https://arxiv.org/abs/2606.18206](https://arxiv.org/abs/2606.18206)
 - Language Models Compare Quantities Using Number-specific and Unit-specific Heuristics — [https://arxiv.org/abs/2606.03982](https://arxiv.org/abs/2606.03982) [⚖ -0.01 · 4/7 · WATCH](filter/report.md#arxiv-2606.03982)
+- Generative Recursive Reasoning — [https://arxiv.org/abs/2605.19376](https://arxiv.org/abs/2605.19376)
+- Solve the Loop: Attractor Models for Language and Reasoning — [https://arxiv.org/abs/2605.12466](https://arxiv.org/abs/2605.12466)
 - Reliable Chain-of-Thought via Prefix Consistency — [https://arxiv.org/abs/2605.07654](https://arxiv.org/abs/2605.07654) [⚖ +0.24 · 6/7](filter/report.md#arxiv-2605.07654)
+- Universal Transformers Need Memory: Depth-State Trade-offs in Adaptive Recursive Reasoning — [https://arxiv.org/abs/2604.21999](https://arxiv.org/abs/2604.21999)
 - A Mechanistic Analysis of Looped Reasoning Language Models — [https://arxiv.org/abs/2604.11791](https://arxiv.org/abs/2604.11791) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5206?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ -0.16 · 3/7 · WATCH](filter/report.md#arxiv-2604.11791)
+- The Illusion of Latent Generalization: Bi-directionality and the Reversal Curse — [https://arxiv.org/abs/2604.04943](https://arxiv.org/abs/2604.04943)
 - LiveMathematicianBench: a live benchmark for mathematician-level reasoning — [https://arxiv.org/abs/2604.01754](https://arxiv.org/abs/2604.01754) [⚖ +0.04 · 4/7 · WATCH](filter/report.md#arxiv-2604.01754)
 - AI-rithmetic — [https://arxiv.org/abs/2602.10416](https://arxiv.org/abs/2602.10416) [⚖ -0.41 · 2/7 · DROP](filter/report.md#arxiv-2602.10416)
 - Position: LLMs can't jump — [https://openreview.net/pdf?id=klU4737opt](https://openreview.net/pdf?id=klU4737opt) [⚖ -0.25 · 2/7 · DROP](filter/report.md#openreview-klU4737opt)
 - In-Context Algebra — [https://arxiv.org/abs/2512.16902](https://arxiv.org/abs/2512.16902) [⚖ +0.34 · 7/7](filter/report.md#arxiv-2512.16902)
+- Universal Reasoning Model — [https://arxiv.org/abs/2512.14693](https://arxiv.org/abs/2512.14693)
+- Less is More: Recursive Reasoning with Tiny Networks — [https://arxiv.org/abs/2510.04871](https://arxiv.org/abs/2510.04871)
 - Why Can't Transformers Learn Multiplication? — [https://arxiv.org/abs/2510.00184](https://arxiv.org/abs/2510.00184) [⚖ +0.06 · 6/7 · WATCH](filter/report.md#arxiv-2510.00184)
 - A Formal Comparison Between Chain-of-Thought and Latent Thought — [https://arxiv.org/abs/2509.25239](https://arxiv.org/abs/2509.25239) [⚖ +0.12 · 5/7 · WATCH](filter/report.md#arxiv-2509.25239)
 - SIM-CoT: Supervised Implicit Chain-of-Thought — [https://arxiv.org/abs/2509.20317](https://arxiv.org/abs/2509.20317) [⌲ tg](https://t-me.translate.goog/s/abstractDL/311?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ +0.23 · 6/7](filter/report.md#arxiv-2509.20317)
 - Modular Arithmetic: Language Models Solve Math Digit by Digit — [https://arxiv.org/abs/2508.02513](https://arxiv.org/abs/2508.02513) [⚖ +0.09 · 6/7 · WATCH](filter/report.md#arxiv-2508.02513)
+- Hierarchical Reasoning Model — [https://arxiv.org/abs/2506.21734](https://arxiv.org/abs/2506.21734)
 - Spurious Rewards: Rethinking Training Signals in RLVR — [https://arxiv.org/abs/2506.10947](https://arxiv.org/abs/2506.10947) [⌲ tg](https://t-me.translate.goog/s/buckwheat_thoughts/197?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ +0.39 · 6/6](filter/report.md#arxiv-2506.10947)
 - Incorrect Baseline Evaluations Call into Question Recent LLM-RL Claims — [https://safe-lip-9a8.notion.site/Incorrect-Baseline-Evaluations-Call-into-Question-Recent-LLM-RL-Claims-2012f1fbf0ee8094ab8ded1953c15a37](https://safe-lip-9a8.notion.site/Incorrect-Baseline-Evaluations-Call-into-Question-Recent-LLM-RL-Claims-2012f1fbf0ee8094ab8ded1953c15a37) [⌲ tg](https://t-me.translate.goog/s/buckwheat_thoughts/306?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp)
 (critiques Spurious Rewards, one-shot RLVR, verifier-free RL, entropy minimization, self-train)
@@ -176,11 +195,14 @@ Score badges: [⚖ final · accepts/models · WATCH|DROP](filter/report.md) — 
 - The Unreasonable Effectiveness of Entropy Minimization in LLM Reasoning — [https://arxiv.org/abs/2505.15134](https://arxiv.org/abs/2505.15134) [⌲ tg](https://t-me.translate.goog/s/buckwheat_thoughts/197?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ +0.23 · 6/7](filter/report.md#arxiv-2505.15134)
 - Language Models Are Capable of Metacognitive Monitoring and Control of Their Internal Activations — [https://arxiv.org/abs/2505.13763](https://arxiv.org/abs/2505.13763) [⚖ -0.09 · 4/7 · WATCH](filter/report.md#arxiv-2505.13763)
 - Reinforcement Learning for Reasoning with One Training Example — [https://arxiv.org/abs/2504.20571](https://arxiv.org/abs/2504.20571) [⌲ tg](https://t-me.translate.goog/s/buckwheat_thoughts/197?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ +0.21 · 4/7](filter/report.md#arxiv-2504.20571)
+- Is the Reversal Curse a Binding Problem? Uncovering Limitations of Transformers from a Basic Generalization Failure — [https://arxiv.org/abs/2504.01928](https://arxiv.org/abs/2504.01928)
 - How do language models learn facts? (DeepMind) — [https://arxiv.org/abs/2503.21676](https://arxiv.org/abs/2503.21676) [⚖ +0.30 · 6/7](filter/report.md#arxiv-2503.21676)
 - The Lookahead Limitation: Why Multi-Operand Addition is Hard for LLMs — [https://arxiv.org/abs/2502.19981](https://arxiv.org/abs/2502.19981) [⚖ -0.16 · 3/7 · WATCH](filter/report.md#arxiv-2502.19981)
 - Scaling up Test-Time Compute with Latent Reasoning (recurrent depth) — [https://arxiv.org/abs/2502.05171](https://arxiv.org/abs/2502.05171) [⌲ tg](https://t-me.translate.goog/s/buckwheat_thoughts/110?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ +0.22 · 5/7](filter/report.md#arxiv-2502.05171)
 - Competitive Programming with Large Reasoning Models (OpenAI o-series) — [https://arxiv.org/abs/2502.06807](https://arxiv.org/abs/2502.06807) [⌲ tg](https://t-me.translate.goog/s/data_secrets/6133?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ -0.26 · 4/7 · WATCH](filter/report.md#arxiv-2502.06807)
+- LIMO: Less is More for Reasoning — [https://arxiv.org/abs/2502.03387](https://arxiv.org/abs/2502.03387)
 - Language Models Use Trigonometry to Do Addition (Kantamneni & Tegmark) — [https://arxiv.org/abs/2502.00873](https://arxiv.org/abs/2502.00873) [⚖ +0.39 · 6/7](filter/report.md#arxiv-2502.00873)
+- s1: Simple test-time scaling — [https://arxiv.org/abs/2501.19393](https://arxiv.org/abs/2501.19393)
 - rStar-Math: Small LLMs Can Master Math Reasoning — [https://arxiv.org/abs/2501.04519](https://arxiv.org/abs/2501.04519) [⌲ tg](https://t-me.translate.goog/s/data_secrets/5738?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ +0.39 · 6/7](filter/report.md#arxiv-2501.04519)
 - Scaling of Search and Learning: A Roadmap to Reproduce o1 — [https://arxiv.org/abs/2412.14135](https://arxiv.org/abs/2412.14135) [⌲ tg](https://t-me.translate.goog/s/AGI_and_RL/881?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ -0.67 · 0/7 · DROP](filter/report.md#arxiv-2412.14135)
 - Coconut: Reasoning in a Continuous Latent Space — [https://arxiv.org/abs/2412.06769](https://arxiv.org/abs/2412.06769) [⌲ tg](https://t-me.translate.goog/s/data_secrets/5507?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ +0.14 · 5/7 · WATCH](filter/report.md#arxiv-2412.06769)
@@ -210,8 +232,10 @@ Score badges: [⚖ final · accepts/models · WATCH|DROP](filter/report.md) — 
 
 ## Data, training, optimization
 
+- Puro-2B: Poor Lab's Qwen2-1.5B Trained on RTX 5090 within $5090 — [https://arxiv.org/abs/2608.27370](https://arxiv.org/abs/2608.27370)
 - The Loss Does Not See the Basis, but Adam Does — [https://arxiv.org/abs/2608.05136](https://arxiv.org/abs/2608.05136) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5956?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ +0.34 · 6/7](filter/report.md#arxiv-2608.05136)
 - Explorative Modeling: Unlocking a Third Pretraining Axis — [https://arxiv.org/abs/2607.27372](https://arxiv.org/abs/2607.27372) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5858?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⌲ tg](https://t-me.translate.goog/s/boris_again/4060?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) · [https://explorative-modeling.github.io/](https://explorative-modeling.github.io/) · [https://arxiviq.substack.com/p/explorative-modeling-unlocking-a](https://arxiviq.substack.com/p/explorative-modeling-unlocking-a) [⚖ +0.29 · 7/7](filter/report.md#arxiv-2607.27372)
+- Why the Third Axis Is Freedom — [https://doi.org/10.5281/zenodo.21979851](https://doi.org/10.5281/zenodo.21979851)
 - Self-Improving Pretraining: using post-trained models to pretrain better models — [https://arxiv.org/abs/2601.21343](https://arxiv.org/abs/2601.21343) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/4691?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ -0.32 · 3/7 · DROP](filter/report.md#arxiv-2601.21343)
 - Nested Learning (Google, NeurIPS 2025) — [https://arxiv.org/abs/2512.24695](https://arxiv.org/abs/2512.24695) · [https://abehrouz.github.io/files/NL.pdf](https://abehrouz.github.io/files/NL.pdf) [⌲ tg](https://t-me.translate.goog/s/data_secrets/5900?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) · [https://research.google/blog/introducing-nested-learning-a-new-ml-paradigm-for-continual-learning/](https://research.google/blog/introducing-nested-learning-a-new-ml-paradigm-for-continual-learning/) [⌲ tg](https://t-me.translate.goog/s/data_secrets/5900?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_pto=wapp) [⚖ -0.65 · 0/6 · DROP](filter/report.md#arxiv-2512.24695)
 - NorMuon: Making Muon more efficient and scalable — [https://arxiv.org/abs/2510.05491](https://arxiv.org/abs/2510.05491) [⚖ +0.06 · 6/7 · WATCH](filter/report.md#arxiv-2510.05491)
@@ -287,6 +311,7 @@ Score badges: [⚖ final · accepts/models · WATCH|DROP](filter/report.md) — 
 - CEO-Bench: Can Agents Play the Long Game? — [https://arxiv.org/abs/2606.18543](https://arxiv.org/abs/2606.18543) [⚖ +0.17 · 5/7 · WATCH](filter/report.md#arxiv-2606.18543)
 - MLE-bench: Evaluating ML Agents on ML Engineering — [https://arxiv.org/abs/2410.07095](https://arxiv.org/abs/2410.07095) [⌲ tg](https://t-me.translate.goog/s/rybolos_channel/1670?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ +0.31 · 4/7](filter/report.md#arxiv-2410.07095)
 - People cannot distinguish GPT-4 from a human in a Turing test — [https://arxiv.org/abs/2405.08007](https://arxiv.org/abs/2405.08007) [⚖ -0.28 · 1/7 · WATCH](filter/report.md#arxiv-2405.08007)
+- StableToolBench: Towards Stable Large-Scale Benchmarking on Tool Learning of Large Language Models — [https://arxiv.org/abs/2403.07714](https://arxiv.org/abs/2403.07714)
 - Rainbow Teaming — [https://arxiv.org/abs/2402.16822](https://arxiv.org/abs/2402.16822) [⌲ tg](https://t-me.translate.goog/s/rybolos_channel/1442?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ +0.38 · 6/7](filter/report.md#arxiv-2402.16822)
 - Artifacts or Abduction: multiple-choice questions without the question — [https://arxiv.org/abs/2402.12483](https://arxiv.org/abs/2402.12483) [⌲ tg](https://t-me.translate.goog/s/tech_priestess/1699?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ -0.04 · 4/7 · WATCH](filter/report.md#arxiv-2402.12483)
 - Medprompt: Can Generalist Foundation Models Outcompete Special-Purpose Tuning? — [https://arxiv.org/abs/2311.16452](https://arxiv.org/abs/2311.16452) [⚖ +0.05 · 5/7 · WATCH](filter/report.md#arxiv-2311.16452)
@@ -306,6 +331,7 @@ Score badges: [⚖ final · accepts/models · WATCH|DROP](filter/report.md) — 
 
 ## Agents, open-endedness, AGI
 
+- Dream-RSI: Recursive Self-Improvement through Evolving Worlds — [https://arxiv.org/abs/2609.14858](https://arxiv.org/abs/2609.14858)
 - AI Finds A Way — [https://arxiv.org/abs/2608.23875](https://arxiv.org/abs/2608.23875) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5974?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ -0.57 · 2/7 · DROP](filter/report.md#arxiv-2608.23875)
 - SPADE: Self-Play in Adaptive Synthetic Executable Environments — [https://arxiv.org/abs/2608.19197](https://arxiv.org/abs/2608.19197) [⌲ tg](https://t-me.translate.goog/s/axisofordinary/9061?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ +0.39 · 6/7](filter/report.md#arxiv-2608.19197)
 - Ouroboros: A Self-Developing Frontier Coding Agent — [https://arxiv.org/abs/2608.08311](https://arxiv.org/abs/2608.08311) · [https://razzant.github.io/ouroboros/](https://razzant.github.io/ouroboros/) [⚖ -0.12 · 3/7 · WATCH](filter/report.md#arxiv-2608.08311)
@@ -403,6 +429,7 @@ Score badges: [⚖ final · accepts/models · WATCH|DROP](filter/report.md) — 
 
 - Verbalizable Representations Form a Global Workspace in Language Models
 (Anthropic, July 2026) — [https://transformer-circuits.pub/2026/workspace/](https://transformer-circuits.pub/2026/workspace/)
+- Manifold Steering Reveals the Shared Geometry of Neural Network Representation and Behavior — [https://arxiv.org/abs/2605.05115](https://arxiv.org/abs/2605.05115)
 - Revisiting the Platonic Representation Hypothesis: An Aristotelian View — [https://arxiv.org/abs/2602.14486](https://arxiv.org/abs/2602.14486) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5622?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ +0.34 · 5/7](filter/report.md#arxiv-2602.14486)
 - Proof of a perfect platonic representation hypothesis — [https://arxiv.org/abs/2507.01098](https://arxiv.org/abs/2507.01098) [⚖ -0.09 · 3/7 · WATCH](filter/report.md#arxiv-2507.01098)
 - Estimating Neural Representation Alignment from Sparsely Sampled Inputs — [https://arxiv.org/abs/2502.15104](https://arxiv.org/abs/2502.15104) [⚖ +0.50 · 6/7](filter/report.md#arxiv-2502.15104)
