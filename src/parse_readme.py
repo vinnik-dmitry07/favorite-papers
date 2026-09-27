@@ -19,7 +19,6 @@ from common import (  # noqa: E402
     apply_date_overrides, arxiv_date, classify, dump_json, is_skippable,
     load_json, node_arxiv_ids,
 )
-from fetch_refs import http_get, parse_meta  # noqa: E402
 
 TITLE_SOURCES = ('papers_titles.json', 'added_titles.json')
 
@@ -249,6 +248,8 @@ def given_first(name: str) -> str:
 
 def fetch_arxiv_meta(ids: list[str]) -> dict:
     '''Resolve unknown arXiv ids from citation meta on /abs pages.'''
+    from fetch_refs import http_get, parse_meta
+
     out: dict[str, dict] = {}
     for index, arxiv_id in enumerate(ids, start=1):
         if index > 1:
