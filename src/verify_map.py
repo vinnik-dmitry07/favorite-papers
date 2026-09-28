@@ -176,6 +176,43 @@ DEEP_LINK_JS = '''() => ({
 })'''
 
 
+TIP_CLEAR_JS = '''() => {
+    const tip = document.getElementById('tip').getBoundingClientRect();
+    function overlaps(box, pad) {
+        return tip.left < box.right + pad && tip.right > box.left - pad
+            && tip.top < box.bottom + pad && tip.bottom > box.top - pad;
+    }
+    const held = [...document.querySelectorAll('.nodes g.held')];
+    const heldIds = new Set(held.map(g => g.__data__.id));
+    const heldHits = held.filter(g => {
+        return overlaps(g.querySelector('circle').getBoundingClientRect(), 3);
+    }).map(g => g.__data__.id);
+    const labelHits = [...document.querySelectorAll('.labels text')].filter(t => {
+        if (t.getAttribute('display') === 'none') return false;
+        if (!t.__data__ || !heldIds.has(t.__data__.id)) return false;
+        return overlaps(t.getBoundingClientRect(), 0);
+    }).map(t => t.__data__.id);
+    let linkPoints = 0;
+    document.querySelectorAll('.edges path').forEach(p => {
+        const opacity = parseFloat(p.getAttribute('stroke-opacity') || '1');
+        if (!(opacity >= 0.5)) return;
+        const ctm = p.getScreenCTM();
+        if (!ctm) return;
+        const len = p.getTotalLength();
+        const step = Math.max(4, len / 40);
+        for (let d = 0; d <= len; d += step) {
+            const pt = p.getPointAtLength(d);
+            const x = ctm.a * pt.x + ctm.c * pt.y + ctm.e;
+            const y = ctm.b * pt.x + ctm.d * pt.y + ctm.f;
+            if (x >= tip.left && x <= tip.right && y >= tip.top && y <= tip.bottom) {
+                linkPoints += 1;
+            }
+        }
+    });
+    return {heldHits, labelHits, linkPoints};
+}'''
+
+
 def hash_sel_ids(hash_value: str) -> list:
     raw = str(hash_value or '')
     if raw.startswith('#'):
@@ -218,6 +255,16 @@ def check_deep_link(page, errors: list, label: str, expected: list) -> dict:
     if linked['share']:
         errors.append(f'{label} share button should be enabled')
     return linked
+
+
+def check_tip_clear(page, errors: list, label: str) -> dict:
+    info = page.evaluate(TIP_CLEAR_JS)
+    print(f'{label} tip:', info)
+    if info['heldHits']:
+        errors.append(f'{label} tip covers held {info["heldHits"]!r}')
+    if info['labelHits']:
+        errors.append(f'{label} tip covers labels {info["labelHits"]!r}')
+    return info
 
 
 def preview() -> None:
@@ -437,16 +484,16 @@ def main() -> None:
         if pageerrors(errors) != before_bad:
             errors.append('f(g(x)) raised pageerror')
 
-        page.fill('#search', 'hyperdreambooth')
+        page.fill('#search', 'minedojo')
         page.wait_for_timeout(400)
-        hyper = page.evaluate(SEARCH_JS)
-        print('search hyperdreambooth:', {
-            'dimmed': hyper['dimmed'],
-            'bright': len(hyper['bright']),
+        mine = page.evaluate(SEARCH_JS)
+        print('search minedojo:', {
+            'dimmed': mine['dimmed'],
+            'bright': len(mine['bright']),
         })
-        if 'url:hyperdreambooth.github.io' not in hyper['bright']:
+        if 'url:minedojo.org' not in mine['bright']:
             errors.append(
-                'hyperdreambooth missed metadata-only url:hyperdreambooth.github.io'
+                'minedojo missed metadata-only url:minedojo.org'
             )
 
         page.fill('#search', '')
@@ -1015,6 +1062,7 @@ def main() -> None:
         page.goto(f'{base_url}#sel={seeds},arxiv:0000.00000')
         page.wait_for_timeout(1200)
         check_deep_link(page, errors, 'deep link', expected)
+        check_tip_clear(page, errors, 'deep link')
         page.screenshot(path=str(SHOTS / '09-deep-link.png'))
 
         alt_seeds = 'arxiv:2506.10947,arxiv:2601.11061'
@@ -1034,6 +1082,7 @@ def main() -> None:
         page.reload(wait_until='load')
         page.wait_for_timeout(1500)
         check_deep_link(page, errors, 'deep link reload', alt_expected)
+        check_tip_clear(page, errors, 'deep link reload')
 
         page.evaluate('''() => { window.__copied = null;
             navigator.clipboard.writeText = (t) => { window.__copied = t; return Promise.resolve(); }; }''')
@@ -1082,6 +1131,8 @@ def main() -> None:
                     f'shift-click hash {after_shift["hash"]!r} '
                     f'should decode to {want!r}'
                 )
+            check_tip_clear(page, errors, 'three selected')
+            page.screenshot(path=str(SHOTS / '10-tip-three.png'))
 
         page.keyboard.press('Escape')
         page.wait_for_timeout(300)

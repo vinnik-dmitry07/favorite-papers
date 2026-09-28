@@ -967,16 +967,6 @@
       "Moncef Gabbouj"
     ]
   },
-  "2306.12925": {
-    "title": "AudioPaLM: A Large Language Model That Can Speak and Listen",
-    "published": "2023-06-22",
-    "authors": [
-      "Paul K. Rubenstein",
-      "Chulayuth Asawaroengchai",
-      "Duc Dung Nguyen",
-      "Ankur Bapna"
-    ]
-  },
   "2505.05410": {
     "title": "Reasoning Models Don't Always Say What They Think",
     "published": "2025-05-08",
@@ -1007,26 +997,6 @@
       "Stella Biderman"
     ]
   },
-  "2305.01644": {
-    "title": "Key-Locked Rank One Editing for Text-to-Image Personalization",
-    "published": "2023-05-02",
-    "authors": [
-      "Yoad Tewel",
-      "Rinon Gal",
-      "Gal Chechik",
-      "Yuval Atzmon"
-    ]
-  },
-  "2307.06949": {
-    "title": "HyperDreamBooth: HyperNetworks for Fast Personalization of Text-to-Image Models",
-    "published": "2023-07-13",
-    "authors": [
-      "Nataniel Ruiz",
-      "Yuanzhen Li",
-      "Varun Jampani",
-      "Wei Wei"
-    ]
-  },
   "1704.04110": {
     "title": "DeepAR: Probabilistic Forecasting with Autoregressive Recurrent Networks",
     "published": "2017-04-13",
@@ -1055,16 +1025,6 @@
       "Dong Gu Choi"
     ]
   },
-  "2311.10709": {
-    "title": "Emu Video: Factorizing Text-to-Video Generation by Explicit Image Conditioning",
-    "published": "2023-11-17",
-    "authors": [
-      "Rohit Girdhar",
-      "Mannat Singh",
-      "Andrew Brown",
-      "Quentin Duval"
-    ]
-  },
   "2412.08821": {
     "title": "Large Concept Models: Language Modeling in a Sentence Representation Space",
     "published": "2024-12-11",
@@ -1083,16 +1043,6 @@
       "Zeqiu Wu",
       "Yizhong Wang",
       "Avirup Sil"
-    ]
-  },
-  "2306.15687": {
-    "title": "Voicebox: Text-Guided Multilingual Universal Speech Generation at Scale",
-    "published": "2023-06-23",
-    "authors": [
-      "Matthew Le",
-      "Apoorv Vyas",
-      "Bowen Shi",
-      "Brian Karrer"
     ]
   },
   "2607.20064": {

@@ -18,9 +18,6 @@
   "url:ai.meta.com/research/publications/code-llama-open-foundation-models-for-code": {
     "arxiv": "2308.12950"
   },
-  "url:google-research.github.io/seanet/audiopalm/examples": {
-    "arxiv": "2306.12925"
-  },
   "url:people.idsia.ch/~juergen/most-cited-neural-nets.html": {
     "date": "2021-12-01",
     "date_source": "known"
@@ -115,18 +112,6 @@
   "acl:2025.acl-long.126": {
     "date": "2025-07-01",
     "date_source": "page"
-  },
-  "url:ai.meta.com/blog/emu-text-to-video-generation-image-editing-research": {
-    "arxiv": "2311.10709"
-  },
-  "url:research.nvidia.com/labs/par/perfusion": {
-    "arxiv": "2305.01644"
-  },
-  "url:hyperdreambooth.github.io": {
-    "arxiv": "2307.06949"
-  },
-  "url:ai.facebook.com/blog/voicebox-generative-ai-model-speech": {
-    "arxiv": "2306.15687"
   },
   "url:selfrag.github.io": {
     "arxiv": "2310.11511"

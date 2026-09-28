@@ -1,6 +1,6 @@
 # Paper quality scores
 
-326 readme papers (web/repo skipped). 326 have at least one Accept/Reject vote.
+350 readme papers (web/repo skipped). 323 have at least one Accept/Reject vote.
 
 Ratings of well-known older papers (Llama 3, DeepSeekMath, DAPO, …) can be inflated: those works appear in Llama-3.1 / Qwen3 / Phi-4 pretraining. Rank **within year** when comparing.
 
@@ -8,21 +8,21 @@ Ratings of well-known older papers (Llama 3, DeepSeekMath, DAPO, …) can be inf
 
 | model | n scored |
 |---|---:|
-| NAIPv2 | 326 |
-| NAIP-v1 | 326 |
-| SciJudge BT | 326 |
-| DGC-BERT p(accept) | 326 |
-| CycleReviewer-8B | 326 |
+| NAIPv2 | 323 |
+| NAIP-v1 | 323 |
+| SciJudge BT | 323 |
+| DGC-BERT p(accept) | 323 |
+| CycleReviewer-8B | 323 |
 | CycleReviewer-70B | 0 |
-| DeepReviewer-7B Standard | 317 |
-| DeepReviewer-7B Fast | 314 |
-| DeepReviewer-14B Fast | 324 |
-| OpenReviewer-8B | 326 |
-| SEA-E | 326 |
+| DeepReviewer-7B Standard | 314 |
+| DeepReviewer-7B Fast | 311 |
+| DeepReviewer-14B Fast | 321 |
+| OpenReviewer-8B | 323 |
+| SEA-E | 323 |
 
 ## DeepReviewer-7B Fast vs Standard
 
-Intersection n=308. Spearman `0.373`. Accept/Reject macro-F1 `0.610` (n=308). Standard is a partial run: it counts in accepts/models, not in mean_rating10.
+Intersection n=305. Spearman `0.371`. Accept/Reject macro-F1 `0.613` (n=305). Standard is a partial run: it counts in accepts/models, not in mean_rating10.
 
 ## Self-agreement (seed 0 vs seed 1)
 
@@ -36,177 +36,177 @@ Intersection n=308. Spearman `0.373`. Accept/Reject macro-F1 `0.610` (n=308). St
 
 Hierarchical factor score on quality families (citation/impact held out). `final_score` is in [-1, 1]. 0 is where reviewer Accept/Reject votes split 50/50 among families whose accept rate is in (0.1, 0.9) (now `['cr8b', 'deep', 'dgcbert', 'or8b']`). `accepts/models` on badges are raw reviewer votes, not this score. VERDICT: DROP if score < -0.2 and conf >= 0.5 and impact_z < 0.5; WATCH if missing impact, conf < 0.5, |score| <= 0.2, or score < -0.2 with impact_z >= 0.5; else KEEP. `final_conf` is coverage `Σ w_used / Σ w_full` (no prior +1). A present family keeps mass 1.0 in q; missingness only lowers coverage.
 
-Calibration `sigmoid(1.205 q + 0.122)`; share of papers with final_score > 0: `0.641`. VERDICT KEEP/WATCH/DROP = `{'WATCH': 156, 'KEEP': 115, 'DROP': 55}`.
+Calibration `sigmoid(1.187 q + 0.134)`; share of papers with final_score > 0: `0.647`. VERDICT KEEP/WATCH/DROP = `{'WATCH': 180, 'KEEP': 116, 'DROP': 54}`.
 
-Family accept rates used for `CAL_VOTE_RANGE`: CR-8B 0.233, DeepReviewer 0.556, DGC-BERT 0.515, OR-8B 0.810, SEA-E 0.936. In target: `['cr8b', 'deep', 'dgcbert', 'or8b']`.
+Family accept rates used for `CAL_VOTE_RANGE`: CR-8B 0.235, DeepReviewer 0.558, DGC-BERT 0.517, OR-8B 0.814, SEA-E 0.938. In target: `['cr8b', 'deep', 'dgcbert', 'or8b']`.
 
 | family | λ | w | PC1 |
 |---|---:|---:|---:|
-| NAIPv2 | 0.586 | 0.524 | 0.699 |
-| DeepReviewer | 0.769 | 1.450 | 0.788 |
-| CR-8B | 0.380 | 0.168 | 0.523 |
-| OR-8B | 0.325 | 0.118 | 0.456 |
-| SEA-E | 0.483 | 0.304 | 0.624 |
-| DGC-BERT | 0.313 | 0.109 | 0.433 |
+| NAIPv2 | 0.585 | 0.520 | 0.701 |
+| DeepReviewer | 0.768 | 1.439 | 0.787 |
+| CR-8B | 0.366 | 0.155 | 0.511 |
+| OR-8B | 0.306 | 0.104 | 0.436 |
+| SEA-E | 0.475 | 0.292 | 0.620 |
+| DGC-BERT | 0.310 | 0.106 | 0.432 |
 
 | model | LOFO | vs | salvage |
 |---|---:|---|---:|
-| NAIPv2 | 0.433 | other families | 0 |
-| NAIP-v1 | 0.448 | sibling | 0 |
-| SciJudge | 0.448 | sibling | 0 |
-| DGC-BERT | 0.222 | other families | 0 |
-| CR-8B | 0.294 | other families | 0 |
-| DR-7B Std | 0.409 | other families | 0 |
-| DR-7B Fast | 0.400 | other families | 6 |
-| DR-14B Fast | 0.457 | other families | 0 |
-| OR-8B | 0.209 | other families | 0 |
-| SEA-E | 0.348 | other families | 0 |
+| NAIPv2 | 0.429 | other families | 0 |
+| NAIP-v1 | 0.440 | sibling | 0 |
+| SciJudge | 0.440 | sibling | 0 |
+| DGC-BERT | 0.219 | other families | 0 |
+| CR-8B | 0.281 | other families | 0 |
+| DR-7B Std | 0.404 | other families | 0 |
+| DR-7B Fast | 0.389 | other families | 6 |
+| DR-14B Fast | 0.449 | other families | 0 |
+| OR-8B | 0.192 | other families | 0 |
+| SEA-E | 0.341 | other families | 0 |
 
-Family clusters at rho>=0.35: deep+naipv2, cr8b, or8b, seae, dgcbert. At rho>=0.25: deep+naipv2+seae, cr8b, or8b, dgcbert. Model clusters at rho>=0.35: dr14b+dr7bf+naipv2, naipv1+scijudge, dgcbert, cr8b, dr7b, or8b, seae. At rho>=0.25: dr14b+dr7b+dr7bf+naipv2+seae, naipv1+scijudge, dgcbert, cr8b, or8b.
+Family clusters at rho>=0.35: deep+naipv2, cr8b, or8b, seae, dgcbert. At rho>=0.25: deep+naipv2+seae, cr8b, or8b, dgcbert. Model clusters at rho>=0.35: dr14b+naipv2, naipv1+scijudge, dgcbert, cr8b, dr7b+dr7bf, or8b, seae. At rho>=0.25: dr14b+dr7b+dr7bf+naipv2+seae, naipv1+scijudge, dgcbert, cr8b, or8b.
 
 | model | field | n | rho vs other families |
 |---|---|---:|---:|
-| CR-8B | rating | 326 | 0.273 |
-| CR-8B | contribution | 326 | 0.297 |
-| CR-8B | soundness | 326 | 0.244 |
-| CR-8B | presentation | 326 | 0.224 |
-| DR-7B Std | rating | 317 | 0.385 |
-| DR-7B Std | contribution | 317 | 0.385 |
-| DR-7B Std | soundness | 317 | 0.322 |
-| DR-7B Std | presentation | 317 | 0.325 |
-| DR-7B Fast | rating | 314 | 0.355 |
-| DR-7B Fast | contribution | 319 | 0.357 |
-| DR-7B Fast | soundness | 319 | 0.293 |
-| DR-7B Fast | presentation | 319 | 0.333 |
-| DR-14B Fast | rating | 324 | 0.381 |
-| DR-14B Fast | contribution | 324 | 0.473 |
-| DR-14B Fast | soundness | 324 | 0.466 |
-| DR-14B Fast | presentation | 324 | 0.343 |
-| OR-8B | rating | 326 | 0.204 |
-| OR-8B | contribution | 326 | 0.238 |
-| OR-8B | soundness | 326 | 0.087 |
-| OR-8B | presentation | 326 | 0.158 |
-| SEA-E | rating | 326 | 0.345 |
-| SEA-E | contribution | 326 | 0.250 |
-| SEA-E | soundness | 326 | 0.175 |
-| SEA-E | presentation | 326 | 0.113 |
+| CR-8B | rating | 323 | 0.264 |
+| CR-8B | contribution | 323 | 0.287 |
+| CR-8B | soundness | 323 | 0.232 |
+| CR-8B | presentation | 323 | 0.210 |
+| DR-7B Std | rating | 314 | 0.386 |
+| DR-7B Std | contribution | 314 | 0.381 |
+| DR-7B Std | soundness | 314 | 0.314 |
+| DR-7B Std | presentation | 314 | 0.318 |
+| DR-7B Fast | rating | 311 | 0.343 |
+| DR-7B Fast | contribution | 316 | 0.350 |
+| DR-7B Fast | soundness | 316 | 0.283 |
+| DR-7B Fast | presentation | 316 | 0.323 |
+| DR-14B Fast | rating | 321 | 0.374 |
+| DR-14B Fast | contribution | 321 | 0.469 |
+| DR-14B Fast | soundness | 321 | 0.459 |
+| DR-14B Fast | presentation | 321 | 0.332 |
+| OR-8B | rating | 323 | 0.188 |
+| OR-8B | contribution | 323 | 0.225 |
+| OR-8B | soundness | 323 | 0.069 |
+| OR-8B | presentation | 323 | 0.148 |
+| SEA-E | rating | 323 | 0.337 |
+| SEA-E | contribution | 323 | 0.256 |
+| SEA-E | soundness | 323 | 0.177 |
+| SEA-E | presentation | 323 | 0.097 |
 
 | model | subset | n | mean consensus z |
 |---|---|---:|---:|
-| CR-8B | parsed | 326 | -0.003 |
+| CR-8B | parsed | 323 | -0.003 |
 | CR-8B | salvage | 0 |  |
 | CR-8B | unparsed | 0 |  |
-| DR-7B Std | parsed | 317 | 0.021 |
+| DR-7B Std | parsed | 314 | 0.022 |
 | DR-7B Std | salvage | 0 |  |
-| DR-7B Std | unparsed | 9 | -0.864 |
-| DR-7B Fast | parsed | 314 | 0.010 |
-| DR-7B Fast | salvage | 6 | -0.571 |
-| DR-7B Fast | unparsed | 6 | -0.149 |
-| DR-14B Fast | parsed | 324 | 0.006 |
+| DR-7B Std | unparsed | 9 | -0.876 |
+| DR-7B Fast | parsed | 311 | 0.011 |
+| DR-7B Fast | salvage | 6 | -0.574 |
+| DR-7B Fast | unparsed | 6 | -0.162 |
+| DR-14B Fast | parsed | 321 | 0.006 |
 | DR-14B Fast | salvage | 0 |  |
-| DR-14B Fast | unparsed | 2 | -1.465 |
-| OR-8B | parsed | 326 | -0.003 |
+| DR-14B Fast | unparsed | 2 | -1.505 |
+| OR-8B | parsed | 323 | -0.003 |
 | OR-8B | salvage | 0 |  |
 | OR-8B | unparsed | 0 |  |
-| SEA-E | parsed | 326 | -0.003 |
+| SEA-E | parsed | 323 | -0.003 |
 | SEA-E | salvage | 0 |  |
 | SEA-E | unparsed | 0 |  |
 
-Remaining unparsed reviews after retry are shifted down (DR-7B Std n=9, consensus z=-0.864; DR-7B Fast n=6, consensus z=-0.149; DR-14B Fast n=2, consensus z=-1.465). No reject-imputation; those papers already get signal from other families.
+Remaining unparsed reviews after retry are shifted down (DR-7B Std n=9, consensus z=-0.876; DR-7B Fast n=6, consensus z=-0.162; DR-14B Fast n=2, consensus z=-1.505). No reject-imputation; those papers already get signal from other families.
 
 
 ## Agreement (Spearman)
 
 | model A | model B | n | Spearman |
 |---|---|---:|---:|
-| NAIPv2 | NAIP-v1 | 326 | 0.250 |
-| NAIPv2 | SciJudge | 326 | 0.435 |
-| NAIPv2 | DGC-BERT | 326 | 0.318 |
-| NAIPv2 | CR-8B | 326 | 0.174 |
+| NAIPv2 | NAIP-v1 | 323 | 0.251 |
+| NAIPv2 | SciJudge | 323 | 0.405 |
+| NAIPv2 | DGC-BERT | 323 | 0.312 |
+| NAIPv2 | CR-8B | 323 | 0.164 |
 | NAIPv2 | CR-70B | 0 |  |
-| NAIPv2 | DR-7B Std | 317 | 0.403 |
-| NAIPv2 | DR-7B Fast | 314 | 0.318 |
-| NAIPv2 | DR-14B Fast | 324 | 0.480 |
-| NAIPv2 | OR-8B | 326 | 0.225 |
-| NAIPv2 | SEA-E | 326 | 0.327 |
-| NAIP-v1 | SciJudge | 326 | 0.486 |
-| NAIP-v1 | DGC-BERT | 326 | 0.125 |
-| NAIP-v1 | CR-8B | 326 | 0.218 |
+| NAIPv2 | DR-7B Std | 314 | 0.397 |
+| NAIPv2 | DR-7B Fast | 311 | 0.308 |
+| NAIPv2 | DR-14B Fast | 321 | 0.473 |
+| NAIPv2 | OR-8B | 323 | 0.218 |
+| NAIPv2 | SEA-E | 323 | 0.322 |
+| NAIP-v1 | SciJudge | 323 | 0.458 |
+| NAIP-v1 | DGC-BERT | 323 | 0.119 |
+| NAIP-v1 | CR-8B | 323 | 0.217 |
 | NAIP-v1 | CR-70B | 0 |  |
-| NAIP-v1 | DR-7B Std | 317 | 0.126 |
-| NAIP-v1 | DR-7B Fast | 314 | 0.149 |
-| NAIP-v1 | DR-14B Fast | 324 | 0.102 |
-| NAIP-v1 | OR-8B | 326 | 0.122 |
-| NAIP-v1 | SEA-E | 326 | 0.110 |
-| SciJudge | DGC-BERT | 326 | 0.403 |
-| SciJudge | CR-8B | 326 | 0.331 |
+| NAIP-v1 | DR-7B Std | 314 | 0.122 |
+| NAIP-v1 | DR-7B Fast | 311 | 0.148 |
+| NAIP-v1 | DR-14B Fast | 321 | 0.100 |
+| NAIP-v1 | OR-8B | 323 | 0.111 |
+| NAIP-v1 | SEA-E | 323 | 0.099 |
+| SciJudge | DGC-BERT | 323 | 0.394 |
+| SciJudge | CR-8B | 323 | 0.318 |
 | SciJudge | CR-70B | 0 |  |
-| SciJudge | DR-7B Std | 317 | 0.277 |
-| SciJudge | DR-7B Fast | 314 | 0.216 |
-| SciJudge | DR-14B Fast | 324 | 0.327 |
-| SciJudge | OR-8B | 326 | 0.240 |
-| SciJudge | SEA-E | 326 | 0.284 |
-| DGC-BERT | CR-8B | 326 | 0.102 |
+| SciJudge | DR-7B Std | 314 | 0.252 |
+| SciJudge | DR-7B Fast | 311 | 0.199 |
+| SciJudge | DR-14B Fast | 321 | 0.299 |
+| SciJudge | OR-8B | 323 | 0.220 |
+| SciJudge | SEA-E | 323 | 0.267 |
+| DGC-BERT | CR-8B | 323 | 0.095 |
 | DGC-BERT | CR-70B | 0 |  |
-| DGC-BERT | DR-7B Std | 317 | 0.208 |
-| DGC-BERT | DR-7B Fast | 314 | 0.188 |
-| DGC-BERT | DR-14B Fast | 324 | 0.190 |
-| DGC-BERT | OR-8B | 326 | -0.051 |
-| DGC-BERT | SEA-E | 326 | 0.124 |
+| DGC-BERT | DR-7B Std | 314 | 0.199 |
+| DGC-BERT | DR-7B Fast | 311 | 0.184 |
+| DGC-BERT | DR-14B Fast | 321 | 0.184 |
+| DGC-BERT | OR-8B | 323 | -0.057 |
+| DGC-BERT | SEA-E | 323 | 0.120 |
 | CR-8B | CR-70B | 0 |  |
-| CR-8B | DR-7B Std | 317 | 0.240 |
-| CR-8B | DR-7B Fast | 314 | 0.160 |
-| CR-8B | DR-14B Fast | 324 | 0.226 |
-| CR-8B | OR-8B | 326 | 0.133 |
-| CR-8B | SEA-E | 326 | 0.153 |
+| CR-8B | DR-7B Std | 314 | 0.234 |
+| CR-8B | DR-7B Fast | 311 | 0.149 |
+| CR-8B | DR-14B Fast | 321 | 0.217 |
+| CR-8B | OR-8B | 323 | 0.123 |
+| CR-8B | SEA-E | 323 | 0.146 |
 | CR-70B | DR-7B Std | 0 |  |
 | CR-70B | DR-7B Fast | 0 |  |
 | CR-70B | DR-14B Fast | 0 |  |
 | CR-70B | OR-8B | 0 |  |
 | CR-70B | SEA-E | 0 |  |
-| DR-7B Std | DR-7B Fast | 308 | 0.373 |
-| DR-7B Std | DR-14B Fast | 317 | 0.388 |
-| DR-7B Std | OR-8B | 317 | 0.239 |
-| DR-7B Std | SEA-E | 317 | 0.280 |
-| DR-7B Fast | DR-14B Fast | 313 | 0.313 |
-| DR-7B Fast | OR-8B | 314 | 0.234 |
-| DR-7B Fast | SEA-E | 314 | 0.282 |
-| DR-14B Fast | OR-8B | 324 | 0.270 |
-| DR-14B Fast | SEA-E | 324 | 0.223 |
-| OR-8B | SEA-E | 326 | 0.220 |
+| DR-7B Std | DR-7B Fast | 305 | 0.371 |
+| DR-7B Std | DR-14B Fast | 314 | 0.383 |
+| DR-7B Std | OR-8B | 314 | 0.238 |
+| DR-7B Std | SEA-E | 314 | 0.278 |
+| DR-7B Fast | DR-14B Fast | 310 | 0.303 |
+| DR-7B Fast | OR-8B | 311 | 0.219 |
+| DR-7B Fast | SEA-E | 311 | 0.274 |
+| DR-14B Fast | OR-8B | 321 | 0.264 |
+| DR-14B Fast | SEA-E | 321 | 0.217 |
+| OR-8B | SEA-E | 323 | 0.204 |
 
 ## Agreement (macro-F1 Accept/Reject)
 
 | model A | model B | n | macro-F1 |
 |---|---|---:|---:|
-| DGC-BERT | CR-8B | 326 | 0.456 |
+| DGC-BERT | CR-8B | 323 | 0.456 |
 | DGC-BERT | CR-70B | 0 |  |
-| DGC-BERT | DR-7B Std | 317 | 0.552 |
-| DGC-BERT | DR-7B Fast | 314 | 0.567 |
-| DGC-BERT | DR-14B Fast | 324 | 0.571 |
-| DGC-BERT | OR-8B | 326 | 0.451 |
-| DGC-BERT | SEA-E | 326 | 0.426 |
+| DGC-BERT | DR-7B Std | 314 | 0.548 |
+| DGC-BERT | DR-7B Fast | 311 | 0.569 |
+| DGC-BERT | DR-14B Fast | 321 | 0.573 |
+| DGC-BERT | OR-8B | 323 | 0.451 |
+| DGC-BERT | SEA-E | 323 | 0.422 |
 | CR-8B | CR-70B | 0 |  |
-| CR-8B | DR-7B Std | 317 | 0.529 |
-| CR-8B | DR-7B Fast | 314 | 0.480 |
-| CR-8B | DR-14B Fast | 324 | 0.444 |
-| CR-8B | OR-8B | 326 | 0.348 |
-| CR-8B | SEA-E | 326 | 0.271 |
+| CR-8B | DR-7B Std | 314 | 0.529 |
+| CR-8B | DR-7B Fast | 311 | 0.480 |
+| CR-8B | DR-14B Fast | 321 | 0.442 |
+| CR-8B | OR-8B | 323 | 0.345 |
+| CR-8B | SEA-E | 323 | 0.269 |
 | CR-70B | DR-7B Std | 0 |  |
 | CR-70B | DR-7B Fast | 0 |  |
 | CR-70B | DR-14B Fast | 0 |  |
 | CR-70B | OR-8B | 0 |  |
 | CR-70B | SEA-E | 0 |  |
-| DR-7B Std | DR-7B Fast | 308 | 0.610 |
-| DR-7B Std | DR-14B Fast | 317 | 0.591 |
-| DR-7B Std | OR-8B | 317 | 0.529 |
-| DR-7B Std | SEA-E | 317 | 0.406 |
-| DR-7B Fast | DR-14B Fast | 313 | 0.651 |
-| DR-7B Fast | OR-8B | 314 | 0.553 |
-| DR-7B Fast | SEA-E | 314 | 0.495 |
-| DR-14B Fast | OR-8B | 324 | 0.573 |
-| DR-14B Fast | SEA-E | 324 | 0.536 |
-| OR-8B | SEA-E | 326 | 0.634 |
+| DR-7B Std | DR-7B Fast | 305 | 0.613 |
+| DR-7B Std | DR-14B Fast | 314 | 0.593 |
+| DR-7B Std | OR-8B | 314 | 0.530 |
+| DR-7B Std | SEA-E | 314 | 0.402 |
+| DR-7B Fast | DR-14B Fast | 310 | 0.646 |
+| DR-7B Fast | OR-8B | 311 | 0.546 |
+| DR-7B Fast | SEA-E | 311 | 0.491 |
+| DR-14B Fast | OR-8B | 321 | 0.565 |
+| DR-14B Fast | SEA-E | 321 | 0.532 |
+| OR-8B | SEA-E | 323 | 0.629 |
 
 ## Ranking by readme section
 
@@ -214,32 +214,34 @@ Remaining unparsed reviews after retry are shifted down (DR-7B Std n=9, consensu
 
 | rank | title | year | final | accept | key |
 |---:|---|---|---:|---:|---|
-| 1 | [First return, then explore](#arxiv-2004.12919) | 2020 | +0.60 | 6/7 | `arxiv:2004.12919` |
-| 2 | [Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor](#arxiv-1801.01290) | 2018 | +0.47 | 6/7 | `arxiv:1801.01290` |
-| 3 | [Deep Neuroevolution: Genetic Algorithms Are a Competitive Alternative for Training Deep Neural Networks for Reinforcement Learning](#arxiv-1712.06567) | 2017 | +0.41 | 4/7 | `arxiv:1712.06567` |
-| 4 | [A Distributional Perspective on Reinforcement Learning](#arxiv-1707.06887) | 2017 | +0.36 | 6/7 | `arxiv:1707.06887` |
+| 1 | [First return, then explore](#arxiv-2004.12919) | 2020 | +0.58 | 6/7 | `arxiv:2004.12919` |
+| 2 | [Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor](#arxiv-1801.01290) | 2018 | +0.46 | 6/7 | `arxiv:1801.01290` |
+| 3 | [Deep Neuroevolution: Genetic Algorithms Are a Competitive Alternative for Training Deep Neural Networks for Reinforcement Learning](#arxiv-1712.06567) | 2017 | +0.40 | 4/7 | `arxiv:1712.06567` |
+| 4 | [A Distributional Perspective on Reinforcement Learning](#arxiv-1707.06887) | 2017 | +0.35 | 6/7 | `arxiv:1707.06887` |
 | 5 | [The Primacy Bias in Deep Reinforcement Learning](#arxiv-2205.07802) | 2022 | +0.27 | 6/7 | `arxiv:2205.07802` |
-| 6 | [Bigger, Better, Faster: Human-level Atari with human-level efficiency](#arxiv-2305.19452) | 2023 | +0.22 | 3/7 | `arxiv:2305.19452` |
+| 6 | [Bigger, Better, Faster: Human-level Atari with human-level efficiency](#arxiv-2305.19452) | 2023 | +0.23 | 3/7 | `arxiv:2305.19452` |
 | 7 | [Beyond The Rainbow: High Performance Deep Reinforcement Learning on a Desktop PC](#arxiv-2411.03820) | 2024 | +0.21 | 2/7 | `arxiv:2411.03820` |
 | 8 | [Sample-Efficient RL by Breaking the Replay Ratio Barrier (ICLR 2023, precursor of BBF)](#openreview-OpC-9aBBVJe) | unknown | +0.16 | 6/7 | `openreview:OpC-9aBBVJe` |
 | 9 | [Mastering Diverse Domains through World Models](#arxiv-2301.04104) | 2023 | +0.16 | 5/7 | `arxiv:2301.04104` |
 | 10 | [Metalearning Continual Learning Algorithms](#arxiv-2312.00276) | 2023 | +0.12 | 5/7 | `arxiv:2312.00276` |
-| 11 | [Dueling Network Architectures for Deep Reinforcement Learning](#arxiv-1511.06581) | 2015 | +0.11 | 6/7 | `arxiv:1511.06581` |
-| 12 | [CDE: Curiosity-Driven Exploration for Efficient Reinforcement Learning in Large Language Models](#arxiv-2509.09675) | 2025 | +0.11 | 6/7 | `arxiv:2509.09675` |
-| 13 | [Deep Reinforcement Learning with Double Q-learning](#arxiv-1509.06461) | 2015 | +0.10 | 5/7 | `arxiv:1509.06461` |
-| 14 | [Q-Learning With World Models](#arxiv-2608.17163) | 2026 | +0.08 | 6/7 | `arxiv:2608.17163` |
-| 15 | [For SALE: State-Action Representation Learning for Deep Reinforcement Learning](#arxiv-2306.02451) | 2023 | +0.04 | 5/7 | `arxiv:2306.02451` |
-| 16 | [Prioritized Experience Replay](#arxiv-1511.05952) | 2015 | +0.01 | 4/7 | `arxiv:1511.05952` |
-| 17 | [1000 Layer Networks for Self-Supervised RL: Scaling Depth Can Enable New Goal-Reaching Capabilities](#arxiv-2503.14858) | 2025 | +0.01 | 5/7 | `arxiv:2503.14858` |
-| 18 | [Rainbow: Combining Improvements in Deep Reinforcement Learning](#arxiv-1710.02298) | 2017 | -0.04 | 3/7 | `arxiv:1710.02298` |
+| 11 | [CDE: Curiosity-Driven Exploration for Efficient Reinforcement Learning in Large Language Models](#arxiv-2509.09675) | 2025 | +0.11 | 6/7 | `arxiv:2509.09675` |
+| 12 | [Dueling Network Architectures for Deep Reinforcement Learning](#arxiv-1511.06581) | 2015 | +0.09 | 6/7 | `arxiv:1511.06581` |
+| 13 | [Q-Learning With World Models](#arxiv-2608.17163) | 2026 | +0.08 | 6/7 | `arxiv:2608.17163` |
+| 14 | [Deep Reinforcement Learning with Double Q-learning](#arxiv-1509.06461) | 2015 | +0.08 | 5/7 | `arxiv:1509.06461` |
+| 15 | [For SALE: State-Action Representation Learning for Deep Reinforcement Learning](#arxiv-2306.02451) | 2023 | +0.05 | 5/7 | `arxiv:2306.02451` |
+| 16 | [1000 Layer Networks for Self-Supervised RL: Scaling Depth Can Enable New Goal-Reaching Capabilities](#arxiv-2503.14858) | 2025 | +0.02 | 5/7 | `arxiv:2503.14858` |
+| 17 | [Prioritized Experience Replay](#arxiv-1511.05952) | 2015 | -0.01 | 4/7 | `arxiv:1511.05952` |
+| 18 | [Rainbow: Combining Improvements in Deep Reinforcement Learning](#arxiv-1710.02298) | 2017 | -0.05 | 3/7 | `arxiv:1710.02298` |
 | 19 | [In-Context Reinforcement Learning for Variable Action Spaces](#arxiv-2312.13327) | 2023 | -0.06 | 4/7 | `arxiv:2312.13327` |
 | 20 | [Towards General-Purpose Model-Free Reinforcement Learning](#arxiv-2501.16142) | 2025 | -0.13 | 5/7 | `arxiv:2501.16142` |
-| 21 | [Revisiting Rainbow: Promoting more Insightful and Inclusive Deep Reinforcement Learning Research](#arxiv-2011.14826) | 2020 | -0.26 | 1/7 | `arxiv:2011.14826` |
-| 22 | [Addressing Function Approximation Error in Actor-Critic Methods](#arxiv-1802.09477) | 2018 | -0.37 | 1/4 | `arxiv:1802.09477` |
+| 21 | [Revisiting Rainbow: Promoting more Insightful and Inclusive Deep Reinforcement Learning Research](#arxiv-2011.14826) | 2020 | -0.27 | 1/7 | `arxiv:2011.14826` |
+| 22 | [Addressing Function Approximation Error in Actor-Critic Methods](#arxiv-1802.09477) | 2018 | -0.36 | 1/4 | `arxiv:1802.09477` |
 | 23 | [Offline Reinforcement Learning: Tutorial, Review, and Perspectives on Open Problems](#arxiv-2005.01643) | 2020 | -0.42 | 0/7 | `arxiv:2005.01643` |
-| 24 | [Meta-Reinforcement Learning with Zero-Shot RL](#openreview-XyGJJ4FPoX) | unknown | -0.47 | 0/7 | `openreview:XyGJJ4FPoX` |
-| 25 | [A Minimalist Approach to Offline Reinforcement Learning](#arxiv-2106.06860) | 2021 | -0.49 | 3/7 | `arxiv:2106.06860` |
+| 24 | [Meta-Reinforcement Learning with Zero-Shot RL](#openreview-XyGJJ4FPoX) | unknown | -0.45 | 0/7 | `openreview:XyGJJ4FPoX` |
+| 25 | [A Minimalist Approach to Offline Reinforcement Learning](#arxiv-2106.06860) | 2021 | -0.50 | 3/7 | `arxiv:2106.06860` |
 | 26 | [Benchmarking Batch Deep Reinforcement Learning Algorithms](#arxiv-1910.01708) | 2019 | -0.56 | 2/7 | `arxiv:1910.01708` |
+| 27 | [Self-Improving World Modelling with Latent Actions](#arxiv-2602.06130) | 2026 |  | 0/0 | `arxiv:2602.06130` |
+| 28 | [UniMASK: Unified Inference in Sequential Decision Problems](#arxiv-2211.10869) | 2022 |  | 0/0 | `arxiv:2211.10869` |
 
 ### Post-training
 
@@ -251,100 +253,108 @@ Remaining unparsed reviews after retry are shifted down (DR-7B Std n=9, consensu
 | 4 | [On the Generalization of SFT: A Reinforcement Learning Perspective with Reward Rectification](#arxiv-2508.05629) | 2025 | +0.43 | 6/7 | `arxiv:2508.05629` |
 | 5 | [Critique-GRPO: Advancing LLM Reasoning with Natural Language and Numerical Feedback](#arxiv-2506.03106) | 2025 | +0.42 | 7/7 | `arxiv:2506.03106` |
 | 6 | [The Art of Scaling Reinforcement Learning Compute for LLMs](#arxiv-2510.13786) | 2025 | +0.42 | 6/7 | `arxiv:2510.13786` |
-| 7 | [Spurious Rewards Paradox: Mechanistically Understanding How RLVR Activates Memorization Shortcuts in LLMs](#arxiv-2601.11061) | 2026 | +0.39 | 6/7 | `arxiv:2601.11061` |
+| 7 | [Spurious Rewards Paradox: Mechanistically Understanding How RLVR Activates Memorization Shortcuts in LLMs](#arxiv-2601.11061) | 2026 | +0.40 | 6/7 | `arxiv:2601.11061` |
 | 8 | [RLVE: Scaling Up Reinforcement Learning for Language Models with Adaptive Verifiable Environments](#arxiv-2511.07317) | 2025 | +0.37 | 5/7 | `arxiv:2511.07317` |
-| 9 | [Rethinking On-Policy Distillation of Large Language Models: Phenomenology, Mechanism, and Recipe](#arxiv-2604.13016) | 2026 | +0.36 | 6/7 | `arxiv:2604.13016` |
-| 10 | [Revisiting Reinforcement Learning with Verifiable Rewards from a Contrastive Perspective](#arxiv-2605.12969) | 2026 | +0.35 | 6/7 | `arxiv:2605.12969` |
+| 9 | [Rethinking On-Policy Distillation of Large Language Models: Phenomenology, Mechanism, and Recipe](#arxiv-2604.13016) | 2026 | +0.37 | 6/7 | `arxiv:2604.13016` |
+| 10 | [Revisiting Reinforcement Learning with Verifiable Rewards from a Contrastive Perspective](#arxiv-2605.12969) | 2026 | +0.36 | 6/7 | `arxiv:2605.12969` |
 | 11 | [MiniMax-M1: Scaling Test-Time Compute Efficiently with Lightning Attention](#arxiv-2506.13585) | 2025 | +0.35 | 4/7 | `arxiv:2506.13585` |
-| 12 | [Understanding R1-Zero-Like Training: A Critical Perspective](#arxiv-2503.20783) | 2025 | +0.33 | 5/7 | `arxiv:2503.20783` |
+| 12 | [Understanding R1-Zero-Like Training: A Critical Perspective](#arxiv-2503.20783) | 2025 | +0.34 | 5/7 | `arxiv:2503.20783` |
 | 13 | [DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models](#arxiv-2402.03300) | 2024 | +0.32 | 5/7 | `arxiv:2402.03300` |
 | 14 | [TTRL: Test-Time Reinforcement Learning](#arxiv-2504.16084) | 2025 | +0.32 | 5/7 | `arxiv:2504.16084` |
 | 15 | [Group-in-Group Policy Optimization for LLM Agent Training](#arxiv-2505.10978) | 2025 | +0.31 | 7/7 | `arxiv:2505.10978` |
-| 16 | [Skip-Connected Policy Optimization for Implicit Advantage](#arxiv-2604.08690) | 2026 | +0.29 | 6/7 | `arxiv:2604.08690` |
-| 17 | [Reinforcement Learning via Self-Distillation](#arxiv-2601.20802) | 2026 | +0.27 | 6/7 | `arxiv:2601.20802` |
-| 18 | [Learning to Discover at Test Time](#arxiv-2601.16175) | 2026 | +0.27 | 6/7 | `arxiv:2601.16175` |
-| 19 | [Beyond the 80/20 Rule: High-Entropy Minority Tokens Drive Effective Reinforcement Learning for LLM Reasoning](#arxiv-2506.01939) | 2025 | +0.27 | 4/7 | `arxiv:2506.01939` |
-| 20 | [SR-GRPO: Stable Rank as an Intrinsic Geometric Reward for Large Language Model Alignment](#arxiv-2512.02807) | 2025 | +0.23 | 6/7 | `arxiv:2512.02807` |
+| 16 | [Skip-Connected Policy Optimization for Implicit Advantage](#arxiv-2604.08690) | 2026 | +0.30 | 6/7 | `arxiv:2604.08690` |
+| 17 | [Reinforcement Learning via Self-Distillation](#arxiv-2601.20802) | 2026 | +0.28 | 6/7 | `arxiv:2601.20802` |
+| 18 | [Beyond the 80/20 Rule: High-Entropy Minority Tokens Drive Effective Reinforcement Learning for LLM Reasoning](#arxiv-2506.01939) | 2025 | +0.28 | 4/7 | `arxiv:2506.01939` |
+| 19 | [Learning to Discover at Test Time](#arxiv-2601.16175) | 2026 | +0.27 | 6/7 | `arxiv:2601.16175` |
+| 20 | [SR-GRPO: Stable Rank as an Intrinsic Geometric Reward for Large Language Model Alignment](#arxiv-2512.02807) | 2025 | +0.24 | 6/7 | `arxiv:2512.02807` |
 | 21 | [Self-Distillation Bridges Distribution Gap in Language Model Fine-Tuning](#arxiv-2402.13669) | 2024 | +0.22 | 5/7 | `arxiv:2402.13669` |
 | 22 | [Reasoning with Sampling: Your Base Model is Smarter Than You Think](#arxiv-2510.14901) | 2025 | +0.21 | 6/7 | `arxiv:2510.14901` |
 | 23 | [From Reasoning Chains to Verifiable Subproblems: Curriculum Reinforcement Learning Enables Credit Assignment for LLM Reasoning](#arxiv-2605.22074) | 2026 | +0.20 | 6/7 | `arxiv:2605.22074` |
 | 24 | [ESPO: Entropy Importance Sampling Policy Optimization](#arxiv-2512.00499) | 2025 | +0.19 | 6/7 | `arxiv:2512.00499` |
-| 25 | [Gradient Regularization Mitigates Reward Hacking in Reinforcement Learning from Human Feedback and Verifiable Rewards](#arxiv-2602.18037) | 2026 | +0.13 | 4/7 | `arxiv:2602.18037` |
-| 26 | [Latent On-Policy Self-Distillation](#arxiv-2608.13040) | 2026 | +0.13 | 6/7 | `arxiv:2608.13040` |
+| 25 | [Gradient Regularization Mitigates Reward Hacking in Reinforcement Learning from Human Feedback and Verifiable Rewards](#arxiv-2602.18037) | 2026 | +0.14 | 4/7 | `arxiv:2602.18037` |
+| 26 | [Latent On-Policy Self-Distillation](#arxiv-2608.13040) | 2026 | +0.14 | 6/7 | `arxiv:2608.13040` |
 | 27 | [Self-Distilled Reasoner: On-Policy Self-Distillation for Large Language Models](#arxiv-2601.18734) | 2026 | +0.12 | 5/7 | `arxiv:2601.18734` |
 | 28 | [Soft Adaptive Policy Optimization](#arxiv-2511.20347) | 2025 | +0.12 | 5/7 | `arxiv:2511.20347` |
 | 29 | [Self-Refine: Iterative Refinement with Self-Feedback](#arxiv-2303.17651) | 2023 | +0.10 | 6/7 | `arxiv:2303.17651` |
-| 30 | [To Retain or to Adapt? Generalizing Continual Learning](#arxiv-2607.05609) | 2026 | +0.07 | 5/7 | `arxiv:2607.05609` |
-| 31 | [Compute as Teacher: Turning Inference Compute Into Reference-Free Supervision](#arxiv-2509.14234) | 2025 | +0.06 | 5/7 | `arxiv:2509.14234` |
+| 30 | [To Retain or to Adapt? Generalizing Continual Learning](#arxiv-2607.05609) | 2026 | +0.08 | 5/7 | `arxiv:2607.05609` |
+| 31 | [Compute as Teacher: Turning Inference Compute Into Reference-Free Supervision](#arxiv-2509.14234) | 2025 | +0.07 | 5/7 | `arxiv:2509.14234` |
 | 32 | [Curriculum Reinforcement Learning from Easy to Hard Tasks Improves LLM Reasoning](#arxiv-2506.06632) | 2025 | +0.05 | 5/7 | `arxiv:2506.06632` |
-| 33 | [Group Sequence Policy Optimization](#arxiv-2507.18071) | 2025 | +0.04 | 5/7 | `arxiv:2507.18071` |
+| 33 | [Group Sequence Policy Optimization](#arxiv-2507.18071) | 2025 | +0.05 | 5/7 | `arxiv:2507.18071` |
 | 34 | [Towards Execution-Grounded Automated AI Research](#arxiv-2601.14525) | 2026 | +0.04 | 5/7 | `arxiv:2601.14525` |
-| 35 | [When Does Continual Learning Require Learning](#arxiv-2607.07847) | 2026 | +0.02 | 4/7 | `arxiv:2607.07847` |
-| 36 | [Does Reinforcement Learning Really Incentivize Reasoning Capacity in LLMs Beyond the Base Model?](#arxiv-2504.13837) | 2025 | +0.01 | 4/7 | `arxiv:2504.13837` |
-| 37 | [Learning from Own Solutions: Self-Conditioned Credit Assignment for Reinforcement Learning with Verifiable Rewards](#arxiv-2606.18810) | 2026 | +0.01 | 4/7 | `arxiv:2606.18810` |
-| 38 | [Learning to Reason without External Rewards](#arxiv-2505.19590) | 2025 | +0.00 | 3/7 | `arxiv:2505.19590` |
-| 39 | [Unifying Group-Relative and Self-Distillation Policy Optimization via Sample Routing](#arxiv-2604.02288) | 2026 | -0.00 | 5/7 | `arxiv:2604.02288` |
-| 40 | [GRPO-VPS: Enhancing Group Relative Policy Optimization with Verifiable Process Supervision for Effective Reasoning](#arxiv-2604.20659) | 2026 | -0.01 | 5/7 | `arxiv:2604.20659` |
+| 35 | [Does Reinforcement Learning Really Incentivize Reasoning Capacity in LLMs Beyond the Base Model?](#arxiv-2504.13837) | 2025 | +0.02 | 4/7 | `arxiv:2504.13837` |
+| 36 | [When Does Continual Learning Require Learning](#arxiv-2607.07847) | 2026 | +0.02 | 4/7 | `arxiv:2607.07847` |
+| 37 | [Learning from Own Solutions: Self-Conditioned Credit Assignment for Reinforcement Learning with Verifiable Rewards](#arxiv-2606.18810) | 2026 | +0.02 | 4/7 | `arxiv:2606.18810` |
+| 38 | [Learning to Reason without External Rewards](#arxiv-2505.19590) | 2025 | +0.01 | 3/7 | `arxiv:2505.19590` |
+| 39 | [Unifying Group-Relative and Self-Distillation Policy Optimization via Sample Routing](#arxiv-2604.02288) | 2026 | +0.01 | 5/7 | `arxiv:2604.02288` |
+| 40 | [GRPO-VPS: Enhancing Group Relative Policy Optimization with Verifiable Process Supervision for Effective Reasoning](#arxiv-2604.20659) | 2026 | -0.00 | 5/7 | `arxiv:2604.20659` |
 | 41 | [LADDER: Self-Improving LLMs Through Recursive Problem Decomposition](#arxiv-2503.00735) | 2025 | -0.01 | 4/7 | `arxiv:2503.00735` |
-| 42 | [Emergent Hierarchical Reasoning in LLMs through Reinforcement Learning](#arxiv-2509.03646) | 2025 | -0.05 | 3/7 | `arxiv:2509.03646` |
-| 43 | [iGRPO: Self-Feedback-Driven LLM Reasoning](#arxiv-2602.09000) | 2026 | -0.05 | 4/7 | `arxiv:2602.09000` |
+| 42 | [Emergent Hierarchical Reasoning in LLMs through Reinforcement Learning](#arxiv-2509.03646) | 2025 | -0.04 | 3/7 | `arxiv:2509.03646` |
+| 43 | [iGRPO: Self-Feedback-Driven LLM Reasoning](#arxiv-2602.09000) | 2026 | -0.04 | 4/7 | `arxiv:2602.09000` |
 | 44 | [From $f(x)$ and $g(x)$ to $f(g(x))$: LLMs Learn New Skills in RL by Composing Old Ones](#arxiv-2509.25123) | 2025 | -0.06 | 5/7 | `arxiv:2509.25123` |
-| 45 | [Revisiting On-Policy Distillation: Empirical Failure Modes and Simple Fixes](#arxiv-2603.25562) | 2026 | -0.07 | 5/7 | `arxiv:2603.25562` |
-| 46 | [The First Few Tokens Are All You Need: An Efficient and Effective Unsupervised Prefix Fine-Tuning Method for Reasoning Models](#arxiv-2503.02875) | 2025 | -0.07 | 3/7 | `arxiv:2503.02875` |
+| 45 | [Revisiting On-Policy Distillation: Empirical Failure Modes and Simple Fixes](#arxiv-2603.25562) | 2026 | -0.06 | 5/7 | `arxiv:2603.25562` |
+| 46 | [The First Few Tokens Are All You Need: An Efficient and Effective Unsupervised Prefix Fine-Tuning Method for Reasoning Models](#arxiv-2503.02875) | 2025 | -0.06 | 3/7 | `arxiv:2503.02875` |
 | 47 | [Single-stream Policy Optimization](#arxiv-2509.13232) | 2025 | -0.07 | 5/7 | `arxiv:2509.13232` |
 | 48 | [Self-Distillation Enables Continual Learning](#arxiv-2601.19897) | 2026 | -0.08 | 6/7 | `arxiv:2601.19897` |
-| 49 | [RIFT: A RubrIc Failure Mode Taxonomy and Automated Diagnostics](#arxiv-2604.01375) | 2026 | -0.10 | 3/7 | `arxiv:2604.01375` |
+| 49 | [RIFT: A RubrIc Failure Mode Taxonomy and Automated Diagnostics](#arxiv-2604.01375) | 2026 | -0.09 | 3/7 | `arxiv:2604.01375` |
 | 50 | [It Takes Two: Your GRPO Is Secretly DPO](#arxiv-2510.00977) | 2025 | -0.10 | 5/7 | `arxiv:2510.00977` |
-| 51 | [Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?](#arxiv-2603.24472) | 2026 | -0.17 | 3/7 | `arxiv:2603.24472` |
+| 51 | [Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?](#arxiv-2603.24472) | 2026 | -0.16 | 3/7 | `arxiv:2603.24472` |
 | 52 | [Klear-Reasoner: Advancing Reasoning Capability via Gradient-Preserving Clipping Policy Optimization](#arxiv-2508.07629) | 2025 | -0.23 | 3/6 | `arxiv:2508.07629` |
-| 53 | [Weight-Space Geometry of Offline Reasoning Training](#arxiv-2606.23740) | 2026 | -0.25 | 2/7 | `arxiv:2606.23740` |
+| 53 | [Weight-Space Geometry of Offline Reasoning Training](#arxiv-2606.23740) | 2026 | -0.24 | 2/7 | `arxiv:2606.23740` |
 | 54 | [DAPO: An Open-Source LLM Reinforcement Learning System at Scale](#arxiv-2503.14476) | 2025 | -0.32 | 3/7 | `arxiv:2503.14476` |
-| 55 | [BDH-CQ: In-Context Learning with Recurrent Latent Reasoning](#arxiv-2608.09888) | 2026 | -0.35 | 2/7 | `arxiv:2608.09888` |
-| 56 | [Evolutionary Strategies lead to Catastrophic Forgetting in LLMs](#arxiv-2601.20861) | 2026 | -0.54 | 3/7 | `arxiv:2601.20861` |
+| 55 | [BDH-CQ: In-Context Learning with Recurrent Latent Reasoning](#arxiv-2608.09888) | 2026 | -0.34 | 2/7 | `arxiv:2608.09888` |
+| 56 | [Evolutionary Strategies lead to Catastrophic Forgetting in LLMs](#arxiv-2601.20861) | 2026 | -0.53 | 3/7 | `arxiv:2601.20861` |
+| 57 | [Fine-Tuning Fixes Mode Collapse and Over-Dispersion in LLMs](#arxiv-2609.16454) | 2026 |  | 0/0 | `arxiv:2609.16454` |
+| 58 | [TTPO: Test-Time Policy Optimization](#arxiv-2608.27448) | 2026 |  | 0/0 | `arxiv:2608.27448` |
+| 59 | [Reinforced Efficient Reasoning via Semantically Diverse Exploration](#arxiv-2601.05053) | 2026 |  | 0/0 | `arxiv:2601.05053` |
+| 60 | [Representation-Based Exploration for Language Models: From Test-Time to Post-Training](#arxiv-2510.11686) | 2025 |  | 0/0 | `arxiv:2510.11686` |
 
 ### LLMs: architectures, context, training
 
 | rank | title | year | final | accept | key |
 |---:|---|---|---:|---:|---|
-| 1 | [Zoology: Measuring and Improving Recall in Efficient Language Models](#arxiv-2312.04927) | 2023 | +0.60 | 5/7 | `arxiv:2312.04927` |
+| 1 | [Zoology: Measuring and Improving Recall in Efficient Language Models](#arxiv-2312.04927) | 2023 | +0.59 | 5/7 | `arxiv:2312.04927` |
 | 2 | [Cache-to-Cache: Direct Semantic Communication Between Large Language Models](#arxiv-2510.03215) | 2025 | +0.50 | 5/7 | `arxiv:2510.03215` |
 | 3 | [Large Language Diffusion Models](#arxiv-2502.09992) | 2025 | +0.50 | 6/7 | `arxiv:2502.09992` |
 | 4 | [Hyena Hierarchy: Towards Larger Convolutional Language Models](#arxiv-2302.10866) | 2023 | +0.42 | 6/7 | `arxiv:2302.10866` |
-| 5 | [Neural Networks and the Chomsky Hierarchy](#arxiv-2207.02098) | 2022 | +0.31 | 7/7 | `arxiv:2207.02098` |
-| 6 | [Enabling Agents to Communicate Entirely in Latent Space](#arxiv-2511.09149) | 2025 | +0.29 | 4/7 | `arxiv:2511.09149` |
-| 7 | [DiffusionGemma Technical Report](#arxiv-2608.00146) | 2026 | +0.29 | 3/7 | `arxiv:2608.00146` |
-| 8 | [Smarter, Better, Faster, Longer: A Modern Bidirectional Encoder for Fast, Memory Efficient, and Long Context Finetuning and Inference](#arxiv-2412.13663) | 2024 | +0.28 | 5/7 | `arxiv:2412.13663` |
+| 5 | [Enabling Agents to Communicate Entirely in Latent Space](#arxiv-2511.09149) | 2025 | +0.30 | 4/7 | `arxiv:2511.09149` |
+| 6 | [Neural Networks and the Chomsky Hierarchy](#arxiv-2207.02098) | 2022 | +0.30 | 7/7 | `arxiv:2207.02098` |
+| 7 | [Smarter, Better, Faster, Longer: A Modern Bidirectional Encoder for Fast, Memory Efficient, and Long Context Finetuning and Inference](#arxiv-2412.13663) | 2024 | +0.29 | 5/7 | `arxiv:2412.13663` |
+| 8 | [DiffusionGemma Technical Report](#arxiv-2608.00146) | 2026 | +0.29 | 3/7 | `arxiv:2608.00146` |
 | 9 | [Language Is Not All You Need: Aligning Perception with Language Models](#arxiv-2302.14045) | 2023 | +0.26 | 6/7 | `arxiv:2302.14045` |
-| 10 | [Memorizing Transformers](#arxiv-2203.08913) | 2022 | +0.25 | 5/7 | `arxiv:2203.08913` |
-| 11 | [XBridge: Entity-Grounded Latent Bridge for Heterogeneous LLM Communication](#arxiv-2608.11676) | 2026 | +0.25 | 5/7 | `arxiv:2608.11676` |
-| 12 | [A Hippocampus for Linear Attention: An Exact Memory for What the Recurrent State Forgets](#arxiv-2607.02303) | 2026 | +0.24 | 6/7 | `arxiv:2607.02303` |
-| 13 | [Scaling MLPs: A Tale of Inductive Bias](#arxiv-2306.13575) | 2023 | +0.24 | 3/7 | `arxiv:2306.13575` |
-| 14 | [2 OLMo 2 Furious](#arxiv-2501.00656) | 2024 | +0.23 | 5/7 | `arxiv:2501.00656` |
+| 10 | [XBridge: Entity-Grounded Latent Bridge for Heterogeneous LLM Communication](#arxiv-2608.11676) | 2026 | +0.25 | 5/7 | `arxiv:2608.11676` |
+| 11 | [A Hippocampus for Linear Attention: An Exact Memory for What the Recurrent State Forgets](#arxiv-2607.02303) | 2026 | +0.25 | 6/7 | `arxiv:2607.02303` |
+| 12 | [Scaling MLPs: A Tale of Inductive Bias](#arxiv-2306.13575) | 2023 | +0.24 | 3/7 | `arxiv:2306.13575` |
+| 13 | [Memorizing Transformers](#arxiv-2203.08913) | 2022 | +0.24 | 5/7 | `arxiv:2203.08913` |
+| 14 | [2 OLMo 2 Furious](#arxiv-2501.00656) | 2024 | +0.24 | 5/7 | `arxiv:2501.00656` |
 | 15 | [Florence-2: Advancing a Unified Representation for a Variety of Vision Tasks](#arxiv-2311.06242) | 2023 | +0.23 | 4/7 | `arxiv:2311.06242` |
-| 16 | [Olmo 3](#arxiv-2512.13961) | 2025 | +0.22 | 3/7 | `arxiv:2512.13961` |
-| 17 | [DMax: Aggressive Parallel Decoding for dLLMs](#arxiv-2604.08302) | 2026 | +0.21 | 4/7 | `arxiv:2604.08302` |
+| 16 | [Olmo 3](#arxiv-2512.13961) | 2025 | +0.23 | 3/7 | `arxiv:2512.13961` |
+| 17 | [DMax: Aggressive Parallel Decoding for dLLMs](#arxiv-2604.08302) | 2026 | +0.22 | 4/7 | `arxiv:2604.08302` |
 | 18 | [Skip a Layer or Loop It? Learning Program-of-Layers in LLMs](#arxiv-2606.06574) | 2026 | +0.19 | 6/7 | `arxiv:2606.06574` |
 | 19 | [Unlimiformer: Long-Range Transformers with Unlimited Length Input](#arxiv-2305.01625) | 2023 | +0.18 | 5/7 | `arxiv:2305.01625` |
-| 20 | [Mixture-of-Recursions: Learning Dynamic Recursive Depths for Adaptive Token-Level Computation](#arxiv-2507.10524) | 2025 | +0.17 | 7/7 | `arxiv:2507.10524` |
+| 20 | [Mixture-of-Recursions: Learning Dynamic Recursive Depths for Adaptive Token-Level Computation](#arxiv-2507.10524) | 2025 | +0.18 | 7/7 | `arxiv:2507.10524` |
 | 21 | [LLaDA2.0: Scaling Up Diffusion Language Models to 100B](#arxiv-2512.15745) | 2025 | +0.15 | 4/7 | `arxiv:2512.15745` |
 | 22 | [Recursive Language Models](#arxiv-2512.24601) | 2025 | +0.15 | 4/7 | `arxiv:2512.24601` |
-| 23 | [Cross-Model KV Cache Transfer in LLM Families: A Closed-Form Linear Mapping for Prefill Reuse](#arxiv-2608.03893) | 2026 | +0.14 | 5/7 | `arxiv:2608.03893` |
-| 24 | [Transformers are RNNs: Fast Autoregressive Transformers with Linear Attention](#arxiv-2006.16236) | 2020 | +0.13 | 5/7 | `arxiv:2006.16236` |
-| 25 | [Searching for Activation Functions](#arxiv-1710.05941) | 2017 | +0.13 | 4/7 | `arxiv:1710.05941` |
-| 26 | [Communicating Activations Between Language Model Agents](#arxiv-2501.14082) | 2025 | +0.11 | 6/7 | `arxiv:2501.14082` |
+| 23 | [Cross-Model KV Cache Transfer in LLM Families: A Closed-Form Linear Mapping for Prefill Reuse](#arxiv-2608.03893) | 2026 | +0.15 | 5/7 | `arxiv:2608.03893` |
+| 24 | [Communicating Activations Between Language Model Agents](#arxiv-2501.14082) | 2025 | +0.12 | 6/7 | `arxiv:2501.14082` |
+| 25 | [Transformers are RNNs: Fast Autoregressive Transformers with Linear Attention](#arxiv-2006.16236) | 2020 | +0.11 | 5/7 | `arxiv:2006.16236` |
+| 26 | [Searching for Activation Functions](#arxiv-1710.05941) | 2017 | +0.11 | 4/7 | `arxiv:1710.05941` |
 | 27 | [The Llama 3 Herd of Models](#arxiv-2407.21783) | 2024 | +0.08 | 3/7 | `arxiv:2407.21783` |
 | 28 | [Encoder-Decoder or Decoder-Only? Revisiting Encoder-Decoder Large Language Model](#arxiv-2510.26622) | 2025 | +0.06 | 6/7 | `arxiv:2510.26622` |
-| 29 | [Beyond Scattered Acceptance: Fast and Coherent Inference for DLMs via Longest Stable Prefixes](#arxiv-2603.05454) | 2026 | +0.05 | 5/7 | `arxiv:2603.05454` |
-| 30 | [Encoder-Decoder Gemma: Improving the Quality-Efficiency Trade-Off via Adaptation](#arxiv-2504.06225) | 2025 | -0.01 | 5/7 | `arxiv:2504.06225` |
-| 31 | [LLaDA2.1: Speeding Up Text Diffusion via Token Editing](#arxiv-2602.08676) | 2026 | -0.04 | 5/7 | `arxiv:2602.08676` |
+| 29 | [Beyond Scattered Acceptance: Fast and Coherent Inference for DLMs via Longest Stable Prefixes](#arxiv-2603.05454) | 2026 | +0.06 | 5/7 | `arxiv:2603.05454` |
+| 30 | [Encoder-Decoder Gemma: Improving the Quality-Efficiency Trade-Off via Adaptation](#arxiv-2504.06225) | 2025 | -0.00 | 5/7 | `arxiv:2504.06225` |
+| 31 | [LLaDA2.1: Speeding Up Text Diffusion via Token Editing](#arxiv-2602.08676) | 2026 | -0.03 | 5/7 | `arxiv:2602.08676` |
 | 32 | [Leave No Context Behind: Efficient Infinite Context Transformers with Infini-attention](#arxiv-2404.07143) | 2024 | -0.06 | 3/7 | `arxiv:2404.07143` |
-| 33 | [TransformerFAM: Feedback attention is working memory](#arxiv-2404.09173) | 2024 | -0.09 | 3/7 | `arxiv:2404.09173` |
-| 34 | [Latent Cache Flow: Model-to-Model Communication Without Text](#arxiv-2605.22863) | 2026 | -0.16 | 4/7 | `arxiv:2605.22863` |
-| 35 | [Energy Transformer](#arxiv-2302.07253) | 2023 | -0.30 | 4/7 | `arxiv:2302.07253` |
-| 36 | [T5Gemma 2: Seeing, Reading, and Understanding Longer](#arxiv-2512.14856) | 2025 | -0.30 | 2/7 | `arxiv:2512.14856` |
-| 37 | [xLSTM: Extended Long Short-Term Memory](#arxiv-2405.04517) | 2024 | -0.33 | 2/7 | `arxiv:2405.04517` |
-| 38 | [Your Transformer is Secretly Linear](#arxiv-2405.12250) | 2024 | -0.41 | 3/7 | `arxiv:2405.12250` |
-| 39 | [GLU Variants Improve Transformer](#arxiv-2002.05202) | 2020 | -0.58 | 1/7 | `arxiv:2002.05202` |
+| 33 | [TransformerFAM: Feedback attention is working memory](#arxiv-2404.09173) | 2024 | -0.08 | 3/7 | `arxiv:2404.09173` |
+| 34 | [Latent Cache Flow: Model-to-Model Communication Without Text](#arxiv-2605.22863) | 2026 | -0.15 | 4/7 | `arxiv:2605.22863` |
+| 35 | [T5Gemma 2: Seeing, Reading, and Understanding Longer](#arxiv-2512.14856) | 2025 | -0.29 | 2/7 | `arxiv:2512.14856` |
+| 36 | [Energy Transformer](#arxiv-2302.07253) | 2023 | -0.29 | 4/7 | `arxiv:2302.07253` |
+| 37 | [xLSTM: Extended Long Short-Term Memory](#arxiv-2405.04517) | 2024 | -0.31 | 2/7 | `arxiv:2405.04517` |
+| 38 | [Your Transformer is Secretly Linear](#arxiv-2405.12250) | 2024 | -0.40 | 3/7 | `arxiv:2405.12250` |
+| 39 | [GLU Variants Improve Transformer](#arxiv-2002.05202) | 2020 | -0.59 | 1/7 | `arxiv:2002.05202` |
+| 40 | [Language Models Can Control Their Own Attention](#arxiv-2609.02737) | 2026 |  | 0/0 | `arxiv:2609.02737` |
+| 41 | [Recirculation](#arxiv-2608.17981) | 2026 |  | 0/0 | `arxiv:2608.17981` |
+| 42 | [Hierarchical Latent Prediction for Language Models](#arxiv-2608.05806) | 2026 |  | 0/0 | `arxiv:2608.05806` |
+| 43 | [Universal Transformers](#arxiv-1807.03819) | 2018 |  | 0/0 | `arxiv:1807.03819` |
 
 ### Reasoning and the "physics" of language models
 
@@ -356,146 +366,159 @@ Remaining unparsed reviews after retry are shifted down (DR-7B Std n=9, consensu
 | 4 | [Grokked Transformers are Implicit Reasoners: A Mechanistic Journey to the Edge of Generalization](#arxiv-2405.15071) | 2024 | +0.46 | 6/7 | `arxiv:2405.15071` |
 | 5 | [Physics of Language Models: Part 1, Learning Hierarchical Language Structures](#arxiv-2305.13673) | 2023 | +0.45 | 6/7 | `arxiv:2305.13673` |
 | 6 | [Grokking Group Multiplication with Cosets](#openreview-hcQfTsVnBo) | unknown | +0.43 | 5/7 | `openreview:hcQfTsVnBo` |
-| 7 | [rStar-Math: Small LLMs Can Master Math Reasoning with Self-Evolved Deep Thinking](#arxiv-2501.04519) | 2025 | +0.39 | 6/7 | `arxiv:2501.04519` |
-| 8 | [Spurious Rewards: Rethinking Training Signals in RLVR](#arxiv-2506.10947) | 2025 | +0.39 | 6/6 | `arxiv:2506.10947` |
-| 9 | [Language Models Use Trigonometry to Do Addition](#arxiv-2502.00873) | 2025 | +0.39 | 6/7 | `arxiv:2502.00873` |
-| 10 | [Pre-trained Large Language Models Use Fourier Features to Compute Addition](#arxiv-2406.03445) | 2024 | +0.37 | 6/7 | `arxiv:2406.03445` |
+| 7 | [Language Models Use Trigonometry to Do Addition](#arxiv-2502.00873) | 2025 | +0.39 | 6/7 | `arxiv:2502.00873` |
+| 8 | [rStar-Math: Small LLMs Can Master Math Reasoning with Self-Evolved Deep Thinking](#arxiv-2501.04519) | 2025 | +0.39 | 6/7 | `arxiv:2501.04519` |
+| 9 | [Spurious Rewards: Rethinking Training Signals in RLVR](#arxiv-2506.10947) | 2025 | +0.39 | 6/6 | `arxiv:2506.10947` |
+| 10 | [Pre-trained Large Language Models Use Fourier Features to Compute Addition](#arxiv-2406.03445) | 2024 | +0.38 | 6/7 | `arxiv:2406.03445` |
 | 11 | [Are Emergent Abilities of Large Language Models a Mirage?](#arxiv-2304.15004) | 2023 | +0.37 | 5/7 | `arxiv:2304.15004` |
 | 12 | [Physics of Language Models: Part 3.3, Knowledge Capacity Scaling Laws](#arxiv-2404.05405) | 2024 | +0.36 | 5/7 | `arxiv:2404.05405` |
-| 13 | [In-Context Algebra](#arxiv-2512.16902) | 2025 | +0.34 | 7/7 | `arxiv:2512.16902` |
+| 13 | [In-Context Algebra](#arxiv-2512.16902) | 2025 | +0.33 | 7/7 | `arxiv:2512.16902` |
 | 14 | [Physics of Language Models: Part 2.1, Grade-School Math and the Hidden Reasoning Process](#arxiv-2407.20311) | 2024 | +0.32 | 5/7 | `arxiv:2407.20311` |
 | 15 | [How do language models learn facts? Dynamics, curricula and hallucinations](#arxiv-2503.21676) | 2025 | +0.30 | 6/7 | `arxiv:2503.21676` |
 | 16 | [Bridging the Gap Between Latent and Explicit Reasoning with Looped Transformers](#arxiv-2606.31779) | 2026 | +0.29 | 5/7 | `arxiv:2606.31779` |
-| 17 | [Physics of Language Models: Part 3.2, Knowledge Manipulation](#arxiv-2309.14402) | 2023 | +0.29 | 3/6 | `arxiv:2309.14402` |
-| 18 | [Self-Consistency Improves Chain of Thought Reasoning in Language Models](#arxiv-2203.11171) | 2022 | +0.25 | 7/7 | `arxiv:2203.11171` |
-| 19 | [Reliable Chain-of-Thought via Prefix Consistency](#arxiv-2605.07654) | 2026 | +0.24 | 6/7 | `arxiv:2605.07654` |
+| 17 | [Physics of Language Models: Part 3.2, Knowledge Manipulation](#arxiv-2309.14402) | 2023 | +0.28 | 3/6 | `arxiv:2309.14402` |
+| 18 | [Reliable Chain-of-Thought via Prefix Consistency](#arxiv-2605.07654) | 2026 | +0.25 | 6/7 | `arxiv:2605.07654` |
+| 19 | [Self-Consistency Improves Chain of Thought Reasoning in Language Models](#arxiv-2203.11171) | 2022 | +0.24 | 7/7 | `arxiv:2203.11171` |
 | 20 | [The Unreasonable Effectiveness of Entropy Minimization in LLM Reasoning](#arxiv-2505.15134) | 2025 | +0.23 | 6/7 | `arxiv:2505.15134` |
 | 21 | [SIM-CoT: Supervised Implicit Chain-of-Thought](#arxiv-2509.20317) | 2025 | +0.23 | 6/7 | `arxiv:2509.20317` |
-| 22 | [Scaling up Test-Time Compute with Latent Reasoning: A Recurrent Depth Approach](#arxiv-2502.05171) | 2025 | +0.22 | 5/7 | `arxiv:2502.05171` |
+| 22 | [Scaling up Test-Time Compute with Latent Reasoning: A Recurrent Depth Approach](#arxiv-2502.05171) | 2025 | +0.23 | 5/7 | `arxiv:2502.05171` |
 | 23 | [Reinforcement Learning for Reasoning in Large Language Models with One Training Example](#arxiv-2504.20571) | 2025 | +0.21 | 4/7 | `arxiv:2504.20571` |
 | 24 | [Physics of Language Models: Part 3.1, Knowledge Storage and Extraction](#arxiv-2309.14316) | 2023 | +0.21 | 4/7 | `arxiv:2309.14316` |
 | 25 | [Evaluating the World Model Implicit in a Generative Model](#arxiv-2406.03689) | 2024 | +0.19 | 4/7 | `arxiv:2406.03689` |
 | 26 | [The Reversal Curse: LLMs trained on "A is B" fail to learn "B is A"](#arxiv-2309.12288) | 2023 | +0.17 | 4/7 | `arxiv:2309.12288` |
-| 27 | [Training Large Language Models to Reason in a Continuous Latent Space](#arxiv-2412.06769) | 2024 | +0.14 | 5/7 | `arxiv:2412.06769` |
-| 28 | [Emergent Analogical Reasoning in Large Language Models](#arxiv-2212.09196) | 2022 | +0.13 | 5/7 | `arxiv:2212.09196` |
-| 29 | [A Formal Comparison Between Chain of Thought and Latent Thought](#arxiv-2509.25239) | 2025 | +0.12 | 5/7 | `arxiv:2509.25239` |
-| 30 | [How Do Large Language Models Acquire Factual Knowledge During Pretraining?](#arxiv-2406.11813) | 2024 | +0.10 | 5/7 | `arxiv:2406.11813` |
-| 31 | [Transcendence: Generative Models Can Outperform The Experts That Train Them](#arxiv-2406.11741) | 2024 | +0.10 | 4/7 | `arxiv:2406.11741` |
+| 27 | [Training Large Language Models to Reason in a Continuous Latent Space](#arxiv-2412.06769) | 2024 | +0.15 | 5/7 | `arxiv:2412.06769` |
+| 28 | [A Formal Comparison Between Chain of Thought and Latent Thought](#arxiv-2509.25239) | 2025 | +0.13 | 5/7 | `arxiv:2509.25239` |
+| 29 | [Emergent Analogical Reasoning in Large Language Models](#arxiv-2212.09196) | 2022 | +0.12 | 5/7 | `arxiv:2212.09196` |
+| 30 | [Transcendence: Generative Models Can Outperform The Experts That Train Them](#arxiv-2406.11741) | 2024 | +0.10 | 4/7 | `arxiv:2406.11741` |
+| 31 | [How Do Large Language Models Acquire Factual Knowledge During Pretraining?](#arxiv-2406.11813) | 2024 | +0.10 | 5/7 | `arxiv:2406.11813` |
 | 32 | [Modular Arithmetic: Language Models Solve Math Digit by Digit](#arxiv-2508.02513) | 2025 | +0.09 | 6/7 | `arxiv:2508.02513` |
 | 33 | [Why Can't Transformers Learn Multiplication? Reverse-Engineering Reveals Long-Range Dependency Pitfalls](#arxiv-2510.00184) | 2025 | +0.06 | 6/7 | `arxiv:2510.00184` |
 | 34 | [Dissociating language and thought in large language models](#arxiv-2301.06627) | 2023 | +0.05 | 3/7 | `arxiv:2301.06627` |
 | 35 | [LiveMathematicianBench: A Live Benchmark for Mathematician-Level Reasoning with Proof Sketches](#arxiv-2604.01754) | 2026 | +0.04 | 4/7 | `arxiv:2604.01754` |
 | 36 | [Multimodal Chain-of-Thought Reasoning in Language Models](#arxiv-2302.00923) | 2023 | +0.04 | 5/7 | `arxiv:2302.00923` |
 | 37 | [Emergent Capabilities Arise Randomly from Learning Sparse Attention Patterns](#arxiv-2606.25010) | 2026 | +0.03 | 4/7 | `arxiv:2606.25010` |
-| 38 | [The Truth is in There: Improving Reasoning in Language Models with Layer-Selective Rank Reduction](#arxiv-2312.13558) | 2023 | +0.02 | 4/7 | `arxiv:2312.13558` |
-| 39 | [Language Models Compare Quantities Using Number-specific and Unit-specific Heuristics](#arxiv-2606.03982) | 2026 | -0.01 | 4/7 | `arxiv:2606.03982` |
-| 40 | [Evidence from formal logical reasoning reveals that the language of thought is not natural language](#doi-10.1073-pnas.2520095123) | 2026 | -0.08 | 5/7 | `doi:10.1073/pnas.2520095123` |
-| 41 | [From Explicit CoT to Implicit CoT: Learning to Internalize CoT Step by Step](#arxiv-2405.14838) | 2024 | -0.09 | 4/7 | `arxiv:2405.14838` |
+| 38 | [The Truth is in There: Improving Reasoning in Language Models with Layer-Selective Rank Reduction](#arxiv-2312.13558) | 2023 | +0.03 | 4/7 | `arxiv:2312.13558` |
+| 39 | [Language Models Compare Quantities Using Number-specific and Unit-specific Heuristics](#arxiv-2606.03982) | 2026 | +0.00 | 4/7 | `arxiv:2606.03982` |
+| 40 | [Evidence from formal logical reasoning reveals that the language of thought is not natural language](#doi-10.1073-pnas.2520095123) | 2026 | -0.07 | 5/7 | `doi:10.1073/pnas.2520095123` |
+| 41 | [From Explicit CoT to Implicit CoT: Learning to Internalize CoT Step by Step](#arxiv-2405.14838) | 2024 | -0.08 | 4/7 | `arxiv:2405.14838` |
 | 42 | [Language Models Are Capable of Metacognitive Monitoring and Control of Their Internal Activations](#arxiv-2505.13763) | 2025 | -0.09 | 4/7 | `arxiv:2505.13763` |
 | 43 | [Can Large Reasoning Models Self-Train?](#arxiv-2505.21444) | 2025 | -0.12 | 2/7 | `arxiv:2505.21444` |
-| 44 | [The Lookahead Limitation: Why Multi-Operand Addition is Hard for LLMs](#arxiv-2502.19981) | 2025 | -0.16 | 3/7 | `arxiv:2502.19981` |
+| 44 | [The Lookahead Limitation: Why Multi-Operand Addition is Hard for LLMs](#arxiv-2502.19981) | 2025 | -0.15 | 3/7 | `arxiv:2502.19981` |
 | 45 | [A Mechanistic Analysis of Looped Reasoning Language Models](#arxiv-2604.11791) | 2026 | -0.16 | 3/7 | `arxiv:2604.11791` |
 | 46 | [Language is primarily a tool for communication rather than thought](#doi-10.1038-s41586-024-07522-w) | 2024 | -0.17 | 4/5 | `doi:10.1038/s41586-024-07522-w` |
-| 47 | [LLMs Can't Plan, But Can Help Planning in LLM-Modulo Frameworks](#arxiv-2402.01817) | 2024 | -0.20 | 2/7 | `arxiv:2402.01817` |
-| 48 | [Knowledge Mechanisms in Large Language Models: A Survey and Perspective](#arxiv-2407.15017) | 2024 | -0.21 | 3/7 | `arxiv:2407.15017` |
-| 49 | [Position: LLMs can't jump](#openreview-klU4737opt) | unknown | -0.25 | 2/7 | `openreview:klU4737opt` |
+| 47 | [Knowledge Mechanisms in Large Language Models: A Survey and Perspective](#arxiv-2407.15017) | 2024 | -0.20 | 3/7 | `arxiv:2407.15017` |
+| 48 | [LLMs Can't Plan, But Can Help Planning in LLM-Modulo Frameworks](#arxiv-2402.01817) | 2024 | -0.20 | 2/7 | `arxiv:2402.01817` |
+| 49 | [Position: LLMs can't jump](#openreview-klU4737opt) | unknown | -0.24 | 2/7 | `openreview:klU4737opt` |
 | 50 | [Competitive Programming with Large Reasoning Models](#arxiv-2502.06807) | 2025 | -0.26 | 4/7 | `arxiv:2502.06807` |
-| 51 | [Why mathematics is set to be revolutionized by AI](#doi-10.1038-d41586-024-01413-w) | 2024 | -0.27 | 3/5 | `doi:10.1038/d41586-024-01413-w` |
+| 51 | [Why mathematics is set to be revolutionized by AI](#doi-10.1038-d41586-024-01413-w) | 2024 | -0.26 | 3/5 | `doi:10.1038/d41586-024-01413-w` |
 | 52 | [Large Language Models Still Can't Plan / PlanBench (Kambhampati)](#openreview-wUU-7XTL5XO) | unknown | -0.30 | 2/7 | `openreview:wUU-7XTL5XO` |
-| 53 | [AI-rithmetic](#arxiv-2602.10416) | 2026 | -0.41 | 2/7 | `arxiv:2602.10416` |
-| 54 | [Scaling of Search and Learning: A Roadmap to Reproduce o1 from Reinforcement Learning Perspective](#arxiv-2412.14135) | 2024 | -0.67 | 0/7 | `arxiv:2412.14135` |
+| 53 | [AI-rithmetic](#arxiv-2602.10416) | 2026 | -0.40 | 2/7 | `arxiv:2602.10416` |
+| 54 | [Scaling of Search and Learning: A Roadmap to Reproduce o1 from Reinforcement Learning Perspective](#arxiv-2412.14135) | 2024 | -0.65 | 0/7 | `arxiv:2412.14135` |
+| 55 | [Flow Reasoning Models: Turning Flows Into Efficient Recurrent Reasoners](#arxiv-2606.29150) | 2026 |  | 0/0 | `arxiv:2606.29150` |
+| 56 | [Fixed-Point Reasoners: Stable and Adaptive Deep Looped Transformers](#arxiv-2606.18206) | 2026 |  | 0/0 | `arxiv:2606.18206` |
+| 57 | [Generative Recursive Reasoning](#arxiv-2605.19376) | 2026 |  | 0/0 | `arxiv:2605.19376` |
+| 58 | [Solve the Loop: Attractor Models for Language and Reasoning](#arxiv-2605.12466) | 2026 |  | 0/0 | `arxiv:2605.12466` |
+| 59 | [Universal Transformers Need Memory: Depth-State Trade-offs in Adaptive Recursive Reasoning](#arxiv-2604.21999) | 2026 |  | 0/0 | `arxiv:2604.21999` |
+| 60 | [The Illusion of Latent Generalization: Bi-directionality and the Reversal Curse](#arxiv-2604.04943) | 2026 |  | 0/0 | `arxiv:2604.04943` |
+| 61 | [Universal Reasoning Model](#arxiv-2512.14693) | 2025 |  | 0/0 | `arxiv:2512.14693` |
+| 62 | [Less is More: Recursive Reasoning with Tiny Networks](#arxiv-2510.04871) | 2025 |  | 0/0 | `arxiv:2510.04871` |
+| 63 | [Hierarchical Reasoning Model](#arxiv-2506.21734) | 2025 |  | 0/0 | `arxiv:2506.21734` |
+| 64 | [Is the Reversal Curse a Binding Problem? Uncovering Limitations of Transformers from a Basic Generalization Failure](#arxiv-2504.01928) | 2025 |  | 0/0 | `arxiv:2504.01928` |
+| 65 | [LIMO: Less is More for Reasoning](#arxiv-2502.03387) | 2025 |  | 0/0 | `arxiv:2502.03387` |
+| 66 | [s1: Simple test-time scaling](#arxiv-2501.19393) | 2025 |  | 0/0 | `arxiv:2501.19393` |
 
 ### Data, training, optimization
 
 | rank | title | year | final | accept | key |
 |---:|---|---|---:|---:|---|
-| 1 | [Sharpness-Aware Minimization for Efficiently Improving Generalization](#arxiv-2010.01412) | 2020 | +0.58 | 5/7 | `arxiv:2010.01412` |
-| 2 | [Tasks, stability, architecture, and compute: Training more effective learned optimizers, and using them to train themselves](#arxiv-2009.11243) | 2020 | +0.51 | 5/7 | `arxiv:2009.11243` |
-| 3 | [Large Batch Optimization for Deep Learning: Training BERT in 76 minutes](#arxiv-1904.00962) | 2019 | +0.48 | 4/7 | `arxiv:1904.00962` |
+| 1 | [Sharpness-Aware Minimization for Efficiently Improving Generalization](#arxiv-2010.01412) | 2020 | +0.56 | 5/7 | `arxiv:2010.01412` |
+| 2 | [Tasks, stability, architecture, and compute: Training more effective learned optimizers, and using them to train themselves](#arxiv-2009.11243) | 2020 | +0.49 | 5/7 | `arxiv:2009.11243` |
+| 3 | [Large Batch Optimization for Deep Learning: Training BERT in 76 minutes](#arxiv-1904.00962) | 2019 | +0.47 | 4/7 | `arxiv:1904.00962` |
 | 4 | [Symbolic Discovery of Optimization Algorithms](#arxiv-2302.06675) | 2023 | +0.42 | 5/7 | `arxiv:2302.06675` |
-| 5 | [Scaling Laws for Neural Language Models](#arxiv-2001.08361) | 2020 | +0.39 | 4/7 | `arxiv:2001.08361` |
+| 5 | [Scaling Laws for Neural Language Models](#arxiv-2001.08361) | 2020 | +0.37 | 4/7 | `arxiv:2001.08361` |
 | 6 | [Loss of plasticity in deep continual learning](#doi-10.1038-s41586-024-07711-7) | 2024 | +0.36 | 5/7 | `doi:10.1038/s41586-024-07711-7` |
-| 7 | [The Loss Does Not See the Basis, but Adam Does](#arxiv-2608.05136) | 2026 | +0.34 | 6/7 | `arxiv:2608.05136` |
-| 8 | [The Road Less Scheduled](#arxiv-2405.15682) | 2024 | +0.34 | 5/7 | `arxiv:2405.15682` |
+| 7 | [The Loss Does Not See the Basis, but Adam Does](#arxiv-2608.05136) | 2026 | +0.35 | 6/7 | `arxiv:2608.05136` |
+| 8 | [The Road Less Scheduled](#arxiv-2405.15682) | 2024 | +0.35 | 5/7 | `arxiv:2405.15682` |
 | 9 | [The AdEMAMix Optimizer: Better, Faster, Older](#arxiv-2409.03137) | 2024 | +0.32 | 4/7 | `arxiv:2409.03137` |
-| 10 | [Explorative Modeling: Unlocking a Third Pretraining Axis and End-to-End Generation](#arxiv-2607.27372) | 2026 | +0.29 | 7/7 | `arxiv:2607.27372` |
-| 11 | [How much do language models memorize?](#arxiv-2505.24832) | 2025 | +0.26 | 6/7 | `arxiv:2505.24832` |
-| 12 | [How Neural Networks Extrapolate: From Feedforward to Graph Neural Networks](#arxiv-2009.11848) | 2020 | +0.24 | 5/7 | `arxiv:2009.11848` |
-| 13 | [Scaling Laws and Compute-Optimal Training Beyond Fixed Training Durations](#arxiv-2405.18392) | 2024 | +0.24 | 5/7 | `arxiv:2405.18392` |
+| 10 | [Explorative Modeling: Unlocking a Third Pretraining Axis and End-to-End Generation](#arxiv-2607.27372) | 2026 | +0.30 | 7/7 | `arxiv:2607.27372` |
+| 11 | [How much do language models memorize?](#arxiv-2505.24832) | 2025 | +0.27 | 6/7 | `arxiv:2505.24832` |
+| 12 | [Scaling Laws and Compute-Optimal Training Beyond Fixed Training Durations](#arxiv-2405.18392) | 2024 | +0.24 | 5/7 | `arxiv:2405.18392` |
+| 13 | [How Neural Networks Extrapolate: From Feedforward to Graph Neural Networks](#arxiv-2009.11848) | 2020 | +0.22 | 5/7 | `arxiv:2009.11848` |
 | 14 | [Scaling Laws for Reward Model Overoptimization](#arxiv-2210.10760) | 2022 | +0.22 | 5/7 | `arxiv:2210.10760` |
 | 15 | [Grokfast: Accelerated Grokking by Amplifying Slow Gradients](#arxiv-2405.20233) | 2024 | +0.18 | 3/7 | `arxiv:2405.20233` |
 | 16 | [Learning Vision from Models Rivals Learning Vision from Data](#arxiv-2312.17742) | 2023 | +0.17 | 3/7 | `arxiv:2312.17742` |
 | 17 | [On-Policy RL Meets Off-Policy Experts: Harmonizing Supervised Fine-Tuning and Reinforcement Learning via Dynamic Weighting](#arxiv-2508.11408) | 2025 | +0.16 | 5/7 | `arxiv:2508.11408` |
-| 18 | [The Lottery Ticket Hypothesis: Finding Sparse, Trainable Neural Networks](#arxiv-1803.03635) | 2018 | +0.16 | 3/7 | `arxiv:1803.03635` |
-| 19 | [Perplexed by Perplexity: Perplexity-Based Data Pruning With Small Reference Models](#arxiv-2405.20541) | 2024 | +0.16 | 4/7 | `arxiv:2405.20541` |
+| 18 | [Perplexed by Perplexity: Perplexity-Based Data Pruning With Small Reference Models](#arxiv-2405.20541) | 2024 | +0.16 | 4/7 | `arxiv:2405.20541` |
+| 19 | [The Lottery Ticket Hypothesis: Finding Sparse, Trainable Neural Networks](#arxiv-1803.03635) | 2018 | +0.14 | 3/7 | `arxiv:1803.03635` |
 | 20 | [Emergent properties with repeated examples](#arxiv-2410.07041) | 2024 | +0.09 | 5/7 | `arxiv:2410.07041` |
-| 21 | [NorMuon: Making Muon more efficient and scalable](#arxiv-2510.05491) | 2025 | +0.06 | 6/7 | `arxiv:2510.05491` |
-| 22 | [Sophia: A Scalable Stochastic Second-order Optimizer for Language Model Pre-training](#arxiv-2305.14342) | 2023 | +0.04 | 4/7 | `arxiv:2305.14342` |
-| 23 | [Overcoming catastrophic forgetting in neural networks](#doi-10.1073-pnas.1611835114) | 2017 | +0.03 | 4/7 | `doi:10.1073/pnas.1611835114` |
-| 24 | [No Train No Gain: Revisiting Efficient Training Algorithms For Transformer-based Language Models](#arxiv-2307.06440) | 2023 | +0.00 | 3/7 | `arxiv:2307.06440` |
-| 25 | [Super-Convergence: Very Fast Training of Neural Networks Using Large Learning Rates](#arxiv-1708.07120) | 2017 | -0.01 | 3/7 | `arxiv:1708.07120` |
-| 26 | [On the Information Bottleneck Theory of Deep Learning (Saxe et al.)](#openreview-ry_WPG-A-) | unknown | -0.01 | 5/7 | `openreview:ry_WPG-A-` |
+| 21 | [NorMuon: Making Muon more efficient and scalable](#arxiv-2510.05491) | 2025 | +0.07 | 6/7 | `arxiv:2510.05491` |
+| 22 | [Sophia: A Scalable Stochastic Second-order Optimizer for Language Model Pre-training](#arxiv-2305.14342) | 2023 | +0.05 | 4/7 | `arxiv:2305.14342` |
+| 23 | [No Train No Gain: Revisiting Efficient Training Algorithms For Transformer-based Language Models](#arxiv-2307.06440) | 2023 | +0.02 | 3/7 | `arxiv:2307.06440` |
+| 24 | [Overcoming catastrophic forgetting in neural networks](#doi-10.1073-pnas.1611835114) | 2017 | +0.01 | 4/7 | `doi:10.1073/pnas.1611835114` |
+| 25 | [On the Information Bottleneck Theory of Deep Learning (Saxe et al.)](#openreview-ry_WPG-A-) | unknown | -0.01 | 5/7 | `openreview:ry_WPG-A-` |
+| 26 | [Super-Convergence: Very Fast Training of Neural Networks Using Large Learning Rates](#arxiv-1708.07120) | 2017 | -0.02 | 3/7 | `arxiv:1708.07120` |
 | 27 | [gzip Predicts Data-dependent Scaling Laws](#arxiv-2405.16684) | 2024 | -0.04 | 3/7 | `arxiv:2405.16684` |
-| 28 | [Cramming: Training a Language Model on a Single GPU in One Day](#arxiv-2212.14034) | 2022 | -0.08 | 3/7 | `arxiv:2212.14034` |
+| 28 | [Cramming: Training a Language Model on a Single GPU in One Day](#arxiv-2212.14034) | 2022 | -0.09 | 3/7 | `arxiv:2212.14034` |
 | 29 | [MetaOptimize: A Framework for Optimizing Step Sizes and Other Meta-parameters](#arxiv-2402.02342) | 2024 | -0.21 | 3/7 | `arxiv:2402.02342` |
-| 30 | [Supervised Fine Tuning on Curated Data is Reinforcement Learning (and can be improved)](#arxiv-2507.12856) | 2025 | -0.24 | 3/7 | `arxiv:2507.12856` |
+| 30 | [Supervised Fine Tuning on Curated Data is Reinforcement Learning (and can be improved)](#arxiv-2507.12856) | 2025 | -0.23 | 3/7 | `arxiv:2507.12856` |
 | 31 | [Continual Learning and Catastrophic Forgetting](#arxiv-2403.05175) | 2024 | -0.27 | 2/7 | `arxiv:2403.05175` |
 | 32 | [Learning in High Dimension Always Amounts to Extrapolation](#arxiv-2110.09485) | 2021 | -0.30 | 1/7 | `arxiv:2110.09485` |
-| 33 | [Self-Improving Pretraining: using post-trained models to pretrain better models](#arxiv-2601.21343) | 2026 | -0.32 | 3/7 | `arxiv:2601.21343` |
-| 34 | [Cyclical Learning Rates for Training Neural Networks](#arxiv-1506.01186) | 2015 | -0.40 | 1/7 | `arxiv:1506.01186` |
-| 35 | [Reinforcement Pre-Training](#arxiv-2506.08007) | 2025 | -0.42 | 3/7 | `arxiv:2506.08007` |
-| 36 | [Continual Backprop: Stochastic Gradient Descent with Persistent Randomness](#arxiv-2108.06325) | 2021 | -0.48 | 0/7 | `arxiv:2108.06325` |
-| 37 | [Measuring Catastrophic Forgetting in Neural Networks](#arxiv-1708.02072) | 2017 | -0.49 | 2/7 | `arxiv:1708.02072` |
-| 38 | [Nested Learning: The Illusion of Deep Learning Architectures](#arxiv-2512.24695) | 2025 | -0.65 | 0/6 | `arxiv:2512.24695` |
-| 39 | [Catastrophic Forgetting in Deep Learning: A Comprehensive Taxonomy](#arxiv-2312.10549) | 2023 | -0.66 | 0/7 | `arxiv:2312.10549` |
-| 40 | [Step-size Optimization for Continual Learning](#arxiv-2401.17401) | 2024 | -0.68 | 1/6 | `arxiv:2401.17401` |
+| 33 | [Self-Improving Pretraining: using post-trained models to pretrain better models](#arxiv-2601.21343) | 2026 | -0.31 | 3/7 | `arxiv:2601.21343` |
+| 34 | [Cyclical Learning Rates for Training Neural Networks](#arxiv-1506.01186) | 2015 | -0.41 | 1/7 | `arxiv:1506.01186` |
+| 35 | [Reinforcement Pre-Training](#arxiv-2506.08007) | 2025 | -0.41 | 3/7 | `arxiv:2506.08007` |
+| 36 | [Continual Backprop: Stochastic Gradient Descent with Persistent Randomness](#arxiv-2108.06325) | 2021 | -0.47 | 0/7 | `arxiv:2108.06325` |
+| 37 | [Measuring Catastrophic Forgetting in Neural Networks](#arxiv-1708.02072) | 2017 | -0.50 | 2/7 | `arxiv:1708.02072` |
+| 38 | [Nested Learning: The Illusion of Deep Learning Architectures](#arxiv-2512.24695) | 2025 | -0.63 | 0/6 | `arxiv:2512.24695` |
+| 39 | [Catastrophic Forgetting in Deep Learning: A Comprehensive Taxonomy](#arxiv-2312.10549) | 2023 | -0.65 | 0/7 | `arxiv:2312.10549` |
+| 40 | [Step-size Optimization for Continual Learning](#arxiv-2401.17401) | 2024 | -0.67 | 1/6 | `arxiv:2401.17401` |
+| 41 | [Puro-2B: Poor Lab's Qwen2-1.5B Trained on RTX 5090 within $5090](#arxiv-2608.27370) | 2026 |  | 0/0 | `arxiv:2608.27370` |
+| 42 | [Why the Third Axis Is Freedom](#doi-10.5281-zenodo.21979851) | 2026 |  | 0/0 | `doi:10.5281/zenodo.21979851` |
 
 ### Self-supervised learning and vision
 
 | rank | title | year | final | accept | key |
 |---:|---|---|---:|---:|---|
 | 1 | [When Does LeJEPA Learn a World Model?](#arxiv-2605.26379) | 2026 | +0.62 | 6/7 | `arxiv:2605.26379` |
-| 2 | [Emerging Properties in Self-Supervised Vision Transformers](#arxiv-2104.14294) | 2021 | +0.48 | 5/7 | `arxiv:2104.14294` |
-| 3 | [Unsupervised Learning of Visual Features by Contrasting Cluster Assignments](#arxiv-2006.09882) | 2020 | +0.43 | 4/7 | `arxiv:2006.09882` |
-| 4 | [ImageReward: Learning and Evaluating Human Preferences for Text-to-Image Generation](#arxiv-2304.05977) | 2023 | +0.43 | 5/7 | `arxiv:2304.05977` |
+| 2 | [Emerging Properties in Self-Supervised Vision Transformers](#arxiv-2104.14294) | 2021 | +0.47 | 5/7 | `arxiv:2104.14294` |
+| 3 | [ImageReward: Learning and Evaluating Human Preferences for Text-to-Image Generation](#arxiv-2304.05977) | 2023 | +0.43 | 5/7 | `arxiv:2304.05977` |
+| 4 | [Unsupervised Learning of Visual Features by Contrasting Cluster Assignments](#arxiv-2006.09882) | 2020 | +0.41 | 4/7 | `arxiv:2006.09882` |
 | 5 | [VISReg: Variance-Invariance-Sketching Regularization for JEPA training](#arxiv-2606.02572) | 2026 | +0.34 | 6/7 | `arxiv:2606.02572` |
 | 6 | [LeJEPA: Provable and Scalable Self-Supervised Learning Without the Heuristics](#arxiv-2511.08544) | 2025 | +0.33 | 6/7 | `arxiv:2511.08544` |
 | 7 | [Image as a Foreign Language: BEiT Pretraining for All Vision and Vision-Language Tasks](#arxiv-2208.10442) | 2022 | +0.24 | 5/7 | `arxiv:2208.10442` |
 | 8 | [DINOv2: Learning Robust Visual Features without Supervision](#arxiv-2304.07193) | 2023 | +0.20 | 4/7 | `arxiv:2304.07193` |
-| 9 | [Latent Consistency Models: Synthesizing High-Resolution Images with Few-Step Inference](#arxiv-2310.04378) | 2023 | +0.19 | 3/7 | `arxiv:2310.04378` |
-| 10 | [Emu: Enhancing Image Generation Models Using Photogenic Needles in a Haystack](#arxiv-2309.15807) | 2023 | +0.19 | 4/7 | `arxiv:2309.15807` |
-| 11 | [Self-Supervised Learning from Images with a Joint-Embedding Predictive Architecture](#arxiv-2301.08243) | 2023 | +0.18 | 4/7 | `arxiv:2301.08243` |
+| 9 | [Latent Consistency Models: Synthesizing High-Resolution Images with Few-Step Inference](#arxiv-2310.04378) | 2023 | +0.20 | 3/7 | `arxiv:2310.04378` |
+| 10 | [Self-Supervised Learning from Images with a Joint-Embedding Predictive Architecture](#arxiv-2301.08243) | 2023 | +0.19 | 4/7 | `arxiv:2301.08243` |
+| 11 | [Emu: Enhancing Image Generation Models Using Photogenic Needles in a Haystack](#arxiv-2309.15807) | 2023 | +0.19 | 4/7 | `arxiv:2309.15807` |
 | 12 | [iBOT: Image BERT Pre-Training with Online Tokenizer](#arxiv-2111.07832) | 2021 | +0.14 | 4/7 | `arxiv:2111.07832` |
-| 13 | [ELT: Elastic Looped Transformers for Visual Generation](#arxiv-2604.09168) | 2026 | +0.05 | 4/7 | `arxiv:2604.09168` |
-| 14 | [Towards Universal Fake Image Detectors that Generalize Across Generative Models](#arxiv-2302.10174) | 2023 | +0.04 | 4/7 | `arxiv:2302.10174` |
-| 15 | [The GAN is dead; long live the GAN! A Modern GAN Baseline](#arxiv-2501.05441) | 2025 | +0.03 | 5/7 | `arxiv:2501.05441` |
-| 16 | [VICReg: Variance-Invariance-Covariance Regularization for Self-Supervised Learning](#arxiv-2105.04906) | 2021 | -0.08 | 3/7 | `arxiv:2105.04906` |
-| 17 | [Tune-A-Video: One-Shot Tuning of Image Diffusion Models for Text-to-Video Generation](#arxiv-2212.11565) | 2022 | -0.25 | 3/7 | `arxiv:2212.11565` |
-| 18 | [To Compress or Not to Compress- Self-Supervised Learning and Information Theory: A Review](#arxiv-2304.09355) | 2023 | -0.41 | 1/6 | `arxiv:2304.09355` |
-| 19 | [A Cookbook of Self-Supervised Learning](#arxiv-2304.12210) | 2023 | -0.57 | 1/7 | `arxiv:2304.12210` |
-| 20 | [A Path Towards Autonomous Machine Intelligence (LeCun, 2022)](#openreview-BZ5a1r-kVsf) | unknown | -0.61 | 2/6 | `openreview:BZ5a1r-kVsf` |
+| 13 | [ELT: Elastic Looped Transformers for Visual Generation](#arxiv-2604.09168) | 2026 | +0.06 | 4/7 | `arxiv:2604.09168` |
+| 14 | [The GAN is dead; long live the GAN! A Modern GAN Baseline](#arxiv-2501.05441) | 2025 | +0.03 | 5/7 | `arxiv:2501.05441` |
+| 15 | [VICReg: Variance-Invariance-Covariance Regularization for Self-Supervised Learning](#arxiv-2105.04906) | 2021 | -0.07 | 3/7 | `arxiv:2105.04906` |
+| 16 | [To Compress or Not to Compress- Self-Supervised Learning and Information Theory: A Review](#arxiv-2304.09355) | 2023 | -0.39 | 1/6 | `arxiv:2304.09355` |
+| 17 | [A Cookbook of Self-Supervised Learning](#arxiv-2304.12210) | 2023 | -0.56 | 1/7 | `arxiv:2304.12210` |
+| 18 | [A Path Towards Autonomous Machine Intelligence (LeCun, 2022)](#openreview-BZ5a1r-kVsf) | unknown | -0.60 | 2/6 | `openreview:BZ5a1r-kVsf` |
 
 ### Retrieval, embeddings, benchmarks
 
 | rank | title | year | final | accept | key |
 |---:|---|---|---:|---:|---|
 | 1 | [Matryoshka Representation Learning](#arxiv-2205.13147) | 2022 | +0.59 | 6/7 | `arxiv:2205.13147` |
-| 2 | [One Embedder, Any Task: Instruction-Finetuned Text Embeddings](#arxiv-2212.09741) | 2022 | +0.53 | 6/7 | `arxiv:2212.09741` |
-| 3 | [Beyond the Imitation Game: Quantifying and extrapolating the capabilities of language models](#arxiv-2206.04615) | 2022 | +0.50 | 3/6 | `arxiv:2206.04615` |
+| 2 | [One Embedder, Any Task: Instruction-Finetuned Text Embeddings](#arxiv-2212.09741) | 2022 | +0.52 | 6/7 | `arxiv:2212.09741` |
+| 3 | [Beyond the Imitation Game: Quantifying and extrapolating the capabilities of language models](#arxiv-2206.04615) | 2022 | +0.49 | 3/6 | `arxiv:2206.04615` |
 | 4 | [Rainbow Teaming: Open-Ended Generation of Diverse Adversarial Prompts](#arxiv-2402.16822) | 2024 | +0.38 | 6/7 | `arxiv:2402.16822` |
-| 5 | [MLE-bench: Evaluating Machine Learning Agents on Machine Learning Engineering](#arxiv-2410.07095) | 2024 | +0.31 | 4/7 | `arxiv:2410.07095` |
+| 5 | [MLE-bench: Evaluating Machine Learning Agents on Machine Learning Engineering](#arxiv-2410.07095) | 2024 | +0.32 | 4/7 | `arxiv:2410.07095` |
 | 6 | [Large Dual Encoders Are Generalizable Retrievers](#arxiv-2112.07899) | 2021 | +0.30 | 4/7 | `arxiv:2112.07899` |
-| 7 | [Demonstrate-Search-Predict: Composing retrieval and language models for knowledge-intensive NLP](#arxiv-2212.14024) | 2022 | +0.30 | 6/7 | `arxiv:2212.14024` |
+| 7 | [Demonstrate-Search-Predict: Composing retrieval and language models for knowledge-intensive NLP](#arxiv-2212.14024) | 2022 | +0.29 | 6/7 | `arxiv:2212.14024` |
 | 8 | [CEO-Bench: Can Agents Play the Long Game?](#arxiv-2606.18543) | 2026 | +0.17 | 5/7 | `arxiv:2606.18543` |
 | 9 | [Super-NaturalInstructions: Generalization via Declarative Instructions on 1600+ NLP Tasks](#acl-2022.emnlp-main.340) | unknown | +0.10 | 4/6 | `acl:2022.emnlp-main.340` |
-| 10 | [Did Aristotle Use a Laptop? A Question Answering Benchmark with Implicit Reasoning Strategies](#arxiv-2101.02235) | 2021 | +0.07 | 5/7 | `arxiv:2101.02235` |
-| 11 | [Can Generalist Foundation Models Outcompete Special-Purpose Tuning? Case Study in Medicine](#arxiv-2311.16452) | 2023 | +0.05 | 5/7 | `arxiv:2311.16452` |
+| 10 | [Can Generalist Foundation Models Outcompete Special-Purpose Tuning? Case Study in Medicine](#arxiv-2311.16452) | 2023 | +0.06 | 5/7 | `arxiv:2311.16452` |
+| 11 | [Did Aristotle Use a Laptop? A Question Answering Benchmark with Implicit Reasoning Strategies](#arxiv-2101.02235) | 2021 | +0.06 | 5/7 | `arxiv:2101.02235` |
 | 12 | [Artifacts or Abduction: How Do LLMs Answer Multiple-Choice Questions Without the Question?](#arxiv-2402.12483) | 2024 | -0.04 | 4/7 | `arxiv:2402.12483` |
-| 13 | [PRIMERA: Pyramid-based Masked Sentence Pre-training for Multi-document Summarization](#acl-2022.acl-long.360) | unknown | -0.08 | 3/7 | `acl:2022.acl-long.360` |
-| 14 | [Learning to Compress Prompts with Gist Tokens](#arxiv-2304.08467) | 2023 | -0.08 | 4/7 | `arxiv:2304.08467` |
-| 15 | [Promptbreeder: Self-Referential Self-Improvement Via Prompt Evolution](#arxiv-2309.16797) | 2023 | -0.20 | 4/7 | `arxiv:2309.16797` |
-| 16 | [People cannot distinguish GPT-4 from a human in a Turing test](#arxiv-2405.08007) | 2024 | -0.28 | 1/7 | `arxiv:2405.08007` |
+| 13 | [Learning to Compress Prompts with Gist Tokens](#arxiv-2304.08467) | 2023 | -0.07 | 4/7 | `arxiv:2304.08467` |
+| 14 | [PRIMERA: Pyramid-based Masked Sentence Pre-training for Multi-document Summarization](#acl-2022.acl-long.360) | unknown | -0.07 | 3/7 | `acl:2022.acl-long.360` |
+| 15 | [Promptbreeder: Self-Referential Self-Improvement Via Prompt Evolution](#arxiv-2309.16797) | 2023 | -0.19 | 4/7 | `arxiv:2309.16797` |
+| 16 | [People cannot distinguish GPT-4 from a human in a Turing test](#arxiv-2405.08007) | 2024 | -0.27 | 1/7 | `arxiv:2405.08007` |
 | 17 | [A System for Answering Simple Questions in Multiple Languages](#acl-2023.acl-demo.51) | unknown | -0.28 | 2/7 | `acl:2023.acl-demo.51` |
+| 18 | [StableToolBench: Towards Stable Large-Scale Benchmarking on Tool Learning of Large Language Models](#arxiv-2403.07714) | 2024 |  | 0/0 | `arxiv:2403.07714` |
 
 ### Agents, open-endedness, AGI
 
@@ -506,73 +529,74 @@ Remaining unparsed reviews after retry are shifted down (DR-7B Std n=9, consensu
 | 3 | [MemRL: Self-Evolving Agents via Runtime Reinforcement Learning on Episodic Memory](#arxiv-2601.03192) | 2026 | +0.46 | 6/7 | `arxiv:2601.03192` |
 | 4 | [Learning Formal Mathematics From Intrinsic Motivation](#arxiv-2407.00695) | 2024 | +0.43 | 3/7 | `arxiv:2407.00695` |
 | 5 | [MemEvolve: Meta-Evolution of Agent Memory Systems](#arxiv-2512.18746) | 2025 | +0.40 | 5/7 | `arxiv:2512.18746` |
-| 6 | [SPADE: Self-Play in Adaptive Synthetic Executable Environments](#arxiv-2608.19197) | 2026 | +0.39 | 6/7 | `arxiv:2608.19197` |
+| 6 | [SPADE: Self-Play in Adaptive Synthetic Executable Environments](#arxiv-2608.19197) | 2026 | +0.38 | 6/7 | `arxiv:2608.19197` |
 | 7 | [Language Agents as Optimizable Graphs](#arxiv-2402.16823) | 2024 | +0.29 | 3/7 | `arxiv:2402.16823` |
 | 8 | [Self-Improvements in Modern Agentic Systems: A Survey](#arxiv-2607.13104) | 2026 | +0.27 | 6/7 | `arxiv:2607.13104` |
 | 9 | [Automated Design of Agentic Systems](#arxiv-2408.08435) | 2024 | +0.13 | 4/7 | `arxiv:2408.08435` |
-| 10 | [Learning to Continually Learn via Meta-learning Agentic Memory Designs](#arxiv-2602.07755) | 2026 | +0.11 | 6/7 | `arxiv:2602.07755` |
+| 10 | [Learning to Continually Learn via Meta-learning Agentic Memory Designs](#arxiv-2602.07755) | 2026 | +0.12 | 6/7 | `arxiv:2602.07755` |
 | 11 | [Propose, Solve, Verify: Self-Play Through Formal Verification](#arxiv-2512.18160) | 2025 | +0.11 | 5/7 | `arxiv:2512.18160` |
-| 12 | [Competition and Attraction Improve Model Fusion](#arxiv-2508.16204) | 2025 | +0.05 | 4/7 | `arxiv:2508.16204` |
-| 13 | [Harnessing Agentic Evolution](#arxiv-2605.13821) | 2026 | +0.05 | 5/7 | `arxiv:2605.13821` |
-| 14 | [Darwin Godel Machine: Open-Ended Evolution of Self-Improving Agents](#arxiv-2505.22954) | 2025 | +0.05 | 4/7 | `arxiv:2505.22954` |
-| 15 | [Dr. Zero: Self-Evolving Search Agents without Training Data](#arxiv-2601.07055) | 2026 | +0.05 | 5/7 | `arxiv:2601.07055` |
-| 16 | [Meta Context Engineering via Agentic Skill Evolution](#arxiv-2601.21557) | 2026 | +0.03 | 5/7 | `arxiv:2601.21557` |
+| 12 | [Competition and Attraction Improve Model Fusion](#arxiv-2508.16204) | 2025 | +0.06 | 4/7 | `arxiv:2508.16204` |
+| 13 | [Darwin Godel Machine: Open-Ended Evolution of Self-Improving Agents](#arxiv-2505.22954) | 2025 | +0.06 | 4/7 | `arxiv:2505.22954` |
+| 14 | [Dr. Zero: Self-Evolving Search Agents without Training Data](#arxiv-2601.07055) | 2026 | +0.06 | 5/7 | `arxiv:2601.07055` |
+| 15 | [Harnessing Agentic Evolution](#arxiv-2605.13821) | 2026 | +0.06 | 5/7 | `arxiv:2605.13821` |
+| 16 | [Meta Context Engineering via Agentic Skill Evolution](#arxiv-2601.21557) | 2026 | +0.04 | 5/7 | `arxiv:2601.21557` |
 | 17 | [Hyperagents](#arxiv-2603.19461) | 2026 | +0.02 | 6/7 | `arxiv:2603.19461` |
-| 18 | [Paired Open-Ended Trailblazer (POET): Endlessly Generating Increasingly Complex and Diverse Learning Environments and Their Solutions](#arxiv-1901.01753) | 2019 | -0.02 | 1/7 | `arxiv:1901.01753` |
+| 18 | [Paired Open-Ended Trailblazer (POET): Endlessly Generating Increasingly Complex and Diverse Learning Environments and Their Solutions](#arxiv-1901.01753) | 2019 | -0.04 | 1/7 | `arxiv:1901.01753` |
 | 19 | [Gödel Agent: A Self-Referential Agent Framework for Recursive Self-Improvement](#arxiv-2410.04444) | 2024 | -0.05 | 3/7 | `arxiv:2410.04444` |
 | 20 | [A Definition of Open-Ended Learning Problems for Goal-Conditioned Agents](#arxiv-2311.00344) | 2023 | -0.09 | 3/7 | `arxiv:2311.00344` |
 | 21 | [Ouroboros: A Self-Developing Frontier Coding Agent with Reviewed Core Evolution](#arxiv-2608.08311) | 2026 | -0.12 | 3/7 | `arxiv:2608.08311` |
-| 22 | [AlphaGo Moment for Model Architecture Discovery](#arxiv-2507.18074) | 2025 | -0.22 | 3/7 | `arxiv:2507.18074` |
-| 23 | [Open-Endedness is Essential for Artificial Superhuman Intelligence](#arxiv-2406.04268) | 2024 | -0.25 | 2/7 | `arxiv:2406.04268` |
-| 24 | [Toward Training Superintelligent Software Agents through Self-Play SWE-RL](#arxiv-2512.18552) | 2025 | -0.25 | 3/7 | `arxiv:2512.18552` |
-| 25 | [AI-GAs: AI-generating algorithms, an alternate paradigm for producing general artificial intelligence](#arxiv-1905.10985) | 2019 | -0.28 | 1/7 | `arxiv:1905.10985` |
-| 26 | [Vending-Bench: A Benchmark for Long-Term Coherence of Autonomous Agents](#arxiv-2502.15840) | 2025 | -0.30 | 3/7 | `arxiv:2502.15840` |
+| 22 | [AlphaGo Moment for Model Architecture Discovery](#arxiv-2507.18074) | 2025 | -0.21 | 3/7 | `arxiv:2507.18074` |
+| 23 | [Toward Training Superintelligent Software Agents through Self-Play SWE-RL](#arxiv-2512.18552) | 2025 | -0.24 | 3/7 | `arxiv:2512.18552` |
+| 24 | [Open-Endedness is Essential for Artificial Superhuman Intelligence](#arxiv-2406.04268) | 2024 | -0.24 | 2/7 | `arxiv:2406.04268` |
+| 25 | [Vending-Bench: A Benchmark for Long-Term Coherence of Autonomous Agents](#arxiv-2502.15840) | 2025 | -0.28 | 3/7 | `arxiv:2502.15840` |
+| 26 | [AI-GAs: AI-generating algorithms, an alternate paradigm for producing general artificial intelligence](#arxiv-1905.10985) | 2019 | -0.28 | 1/7 | `arxiv:1905.10985` |
 | 27 | [Levels of AGI for Operationalizing Progress on the Path to AGI](#arxiv-2311.02462) | 2023 | -0.31 | 2/7 | `arxiv:2311.02462` |
-| 28 | [What Does It Take to Be a Good AI Research Agent? Studying the Role of Ideation Diversity](#arxiv-2511.15593) | 2025 | -0.45 | 2/7 | `arxiv:2511.15593` |
-| 29 | [A social path to human-like artificial intelligence](#doi-10.1038-s42256-023-00754-x) | 2023 | -0.49 | 1/7 | `doi:10.1038/s42256-023-00754-x` |
-| 30 | [AI Finds A Way](#arxiv-2608.23875) | 2026 | -0.57 | 2/7 | `arxiv:2608.23875` |
-| 31 | [Self-Programming AI: Code-Learning Agents for Autonomous Refactoring and Architectural Evolution](#doi-10.21203-rs.3.rs-6688473-v1) | 2025 | -0.72 | 2/7 | `doi:10.21203/rs.3.rs-6688473/v1` |
+| 28 | [What Does It Take to Be a Good AI Research Agent? Studying the Role of Ideation Diversity](#arxiv-2511.15593) | 2025 | -0.44 | 2/7 | `arxiv:2511.15593` |
+| 29 | [A social path to human-like artificial intelligence](#doi-10.1038-s42256-023-00754-x) | 2023 | -0.48 | 1/7 | `doi:10.1038/s42256-023-00754-x` |
+| 30 | [AI Finds A Way](#arxiv-2608.23875) | 2026 | -0.55 | 2/7 | `arxiv:2608.23875` |
+| 31 | [Self-Programming AI: Code-Learning Agents for Autonomous Refactoring and Architectural Evolution](#doi-10.21203-rs.3.rs-6688473-v1) | 2025 | -0.71 | 2/7 | `doi:10.21203/rs.3.rs-6688473/v1` |
+| 32 | [Dream-RSI: Recursive Self-Improvement through Evolving Worlds](#arxiv-2609.14858) | 2026 |  | 0/0 | `arxiv:2609.14858` |
 
 ### Harness
 
 | rank | title | year | final | accept | key |
 |---:|---|---|---:|---:|---|
 | 1 | [Structured Scaling of AI Discovery Across Diverse Scientific Domains](#arxiv-2604.19341) | 2026 | +0.65 | 6/7 | `arxiv:2604.19341` |
-| 2 | [Meta-Harness: End-to-End Optimization of Model Harnesses](#arxiv-2603.28052) | 2026 | +0.31 | 6/7 | `arxiv:2603.28052` |
+| 2 | [Meta-Harness: End-to-End Optimization of Model Harnesses](#arxiv-2603.28052) | 2026 | +0.32 | 6/7 | `arxiv:2603.28052` |
 | 3 | [Adaptive Auto-Harness: Sustained Self-Improvement for Agentic System Deployment on Open-Ended Task Streams](#arxiv-2606.01770) | 2026 | +0.23 | 5/7 | `arxiv:2606.01770` |
-| 4 | [Agentic Harness Engineering: Observability-Driven Automatic Evolution of Coding-Agent Harnesses](#arxiv-2604.25850) | 2026 | +0.08 | 3/7 | `arxiv:2604.25850` |
+| 4 | [Agentic Harness Engineering: Observability-Driven Automatic Evolution of Coding-Agent Harnesses](#arxiv-2604.25850) | 2026 | +0.09 | 3/7 | `arxiv:2604.25850` |
 | 5 | [HarnessDev: Can LLMs Create and Evolve Their Own Agent Harness?](#arxiv-2609.01437) | 2026 | -0.04 | 4/7 | `arxiv:2609.01437` |
-| 6 | [Externalization in LLM Agents: A Unified Review of Memory, Skills, Protocols and Harness Engineering](#arxiv-2604.08224) | 2026 | -0.20 | 3/7 | `arxiv:2604.08224` |
+| 6 | [Externalization in LLM Agents: A Unified Review of Memory, Skills, Protocols and Harness Engineering](#arxiv-2604.08224) | 2026 | -0.19 | 3/7 | `arxiv:2604.08224` |
 
 ### AI safety and consciousness
 
 | rank | title | year | final | accept | key |
 |---:|---|---|---:|---:|---|
 | 1 | [Constitutional Classifiers: Defending against Universal Jailbreaks across Thousands of Hours of Red Teaming](#arxiv-2501.18837) | 2025 | +0.13 | 6/7 | `arxiv:2501.18837` |
-| 2 | [Sparse Autoencoders Find Highly Interpretable Features in Language Models](#arxiv-2309.08600) | 2023 | +0.09 | 4/7 | `arxiv:2309.08600` |
-| 3 | [When Activation Oracles Learn Not to Read: Concept-Specific Blind Spots in Fine-Tuned Oracles](#arxiv-2607.23379) | 2026 | +0.08 | 4/7 | `arxiv:2607.23379` |
-| 4 | [Optimal Policies Tend to Seek Power](#arxiv-1912.01683) | 2019 | +0.07 | 3/7 | `arxiv:1912.01683` |
-| 5 | [Is Power-Seeking AI an Existential Risk?](#arxiv-2206.13353) | 2022 | +0.01 | 3/7 | `arxiv:2206.13353` |
+| 2 | [Sparse Autoencoders Find Highly Interpretable Features in Language Models](#arxiv-2309.08600) | 2023 | +0.10 | 4/7 | `arxiv:2309.08600` |
+| 3 | [When Activation Oracles Learn Not to Read: Concept-Specific Blind Spots in Fine-Tuned Oracles](#arxiv-2607.23379) | 2026 | +0.09 | 4/7 | `arxiv:2607.23379` |
+| 4 | [Optimal Policies Tend to Seek Power](#arxiv-1912.01683) | 2019 | +0.05 | 3/7 | `arxiv:1912.01683` |
+| 5 | [Is Power-Seeking AI an Existential Risk?](#arxiv-2206.13353) | 2022 | +0.00 | 3/7 | `arxiv:2206.13353` |
 | 6 | [Consciousness in Artificial Intelligence: Insights from the Science of Consciousness](#arxiv-2308.08708) | 2023 | -0.03 | 4/7 | `arxiv:2308.08708` |
 | 7 | [Parametrically Retargetable Decision-Makers Tend To Seek Power](#arxiv-2206.13477) | 2022 | -0.10 | 3/7 | `arxiv:2206.13477` |
 | 8 | [Could a Large Language Model be Conscious?](#arxiv-2303.07103) | 2023 | -0.25 | 3/6 | `arxiv:2303.07103` |
-| 9 | [Is Evaluation Awareness Just Format Sensitivity? Limitations of Probe-Based Evidence under Controlled Prompt Structure](#arxiv-2603.19426) | 2026 | -0.30 | 5/7 | `arxiv:2603.19426` |
+| 9 | [Is Evaluation Awareness Just Format Sensitivity? Limitations of Probe-Based Evidence under Controlled Prompt Structure](#arxiv-2603.19426) | 2026 | -0.29 | 5/7 | `arxiv:2603.19426` |
 | 10 | [Power-seeking can be probable and predictive for trained agents](#arxiv-2304.06528) | 2023 | -0.34 | 3/7 | `arxiv:2304.06528` |
-| 11 | [Detecting Strategic Deception Using Linear Probes](#arxiv-2502.03407) | 2025 | -0.40 | 3/7 | `arxiv:2502.03407` |
+| 11 | [Detecting Strategic Deception Using Linear Probes](#arxiv-2502.03407) | 2025 | -0.39 | 3/7 | `arxiv:2502.03407` |
 | 12 | [Palatable Conceptions of Disembodied Being](#arxiv-2503.16348) | 2025 | -0.72 | 2/7 | `arxiv:2503.16348` |
 
 ### NeuroAI
 
 | rank | title | year | final | accept | key |
 |---:|---|---|---:|---:|---|
-| 1 | [From Tokens to Thoughts: How LLMs and Humans Trade Compression for Meaning](#arxiv-2505.17117) | 2025 | +0.43 | 7/7 | `arxiv:2505.17117` |
+| 1 | [From Tokens to Thoughts: How LLMs and Humans Trade Compression for Meaning](#arxiv-2505.17117) | 2025 | +0.42 | 7/7 | `arxiv:2505.17117` |
 | 2 | [Neural spiking for causal inference and learning](#doi-10.1371-journal.pcbi.1011005) | 2023 | +0.23 | 4/6 | `doi:10.1371/journal.pcbi.1011005` |
 | 3 | [Attractor and integrator networks in the brain](#arxiv-2112.03978) | 2021 | +0.14 | 5/7 | `arxiv:2112.03978` |
-| 4 | [Sleep prevents catastrophic forgetting in spiking neural networks by forming a joint synaptic weight representation](#doi-10.1371-journal.pcbi.1010628) | 2022 | +0.12 | 4/7 | `doi:10.1371/journal.pcbi.1010628` |
-| 5 | [MetaWorm: An Integrative Data-Driven Model Simulating <i>C. elegans</i> Brain, Body and Environment Interactions](#doi-10.1101-2024.02.22.581686) | 2024 | +0.10 | 4/7 | `doi:10.1101/2024.02.22.581686` |
+| 4 | [MetaWorm: An Integrative Data-Driven Model Simulating <i>C. elegans</i> Brain, Body and Environment Interactions](#doi-10.1101-2024.02.22.581686) | 2024 | +0.11 | 4/7 | `doi:10.1101/2024.02.22.581686` |
+| 5 | [Sleep prevents catastrophic forgetting in spiking neural networks by forming a joint synaptic weight representation](#doi-10.1371-journal.pcbi.1010628) | 2022 | +0.11 | 4/7 | `doi:10.1371/journal.pcbi.1010628` |
 | 6 | [Emergence of belief-like representations through reinforcement learning](#doi-10.1101-2023.04.04.535512) | 2023 | +0.02 | 2/7 | `doi:10.1101/2023.04.04.535512` |
-| 7 | [Relating transformers to models and neural representations of the hippocampal formation](#arxiv-2112.04035) | 2021 | +0.01 | 3/7 | `arxiv:2112.04035` |
-| 8 | [Toward Next-Generation Artificial Intelligence: Catalyzing the NeuroAI Revolution](#arxiv-2210.08340) | 2022 | -0.06 | 3/7 | `arxiv:2210.08340` |
+| 7 | [Relating transformers to models and neural representations of the hippocampal formation](#arxiv-2112.04035) | 2021 | +0.00 | 3/7 | `arxiv:2112.04035` |
+| 8 | [Toward Next-Generation Artificial Intelligence: Catalyzing the NeuroAI Revolution](#arxiv-2210.08340) | 2022 | -0.05 | 3/7 | `arxiv:2210.08340` |
 | 9 | [This is how the Neocortex Learns](#arxiv-2606.08720) | 2026 | -0.21 | 3/7 | `arxiv:2606.08720` |
 | 10 | [Correspondence between neuroevolution and gradient descent](#doi-10.1038-s41467-021-26568-2) | 2021 | -0.32 | 3/7 | `doi:10.1038/s41467-021-26568-2` |
 
@@ -580,21 +604,21 @@ Remaining unparsed reviews after retry are shifted down (DR-7B Std n=9, consensu
 
 | rank | title | year | final | accept | key |
 |---:|---|---|---:|---:|---|
-| 1 | [Comparing representational geometries using whitened unbiased-distance-matrix similarity](#arxiv-2007.02789) | 2020 | +0.71 | 5/7 | `arxiv:2007.02789` |
+| 1 | [Comparing representational geometries using whitened unbiased-distance-matrix similarity](#arxiv-2007.02789) | 2020 | +0.70 | 5/7 | `arxiv:2007.02789` |
 | 2 | [Estimating Neural Representation Alignment from Sparsely Sampled Inputs and Features](#arxiv-2502.15104) | 2025 | +0.50 | 6/7 | `arxiv:2502.15104` |
 | 3 | [Revisiting the Platonic Representation Hypothesis: An Aristotelian View](#arxiv-2602.14486) | 2026 | +0.34 | 5/7 | `arxiv:2602.14486` |
-| 4 | [Proof of a perfect platonic representation hypothesis](#arxiv-2507.01098) | 2025 | -0.09 | 3/7 | `arxiv:2507.01098` |
-| 5 | [The Platonic Representation Hypothesis](#arxiv-2405.07987) | 2024 | -0.11 | 3/6 | `arxiv:2405.07987` |
-| 6 | [Correcting Biased Centered Kernel Alignment Measures in Biological and Artificial Neural Networks](#arxiv-2405.01012) | 2024 | -0.52 | 1/7 | `arxiv:2405.01012` |
+| 4 | [Proof of a perfect platonic representation hypothesis](#arxiv-2507.01098) | 2025 | -0.08 | 3/7 | `arxiv:2507.01098` |
+| 5 | [The Platonic Representation Hypothesis](#arxiv-2405.07987) | 2024 | -0.10 | 3/6 | `arxiv:2405.07987` |
+| 6 | [Correcting Biased Centered Kernel Alignment Measures in Biological and Artificial Neural Networks](#arxiv-2405.01012) | 2024 | -0.51 | 1/7 | `arxiv:2405.01012` |
+| 7 | [Manifold Steering Reveals the Shared Geometry of Neural Network Representation and Behavior](#arxiv-2605.05115) | 2026 |  | 0/0 | `arxiv:2605.05115` |
 
 ### Finance
 
 | rank | title | year | final | accept | key |
 |---:|---|---|---:|---:|---|
 | 1 | [INVESTORBENCH: A Benchmark for Financial Decision-Making Tasks with LLM-based Agent](#acl-2025.acl-long.126) | unknown | -0.18 | 2/7 | `acl:2025.acl-long.126` |
-| 2 | [A Deep Reinforcement Learning Framework for the Financial Portfolio Management Problem](#arxiv-1706.10059) | 2017 | -0.65 | 0/7 | `arxiv:1706.10059` |
-| 3 | [Applications of deep learning in stock market prediction: recent progress](#arxiv-2003.01859) | 2020 | -0.72 | 1/7 | `arxiv:2003.01859` |
-| 4 | [Financial Trading as a Game: A Deep Reinforcement Learning Approach](#arxiv-1807.02787) | 2018 | -0.74 | 1/7 | `arxiv:1807.02787` |
+| 2 | [Applications of deep learning in stock market prediction: recent progress](#arxiv-2003.01859) | 2020 | -0.72 | 1/7 | `arxiv:2003.01859` |
+| 3 | [Financial Trading as a Game: A Deep Reinforcement Learning Approach](#arxiv-1807.02787) | 2018 | -0.75 | 1/7 | `arxiv:1807.02787` |
 
 ### Books
 
@@ -608,8 +632,8 @@ Remaining unparsed reviews after retry are shifted down (DR-7B Std n=9, consensu
 | rank | title | year | final | accept | key |
 |---:|---|---|---:|---:|---|
 | 1 | [TPU v4: An Optically Reconfigurable Supercomputer for Machine Learning with Hardware Support for Embeddings](#arxiv-2304.01433) | 2023 | +0.02 | 3/6 | `arxiv:2304.01433` |
-| 2 | [Inverse-designed low-index-contrast structures on a silicon photonics platform for vector–matrix multiplication](#doi-10.1038-s41566-024-01394-2) | 2024 | -0.13 | 2/6 | `doi:10.1038/s41566-024-01394-2` |
-| 3 | [Fully parallel optical matrix-matrix multiplication](#arxiv-2309.10232) | 2023 | -0.77 | 0/7 | `arxiv:2309.10232` |
+| 2 | [Inverse-designed low-index-contrast structures on a silicon photonics platform for vector–matrix multiplication](#doi-10.1038-s41566-024-01394-2) | 2024 | -0.12 | 2/6 | `doi:10.1038/s41566-024-01394-2` |
+| 3 | [Fully parallel optical matrix-matrix multiplication](#arxiv-2309.10232) | 2023 | -0.76 | 0/7 | `arxiv:2309.10232` |
 
 ## DROP
 
@@ -617,108 +641,107 @@ Remaining unparsed reviews after retry are shifted down (DR-7B Std n=9, consensu
 
 | title | section | year | final | conf | impact | accept |
 |---|---|---|---:|---:|---:|---:|
-| [Fully parallel optical matrix-matrix multiplication](#arxiv-2309.10232) | Other | 2023 | -0.77 | 1.00 | -1.90 | 0/7 |
-| [Financial Trading as a Game: A Deep Reinforcement Learning Approach](#arxiv-1807.02787) | Finance | 2018 | -0.74 | 1.00 | -1.93 | 1/7 |
-| [Palatable Conceptions of Disembodied Being](#arxiv-2503.16348) | AI safety and consciousness | 2025 | -0.72 | 1.00 | -2.39 | 2/7 |
-| [Applications of deep learning in stock market prediction: recent progress](#arxiv-2003.01859) | Finance | 2020 | -0.72 | 1.00 | +0.27 | 1/7 |
-| [Self-Programming AI: Code-Learning Agents for Autonomous Refactoring and Architectural Evolution](#doi-10.21203-rs.3.rs-6688473-v1) | Agents, open-endedness, AGI | 2025 | -0.72 | 1.00 | -0.31 | 2/7 |
-| [Step-size Optimization for Continual Learning](#arxiv-2401.17401) | Data, training, optimization | 2024 | -0.68 | 0.91 | -2.26 | 1/6 |
-| [Scaling of Search and Learning: A Roadmap to Reproduce o1 from Reinforcement Learning Perspective](#arxiv-2412.14135) | Reasoning and the "physics" of language models | 2024 | -0.67 | 1.00 | -1.58 | 0/7 |
-| [Catastrophic Forgetting in Deep Learning: A Comprehensive Taxonomy](#arxiv-2312.10549) | Data, training, optimization | 2023 | -0.66 | 1.00 | -0.09 | 0/7 |
-| [A Deep Reinforcement Learning Framework for the Financial Portfolio Management Problem](#arxiv-1706.10059) | Finance | 2017 | -0.65 | 1.00 | -2.21 | 0/7 |
-| [Nested Learning: The Illusion of Deep Learning Architectures](#arxiv-2512.24695) | Data, training, optimization | 2025 | -0.65 | 0.82 | -2.10 | 0/6 |
-| [A Path Towards Autonomous Machine Intelligence (LeCun, 2022)](#openreview-BZ5a1r-kVsf) | Self-supervised learning and vision | unknown | -0.61 | 0.91 | +0.06 | 2/6 |
-| [Reinforcement Learning Textbook](#arxiv-2201.09746) | Books | 2022 | -0.59 | 0.62 | -0.58 | 1/7 |
-| [GLU Variants Improve Transformer](#arxiv-2002.05202) | LLMs: architectures, context, training | 2020 | -0.58 | 1.00 | -1.06 | 1/7 |
-| [A Cookbook of Self-Supervised Learning](#arxiv-2304.12210) | Self-supervised learning and vision | 2023 | -0.57 | 1.00 | +0.07 | 1/7 |
-| [AI Finds A Way](#arxiv-2608.23875) | Agents, open-endedness, AGI | 2026 | -0.57 | 1.00 | -0.56 | 2/7 |
-| [Benchmarking Batch Deep Reinforcement Learning Algorithms](#arxiv-1910.01708) | Reinforcement learning | 2019 | -0.56 | 1.00 | -1.45 | 2/7 |
-| [Evolutionary Strategies lead to Catastrophic Forgetting in LLMs](#arxiv-2601.20861) | Post-training | 2026 | -0.54 | 1.00 | -1.33 | 3/7 |
-| [Correcting Biased Centered Kernel Alignment Measures in Biological and Artificial Neural Networks](#arxiv-2405.01012) | Representation alignment | 2024 | -0.52 | 1.00 | -1.44 | 1/7 |
-| [A Minimalist Approach to Offline Reinforcement Learning](#arxiv-2106.06860) | Reinforcement learning | 2021 | -0.49 | 1.00 | -0.69 | 3/7 |
-| [Measuring Catastrophic Forgetting in Neural Networks](#arxiv-1708.02072) | Data, training, optimization | 2017 | -0.49 | 1.00 | -0.43 | 2/7 |
-| [A social path to human-like artificial intelligence](#doi-10.1038-s42256-023-00754-x) | Agents, open-endedness, AGI | 2023 | -0.49 | 1.00 | -1.92 | 1/7 |
-| [Continual Backprop: Stochastic Gradient Descent with Persistent Randomness](#arxiv-2108.06325) | Data, training, optimization | 2021 | -0.48 | 1.00 | -1.87 | 0/7 |
-| [Meta-Reinforcement Learning with Zero-Shot RL](#openreview-XyGJJ4FPoX) | Reinforcement learning | unknown | -0.47 | 1.00 | -0.89 | 0/7 |
-| [What Does It Take to Be a Good AI Research Agent? Studying the Role of Ideation Diversity](#arxiv-2511.15593) | Agents, open-endedness, AGI | 2025 | -0.45 | 1.00 | -1.51 | 2/7 |
-| [Reinforcement Pre-Training](#arxiv-2506.08007) | Data, training, optimization | 2025 | -0.42 | 1.00 | -1.06 | 3/7 |
-| [Your Transformer is Secretly Linear](#arxiv-2405.12250) | LLMs: architectures, context, training | 2024 | -0.41 | 1.00 | +0.06 | 3/7 |
-| [AI-rithmetic](#arxiv-2602.10416) | Reasoning and the "physics" of language models | 2026 | -0.41 | 1.00 | -0.07 | 2/7 |
-| [To Compress or Not to Compress- Self-Supervised Learning and Information Theory: A Review](#arxiv-2304.09355) | Self-supervised learning and vision | 2023 | -0.41 | 0.91 | -0.23 | 1/6 |
-| [Cyclical Learning Rates for Training Neural Networks](#arxiv-1506.01186) | Data, training, optimization | 2015 | -0.40 | 1.00 | -0.25 | 1/7 |
-| [Detecting Strategic Deception Using Linear Probes](#arxiv-2502.03407) | AI safety and consciousness | 2025 | -0.40 | 1.00 | +0.23 | 3/7 |
-| [BDH-CQ: In-Context Learning with Recurrent Latent Reasoning](#arxiv-2608.09888) | Post-training | 2026 | -0.35 | 1.00 | -0.46 | 2/7 |
-| [Power-seeking can be probable and predictive for trained agents](#arxiv-2304.06528) | AI safety and consciousness | 2023 | -0.34 | 1.00 | +0.28 | 3/7 |
-| [DAPO: An Open-Source LLM Reinforcement Learning System at Scale](#arxiv-2503.14476) | Post-training | 2025 | -0.32 | 1.00 | +0.32 | 3/7 |
+| [Fully parallel optical matrix-matrix multiplication](#arxiv-2309.10232) | Other | 2023 | -0.76 | 1.00 | -1.90 | 0/7 |
+| [Financial Trading as a Game: A Deep Reinforcement Learning Approach](#arxiv-1807.02787) | Finance | 2018 | -0.75 | 1.00 | -2.01 | 1/7 |
+| [Applications of deep learning in stock market prediction: recent progress](#arxiv-2003.01859) | Finance | 2020 | -0.72 | 1.00 | +0.23 | 1/7 |
+| [Palatable Conceptions of Disembodied Being](#arxiv-2503.16348) | AI safety and consciousness | 2025 | -0.72 | 1.00 | -2.43 | 2/7 |
+| [Self-Programming AI: Code-Learning Agents for Autonomous Refactoring and Architectural Evolution](#doi-10.21203-rs.3.rs-6688473-v1) | Agents, open-endedness, AGI | 2025 | -0.71 | 1.00 | -0.31 | 2/7 |
+| [Step-size Optimization for Continual Learning](#arxiv-2401.17401) | Data, training, optimization | 2024 | -0.67 | 0.91 | -2.27 | 1/6 |
+| [Scaling of Search and Learning: A Roadmap to Reproduce o1 from Reinforcement Learning Perspective](#arxiv-2412.14135) | Reasoning and the "physics" of language models | 2024 | -0.65 | 1.00 | -1.62 | 0/7 |
+| [Catastrophic Forgetting in Deep Learning: A Comprehensive Taxonomy](#arxiv-2312.10549) | Data, training, optimization | 2023 | -0.65 | 1.00 | -0.07 | 0/7 |
+| [Nested Learning: The Illusion of Deep Learning Architectures](#arxiv-2512.24695) | Data, training, optimization | 2025 | -0.63 | 0.82 | -2.13 | 0/6 |
+| [A Path Towards Autonomous Machine Intelligence (LeCun, 2022)](#openreview-BZ5a1r-kVsf) | Self-supervised learning and vision | unknown | -0.60 | 0.91 | +0.06 | 2/6 |
+| [Reinforcement Learning Textbook](#arxiv-2201.09746) | Books | 2022 | -0.59 | 0.62 | -0.55 | 1/7 |
+| [GLU Variants Improve Transformer](#arxiv-2002.05202) | LLMs: architectures, context, training | 2020 | -0.59 | 1.00 | -1.11 | 1/7 |
+| [Benchmarking Batch Deep Reinforcement Learning Algorithms](#arxiv-1910.01708) | Reinforcement learning | 2019 | -0.56 | 1.00 | -1.50 | 2/7 |
+| [A Cookbook of Self-Supervised Learning](#arxiv-2304.12210) | Self-supervised learning and vision | 2023 | -0.56 | 1.00 | +0.10 | 1/7 |
+| [AI Finds A Way](#arxiv-2608.23875) | Agents, open-endedness, AGI | 2026 | -0.55 | 1.00 | -0.56 | 2/7 |
+| [Evolutionary Strategies lead to Catastrophic Forgetting in LLMs](#arxiv-2601.20861) | Post-training | 2026 | -0.53 | 1.00 | -1.35 | 3/7 |
+| [Correcting Biased Centered Kernel Alignment Measures in Biological and Artificial Neural Networks](#arxiv-2405.01012) | Representation alignment | 2024 | -0.51 | 1.00 | -1.47 | 1/7 |
+| [Measuring Catastrophic Forgetting in Neural Networks](#arxiv-1708.02072) | Data, training, optimization | 2017 | -0.50 | 1.00 | -0.62 | 2/7 |
+| [A Minimalist Approach to Offline Reinforcement Learning](#arxiv-2106.06860) | Reinforcement learning | 2021 | -0.50 | 1.00 | -0.68 | 3/7 |
+| [A social path to human-like artificial intelligence](#doi-10.1038-s42256-023-00754-x) | Agents, open-endedness, AGI | 2023 | -0.48 | 1.00 | -1.91 | 1/7 |
+| [Continual Backprop: Stochastic Gradient Descent with Persistent Randomness](#arxiv-2108.06325) | Data, training, optimization | 2021 | -0.47 | 1.00 | -1.89 | 0/7 |
+| [Meta-Reinforcement Learning with Zero-Shot RL](#openreview-XyGJJ4FPoX) | Reinforcement learning | unknown | -0.45 | 1.00 | -0.89 | 0/7 |
+| [What Does It Take to Be a Good AI Research Agent? Studying the Role of Ideation Diversity](#arxiv-2511.15593) | Agents, open-endedness, AGI | 2025 | -0.44 | 1.00 | -1.52 | 2/7 |
+| [Reinforcement Pre-Training](#arxiv-2506.08007) | Data, training, optimization | 2025 | -0.41 | 1.00 | -1.07 | 3/7 |
+| [Cyclical Learning Rates for Training Neural Networks](#arxiv-1506.01186) | Data, training, optimization | 2015 | -0.41 | 1.00 | -0.27 | 1/7 |
+| [Your Transformer is Secretly Linear](#arxiv-2405.12250) | LLMs: architectures, context, training | 2024 | -0.40 | 1.00 | +0.05 | 3/7 |
+| [AI-rithmetic](#arxiv-2602.10416) | Reasoning and the "physics" of language models | 2026 | -0.40 | 1.00 | -0.09 | 2/7 |
+| [To Compress or Not to Compress- Self-Supervised Learning and Information Theory: A Review](#arxiv-2304.09355) | Self-supervised learning and vision | 2023 | -0.39 | 0.91 | -0.20 | 1/6 |
+| [Detecting Strategic Deception Using Linear Probes](#arxiv-2502.03407) | AI safety and consciousness | 2025 | -0.39 | 1.00 | +0.24 | 3/7 |
+| [BDH-CQ: In-Context Learning with Recurrent Latent Reasoning](#arxiv-2608.09888) | Post-training | 2026 | -0.34 | 1.00 | -0.46 | 2/7 |
+| [Power-seeking can be probable and predictive for trained agents](#arxiv-2304.06528) | AI safety and consciousness | 2023 | -0.34 | 1.00 | +0.31 | 3/7 |
 | [Correspondence between neuroevolution and gradient descent](#doi-10.1038-s41467-021-26568-2) | NeuroAI | 2021 | -0.32 | 1.00 | -1.16 | 3/7 |
-| [Self-Improving Pretraining: using post-trained models to pretrain better models](#arxiv-2601.21343) | Data, training, optimization | 2026 | -0.32 | 1.00 | -0.43 | 3/7 |
-| [Levels of AGI for Operationalizing Progress on the Path to AGI](#arxiv-2311.02462) | Agents, open-endedness, AGI | 2023 | -0.31 | 1.00 | -0.29 | 2/7 |
-| [Learning in High Dimension Always Amounts to Extrapolation](#arxiv-2110.09485) | Data, training, optimization | 2021 | -0.30 | 1.00 | -0.45 | 1/7 |
-| [T5Gemma 2: Seeing, Reading, and Understanding Longer](#arxiv-2512.14856) | LLMs: architectures, context, training | 2025 | -0.30 | 1.00 | -0.14 | 2/7 |
-| [Energy Transformer](#arxiv-2302.07253) | LLMs: architectures, context, training | 2023 | -0.30 | 1.00 | -0.76 | 4/7 |
-| [Is Evaluation Awareness Just Format Sensitivity? Limitations of Probe-Based Evidence under Controlled Prompt Structure](#arxiv-2603.19426) | AI safety and consciousness | 2026 | -0.30 | 1.00 | -1.54 | 5/7 |
-| [Vending-Bench: A Benchmark for Long-Term Coherence of Autonomous Agents](#arxiv-2502.15840) | Agents, open-endedness, AGI | 2025 | -0.30 | 1.00 | -0.26 | 3/7 |
+| [DAPO: An Open-Source LLM Reinforcement Learning System at Scale](#arxiv-2503.14476) | Post-training | 2025 | -0.32 | 1.00 | +0.32 | 3/7 |
+| [Levels of AGI for Operationalizing Progress on the Path to AGI](#arxiv-2311.02462) | Agents, open-endedness, AGI | 2023 | -0.31 | 1.00 | -0.26 | 2/7 |
+| [Self-Improving Pretraining: using post-trained models to pretrain better models](#arxiv-2601.21343) | Data, training, optimization | 2026 | -0.31 | 1.00 | -0.43 | 3/7 |
+| [Learning in High Dimension Always Amounts to Extrapolation](#arxiv-2110.09485) | Data, training, optimization | 2021 | -0.30 | 1.00 | -0.44 | 1/7 |
 | [Large Language Models Still Can't Plan / PlanBench (Kambhampati)](#openreview-wUU-7XTL5XO) | Reasoning and the "physics" of language models | unknown | -0.30 | 1.00 | +0.29 | 2/7 |
-| [A System for Answering Simple Questions in Multiple Languages](#acl-2023.acl-demo.51) | Retrieval, embeddings, benchmarks | unknown | -0.28 | 0.91 | -0.97 | 2/7 |
-| [AI-GAs: AI-generating algorithms, an alternate paradigm for producing general artificial intelligence](#arxiv-1905.10985) | Agents, open-endedness, AGI | 2019 | -0.28 | 1.00 | -0.34 | 1/7 |
+| [Is Evaluation Awareness Just Format Sensitivity? Limitations of Probe-Based Evidence under Controlled Prompt Structure](#arxiv-2603.19426) | AI safety and consciousness | 2026 | -0.29 | 1.00 | -1.55 | 5/7 |
+| [Energy Transformer](#arxiv-2302.07253) | LLMs: architectures, context, training | 2023 | -0.29 | 1.00 | -0.74 | 4/7 |
+| [T5Gemma 2: Seeing, Reading, and Understanding Longer](#arxiv-2512.14856) | LLMs: architectures, context, training | 2025 | -0.29 | 1.00 | -0.15 | 2/7 |
+| [AI-GAs: AI-generating algorithms, an alternate paradigm for producing general artificial intelligence](#arxiv-1905.10985) | Agents, open-endedness, AGI | 2019 | -0.28 | 1.00 | -0.37 | 1/7 |
+| [Vending-Bench: A Benchmark for Long-Term Coherence of Autonomous Agents](#arxiv-2502.15840) | Agents, open-endedness, AGI | 2025 | -0.28 | 1.00 | -0.26 | 3/7 |
+| [A System for Answering Simple Questions in Multiple Languages](#acl-2023.acl-demo.51) | Retrieval, embeddings, benchmarks | unknown | -0.28 | 0.91 | -0.99 | 2/7 |
 | [Continual Learning and Catastrophic Forgetting](#arxiv-2403.05175) | Data, training, optimization | 2024 | -0.27 | 1.00 | -1.11 | 2/7 |
-| [Revisiting Rainbow: Promoting more Insightful and Inclusive Deep Reinforcement Learning Research](#arxiv-2011.14826) | Reinforcement learning | 2020 | -0.26 | 1.00 | -1.46 | 1/7 |
-| [Weight-Space Geometry of Offline Reasoning Training](#arxiv-2606.23740) | Post-training | 2026 | -0.25 | 1.00 | -0.91 | 2/7 |
-| [Toward Training Superintelligent Software Agents through Self-Play SWE-RL](#arxiv-2512.18552) | Agents, open-endedness, AGI | 2025 | -0.25 | 1.00 | -0.56 | 3/7 |
-| [Position: LLMs can't jump](#openreview-klU4737opt) | Reasoning and the "physics" of language models | unknown | -0.25 | 1.00 | -1.35 | 2/7 |
-| [Open-Endedness is Essential for Artificial Superhuman Intelligence](#arxiv-2406.04268) | Agents, open-endedness, AGI | 2024 | -0.25 | 1.00 | +0.33 | 2/7 |
-| [Supervised Fine Tuning on Curated Data is Reinforcement Learning (and can be improved)](#arxiv-2507.12856) | Data, training, optimization | 2025 | -0.24 | 1.00 | -1.96 | 3/7 |
-| [Klear-Reasoner: Advancing Reasoning Capability via Gradient-Preserving Clipping Policy Optimization](#arxiv-2508.07629) | Post-training | 2025 | -0.23 | 0.82 | -0.88 | 3/6 |
-| [MetaOptimize: A Framework for Optimizing Step Sizes and Other Meta-parameters](#arxiv-2402.02342) | Data, training, optimization | 2024 | -0.21 | 1.00 | -1.37 | 3/7 |
-| [This is how the Neocortex Learns](#arxiv-2606.08720) | NeuroAI | 2026 | -0.21 | 0.91 | -1.71 | 3/7 |
+| [Revisiting Rainbow: Promoting more Insightful and Inclusive Deep Reinforcement Learning Research](#arxiv-2011.14826) | Reinforcement learning | 2020 | -0.27 | 1.00 | -1.50 | 1/7 |
+| [Weight-Space Geometry of Offline Reasoning Training](#arxiv-2606.23740) | Post-training | 2026 | -0.24 | 1.00 | -0.93 | 2/7 |
+| [Position: LLMs can't jump](#openreview-klU4737opt) | Reasoning and the "physics" of language models | unknown | -0.24 | 1.00 | -1.37 | 2/7 |
+| [Open-Endedness is Essential for Artificial Superhuman Intelligence](#arxiv-2406.04268) | Agents, open-endedness, AGI | 2024 | -0.24 | 1.00 | +0.34 | 2/7 |
+| [Toward Training Superintelligent Software Agents through Self-Play SWE-RL](#arxiv-2512.18552) | Agents, open-endedness, AGI | 2025 | -0.24 | 1.00 | -0.56 | 3/7 |
+| [Supervised Fine Tuning on Curated Data is Reinforcement Learning (and can be improved)](#arxiv-2507.12856) | Data, training, optimization | 2025 | -0.23 | 1.00 | -1.96 | 3/7 |
+| [Klear-Reasoner: Advancing Reasoning Capability via Gradient-Preserving Clipping Policy Optimization](#arxiv-2508.07629) | Post-training | 2025 | -0.23 | 0.82 | -0.90 | 3/6 |
+| [MetaOptimize: A Framework for Optimizing Step Sizes and Other Meta-parameters](#arxiv-2402.02342) | Data, training, optimization | 2024 | -0.21 | 1.00 | -1.40 | 3/7 |
+| [This is how the Neocortex Learns](#arxiv-2606.08720) | NeuroAI | 2026 | -0.21 | 0.91 | -1.72 | 3/7 |
 | [LLMs Can't Plan, But Can Help Planning in LLM-Modulo Frameworks](#arxiv-2402.01817) | Reasoning and the "physics" of language models | 2024 | -0.20 | 1.00 | -0.08 | 2/7 |
 
 ## WATCH
 
-Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predicted impact. Showing 40 of 156.
+Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predicted impact. Showing 40 of 180.
 
 | title | section | year | final | conf | impact | accept |
 |---|---|---|---:|---:|---:|---:|
 | [Deep Learning Interviews: Hundreds of fully solved job interview questions from a wide range of key topics in AI](#arxiv-2201.00650) | Books | 2021 | -0.83 | 0.43 | -1.39 | 0/5 |
-| [Offline Reinforcement Learning: Tutorial, Review, and Perspectives on Open Problems](#arxiv-2005.01643) | Reinforcement learning | 2020 | -0.42 | 1.00 | +0.73 | 0/7 |
-| [Addressing Function Approximation Error in Actor-Critic Methods](#arxiv-1802.09477) | Reinforcement learning | 2018 | -0.37 | 0.46 | -1.14 | 1/4 |
-| [xLSTM: Extended Long Short-Term Memory](#arxiv-2405.04517) | LLMs: architectures, context, training | 2024 | -0.33 | 0.95 | +0.60 | 2/7 |
-| [People cannot distinguish GPT-4 from a human in a Turing test](#arxiv-2405.08007) | Retrieval, embeddings, benchmarks | 2024 | -0.28 | 1.00 | +1.95 | 1/7 |
-| [Why mathematics is set to be revolutionized by AI](#doi-10.1038-d41586-024-01413-w) | Reasoning and the "physics" of language models | 2024 | -0.27 | 0.44 | -1.40 | 3/5 |
+| [Offline Reinforcement Learning: Tutorial, Review, and Perspectives on Open Problems](#arxiv-2005.01643) | Reinforcement learning | 2020 | -0.42 | 1.00 | +0.71 | 0/7 |
+| [Addressing Function Approximation Error in Actor-Critic Methods](#arxiv-1802.09477) | Reinforcement learning | 2018 | -0.36 | 0.45 | -1.19 | 1/4 |
+| [xLSTM: Extended Long Short-Term Memory](#arxiv-2405.04517) | LLMs: architectures, context, training | 2024 | -0.31 | 0.96 | +0.60 | 2/7 |
+| [People cannot distinguish GPT-4 from a human in a Turing test](#arxiv-2405.08007) | Retrieval, embeddings, benchmarks | 2024 | -0.27 | 1.00 | +1.96 | 1/7 |
+| [Why mathematics is set to be revolutionized by AI](#doi-10.1038-d41586-024-01413-w) | Reasoning and the "physics" of language models | 2024 | -0.26 | 0.44 | -1.41 | 3/5 |
 | [Competitive Programming with Large Reasoning Models](#arxiv-2502.06807) | Reasoning and the "physics" of language models | 2025 | -0.26 | 1.00 | +0.65 | 4/7 |
-| [Could a Large Language Model be Conscious?](#arxiv-2303.07103) | AI safety and consciousness | 2023 | -0.25 | 0.91 | +0.69 | 3/6 |
-| [Tune-A-Video: One-Shot Tuning of Image Diffusion Models for Text-to-Video Generation](#arxiv-2212.11565) | Self-supervised learning and vision | 2022 | -0.25 | 1.00 | +0.85 | 3/7 |
-| [AlphaGo Moment for Model Architecture Discovery](#arxiv-2507.18074) | Agents, open-endedness, AGI | 2025 | -0.22 | 1.00 | +1.17 | 3/7 |
-| [Knowledge Mechanisms in Large Language Models: A Survey and Perspective](#arxiv-2407.15017) | Reasoning and the "physics" of language models | 2024 | -0.21 | 1.00 | +0.67 | 3/7 |
-| [Promptbreeder: Self-Referential Self-Improvement Via Prompt Evolution](#arxiv-2309.16797) | Retrieval, embeddings, benchmarks | 2023 | -0.20 | 1.00 | +0.57 | 4/7 |
-| [Externalization in LLM Agents: A Unified Review of Memory, Skills, Protocols and Harness Engineering](#arxiv-2604.08224) | Harness | 2026 | -0.20 | 1.00 | +1.32 | 3/7 |
+| [Could a Large Language Model be Conscious?](#arxiv-2303.07103) | AI safety and consciousness | 2023 | -0.25 | 0.91 | +0.71 | 3/6 |
+| [AlphaGo Moment for Model Architecture Discovery](#arxiv-2507.18074) | Agents, open-endedness, AGI | 2025 | -0.21 | 1.00 | +1.18 | 3/7 |
+| [Knowledge Mechanisms in Large Language Models: A Survey and Perspective](#arxiv-2407.15017) | Reasoning and the "physics" of language models | 2024 | -0.20 | 1.00 | +0.68 | 3/7 |
+| [Externalization in LLM Agents: A Unified Review of Memory, Skills, Protocols and Harness Engineering](#arxiv-2604.08224) | Harness | 2026 | -0.19 | 1.00 | +1.32 | 3/7 |
+| [Promptbreeder: Self-Referential Self-Improvement Via Prompt Evolution](#arxiv-2309.16797) | Retrieval, embeddings, benchmarks | 2023 | -0.19 | 1.00 | +0.61 | 4/7 |
 | [INVESTORBENCH: A Benchmark for Financial Decision-Making Tasks with LLM-based Agent](#acl-2025.acl-long.126) | Finance | unknown | -0.18 | 0.91 | -0.08 | 2/7 |
-| [Language is primarily a tool for communication rather than thought](#doi-10.1038-s41586-024-07522-w) | Reasoning and the "physics" of language models | 2024 | -0.17 | 0.65 | -2.67 | 4/5 |
-| [Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?](#arxiv-2603.24472) | Post-training | 2026 | -0.17 | 1.00 | +0.19 | 3/7 |
-| [A Mechanistic Analysis of Looped Reasoning Language Models](#arxiv-2604.11791) | Reasoning and the "physics" of language models | 2026 | -0.16 | 1.00 | -1.42 | 3/7 |
-| [The Lookahead Limitation: Why Multi-Operand Addition is Hard for LLMs](#arxiv-2502.19981) | Reasoning and the "physics" of language models | 2025 | -0.16 | 1.00 | +0.68 | 3/7 |
-| [Latent Cache Flow: Model-to-Model Communication Without Text](#arxiv-2605.22863) | LLMs: architectures, context, training | 2026 | -0.16 | 1.00 | -0.76 | 4/7 |
-| [Inverse-designed low-index-contrast structures on a silicon photonics platform for vector–matrix multiplication](#doi-10.1038-s41566-024-01394-2) | Other | 2024 | -0.13 | 0.82 | -1.61 | 2/6 |
-| [Towards General-Purpose Model-Free Reinforcement Learning](#arxiv-2501.16142) | Reinforcement learning | 2025 | -0.13 | 1.00 | -1.07 | 5/7 |
-| [Can Large Reasoning Models Self-Train?](#arxiv-2505.21444) | Reasoning and the "physics" of language models | 2025 | -0.12 | 1.00 | -0.88 | 2/7 |
-| [Ouroboros: A Self-Developing Frontier Coding Agent with Reviewed Core Evolution](#arxiv-2608.08311) | Agents, open-endedness, AGI | 2026 | -0.12 | 1.00 | -0.71 | 3/7 |
-| [The Platonic Representation Hypothesis](#arxiv-2405.07987) | Representation alignment | 2024 | -0.11 | 0.82 | -0.03 | 3/6 |
-| [It Takes Two: Your GRPO Is Secretly DPO](#arxiv-2510.00977) | Post-training | 2025 | -0.10 | 1.00 | -1.37 | 5/7 |
-| [Parametrically Retargetable Decision-Makers Tend To Seek Power](#arxiv-2206.13477) | AI safety and consciousness | 2022 | -0.10 | 1.00 | +1.00 | 3/7 |
-| [RIFT: A RubrIc Failure Mode Taxonomy and Automated Diagnostics](#arxiv-2604.01375) | Post-training | 2026 | -0.10 | 1.00 | -0.29 | 3/7 |
-| [A Definition of Open-Ended Learning Problems for Goal-Conditioned Agents](#arxiv-2311.00344) | Agents, open-endedness, AGI | 2023 | -0.09 | 1.00 | -1.59 | 3/7 |
-| [Proof of a perfect platonic representation hypothesis](#arxiv-2507.01098) | Representation alignment | 2025 | -0.09 | 1.00 | -2.74 | 3/7 |
+| [Language is primarily a tool for communication rather than thought](#doi-10.1038-s41586-024-07522-w) | Reasoning and the "physics" of language models | 2024 | -0.17 | 0.65 | -2.68 | 4/5 |
+| [A Mechanistic Analysis of Looped Reasoning Language Models](#arxiv-2604.11791) | Reasoning and the "physics" of language models | 2026 | -0.16 | 1.00 | -1.43 | 3/7 |
+| [Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?](#arxiv-2603.24472) | Post-training | 2026 | -0.16 | 1.00 | +0.19 | 3/7 |
+| [The Lookahead Limitation: Why Multi-Operand Addition is Hard for LLMs](#arxiv-2502.19981) | Reasoning and the "physics" of language models | 2025 | -0.15 | 1.00 | +0.69 | 3/7 |
+| [Latent Cache Flow: Model-to-Model Communication Without Text](#arxiv-2605.22863) | LLMs: architectures, context, training | 2026 | -0.15 | 1.00 | -0.77 | 4/7 |
+| [Towards General-Purpose Model-Free Reinforcement Learning](#arxiv-2501.16142) | Reinforcement learning | 2025 | -0.13 | 1.00 | -1.08 | 5/7 |
+| [Inverse-designed low-index-contrast structures on a silicon photonics platform for vector–matrix multiplication](#doi-10.1038-s41566-024-01394-2) | Other | 2024 | -0.12 | 0.82 | -1.63 | 2/6 |
+| [Can Large Reasoning Models Self-Train?](#arxiv-2505.21444) | Reasoning and the "physics" of language models | 2025 | -0.12 | 1.00 | -0.89 | 2/7 |
+| [Ouroboros: A Self-Developing Frontier Coding Agent with Reviewed Core Evolution](#arxiv-2608.08311) | Agents, open-endedness, AGI | 2026 | -0.12 | 1.00 | -0.72 | 3/7 |
+| [The Platonic Representation Hypothesis](#arxiv-2405.07987) | Representation alignment | 2024 | -0.10 | 0.82 | -0.03 | 3/6 |
+| [Parametrically Retargetable Decision-Makers Tend To Seek Power](#arxiv-2206.13477) | AI safety and consciousness | 2022 | -0.10 | 1.00 | +1.08 | 3/7 |
+| [It Takes Two: Your GRPO Is Secretly DPO](#arxiv-2510.00977) | Post-training | 2025 | -0.10 | 1.00 | -1.38 | 5/7 |
 | [Language Models Are Capable of Metacognitive Monitoring and Control of Their Internal Activations](#arxiv-2505.13763) | Reasoning and the "physics" of language models | 2025 | -0.09 | 1.00 | +0.03 | 4/7 |
-| [TransformerFAM: Feedback attention is working memory](#arxiv-2404.09173) | LLMs: architectures, context, training | 2024 | -0.09 | 1.00 | +0.33 | 3/7 |
-| [From Explicit CoT to Implicit CoT: Learning to Internalize CoT Step by Step](#arxiv-2405.14838) | Reasoning and the "physics" of language models | 2024 | -0.09 | 1.00 | -0.02 | 4/7 |
-| [Cramming: Training a Language Model on a Single GPU in One Day](#arxiv-2212.14034) | Data, training, optimization | 2022 | -0.08 | 1.00 | -0.93 | 3/7 |
+| [A Definition of Open-Ended Learning Problems for Goal-Conditioned Agents](#arxiv-2311.00344) | Agents, open-endedness, AGI | 2023 | -0.09 | 1.00 | -1.58 | 3/7 |
+| [RIFT: A RubrIc Failure Mode Taxonomy and Automated Diagnostics](#arxiv-2604.01375) | Post-training | 2026 | -0.09 | 1.00 | -0.29 | 3/7 |
+| [Cramming: Training a Language Model on a Single GPU in One Day](#arxiv-2212.14034) | Data, training, optimization | 2022 | -0.09 | 1.00 | -0.90 | 3/7 |
+| [Proof of a perfect platonic representation hypothesis](#arxiv-2507.01098) | Representation alignment | 2025 | -0.08 | 1.00 | -2.75 | 3/7 |
+| [From Explicit CoT to Implicit CoT: Learning to Internalize CoT Step by Step](#arxiv-2405.14838) | Reasoning and the "physics" of language models | 2024 | -0.08 | 1.00 | -0.02 | 4/7 |
+| [TransformerFAM: Feedback attention is working memory](#arxiv-2404.09173) | LLMs: architectures, context, training | 2024 | -0.08 | 1.00 | +0.34 | 3/7 |
 | [Self-Distillation Enables Continual Learning](#arxiv-2601.19897) | Post-training | 2026 | -0.08 | 1.00 | +0.66 | 6/7 |
-| [Learning to Compress Prompts with Gist Tokens](#arxiv-2304.08467) | Retrieval, embeddings, benchmarks | 2023 | -0.08 | 1.00 | +0.12 | 4/7 |
-| [Evidence from formal logical reasoning reveals that the language of thought is not natural language](#doi-10.1073-pnas.2520095123) | Reasoning and the "physics" of language models | 2026 | -0.08 | 0.91 | -1.14 | 5/7 |
-| [PRIMERA: Pyramid-based Masked Sentence Pre-training for Multi-document Summarization](#acl-2022.acl-long.360) | Retrieval, embeddings, benchmarks | unknown | -0.08 | 0.91 | +0.69 | 3/7 |
-| [VICReg: Variance-Invariance-Covariance Regularization for Self-Supervised Learning](#arxiv-2105.04906) | Self-supervised learning and vision | 2021 | -0.08 | 1.00 | +0.24 | 3/7 |
+| [VICReg: Variance-Invariance-Covariance Regularization for Self-Supervised Learning](#arxiv-2105.04906) | Self-supervised learning and vision | 2021 | -0.07 | 1.00 | +0.25 | 3/7 |
+| [Evidence from formal logical reasoning reveals that the language of thought is not natural language](#doi-10.1073-pnas.2520095123) | Reasoning and the "physics" of language models | 2026 | -0.07 | 0.91 | -1.14 | 5/7 |
+| [PRIMERA: Pyramid-based Masked Sentence Pre-training for Multi-document Summarization](#acl-2022.acl-long.360) | Retrieval, embeddings, benchmarks | unknown | -0.07 | 0.91 | +0.70 | 3/7 |
+| [Learning to Compress Prompts with Gist Tokens](#arxiv-2304.08467) | Retrieval, embeddings, benchmarks | 2023 | -0.07 | 1.00 | +0.16 | 4/7 |
 | [Single-stream Policy Optimization](#arxiv-2509.13232) | Post-training | 2025 | -0.07 | 1.00 | +0.40 | 5/7 |
-| [The First Few Tokens Are All You Need: An Efficient and Effective Unsupervised Prefix Fine-Tuning Method for Reasoning Models](#arxiv-2503.02875) | Post-training | 2025 | -0.07 | 1.00 | +0.85 | 3/7 |
+| [The First Few Tokens Are All You Need: An Efficient and Effective Unsupervised Prefix Fine-Tuning Method for Reasoning Models](#arxiv-2503.02875) | Post-training | 2025 | -0.06 | 1.00 | +0.86 | 3/7 |
+| [Revisiting On-Policy Distillation: Empirical Failure Modes and Simple Fixes](#arxiv-2603.25562) | Post-training | 2026 | -0.06 | 1.00 | +0.38 | 5/7 |
 
 ## Per paper
 
@@ -727,8 +750,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2608.17163` · Reinforcement learning · 2026-08-17
 
-- final **+0.08** (conf 1.00, pct 49) · impact -1.00 · WATCH
-- mean rating (1–10): **6.0** · accept votes **6/7** · percentile rank_avg 54.3 (100=best) · rank in year 43.0 (1=best)
+- final **+0.08** (conf 1.00, pct 52) · impact -1.00 · WATCH
+- mean rating (1–10): **6.0** · accept votes **6/7** · percentile rank_avg 54.1 (100=best) · rank in year 43.0 (1=best)
 - NAIPv2 `-0.711` · NAIP-v1 `0.593` · SciJudge `-4.566` · DGC-BERT `0.760`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/2.5) · 14B Fast `6.5` Accept
@@ -738,13 +761,27 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
   - [CR-8B](reviews/cyclereviewer-8b/arxiv_2608.17163.md#weaknesses): The main weakness of the paper is that the authors do not provide a theoretical analysis of their method. While the authors do provide some experimental results, the results are limited to a few tasks and do not provide a comprehensive evaluation of the method. In particular, the authors do not provide a comparison with other model-based RL methods or other methods that use world models.…
   - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2608.17163.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. First, while the paper demonstrates that QWM improves performance, it does not provide a detailed explanation of *why* this improvement occurs.…
 
+<a id="arxiv-2602.06130"></a>
+### Self-Improving World Modelling with Latent Actions
+
+`arxiv:2602.06130` · Reinforcement learning · 2026-02-05
+
+- final **n/a** (conf 0.00, pct 47) · impact n/a · WATCH
+- mean rating (1–10): **n/a** · accept votes **0/0** · percentile rank_avg  (100=best) · rank in year  (1=best)
+- NAIPv2 `` · NAIP-v1 `` · SciJudge `` · DGC-BERT ``
+- CycleReviewer 8B ``  · 70B `` 
+- DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `` 
+- OpenReviewer ``  (S/P/C None/None/None) · SEA-E `` 
+- Telegram: —
+- Weaknesses: —
+
 <a id="arxiv-2509.09675"></a>
 ### CDE: Curiosity-Driven Exploration for Efficient Reinforcement Learning in Large Language Models
 
 `arxiv:2509.09675` · Reinforcement learning · 2025-09-11
 
-- final **+0.11** (conf 1.00, pct 52) · impact -1.20 · WATCH
-- mean rating (1–10): **6.0** · accept votes **6/7** · percentile rank_avg 51.2 (100=best) · rank in year 53.0 (1=best)
+- final **+0.11** (conf 1.00, pct 57) · impact -1.21 · WATCH
+- mean rating (1–10): **6.0** · accept votes **6/7** · percentile rank_avg 51.0 (100=best) · rank in year 53.0 (1=best)
 - NAIPv2 `-0.663` · NAIP-v1 `0.401` · SciJudge `-2.350` · DGC-BERT `0.946`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.8` Accept (S/P/C 2.6/2.6/2.4) · 14B Fast `6.5` Accept
@@ -759,8 +796,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2503.14858` · Reinforcement learning · 2025-03-19
 
-- final **+0.01** (conf 1.00, pct 37) · impact -0.02 · WATCH
-- mean rating (1–10): **5.5** · accept votes **5/7** · percentile rank_avg 46.6 (100=best) · rank in year 64.0 (1=best)
+- final **+0.02** (conf 1.00, pct 35) · impact -0.02 · WATCH
+- mean rating (1–10): **5.5** · accept votes **5/7** · percentile rank_avg 46.5 (100=best) · rank in year 64.0 (1=best)
 - NAIPv2 `0.184` · NAIP-v1 `0.590` · SciJudge `-0.316` · DGC-BERT `0.755`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.5` Reject · 7B Fast `5.7` Accept (S/P/C 2.67/3.0/2.67) · 14B Fast `7.0` Accept
@@ -775,8 +812,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2501.16142` · Reinforcement learning · 2025-01-27
 
-- final **-0.13** (conf 1.00, pct 23) · impact -1.07 · WATCH
-- mean rating (1–10): **5.7** · accept votes **5/7** · percentile rank_avg 41.1 (100=best) · rank in year 69.0 (1=best)
+- final **-0.13** (conf 1.00, pct 21) · impact -1.08 · WATCH
+- mean rating (1–10): **5.7** · accept votes **5/7** · percentile rank_avg 40.8 (100=best) · rank in year 69.0 (1=best)
 - NAIPv2 `-1.769` · NAIP-v1 `0.462` · SciJudge `-3.189` · DGC-BERT `0.865`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `4.8` Reject (S/P/C 2.25/2.5/2.5) · 14B Fast `6.5` Accept
@@ -791,8 +828,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2411.03820` · Reinforcement learning · 2024-11-06
 
-- final **+0.21** (conf 1.00, pct 66) · impact -0.74 · KEEP
-- mean rating (1–10): **5.8** · accept votes **2/7** · percentile rank_avg 41.7 (100=best) · rank in year 30.0 (1=best)
+- final **+0.21** (conf 1.00, pct 68) · impact -0.74 · KEEP
+- mean rating (1–10): **5.8** · accept votes **2/7** · percentile rank_avg 41.5 (100=best) · rank in year 30.0 (1=best)
 - NAIPv2 `0.004` · NAIP-v1 `0.487` · SciJudge `-3.795` · DGC-BERT `0.091`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `5.8` Reject (S/P/C 3.0/3.25/2.75) · 14B Fast `5.0` Reject
@@ -807,8 +844,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2312.13327` · Reinforcement learning · 2023-12-20
 
-- final **-0.06** (conf 1.00, pct 30) · impact -1.38 · WATCH
-- mean rating (1–10): **5.7** · accept votes **4/7** · percentile rank_avg 37.1 (100=best) · rank in year 41.0 (1=best)
+- final **-0.06** (conf 1.00, pct 28) · impact -1.37 · WATCH
+- mean rating (1–10): **5.7** · accept votes **4/7** · percentile rank_avg 36.9 (100=best) · rank in year 40.0 (1=best)
 - NAIPv2 `0.215` · NAIP-v1 `0.453` · SciJudge `-4.719` · DGC-BERT `0.658`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `4.0` Reject · 7B Fast `6.0` Accept (S/P/C 2.5/3.0/2.75) · 14B Fast `5.8` Reject
@@ -823,8 +860,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2312.00276` · Reinforcement learning · 2023-12-01
 
-- final **+0.12** (conf 1.00, pct 54) · impact -0.93 · WATCH
-- mean rating (1–10): **5.6** · accept votes **5/7** · percentile rank_avg 39.8 (100=best) · rank in year 36.0 (1=best)
+- final **+0.12** (conf 1.00, pct 59) · impact -0.91 · WATCH
+- mean rating (1–10): **5.6** · accept votes **5/7** · percentile rank_avg 39.7 (100=best) · rank in year 36.0 (1=best)
 - NAIPv2 `-2.000` · NAIP-v1 `0.537` · SciJudge `-4.290` · DGC-BERT `0.504`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `5.7` Reject (S/P/C 2.67/2.67/2.67) · 14B Fast `5.8` Accept
@@ -839,8 +876,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2306.02451` · Reinforcement learning · 2023-06-04
 
-- final **+0.04** (conf 1.00, pct 42) · impact -1.17 · WATCH
-- mean rating (1–10): **5.6** · accept votes **5/7** · percentile rank_avg 45.5 (100=best) · rank in year 31.0 (1=best)
+- final **+0.05** (conf 1.00, pct 39) · impact -1.16 · WATCH
+- mean rating (1–10): **5.6** · accept votes **5/7** · percentile rank_avg 45.4 (100=best) · rank in year 30.0 (1=best)
 - NAIPv2 `-2.250` · NAIP-v1 `0.436` · SciJudge `-3.215` · DGC-BERT `0.900`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `6.2` Accept (S/P/C 2.75/2.5/2.5) · 14B Fast `4.7` Reject
@@ -855,8 +892,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2305.19452` · Reinforcement learning · 2023-05-30
 
-- final **+0.22** (conf 1.00, pct 68) · impact -0.45 · KEEP
-- mean rating (1–10): **5.8** · accept votes **3/7** · percentile rank_avg 51.0 (100=best) · rank in year 22.0 (1=best)
+- final **+0.23** (conf 1.00, pct 71) · impact -0.43 · KEEP
+- mean rating (1–10): **5.8** · accept votes **3/7** · percentile rank_avg 50.8 (100=best) · rank in year 22.0 (1=best)
 - NAIPv2 `1.444` · NAIP-v1 `0.643` · SciJudge `-3.935` · DGC-BERT `0.799`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.0` Reject (S/P/C 3.0/3.25/2.5) · 14B Fast `6.2` Accept
@@ -871,8 +908,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2301.04104` · Reinforcement learning · 2023-01-10
 
-- final **+0.16** (conf 1.00, pct 60) · impact +1.47 · WATCH
-- mean rating (1–10): **6.1** · accept votes **5/7** · percentile rank_avg 58.1 (100=best) · rank in year 12.0 (1=best)
+- final **+0.16** (conf 1.00, pct 62) · impact +1.47 · WATCH
+- mean rating (1–10): **6.1** · accept votes **5/7** · percentile rank_avg 57.9 (100=best) · rank in year 12.0 (1=best)
 - NAIPv2 `-1.748` · NAIP-v1 `0.739` · SciJudge `3.613` · DGC-BERT `0.596`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `7.0` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `6.5` Accept
@@ -887,8 +924,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `openreview:XyGJJ4FPoX` · Reinforcement learning · unknown
 
-- final **-0.47** (conf 1.00, pct 7) · impact -0.89 · DROP
-- mean rating (1–10): **4.7** · accept votes **0/7** · percentile rank_avg 17.4 (100=best) · rank in year 12.0 (1=best)
+- final **-0.45** (conf 1.00, pct 6) · impact -0.89 · DROP
+- mean rating (1–10): **4.7** · accept votes **0/7** · percentile rank_avg 17.2 (100=best) · rank in year 12.0 (1=best)
 - NAIPv2 `-3.945` · NAIP-v1 `0.472` · SciJudge `-4.250` · DGC-BERT `0.183`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `5.7` Reject (S/P/C 2.67/2.33/2.33) · 14B Fast `4.2` Reject
@@ -903,8 +940,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `openreview:OpC-9aBBVJe` · Reinforcement learning · unknown
 
-- final **+0.16** (conf 1.00, pct 60) · impact +0.68 · WATCH
-- mean rating (1–10): **6.0** · accept votes **6/7** · percentile rank_avg 49.6 (100=best) · rank in year 3.0 (1=best)
+- final **+0.16** (conf 1.00, pct 63) · impact +0.69 · WATCH
+- mean rating (1–10): **6.0** · accept votes **6/7** · percentile rank_avg 49.4 (100=best) · rank in year 3.0 (1=best)
 - NAIPv2 `-1.396` · NAIP-v1 `0.698` · SciJudge `1.090` · DGC-BERT `0.016`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.8` Accept · 7B Fast `5.8` Accept (S/P/C 2.75/2.75/2.25) · 14B Fast `6.5` Accept
@@ -914,13 +951,27 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
   - [CR-8B](reviews/cyclereviewer-8b/openreview_OpC-9aBBVJe.md#weaknesses): The main weakness of the paper is the novelty of the approach. The idea of resetting the parameters periodically has been proposed in previous works (e.g., Nikishin et al., 2022). The authors do not provide a theoretical analysis of the proposed approach. The results are only evaluated on two benchmarks and the baselines are not up-to-date.…
   - [DR-14B Fast](reviews/deepreviewer-14b/openreview_OpC-9aBBVJe.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, while the paper introduces parameter resetting as a key component of its method, it does not provide a detailed analysis of the impact of different reset frequencies on the learning process.…
 
+<a id="arxiv-2211.10869"></a>
+### UniMASK: Unified Inference in Sequential Decision Problems
+
+`arxiv:2211.10869` · Reinforcement learning · 2022-11-20
+
+- final **n/a** (conf 0.00, pct 47) · impact n/a · WATCH
+- mean rating (1–10): **n/a** · accept votes **0/0** · percentile rank_avg  (100=best) · rank in year  (1=best)
+- NAIPv2 `` · NAIP-v1 `` · SciJudge `` · DGC-BERT ``
+- CycleReviewer 8B ``  · 70B `` 
+- DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `` 
+- OpenReviewer ``  (S/P/C None/None/None) · SEA-E `` 
+- Telegram: —
+- Weaknesses: —
+
 <a id="arxiv-2205.07802"></a>
 ### The Primacy Bias in Deep Reinforcement Learning
 
 `arxiv:2205.07802` · Reinforcement learning · 2022-05-16
 
-- final **+0.27** (conf 1.00, pct 75) · impact -1.51 · KEEP
-- mean rating (1–10): **6.1** · accept votes **6/7** · percentile rank_avg 47.9 (100=best) · rank in year 13.0 (1=best)
+- final **+0.27** (conf 1.00, pct 75) · impact -1.49 · KEEP
+- mean rating (1–10): **6.1** · accept votes **6/7** · percentile rank_avg 47.8 (100=best) · rank in year 13.0 (1=best)
 - NAIPv2 `-1.850` · NAIP-v1 `0.358` · SciJudge `-3.692` · DGC-BERT `0.855`
 - CycleReviewer 8B `4.8` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.5` Accept (S/P/C 3.0/3.5/2.75) · 14B Fast `6.2` Accept
@@ -935,8 +986,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2106.06860` · Reinforcement learning · 2021-06-12
 
-- final **-0.49** (conf 1.00, pct 6) · impact -0.69 · DROP
-- mean rating (1–10): **5.0** · accept votes **3/7** · percentile rank_avg 26.5 (100=best) · rank in year 10.0 (1=best)
+- final **-0.50** (conf 1.00, pct 5) · impact -0.68 · DROP
+- mean rating (1–10): **5.0** · accept votes **3/7** · percentile rank_avg 26.3 (100=best) · rank in year 10.0 (1=best)
 - NAIPv2 `-3.971` · NAIP-v1 `0.426` · SciJudge `1.290` · DGC-BERT `0.685`
 - CycleReviewer 8B `3.8` Reject · 70B `` 
 - DeepReviewer 7B Std `3.5` Reject · 7B Fast `4.2` Reject (S/P/C 2.25/2.25/2.0) · 14B Fast `5.0` Reject
@@ -951,8 +1002,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2011.14826` · Reinforcement learning · 2020-11-20
 
-- final **-0.26** (conf 1.00, pct 16) · impact -1.46 · DROP
-- mean rating (1–10): **4.4** · accept votes **1/7** · percentile rank_avg 17.7 (100=best) · rank in year 11.0 (1=best)
+- final **-0.27** (conf 1.00, pct 14) · impact -1.50 · DROP
+- mean rating (1–10): **4.4** · accept votes **1/7** · percentile rank_avg 17.5 (100=best) · rank in year 11.0 (1=best)
 - NAIPv2 `-3.248` · NAIP-v1 `0.415` · SciJudge `-4.230` · DGC-BERT `0.397`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `5.2` Reject (S/P/C 2.25/2.75/2.25) · 14B Fast `4.8` Reject
@@ -967,8 +1018,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2005.01643` · Reinforcement learning · 2020-05-04
 
-- final **-0.42** (conf 1.00, pct 8) · impact +0.73 · WATCH
-- mean rating (1–10): **4.2** · accept votes **0/7** · percentile rank_avg 24.8 (100=best) · rank in year 9.0 (1=best)
+- final **-0.42** (conf 1.00, pct 7) · impact +0.71 · WATCH
+- mean rating (1–10): **4.2** · accept votes **0/7** · percentile rank_avg 24.6 (100=best) · rank in year 9.0 (1=best)
 - NAIPv2 `-4.117` · NAIP-v1 `0.684` · SciJudge `1.994` · DGC-BERT `0.060`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.0` Reject · 7B Fast `5.7` Reject (S/P/C 3.0/3.0/2.0) · 14B Fast `4.3` Reject
@@ -983,8 +1034,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2004.12919` · Reinforcement learning · 2020-04-27
 
-- final **+0.60** (conf 1.00, pct 98) · impact +1.34 · KEEP
-- mean rating (1–10): **6.2** · accept votes **6/7** · percentile rank_avg 65.6 (100=best) · rank in year 3.0 (1=best)
+- final **+0.58** (conf 1.00, pct 98) · impact +1.31 · KEEP
+- mean rating (1–10): **6.2** · accept votes **6/7** · percentile rank_avg 65.5 (100=best) · rank in year 3.0 (1=best)
 - NAIPv2 `-0.674` · NAIP-v1 `0.851` · SciJudge `1.705` · DGC-BERT `0.740`
 - CycleReviewer 8B `2.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `7.3` Accept (S/P/C 3.67/3.33/3.33) · 14B Fast `6.2` Accept
@@ -999,8 +1050,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:1910.01708` · Reinforcement learning · 2019-10-03
 
-- final **-0.56** (conf 1.00, pct 5) · impact -1.45 · DROP
-- mean rating (1–10): **4.2** · accept votes **2/7** · percentile rank_avg 17.0 (100=best) · rank in year 5.0 (1=best)
+- final **-0.56** (conf 1.00, pct 4) · impact -1.50 · DROP
+- mean rating (1–10): **4.2** · accept votes **2/7** · percentile rank_avg 16.8 (100=best) · rank in year 5.0 (1=best)
 - NAIPv2 `-2.742` · NAIP-v1 `0.356` · SciJudge `-2.343` · DGC-BERT `0.787`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast `3.5` Reject (S/P/C 2.25/2.25/2.0) · 14B Fast `3.5` Reject
@@ -1015,8 +1066,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:1802.09477` · Reinforcement learning · 2018-02-26
 
-- final **-0.37** (conf 0.46, pct 10) · impact -1.14 · WATCH
-- mean rating (1–10): **4.3** · accept votes **1/4** · percentile rank_avg 26.7 (100=best) · rank in year 3.0 (1=best)
+- final **-0.36** (conf 0.45, pct 9) · impact -1.19 · WATCH
+- mean rating (1–10): **4.3** · accept votes **1/4** · percentile rank_avg 26.5 (100=best) · rank in year 3.0 (1=best)
 - NAIPv2 `-3.898` · NAIP-v1 `0.363` · SciJudge `-0.461` · DGC-BERT `0.888`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `` 
@@ -1031,8 +1082,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:1801.01290` · Reinforcement learning · 2018-01-04
 
-- final **+0.47** (conf 1.00, pct 94) · impact +1.39 · KEEP
-- mean rating (1–10): **6.4** · accept votes **6/7** · percentile rank_avg 68.2 (100=best) · rank in year 1.0 (1=best)
+- final **+0.46** (conf 1.00, pct 93) · impact +1.36 · KEEP
+- mean rating (1–10): **6.4** · accept votes **6/7** · percentile rank_avg 68.0 (100=best) · rank in year 1.0 (1=best)
 - NAIPv2 `-3.234` · NAIP-v1 `0.771` · SciJudge `1.989` · DGC-BERT `0.915`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `7.5` Accept (S/P/C 3.25/3.25/3.25) · 14B Fast `5.7` Accept
@@ -1047,8 +1098,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:1712.06567` · Reinforcement learning · 2017-12-18
 
-- final **+0.41** (conf 1.00, pct 89) · impact +0.41 · KEEP
-- mean rating (1–10): **6.3** · accept votes **4/7** · percentile rank_avg 60.1 (100=best) · rank in year 1.0 (1=best)
+- final **+0.40** (conf 1.00, pct 89) · impact +0.13 · KEEP
+- mean rating (1–10): **6.3** · accept votes **4/7** · percentile rank_avg 58.5 (100=best) · rank in year 1.0 (1=best)
 - NAIPv2 `-0.830` · NAIP-v1 `0.779` · SciJudge `-2.734` · DGC-BERT `0.451`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `5.8` Accept (S/P/C 2.75/3.0/2.75) · 14B Fast `7.0` Accept
@@ -1063,8 +1114,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:1710.02298` · Reinforcement learning · 2017-10-06
 
-- final **-0.04** (conf 1.00, pct 33) · impact +1.08 · WATCH
-- mean rating (1–10): **5.7** · accept votes **3/7** · percentile rank_avg 51.0 (100=best) · rank in year 3.0 (1=best)
+- final **-0.05** (conf 1.00, pct 28) · impact +1.01 · WATCH
+- mean rating (1–10): **5.7** · accept votes **3/7** · percentile rank_avg 50.8 (100=best) · rank in year 3.0 (1=best)
 - NAIPv2 `-3.051` · NAIP-v1 `0.667` · SciJudge `2.473` · DGC-BERT `0.881`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `5.5` Reject (S/P/C 2.75/3.0/2.25) · 14B Fast `5.0` Reject
@@ -1079,8 +1130,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:1707.06887` · Reinforcement learning · 2017-07-21
 
-- final **+0.36** (conf 1.00, pct 85) · impact +0.89 · KEEP
-- mean rating (1–10): **6.0** · accept votes **6/7** · percentile rank_avg 55.7 (100=best) · rank in year 2.0 (1=best)
+- final **+0.35** (conf 1.00, pct 85) · impact +0.80 · KEEP
+- mean rating (1–10): **6.0** · accept votes **6/7** · percentile rank_avg 55.3 (100=best) · rank in year 2.0 (1=best)
 - NAIPv2 `-2.482` · NAIP-v1 `0.682` · SciJudge `2.160` · DGC-BERT `0.891`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `4.5` Accept · 7B Fast `5.8` Accept (S/P/C 2.5/2.75/2.5) · 14B Fast `6.7` Accept
@@ -1095,8 +1146,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:1511.06581` · Reinforcement learning · 2015-11-20
 
-- final **+0.11** (conf 1.00, pct 53) · impact +0.29 · WATCH
-- mean rating (1–10): **5.9** · accept votes **6/7** · percentile rank_avg 53.2 (100=best) · rank in year 1.0 (1=best)
+- final **+0.09** (conf 1.00, pct 53) · impact +0.26 · WATCH
+- mean rating (1–10): **5.9** · accept votes **6/7** · percentile rank_avg 53.0 (100=best) · rank in year 1.0 (1=best)
 - NAIPv2 `-4.504` · NAIP-v1 `0.628` · SciJudge `-0.007` · DGC-BERT `0.840`
 - CycleReviewer 8B `4.8` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.7` Accept (S/P/C 3.0/3.0/2.33) · 14B Fast `5.0` Accept
@@ -1111,8 +1162,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:1511.05952` · Reinforcement learning · 2015-11-18
 
-- final **+0.01** (conf 1.00, pct 38) · impact +1.07 · WATCH
-- mean rating (1–10): **5.5** · accept votes **4/7** · percentile rank_avg 49.9 (100=best) · rank in year 2.0 (1=best)
+- final **-0.01** (conf 1.00, pct 32) · impact +1.05 · WATCH
+- mean rating (1–10): **5.5** · accept votes **4/7** · percentile rank_avg 49.8 (100=best) · rank in year 2.0 (1=best)
 - NAIPv2 `-1.875` · NAIP-v1 `0.706` · SciJudge `2.060` · DGC-BERT `0.910`
 - CycleReviewer 8B `4.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.8` Reject · 7B Fast `4.8` Reject (S/P/C 2.5/3.0/2.25) · 14B Fast `5.0` Accept
@@ -1127,8 +1178,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:1509.06461` · Reinforcement learning · 2015-09-22
 
-- final **+0.10** (conf 1.00, pct 51) · impact +0.43 · WATCH
-- mean rating (1–10): **5.5** · accept votes **5/7** · percentile rank_avg 49.0 (100=best) · rank in year 3.0 (1=best)
+- final **+0.08** (conf 1.00, pct 52) · impact +0.40 · WATCH
+- mean rating (1–10): **5.5** · accept votes **5/7** · percentile rank_avg 48.8 (100=best) · rank in year 3.0 (1=best)
 - NAIPv2 `-2.979` · NAIP-v1 `0.721` · SciJudge `-0.671` · DGC-BERT `0.890`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Reject (S/P/C 2.75/3.0/2.75) · 14B Fast `4.0` Accept
@@ -1138,13 +1189,41 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
   - [CR-8B](reviews/cyclereviewer-8b/arxiv_1509.06461.md#weaknesses): The paper lacks a comprehensive discussion of the limitations and potential drawbacks of the proposed approach. The authors should provide a more detailed analysis of the computational complexity and scalability of the proposed algorithm, as well as its potential limitations in terms of generalizability and applicability to different types of problems.
   - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_1509.06461.md#weaknesses): While the paper presents a valuable contribution, I have identified several weaknesses that warrant further discussion. Firstly, the paper's comparison of Double DQN is primarily against the original DQN algorithm.…
 
+<a id="arxiv-2609.16454"></a>
+### Fine-Tuning Fixes Mode Collapse and Over-Dispersion in LLMs
+
+`arxiv:2609.16454` · Post-training · 2026-09-15
+
+- final **n/a** (conf 0.00, pct 47) · impact n/a · WATCH
+- mean rating (1–10): **n/a** · accept votes **0/0** · percentile rank_avg  (100=best) · rank in year  (1=best)
+- NAIPv2 `` · NAIP-v1 `` · SciJudge `` · DGC-BERT ``
+- CycleReviewer 8B ``  · 70B `` 
+- DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `` 
+- OpenReviewer ``  (S/P/C None/None/None) · SEA-E `` 
+- Telegram: —
+- Weaknesses: —
+
+<a id="arxiv-2608.27448"></a>
+### TTPO: Test-Time Policy Optimization
+
+`arxiv:2608.27448` · Post-training · 2026-08-27
+
+- final **n/a** (conf 0.00, pct 47) · impact n/a · WATCH
+- mean rating (1–10): **n/a** · accept votes **0/0** · percentile rank_avg  (100=best) · rank in year  (1=best)
+- NAIPv2 `` · NAIP-v1 `` · SciJudge `` · DGC-BERT ``
+- CycleReviewer 8B ``  · 70B `` 
+- DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `` 
+- OpenReviewer ``  (S/P/C None/None/None) · SEA-E `` 
+- Telegram: —
+- Weaknesses: —
+
 <a id="arxiv-2608.13040"></a>
 ### Latent On-Policy Self-Distillation
 
 `arxiv:2608.13040` · Post-training · 2026-08-13
 
-- final **+0.13** (conf 1.00, pct 57) · impact -0.53 · WATCH
-- mean rating (1–10): **6.1** · accept votes **6/7** · percentile rank_avg 56.3 (100=best) · rank in year 39.0 (1=best)
+- final **+0.14** (conf 1.00, pct 60) · impact -0.53 · WATCH
+- mean rating (1–10): **6.1** · accept votes **6/7** · percentile rank_avg 56.1 (100=best) · rank in year 38.0 (1=best)
 - NAIPv2 `-0.950` · NAIP-v1 `0.536` · SciJudge `-2.128` · DGC-BERT `0.842`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `7.0` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `6.5` Accept
@@ -1159,8 +1238,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2608.09888` · Post-training · 2026-08-10
 
-- final **-0.35** (conf 1.00, pct 10) · impact -0.46 · DROP
-- mean rating (1–10): **5.4** · accept votes **2/7** · percentile rank_avg 38.8 (100=best) · rank in year 64.0 (1=best)
+- final **-0.34** (conf 1.00, pct 9) · impact -0.46 · DROP
+- mean rating (1–10): **5.4** · accept votes **2/7** · percentile rank_avg 38.6 (100=best) · rank in year 64.0 (1=best)
 - NAIPv2 `-0.529` · NAIP-v1 `0.629` · SciJudge `-3.654` · DGC-BERT `0.411`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `4.2` Reject (S/P/C 2.5/2.75/2.5) · 14B Fast `5.7` Reject
@@ -1175,8 +1254,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2607.07847` · Post-training · 2026-07-08
 
-- final **+0.02** (conf 1.00, pct 39) · impact +0.56 · WATCH
-- mean rating (1–10): **5.9** · accept votes **4/7** · percentile rank_avg 50.5 (100=best) · rank in year 53.0 (1=best)
+- final **+0.02** (conf 1.00, pct 36) · impact +0.57 · WATCH
+- mean rating (1–10): **5.9** · accept votes **4/7** · percentile rank_avg 50.3 (100=best) · rank in year 53.0 (1=best)
 - NAIPv2 `-0.608` · NAIP-v1 `0.653` · SciJudge `1.397` · DGC-BERT `0.382`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.8` Reject · 7B Fast `6.0` Accept (S/P/C 3.0/3.25/3.0) · 14B Fast `6.5` Accept
@@ -1191,8 +1270,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2607.05609` · Post-training · 2026-07-06
 
-- final **+0.07** (conf 1.00, pct 48) · impact -0.69 · WATCH
-- mean rating (1–10): **6.1** · accept votes **5/7** · percentile rank_avg 59.7 (100=best) · rank in year 30.0 (1=best)
+- final **+0.08** (conf 1.00, pct 52) · impact -0.69 · WATCH
+- mean rating (1–10): **6.1** · accept votes **5/7** · percentile rank_avg 59.6 (100=best) · rank in year 30.0 (1=best)
 - NAIPv2 `0.292` · NAIP-v1 `0.529` · SciJudge `-2.730` · DGC-BERT `0.825`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `6.0` Reject (S/P/C 2.75/3.0/2.5) · 14B Fast `6.5` Reject
@@ -1207,8 +1286,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2606.23740` · Post-training · 2026-06-21
 
-- final **-0.25** (conf 1.00, pct 17) · impact -0.91 · DROP
-- mean rating (1–10): **5.5** · accept votes **2/7** · percentile rank_avg 36.9 (100=best) · rank in year 67.0 (1=best)
+- final **-0.24** (conf 1.00, pct 15) · impact -0.93 · DROP
+- mean rating (1–10): **5.5** · accept votes **2/7** · percentile rank_avg 36.7 (100=best) · rank in year 67.0 (1=best)
 - NAIPv2 `0.401` · NAIP-v1 `0.346` · SciJudge `0.709` · DGC-BERT `0.074`
 - CycleReviewer 8B `4.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `4.8` Reject (S/P/C 2.5/2.5/2.5) · 14B Fast `6.5` Reject
@@ -1223,8 +1302,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2606.18810` · Post-training · 2026-06-17
 
-- final **+0.01** (conf 1.00, pct 38) · impact -0.98 · WATCH
-- mean rating (1–10): **6.3** · accept votes **4/7** · percentile rank_avg 49.4 (100=best) · rank in year 55.0 (1=best)
+- final **+0.02** (conf 1.00, pct 35) · impact -0.99 · WATCH
+- mean rating (1–10): **6.3** · accept votes **4/7** · percentile rank_avg 49.2 (100=best) · rank in year 55.0 (1=best)
 - NAIPv2 `-1.278` · NAIP-v1 `0.505` · SciJudge `-3.665` · DGC-BERT `0.160`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Reject · 7B Fast `6.5` Accept (S/P/C 3.0/3.25/2.5) · 14B Fast `7.5` Accept
@@ -1239,8 +1318,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2606.06021` · Post-training · 2026-06-04
 
-- final **+0.46** (conf 1.00, pct 93) · impact +0.74 · KEEP
-- mean rating (1–10): **6.3** · accept votes **5/7** · percentile rank_avg 76.1 (100=best) · rank in year 2.0 (1=best)
+- final **+0.46** (conf 1.00, pct 94) · impact +0.74 · KEEP
+- mean rating (1–10): **6.3** · accept votes **5/7** · percentile rank_avg 76.0 (100=best) · rank in year 2.0 (1=best)
 - NAIPv2 `3.092` · NAIP-v1 `0.698` · SciJudge `0.956` · DGC-BERT `0.915`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `6.8` Accept · 7B Fast `6.0` Reject (S/P/C 3.0/3.0/3.0) · 14B Fast `7.0` Accept
@@ -1255,8 +1334,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2605.22074` · Post-training · 2026-05-21
 
-- final **+0.20** (conf 1.00, pct 65) · impact +0.59 · KEEP
-- mean rating (1–10): **6.3** · accept votes **6/7** · percentile rank_avg 69.6 (100=best) · rank in year 9.0 (1=best)
+- final **+0.20** (conf 1.00, pct 67) · impact +0.60 · KEEP
+- mean rating (1–10): **6.3** · accept votes **6/7** · percentile rank_avg 69.5 (100=best) · rank in year 9.0 (1=best)
 - NAIPv2 `-0.527` · NAIP-v1 `0.638` · SciJudge `1.542` · DGC-BERT `0.907`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `7.0` Accept (S/P/C 3.0/3.25/3.25) · 14B Fast `5.8` Reject
@@ -1271,8 +1350,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2605.12969` · Post-training · 2026-05-13
 
-- final **+0.35** (conf 1.00, pct 84) · impact -0.79 · KEEP
-- mean rating (1–10): **6.5** · accept votes **6/7** · percentile rank_avg 65.2 (100=best) · rank in year 20.0 (1=best)
+- final **+0.36** (conf 1.00, pct 85) · impact -0.80 · KEEP
+- mean rating (1–10): **6.5** · accept votes **6/7** · percentile rank_avg 65.1 (100=best) · rank in year 20.0 (1=best)
 - NAIPv2 `0.069` · NAIP-v1 `0.457` · SciJudge `-1.566` · DGC-BERT `0.943`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `7.0` Accept (S/P/C 3.0/2.75/3.0) · 14B Fast `7.5` Accept
@@ -1287,8 +1366,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2605.06241` · Post-training · 2026-05-07
 
-- final **+0.49** (conf 1.00, pct 94) · impact +1.40 · KEEP
-- mean rating (1–10): **7.2** · accept votes **5/7** · percentile rank_avg 80.6 (100=best) · rank in year 1.0 (1=best)
+- final **+0.49** (conf 1.00, pct 95) · impact +1.41 · KEEP
+- mean rating (1–10): **7.2** · accept votes **5/7** · percentile rank_avg 80.5 (100=best) · rank in year 1.0 (1=best)
 - NAIPv2 `0.688` · NAIP-v1 `0.633` · SciJudge `3.479` · DGC-BERT `0.163`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `7.5` Accept (S/P/C 3.25/3.25/3.0) · 14B Fast `7.5` Accept
@@ -1303,8 +1382,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2604.20659` · Post-training · 2026-04-22
 
-- final **-0.01** (conf 1.00, pct 35) · impact -0.78 · WATCH
-- mean rating (1–10): **6.0** · accept votes **5/7** · percentile rank_avg 48.1 (100=best) · rank in year 56.0 (1=best)
+- final **-0.00** (conf 1.00, pct 32) · impact -0.79 · WATCH
+- mean rating (1–10): **6.0** · accept votes **5/7** · percentile rank_avg 47.9 (100=best) · rank in year 56.0 (1=best)
 - NAIPv2 `-1.234` · NAIP-v1 `0.453` · SciJudge `-0.894` · DGC-BERT `0.697`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `5.8` Reject (S/P/C 2.75/2.75/2.5) · 14B Fast `7.0` Accept
@@ -1319,8 +1398,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2604.13016` · Post-training · 2026-04-14
 
-- final **+0.36** (conf 1.00, pct 85) · impact -0.07 · KEEP
-- mean rating (1–10): **6.3** · accept votes **6/7** · percentile rank_avg 66.1 (100=best) · rank in year 15.0 (1=best)
+- final **+0.37** (conf 1.00, pct 86) · impact -0.07 · KEEP
+- mean rating (1–10): **6.3** · accept votes **6/7** · percentile rank_avg 66.0 (100=best) · rank in year 15.0 (1=best)
 - NAIPv2 `0.490` · NAIP-v1 `0.563` · SciJudge `0.303` · DGC-BERT `0.852`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `7.5` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `6.0` Reject
@@ -1335,8 +1414,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2604.08690` · Post-training · 2026-04-09
 
-- final **+0.29** (conf 1.00, pct 77) · impact -1.77 · KEEP
-- mean rating (1–10): **6.5** · accept votes **6/7** · percentile rank_avg 60.8 (100=best) · rank in year 28.0 (1=best)
+- final **+0.30** (conf 1.00, pct 79) · impact -1.79 · KEEP
+- mean rating (1–10): **6.5** · accept votes **6/7** · percentile rank_avg 60.6 (100=best) · rank in year 28.0 (1=best)
 - NAIPv2 `-0.349` · NAIP-v1 `0.353` · SciJudge `-3.717` · DGC-BERT `0.886`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `7.5` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `6.5` Accept
@@ -1351,8 +1430,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2604.02288` · Post-training · 2026-04-02
 
-- final **-0.00** (conf 1.00, pct 36) · impact +0.63 · WATCH
-- mean rating (1–10): **5.9** · accept votes **5/7** · percentile rank_avg 59.7 (100=best) · rank in year 31.0 (1=best)
+- final **+0.01** (conf 1.00, pct 34) · impact +0.64 · WATCH
+- mean rating (1–10): **5.9** · accept votes **5/7** · percentile rank_avg 59.5 (100=best) · rank in year 31.0 (1=best)
 - NAIPv2 `0.539` · NAIP-v1 `0.620` · SciJudge `2.070` · DGC-BERT `0.848`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `6.0` Accept (S/P/C 2.5/3.0/2.75) · 14B Fast `6.5` Accept
@@ -1367,8 +1446,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2604.01375` · Post-training · 2026-04-01
 
-- final **-0.10** (conf 1.00, pct 25) · impact -0.29 · WATCH
-- mean rating (1–10): **5.8** · accept votes **3/7** · percentile rank_avg 46.3 (100=best) · rank in year 57.0 (1=best)
+- final **-0.09** (conf 1.00, pct 23) · impact -0.29 · WATCH
+- mean rating (1–10): **5.8** · accept votes **3/7** · percentile rank_avg 46.1 (100=best) · rank in year 57.0 (1=best)
 - NAIPv2 `-1.389` · NAIP-v1 `0.541` · SciJudge `-0.344` · DGC-BERT `0.309`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.2` Reject (S/P/C 2.75/3.0/3.0) · 14B Fast `5.8` Reject
@@ -1383,8 +1462,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2603.25562` · Post-training · 2026-03-26
 
-- final **-0.07** (conf 1.00, pct 29) · impact +0.37 · WATCH
-- mean rating (1–10): **5.8** · accept votes **5/7** · percentile rank_avg 53.8 (100=best) · rank in year 45.0 (1=best)
+- final **-0.06** (conf 1.00, pct 27) · impact +0.38 · WATCH
+- mean rating (1–10): **5.8** · accept votes **5/7** · percentile rank_avg 53.7 (100=best) · rank in year 45.0 (1=best)
 - NAIPv2 `-0.349` · NAIP-v1 `0.660` · SciJudge `0.539` · DGC-BERT `0.870`
 - CycleReviewer 8B `4.2` Reject · 70B `` 
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `5.8` Accept (S/P/C 2.5/3.0/2.5) · 14B Fast `7.0` Accept
@@ -1399,8 +1478,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2603.24472` · Post-training · 2026-03-25
 
-- final **-0.17** (conf 1.00, pct 22) · impact +0.19 · WATCH
-- mean rating (1–10): **5.7** · accept votes **3/7** · percentile rank_avg 43.4 (100=best) · rank in year 61.0 (1=best)
+- final **-0.16** (conf 1.00, pct 20) · impact +0.19 · WATCH
+- mean rating (1–10): **5.7** · accept votes **3/7** · percentile rank_avg 43.2 (100=best) · rank in year 61.0 (1=best)
 - NAIPv2 `-0.968` · NAIP-v1 `0.561` · SciJudge `1.327` · DGC-BERT `0.251`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `5.8` Reject (S/P/C 2.75/2.75/2.75) · 14B Fast `5.8` Accept
@@ -1415,8 +1494,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2602.18037` · Post-training · 2026-02-20
 
-- final **+0.13** (conf 1.00, pct 57) · impact -0.39 · WATCH
-- mean rating (1–10): **6.0** · accept votes **4/7** · percentile rank_avg 56.3 (100=best) · rank in year 38.0 (1=best)
+- final **+0.14** (conf 1.00, pct 61) · impact -0.40 · WATCH
+- mean rating (1–10): **6.0** · accept votes **4/7** · percentile rank_avg 56.1 (100=best) · rank in year 39.0 (1=best)
 - NAIPv2 `-1.482` · NAIP-v1 `0.387` · SciJudge `1.762` · DGC-BERT `0.828`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `6.5` Reject (S/P/C 2.75/2.75/2.75) · 14B Fast `6.5` Accept
@@ -1431,8 +1510,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2602.09000` · Post-training · 2026-02-09
 
-- final **-0.05** (conf 1.00, pct 31) · impact +0.61 · WATCH
-- mean rating (1–10): **5.6** · accept votes **4/7** · percentile rank_avg 52.4 (100=best) · rank in year 49.0 (1=best)
+- final **-0.04** (conf 1.00, pct 29) · impact +0.61 · WATCH
+- mean rating (1–10): **5.6** · accept votes **4/7** · percentile rank_avg 52.2 (100=best) · rank in year 49.0 (1=best)
 - NAIPv2 `-1.219` · NAIP-v1 `0.502` · SciJudge `3.149` · DGC-BERT `0.912`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `5.5` Reject (S/P/C 2.5/2.75/2.75) · 14B Fast `6.5` Accept
@@ -1447,8 +1526,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2601.20861` · Post-training · 2026-01-28
 
-- final **-0.54** (conf 1.00, pct 5) · impact -1.33 · DROP
-- mean rating (1–10): **5.1** · accept votes **3/7** · percentile rank_avg 23.8 (100=best) · rank in year 71.0 (1=best)
+- final **-0.53** (conf 1.00, pct 5) · impact -1.35 · DROP
+- mean rating (1–10): **5.1** · accept votes **3/7** · percentile rank_avg 23.6 (100=best) · rank in year 71.0 (1=best)
 - NAIPv2 `-2.814` · NAIP-v1 `0.345` · SciJudge `-1.974` · DGC-BERT `0.038`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `5.7` Accept (S/P/C 2.67/2.67/2.67) · 14B Fast `4.0` Reject
@@ -1463,8 +1542,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2601.20802` · Post-training · 2026-01-28
 
-- final **+0.27** (conf 1.00, pct 75) · impact +1.09 · KEEP
-- mean rating (1–10): **6.2** · accept votes **6/7** · percentile rank_avg 68.4 (100=best) · rank in year 10.0 (1=best)
+- final **+0.28** (conf 1.00, pct 77) · impact +1.09 · KEEP
+- mean rating (1–10): **6.2** · accept votes **6/7** · percentile rank_avg 68.2 (100=best) · rank in year 10.0 (1=best)
 - NAIPv2 `-0.924` · NAIP-v1 `0.584` · SciJudge `3.379` · DGC-BERT `0.912`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.5` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `7.0` Accept
@@ -1479,8 +1558,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2601.19897` · Post-training · 2026-01-27
 
-- final **-0.08** (conf 1.00, pct 27) · impact +0.66 · WATCH
-- mean rating (1–10): **6.0** · accept votes **6/7** · percentile rank_avg 59.6 (100=best) · rank in year 32.0 (1=best)
+- final **-0.08** (conf 1.00, pct 25) · impact +0.66 · WATCH
+- mean rating (1–10): **6.0** · accept votes **6/7** · percentile rank_avg 59.4 (100=best) · rank in year 32.0 (1=best)
 - NAIPv2 `-1.568` · NAIP-v1 `0.601` · SciJudge `2.275` · DGC-BERT `0.924`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `6.2` Accept (S/P/C 2.75/3.0/2.75) · 14B Fast `6.0` Accept
@@ -1495,8 +1574,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2601.18734` · Post-training · 2026-01-26
 
-- final **+0.12** (conf 1.00, pct 55) · impact +0.54 · WATCH
-- mean rating (1–10): **6.3** · accept votes **5/7** · percentile rank_avg 66.6 (100=best) · rank in year 13.0 (1=best)
+- final **+0.12** (conf 1.00, pct 58) · impact +0.55 · WATCH
+- mean rating (1–10): **6.3** · accept votes **5/7** · percentile rank_avg 66.5 (100=best) · rank in year 13.0 (1=best)
 - NAIPv2 `1.841` · NAIP-v1 `0.656` · SciJudge `1.189` · DGC-BERT `0.813`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Reject · 7B Fast `6.7` Accept (S/P/C 3.0/3.0/2.67) · 14B Fast `6.0` Accept
@@ -1511,8 +1590,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2601.16175` · Post-training · 2026-01-22
 
-- final **+0.27** (conf 1.00, pct 74) · impact +1.26 · KEEP
-- mean rating (1–10): **6.5** · accept votes **6/7** · percentile rank_avg 65.9 (100=best) · rank in year 16.0 (1=best)
+- final **+0.27** (conf 1.00, pct 76) · impact +1.26 · KEEP
+- mean rating (1–10): **6.5** · accept votes **6/7** · percentile rank_avg 65.7 (100=best) · rank in year 16.0 (1=best)
 - NAIPv2 `-0.401` · NAIP-v1 `0.564` · SciJudge `3.609` · DGC-BERT `0.030`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `5.8` Accept (S/P/C 2.75/2.5/2.5) · 14B Fast `8.0` Accept
@@ -1527,8 +1606,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2601.14525` · Post-training · 2026-01-20
 
-- final **+0.04** (conf 1.00, pct 42) · impact +0.18 · WATCH
-- mean rating (1–10): **6.2** · accept votes **5/7** · percentile rank_avg 54.0 (100=best) · rank in year 44.0 (1=best)
+- final **+0.04** (conf 1.00, pct 38) · impact +0.18 · WATCH
+- mean rating (1–10): **6.2** · accept votes **5/7** · percentile rank_avg 53.8 (100=best) · rank in year 44.0 (1=best)
 - NAIPv2 `-0.429` · NAIP-v1 `0.485` · SciJudge `2.270` · DGC-BERT `0.572`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/3.0) · 14B Fast `6.5` Accept
@@ -1543,7 +1622,7 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2601.11061` · Post-training · 2026-01-16
 
-- final **+0.39** (conf 1.00, pct 88) · impact +1.02 · KEEP
+- final **+0.40** (conf 1.00, pct 89) · impact +1.03 · KEEP
 - mean rating (1–10): **6.3** · accept votes **6/7** · percentile rank_avg 73.1 (100=best) · rank in year 5.0 (1=best)
 - NAIPv2 `2.123` · NAIP-v1 `0.655` · SciJudge `2.750` · DGC-BERT `0.666`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
@@ -1554,13 +1633,27 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
   - [CR-8B](reviews/cyclereviewer-8b/arxiv_2601.11061.md#weaknesses): The paper only studies the Qwen2.5 model, which is a specific model architecture. It is unclear whether the findings can be generalized to other model architectures. - The paper only studies the spurious rewards paradox in RLVR, which is a specific phenomenon. It is unclear whether the findings can be generalized to other phenomena in RLVR.…
   - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2601.11061.md#weaknesses): While this paper presents significant contributions to our understanding of memorization in RLVR-tuned models, several limitations warrant careful consideration. First, the paper's reliance on a specific model architecture, the Qwen2.5-Math-7B, raises concerns about the generalizability of the findings.…
 
+<a id="arxiv-2601.05053"></a>
+### Reinforced Efficient Reasoning via Semantically Diverse Exploration
+
+`arxiv:2601.05053` · Post-training · 2026-01-08
+
+- final **n/a** (conf 0.00, pct 47) · impact n/a · WATCH
+- mean rating (1–10): **n/a** · accept votes **0/0** · percentile rank_avg  (100=best) · rank in year  (1=best)
+- NAIPv2 `` · NAIP-v1 `` · SciJudge `` · DGC-BERT ``
+- CycleReviewer 8B ``  · 70B `` 
+- DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `` 
+- OpenReviewer ``  (S/P/C None/None/None) · SEA-E `` 
+- Telegram: —
+- Weaknesses: —
+
 <a id="arxiv-2512.02807"></a>
 ### SR-GRPO: Stable Rank as an Intrinsic Geometric Reward for Large Language Model Alignment
 
 `arxiv:2512.02807` · Post-training · 2025-12-02
 
-- final **+0.23** (conf 1.00, pct 70) · impact +0.14 · KEEP
-- mean rating (1–10): **6.0** · accept votes **6/7** · percentile rank_avg 61.3 (100=best) · rank in year 28.0 (1=best)
+- final **+0.24** (conf 1.00, pct 73) · impact +0.15 · KEEP
+- mean rating (1–10): **6.0** · accept votes **6/7** · percentile rank_avg 61.1 (100=best) · rank in year 28.0 (1=best)
 - NAIPv2 `-0.412` · NAIP-v1 `0.616` · SciJudge `0.108` · DGC-BERT `0.904`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.5` Accept (S/P/C 2.75/2.75/2.75) · 14B Fast `6.5` Accept
@@ -1575,8 +1668,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2512.00499` · Post-training · 2025-11-29
 
-- final **+0.19** (conf 1.00, pct 63) · impact -0.92 · WATCH
-- mean rating (1–10): **6.2** · accept votes **6/7** · percentile rank_avg 53.6 (100=best) · rank in year 45.0 (1=best)
+- final **+0.19** (conf 1.00, pct 66) · impact -0.92 · WATCH
+- mean rating (1–10): **6.2** · accept votes **6/7** · percentile rank_avg 53.5 (100=best) · rank in year 46.0 (1=best)
 - NAIPv2 `-0.965` · NAIP-v1 `0.544` · SciJudge `-4.950` · DGC-BERT `0.884`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `7.5` Accept (S/P/C 3.0/3.25/3.25) · 14B Fast `6.0` Accept
@@ -1591,8 +1684,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2511.20347` · Post-training · 2025-11-25
 
-- final **+0.12** (conf 1.00, pct 54) · impact -0.32 · WATCH
-- mean rating (1–10): **6.3** · accept votes **5/7** · percentile rank_avg 60.5 (100=best) · rank in year 33.0 (1=best)
+- final **+0.12** (conf 1.00, pct 58) · impact -0.32 · WATCH
+- mean rating (1–10): **6.3** · accept votes **5/7** · percentile rank_avg 60.4 (100=best) · rank in year 33.0 (1=best)
 - NAIPv2 `-0.818` · NAIP-v1 `0.581` · SciJudge `-1.889` · DGC-BERT `0.819`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Reject (S/P/C 2.5/3.0/2.5) · 14B Fast `7.0` Accept
@@ -1607,8 +1700,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2511.07317` · Post-training · 2025-11-10
 
-- final **+0.37** (conf 1.00, pct 86) · impact -0.24 · KEEP
-- mean rating (1–10): **6.5** · accept votes **5/7** · percentile rank_avg 61.2 (100=best) · rank in year 30.0 (1=best)
+- final **+0.37** (conf 1.00, pct 87) · impact -0.24 · KEEP
+- mean rating (1–10): **6.5** · accept votes **5/7** · percentile rank_avg 61.0 (100=best) · rank in year 30.0 (1=best)
 - NAIPv2 `-0.931` · NAIP-v1 `0.519` · SciJudge `-0.150` · DGC-BERT `0.547`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Reject · 7B Fast `6.8` Accept (S/P/C 3.25/3.25/3.0) · 14B Fast `7.5` Accept
@@ -1623,8 +1716,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2510.14901` · Post-training · 2025-10-16
 
-- final **+0.21** (conf 1.00, pct 66) · impact -0.02 · KEEP
-- mean rating (1–10): **6.5** · accept votes **6/7** · percentile rank_avg 62.7 (100=best) · rank in year 21.0 (1=best)
+- final **+0.21** (conf 1.00, pct 68) · impact -0.02 · KEEP
+- mean rating (1–10): **6.5** · accept votes **6/7** · percentile rank_avg 62.5 (100=best) · rank in year 21.0 (1=best)
 - NAIPv2 `-1.463` · NAIP-v1 `0.513` · SciJudge `0.607` · DGC-BERT `0.885`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `7.0` Accept (S/P/C 3.0/3.25/3.0) · 14B Fast `6.5` Accept
@@ -1639,8 +1732,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2510.13786` · Post-training · 2025-10-15
 
-- final **+0.42** (conf 1.00, pct 89) · impact +0.98 · KEEP
-- mean rating (1–10): **6.3** · accept votes **6/7** · percentile rank_avg 74.8 (100=best) · rank in year 4.0 (1=best)
+- final **+0.42** (conf 1.00, pct 90) · impact +0.99 · KEEP
+- mean rating (1–10): **6.3** · accept votes **6/7** · percentile rank_avg 74.7 (100=best) · rank in year 4.0 (1=best)
 - NAIPv2 `0.044` · NAIP-v1 `0.693` · SciJudge `1.574` · DGC-BERT `0.852`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `6.8` Accept (S/P/C 3.25/3.25/3.25) · 14B Fast `6.0` Reject
@@ -1650,13 +1743,27 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
   - [CR-8B](reviews/cyclereviewer-8b/arxiv_2510.13786.md#weaknesses): 1. The authors only study the scaling law of RL for LLMs, but do not discuss the scaling law of RL for other tasks, such as robotics and game playing. 2. The authors do not provide a theoretical analysis of the scaling law of RL for LLMs. 3. The authors do not discuss the limitations of the proposed method.
   - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2510.13786.md#weaknesses): While this paper makes significant contributions, several weaknesses warrant attention. First, the paper's focus on a single task, verifiable math, limits the generalizability of the findings. Although the authors include a multi-task experiment with math and code, the primary analysis and the ScaleRL recipe are centered around verifiable math.…
 
+<a id="arxiv-2510.11686"></a>
+### Representation-Based Exploration for Language Models: From Test-Time to Post-Training
+
+`arxiv:2510.11686` · Post-training · 2025-10-13
+
+- final **n/a** (conf 0.00, pct 47) · impact n/a · WATCH
+- mean rating (1–10): **n/a** · accept votes **0/0** · percentile rank_avg  (100=best) · rank in year  (1=best)
+- NAIPv2 `` · NAIP-v1 `` · SciJudge `` · DGC-BERT ``
+- CycleReviewer 8B ``  · 70B `` 
+- DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `` 
+- OpenReviewer ``  (S/P/C None/None/None) · SEA-E `` 
+- Telegram: —
+- Weaknesses: —
+
 <a id="arxiv-2510.00977"></a>
 ### It Takes Two: Your GRPO Is Secretly DPO
 
 `arxiv:2510.00977` · Post-training · 2025-10-01
 
-- final **-0.10** (conf 1.00, pct 24) · impact -1.37 · WATCH
-- mean rating (1–10): **5.7** · accept votes **5/7** · percentile rank_avg 43.7 (100=best) · rank in year 66.0 (1=best)
+- final **-0.10** (conf 1.00, pct 22) · impact -1.38 · WATCH
+- mean rating (1–10): **5.7** · accept votes **5/7** · percentile rank_avg 43.4 (100=best) · rank in year 66.0 (1=best)
 - NAIPv2 `-0.455` · NAIP-v1 `0.411` · SciJudge `-3.230` · DGC-BERT `0.614`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `4.8` Reject (S/P/C 2.5/2.75/2.25) · 14B Fast `6.5` Accept
@@ -1671,8 +1778,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2509.25123` · Post-training · 2025-09-29
 
-- final **-0.06** (conf 1.00, pct 30) · impact -0.11 · WATCH
-- mean rating (1–10): **5.8** · accept votes **5/7** · percentile rank_avg 50.8 (100=best) · rank in year 54.0 (1=best)
+- final **-0.06** (conf 1.00, pct 27) · impact -0.11 · WATCH
+- mean rating (1–10): **5.8** · accept votes **5/7** · percentile rank_avg 50.6 (100=best) · rank in year 54.0 (1=best)
 - NAIPv2 `-0.188` · NAIP-v1 `0.603` · SciJudge `-0.986` · DGC-BERT `0.417`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `4.2` Reject (S/P/C 2.25/2.25/2.25) · 14B Fast `6.5` Accept
@@ -1687,8 +1794,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2509.14234` · Post-training · 2025-09-17
 
-- final **+0.06** (conf 1.00, pct 47) · impact +0.12 · WATCH
-- mean rating (1–10): **6.0** · accept votes **5/7** · percentile rank_avg 51.2 (100=best) · rank in year 52.0 (1=best)
+- final **+0.07** (conf 1.00, pct 43) · impact +0.12 · WATCH
+- mean rating (1–10): **6.0** · accept votes **5/7** · percentile rank_avg 51.0 (100=best) · rank in year 52.0 (1=best)
 - NAIPv2 `-1.042` · NAIP-v1 `0.547` · SciJudge `0.707` · DGC-BERT `0.040`
 - CycleReviewer 8B `4.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `6.2` Accept (S/P/C 2.75/3.0/2.5) · 14B Fast `6.5` Accept
@@ -1702,8 +1809,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2509.13232` · Post-training · 2025-09-16
 
-- final **-0.07** (conf 1.00, pct 29) · impact +0.40 · WATCH
-- mean rating (1–10): **6.0** · accept votes **5/7** · percentile rank_avg 54.3 (100=best) · rank in year 43.0 (1=best)
+- final **-0.07** (conf 1.00, pct 26) · impact +0.40 · WATCH
+- mean rating (1–10): **6.0** · accept votes **5/7** · percentile rank_avg 54.2 (100=best) · rank in year 43.0 (1=best)
 - NAIPv2 `-0.961` · NAIP-v1 `0.567` · SciJudge `1.527` · DGC-BERT `0.947`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.0` Reject · 7B Fast `7.0` Accept (S/P/C 3.0/3.25/2.75) · 14B Fast `6.0` Accept
@@ -1718,8 +1825,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2509.03646` · Post-training · 2025-09-03
 
-- final **-0.05** (conf 1.00, pct 31) · impact +0.25 · WATCH
-- mean rating (1–10): **5.9** · accept votes **3/7** · percentile rank_avg 57.1 (100=best) · rank in year 41.0 (1=best)
+- final **-0.04** (conf 1.00, pct 29) · impact +0.25 · WATCH
+- mean rating (1–10): **5.9** · accept votes **3/7** · percentile rank_avg 56.9 (100=best) · rank in year 41.0 (1=best)
 - NAIPv2 `-0.492` · NAIP-v1 `0.669` · SciJudge `-0.602` · DGC-BERT `0.871`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Reject · 7B Fast `5.5` Reject (S/P/C 2.75/2.75/2.5) · 14B Fast `6.0` Reject
@@ -1734,8 +1841,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2508.07629` · Post-training · 2025-08-11
 
-- final **-0.23** (conf 0.82, pct 18) · impact -0.88 · DROP
-- mean rating (1–10): **5.8** · accept votes **3/6** · percentile rank_avg 37.7 (100=best) · rank in year 70.0 (1=best)
+- final **-0.23** (conf 0.82, pct 17) · impact -0.90 · DROP
+- mean rating (1–10): **5.8** · accept votes **3/6** · percentile rank_avg 37.4 (100=best) · rank in year 70.0 (1=best)
 - NAIPv2 `-1.587` · NAIP-v1 `0.330` · SciJudge `0.554` · DGC-BERT `0.049`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std ``  · 7B Fast `5.2` Reject (S/P/C 2.75/3.0/2.5) · 14B Fast `6.0` Reject
@@ -1750,8 +1857,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2508.05629` · Post-training · 2025-08-07
 
-- final **+0.43** (conf 1.00, pct 91) · impact -0.51 · KEEP
-- mean rating (1–10): **6.4** · accept votes **6/7** · percentile rank_avg 67.7 (100=best) · rank in year 12.0 (1=best)
+- final **+0.43** (conf 1.00, pct 92) · impact -0.51 · KEEP
+- mean rating (1–10): **6.4** · accept votes **6/7** · percentile rank_avg 67.6 (100=best) · rank in year 12.0 (1=best)
 - NAIPv2 `1.032` · NAIP-v1 `0.536` · SciJudge `-2.038` · DGC-BERT `0.950`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.4` Accept · 7B Fast `7.0` Accept (S/P/C 3.25/3.25/3.25) · 14B Fast `6.5` Accept
@@ -1766,8 +1873,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2507.19457` · Post-training · 2025-07-25
 
-- final **+0.45** (conf 1.00, pct 92) · impact -0.09 · KEEP
-- mean rating (1–10): **6.3** · accept votes **6/7** · percentile rank_avg 66.8 (100=best) · rank in year 14.0 (1=best)
+- final **+0.45** (conf 1.00, pct 93) · impact -0.09 · KEEP
+- mean rating (1–10): **6.3** · accept votes **6/7** · percentile rank_avg 66.7 (100=best) · rank in year 14.0 (1=best)
 - NAIPv2 `2.922` · NAIP-v1 `0.504` · SciJudge `0.591` · DGC-BERT `0.518`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.5` Accept (S/P/C 2.75/3.0/2.5) · 14B Fast `7.0` Accept
@@ -1782,8 +1889,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2507.18071` · Post-training · 2025-07-24
 
-- final **+0.04** (conf 1.00, pct 43) · impact -0.31 · WATCH
-- mean rating (1–10): **5.5** · accept votes **5/7** · percentile rank_avg 48.0 (100=best) · rank in year 60.0 (1=best)
+- final **+0.05** (conf 1.00, pct 40) · impact -0.31 · WATCH
+- mean rating (1–10): **5.5** · accept votes **5/7** · percentile rank_avg 47.8 (100=best) · rank in year 60.0 (1=best)
 - NAIPv2 `-1.184` · NAIP-v1 `0.424` · SciJudge `1.173` · DGC-BERT `0.875`
 - CycleReviewer 8B `4.2` Reject · 70B `` 
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `4.8` Reject (S/P/C 2.5/2.75/2.25) · 14B Fast `6.5` Accept
@@ -1798,8 +1905,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2506.13585` · Post-training · 2025-06-16
 
-- final **+0.35** (conf 1.00, pct 83) · impact -0.19 · KEEP
-- mean rating (1–10): **6.0** · accept votes **4/7** · percentile rank_avg 52.5 (100=best) · rank in year 48.0 (1=best)
+- final **+0.35** (conf 1.00, pct 85) · impact -0.22 · KEEP
+- mean rating (1–10): **6.0** · accept votes **4/7** · percentile rank_avg 52.3 (100=best) · rank in year 48.0 (1=best)
 - NAIPv2 `1.191` · NAIP-v1 `0.258` · SciJudge `3.618` · DGC-BERT `0.306`
 - CycleReviewer 8B `4.8` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.5` Reject (S/P/C 3.25/3.25/3.0) · 14B Fast `8.0` Accept
@@ -1814,8 +1921,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2506.06632` · Post-training · 2025-06-07
 
-- final **+0.05** (conf 1.00, pct 43) · impact -0.48 · WATCH
-- mean rating (1–10): **5.9** · accept votes **5/7** · percentile rank_avg 51.7 (100=best) · rank in year 51.0 (1=best)
+- final **+0.05** (conf 1.00, pct 40) · impact -0.48 · WATCH
+- mean rating (1–10): **5.9** · accept votes **5/7** · percentile rank_avg 51.5 (100=best) · rank in year 51.0 (1=best)
 - NAIPv2 `1.160` · NAIP-v1 `0.422` · SciJudge `0.690` · DGC-BERT `0.832`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `6.5` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `6.5` Accept
@@ -1830,7 +1937,7 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2506.03106` · Post-training · 2025-06-03
 
-- final **+0.42** (conf 1.00, pct 90) · impact +0.94 · KEEP
+- final **+0.42** (conf 1.00, pct 91) · impact +0.94 · KEEP
 - mean rating (1–10): **6.5** · accept votes **7/7** · percentile rank_avg 78.1 (100=best) · rank in year 2.0 (1=best)
 - NAIPv2 `1.530` · NAIP-v1 `0.635` · SciJudge `2.324` · DGC-BERT `0.909`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
@@ -1846,8 +1953,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2506.01939` · Post-training · 2025-06-02
 
-- final **+0.27** (conf 1.00, pct 74) · impact +0.65 · KEEP
-- mean rating (1–10): **6.2** · accept votes **4/7** · percentile rank_avg 60.0 (100=best) · rank in year 35.0 (1=best)
+- final **+0.28** (conf 1.00, pct 77) · impact +0.65 · KEEP
+- mean rating (1–10): **6.2** · accept votes **4/7** · percentile rank_avg 59.9 (100=best) · rank in year 35.0 (1=best)
 - NAIPv2 `-1.289` · NAIP-v1 `0.601` · SciJudge `1.946` · DGC-BERT `0.275`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `5.8` Reject (S/P/C 2.75/2.75/2.75) · 14B Fast `7.5` Accept
@@ -1862,8 +1969,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2505.19590` · Post-training · 2025-05-26
 
-- final **+0.00** (conf 1.00, pct 36) · impact +0.40 · WATCH
-- mean rating (1–10): **5.3** · accept votes **3/7** · percentile rank_avg 51.9 (100=best) · rank in year 50.0 (1=best)
+- final **+0.01** (conf 1.00, pct 34) · impact +0.40 · WATCH
+- mean rating (1–10): **5.3** · accept votes **3/7** · percentile rank_avg 51.7 (100=best) · rank in year 50.0 (1=best)
 - NAIPv2 `1.556` · NAIP-v1 `0.594` · SciJudge `1.067` · DGC-BERT `0.822`
 - CycleReviewer 8B `4.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Reject · 7B Fast `4.8` Reject (S/P/C 2.5/2.75/2.25) · 14B Fast `6.0` Accept
@@ -1878,8 +1985,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2505.10978` · Post-training · 2025-05-16
 
-- final **+0.31** (conf 1.00, pct 79) · impact +0.58 · KEEP
-- mean rating (1–10): **6.3** · accept votes **7/7** · percentile rank_avg 73.4 (100=best) · rank in year 5.0 (1=best)
+- final **+0.31** (conf 1.00, pct 81) · impact +0.58 · KEEP
+- mean rating (1–10): **6.3** · accept votes **7/7** · percentile rank_avg 73.3 (100=best) · rank in year 5.0 (1=best)
 - NAIPv2 `0.338` · NAIP-v1 `0.675` · SciJudge `0.530` · DGC-BERT `0.888`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/2.67) · 14B Fast `6.7` Accept
@@ -1894,8 +2001,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2504.16084` · Post-training · 2025-04-22
 
-- final **+0.32** (conf 1.00, pct 80) · impact -0.03 · KEEP
-- mean rating (1–10): **6.1** · accept votes **5/7** · percentile rank_avg 62.4 (100=best) · rank in year 23.0 (1=best)
+- final **+0.32** (conf 1.00, pct 82) · impact -0.04 · KEEP
+- mean rating (1–10): **6.1** · accept votes **5/7** · percentile rank_avg 62.2 (100=best) · rank in year 23.0 (1=best)
 - NAIPv2 `1.952` · NAIP-v1 `0.403` · SciJudge `2.544` · DGC-BERT `0.948`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/3.0) · 14B Fast `7.0` Accept
@@ -1910,8 +2017,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2504.13837` · Post-training · 2025-04-18
 
-- final **+0.01** (conf 1.00, pct 38) · impact +0.42 · WATCH
-- mean rating (1–10): **5.8** · accept votes **4/7** · percentile rank_avg 50.0 (100=best) · rank in year 56.0 (1=best)
+- final **+0.02** (conf 1.00, pct 36) · impact +0.42 · WATCH
+- mean rating (1–10): **5.8** · accept votes **4/7** · percentile rank_avg 49.8 (100=best) · rank in year 56.0 (1=best)
 - NAIPv2 `-1.139` · NAIP-v1 `0.544` · SciJudge `1.764` · DGC-BERT `0.742`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.5` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `6.5` Accept
@@ -1926,8 +2033,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2503.20783` · Post-training · 2025-03-26
 
-- final **+0.33** (conf 1.00, pct 82) · impact +0.02 · KEEP
-- mean rating (1–10): **6.2** · accept votes **5/7** · percentile rank_avg 61.0 (100=best) · rank in year 31.0 (1=best)
+- final **+0.34** (conf 1.00, pct 83) · impact +0.02 · KEEP
+- mean rating (1–10): **6.2** · accept votes **5/7** · percentile rank_avg 60.9 (100=best) · rank in year 31.0 (1=best)
 - NAIPv2 `1.818` · NAIP-v1 `0.442` · SciJudge `2.137` · DGC-BERT `0.447`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.5` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `7.0` Accept
@@ -1942,8 +2049,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2503.14476` · Post-training · 2025-03-18
 
-- final **-0.32** (conf 1.00, pct 11) · impact +0.32 · DROP
-- mean rating (1–10): **6.0** · accept votes **3/7** · percentile rank_avg 46.2 (100=best) · rank in year 65.0 (1=best)
+- final **-0.32** (conf 1.00, pct 10) · impact +0.32 · DROP
+- mean rating (1–10): **6.0** · accept votes **3/7** · percentile rank_avg 46.0 (100=best) · rank in year 65.0 (1=best)
 - NAIPv2 `-1.369` · NAIP-v1 `0.501` · SciJudge `2.162` · DGC-BERT `0.160`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `4.0` Reject · 7B Fast `5.0` Reject (S/P/C 2.5/2.5/2.5) · 14B Fast `6.0` Reject
@@ -1958,8 +2065,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2503.02875` · Post-training · 2025-03-04
 
-- final **-0.07** (conf 1.00, pct 29) · impact +0.85 · WATCH
-- mean rating (1–10): **6.2** · accept votes **3/7** · percentile rank_avg 58.6 (100=best) · rank in year 38.0 (1=best)
+- final **-0.06** (conf 1.00, pct 26) · impact +0.86 · WATCH
+- mean rating (1–10): **6.2** · accept votes **3/7** · percentile rank_avg 58.4 (100=best) · rank in year 38.0 (1=best)
 - NAIPv2 `-1.960` · NAIP-v1 `0.596` · SciJudge `2.834` · DGC-BERT `0.817`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `5.8` Reject (S/P/C 2.75/2.75/2.75) · 14B Fast `6.5` Reject
@@ -1974,8 +2081,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2503.00735` · Post-training · 2025-03-02
 
-- final **-0.01** (conf 1.00, pct 34) · impact +1.21 · WATCH
-- mean rating (1–10): **6.0** · accept votes **4/7** · percentile rank_avg 59.7 (100=best) · rank in year 37.0 (1=best)
+- final **-0.01** (conf 1.00, pct 32) · impact +1.22 · WATCH
+- mean rating (1–10): **6.0** · accept votes **4/7** · percentile rank_avg 59.5 (100=best) · rank in year 37.0 (1=best)
 - NAIPv2 `-0.900` · NAIP-v1 `0.600` · SciJudge `3.799` · DGC-BERT `0.731`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.0` Reject · 7B Fast `6.0` Reject (S/P/C 3.0/3.0/3.0) · 14B Fast `6.0` Reject
@@ -1990,8 +2097,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2402.13669` · Post-training · 2024-02-21
 
-- final **+0.22** (conf 1.00, pct 67) · impact +0.32 · KEEP
-- mean rating (1–10): **6.4** · accept votes **5/7** · percentile rank_avg 62.0 (100=best) · rank in year 6.0 (1=best)
+- final **+0.22** (conf 1.00, pct 69) · impact +0.32 · KEEP
+- mean rating (1–10): **6.4** · accept votes **5/7** · percentile rank_avg 61.9 (100=best) · rank in year 6.0 (1=best)
 - NAIPv2 `0.723` · NAIP-v1 `0.570` · SciJudge `1.287` · DGC-BERT `0.909`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `6.0` Accept (S/P/C 2.67/3.0/2.67) · 14B Fast `6.7` Accept
@@ -2006,8 +2113,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2402.03300` · Post-training · 2024-02-05
 
-- final **+0.32** (conf 1.00, pct 81) · impact +0.57 · KEEP
-- mean rating (1–10): **6.2** · accept votes **5/7** · percentile rank_avg 57.0 (100=best) · rank in year 14.0 (1=best)
+- final **+0.32** (conf 1.00, pct 82) · impact +0.57 · KEEP
+- mean rating (1–10): **6.2** · accept votes **5/7** · percentile rank_avg 56.8 (100=best) · rank in year 14.0 (1=best)
 - NAIPv2 `-1.261` · NAIP-v1 `0.440` · SciJudge `3.816` · DGC-BERT `0.859`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `5.5` Reject (S/P/C 3.0/3.0/3.0) · 14B Fast `7.5` Accept
@@ -2022,8 +2129,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2303.17651` · Post-training · 2023-03-30
 
-- final **+0.10** (conf 1.00, pct 52) · impact +1.71 · WATCH
-- mean rating (1–10): **6.2** · accept votes **6/7** · percentile rank_avg 60.5 (100=best) · rank in year 10.0 (1=best)
+- final **+0.10** (conf 1.00, pct 55) · impact +1.73 · WATCH
+- mean rating (1–10): **6.2** · accept votes **6/7** · percentile rank_avg 60.3 (100=best) · rank in year 10.0 (1=best)
 - NAIPv2 `-2.209` · NAIP-v1 `0.704` · SciJudge `4.050` · DGC-BERT `0.851`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `5.8` Accept (S/P/C 3.0/3.0/2.5) · 14B Fast `6.0` Accept
@@ -2033,12 +2140,40 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
   - [CR-8B](reviews/cyclereviewer-8b/arxiv_2303.17651.md#weaknesses): The paper evaluates Self-Refine on a limited number of tasks, and it is not clear how well the approach would perform on other tasks or domains. The paper also does not provide a detailed comparison with other approaches that use feedback and refinement to improve LLM outputs.
   - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2303.17651.md#weaknesses): While the paper presents a compelling method, several weaknesses warrant careful consideration. First, the paper's evaluation lacks a crucial comparison with a baseline that uses a larger number of samples from the same model.…
 
+<a id="arxiv-2609.02737"></a>
+### Language Models Can Control Their Own Attention
+
+`arxiv:2609.02737` · LLMs: architectures, context, training · 2026-09-02
+
+- final **n/a** (conf 0.00, pct 47) · impact n/a · WATCH
+- mean rating (1–10): **n/a** · accept votes **0/0** · percentile rank_avg  (100=best) · rank in year  (1=best)
+- NAIPv2 `` · NAIP-v1 `` · SciJudge `` · DGC-BERT ``
+- CycleReviewer 8B ``  · 70B `` 
+- DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `` 
+- OpenReviewer ``  (S/P/C None/None/None) · SEA-E `` 
+- Telegram: —
+- Weaknesses: —
+
+<a id="arxiv-2608.17981"></a>
+### Recirculation
+
+`arxiv:2608.17981` · LLMs: architectures, context, training · 2026-08-18
+
+- final **n/a** (conf 0.00, pct 47) · impact n/a · WATCH
+- mean rating (1–10): **n/a** · accept votes **0/0** · percentile rank_avg  (100=best) · rank in year  (1=best)
+- NAIPv2 `` · NAIP-v1 `` · SciJudge `` · DGC-BERT ``
+- CycleReviewer 8B ``  · 70B `` 
+- DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `` 
+- OpenReviewer ``  (S/P/C None/None/None) · SEA-E `` 
+- Telegram: —
+- Weaknesses: —
+
 <a id="arxiv-2608.11676"></a>
 ### XBridge: Entity-Grounded Latent Bridge for Heterogeneous LLM Communication
 
 `arxiv:2608.11676` · LLMs: architectures, context, training · 2026-08-12
 
-- final **+0.25** (conf 1.00, pct 72) · impact -0.45 · KEEP
+- final **+0.25** (conf 1.00, pct 75) · impact -0.45 · KEEP
 - mean rating (1–10): **6.2** · accept votes **5/7** · percentile rank_avg 56.7 (100=best) · rank in year 34.0 (1=best)
 - NAIPv2 `-0.440` · NAIP-v1 `0.609` · SciJudge `-3.188` · DGC-BERT `0.209`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
@@ -2049,13 +2184,27 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
   - [CR-8B](reviews/cyclereviewer-8b/arxiv_2608.11676.md#weaknesses): 1. The proposed method is only evaluated on a limited set of benchmarks, and it is unclear how the method will perform on other tasks. 2. The method requires training a separate bridge for each sender-receiver pair, which may be computationally expensive. 3. The method assumes that the sender and receiver have the same vocabulary, which may not always be the case in real-world applications.
   - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2608.11676.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. First, while the paper introduces the concept of the 'entity grounding problem' and provides a clear explanation of the 'rare-token compression collapse,' the explanation of *why* this collapse occurs is somewhat superficial.…
 
+<a id="arxiv-2608.05806"></a>
+### Hierarchical Latent Prediction for Language Models
+
+`arxiv:2608.05806` · LLMs: architectures, context, training · 2026-08-06
+
+- final **n/a** (conf 0.00, pct 47) · impact n/a · WATCH
+- mean rating (1–10): **n/a** · accept votes **0/0** · percentile rank_avg  (100=best) · rank in year  (1=best)
+- NAIPv2 `` · NAIP-v1 `` · SciJudge `` · DGC-BERT ``
+- CycleReviewer 8B ``  · 70B `` 
+- DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `` 
+- OpenReviewer ``  (S/P/C None/None/None) · SEA-E `` 
+- Telegram: —
+- Weaknesses: —
+
 <a id="arxiv-2608.03893"></a>
 ### Cross-Model KV Cache Transfer in LLM Families: A Closed-Form Linear Mapping for Prefill Reuse
 
 `arxiv:2608.03893` · LLMs: architectures, context, training · 2026-08-04
 
-- final **+0.14** (conf 1.00, pct 58) · impact -0.78 · WATCH
-- mean rating (1–10): **5.8** · accept votes **5/7** · percentile rank_avg 50.5 (100=best) · rank in year 52.0 (1=best)
+- final **+0.15** (conf 1.00, pct 61) · impact -0.79 · WATCH
+- mean rating (1–10): **5.8** · accept votes **5/7** · percentile rank_avg 50.4 (100=best) · rank in year 52.0 (1=best)
 - NAIPv2 `-0.026` · NAIP-v1 `0.437` · SciJudge `-0.462` · DGC-BERT `0.067`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.5` Accept (S/P/C 3.0/3.0/2.5) · 14B Fast `6.5` Accept
@@ -2070,8 +2219,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2608.00146` · LLMs: architectures, context, training · 2026-07-31
 
-- final **+0.29** (conf 1.00, pct 76) · impact +1.45 · KEEP
-- mean rating (1–10): **6.7** · accept votes **3/7** · percentile rank_avg 66.3 (100=best) · rank in year 14.0 (1=best)
+- final **+0.29** (conf 1.00, pct 77) · impact +1.46 · KEEP
+- mean rating (1–10): **6.7** · accept votes **3/7** · percentile rank_avg 66.2 (100=best) · rank in year 14.0 (1=best)
 - NAIPv2 `-0.480` · NAIP-v1 `0.688` · SciJudge `3.275` · DGC-BERT `0.309`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `5.6` Reject (S/P/C 3.0/3.0/3.0) · 14B Fast `8.0` Accept
@@ -2086,8 +2235,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2607.02303` · LLMs: architectures, context, training · 2026-07-02
 
-- final **+0.24** (conf 1.00, pct 72) · impact +0.37 · KEEP
-- mean rating (1–10): **6.2** · accept votes **6/7** · percentile rank_avg 62.1 (100=best) · rank in year 26.0 (1=best)
+- final **+0.25** (conf 1.00, pct 74) · impact +0.38 · KEEP
+- mean rating (1–10): **6.2** · accept votes **6/7** · percentile rank_avg 61.9 (100=best) · rank in year 26.0 (1=best)
 - NAIPv2 `0.288` · NAIP-v1 `0.584` · SciJudge `1.596` · DGC-BERT `0.693`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.8` Accept · 7B Fast `5.8` Accept (S/P/C 2.75/2.75/2.75) · 14B Fast `7.5` Accept
@@ -2102,8 +2251,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2606.06574` · LLMs: architectures, context, training · 2026-06-04
 
-- final **+0.19** (conf 1.00, pct 64) · impact +0.30 · WATCH
-- mean rating (1–10): **6.0** · accept votes **6/7** · percentile rank_avg 64.2 (100=best) · rank in year 23.0 (1=best)
+- final **+0.19** (conf 1.00, pct 66) · impact +0.30 · WATCH
+- mean rating (1–10): **6.0** · accept votes **6/7** · percentile rank_avg 64.0 (100=best) · rank in year 23.0 (1=best)
 - NAIPv2 `-0.587` · NAIP-v1 `0.680` · SciJudge `-0.373` · DGC-BERT `0.957`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.0` Accept (S/P/C 3.25/3.25/3.0) · 14B Fast `6.2` Accept
@@ -2118,8 +2267,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2605.22863` · LLMs: architectures, context, training · 2026-05-19
 
-- final **-0.16** (conf 1.00, pct 22) · impact -0.76 · WATCH
-- mean rating (1–10): **5.7** · accept votes **4/7** · percentile rank_avg 37.3 (100=best) · rank in year 66.0 (1=best)
+- final **-0.15** (conf 1.00, pct 20) · impact -0.77 · WATCH
+- mean rating (1–10): **5.7** · accept votes **4/7** · percentile rank_avg 37.1 (100=best) · rank in year 66.0 (1=best)
 - NAIPv2 `-1.681` · NAIP-v1 `0.490` · SciJudge `-2.391` · DGC-BERT `0.281`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/3.0) · 14B Fast `5.8` Reject
@@ -2134,8 +2283,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2604.08302` · LLMs: architectures, context, training · 2026-04-09
 
-- final **+0.21** (conf 1.00, pct 66) · impact -0.54 · KEEP
-- mean rating (1–10): **6.2** · accept votes **4/7** · percentile rank_avg 56.0 (100=best) · rank in year 40.0 (1=best)
+- final **+0.22** (conf 1.00, pct 69) · impact -0.54 · KEEP
+- mean rating (1–10): **6.2** · accept votes **4/7** · percentile rank_avg 55.9 (100=best) · rank in year 40.0 (1=best)
 - NAIPv2 `2.402` · NAIP-v1 `0.470` · SciJudge `-0.175` · DGC-BERT `0.709`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `7.5` Accept (S/P/C 3.25/3.25/3.25) · 14B Fast `6.0` Reject
@@ -2150,8 +2299,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2603.05454` · LLMs: architectures, context, training · 2026-03-05
 
-- final **+0.05** (conf 1.00, pct 45) · impact +0.37 · WATCH
-- mean rating (1–10): **6.0** · accept votes **5/7** · percentile rank_avg 59.4 (100=best) · rank in year 33.0 (1=best)
+- final **+0.06** (conf 1.00, pct 41) · impact +0.38 · WATCH
+- mean rating (1–10): **6.0** · accept votes **5/7** · percentile rank_avg 59.3 (100=best) · rank in year 33.0 (1=best)
 - NAIPv2 `-0.349` · NAIP-v1 `0.573` · SciJudge `1.675` · DGC-BERT `0.820`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `5.8` Reject (S/P/C 2.75/2.75/2.75) · 14B Fast `6.0` Accept
@@ -2166,8 +2315,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2602.08676` · LLMs: architectures, context, training · 2026-02-09
 
-- final **-0.04** (conf 1.00, pct 32) · impact +0.80 · WATCH
-- mean rating (1–10): **5.5** · accept votes **5/7** · percentile rank_avg 54.7 (100=best) · rank in year 41.0 (1=best)
+- final **-0.03** (conf 1.00, pct 30) · impact +0.80 · WATCH
+- mean rating (1–10): **5.5** · accept votes **5/7** · percentile rank_avg 54.6 (100=best) · rank in year 41.0 (1=best)
 - NAIPv2 `0.517` · NAIP-v1 `0.613` · SciJudge `2.580` · DGC-BERT `0.633`
 - CycleReviewer 8B `4.0` Reject · 70B `` 
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `5.5` Reject (S/P/C 2.75/2.25/2.5) · 14B Fast `6.0` Accept
@@ -2182,8 +2331,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2512.24601` · LLMs: architectures, context, training · 2025-12-31
 
-- final **+0.15** (conf 1.00, pct 59) · impact +0.13 · WATCH
-- mean rating (1–10): **6.0** · accept votes **4/7** · percentile rank_avg 61.3 (100=best) · rank in year 29.0 (1=best)
+- final **+0.15** (conf 1.00, pct 62) · impact +0.13 · WATCH
+- mean rating (1–10): **6.0** · accept votes **4/7** · percentile rank_avg 61.1 (100=best) · rank in year 29.0 (1=best)
 - NAIPv2 `1.517` · NAIP-v1 `0.511` · SciJudge `1.123` · DGC-BERT `0.906`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Reject · 7B Fast `5.2` Reject (S/P/C 2.5/2.75/2.25) · 14B Fast `6.5` Accept
@@ -2198,8 +2347,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2512.14856` · LLMs: architectures, context, training · 2025-12-16
 
-- final **-0.30** (conf 1.00, pct 13) · impact -0.14 · DROP
-- mean rating (1–10): **5.4** · accept votes **2/7** · percentile rank_avg 34.2 (100=best) · rank in year 74.0 (1=best)
+- final **-0.29** (conf 1.00, pct 12) · impact -0.15 · DROP
+- mean rating (1–10): **5.4** · accept votes **2/7** · percentile rank_avg 34.0 (100=best) · rank in year 74.0 (1=best)
 - NAIPv2 `-1.177` · NAIP-v1 `0.465` · SciJudge `1.066` · DGC-BERT `0.348`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `5.5` Reject
@@ -2214,8 +2363,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2512.13961` · LLMs: architectures, context, training · 2025-12-15
 
-- final **+0.22** (conf 1.00, pct 68) · impact +0.45 · KEEP
-- mean rating (1–10): **6.3** · accept votes **3/7** · percentile rank_avg 62.5 (100=best) · rank in year 22.0 (1=best)
+- final **+0.23** (conf 1.00, pct 70) · impact +0.45 · KEEP
+- mean rating (1–10): **6.3** · accept votes **3/7** · percentile rank_avg 62.4 (100=best) · rank in year 22.0 (1=best)
 - NAIPv2 `-0.192` · NAIP-v1 `0.468` · SciJudge `3.346` · DGC-BERT `0.135`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.7` Reject · 7B Fast `6.2` Reject (S/P/C 3.0/3.0/2.75) · 14B Fast `6.5` Accept
@@ -2230,8 +2379,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2512.15745` · LLMs: architectures, context, training · 2025-12-10
 
-- final **+0.15** (conf 1.00, pct 59) · impact +0.77 · WATCH
-- mean rating (1–10): **6.4** · accept votes **4/7** · percentile rank_avg 62.8 (100=best) · rank in year 20.0 (1=best)
+- final **+0.15** (conf 1.00, pct 62) · impact +0.78 · WATCH
+- mean rating (1–10): **6.4** · accept votes **4/7** · percentile rank_avg 62.7 (100=best) · rank in year 20.0 (1=best)
 - NAIPv2 `0.392` · NAIP-v1 `0.606` · SciJudge `2.193` · DGC-BERT `0.073`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `5.5` Accept (S/P/C 2.75/2.75/2.75) · 14B Fast `6.5` Reject
@@ -2246,8 +2395,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2511.09149` · LLMs: architectures, context, training · 2025-11-12
 
-- final **+0.29** (conf 1.00, pct 78) · impact +0.07 · KEEP
-- mean rating (1–10): **6.6** · accept votes **4/7** · percentile rank_avg 65.6 (100=best) · rank in year 18.0 (1=best)
+- final **+0.30** (conf 1.00, pct 80) · impact +0.08 · KEEP
+- mean rating (1–10): **6.6** · accept votes **4/7** · percentile rank_avg 65.5 (100=best) · rank in year 17.0 (1=best)
 - NAIPv2 `0.965` · NAIP-v1 `0.694` · SciJudge `-2.378` · DGC-BERT `0.637`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Reject · 7B Fast `6.0` Reject (S/P/C 3.0/3.0/2.67) · 14B Fast `7.5` Accept
@@ -2262,8 +2411,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2510.26622` · LLMs: architectures, context, training · 2025-10-30
 
-- final **+0.06** (conf 1.00, pct 46) · impact -0.23 · WATCH
-- mean rating (1–10): **5.9** · accept votes **6/7** · percentile rank_avg 52.4 (100=best) · rank in year 49.0 (1=best)
+- final **+0.06** (conf 1.00, pct 43) · impact -0.23 · WATCH
+- mean rating (1–10): **5.9** · accept votes **6/7** · percentile rank_avg 52.2 (100=best) · rank in year 49.0 (1=best)
 - NAIPv2 `-0.363` · NAIP-v1 `0.578` · SciJudge `-1.158` · DGC-BERT `0.763`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.7` Reject (S/P/C 2.67/2.33/2.67) · 14B Fast `6.0` Accept
@@ -2294,8 +2443,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2507.10524` · LLMs: architectures, context, training · 2025-07-14
 
-- final **+0.17** (conf 1.00, pct 62) · impact +1.26 · WATCH
-- mean rating (1–10): **6.0** · accept votes **7/7** · percentile rank_avg 65.7 (100=best) · rank in year 17.0 (1=best)
+- final **+0.18** (conf 1.00, pct 64) · impact +1.27 · WATCH
+- mean rating (1–10): **6.0** · accept votes **7/7** · percentile rank_avg 65.5 (100=best) · rank in year 18.0 (1=best)
 - NAIPv2 `0.704` · NAIP-v1 `0.743` · SciJudge `1.579` · DGC-BERT `0.916`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.2` Accept (S/P/C 2.75/3.0/2.75) · 14B Fast `6.5` Accept
@@ -2310,8 +2459,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2504.06225` · LLMs: architectures, context, training · 2025-04-08
 
-- final **-0.01** (conf 1.00, pct 34) · impact +0.10 · WATCH
-- mean rating (1–10): **5.2** · accept votes **5/7** · percentile rank_avg 50.0 (100=best) · rank in year 57.0 (1=best)
+- final **-0.00** (conf 1.00, pct 32) · impact +0.10 · WATCH
+- mean rating (1–10): **5.2** · accept votes **5/7** · percentile rank_avg 49.8 (100=best) · rank in year 57.0 (1=best)
 - NAIPv2 `-0.588` · NAIP-v1 `0.592` · SciJudge `0.393` · DGC-BERT `0.919`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `5.0` Reject (S/P/C 2.67/3.0/2.67) · 14B Fast `6.8` Accept
@@ -2326,8 +2475,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2502.09992` · LLMs: architectures, context, training · 2025-02-14
 
-- final **+0.50** (conf 1.00, pct 95) · impact +2.17 · KEEP
-- mean rating (1–10): **6.7** · accept votes **6/7** · percentile rank_avg 80.7 (100=best) · rank in year 1.0 (1=best)
+- final **+0.50** (conf 1.00, pct 96) · impact +2.18 · KEEP
+- mean rating (1–10): **6.7** · accept votes **6/7** · percentile rank_avg 80.6 (100=best) · rank in year 1.0 (1=best)
 - NAIPv2 `0.659` · NAIP-v1 `0.700` · SciJudge `4.051` · DGC-BERT `0.892`
 - CycleReviewer 8B `4.8` Reject · 70B `` 
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/3.0) · 14B Fast `7.5` Accept
@@ -2342,8 +2491,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2501.14082` · LLMs: architectures, context, training · 2025-01-23
 
-- final **+0.11** (conf 1.00, pct 53) · impact -0.46 · WATCH
-- mean rating (1–10): **6.2** · accept votes **6/7** · percentile rank_avg 49.3 (100=best) · rank in year 58.0 (1=best)
+- final **+0.12** (conf 1.00, pct 58) · impact -0.47 · WATCH
+- mean rating (1–10): **6.2** · accept votes **6/7** · percentile rank_avg 49.2 (100=best) · rank in year 58.0 (1=best)
 - NAIPv2 `-2.201` · NAIP-v1 `0.405` · SciJudge `0.894` · DGC-BERT `0.102`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `5.8` Accept (S/P/C 2.75/3.0/2.5) · 14B Fast `7.5` Accept
@@ -2358,8 +2507,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2501.00656` · LLMs: architectures, context, training · 2024-12-31
 
-- final **+0.23** (conf 1.00, pct 70) · impact +1.76 · KEEP
-- mean rating (1–10): **6.0** · accept votes **5/7** · percentile rank_avg 58.1 (100=best) · rank in year 13.0 (1=best)
+- final **+0.24** (conf 1.00, pct 72) · impact +1.77 · KEEP
+- mean rating (1–10): **6.0** · accept votes **5/7** · percentile rank_avg 58.0 (100=best) · rank in year 13.0 (1=best)
 - NAIPv2 `-0.377` · NAIP-v1 `0.689` · SciJudge `3.821` · DGC-BERT `0.052`
 - CycleReviewer 8B `3.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept (S/P/C 2.75/2.75/2.75) · 14B Fast `6.5` Accept
@@ -2374,8 +2523,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2412.13663` · LLMs: architectures, context, training · 2024-12-18
 
-- final **+0.28** (conf 1.00, pct 75) · impact +0.20 · KEEP
-- mean rating (1–10): **6.0** · accept votes **5/7** · percentile rank_avg 53.8 (100=best) · rank in year 18.0 (1=best)
+- final **+0.29** (conf 1.00, pct 78) · impact +0.21 · KEEP
+- mean rating (1–10): **6.0** · accept votes **5/7** · percentile rank_avg 53.6 (100=best) · rank in year 18.0 (1=best)
 - NAIPv2 `-1.003` · NAIP-v1 `0.656` · SciJudge `-1.574` · DGC-BERT `0.731`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/3.0) · 14B Fast `7.0` Accept
@@ -2390,8 +2539,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2407.21783` · LLMs: architectures, context, training · 2024-07-31
 
-- final **+0.08** (conf 1.00, pct 48) · impact +2.37 · WATCH
-- mean rating (1–10): **6.0** · accept votes **3/7** · percentile rank_avg 58.3 (100=best) · rank in year 11.0 (1=best)
+- final **+0.08** (conf 1.00, pct 52) · impact +2.37 · WATCH
+- mean rating (1–10): **6.0** · accept votes **3/7** · percentile rank_avg 58.2 (100=best) · rank in year 11.0 (1=best)
 - NAIPv2 `-2.232` · NAIP-v1 `0.744` · SciJudge `4.102` · DGC-BERT `0.445`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Reject · 7B Fast `6.8` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `4.0` Reject
@@ -2406,8 +2555,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2405.12250` · LLMs: architectures, context, training · 2024-05-19
 
-- final **-0.41** (conf 1.00, pct 8) · impact +0.06 · DROP
-- mean rating (1–10): **4.9** · accept votes **3/7** · percentile rank_avg 35.4 (100=best) · rank in year 39.0 (1=best)
+- final **-0.40** (conf 1.00, pct 8) · impact +0.05 · DROP
+- mean rating (1–10): **4.9** · accept votes **3/7** · percentile rank_avg 35.2 (100=best) · rank in year 40.0 (1=best)
 - NAIPv2 `-2.941` · NAIP-v1 `0.483` · SciJudge `1.763` · DGC-BERT `0.769`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `4.0` Reject (S/P/C 2.25/2.25/2.25) · 14B Fast `3.5` Reject
@@ -2422,8 +2571,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2405.04517` · LLMs: architectures, context, training · 2024-05-07
 
-- final **-0.33** (conf 0.95, pct 11) · impact +0.60 · WATCH
-- mean rating (1–10): **4.5** · accept votes **2/7** · percentile rank_avg 35.3 (100=best) · rank in year 40.0 (1=best)
+- final **-0.31** (conf 0.96, pct 10) · impact +0.60 · WATCH
+- mean rating (1–10): **4.5** · accept votes **2/7** · percentile rank_avg 35.2 (100=best) · rank in year 39.0 (1=best)
 - NAIPv2 `-1.738` · NAIP-v1 `0.465` · SciJudge `3.495` · DGC-BERT `0.254`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `3.5` Reject (S/P/C 2.0/2.0/1.75) · 14B Fast `6.2` Reject
@@ -2438,8 +2587,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2404.09173` · LLMs: architectures, context, training · 2024-04-14
 
-- final **-0.09** (conf 1.00, pct 26) · impact +0.33 · WATCH
-- mean rating (1–10): **5.5** · accept votes **3/7** · percentile rank_avg 47.5 (100=best) · rank in year 25.0 (1=best)
+- final **-0.08** (conf 1.00, pct 24) · impact +0.34 · WATCH
+- mean rating (1–10): **5.5** · accept votes **3/7** · percentile rank_avg 47.3 (100=best) · rank in year 25.0 (1=best)
 - NAIPv2 `-2.414` · NAIP-v1 `0.595` · SciJudge `0.672` · DGC-BERT `0.948`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `6.0` Reject (S/P/C 2.75/3.0/2.5) · 14B Fast `4.8` Reject
@@ -2454,8 +2603,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2404.07143` · LLMs: architectures, context, training · 2024-04-10
 
-- final **-0.06** (conf 1.00, pct 30) · impact +0.47 · WATCH
-- mean rating (1–10): **5.5** · accept votes **3/7** · percentile rank_avg 43.4 (100=best) · rank in year 28.0 (1=best)
+- final **-0.06** (conf 1.00, pct 27) · impact +0.47 · WATCH
+- mean rating (1–10): **5.5** · accept votes **3/7** · percentile rank_avg 43.2 (100=best) · rank in year 28.0 (1=best)
 - NAIPv2 `-2.006` · NAIP-v1 `0.497` · SciJudge `3.327` · DGC-BERT `0.878`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Reject · 7B Fast `5.8` Accept (S/P/C 2.5/2.5/2.75) · 14B Fast `5.5` Reject
@@ -2470,7 +2619,7 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2312.04927` · LLMs: architectures, context, training · 2023-12-08
 
-- final **+0.60** (conf 1.00, pct 98) · impact -0.01 · KEEP
+- final **+0.59** (conf 1.00, pct 98) · impact +0.02 · KEEP
 - mean rating (1–10): **6.7** · accept votes **5/7** · percentile rank_avg 67.6 (100=best) · rank in year 3.0 (1=best)
 - NAIPv2 `2.451` · NAIP-v1 `0.635` · SciJudge `-0.367` · DGC-BERT `0.071`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
@@ -2485,8 +2634,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2311.06242` · LLMs: architectures, context, training · 2023-11-10
 
-- final **+0.23** (conf 1.00, pct 68) · impact +0.10 · KEEP
-- mean rating (1–10): **6.1** · accept votes **4/7** · percentile rank_avg 53.8 (100=best) · rank in year 19.0 (1=best)
+- final **+0.23** (conf 1.00, pct 71) · impact +0.10 · KEEP
+- mean rating (1–10): **6.1** · accept votes **4/7** · percentile rank_avg 53.6 (100=best) · rank in year 18.0 (1=best)
 - NAIPv2 `-1.918` · NAIP-v1 `0.479` · SciJudge `3.031` · DGC-BERT `0.049`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `6.5` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `6.0` Reject
@@ -2501,8 +2650,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2306.13575` · LLMs: architectures, context, training · 2023-06-23
 
-- final **+0.24** (conf 1.00, pct 71) · impact -0.07 · KEEP
-- mean rating (1–10): **5.6** · accept votes **3/7** · percentile rank_avg 46.4 (100=best) · rank in year 30.0 (1=best)
+- final **+0.24** (conf 1.00, pct 74) · impact -0.05 · KEEP
+- mean rating (1–10): **5.6** · accept votes **3/7** · percentile rank_avg 46.3 (100=best) · rank in year 29.0 (1=best)
 - NAIPv2 `-1.609` · NAIP-v1 `0.617` · SciJudge `-0.341` · DGC-BERT `0.307`
 - CycleReviewer 8B `4.0` Reject · 70B `` 
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `6.0` Reject (S/P/C 2.67/3.0/2.33) · 14B Fast `6.0` Reject
@@ -2517,8 +2666,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2305.01625` · LLMs: architectures, context, training · 2023-05-02
 
-- final **+0.18** (conf 1.00, pct 62) · impact -0.26 · WATCH
-- mean rating (1–10): **5.8** · accept votes **5/7** · percentile rank_avg 50.6 (100=best) · rank in year 26.0 (1=best)
+- final **+0.18** (conf 1.00, pct 65) · impact -0.23 · WATCH
+- mean rating (1–10): **5.8** · accept votes **5/7** · percentile rank_avg 50.5 (100=best) · rank in year 25.0 (1=best)
 - NAIPv2 `0.546` · NAIP-v1 `0.543` · SciJudge `-0.087` · DGC-BERT `0.843`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `5.8` Accept (S/P/C 2.75/2.5/2.5) · 14B Fast `6.5` Accept
@@ -2533,8 +2682,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2302.14045` · LLMs: architectures, context, training · 2023-02-27
 
-- final **+0.26** (conf 1.00, pct 73) · impact +1.00 · KEEP
-- mean rating (1–10): **6.2** · accept votes **6/7** · percentile rank_avg 67.2 (100=best) · rank in year 5.0 (1=best)
+- final **+0.26** (conf 1.00, pct 75) · impact +1.01 · KEEP
+- mean rating (1–10): **6.2** · accept votes **6/7** · percentile rank_avg 67.0 (100=best) · rank in year 5.0 (1=best)
 - NAIPv2 `-1.012` · NAIP-v1 `0.670` · SciJudge `3.295` · DGC-BERT `0.908`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/2.67) · 14B Fast `6.0` Accept
@@ -2549,8 +2698,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2302.10866` · LLMs: architectures, context, training · 2023-02-21
 
-- final **+0.42** (conf 0.95, pct 90) · impact +1.20 · KEEP
-- mean rating (1–10): **6.2** · accept votes **6/7** · percentile rank_avg 69.7 (100=best) · rank in year 2.0 (1=best)
+- final **+0.42** (conf 0.96, pct 91) · impact +1.21 · KEEP
+- mean rating (1–10): **6.2** · accept votes **6/7** · percentile rank_avg 69.5 (100=best) · rank in year 2.0 (1=best)
 - NAIPv2 `-0.003` · NAIP-v1 `0.679` · SciJudge `3.640` · DGC-BERT `0.908`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.5` Accept (S/P/C 3.0/3.25/2.5) · 14B Fast `7.5` Accept
@@ -2565,8 +2714,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2302.07253` · LLMs: architectures, context, training · 2023-02-14
 
-- final **-0.30** (conf 1.00, pct 13) · impact -0.76 · DROP
-- mean rating (1–10): **5.6** · accept votes **4/7** · percentile rank_avg 34.4 (100=best) · rank in year 43.0 (1=best)
+- final **-0.29** (conf 1.00, pct 12) · impact -0.74 · DROP
+- mean rating (1–10): **5.6** · accept votes **4/7** · percentile rank_avg 34.2 (100=best) · rank in year 42.0 (1=best)
 - NAIPv2 `-2.529` · NAIP-v1 `0.485` · SciJudge `-0.904` · DGC-BERT `0.732`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/2.5) · 14B Fast `6.0` Reject
@@ -2581,7 +2730,7 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2207.02098` · LLMs: architectures, context, training · 2022-07-05
 
-- final **+0.31** (conf 1.00, pct 79) · impact -1.29 · KEEP
+- final **+0.30** (conf 1.00, pct 79) · impact -1.27 · KEEP
 - mean rating (1–10): **6.4** · accept votes **7/7** · percentile rank_avg 50.7 (100=best) · rank in year 10.0 (1=best)
 - NAIPv2 `-1.336` · NAIP-v1 `0.379` · SciJudge `-1.578` · DGC-BERT `0.580`
 - CycleReviewer 8B `5.8` Accept · 70B `` 
@@ -2597,8 +2746,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2203.08913` · LLMs: architectures, context, training · 2022-03-16
 
-- final **+0.25** (conf 1.00, pct 73) · impact +0.36 · KEEP
-- mean rating (1–10): **6.3** · accept votes **5/7** · percentile rank_avg 60.3 (100=best) · rank in year 5.0 (1=best)
+- final **+0.24** (conf 1.00, pct 73) · impact +0.43 · KEEP
+- mean rating (1–10): **6.3** · accept votes **5/7** · percentile rank_avg 60.5 (100=best) · rank in year 4.0 (1=best)
 - NAIPv2 `-1.776` · NAIP-v1 `0.668` · SciJudge `1.048` · DGC-BERT `0.663`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.2` Accept (S/P/C 3.25/3.25/2.75) · 14B Fast `6.5` Accept
@@ -2613,8 +2762,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2006.16236` · LLMs: architectures, context, training · 2020-06-29
 
-- final **+0.13** (conf 1.00, pct 57) · impact +0.51 · WATCH
-- mean rating (1–10): **5.8** · accept votes **5/7** · percentile rank_avg 51.1 (100=best) · rank in year 7.0 (1=best)
+- final **+0.11** (conf 1.00, pct 57) · impact +0.49 · WATCH
+- mean rating (1–10): **5.8** · accept votes **5/7** · percentile rank_avg 50.9 (100=best) · rank in year 7.0 (1=best)
 - NAIPv2 `-1.190` · NAIP-v1 `0.669` · SciJudge `1.961` · DGC-BERT `0.564`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `5.0` Reject (S/P/C 2.5/2.75/2.5) · 14B Fast `6.2` Accept
@@ -2628,8 +2777,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2002.05202` · LLMs: architectures, context, training · 2020-02-12
 
-- final **-0.58** (conf 1.00, pct 4) · impact -1.06 · DROP
-- mean rating (1–10): **3.5** · accept votes **1/7** · percentile rank_avg 16.9 (100=best) · rank in year 12.0 (1=best)
+- final **-0.59** (conf 1.00, pct 3) · impact -1.11 · DROP
+- mean rating (1–10): **3.5** · accept votes **1/7** · percentile rank_avg 16.7 (100=best) · rank in year 12.0 (1=best)
 - NAIPv2 `-2.363` · NAIP-v1 `0.392` · SciJudge `-1.128` · DGC-BERT `0.806`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast `2.3` Reject (S/P/C 1.67/1.67/1.67) · 14B Fast `4.0` Reject
@@ -2639,13 +2788,27 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
   - [CR-8B](reviews/cyclereviewer-8b/arxiv_2002.05202.md#weaknesses): 1. The main concern is the novelty of the proposed method. The GLU unit has been proposed in 2016, and it has been widely used in many NLP tasks. The proposed method is simply replacing the FFN with GLU and its variants. The novelty of the proposed method is limited.
   - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2002.05202.md#weaknesses): While this paper presents a valuable exploration of GLU variants in Transformers, several weaknesses limit the impact and generalizability of its findings. A primary concern is the lack of a strong theoretical justification for the observed performance improvements.…
 
+<a id="arxiv-1807.03819"></a>
+### Universal Transformers
+
+`arxiv:1807.03819` · LLMs: architectures, context, training · 2018-07-10
+
+- final **n/a** (conf 0.00, pct 47) · impact n/a · WATCH
+- mean rating (1–10): **n/a** · accept votes **0/0** · percentile rank_avg  (100=best) · rank in year  (1=best)
+- NAIPv2 `` · NAIP-v1 `` · SciJudge `` · DGC-BERT ``
+- CycleReviewer 8B ``  · 70B `` 
+- DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `` 
+- OpenReviewer ``  (S/P/C None/None/None) · SEA-E `` 
+- Telegram: [gonzo_ML/1857](https://t.me/gonzo_ML/1857), [gonzo_ML/90](https://t.me/gonzo_ML/90), [gonzo_ML/62](https://t.me/gonzo_ML/62), [gonzo_ML/4727](https://t.me/gonzo_ML/4727), [gonzo_ML/1976](https://t.me/gonzo_ML/1976)
+- Weaknesses: —
+
 <a id="arxiv-1710.05941"></a>
 ### Searching for Activation Functions
 
 `arxiv:1710.05941` · LLMs: architectures, context, training · 2017-10-16
 
-- final **+0.13** (conf 1.00, pct 56) · impact +0.94 · WATCH
-- mean rating (1–10): **5.7** · accept votes **4/7** · percentile rank_avg 46.6 (100=best) · rank in year 4.0 (1=best)
+- final **+0.11** (conf 1.00, pct 56) · impact +0.84 · WATCH
+- mean rating (1–10): **5.7** · accept votes **4/7** · percentile rank_avg 46.0 (100=best) · rank in year 4.0 (1=best)
 - NAIPv2 `-1.962` · NAIP-v1 `0.734` · SciJudge `1.835` · DGC-BERT `0.614`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.0` Accept (S/P/C 3.0/3.25/2.75) · 14B Fast `5.8` Accept
@@ -2660,8 +2823,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `doi:10.1073/pnas.2520095123` · Reasoning and the "physics" of language models · 2026-07-06
 
-- final **-0.08** (conf 0.91, pct 28) · impact -1.14 · WATCH · partial fulltext
-- mean rating (1–10): **5.7** · accept votes **5/7** · percentile rank_avg 41.4 (100=best) · rank in year 62.0 (1=best)
+- final **-0.07** (conf 0.91, pct 25) · impact -1.14 · WATCH · partial fulltext
+- mean rating (1–10): **5.7** · accept votes **5/7** · percentile rank_avg 41.2 (100=best) · rank in year 62.0 (1=best)
 - NAIPv2 `-1.912` · NAIP-v1 `0.588` · SciJudge `-7.362` · DGC-BERT `0.105`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.5` Accept (S/P/C 2.75/2.75/2.75) · 14B Fast `7.0` Accept
@@ -2676,8 +2839,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2606.31779` · Reasoning and the "physics" of language models · 2026-06-30
 
-- final **+0.29** (conf 1.00, pct 76) · impact +0.98 · KEEP
-- mean rating (1–10): **6.0** · accept votes **5/7** · percentile rank_avg 64.6 (100=best) · rank in year 22.0 (1=best)
+- final **+0.29** (conf 1.00, pct 78) · impact +0.98 · KEEP
+- mean rating (1–10): **6.0** · accept votes **5/7** · percentile rank_avg 64.5 (100=best) · rank in year 22.0 (1=best)
 - NAIPv2 `2.404` · NAIP-v1 `0.771` · SciJudge `0.777` · DGC-BERT `0.735`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.5` Accept (S/P/C 3.0/3.0/2.5) · 14B Fast `6.2` Reject
@@ -2687,13 +2850,27 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
   - [CR-8B](reviews/cyclereviewer-8b/arxiv_2606.31779.md#weaknesses): 1. The proposed method is only evaluated on math reasoning tasks. It would be interesting to see how it performs on other tasks, such as language translation or question answering. 2. The proposed method is only compared to one previous method. It would be interesting to see how it compares to other methods.
   - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2606.31779.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further discussion. First, the method's reliance on gold-CoT for training is a significant limitation. As the authors themselves acknowledge, the training objective directly aligns the latent representations with the gold-CoT tokens.…
 
+<a id="arxiv-2606.29150"></a>
+### Flow Reasoning Models: Turning Flows Into Efficient Recurrent Reasoners
+
+`arxiv:2606.29150` · Reasoning and the "physics" of language models · 2026-06-28
+
+- final **n/a** (conf 0.00, pct 47) · impact n/a · WATCH
+- mean rating (1–10): **n/a** · accept votes **0/0** · percentile rank_avg  (100=best) · rank in year  (1=best)
+- NAIPv2 `` · NAIP-v1 `` · SciJudge `` · DGC-BERT ``
+- CycleReviewer 8B ``  · 70B `` 
+- DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `` 
+- OpenReviewer ``  (S/P/C None/None/None) · SEA-E `` 
+- Telegram: [gonzo_ML/5657](https://t.me/gonzo_ML/5657)
+- Weaknesses: —
+
 <a id="arxiv-2606.25010"></a>
 ### Emergent Capabilities Arise Randomly from Learning Sparse Attention Patterns
 
 `arxiv:2606.25010` · Reasoning and the "physics" of language models · 2026-06-23
 
-- final **+0.03** (conf 1.00, pct 40) · impact -0.95 · WATCH
-- mean rating (1–10): **6.0** · accept votes **4/7** · percentile rank_avg 53.6 (100=best) · rank in year 46.0 (1=best)
+- final **+0.03** (conf 1.00, pct 37) · impact -0.96 · WATCH
+- mean rating (1–10): **6.0** · accept votes **4/7** · percentile rank_avg 53.4 (100=best) · rank in year 46.0 (1=best)
 - NAIPv2 `-0.768` · NAIP-v1 `0.409` · SciJudge `-0.594` · DGC-BERT `0.879`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Reject · 7B Fast `7.0` Accept (S/P/C 2.75/3.0/3.0) · 14B Fast `6.0` Reject
@@ -2703,13 +2880,27 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
   - [CR-8B](reviews/cyclereviewer-8b/arxiv_2606.25010.md#weaknesses): The paper does not seem to have any significant contributions. The authors show that the emergence of capabilities is driven by the learning of task-relevant attention patterns. This is not a new finding. The authors also show that the difficulty of learning attention patterns depends on context length and pattern sparsity. This is also not a new finding.…
   - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2606.25010.md#weaknesses): Despite its strengths, this paper has several weaknesses that warrant careful consideration. One significant limitation is the lack of a precise definition of 'emergent capabilities' within the context of this study. While the paper describes how emergence is measured operationally, it does not provide a formal definition of the term itself.…
 
+<a id="arxiv-2606.18206"></a>
+### Fixed-Point Reasoners: Stable and Adaptive Deep Looped Transformers
+
+`arxiv:2606.18206` · Reasoning and the "physics" of language models · 2026-06-16
+
+- final **n/a** (conf 0.00, pct 47) · impact n/a · WATCH
+- mean rating (1–10): **n/a** · accept votes **0/0** · percentile rank_avg  (100=best) · rank in year  (1=best)
+- NAIPv2 `` · NAIP-v1 `` · SciJudge `` · DGC-BERT ``
+- CycleReviewer 8B ``  · 70B `` 
+- DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `` 
+- OpenReviewer ``  (S/P/C None/None/None) · SEA-E `` 
+- Telegram: [gonzo_ML/5602](https://t.me/gonzo_ML/5602)
+- Weaknesses: —
+
 <a id="arxiv-2606.03982"></a>
 ### Language Models Compare Quantities Using Number-specific and Unit-specific Heuristics
 
 `arxiv:2606.03982` · Reasoning and the "physics" of language models · 2026-06-02
 
-- final **-0.01** (conf 1.00, pct 35) · impact -1.40 · WATCH
-- mean rating (1–10): **6.0** · accept votes **4/7** · percentile rank_avg 45.3 (100=best) · rank in year 59.0 (1=best)
+- final **+0.00** (conf 1.00, pct 33) · impact -1.41 · WATCH
+- mean rating (1–10): **6.0** · accept votes **4/7** · percentile rank_avg 45.1 (100=best) · rank in year 59.0 (1=best)
 - NAIPv2 `-0.947` · NAIP-v1 `0.431` · SciJudge `-3.712` · DGC-BERT `0.120`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/2.5) · 14B Fast `6.0` Reject
@@ -2719,13 +2910,41 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
   - [CR-8B](reviews/cyclereviewer-8b/arxiv_2606.03982.md#weaknesses): 1. The paper lacks novelty. The authors have conducted a thorough analysis of language models' behavior in comparing quantities with measurement units. However, the results are not surprising, and the conclusions drawn from the analysis are not particularly novel or groundbreaking.…
   - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2606.03982.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. First, while the paper provides a detailed description of the Quantity Margin calculation in Section 2.1, including the formula and an example, the initial presentation of this concept could be improved.…
 
+<a id="arxiv-2605.19376"></a>
+### Generative Recursive Reasoning
+
+`arxiv:2605.19376` · Reasoning and the "physics" of language models · 2026-05-19
+
+- final **n/a** (conf 0.00, pct 47) · impact n/a · WATCH
+- mean rating (1–10): **n/a** · accept votes **0/0** · percentile rank_avg  (100=best) · rank in year  (1=best)
+- NAIPv2 `` · NAIP-v1 `` · SciJudge `` · DGC-BERT ``
+- CycleReviewer 8B ``  · 70B `` 
+- DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `` 
+- OpenReviewer ``  (S/P/C None/None/None) · SEA-E `` 
+- Telegram: [gonzo_ML/5406](https://t.me/gonzo_ML/5406)
+- Weaknesses: —
+
+<a id="arxiv-2605.12466"></a>
+### Solve the Loop: Attractor Models for Language and Reasoning
+
+`arxiv:2605.12466` · Reasoning and the "physics" of language models · 2026-05-12
+
+- final **n/a** (conf 0.00, pct 47) · impact n/a · WATCH
+- mean rating (1–10): **n/a** · accept votes **0/0** · percentile rank_avg  (100=best) · rank in year  (1=best)
+- NAIPv2 `` · NAIP-v1 `` · SciJudge `` · DGC-BERT ``
+- CycleReviewer 8B ``  · 70B `` 
+- DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `` 
+- OpenReviewer ``  (S/P/C None/None/None) · SEA-E `` 
+- Telegram: —
+- Weaknesses: —
+
 <a id="arxiv-2605.07654"></a>
 ### Reliable Chain-of-Thought via Prefix Consistency
 
 `arxiv:2605.07654` · Reasoning and the "physics" of language models · 2026-05-08
 
-- final **+0.24** (conf 1.00, pct 72) · impact +0.95 · KEEP
-- mean rating (1–10): **6.2** · accept votes **6/7** · percentile rank_avg 65.5 (100=best) · rank in year 18.0 (1=best)
+- final **+0.25** (conf 1.00, pct 74) · impact +0.96 · KEEP
+- mean rating (1–10): **6.2** · accept votes **6/7** · percentile rank_avg 65.4 (100=best) · rank in year 18.0 (1=best)
 - NAIPv2 `0.827` · NAIP-v1 `0.720` · SciJudge `1.499` · DGC-BERT `0.774`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.8` Accept · 7B Fast `7.0` Accept (S/P/C 3.25/3.25/3.0) · 14B Fast `6.8` Accept
@@ -2735,13 +2954,27 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
   - [CR-8B](reviews/cyclereviewer-8b/arxiv_2605.07654.md#weaknesses): 1. The paper lacks sufficient analysis of the proposed method. For example, the paper does not provide any theoretical analysis of the proposed method. The authors only show that the reproduction rate is higher for correct answers than for incorrect answers. However, it is not clear why this is the case or how it leads to the proposed method.…
   - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2605.07654.md#weaknesses): Despite the paper's strengths, several limitations and areas for improvement have been identified. First, the evaluation is limited to a few reasoning benchmarks, specifically FrontierScience-Olympiad, HMMT Feb 2026, AIME 2025, and Brumo 2025.…
 
+<a id="arxiv-2604.21999"></a>
+### Universal Transformers Need Memory: Depth-State Trade-offs in Adaptive Recursive Reasoning
+
+`arxiv:2604.21999` · Reasoning and the "physics" of language models · 2026-04-23
+
+- final **n/a** (conf 0.00, pct 47) · impact n/a · WATCH
+- mean rating (1–10): **n/a** · accept votes **0/0** · percentile rank_avg  (100=best) · rank in year  (1=best)
+- NAIPv2 `` · NAIP-v1 `` · SciJudge `` · DGC-BERT ``
+- CycleReviewer 8B ``  · 70B `` 
+- DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `` 
+- OpenReviewer ``  (S/P/C None/None/None) · SEA-E `` 
+- Telegram: [gonzo_ML/5891](https://t.me/gonzo_ML/5891), [gonzo_ML/5270](https://t.me/gonzo_ML/5270), [gonzo_ML/5334](https://t.me/gonzo_ML/5334)
+- Weaknesses: —
+
 <a id="arxiv-2604.11791"></a>
 ### A Mechanistic Analysis of Looped Reasoning Language Models
 
 `arxiv:2604.11791` · Reasoning and the "physics" of language models · 2026-04-13
 
-- final **-0.16** (conf 1.00, pct 22) · impact -1.42 · WATCH
-- mean rating (1–10): **6.2** · accept votes **3/7** · percentile rank_avg 45.9 (100=best) · rank in year 58.0 (1=best)
+- final **-0.16** (conf 1.00, pct 19) · impact -1.43 · WATCH
+- mean rating (1–10): **6.2** · accept votes **3/7** · percentile rank_avg 45.7 (100=best) · rank in year 58.0 (1=best)
 - NAIPv2 `-0.953` · NAIP-v1 `0.346` · SciJudge `-2.454` · DGC-BERT `0.489`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.8` Reject (S/P/C 2.75/2.75/2.5) · 14B Fast `6.5` Reject
@@ -2751,13 +2984,27 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
   - [CR-8B](reviews/cyclereviewer-8b/arxiv_2604.11791.md#weaknesses): The main weakness of the paper is that it is unclear what the contribution of the paper is. The paper studies the behavior of looped LLMs, but it is not clear what this behavior tells us about how to design better looped LLMs. The authors do not provide any practical guidance on how to design better looped LLMs based on their results.
   - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2604.11791.md#weaknesses): Despite the strengths, I have identified several weaknesses that warrant attention. First, the paper lacks a comprehensive explanation for the observed behavior of looped Transformers. While the authors demonstrate that looped models exhibit cyclic behavior and mirroring of feedforward stages of inference, the underlying reasons for these phenomena are not fully explored.…
 
+<a id="arxiv-2604.04943"></a>
+### The Illusion of Latent Generalization: Bi-directionality and the Reversal Curse
+
+`arxiv:2604.04943` · Reasoning and the "physics" of language models · 2026-03-13
+
+- final **n/a** (conf 0.00, pct 47) · impact n/a · WATCH
+- mean rating (1–10): **n/a** · accept votes **0/0** · percentile rank_avg  (100=best) · rank in year  (1=best)
+- NAIPv2 `` · NAIP-v1 `` · SciJudge `` · DGC-BERT ``
+- CycleReviewer 8B ``  · 70B `` 
+- DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `` 
+- OpenReviewer ``  (S/P/C None/None/None) · SEA-E `` 
+- Telegram: —
+- Weaknesses: —
+
 <a id="arxiv-2604.01754"></a>
 ### LiveMathematicianBench: A Live Benchmark for Mathematician-Level Reasoning with Proof Sketches
 
 `arxiv:2604.01754` · Reasoning and the "physics" of language models · 2026-04-02
 
-- final **+0.04** (conf 1.00, pct 42) · impact +1.86 · WATCH
-- mean rating (1–10): **6.8** · accept votes **4/7** · percentile rank_avg 70.6 (100=best) · rank in year 8.0 (1=best)
+- final **+0.04** (conf 1.00, pct 38) · impact +1.86 · WATCH
+- mean rating (1–10): **6.8** · accept votes **4/7** · percentile rank_avg 70.5 (100=best) · rank in year 8.0 (1=best)
 - NAIPv2 `-0.744` · NAIP-v1 `0.756` · SciJudge `3.339` · DGC-BERT `0.424`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Reject (S/P/C 3.0/2.5/2.5) · 14B Fast `5.8` Reject
@@ -2772,8 +3019,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2602.10416` · Reasoning and the "physics" of language models · 2026-02-11
 
-- final **-0.41** (conf 1.00, pct 9) · impact -0.07 · DROP
-- mean rating (1–10): **5.5** · accept votes **2/7** · percentile rank_avg 34.5 (100=best) · rank in year 69.0 (1=best)
+- final **-0.40** (conf 1.00, pct 8) · impact -0.09 · DROP
+- mean rating (1–10): **5.5** · accept votes **2/7** · percentile rank_avg 34.2 (100=best) · rank in year 69.0 (1=best)
 - NAIPv2 `-1.744` · NAIP-v1 `0.367` · SciJudge `2.983` · DGC-BERT `0.162`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `5.2` Accept (S/P/C 2.75/3.0/2.5) · 14B Fast `5.8` Reject
@@ -2788,8 +3035,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `openreview:klU4737opt` · Reasoning and the "physics" of language models · unknown
 
-- final **-0.25** (conf 1.00, pct 18) · impact -1.35 · DROP
-- mean rating (1–10): **5.5** · accept votes **2/7** · percentile rank_avg 27.7 (100=best) · rank in year 9.0 (1=best)
+- final **-0.24** (conf 1.00, pct 15) · impact -1.37 · DROP
+- mean rating (1–10): **5.5** · accept votes **2/7** · percentile rank_avg 27.5 (100=best) · rank in year 9.0 (1=best)
 - NAIPv2 `-3.801` · NAIP-v1 `0.327` · SciJudge `-1.683` · DGC-BERT `0.040`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `5.0` Reject (S/P/C 2.5/2.25/2.5) · 14B Fast `4.8` Reject
@@ -2804,8 +3051,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2512.16902` · Reasoning and the "physics" of language models · 2025-12-18
 
-- final **+0.34** (conf 1.00, pct 82) · impact -0.77 · KEEP
-- mean rating (1–10): **6.8** · accept votes **7/7** · percentile rank_avg 68.0 (100=best) · rank in year 11.0 (1=best)
+- final **+0.33** (conf 1.00, pct 83) · impact -0.77 · KEEP
+- mean rating (1–10): **6.8** · accept votes **7/7** · percentile rank_avg 67.8 (100=best) · rank in year 11.0 (1=best)
 - NAIPv2 `-0.869` · NAIP-v1 `0.504` · SciJudge `-2.892` · DGC-BERT `0.931`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.8` Accept · 7B Fast `6.2` Accept (S/P/C 3.0/2.75/2.75) · 14B Fast `6.5` Accept
@@ -2815,13 +3062,41 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
   - [CR-8B](reviews/cyclereviewer-8b/arxiv_2512.16902.md#weaknesses): The paper does not provide a comprehensive review of the existing literature on in-context learning and its applications. The authors should provide a more detailed discussion of the current state of the field and how their work contributes to it. - The paper does not provide a clear explanation of the limitations of the proposed approach.…
   - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2512.16902.md#weaknesses): While the paper presents compelling results, I have identified several weaknesses that warrant further consideration. First, the paper's presentation of the task description, particularly the token mapping process, is difficult to follow. The description of how variable tokens are mapped to elements of different groups across sequences, as described in Section 2, is dense and hard to parse.…
 
+<a id="arxiv-2512.14693"></a>
+### Universal Reasoning Model
+
+`arxiv:2512.14693` · Reasoning and the "physics" of language models · 2025-12-16
+
+- final **n/a** (conf 0.00, pct 47) · impact n/a · WATCH
+- mean rating (1–10): **n/a** · accept votes **0/0** · percentile rank_avg  (100=best) · rank in year  (1=best)
+- NAIPv2 `` · NAIP-v1 `` · SciJudge `` · DGC-BERT ``
+- CycleReviewer 8B ``  · 70B `` 
+- DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `` 
+- OpenReviewer ``  (S/P/C None/None/None) · SEA-E `` 
+- Telegram: [gonzo_ML/4437](https://t.me/gonzo_ML/4437), [gonzo_ML/4439](https://t.me/gonzo_ML/4439), [axisofordinary/8049](https://t.me/axisofordinary/8049)
+- Weaknesses: —
+
+<a id="arxiv-2510.04871"></a>
+### Less is More: Recursive Reasoning with Tiny Networks
+
+`arxiv:2510.04871` · Reasoning and the "physics" of language models · 2025-10-06
+
+- final **n/a** (conf 0.00, pct 47) · impact n/a · WATCH
+- mean rating (1–10): **n/a** · accept votes **0/0** · percentile rank_avg  (100=best) · rank in year  (1=best)
+- NAIPv2 `` · NAIP-v1 `` · SciJudge `` · DGC-BERT ``
+- CycleReviewer 8B ``  · 70B `` 
+- DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `` 
+- OpenReviewer ``  (S/P/C None/None/None) · SEA-E `` 
+- Telegram: [data_secrets/7991](https://t.me/data_secrets/7991), [gonzo_ML/4127](https://t.me/gonzo_ML/4127), [knowledge_accumulator/326](https://t.me/knowledge_accumulator/326), [gonzo_ML/4130](https://t.me/gonzo_ML/4130), [gonzo_ML/4097](https://t.me/gonzo_ML/4097), [gonzo_ML/4101](https://t.me/gonzo_ML/4101)
+- Weaknesses: —
+
 <a id="arxiv-2510.00184"></a>
 ### Why Can't Transformers Learn Multiplication? Reverse-Engineering Reveals Long-Range Dependency Pitfalls
 
 `arxiv:2510.00184` · Reasoning and the "physics" of language models · 2025-09-30
 
-- final **+0.06** (conf 1.00, pct 46) · impact +0.45 · WATCH
-- mean rating (1–10): **6.3** · accept votes **6/7** · percentile rank_avg 59.8 (100=best) · rank in year 36.0 (1=best)
+- final **+0.06** (conf 1.00, pct 43) · impact +0.46 · WATCH
+- mean rating (1–10): **6.3** · accept votes **6/7** · percentile rank_avg 59.6 (100=best) · rank in year 36.0 (1=best)
 - NAIPv2 `-1.400` · NAIP-v1 `0.696` · SciJudge `-0.466` · DGC-BERT `0.774`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.8` Accept (S/P/C 3.0/3.0/2.5) · 14B Fast `6.7` Accept
@@ -2836,8 +3111,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2509.25239` · Reasoning and the "physics" of language models · 2025-09-25
 
-- final **+0.12** (conf 1.00, pct 55) · impact -1.08 · WATCH
-- mean rating (1–10): **6.0** · accept votes **5/7** · percentile rank_avg 48.7 (100=best) · rank in year 59.0 (1=best)
+- final **+0.13** (conf 1.00, pct 59) · impact -1.08 · WATCH
+- mean rating (1–10): **6.0** · accept votes **5/7** · percentile rank_avg 48.5 (100=best) · rank in year 59.0 (1=best)
 - NAIPv2 `-2.500` · NAIP-v1 `0.488` · SciJudge `-3.698` · DGC-BERT `0.853`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.0` Reject (S/P/C 3.0/3.0/3.0) · 14B Fast `6.5` Accept
@@ -2852,8 +3127,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2509.20317` · Reasoning and the "physics" of language models · 2025-09-24
 
-- final **+0.23** (conf 1.00, pct 69) · impact +0.75 · KEEP
-- mean rating (1–10): **6.5** · accept votes **6/7** · percentile rank_avg 71.0 (100=best) · rank in year 8.0 (1=best)
+- final **+0.23** (conf 1.00, pct 70) · impact +0.76 · KEEP
+- mean rating (1–10): **6.5** · accept votes **6/7** · percentile rank_avg 70.9 (100=best) · rank in year 8.0 (1=best)
 - NAIPv2 `1.872` · NAIP-v1 `0.683` · SciJudge `0.797` · DGC-BERT `0.939`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `3.8` Reject · 7B Fast `6.3` Accept (S/P/C 3.0/3.0/2.67) · 14B Fast `7.0` Accept
@@ -2868,8 +3143,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2508.02513` · Reasoning and the "physics" of language models · 2025-08-04
 
-- final **+0.09** (conf 1.00, pct 50) · impact +0.29 · WATCH
-- mean rating (1–10): **6.2** · accept votes **6/7** · percentile rank_avg 61.8 (100=best) · rank in year 25.0 (1=best)
+- final **+0.09** (conf 1.00, pct 54) · impact +0.30 · WATCH
+- mean rating (1–10): **6.2** · accept votes **6/7** · percentile rank_avg 61.7 (100=best) · rank in year 25.0 (1=best)
 - NAIPv2 `-0.951` · NAIP-v1 `0.661` · SciJudge `-0.407` · DGC-BERT `0.733`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `5.8` Reject (S/P/C 2.75/2.5/2.5) · 14B Fast `6.5` Accept
@@ -2879,13 +3154,27 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
   - [CR-8B](reviews/cyclereviewer-8b/arxiv_2508.02513.md#weaknesses): 1. The authors only consider addition and subtraction in their experiments. It would be interesting to see if the proposed approach can be extended to more complex arithmetic operations such as multiplication and division. 2. The authors only consider MLP layers in their analysis. It would be interesting to see if the proposed approach can be extended to other components such as attention heads.…
   - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2508.02513.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, the scope of the paper is limited to addition and subtraction, and the experiments are primarily conducted on three- digit numbers.…
 
+<a id="arxiv-2506.21734"></a>
+### Hierarchical Reasoning Model
+
+`arxiv:2506.21734` · Reasoning and the "physics" of language models · 2025-06-26
+
+- final **n/a** (conf 0.00, pct 47) · impact n/a · WATCH
+- mean rating (1–10): **n/a** · accept votes **0/0** · percentile rank_avg  (100=best) · rank in year  (1=best)
+- NAIPv2 `` · NAIP-v1 `` · SciJudge `` · DGC-BERT ``
+- CycleReviewer 8B ``  · 70B `` 
+- DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `` 
+- OpenReviewer ``  (S/P/C None/None/None) · SEA-E `` 
+- Telegram: [data_secrets/7663](https://t.me/data_secrets/7663), [nn_for_science/2508](https://t.me/nn_for_science/2508), [axisofordinary/7472](https://t.me/axisofordinary/7472), [gonzo_ML/4097](https://t.me/gonzo_ML/4097), [gonzo_ML/4101](https://t.me/gonzo_ML/4101)
+- Weaknesses: —
+
 <a id="arxiv-2506.10947"></a>
 ### Spurious Rewards: Rethinking Training Signals in RLVR
 
 `arxiv:2506.10947` · Reasoning and the "physics" of language models · 2025-06-12
 
-- final **+0.39** (conf 0.91, pct 87) · impact -0.96 · KEEP · salvage dr7bf
-- mean rating (1–10): **7.1** · accept votes **6/6** · percentile rank_avg 70.8 (100=best) · rank in year 9.0 (1=best)
+- final **+0.39** (conf 0.91, pct 88) · impact -0.98 · KEEP · salvage dr7bf
+- mean rating (1–10): **7.1** · accept votes **6/6** · percentile rank_avg 70.7 (100=best) · rank in year 9.0 (1=best)
 - NAIPv2 `-0.237` · NAIP-v1 `0.326` · SciJudge `0.486` · DGC-BERT `0.888`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast ``  (S/P/C 3.0/3.0/3.0) · 14B Fast `7.5` Accept
@@ -2900,8 +3189,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2505.21493` · Reasoning and the "physics" of language models · 2025-05-27
 
-- final **+0.50** (conf 1.00, pct 96) · impact +0.42 · KEEP
-- mean rating (1–10): **6.6** · accept votes **6/7** · percentile rank_avg 72.9 (100=best) · rank in year 6.0 (1=best)
+- final **+0.50** (conf 1.00, pct 97) · impact +0.42 · KEEP
+- mean rating (1–10): **6.6** · accept votes **6/7** · percentile rank_avg 72.8 (100=best) · rank in year 6.0 (1=best)
 - NAIPv2 `0.858` · NAIP-v1 `0.455` · SciJudge `3.357` · DGC-BERT `0.812`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `7.0` Accept (S/P/C 3.25/3.0/3.0) · 14B Fast `6.8` Accept
@@ -2916,8 +3205,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2505.21444` · Reasoning and the "physics" of language models · 2025-05-27
 
-- final **-0.12** (conf 1.00, pct 23) · impact -0.88 · WATCH
-- mean rating (1–10): **6.0** · accept votes **2/7** · percentile rank_avg 42.0 (100=best) · rank in year 67.0 (1=best)
+- final **-0.12** (conf 1.00, pct 21) · impact -0.89 · WATCH
+- mean rating (1–10): **6.0** · accept votes **2/7** · percentile rank_avg 41.8 (100=best) · rank in year 67.0 (1=best)
 - NAIPv2 `-1.297` · NAIP-v1 `0.361` · SciJudge `0.324` · DGC-BERT `0.480`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `5.5` Reject (S/P/C 2.75/3.0/2.5) · 14B Fast `5.8` Reject
@@ -2932,8 +3221,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2505.15134` · Reasoning and the "physics" of language models · 2025-05-21
 
-- final **+0.23** (conf 1.00, pct 69) · impact +2.06 · KEEP
-- mean rating (1–10): **6.3** · accept votes **6/7** · percentile rank_avg 68.2 (100=best) · rank in year 10.0 (1=best)
+- final **+0.23** (conf 1.00, pct 72) · impact +2.07 · KEEP
+- mean rating (1–10): **6.3** · accept votes **6/7** · percentile rank_avg 68.0 (100=best) · rank in year 10.0 (1=best)
 - NAIPv2 `-0.945` · NAIP-v1 `0.718` · SciJudge `3.930` · DGC-BERT `0.750`
 - CycleReviewer 8B `4.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `6.5` Accept (S/P/C 3.25/3.25/2.75) · 14B Fast `7.0` Accept
@@ -2948,8 +3237,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2505.13763` · Reasoning and the "physics" of language models · 2025-05-19
 
-- final **-0.09** (conf 1.00, pct 26) · impact +0.03 · WATCH
-- mean rating (1–10): **6.5** · accept votes **4/7** · percentile rank_avg 50.5 (100=best) · rank in year 55.0 (1=best)
+- final **-0.09** (conf 1.00, pct 23) · impact +0.03 · WATCH
+- mean rating (1–10): **6.5** · accept votes **4/7** · percentile rank_avg 50.3 (100=best) · rank in year 55.0 (1=best)
 - NAIPv2 `-1.741` · NAIP-v1 `0.559` · SciJudge `0.416` · DGC-BERT `0.055`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `4.8` Reject · 7B Fast `6.2` Reject (S/P/C 2.5/3.0/2.75) · 14B Fast `6.5` Accept
@@ -2964,8 +3253,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2504.20571` · Reasoning and the "physics" of language models · 2025-04-29
 
-- final **+0.21** (conf 1.00, pct 66) · impact +0.77 · KEEP
-- mean rating (1–10): **5.9** · accept votes **4/7** · percentile rank_avg 57.9 (100=best) · rank in year 40.0 (1=best)
+- final **+0.21** (conf 1.00, pct 68) · impact +0.78 · KEEP
+- mean rating (1–10): **5.9** · accept votes **4/7** · percentile rank_avg 57.8 (100=best) · rank in year 40.0 (1=best)
 - NAIPv2 `1.729` · NAIP-v1 `0.521` · SciJudge `3.472` · DGC-BERT `0.725`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `6.5` Accept
@@ -2975,13 +3264,27 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
   - [CR-8B](reviews/cyclereviewer-8b/arxiv_2504.20571.md#weaknesses): 1. The paper only investigates the effectiveness of RLVR with a single training example on a base model Qwen2.5-Math-1.5B. It would be interesting to see if the results hold for other base models and RL algorithms.
   - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2504.20571.md#weaknesses): While this paper presents a compelling and novel approach to RLVR, several weaknesses warrant careful consideration. First, the paper's claim that one-shot RLVR works across different base models is not fully supported by the experimental results. While the authors demonstrate improvements on Llama-3.2-3B-Instruct, the gains are substantially smaller compared to those observed on the Qwen models.…
 
+<a id="arxiv-2504.01928"></a>
+### Is the Reversal Curse a Binding Problem? Uncovering Limitations of Transformers from a Basic Generalization Failure
+
+`arxiv:2504.01928` · Reasoning and the "physics" of language models · 2025-04-02
+
+- final **n/a** (conf 0.00, pct 47) · impact n/a · WATCH
+- mean rating (1–10): **n/a** · accept votes **0/0** · percentile rank_avg  (100=best) · rank in year  (1=best)
+- NAIPv2 `` · NAIP-v1 `` · SciJudge `` · DGC-BERT ``
+- CycleReviewer 8B ``  · 70B `` 
+- DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `` 
+- OpenReviewer ``  (S/P/C None/None/None) · SEA-E `` 
+- Telegram: —
+- Weaknesses: —
+
 <a id="arxiv-2503.21676"></a>
 ### How do language models learn facts? Dynamics, curricula and hallucinations
 
 `arxiv:2503.21676` · Reasoning and the "physics" of language models · 2025-03-27
 
-- final **+0.30** (conf 1.00, pct 78) · impact -0.15 · KEEP
-- mean rating (1–10): **6.5** · accept votes **6/7** · percentile rank_avg 62.0 (100=best) · rank in year 24.0 (1=best)
+- final **+0.30** (conf 1.00, pct 80) · impact -0.15 · KEEP
+- mean rating (1–10): **6.5** · accept votes **6/7** · percentile rank_avg 61.8 (100=best) · rank in year 24.0 (1=best)
 - NAIPv2 `-0.619` · NAIP-v1 `0.448` · SciJudge `1.357` · DGC-BERT `0.792`
 - CycleReviewer 8B `4.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `7.0` Accept (S/P/C 3.0/3.25/2.75) · 14B Fast `6.5` Accept
@@ -2996,8 +3299,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2502.19981` · Reasoning and the "physics" of language models · 2025-02-27
 
-- final **-0.16** (conf 1.00, pct 22) · impact +0.68 · WATCH
-- mean rating (1–10): **5.8** · accept votes **3/7** · percentile rank_avg 53.2 (100=best) · rank in year 47.0 (1=best)
+- final **-0.15** (conf 1.00, pct 20) · impact +0.69 · WATCH
+- mean rating (1–10): **5.8** · accept votes **3/7** · percentile rank_avg 53.1 (100=best) · rank in year 47.0 (1=best)
 - NAIPv2 `-2.475` · NAIP-v1 `0.728` · SciJudge `-0.141` · DGC-BERT `0.449`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `6.0` Reject (S/P/C 2.5/2.75/2.5) · 14B Fast `4.8` Reject
@@ -3012,8 +3315,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2502.05171` · Reasoning and the "physics" of language models · 2025-02-07
 
-- final **+0.22** (conf 1.00, pct 67) · impact -0.37 · KEEP
-- mean rating (1–10): **6.3** · accept votes **5/7** · percentile rank_avg 60.9 (100=best) · rank in year 32.0 (1=best)
+- final **+0.23** (conf 1.00, pct 70) · impact -0.38 · KEEP
+- mean rating (1–10): **6.3** · accept votes **5/7** · percentile rank_avg 60.7 (100=best) · rank in year 32.0 (1=best)
 - NAIPv2 `-1.399` · NAIP-v1 `0.460` · SciJudge `0.457` · DGC-BERT `0.918`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.0` Reject (S/P/C 3.25/2.75/2.5) · 14B Fast `7.5` Accept
@@ -3028,8 +3331,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2502.06807` · Reasoning and the "physics" of language models · 2025-02-03
 
-- final **-0.26** (conf 1.00, pct 16) · impact +0.65 · WATCH
-- mean rating (1–10): **5.8** · accept votes **4/7** · percentile rank_avg 47.6 (100=best) · rank in year 62.0 (1=best)
+- final **-0.26** (conf 1.00, pct 15) · impact +0.65 · WATCH
+- mean rating (1–10): **5.8** · accept votes **4/7** · percentile rank_avg 47.4 (100=best) · rank in year 62.0 (1=best)
 - NAIPv2 `-0.521` · NAIP-v1 `0.472` · SciJudge `3.654` · DGC-BERT `0.503`
 - CycleReviewer 8B `2.5` Reject · 70B `` 
 - DeepReviewer 7B Std `3.2` Reject · 7B Fast `6.5` Reject (S/P/C 3.25/2.75/2.5) · 14B Fast `5.8` Accept
@@ -3039,13 +3342,27 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
   - [CR-8B](reviews/cyclereviewer-8b/arxiv_2502.06807.md#weaknesses): 1. The paper is not a research paper, but rather a report of the performance of OpenAI's o1, o1-ioi and o3 models on competitive programming tasks. The paper lacks a clear research question, methodology, and results section.
   - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2502.06807.md#weaknesses): While this paper presents valuable findings, several weaknesses warrant careful consideration. Firstly, the paper lacks a detailed explanation of the reinforcement learning training process, which significantly impacts the interpretability of the results.…
 
+<a id="arxiv-2502.03387"></a>
+### LIMO: Less is More for Reasoning
+
+`arxiv:2502.03387` · Reasoning and the "physics" of language models · 2025-02-05
+
+- final **n/a** (conf 0.00, pct 47) · impact n/a · WATCH
+- mean rating (1–10): **n/a** · accept votes **0/0** · percentile rank_avg  (100=best) · rank in year  (1=best)
+- NAIPv2 `` · NAIP-v1 `` · SciJudge `` · DGC-BERT ``
+- CycleReviewer 8B ``  · 70B `` 
+- DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `` 
+- OpenReviewer ``  (S/P/C None/None/None) · SEA-E `` 
+- Telegram: [j_links/7895](https://t.me/j_links/7895), [axisofordinary/6957](https://t.me/axisofordinary/6957), [tech_priestess/2091](https://t.me/tech_priestess/2091)
+- Weaknesses: —
+
 <a id="arxiv-2502.00873"></a>
 ### Language Models Use Trigonometry to Do Addition
 
 `arxiv:2502.00873` · Reasoning and the "physics" of language models · 2025-02-02
 
-- final **+0.39** (conf 1.00, pct 87) · impact +1.03 · KEEP
-- mean rating (1–10): **6.2** · accept votes **6/7** · percentile rank_avg 64.0 (100=best) · rank in year 19.0 (1=best)
+- final **+0.39** (conf 1.00, pct 89) · impact +1.04 · KEEP
+- mean rating (1–10): **6.2** · accept votes **6/7** · percentile rank_avg 63.9 (100=best) · rank in year 19.0 (1=best)
 - NAIPv2 `-0.740` · NAIP-v1 `0.506` · SciJudge `3.856` · DGC-BERT `0.164`
 - CycleReviewer 8B `5.2` Accept · 70B `` 
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `7.0` Accept (S/P/C 3.25/3.25/3.25) · 14B Fast `7.0` Accept
@@ -3055,13 +3372,27 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
   - [CR-8B](reviews/cyclereviewer-8b/arxiv_2502.00873.md#weaknesses): The paper is not very novel. The authors show that numbers are represented as a helix in LLMs and that LLMs compute addition by manipulating this helix using the "Clock" algorithm. However, this has already been shown by previous works (e.g., Levy & Geva, 2024; Zhu et al., 2025).
   - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2502.00873.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. First, the paper's claim that the helical representation is the *only* way LLMs perform addition is not fully supported by the evidence.…
 
+<a id="arxiv-2501.19393"></a>
+### s1: Simple test-time scaling
+
+`arxiv:2501.19393` · Reasoning and the "physics" of language models · 2025-01-31
+
+- final **n/a** (conf 0.00, pct 47) · impact n/a · WATCH
+- mean rating (1–10): **n/a** · accept votes **0/0** · percentile rank_avg  (100=best) · rank in year  (1=best)
+- NAIPv2 `` · NAIP-v1 `` · SciJudge `` · DGC-BERT ``
+- CycleReviewer 8B ``  · 70B `` 
+- DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `` 
+- OpenReviewer ``  (S/P/C None/None/None) · SEA-E `` 
+- Telegram: [data_secrets/6119](https://t.me/data_secrets/6119), [gonzo_ML/3355](https://t.me/gonzo_ML/3355), [gonzo_ML/3343](https://t.me/gonzo_ML/3343), [gonzo_ML/3344](https://t.me/gonzo_ML/3344), [tech_priestess/2091](https://t.me/tech_priestess/2091), [gonzo_ML/3319](https://t.me/gonzo_ML/3319), [axisofordinary/6946](https://t.me/axisofordinary/6946)
+- Weaknesses: —
+
 <a id="arxiv-2501.04519"></a>
 ### rStar-Math: Small LLMs Can Master Math Reasoning with Self-Evolved Deep Thinking
 
 `arxiv:2501.04519` · Reasoning and the "physics" of language models · 2025-01-08
 
-- final **+0.39** (conf 1.00, pct 88) · impact +1.54 · KEEP
-- mean rating (1–10): **6.5** · accept votes **6/7** · percentile rank_avg 71.6 (100=best) · rank in year 7.0 (1=best)
+- final **+0.39** (conf 1.00, pct 88) · impact +1.55 · KEEP
+- mean rating (1–10): **6.5** · accept votes **6/7** · percentile rank_avg 71.5 (100=best) · rank in year 7.0 (1=best)
 - NAIPv2 `2.328` · NAIP-v1 `0.656` · SciJudge `3.818` · DGC-BERT `0.417`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.8` Accept · 7B Fast `7.0` Accept (S/P/C 3.0/3.25/3.25) · 14B Fast `6.2` Accept
@@ -3076,8 +3407,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2412.14135` · Reasoning and the "physics" of language models · 2024-12-18
 
-- final **-0.67** (conf 1.00, pct 2) · impact -1.58 · DROP
-- mean rating (1–10): **3.8** · accept votes **0/7** · percentile rank_avg 7.1 (100=best) · rank in year 49.0 (1=best)
+- final **-0.65** (conf 1.00, pct 2) · impact -1.62 · DROP
+- mean rating (1–10): **3.8** · accept votes **0/7** · percentile rank_avg 6.9 (100=best) · rank in year 49.0 (1=best)
 - NAIPv2 `-3.502` · NAIP-v1 `0.258` · SciJudge `-3.597` · DGC-BERT `0.003`
 - CycleReviewer 8B `1.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `4.8` Reject (S/P/C 2.25/2.75/2.25) · 14B Fast `3.0` Reject
@@ -3092,8 +3423,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2412.06769` · Reasoning and the "physics" of language models · 2024-12-09
 
-- final **+0.14** (conf 1.00, pct 58) · impact +0.21 · WATCH
-- mean rating (1–10): **6.1** · accept votes **5/7** · percentile rank_avg 54.3 (100=best) · rank in year 17.0 (1=best)
+- final **+0.15** (conf 1.00, pct 62) · impact +0.21 · WATCH
+- mean rating (1–10): **6.1** · accept votes **5/7** · percentile rank_avg 54.2 (100=best) · rank in year 17.0 (1=best)
 - NAIPv2 `-1.824` · NAIP-v1 `0.554` · SciJudge `1.110` · DGC-BERT `0.750`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.2` Reject (S/P/C 2.5/3.0/2.75) · 14B Fast `6.2` Reject
@@ -3108,8 +3439,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2410.21272` · Reasoning and the "physics" of language models · 2024-10-28
 
-- final **+0.60** (conf 1.00, pct 98) · impact +0.53 · KEEP
-- mean rating (1–10): **6.6** · accept votes **6/7** · percentile rank_avg 66.4 (100=best) · rank in year 2.0 (1=best)
+- final **+0.60** (conf 1.00, pct 99) · impact +0.54 · KEEP
+- mean rating (1–10): **6.6** · accept votes **6/7** · percentile rank_avg 66.3 (100=best) · rank in year 2.0 (1=best)
 - NAIPv2 `-0.077` · NAIP-v1 `0.618` · SciJudge `1.411` · DGC-BERT `0.291`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.25/3.0) · 14B Fast `8.0` Accept
@@ -3124,7 +3455,7 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2305.13673` · Reasoning and the "physics" of language models · 2023-05-23
 
-- final **+0.45** (conf 1.00, pct 92) · impact -0.23 · KEEP
+- final **+0.45** (conf 1.00, pct 93) · impact -0.20 · KEEP
 - mean rating (1–10): **6.1** · accept votes **6/7** · percentile rank_avg 64.1 (100=best) · rank in year 7.0 (1=best)
 - NAIPv2 `-0.169` · NAIP-v1 `0.496` · SciJudge `1.237` · DGC-BERT `0.867`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
@@ -3140,8 +3471,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2407.20311` · Reasoning and the "physics" of language models · 2024-07-29
 
-- final **+0.32** (conf 1.00, pct 81) · impact +0.23 · KEEP
-- mean rating (1–10): **6.4** · accept votes **5/7** · percentile rank_avg 58.1 (100=best) · rank in year 12.0 (1=best)
+- final **+0.32** (conf 1.00, pct 82) · impact +0.23 · KEEP
+- mean rating (1–10): **6.4** · accept votes **5/7** · percentile rank_avg 58.0 (100=best) · rank in year 12.0 (1=best)
 - NAIPv2 `-2.086` · NAIP-v1 `0.498` · SciJudge `1.933` · DGC-BERT `0.745`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.8` Reject · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/2.5) · 14B Fast `7.5` Accept
@@ -3156,8 +3487,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2309.14316` · Reasoning and the "physics" of language models · 2023-09-25
 
-- final **+0.21** (conf 1.00, pct 65) · impact -0.85 · KEEP
-- mean rating (1–10): **6.1** · accept votes **4/7** · percentile rank_avg 44.0 (100=best) · rank in year 32.0 (1=best)
+- final **+0.21** (conf 1.00, pct 68) · impact -0.84 · KEEP
+- mean rating (1–10): **6.1** · accept votes **4/7** · percentile rank_avg 43.9 (100=best) · rank in year 31.0 (1=best)
 - NAIPv2 `-1.495` · NAIP-v1 `0.444` · SciJudge `-0.407` · DGC-BERT `0.152`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `6.5` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `6.5` Accept
@@ -3172,7 +3503,7 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2309.14402` · Reasoning and the "physics" of language models · 2023-09-25
 
-- final **+0.29** (conf 0.83, pct 76) · impact -0.50 · KEEP
+- final **+0.28** (conf 0.83, pct 77) · impact -0.47 · KEEP
 - mean rating (1–10): **7.0** · accept votes **3/6** · percentile rank_avg 57.6 (100=best) · rank in year 13.0 (1=best)
 - NAIPv2 `-1.719` · NAIP-v1 `0.454` · SciJudge `1.058` · DGC-BERT `0.177`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
@@ -3188,8 +3519,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2404.05405` · Reasoning and the "physics" of language models · 2024-04-08
 
-- final **+0.36** (conf 1.00, pct 84) · impact +1.15 · KEEP
-- mean rating (1–10): **6.6** · accept votes **5/7** · percentile rank_avg 63.3 (100=best) · rank in year 4.0 (1=best)
+- final **+0.36** (conf 1.00, pct 85) · impact +1.16 · KEEP
+- mean rating (1–10): **6.6** · accept votes **5/7** · percentile rank_avg 63.1 (100=best) · rank in year 4.0 (1=best)
 - NAIPv2 `-0.638` · NAIP-v1 `0.514` · SciJudge `4.026` · DGC-BERT `0.237`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.7` Accept (S/P/C 2.67/2.67/2.67) · 14B Fast `7.5` Accept
@@ -3204,8 +3535,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2407.15017` · Reasoning and the "physics" of language models · 2024-07-22
 
-- final **-0.21** (conf 1.00, pct 20) · impact +0.67 · WATCH
-- mean rating (1–10): **5.8** · accept votes **3/7** · percentile rank_avg 39.0 (100=best) · rank in year 36.0 (1=best)
+- final **-0.20** (conf 1.00, pct 18) · impact +0.68 · WATCH
+- mean rating (1–10): **5.8** · accept votes **3/7** · percentile rank_avg 38.9 (100=best) · rank in year 36.0 (1=best)
 - NAIPv2 `-2.588` · NAIP-v1 `0.644` · SciJudge `1.682` · DGC-BERT `0.021`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `5.8` Reject (S/P/C 2.5/2.75/2.5) · 14B Fast `5.8` Accept
@@ -3220,8 +3551,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `doi:10.1038/s41586-024-07522-w` · Reasoning and the "physics" of language models · 2024-06-19
 
-- final **-0.17** (conf 0.65, pct 21) · impact -2.67 · WATCH
-- mean rating (1–10): **5.9** · accept votes **4/5** · percentile rank_avg 27.4 (100=best) · rank in year 43.0 (1=best)
+- final **-0.17** (conf 0.65, pct 19) · impact -2.68 · WATCH
+- mean rating (1–10): **5.9** · accept votes **4/5** · percentile rank_avg 27.3 (100=best) · rank in year 43.0 (1=best)
 - NAIPv2 `-5.289` · NAIP-v1 `0.204` · SciJudge `-10.659` · DGC-BERT `0.060`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `5.8` Accept
@@ -3236,8 +3567,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2406.11813` · Reasoning and the "physics" of language models · 2024-06-17
 
-- final **+0.10** (conf 1.00, pct 51) · impact -0.27 · WATCH
-- mean rating (1–10): **6.0** · accept votes **5/7** · percentile rank_avg 46.0 (100=best) · rank in year 26.0 (1=best)
+- final **+0.10** (conf 1.00, pct 54) · impact -0.27 · WATCH
+- mean rating (1–10): **6.0** · accept votes **5/7** · percentile rank_avg 45.8 (100=best) · rank in year 26.0 (1=best)
 - NAIPv2 `-1.204` · NAIP-v1 `0.502` · SciJudge `-0.321` · DGC-BERT `0.244`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `6.2` Accept (S/P/C 2.75/3.25/2.75) · 14B Fast `6.0` Accept
@@ -3252,8 +3583,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2406.11741` · Reasoning and the "physics" of language models · 2024-06-17
 
-- final **+0.10** (conf 1.00, pct 50) · impact +0.55 · WATCH
-- mean rating (1–10): **6.0** · accept votes **4/7** · percentile rank_avg 53.4 (100=best) · rank in year 19.0 (1=best)
+- final **+0.10** (conf 1.00, pct 55) · impact +0.56 · WATCH
+- mean rating (1–10): **6.0** · accept votes **4/7** · percentile rank_avg 53.3 (100=best) · rank in year 19.0 (1=best)
 - NAIPv2 `-1.136` · NAIP-v1 `0.593` · SciJudge `1.814` · DGC-BERT `0.654`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `5.8` Accept (S/P/C 2.75/2.75/2.5) · 14B Fast `5.2` Reject
@@ -3268,8 +3599,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2406.03689` · Reasoning and the "physics" of language models · 2024-06-06
 
-- final **+0.19** (conf 1.00, pct 64) · impact -0.53 · WATCH
-- mean rating (1–10): **6.5** · accept votes **4/7** · percentile rank_avg 54.8 (100=best) · rank in year 16.0 (1=best)
+- final **+0.19** (conf 1.00, pct 65) · impact -0.53 · WATCH
+- mean rating (1–10): **6.5** · accept votes **4/7** · percentile rank_avg 54.6 (100=best) · rank in year 16.0 (1=best)
 - NAIPv2 `-1.565` · NAIP-v1 `0.471` · SciJudge `-1.463` · DGC-BERT `0.861`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Reject · 7B Fast `5.2` Reject (S/P/C 2.5/2.75/2.5) · 14B Fast `6.5` Accept
@@ -3284,8 +3615,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2406.03445` · Reasoning and the "physics" of language models · 2024-06-05
 
-- final **+0.37** (conf 0.97, pct 86) · impact +1.10 · KEEP
-- mean rating (1–10): **5.8** · accept votes **6/7** · percentile rank_avg 63.4 (100=best) · rank in year 3.0 (1=best)
+- final **+0.38** (conf 0.97, pct 87) · impact +1.10 · KEEP
+- mean rating (1–10): **5.8** · accept votes **6/7** · percentile rank_avg 63.2 (100=best) · rank in year 3.0 (1=best)
 - NAIPv2 `-1.313` · NAIP-v1 `0.676` · SciJudge `2.536` · DGC-BERT `0.871`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `7.5` Accept (S/P/C 3.0/3.25/3.25) · 14B Fast `5.8` Accept
@@ -3300,8 +3631,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2405.15071` · Reasoning and the "physics" of language models · 2024-05-23
 
-- final **+0.46** (conf 1.00, pct 93) · impact +1.17 · KEEP
-- mean rating (1–10): **6.0** · accept votes **6/7** · percentile rank_avg 62.5 (100=best) · rank in year 5.0 (1=best)
+- final **+0.46** (conf 1.00, pct 94) · impact +1.18 · KEEP
+- mean rating (1–10): **6.0** · accept votes **6/7** · percentile rank_avg 62.4 (100=best) · rank in year 5.0 (1=best)
 - NAIPv2 `-0.824` · NAIP-v1 `0.652` · SciJudge `3.381` · DGC-BERT `0.698`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `7.3` Accept (S/P/C 3.0/3.33/3.0) · 14B Fast `5.8` Accept
@@ -3316,8 +3647,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2405.14838` · Reasoning and the "physics" of language models · 2024-05-23
 
-- final **-0.09** (conf 1.00, pct 26) · impact -0.02 · WATCH
-- mean rating (1–10): **5.6** · accept votes **4/7** · percentile rank_avg 42.0 (100=best) · rank in year 29.0 (1=best)
+- final **-0.08** (conf 1.00, pct 24) · impact -0.02 · WATCH
+- mean rating (1–10): **5.6** · accept votes **4/7** · percentile rank_avg 41.9 (100=best) · rank in year 29.0 (1=best)
 - NAIPv2 `-2.850` · NAIP-v1 `0.458` · SciJudge `1.787` · DGC-BERT `0.909`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.5` Accept (S/P/C 2.75/3.25/2.75) · 14B Fast `5.0` Reject
@@ -3332,8 +3663,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `doi:10.1038/d41586-024-01413-w` · Reasoning and the "physics" of language models · 2024-05-14
 
-- final **-0.27** (conf 0.44, pct 15) · impact -1.40 · WATCH · partial fulltext
-- mean rating (1–10): **5.2** · accept votes **3/5** · percentile rank_avg 21.5 (100=best) · rank in year 45.0 (1=best)
+- final **-0.26** (conf 0.44, pct 14) · impact -1.41 · WATCH · partial fulltext
+- mean rating (1–10): **5.2** · accept votes **3/5** · percentile rank_avg 21.3 (100=best) · rank in year 45.0 (1=best)
 - NAIPv2 `-4.922` · NAIP-v1 `0.454` · SciJudge `-7.115` · DGC-BERT `0.036`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `6.0` Accept
@@ -3348,8 +3679,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2402.01817` · Reasoning and the "physics" of language models · 2024-02-02
 
-- final **-0.20** (conf 1.00, pct 20) · impact -0.08 · DROP
-- mean rating (1–10): **6.0** · accept votes **2/7** · percentile rank_avg 35.1 (100=best) · rank in year 41.0 (1=best)
+- final **-0.20** (conf 1.00, pct 18) · impact -0.08 · DROP
+- mean rating (1–10): **6.0** · accept votes **2/7** · percentile rank_avg 35.0 (100=best) · rank in year 41.0 (1=best)
 - NAIPv2 `-2.639` · NAIP-v1 `0.513` · SciJudge `0.099` · DGC-BERT `0.004`
 - CycleReviewer 8B `3.5` Reject · 70B `` 
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `5.5` Reject (S/P/C 2.75/2.5/2.5) · 14B Fast `5.8` Reject
@@ -3364,8 +3695,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2312.13558` · Reasoning and the "physics" of language models · 2023-12-21
 
-- final **+0.02** (conf 1.00, pct 39) · impact -0.91 · WATCH
-- mean rating (1–10): **5.8** · accept votes **4/7** · percentile rank_avg 42.6 (100=best) · rank in year 34.0 (1=best)
+- final **+0.03** (conf 1.00, pct 37) · impact -0.90 · WATCH
+- mean rating (1–10): **5.8** · accept votes **4/7** · percentile rank_avg 42.4 (100=best) · rank in year 33.0 (1=best)
 - NAIPv2 `-1.128` · NAIP-v1 `0.379` · SciJudge `0.058` · DGC-BERT `0.923`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `4.8` Reject · 7B Fast `5.5` Reject (S/P/C 2.5/2.75/2.25) · 14B Fast `6.2` Accept
@@ -3380,8 +3711,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `openreview:hcQfTsVnBo` · Reasoning and the "physics" of language models · unknown
 
-- final **+0.43** (conf 1.00, pct 92) · impact -1.58 · KEEP
-- mean rating (1–10): **6.5** · accept votes **5/7** · percentile rank_avg 50.1 (100=best) · rank in year 2.0 (1=best)
+- final **+0.43** (conf 1.00, pct 92) · impact -1.59 · KEEP
+- mean rating (1–10): **6.5** · accept votes **5/7** · percentile rank_avg 50.0 (100=best) · rank in year 2.0 (1=best)
 - NAIPv2 `-3.244` · NAIP-v1 `0.371` · SciJudge `-7.266` · DGC-BERT `0.035`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.8` Accept · 7B Fast `7.0` Accept (S/P/C 3.25/3.0/3.0) · 14B Fast `6.8` Accept
@@ -3396,8 +3727,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2309.12288` · Reasoning and the "physics" of language models · 2023-09-21
 
-- final **+0.17** (conf 1.00, pct 61) · impact +0.70 · WATCH
-- mean rating (1–10): **5.7** · accept votes **4/7** · percentile rank_avg 55.3 (100=best) · rank in year 16.0 (1=best)
+- final **+0.17** (conf 1.00, pct 64) · impact +0.74 · WATCH
+- mean rating (1–10): **5.7** · accept votes **4/7** · percentile rank_avg 55.3 (100=best) · rank in year 15.0 (1=best)
 - NAIPv2 `1.487` · NAIP-v1 `0.676` · SciJudge `1.893` · DGC-BERT `0.254`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Reject · 7B Fast `6.3` Accept (S/P/C 2.67/2.67/2.67) · 14B Fast `5.8` Accept
@@ -3412,8 +3743,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2304.15004` · Reasoning and the "physics" of language models · 2023-04-28
 
-- final **+0.37** (conf 1.00, pct 85) · impact +0.34 · KEEP
-- mean rating (1–10): **6.2** · accept votes **5/7** · percentile rank_avg 62.9 (100=best) · rank in year 8.0 (1=best)
+- final **+0.37** (conf 1.00, pct 86) · impact +0.35 · KEEP
+- mean rating (1–10): **6.2** · accept votes **5/7** · percentile rank_avg 62.7 (100=best) · rank in year 8.0 (1=best)
 - NAIPv2 `0.762` · NAIP-v1 `0.551` · SciJudge `2.855` · DGC-BERT `0.254`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.2` Accept (S/P/C 2.75/3.0/3.0) · 14B Fast `6.5` Accept
@@ -3428,7 +3759,7 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2302.00923` · Reasoning and the "physics" of language models · 2023-02-02
 
-- final **+0.04** (conf 1.00, pct 42) · impact +0.93 · WATCH
+- final **+0.04** (conf 1.00, pct 38) · impact +0.97 · WATCH
 - mean rating (1–10): **6.2** · accept votes **5/7** · percentile rank_avg 58.3 (100=best) · rank in year 11.0 (1=best)
 - NAIPv2 `-0.418` · NAIP-v1 `0.730` · SciJudge `1.666` · DGC-BERT `0.793`
 - CycleReviewer 8B `5.8` Accept · 70B `` 
@@ -3444,8 +3775,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2301.06627` · Reasoning and the "physics" of language models · 2023-01-16
 
-- final **+0.05** (conf 1.00, pct 44) · impact -0.44 · WATCH
-- mean rating (1–10): **6.2** · accept votes **3/7** · percentile rank_avg 47.8 (100=best) · rank in year 29.0 (1=best)
+- final **+0.05** (conf 1.00, pct 40) · impact -0.42 · WATCH
+- mean rating (1–10): **6.2** · accept votes **3/7** · percentile rank_avg 47.7 (100=best) · rank in year 28.0 (1=best)
 - NAIPv2 `-2.279` · NAIP-v1 `0.436` · SciJudge `1.612` · DGC-BERT `0.311`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `6.5` Reject (S/P/C 2.75/2.75/2.75) · 14B Fast `6.8` Accept
@@ -3461,7 +3792,7 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 `arxiv:2301.05217` · Reasoning and the "physics" of language models · 2023-01-12
 
 - final **+0.65** (conf 1.00, pct 99) · impact +0.01 · KEEP
-- mean rating (1–10): **6.6** · accept votes **7/7** · percentile rank_avg 67.5 (100=best) · rank in year 4.0 (1=best)
+- mean rating (1–10): **6.6** · accept votes **7/7** · percentile rank_avg 67.3 (100=best) · rank in year 4.0 (1=best)
 - NAIPv2 `-0.686` · NAIP-v1 `0.491` · SciJudge `2.071` · DGC-BERT `0.559`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `8.0` Accept (S/P/C 3.5/3.5/3.5) · 14B Fast `7.0` Accept
@@ -3476,8 +3807,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2212.09196` · Reasoning and the "physics" of language models · 2022-12-19
 
-- final **+0.13** (conf 1.00, pct 56) · impact +0.98 · WATCH
-- mean rating (1–10): **6.3** · accept votes **5/7** · percentile rank_avg 56.1 (100=best) · rank in year 7.0 (1=best)
+- final **+0.12** (conf 1.00, pct 58) · impact +1.05 · WATCH
+- mean rating (1–10): **6.3** · accept votes **5/7** · percentile rank_avg 56.3 (100=best) · rank in year 7.0 (1=best)
 - NAIPv2 `-1.596` · NAIP-v1 `0.756` · SciJudge `2.294` · DGC-BERT `0.046`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.2` Reject (S/P/C 2.5/3.0/2.25) · 14B Fast `6.5` Accept
@@ -3492,8 +3823,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `openreview:wUU-7XTL5XO` · Reasoning and the "physics" of language models · unknown
 
-- final **-0.30** (conf 1.00, pct 14) · impact +0.29 · DROP
-- mean rating (1–10): **5.4** · accept votes **2/7** · percentile rank_avg 33.6 (100=best) · rank in year 8.0 (1=best)
+- final **-0.30** (conf 1.00, pct 11) · impact +0.29 · DROP
+- mean rating (1–10): **5.4** · accept votes **2/7** · percentile rank_avg 33.4 (100=best) · rank in year 8.0 (1=best)
 - NAIPv2 `-1.282` · NAIP-v1 `0.555` · SciJudge `1.625` · DGC-BERT `0.014`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast `4.2` Reject (S/P/C 2.5/2.25/2.25) · 14B Fast `5.7` Reject
@@ -3508,8 +3839,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2203.11171` · Reasoning and the "physics" of language models · 2022-03-21
 
-- final **+0.25** (conf 1.00, pct 73) · impact +1.83 · KEEP
-- mean rating (1–10): **5.7** · accept votes **7/7** · percentile rank_avg 60.5 (100=best) · rank in year 4.0 (1=best)
+- final **+0.24** (conf 1.00, pct 73) · impact +1.82 · KEEP
+- mean rating (1–10): **5.7** · accept votes **7/7** · percentile rank_avg 60.4 (100=best) · rank in year 5.0 (1=best)
 - NAIPv2 `-2.383` · NAIP-v1 `0.759` · SciJudge `3.944` · DGC-BERT `0.917`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.25/2.75) · 14B Fast `4.5` Accept
@@ -3519,12 +3850,26 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
   - [CR-8B](reviews/cyclereviewer-8b/arxiv_2203.11171.md#weaknesses): The paper could benefit from a more thorough discussion of the limitations of the proposed method. For example, the authors mention that self-consistency incurs more computation cost, but it would be helpful to provide more details on how much more expensive it is compared to other methods.…
   - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2203.11171.md#weaknesses): While the paper presents a compelling method with strong empirical results, there are several limitations that warrant further discussion. First, the paper lacks a detailed analysis of the computational cost associated with self-consistency.…
 
+<a id="arxiv-2608.27370"></a>
+### Puro-2B: Poor Lab's Qwen2-1.5B Trained on RTX 5090 within $5090
+
+`arxiv:2608.27370` · Data, training, optimization · 2026-08-27
+
+- final **n/a** (conf 0.00, pct 47) · impact n/a · WATCH
+- mean rating (1–10): **n/a** · accept votes **0/0** · percentile rank_avg  (100=best) · rank in year  (1=best)
+- NAIPv2 `` · NAIP-v1 `` · SciJudge `` · DGC-BERT ``
+- CycleReviewer 8B ``  · 70B `` 
+- DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `` 
+- OpenReviewer ``  (S/P/C None/None/None) · SEA-E `` 
+- Telegram: [AGI_and_RL/1361](https://t.me/AGI_and_RL/1361)
+- Weaknesses: —
+
 <a id="arxiv-2608.05136"></a>
 ### The Loss Does Not See the Basis, but Adam Does
 
 `arxiv:2608.05136` · Data, training, optimization · 2026-08-05
 
-- final **+0.34** (conf 1.00, pct 83) · impact -0.43 · KEEP
+- final **+0.35** (conf 1.00, pct 84) · impact -0.43 · KEEP
 - mean rating (1–10): **6.4** · accept votes **6/7** · percentile rank_avg 62.4 (100=best) · rank in year 25.0 (1=best)
 - NAIPv2 `1.129` · NAIP-v1 `0.627` · SciJudge `-3.627` · DGC-BERT `0.208`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
@@ -3540,8 +3885,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2607.27372` · Data, training, optimization · 2026-07-29
 
-- final **+0.29** (conf 1.00, pct 77) · impact +1.42 · KEEP
-- mean rating (1–10): **6.2** · accept votes **7/7** · percentile rank_avg 71.1 (100=best) · rank in year 7.0 (1=best)
+- final **+0.30** (conf 1.00, pct 79) · impact +1.43 · KEEP
+- mean rating (1–10): **6.2** · accept votes **7/7** · percentile rank_avg 70.9 (100=best) · rank in year 7.0 (1=best)
 - NAIPv2 `0.640` · NAIP-v1 `0.771` · SciJudge `2.127` · DGC-BERT `0.888`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/2.67) · 14B Fast `7.0` Accept
@@ -3551,13 +3896,27 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
   - [CR-8B](reviews/cyclereviewer-8b/arxiv_2607.27372.md#weaknesses): The paper does not provide a detailed explanation of the mathematical formulation of the XM approach. While the authors provide an intuitive explanation of the approach, a more formal mathematical description would be helpful for readers who want to understand the underlying principles of the method.…
   - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2607.27372.md#weaknesses): section, there are several limitations that need to be addressed in future work.
 
+<a id="doi-10.5281-zenodo.21979851"></a>
+### Why the Third Axis Is Freedom
+
+`doi:10.5281/zenodo.21979851` · Data, training, optimization · 2026-08-17
+
+- final **n/a** (conf 0.00, pct 47) · impact n/a · WATCH
+- mean rating (1–10): **n/a** · accept votes **0/0** · percentile rank_avg  (100=best) · rank in year  (1=best)
+- NAIPv2 `` · NAIP-v1 `` · SciJudge `` · DGC-BERT ``
+- CycleReviewer 8B ``  · 70B `` 
+- DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `` 
+- OpenReviewer ``  (S/P/C None/None/None) · SEA-E `` 
+- Telegram: —
+- Weaknesses: —
+
 <a id="arxiv-2601.21343"></a>
 ### Self-Improving Pretraining: using post-trained models to pretrain better models
 
 `arxiv:2601.21343` · Data, training, optimization · 2026-01-29
 
-- final **-0.32** (conf 1.00, pct 12) · impact -0.43 · DROP
-- mean rating (1–10): **5.8** · accept votes **3/7** · percentile rank_avg 38.5 (100=best) · rank in year 65.0 (1=best)
+- final **-0.31** (conf 1.00, pct 11) · impact -0.43 · DROP
+- mean rating (1–10): **5.8** · accept votes **3/7** · percentile rank_avg 38.3 (100=best) · rank in year 65.0 (1=best)
 - NAIPv2 `-2.145` · NAIP-v1 `0.484` · SciJudge `0.240` · DGC-BERT `0.335`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `5.5` Reject (S/P/C 2.5/2.5/2.5) · 14B Fast `6.5` Accept
@@ -3572,8 +3931,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2512.24695` · Data, training, optimization · 2025-12-31
 
-- final **-0.65** (conf 0.82, pct 3) · impact -2.10 · DROP
-- mean rating (1–10): **4.0** · accept votes **0/6** · percentile rank_avg 11.7 (100=best) · rank in year 81.0 (1=best)
+- final **-0.63** (conf 0.82, pct 3) · impact -2.13 · DROP
+- mean rating (1–10): **4.0** · accept votes **0/6** · percentile rank_avg 11.6 (100=best) · rank in year 81.0 (1=best)
 - NAIPv2 `-2.021` · NAIP-v1 `0.319` · SciJudge `-7.151` · DGC-BERT `0.206`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std ``  · 7B Fast `5.0` Reject (S/P/C 2.5/2.5/2.5) · 14B Fast `4.2` Reject
@@ -3588,8 +3947,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2510.05491` · Data, training, optimization · 2025-10-07
 
-- final **+0.06** (conf 1.00, pct 47) · impact -0.51 · WATCH
-- mean rating (1–10): **5.9** · accept votes **6/7** · percentile rank_avg 47.9 (100=best) · rank in year 61.0 (1=best)
+- final **+0.07** (conf 1.00, pct 51) · impact -0.51 · WATCH
+- mean rating (1–10): **5.9** · accept votes **6/7** · percentile rank_avg 47.7 (100=best) · rank in year 61.0 (1=best)
 - NAIPv2 `-1.236` · NAIP-v1 `0.512` · SciJudge `-1.756` · DGC-BERT `0.663`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `7.0` Accept (S/P/C 3.25/3.25/3.0) · 14B Fast `6.0` Accept
@@ -3604,8 +3963,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2508.11408` · Data, training, optimization · 2025-08-15
 
-- final **+0.16** (conf 1.00, pct 61) · impact -0.16 · WATCH
-- mean rating (1–10): **6.1** · accept votes **5/7** · percentile rank_avg 53.9 (100=best) · rank in year 44.0 (1=best)
+- final **+0.16** (conf 1.00, pct 63) · impact -0.16 · WATCH
+- mean rating (1–10): **6.1** · accept votes **5/7** · percentile rank_avg 53.7 (100=best) · rank in year 44.0 (1=best)
 - NAIPv2 `1.382` · NAIP-v1 `0.602` · SciJudge `-1.549` · DGC-BERT `0.046`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/2.5) · 14B Fast `6.0` Accept
@@ -3620,8 +3979,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2507.12856` · Data, training, optimization · 2025-07-17
 
-- final **-0.24** (conf 1.00, pct 18) · impact -1.96 · DROP
-- mean rating (1–10): **5.8** · accept votes **3/7** · percentile rank_avg 36.1 (100=best) · rank in year 72.0 (1=best)
+- final **-0.23** (conf 1.00, pct 16) · impact -1.96 · DROP
+- mean rating (1–10): **5.8** · accept votes **3/7** · percentile rank_avg 35.9 (100=best) · rank in year 72.0 (1=best)
 - NAIPv2 `-3.164` · NAIP-v1 `0.229` · SciJudge `-3.125` · DGC-BERT `0.201`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `5.8` Reject (S/P/C 2.5/2.75/2.25) · 14B Fast `6.0` Reject
@@ -3636,8 +3995,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2506.08007` · Data, training, optimization · 2025-06-09
 
-- final **-0.42** (conf 1.00, pct 8) · impact -1.06 · DROP
-- mean rating (1–10): **5.5** · accept votes **3/7** · percentile rank_avg 32.5 (100=best) · rank in year 76.0 (1=best)
+- final **-0.41** (conf 1.00, pct 7) · impact -1.07 · DROP
+- mean rating (1–10): **5.5** · accept votes **3/7** · percentile rank_avg 32.4 (100=best) · rank in year 76.0 (1=best)
 - NAIPv2 `-2.857` · NAIP-v1 `0.424` · SciJudge `-2.290` · DGC-BERT `0.913`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast `6.0` Reject (S/P/C 2.67/2.67/2.67) · 14B Fast `5.0` Reject
@@ -3652,8 +4011,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2505.24832` · Data, training, optimization · 2025-05-30
 
-- final **+0.26** (conf 1.00, pct 74) · impact +0.51 · KEEP
-- mean rating (1–10): **6.0** · accept votes **6/7** · percentile rank_avg 61.4 (100=best) · rank in year 27.0 (1=best)
+- final **+0.27** (conf 1.00, pct 76) · impact +0.51 · KEEP
+- mean rating (1–10): **6.0** · accept votes **6/7** · percentile rank_avg 61.2 (100=best) · rank in year 27.0 (1=best)
 - NAIPv2 `-0.806` · NAIP-v1 `0.508` · SciJudge `2.631` · DGC-BERT `0.785`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.5` Accept (S/P/C 3.25/3.25/3.25) · 14B Fast `6.5` Accept
@@ -3668,8 +4027,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2410.07041` · Data, training, optimization · 2024-10-09
 
-- final **+0.09** (conf 1.00, pct 50) · impact -2.25 · WATCH
-- mean rating (1–10): **6.1** · accept votes **5/7** · percentile rank_avg 40.8 (100=best) · rank in year 31.0 (1=best)
+- final **+0.09** (conf 1.00, pct 54) · impact -2.26 · WATCH
+- mean rating (1–10): **6.1** · accept votes **5/7** · percentile rank_avg 40.6 (100=best) · rank in year 31.0 (1=best)
 - NAIPv2 `-2.184` · NAIP-v1 `0.120` · SciJudge `-4.219` · DGC-BERT `0.719`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.5` Accept (S/P/C 2.75/3.25/2.75) · 14B Fast `6.0` Reject
@@ -3684,8 +4043,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2409.03137` · Data, training, optimization · 2024-09-05
 
-- final **+0.32** (conf 1.00, pct 80) · impact -0.30 · KEEP
-- mean rating (1–10): **6.1** · accept votes **4/7** · percentile rank_avg 51.2 (100=best) · rank in year 21.0 (1=best)
+- final **+0.32** (conf 1.00, pct 81) · impact -0.30 · KEEP
+- mean rating (1–10): **6.1** · accept votes **4/7** · percentile rank_avg 51.0 (100=best) · rank in year 21.0 (1=best)
 - NAIPv2 `-0.882` · NAIP-v1 `0.472` · SciJudge `-0.025` · DGC-BERT `0.901`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `7.5` Accept (S/P/C 3.25/3.25/3.25) · 14B Fast `6.5` Reject
@@ -3700,8 +4059,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2405.20541` · Data, training, optimization · 2024-05-30
 
-- final **+0.16** (conf 1.00, pct 59) · impact -0.68 · WATCH
-- mean rating (1–10): **5.2** · accept votes **4/7** · percentile rank_avg 39.6 (100=best) · rank in year 34.0 (1=best)
+- final **+0.16** (conf 1.00, pct 63) · impact -0.69 · WATCH
+- mean rating (1–10): **5.2** · accept votes **4/7** · percentile rank_avg 39.4 (100=best) · rank in year 35.0 (1=best)
 - NAIPv2 `-1.069` · NAIP-v1 `0.432` · SciJudge `-0.605` · DGC-BERT `0.758`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `6.0` Accept (S/P/C 3.25/3.0/2.75) · 14B Fast `7.0` Accept
@@ -3716,8 +4075,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2405.20233` · Data, training, optimization · 2024-05-30
 
-- final **+0.18** (conf 1.00, pct 62) · impact -0.81 · WATCH
-- mean rating (1–10): **6.0** · accept votes **3/7** · percentile rank_avg 49.8 (100=best) · rank in year 24.0 (1=best)
+- final **+0.18** (conf 1.00, pct 65) · impact -0.81 · WATCH
+- mean rating (1–10): **6.0** · accept votes **3/7** · percentile rank_avg 49.6 (100=best) · rank in year 24.0 (1=best)
 - NAIPv2 `1.244` · NAIP-v1 `0.455` · SciJudge `-2.424` · DGC-BERT `0.789`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.0` Reject (S/P/C 2.75/3.0/2.5) · 14B Fast `5.8` Reject
@@ -3732,8 +4091,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2405.18392` · Data, training, optimization · 2024-05-28
 
-- final **+0.24** (conf 1.00, pct 71) · impact +0.06 · KEEP
-- mean rating (1–10): **5.9** · accept votes **5/7** · percentile rank_avg 50.8 (100=best) · rank in year 22.0 (1=best)
+- final **+0.24** (conf 1.00, pct 74) · impact +0.07 · KEEP
+- mean rating (1–10): **5.9** · accept votes **5/7** · percentile rank_avg 50.7 (100=best) · rank in year 22.0 (1=best)
 - NAIPv2 `1.571` · NAIP-v1 `0.550` · SciJudge `0.148` · DGC-BERT `0.653`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.8` Reject · 7B Fast `5.8` Accept (S/P/C 2.75/3.0/2.5) · 14B Fast `6.8` Accept
@@ -3748,8 +4107,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2405.16684` · Data, training, optimization · 2024-05-26
 
-- final **-0.04** (conf 1.00, pct 32) · impact -0.80 · WATCH
-- mean rating (1–10): **5.2** · accept votes **3/7** · percentile rank_avg 40.2 (100=best) · rank in year 32.0 (1=best)
+- final **-0.04** (conf 1.00, pct 30) · impact -0.81 · WATCH
+- mean rating (1–10): **5.2** · accept votes **3/7** · percentile rank_avg 40.0 (100=best) · rank in year 33.0 (1=best)
 - NAIPv2 `-0.097` · NAIP-v1 `0.392` · SciJudge `-0.504` · DGC-BERT `0.855`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `4.8` Reject (S/P/C 2.25/2.5/2.5) · 14B Fast `4.2` Reject
@@ -3764,8 +4123,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2405.15682` · Data, training, optimization · 2024-05-24
 
-- final **+0.34** (conf 1.00, pct 83) · impact +0.33 · KEEP
-- mean rating (1–10): **5.8** · accept votes **5/7** · percentile rank_avg 60.0 (100=best) · rank in year 7.0 (1=best)
+- final **+0.35** (conf 1.00, pct 84) · impact +0.33 · KEEP
+- mean rating (1–10): **5.8** · accept votes **5/7** · percentile rank_avg 59.8 (100=best) · rank in year 7.0 (1=best)
 - NAIPv2 `-0.572` · NAIP-v1 `0.472` · SciJudge `3.083` · DGC-BERT `0.912`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/2.67) · 14B Fast `5.8` Reject
@@ -3780,8 +4139,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2403.05175` · Data, training, optimization · 2024-03-08
 
-- final **-0.27** (conf 1.00, pct 15) · impact -1.11 · DROP
-- mean rating (1–10): **5.6** · accept votes **2/7** · percentile rank_avg 23.9 (100=best) · rank in year 44.0 (1=best)
+- final **-0.27** (conf 1.00, pct 13) · impact -1.11 · DROP
+- mean rating (1–10): **5.6** · accept votes **2/7** · percentile rank_avg 23.7 (100=best) · rank in year 44.0 (1=best)
 - NAIPv2 `-3.904` · NAIP-v1 `0.467` · SciJudge `-4.599` · DGC-BERT `0.018`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast `5.0` Reject (S/P/C None/None/None) · 14B Fast `5.8` Accept
@@ -3796,8 +4155,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2402.02342` · Data, training, optimization · 2024-02-04
 
-- final **-0.21** (conf 1.00, pct 19) · impact -1.37 · DROP
-- mean rating (1–10): **5.4** · accept votes **3/7** · percentile rank_avg 33.7 (100=best) · rank in year 42.0 (1=best)
+- final **-0.21** (conf 1.00, pct 17) · impact -1.40 · DROP
+- mean rating (1–10): **5.4** · accept votes **3/7** · percentile rank_avg 33.5 (100=best) · rank in year 42.0 (1=best)
 - NAIPv2 `-1.805` · NAIP-v1 `0.266` · SciJudge `-2.145` · DGC-BERT `0.945`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.8` Reject · 7B Fast `4.2` Reject (S/P/C 2.5/2.25/2.25) · 14B Fast `5.8` Reject
@@ -3812,8 +4171,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2401.17401` · Data, training, optimization · 2024-01-30
 
-- final **-0.68** (conf 0.91, pct 2) · impact -2.26 · DROP · salvage dr7bf
-- mean rating (1–10): **3.4** · accept votes **1/6** · percentile rank_avg 13.0 (100=best) · rank in year 48.0 (1=best)
+- final **-0.67** (conf 0.91, pct 2) · impact -2.27 · DROP · salvage dr7bf
+- mean rating (1–10): **3.4** · accept votes **1/6** · percentile rank_avg 12.9 (100=best) · rank in year 48.0 (1=best)
 - NAIPv2 `-3.381` · NAIP-v1 `0.206` · SciJudge `-6.733` · DGC-BERT `0.502`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast ``  (S/P/C 2.67/2.33/2.0) · 14B Fast `3.0` Reject
@@ -3828,8 +4187,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2312.17742` · Data, training, optimization · 2023-12-28
 
-- final **+0.17** (conf 0.95, pct 61) · impact +0.13 · WATCH
-- mean rating (1–10): **5.8** · accept votes **3/7** · percentile rank_avg 50.9 (100=best) · rank in year 23.0 (1=best)
+- final **+0.17** (conf 0.96, pct 64) · impact +0.16 · WATCH
+- mean rating (1–10): **5.8** · accept votes **3/7** · percentile rank_avg 50.8 (100=best) · rank in year 21.0 (1=best)
 - NAIPv2 `-1.154` · NAIP-v1 `0.652` · SciJudge `-0.232` · DGC-BERT `0.916`
 - CycleReviewer 8B `4.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.0` Reject · 7B Fast `6.0` Reject (S/P/C 3.0/3.0/2.5) · 14B Fast `7.0` Accept
@@ -3844,8 +4203,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2312.10549` · Data, training, optimization · 2023-12-16
 
-- final **-0.66** (conf 1.00, pct 2) · impact -0.09 · DROP
-- mean rating (1–10): **3.3** · accept votes **0/7** · percentile rank_avg 16.4 (100=best) · rank in year 49.0 (1=best)
+- final **-0.65** (conf 1.00, pct 2) · impact -0.07 · DROP
+- mean rating (1–10): **3.3** · accept votes **0/7** · percentile rank_avg 16.3 (100=best) · rank in year 48.0 (1=best)
 - NAIPv2 `-3.830` · NAIP-v1 `0.671` · SciJudge `-3.152` · DGC-BERT `0.045`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `4.5` Reject (S/P/C 2.75/2.75/2.0) · 14B Fast `3.0` Reject
@@ -3860,8 +4219,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2307.06440` · Data, training, optimization · 2023-07-12
 
-- final **+0.00** (conf 1.00, pct 36) · impact -0.82 · WATCH
-- mean rating (1–10): **4.8** · accept votes **3/7** · percentile rank_avg 37.0 (100=best) · rank in year 42.0 (1=best)
+- final **+0.02** (conf 1.00, pct 35) · impact -0.80 · WATCH
+- mean rating (1–10): **4.8** · accept votes **3/7** · percentile rank_avg 36.9 (100=best) · rank in year 41.0 (1=best)
 - NAIPv2 `0.661` · NAIP-v1 `0.517` · SciJudge `-3.309` · DGC-BERT `0.796`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `5.2` Reject (S/P/C 2.5/3.0/2.5) · 14B Fast `6.8` Accept
@@ -3876,8 +4235,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `doi:10.1038/s41586-024-07711-7` · Data, training, optimization · 2024-08-21
 
-- final **+0.36** (conf 1.00, pct 84) · impact -0.82 · KEEP
-- mean rating (1–10): **6.2** · accept votes **5/7** · percentile rank_avg 50.6 (100=best) · rank in year 23.0 (1=best)
+- final **+0.36** (conf 1.00, pct 86) · impact -0.83 · KEEP
+- mean rating (1–10): **6.2** · accept votes **5/7** · percentile rank_avg 50.4 (100=best) · rank in year 23.0 (1=best)
 - NAIPv2 `-2.879` · NAIP-v1 `0.428` · SciJudge `-1.859` · DGC-BERT `0.407`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.8` Accept · 7B Fast `7.0` Accept (S/P/C 3.0/3.25/3.25) · 14B Fast `6.8` Accept
@@ -3892,8 +4251,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2305.14342` · Data, training, optimization · 2023-05-23
 
-- final **+0.04** (conf 1.00, pct 43) · impact +0.71 · WATCH
-- mean rating (1–10): **5.8** · accept votes **4/7** · percentile rank_avg 53.8 (100=best) · rank in year 18.0 (1=best)
+- final **+0.05** (conf 1.00, pct 39) · impact +0.73 · WATCH
+- mean rating (1–10): **5.8** · accept votes **4/7** · percentile rank_avg 53.6 (100=best) · rank in year 19.0 (1=best)
 - NAIPv2 `-1.202` · NAIP-v1 `0.658` · SciJudge `2.112` · DGC-BERT `0.770`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.2` Reject (S/P/C 2.75/2.75/2.5) · 14B Fast `6.0` Accept
@@ -3908,8 +4267,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2302.06675` · Data, training, optimization · 2023-02-13
 
-- final **+0.42** (conf 1.00, pct 89) · impact +1.97 · KEEP
-- mean rating (1–10): **6.5** · accept votes **5/7** · percentile rank_avg 74.5 (100=best) · rank in year 1.0 (1=best)
+- final **+0.42** (conf 1.00, pct 90) · impact +1.98 · KEEP
+- mean rating (1–10): **6.5** · accept votes **5/7** · percentile rank_avg 74.4 (100=best) · rank in year 1.0 (1=best)
 - NAIPv2 `-0.872` · NAIP-v1 `0.779` · SciJudge `3.932` · DGC-BERT `0.449`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `7.0` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `6.5` Accept
@@ -3924,8 +4283,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2212.14034` · Data, training, optimization · 2022-12-28
 
-- final **-0.08** (conf 1.00, pct 27) · impact -0.93 · WATCH
-- mean rating (1–10): **5.8** · accept votes **3/7** · percentile rank_avg 37.7 (100=best) · rank in year 16.0 (1=best)
+- final **-0.09** (conf 1.00, pct 23) · impact -0.90 · WATCH
+- mean rating (1–10): **5.8** · accept votes **3/7** · percentile rank_avg 37.7 (100=best) · rank in year 15.0 (1=best)
 - NAIPv2 `-1.931` · NAIP-v1 `0.429` · SciJudge `-0.085` · DGC-BERT `0.737`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `5.5` Reject (S/P/C 2.75/3.0/2.5) · 14B Fast `5.8` Reject
@@ -3940,8 +4299,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2210.10760` · Data, training, optimization · 2022-10-19
 
-- final **+0.22** (conf 1.00, pct 67) · impact -0.40 · KEEP
-- mean rating (1–10): **6.1** · accept votes **5/7** · percentile rank_avg 51.9 (100=best) · rank in year 9.0 (1=best)
+- final **+0.22** (conf 1.00, pct 69) · impact -0.34 · KEEP
+- mean rating (1–10): **6.1** · accept votes **5/7** · percentile rank_avg 52.1 (100=best) · rank in year 9.0 (1=best)
 - NAIPv2 `-0.943` · NAIP-v1 `0.466` · SciJudge `1.191` · DGC-BERT `0.793`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.7` Accept (S/P/C 2.67/2.67/2.67) · 14B Fast `5.8` Accept
@@ -3956,8 +4315,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2110.09485` · Data, training, optimization · 2021-10-18
 
-- final **-0.30** (conf 1.00, pct 12) · impact -0.45 · DROP
-- mean rating (1–10): **3.9** · accept votes **1/7** · percentile rank_avg 27.1 (100=best) · rank in year 9.0 (1=best)
+- final **-0.30** (conf 1.00, pct 11) · impact -0.44 · DROP
+- mean rating (1–10): **3.9** · accept votes **1/7** · percentile rank_avg 27.0 (100=best) · rank in year 9.0 (1=best)
 - NAIPv2 `-0.846` · NAIP-v1 `0.525` · SciJudge `0.222` · DGC-BERT `0.218`
 - CycleReviewer 8B `1.0` Reject · 70B `` 
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast `5.5` Reject (S/P/C 3.0/2.75/2.5) · 14B Fast `6.0` Reject
@@ -3972,8 +4331,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2108.06325` · Data, training, optimization · 2021-08-13
 
-- final **-0.48** (conf 1.00, pct 7) · impact -1.87 · DROP
-- mean rating (1–10): **3.7** · accept votes **0/7** · percentile rank_avg 15.5 (100=best) · rank in year 11.0 (1=best)
+- final **-0.47** (conf 1.00, pct 6) · impact -1.89 · DROP
+- mean rating (1–10): **3.7** · accept votes **0/7** · percentile rank_avg 15.3 (100=best) · rank in year 11.0 (1=best)
 - NAIPv2 `-2.754` · NAIP-v1 `0.266` · SciJudge `-4.632` · DGC-BERT `0.349`
 - CycleReviewer 8B `4.2` Reject · 70B `` 
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `5.2` Reject (S/P/C 2.75/2.25/2.5) · 14B Fast `3.0` Reject
@@ -3988,8 +4347,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2010.01412` · Data, training, optimization · 2020-10-03
 
-- final **+0.58** (conf 1.00, pct 97) · impact +1.73 · KEEP
-- mean rating (1–10): **6.0** · accept votes **5/7** · percentile rank_avg 68.1 (100=best) · rank in year 1.0 (1=best)
+- final **+0.56** (conf 1.00, pct 97) · impact +1.70 · KEEP
+- mean rating (1–10): **6.0** · accept votes **5/7** · percentile rank_avg 68.0 (100=best) · rank in year 1.0 (1=best)
 - NAIPv2 `1.366` · NAIP-v1 `0.811` · SciJudge `3.001` · DGC-BERT `0.925`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `7.0` Accept (S/P/C 3.25/3.25/3.0) · 14B Fast `6.5` Accept
@@ -4004,8 +4363,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2009.11848` · Data, training, optimization · 2020-09-24
 
-- final **+0.24** (conf 1.00, pct 71) · impact -0.55 · KEEP
-- mean rating (1–10): **6.1** · accept votes **5/7** · percentile rank_avg 50.5 (100=best) · rank in year 8.0 (1=best)
+- final **+0.22** (conf 1.00, pct 70) · impact -0.59 · KEEP
+- mean rating (1–10): **6.1** · accept votes **5/7** · percentile rank_avg 50.3 (100=best) · rank in year 8.0 (1=best)
 - NAIPv2 `-0.141` · NAIP-v1 `0.540` · SciJudge `-1.128` · DGC-BERT `0.418`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `5.7` Accept (S/P/C 2.67/2.67/2.33) · 14B Fast `6.0` Accept
@@ -4020,8 +4379,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2009.11243` · Data, training, optimization · 2020-09-23
 
-- final **+0.51** (conf 1.00, pct 96) · impact +0.04 · KEEP
-- mean rating (1–10): **6.7** · accept votes **5/7** · percentile rank_avg 58.9 (100=best) · rank in year 5.0 (1=best)
+- final **+0.49** (conf 1.00, pct 95) · impact +0.01 · KEEP
+- mean rating (1–10): **6.7** · accept votes **5/7** · percentile rank_avg 58.8 (100=best) · rank in year 5.0 (1=best)
 - NAIPv2 `-1.413` · NAIP-v1 `0.625` · SciJudge `0.236` · DGC-BERT `0.619`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `8.0` Accept (S/P/C 3.67/3.67/3.67) · 14B Fast `5.8` Reject
@@ -4036,8 +4395,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2001.08361` · Data, training, optimization · 2020-01-23
 
-- final **+0.39** (conf 1.00, pct 87) · impact +1.87 · KEEP
-- mean rating (1–10): **5.6** · accept votes **4/7** · percentile rank_avg 66.1 (100=best) · rank in year 2.0 (1=best)
+- final **+0.37** (conf 1.00, pct 87) · impact +1.84 · KEEP
+- mean rating (1–10): **5.6** · accept votes **4/7** · percentile rank_avg 65.9 (100=best) · rank in year 2.0 (1=best)
 - NAIPv2 `0.012` · NAIP-v1 `0.787` · SciJudge `3.608` · DGC-BERT `0.896`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.0` Reject · 7B Fast `6.0` Reject (S/P/C 2.67/3.33/2.33) · 14B Fast `4.0` Accept
@@ -4052,8 +4411,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:1904.00962` · Data, training, optimization · 2019-04-01
 
-- final **+0.48** (conf 1.00, pct 94) · impact +0.58 · KEEP
-- mean rating (1–10): **5.8** · accept votes **4/7** · percentile rank_avg 62.5 (100=best) · rank in year 1.0 (1=best)
+- final **+0.47** (conf 1.00, pct 94) · impact +0.56 · KEEP
+- mean rating (1–10): **5.8** · accept votes **4/7** · percentile rank_avg 62.4 (100=best) · rank in year 1.0 (1=best)
 - NAIPv2 `0.668` · NAIP-v1 `0.668` · SciJudge `1.685` · DGC-BERT `0.913`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `7.0` Accept (S/P/C 3.25/3.0/2.75) · 14B Fast `6.0` Reject
@@ -4068,8 +4427,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:1803.03635` · Data, training, optimization · 2018-03-09
 
-- final **+0.16** (conf 1.00, pct 60) · impact +0.67 · WATCH
-- mean rating (1–10): **5.7** · accept votes **3/7** · percentile rank_avg 46.1 (100=best) · rank in year 2.0 (1=best)
+- final **+0.14** (conf 1.00, pct 61) · impact +0.64 · WATCH
+- mean rating (1–10): **5.7** · accept votes **3/7** · percentile rank_avg 45.8 (100=best) · rank in year 2.0 (1=best)
 - NAIPv2 `-1.059` · NAIP-v1 `0.703` · SciJudge `1.989` · DGC-BERT `0.135`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `5.0` Reject (S/P/C 2.5/2.5/2.5) · 14B Fast `6.5` Accept
@@ -4084,8 +4443,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `openreview:ry_WPG-A-` · Data, training, optimization · unknown
 
-- final **-0.01** (conf 1.00, pct 34) · impact +0.02 · WATCH
-- mean rating (1–10): **5.8** · accept votes **5/7** · percentile rank_avg 40.5 (100=best) · rank in year 6.0 (1=best)
+- final **-0.01** (conf 1.00, pct 31) · impact +0.02 · WATCH
+- mean rating (1–10): **5.8** · accept votes **5/7** · percentile rank_avg 40.3 (100=best) · rank in year 6.0 (1=best)
 - NAIPv2 `-1.558` · NAIP-v1 `0.431` · SciJudge `2.361` · DGC-BERT `0.465`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast `5.5` Accept (S/P/C 2.25/2.5/2.5) · 14B Fast `5.5` Accept
@@ -4100,8 +4459,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:1708.07120` · Data, training, optimization · 2017-08-23
 
-- final **-0.01** (conf 1.00, pct 35) · impact -0.35 · WATCH
-- mean rating (1–10): **4.7** · accept votes **3/7** · percentile rank_avg 38.0 (100=best) · rank in year 6.0 (1=best)
+- final **-0.02** (conf 1.00, pct 31) · impact -0.50 · WATCH
+- mean rating (1–10): **4.7** · accept votes **3/7** · percentile rank_avg 36.9 (100=best) · rank in year 6.0 (1=best)
 - NAIPv2 `-0.206` · NAIP-v1 `0.528` · SciJudge `0.748` · DGC-BERT `0.854`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `5.8` Reject (S/P/C 2.5/2.5/2.5) · 14B Fast `6.7` Accept
@@ -4116,8 +4475,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:1708.02072` · Data, training, optimization · 2017-08-07
 
-- final **-0.49** (conf 1.00, pct 6) · impact -0.43 · DROP
-- mean rating (1–10): **4.0** · accept votes **2/7** · percentile rank_avg 22.9 (100=best) · rank in year 7.0 (1=best)
+- final **-0.50** (conf 1.00, pct 5) · impact -0.62 · DROP
+- mean rating (1–10): **4.0** · accept votes **2/7** · percentile rank_avg 21.6 (100=best) · rank in year 7.0 (1=best)
 - NAIPv2 `-2.916` · NAIP-v1 `0.558` · SciJudge `-0.195` · DGC-BERT `0.521`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `4.8` Reject (S/P/C 2.25/2.75/2.25) · 14B Fast `3.5` Reject
@@ -4132,8 +4491,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `doi:10.1073/pnas.1611835114` · Data, training, optimization · 2017-03-14
 
-- final **+0.03** (conf 1.00, pct 41) · impact -0.13 · WATCH
-- mean rating (1–10): **5.8** · accept votes **4/7** · percentile rank_avg 39.3 (100=best) · rank in year 5.0 (1=best)
+- final **+0.01** (conf 1.00, pct 34) · impact -0.25 · WATCH
+- mean rating (1–10): **5.8** · accept votes **4/7** · percentile rank_avg 38.4 (100=best) · rank in year 5.0 (1=best)
 - NAIPv2 `-4.164` · NAIP-v1 `0.542` · SciJudge `1.496` · DGC-BERT `0.360`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.0` Accept (S/P/C 3.0/2.75/2.75) · 14B Fast `6.0` Accept
@@ -4148,8 +4507,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:1506.01186` · Data, training, optimization · 2015-06-03
 
-- final **-0.40** (conf 1.00, pct 9) · impact -0.25 · DROP
-- mean rating (1–10): **4.4** · accept votes **1/7** · percentile rank_avg 20.3 (100=best) · rank in year 4.0 (1=best)
+- final **-0.41** (conf 1.00, pct 7) · impact -0.27 · DROP
+- mean rating (1–10): **4.4** · accept votes **1/7** · percentile rank_avg 20.2 (100=best) · rank in year 4.0 (1=best)
 - NAIPv2 `-3.008` · NAIP-v1 `0.664` · SciJudge `-1.382` · DGC-BERT `0.304`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `2.5` Reject · 7B Fast `5.2` Reject (S/P/C 2.5/2.75/2.25) · 14B Fast `4.8` Reject
@@ -4164,8 +4523,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2606.02572` · Self-supervised learning and vision · 2026-06-01
 
-- final **+0.34** (conf 1.00, pct 82) · impact -0.22 · KEEP
-- mean rating (1–10): **6.5** · accept votes **6/7** · percentile rank_avg 62.6 (100=best) · rank in year 24.0 (1=best)
+- final **+0.34** (conf 1.00, pct 84) · impact -0.22 · KEEP
+- mean rating (1–10): **6.5** · accept votes **6/7** · percentile rank_avg 62.5 (100=best) · rank in year 24.0 (1=best)
 - NAIPv2 `1.062` · NAIP-v1 `0.622` · SciJudge `-2.289` · DGC-BERT `0.537`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `8.0` Accept (S/P/C 3.25/3.25/3.25) · 14B Fast `6.5` Accept
@@ -4180,8 +4539,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2605.26379` · Self-supervised learning and vision · 2026-05-25
 
-- final **+0.62** (conf 1.00, pct 99) · impact -0.66 · KEEP
-- mean rating (1–10): **6.7** · accept votes **6/7** · percentile rank_avg 68.3 (100=best) · rank in year 11.0 (1=best)
+- final **+0.62** (conf 1.00, pct 99) · impact -0.67 · KEEP
+- mean rating (1–10): **6.7** · accept votes **6/7** · percentile rank_avg 68.2 (100=best) · rank in year 11.0 (1=best)
 - NAIPv2 `0.844` · NAIP-v1 `0.475` · SciJudge `-1.515` · DGC-BERT `0.929`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `6.5` Accept (S/P/C 3.0/3.0/3.0) · 14B Fast `8.0` Accept
@@ -4196,8 +4555,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2604.09168` · Self-supervised learning and vision · 2026-04-10
 
-- final **+0.05** (conf 1.00, pct 44) · impact +0.01 · WATCH
-- mean rating (1–10): **6.0** · accept votes **4/7** · percentile rank_avg 53.2 (100=best) · rank in year 47.0 (1=best)
+- final **+0.06** (conf 1.00, pct 41) · impact +0.02 · WATCH
+- mean rating (1–10): **6.0** · accept votes **4/7** · percentile rank_avg 53.1 (100=best) · rank in year 47.0 (1=best)
 - NAIPv2 `-1.056` · NAIP-v1 `0.587` · SciJudge `0.389` · DGC-BERT `0.404`
 - CycleReviewer 8B `4.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `6.7` Accept (S/P/C 3.0/3.0/2.67) · 14B Fast `6.5` Accept
@@ -4212,8 +4571,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2511.08544` · Self-supervised learning and vision · 2025-11-11
 
-- final **+0.33** (conf 1.00, pct 81) · impact +0.57 · KEEP
-- mean rating (1–10): **6.0** · accept votes **6/7** · percentile rank_avg 61.7 (100=best) · rank in year 26.0 (1=best)
+- final **+0.33** (conf 1.00, pct 83) · impact +0.58 · KEEP
+- mean rating (1–10): **6.0** · accept votes **6/7** · percentile rank_avg 61.6 (100=best) · rank in year 26.0 (1=best)
 - NAIPv2 `1.300` · NAIP-v1 `0.690` · SciJudge `0.329` · DGC-BERT `0.684`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `5.8` Accept (S/P/C 3.0/2.75/2.75) · 14B Fast `7.0` Accept
@@ -4228,8 +4587,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2501.05441` · Self-supervised learning and vision · 2025-01-09
 
-- final **+0.03** (conf 1.00, pct 41) · impact +1.17 · WATCH
-- mean rating (1–10): **5.8** · accept votes **5/7** · percentile rank_avg 58.5 (100=best) · rank in year 39.0 (1=best)
+- final **+0.03** (conf 1.00, pct 37) · impact +1.18 · WATCH
+- mean rating (1–10): **5.8** · accept votes **5/7** · percentile rank_avg 58.3 (100=best) · rank in year 39.0 (1=best)
 - NAIPv2 `0.142` · NAIP-v1 `0.849` · SciJudge `-0.512` · DGC-BERT `0.967`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.2` Reject (S/P/C 3.0/3.0/2.25) · 14B Fast `6.2` Accept
@@ -4244,8 +4603,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2310.04378` · Self-supervised learning and vision · 2023-10-06
 
-- final **+0.19** (conf 1.00, pct 64) · impact +1.46 · WATCH
-- mean rating (1–10): **5.7** · accept votes **3/7** · percentile rank_avg 56.2 (100=best) · rank in year 15.0 (1=best)
+- final **+0.20** (conf 1.00, pct 67) · impact +1.47 · WATCH
+- mean rating (1–10): **5.7** · accept votes **3/7** · percentile rank_avg 55.9 (100=best) · rank in year 14.0 (1=best)
 - NAIPv2 `0.217` · NAIP-v1 `0.715` · SciJudge `3.875` · DGC-BERT `0.846`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `5.2` Reject (S/P/C 2.75/2.75/2.75) · 14B Fast `6.5` Accept
@@ -4260,8 +4619,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2309.15807` · Self-supervised learning and vision · 2023-09-27
 
-- final **+0.19** (conf 1.00, pct 63) · impact -0.21 · WATCH
-- mean rating (1–10): **6.2** · accept votes **4/7** · percentile rank_avg 53.7 (100=best) · rank in year 20.0 (1=best)
+- final **+0.19** (conf 1.00, pct 66) · impact -0.18 · WATCH
+- mean rating (1–10): **6.2** · accept votes **4/7** · percentile rank_avg 53.6 (100=best) · rank in year 17.0 (1=best)
 - NAIPv2 `-0.754` · NAIP-v1 `0.502` · SciJudge `1.167` · DGC-BERT `0.109`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.5` Reject (S/P/C 3.0/3.0/2.5) · 14B Fast `6.7` Accept
@@ -4276,8 +4635,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2304.12210` · Self-supervised learning and vision · 2023-04-24
 
-- final **-0.57** (conf 1.00, pct 4) · impact +0.07 · DROP
-- mean rating (1–10): **4.9** · accept votes **1/7** · percentile rank_avg 27.3 (100=best) · rank in year 46.0 (1=best)
+- final **-0.56** (conf 1.00, pct 4) · impact +0.10 · DROP
+- mean rating (1–10): **4.9** · accept votes **1/7** · percentile rank_avg 27.3 (100=best) · rank in year 45.0 (1=best)
 - NAIPv2 `-2.777` · NAIP-v1 `0.688` · SciJudge `-0.908` · DGC-BERT `0.047`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.0` Reject · 7B Fast `5.5` Reject (S/P/C 3.0/3.0/2.25) · 14B Fast `3.0` Reject
@@ -4292,8 +4651,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2304.09355` · Self-supervised learning and vision · 2023-04-19
 
-- final **-0.41** (conf 0.91, pct 9) · impact -0.23 · DROP · salvage dr7bf
-- mean rating (1–10): **4.5** · accept votes **1/6** · percentile rank_avg 24.1 (100=best) · rank in year 47.0 (1=best)
+- final **-0.39** (conf 0.91, pct 8) · impact -0.20 · DROP · salvage dr7bf
+- mean rating (1–10): **4.5** · accept votes **1/6** · percentile rank_avg 24.1 (100=best) · rank in year 46.0 (1=best)
 - NAIPv2 `-2.838` · NAIP-v1 `0.636` · SciJudge `-2.287` · DGC-BERT `0.108`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast ``  (S/P/C 2.25/2.5/2.5) · 14B Fast `4.0` Reject
@@ -4308,8 +4667,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2304.07193` · Self-supervised learning and vision · 2023-04-14
 
-- final **+0.20** (conf 1.00, pct 65) · impact +2.01 · WATCH
-- mean rating (1–10): **5.7** · accept votes **4/7** · percentile rank_avg 54.1 (100=best) · rank in year 17.0 (1=best)
+- final **+0.20** (conf 1.00, pct 67) · impact +2.03 · KEEP
+- mean rating (1–10): **5.7** · accept votes **4/7** · percentile rank_avg 53.9 (100=best) · rank in year 16.0 (1=best)
 - NAIPv2 `-2.252` · NAIP-v1 `0.729` · SciJudge `4.260` · DGC-BERT `0.380`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/2.5) · 14B Fast `6.0` Accept
@@ -4324,8 +4683,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2304.05977` · Self-supervised learning and vision · 2023-04-12
 
-- final **+0.43** (conf 1.00, pct 91) · impact +1.85 · KEEP
-- mean rating (1–10): **6.0** · accept votes **5/7** · percentile rank_avg 64.9 (100=best) · rank in year 6.0 (1=best)
+- final **+0.43** (conf 1.00, pct 92) · impact +1.86 · KEEP
+- mean rating (1–10): **6.0** · accept votes **5/7** · percentile rank_avg 64.7 (100=best) · rank in year 6.0 (1=best)
 - NAIPv2 `1.893` · NAIP-v1 `0.827` · SciJudge `3.476` · DGC-BERT `0.405`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept (S/P/C 2.75/3.0/2.75) · 14B Fast `6.0` Accept
@@ -4335,29 +4694,13 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
   - [CR-8B](reviews/cyclereviewer-8b/arxiv_2304.05977.md#weaknesses): The authors only compared their method with a few existing methods, and it would be better if they could compare with more existing methods in the field. - The authors only tested their method on a small set of prompts, and it would be better if they could test their method on a larger set of prompts.…
   - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2304.05977.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant further consideration. Firstly, the evaluation of ImageReward, as presented in Section 4.1, is not as robust as it could be.…
 
-<a id="arxiv-2302.10174"></a>
-### Towards Universal Fake Image Detectors that Generalize Across Generative Models
-
-`arxiv:2302.10174` · Self-supervised learning and vision · 2023-02-20
-
-- final **+0.04** (conf 1.00, pct 41) · impact +1.05 · WATCH
-- mean rating (1–10): **6.4** · accept votes **4/7** · percentile rank_avg 56.2 (100=best) · rank in year 14.0 (1=best)
-- NAIPv2 `-1.620` · NAIP-v1 `0.738` · SciJudge `1.942` · DGC-BERT `0.277`
-- CycleReviewer 8B `5.0` Reject · 70B `` 
-- DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.0` Accept (S/P/C 2.67/3.0/2.67) · 14B Fast `6.0` Accept
-- OpenReviewer `8.0` Accept (S/P/C 3.0/3.0/3.0) · SEA-E `7.0` Accept
-- Telegram: [dl_stories/730](https://t.me/dl_stories/730)
-- Weaknesses:
-  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2302.10174.md#weaknesses): 1. The paper lacks novelty. The authors use the pre-trained CLIP model to extract features and then use the nearest neighbor and linear probing methods to perform the classification task. These methods are commonly used in the field of image classification and have been widely studied.…
-  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2302.10174.md#weaknesses): While this paper presents a compelling approach to fake image detection, there are several weaknesses that warrant careful consideration. First, the paper lacks a detailed analysis of the computational cost associated with the proposed method, particularly the nearest neighbor approach.…
-
 <a id="arxiv-2301.08243"></a>
 ### Self-Supervised Learning from Images with a Joint-Embedding Predictive Architecture
 
 `arxiv:2301.08243` · Self-supervised learning and vision · 2023-01-19
 
-- final **+0.18** (conf 1.00, pct 63) · impact +0.18 · WATCH
-- mean rating (1–10): **6.0** · accept votes **4/7** · percentile rank_avg 50.8 (100=best) · rank in year 25.0 (1=best)
+- final **+0.19** (conf 1.00, pct 66) · impact +0.22 · WATCH
+- mean rating (1–10): **6.0** · accept votes **4/7** · percentile rank_avg 50.8 (100=best) · rank in year 23.0 (1=best)
 - NAIPv2 `-1.402` · NAIP-v1 `0.562` · SciJudge `1.804` · DGC-BERT `0.423`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Reject · 7B Fast `7.5` Accept (S/P/C 3.0/3.25/3.0) · 14B Fast `6.0` Accept
@@ -4367,29 +4710,13 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
   - [CR-8B](reviews/cyclereviewer-8b/arxiv_2301.08243.md#weaknesses): The paper lacks a strong theoretical foundation for the proposed method. While the authors provide some intuition for why the method works, there is no formal analysis or proof of its correctness or optimality. This makes it difficult to understand the underlying principles of the method and its limitations. - The paper does not provide a clear comparison to existing methods.…
   - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2301.08243.md#weaknesses): While I find the paper to be generally strong, there are several weaknesses that I believe need to be addressed. First, while the paper claims that I-JEPA learns semantic representations that do not require extensive fine-tuning on downstream tasks, the empirical evidence for this claim is not as robust as it could be.…
 
-<a id="arxiv-2212.11565"></a>
-### Tune-A-Video: One-Shot Tuning of Image Diffusion Models for Text-to-Video Generation
-
-`arxiv:2212.11565` · Self-supervised learning and vision · 2022-12-22
-
-- final **-0.25** (conf 1.00, pct 17) · impact +0.85 · WATCH
-- mean rating (1–10): **5.0** · accept votes **3/7** · percentile rank_avg 41.3 (100=best) · rank in year 15.0 (1=best)
-- NAIPv2 `-2.020` · NAIP-v1 `0.669` · SciJudge `2.860` · DGC-BERT `0.743`
-- CycleReviewer 8B `4.5` Reject · 70B `` 
-- DeepReviewer 7B Std `6.0` Accept · 7B Fast `4.0` Reject (S/P/C 2.5/2.75/2.0) · 14B Fast `5.8` Reject
-- OpenReviewer `5.0` Reject (S/P/C 2.0/3.0/2.0) · SEA-E `6.0` Accept
-- Telegram: [monkeyinlaw/1044](https://t.me/monkeyinlaw/1044), [AI_DeepLearning/831](https://t.me/AI_DeepLearning/831), [derplearning/2267](https://t.me/derplearning/2267)
-- Weaknesses:
-  - [CR-8B](reviews/cyclereviewer-8b/arxiv_2212.11565.md#weaknesses): 1. The proposed method is based on the existing T2I model, and the proposed method is not very novel. 2. The proposed method is not very effective. For example, the video generation results in Fig. 7 are not good enough. 3. The proposed method is not very efficient. For example, the training time is 10 minutes for a single video.
-  - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2212.11565.md#weaknesses): While the paper presents a compelling approach to text-to-video generation, I have identified several weaknesses that warrant further discussion. Firstly, the paper's reliance on DDIM inversion for structure guidance, while effective, lacks a thorough analysis of its limitations.…
-
 <a id="arxiv-2208.10442"></a>
 ### Image as a Foreign Language: BEiT Pretraining for All Vision and Vision-Language Tasks
 
 `arxiv:2208.10442` · Self-supervised learning and vision · 2022-08-22
 
-- final **+0.24** (conf 1.00, pct 70) · impact +2.16 · KEEP
-- mean rating (1–10): **5.5** · accept votes **5/7** · percentile rank_avg 54.2 (100=best) · rank in year 8.0 (1=best)
+- final **+0.24** (conf 1.00, pct 72) · impact +2.15 · KEEP
+- mean rating (1–10): **5.5** · accept votes **5/7** · percentile rank_avg 54.0 (100=best) · rank in year 8.0 (1=best)
 - NAIPv2 `-0.626` · NAIP-v1 `0.862` · SciJudge `3.291` · DGC-BERT `0.574`
 - CycleReviewer 8B `4.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/3.0) · 14B Fast `6.5` Accept
@@ -4404,8 +4731,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `openreview:BZ5a1r-kVsf` · Self-supervised learning and vision · unknown
 
-- final **-0.61** (conf 0.91, pct 3) · impact +0.06 · DROP · salvage dr7bf
-- mean rating (1–10): **4.4** · accept votes **2/6** · percentile rank_avg 22.9 (100=best) · rank in year 11.0 (1=best)
+- final **-0.60** (conf 0.91, pct 3) · impact +0.06 · DROP · salvage dr7bf
+- mean rating (1–10): **4.4** · accept votes **2/6** · percentile rank_avg 22.8 (100=best) · rank in year 11.0 (1=best)
 - NAIPv2 `-4.348` · NAIP-v1 `0.523` · SciJudge `1.364` · DGC-BERT `0.006`
 - CycleReviewer 8B `1.0` Reject · 70B `` 
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast ``  (S/P/C 2.75/2.5/2.5) · 14B Fast `3.5` Reject
@@ -4420,8 +4747,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2111.07832` · Self-supervised learning and vision · 2021-11-15
 
-- final **+0.14** (conf 1.00, pct 58) · impact +1.33 · WATCH
-- mean rating (1–10): **6.2** · accept votes **4/7** · percentile rank_avg 57.7 (100=best) · rank in year 3.0 (1=best)
+- final **+0.14** (conf 1.00, pct 60) · impact +1.34 · WATCH
+- mean rating (1–10): **6.2** · accept votes **4/7** · percentile rank_avg 57.5 (100=best) · rank in year 3.0 (1=best)
 - NAIPv2 `-1.606` · NAIP-v1 `0.771` · SciJudge `3.147` · DGC-BERT `0.353`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `7.0` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `6.5` Accept
@@ -4436,8 +4763,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2105.04906` · Self-supervised learning and vision · 2021-05-11
 
-- final **-0.08** (conf 1.00, pct 28) · impact +0.24 · WATCH
-- mean rating (1–10): **5.2** · accept votes **3/7** · percentile rank_avg 41.2 (100=best) · rank in year 6.0 (1=best)
+- final **-0.07** (conf 1.00, pct 25) · impact +0.25 · WATCH
+- mean rating (1–10): **5.2** · accept votes **3/7** · percentile rank_avg 41.1 (100=best) · rank in year 6.0 (1=best)
 - NAIPv2 `-2.426` · NAIP-v1 `0.488` · SciJudge `3.352` · DGC-BERT `0.930`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `4.0` Reject · 7B Fast `5.8` Reject (S/P/C 2.75/3.0/2.5) · 14B Fast `6.5` Accept
@@ -4452,8 +4779,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2104.14294` · Self-supervised learning and vision · 2021-04-29
 
-- final **+0.48** (conf 1.00, pct 94) · impact +2.06 · KEEP
-- mean rating (1–10): **6.5** · accept votes **5/7** · percentile rank_avg 72.6 (100=best) · rank in year 1.0 (1=best)
+- final **+0.47** (conf 1.00, pct 95) · impact +2.07 · KEEP
+- mean rating (1–10): **6.5** · accept votes **5/7** · percentile rank_avg 72.5 (100=best) · rank in year 1.0 (1=best)
 - NAIPv2 `-1.077` · NAIP-v1 `0.827` · SciJudge `3.543` · DGC-BERT `0.159`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.7` Accept (S/P/C 3.0/3.0/2.33) · 14B Fast `7.3` Accept
@@ -4468,8 +4795,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2006.09882` · Self-supervised learning and vision · 2020-06-17
 
-- final **+0.43** (conf 1.00, pct 91) · impact +1.11 · KEEP
-- mean rating (1–10): **6.3** · accept votes **4/7** · percentile rank_avg 61.5 (100=best) · rank in year 4.0 (1=best)
+- final **+0.41** (conf 1.00, pct 90) · impact +1.09 · KEEP
+- mean rating (1–10): **6.3** · accept votes **4/7** · percentile rank_avg 61.4 (100=best) · rank in year 4.0 (1=best)
 - NAIPv2 `-1.362` · NAIP-v1 `0.729` · SciJudge `2.525` · DGC-BERT `0.839`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.0` Reject · 7B Fast `7.5` Accept (S/P/C 3.25/3.25/3.25) · 14B Fast `7.0` Accept
@@ -4484,8 +4811,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2606.18543` · Retrieval, embeddings, benchmarks · 2026-06-16
 
-- final **+0.17** (conf 1.00, pct 62) · impact +1.15 · WATCH
-- mean rating (1–10): **6.4** · accept votes **5/7** · percentile rank_avg 65.4 (100=best) · rank in year 19.0 (1=best)
+- final **+0.17** (conf 1.00, pct 64) · impact +1.16 · WATCH
+- mean rating (1–10): **6.4** · accept votes **5/7** · percentile rank_avg 65.3 (100=best) · rank in year 19.0 (1=best)
 - NAIPv2 `-0.407` · NAIP-v1 `0.710` · SciJudge `2.262` · DGC-BERT `0.191`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `6.5` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `7.5` Accept
@@ -4500,8 +4827,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2410.07095` · Retrieval, embeddings, benchmarks · 2024-10-09
 
-- final **+0.31** (conf 1.00, pct 80) · impact +0.92 · KEEP
-- mean rating (1–10): **6.0** · accept votes **4/7** · percentile rank_avg 58.5 (100=best) · rank in year 9.0 (1=best)
+- final **+0.32** (conf 1.00, pct 81) · impact +0.93 · KEEP
+- mean rating (1–10): **6.0** · accept votes **4/7** · percentile rank_avg 58.3 (100=best) · rank in year 10.0 (1=best)
 - NAIPv2 `0.277` · NAIP-v1 `0.631` · SciJudge `2.588` · DGC-BERT `0.394`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Accept (S/P/C 2.5/3.0/2.75) · 14B Fast `6.2` Reject
@@ -4516,8 +4843,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2405.08007` · Retrieval, embeddings, benchmarks · 2024-05-09
 
-- final **-0.28** (conf 1.00, pct 15) · impact +1.95 · WATCH
-- mean rating (1–10): **4.6** · accept votes **1/7** · percentile rank_avg 37.3 (100=best) · rank in year 37.0 (1=best)
+- final **-0.27** (conf 1.00, pct 14) · impact +1.96 · WATCH
+- mean rating (1–10): **4.6** · accept votes **1/7** · percentile rank_avg 37.1 (100=best) · rank in year 37.0 (1=best)
 - NAIPv2 `-2.674` · NAIP-v1 `0.806` · SciJudge `3.333` · DGC-BERT `0.083`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `3.8` Reject · 7B Fast `4.7` Reject (S/P/C 2.67/3.0/2.33) · 14B Fast `7.5` Accept
@@ -4527,13 +4854,27 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
   - [CR-8B](reviews/cyclereviewer-8b/arxiv_2405.08007.md#weaknesses): The paper is not written in a way that is easy to understand. The authors seem to be writing for a very specific audience, and the paper is not well-suited for a broader audience.
   - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2405.08007.md#weaknesses): While this paper presents a valuable contribution to the field, several weaknesses warrant careful consideration. First, the paper's core contribution, while empirically sound, may be considered somewhat incremental.…
 
+<a id="arxiv-2403.07714"></a>
+### StableToolBench: Towards Stable Large-Scale Benchmarking on Tool Learning of Large Language Models
+
+`arxiv:2403.07714` · Retrieval, embeddings, benchmarks · 2024-03-12
+
+- final **n/a** (conf 0.00, pct 47) · impact n/a · WATCH
+- mean rating (1–10): **n/a** · accept votes **0/0** · percentile rank_avg  (100=best) · rank in year  (1=best)
+- NAIPv2 `` · NAIP-v1 `` · SciJudge `` · DGC-BERT ``
+- CycleReviewer 8B ``  · 70B `` 
+- DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `` 
+- OpenReviewer ``  (S/P/C None/None/None) · SEA-E `` 
+- Telegram: —
+- Weaknesses: —
+
 <a id="arxiv-2402.16822"></a>
 ### Rainbow Teaming: Open-Ended Generation of Diverse Adversarial Prompts
 
 `arxiv:2402.16822` · Retrieval, embeddings, benchmarks · 2024-02-26
 
-- final **+0.38** (conf 1.00, pct 86) · impact +1.36 · KEEP
-- mean rating (1–10): **6.6** · accept votes **6/7** · percentile rank_avg 71.9 (100=best) · rank in year 1.0 (1=best)
+- final **+0.38** (conf 1.00, pct 88) · impact +1.38 · KEEP
+- mean rating (1–10): **6.6** · accept votes **6/7** · percentile rank_avg 71.7 (100=best) · rank in year 1.0 (1=best)
 - NAIPv2 `-1.450` · NAIP-v1 `0.661` · SciJudge `3.444` · DGC-BERT `0.923`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `6.7` Accept (S/P/C 2.67/3.33/2.67) · 14B Fast `7.5` Accept
@@ -4548,8 +4889,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2402.12483` · Retrieval, embeddings, benchmarks · 2024-02-19
 
-- final **-0.04** (conf 1.00, pct 33) · impact +0.90 · WATCH
-- mean rating (1–10): **6.0** · accept votes **4/7** · percentile rank_avg 51.3 (100=best) · rank in year 20.0 (1=best)
+- final **-0.04** (conf 1.00, pct 30) · impact +0.91 · WATCH
+- mean rating (1–10): **6.0** · accept votes **4/7** · percentile rank_avg 51.1 (100=best) · rank in year 20.0 (1=best)
 - NAIPv2 `-1.801` · NAIP-v1 `0.656` · SciJudge `1.994` · DGC-BERT `0.747`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `6.3` Accept (S/P/C 2.67/3.0/2.67) · 14B Fast `6.0` Reject
@@ -4564,8 +4905,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2311.16452` · Retrieval, embeddings, benchmarks · 2023-11-28
 
-- final **+0.05** (conf 1.00, pct 46) · impact +0.62 · WATCH
-- mean rating (1–10): **5.9** · accept votes **5/7** · percentile rank_avg 50.8 (100=best) · rank in year 24.0 (1=best)
+- final **+0.06** (conf 1.00, pct 42) · impact +0.63 · WATCH
+- mean rating (1–10): **5.9** · accept votes **5/7** · percentile rank_avg 50.6 (100=best) · rank in year 24.0 (1=best)
 - NAIPv2 `-2.244` · NAIP-v1 `0.628` · SciJudge `2.399` · DGC-BERT `0.706`
 - CycleReviewer 8B `5.5` Accept · 70B `` 
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `5.3` Reject (S/P/C 2.67/3.0/2.33) · 14B Fast `6.8` Accept
@@ -4580,8 +4921,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2309.16797` · Retrieval, embeddings, benchmarks · 2023-09-28
 
-- final **-0.20** (conf 1.00, pct 20) · impact +0.57 · WATCH
-- mean rating (1–10): **4.9** · accept votes **4/7** · percentile rank_avg 41.6 (100=best) · rank in year 35.0 (1=best)
+- final **-0.19** (conf 1.00, pct 19) · impact +0.61 · WATCH
+- mean rating (1–10): **4.9** · accept votes **4/7** · percentile rank_avg 41.5 (100=best) · rank in year 34.0 (1=best)
 - NAIPv2 `-4.238` · NAIP-v1 `0.704` · SciJudge `0.737` · DGC-BERT `0.860`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/3.0) · 14B Fast `6.7` Accept
@@ -4596,8 +4937,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `acl:2023.acl-demo.51` · Retrieval, embeddings, benchmarks · unknown
 
-- final **-0.28** (conf 0.91, pct 14) · impact -0.97 · DROP · partial fulltext
-- mean rating (1–10): **5.2** · accept votes **2/7** · percentile rank_avg 24.9 (100=best) · rank in year 10.0 (1=best)
+- final **-0.28** (conf 0.91, pct 13) · impact -0.99 · DROP · partial fulltext
+- mean rating (1–10): **5.2** · accept votes **2/7** · percentile rank_avg 24.7 (100=best) · rank in year 10.0 (1=best)
 - NAIPv2 `-3.318` · NAIP-v1 `0.375` · SciJudge `-1.113` · DGC-BERT `0.054`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `4.0` Reject · 7B Fast `5.0` Reject (S/P/C 2.75/3.0/2.5) · 14B Fast `3.7` Reject
@@ -4612,8 +4953,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2304.08467` · Retrieval, embeddings, benchmarks · 2023-04-17
 
-- final **-0.08** (conf 1.00, pct 27) · impact +0.12 · WATCH
-- mean rating (1–10): **5.3** · accept votes **4/7** · percentile rank_avg 43.7 (100=best) · rank in year 33.0 (1=best)
+- final **-0.07** (conf 1.00, pct 26) · impact +0.16 · WATCH
+- mean rating (1–10): **5.3** · accept votes **4/7** · percentile rank_avg 43.6 (100=best) · rank in year 32.0 (1=best)
 - NAIPv2 `-1.269` · NAIP-v1 `0.576` · SciJudge `1.529` · DGC-BERT `0.801`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `4.8` Reject (S/P/C 2.5/2.75/2.5) · 14B Fast `6.0` Accept
@@ -4628,7 +4969,7 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2212.14024` · Retrieval, embeddings, benchmarks · 2022-12-28
 
-- final **+0.30** (conf 1.00, pct 78) · impact +0.68 · KEEP
+- final **+0.29** (conf 1.00, pct 79) · impact +0.72 · KEEP
 - mean rating (1–10): **6.1** · accept votes **6/7** · percentile rank_avg 59.5 (100=best) · rank in year 6.0 (1=best)
 - NAIPv2 `0.195` · NAIP-v1 `0.791` · SciJudge `-1.113` · DGC-BERT `0.669`
 - CycleReviewer 8B `5.8` Accept · 70B `` 
@@ -4644,8 +4985,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2212.09741` · Retrieval, embeddings, benchmarks · 2022-12-19
 
-- final **+0.53** (conf 1.00, pct 97) · impact +1.01 · KEEP
-- mean rating (1–10): **6.1** · accept votes **6/7** · percentile rank_avg 70.3 (100=best) · rank in year 1.0 (1=best)
+- final **+0.52** (conf 1.00, pct 97) · impact +1.12 · KEEP
+- mean rating (1–10): **6.1** · accept votes **6/7** · percentile rank_avg 70.6 (100=best) · rank in year 1.0 (1=best)
 - NAIPv2 `0.333` · NAIP-v1 `0.723` · SciJudge `2.739` · DGC-BERT `0.877`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.5` Accept (S/P/C 3.0/3.25/3.0) · 14B Fast `7.0` Accept
@@ -4660,8 +5001,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2206.04615` · Retrieval, embeddings, benchmarks · 2022-06-09
 
-- final **+0.50** (conf 0.83, pct 95) · impact +1.82 · KEEP
-- mean rating (1–10): **6.4** · accept votes **3/6** · percentile rank_avg 66.4 (100=best) · rank in year 2.0 (1=best)
+- final **+0.49** (conf 0.83, pct 95) · impact +1.81 · KEEP
+- mean rating (1–10): **6.4** · accept votes **3/6** · percentile rank_avg 66.2 (100=best) · rank in year 3.0 (1=best)
 - NAIPv2 `-0.651` · NAIP-v1 `0.794` · SciJudge `3.656` · DGC-BERT `0.391`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `7.5` Accept
@@ -4676,8 +5017,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2205.13147` · Retrieval, embeddings, benchmarks · 2022-05-26
 
-- final **+0.59** (conf 1.00, pct 98) · impact +0.08 · KEEP
-- mean rating (1–10): **6.1** · accept votes **6/7** · percentile rank_avg 66.2 (100=best) · rank in year 3.0 (1=best)
+- final **+0.59** (conf 1.00, pct 98) · impact +0.13 · KEEP
+- mean rating (1–10): **6.1** · accept votes **6/7** · percentile rank_avg 66.4 (100=best) · rank in year 2.0 (1=best)
 - NAIPv2 `2.609` · NAIP-v1 `0.626` · SciJudge `0.790` · DGC-BERT `0.871`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `7.0` Accept (S/P/C 3.25/3.0/3.0) · 14B Fast `7.0` Accept
@@ -4692,8 +5033,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `acl:2022.emnlp-main.340` · Retrieval, embeddings, benchmarks · unknown
 
-- final **+0.10** (conf 0.83, pct 51) · impact +1.00 · WATCH · partial fulltext · salvage dr7bf
-- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 49.3 (100=best) · rank in year 4.0 (1=best)
+- final **+0.10** (conf 0.82, pct 55) · impact +1.00 · WATCH · partial fulltext · salvage dr7bf
+- mean rating (1–10): **6.0** · accept votes **4/6** · percentile rank_avg 49.2 (100=best) · rank in year 4.0 (1=best)
 - NAIPv2 `-2.061` · NAIP-v1 `0.551` · SciJudge `3.138` · DGC-BERT `0.241`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast ``  (S/P/C 2.75/2.75/2.75) · 14B Fast `6.0` Accept
@@ -4708,8 +5049,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2112.07899` · Retrieval, embeddings, benchmarks · 2021-12-15
 
-- final **+0.30** (conf 1.00, pct 78) · impact +0.23 · KEEP
-- mean rating (1–10): **6.3** · accept votes **4/7** · percentile rank_avg 59.0 (100=best) · rank in year 2.0 (1=best)
+- final **+0.30** (conf 1.00, pct 80) · impact +0.24 · KEEP
+- mean rating (1–10): **6.3** · accept votes **4/7** · percentile rank_avg 58.9 (100=best) · rank in year 2.0 (1=best)
 - NAIPv2 `-0.023` · NAIP-v1 `0.572` · SciJudge `2.174` · DGC-BERT `0.059`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `6.2` Reject (S/P/C 2.75/3.0/2.75) · 14B Fast `6.5` Accept
@@ -4724,8 +5065,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `acl:2022.acl-long.360` · Retrieval, embeddings, benchmarks · unknown
 
-- final **-0.08** (conf 0.91, pct 28) · impact +0.69 · WATCH · partial fulltext
-- mean rating (1–10): **5.7** · accept votes **3/7** · percentile rank_avg 38.5 (100=best) · rank in year 7.0 (1=best)
+- final **-0.07** (conf 0.91, pct 26) · impact +0.70 · WATCH · partial fulltext
+- mean rating (1–10): **5.7** · accept votes **3/7** · percentile rank_avg 38.3 (100=best) · rank in year 7.0 (1=best)
 - NAIPv2 `-2.773` · NAIP-v1 `0.625` · SciJudge `1.991` · DGC-BERT `0.079`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `3.8` Reject · 7B Fast `5.7` Reject (S/P/C 2.67/3.0/2.67) · 14B Fast `6.0` Accept
@@ -4740,8 +5081,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2101.02235` · Retrieval, embeddings, benchmarks · 2021-01-06
 
-- final **+0.07** (conf 1.00, pct 48) · impact +0.16 · WATCH
-- mean rating (1–10): **6.0** · accept votes **5/7** · percentile rank_avg 51.1 (100=best) · rank in year 4.0 (1=best)
+- final **+0.06** (conf 1.00, pct 42) · impact +0.17 · WATCH
+- mean rating (1–10): **6.0** · accept votes **5/7** · percentile rank_avg 50.9 (100=best) · rank in year 4.0 (1=best)
 - NAIPv2 `-2.572` · NAIP-v1 `0.593` · SciJudge `1.830` · DGC-BERT `0.469`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `4.8` Reject (S/P/C 2.5/2.5/2.25) · 14B Fast `6.0` Accept
@@ -4751,13 +5092,27 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
   - [CR-8B](reviews/cyclereviewer-8b/arxiv_2101.02235.md#weaknesses): The authors should provide more details about the baselines and their performance. In particular, it would be helpful to know how the baselines are trained and evaluated, and what types of reasoning they are able to perform.
   - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_2101.02235.md#weaknesses): While the paper presents a valuable contribution, several weaknesses warrant careful consideration. First, the paper's definition of 'implicit' questions, while providing examples, lacks a formal definition and clear, objective criteria.…
 
+<a id="arxiv-2609.14858"></a>
+### Dream-RSI: Recursive Self-Improvement through Evolving Worlds
+
+`arxiv:2609.14858` · Agents, open-endedness, AGI · 2026-09-14
+
+- final **n/a** (conf 0.00, pct 47) · impact n/a · WATCH
+- mean rating (1–10): **n/a** · accept votes **0/0** · percentile rank_avg  (100=best) · rank in year  (1=best)
+- NAIPv2 `` · NAIP-v1 `` · SciJudge `` · DGC-BERT ``
+- CycleReviewer 8B ``  · 70B `` 
+- DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `` 
+- OpenReviewer ``  (S/P/C None/None/None) · SEA-E `` 
+- Telegram: —
+- Weaknesses: —
+
 <a id="arxiv-2608.23875"></a>
 ### AI Finds A Way
 
 `arxiv:2608.23875` · Agents, open-endedness, AGI · 2026-08-24
 
-- final **-0.57** (conf 1.00, pct 5) · impact -0.56 · DROP
-- mean rating (1–10): **4.7** · accept votes **2/7** · percentile rank_avg 24.5 (100=best) · rank in year 70.0 (1=best)
+- final **-0.55** (conf 1.00, pct 4) · impact -0.56 · DROP
+- mean rating (1–10): **4.7** · accept votes **2/7** · percentile rank_avg 24.3 (100=best) · rank in year 70.0 (1=best)
 - NAIPv2 `-2.221` · NAIP-v1 `0.558` · SciJudge `-2.610` · DGC-BERT `0.067`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `4.7` Reject (S/P/C 2.0/2.33/2.0) · 14B Fast `3.8` Reject
@@ -4772,7 +5127,7 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2608.19197` · Agents, open-endedness, AGI · 2026-08-19
 
-- final **+0.39** (conf 1.00, pct 86) · impact +0.26 · KEEP
+- final **+0.38** (conf 1.00, pct 87) · impact +0.27 · KEEP
 - mean rating (1–10): **7.0** · accept votes **6/7** · percentile rank_avg 72.9 (100=best) · rank in year 6.0 (1=best)
 - NAIPv2 `0.183` · NAIP-v1 `0.656` · SciJudge `-0.099` · DGC-BERT `0.078`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
@@ -4788,8 +5143,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2608.08311` · Agents, open-endedness, AGI · 2026-08-08
 
-- final **-0.12** (conf 1.00, pct 24) · impact -0.71 · WATCH
-- mean rating (1–10): **6.2** · accept votes **3/7** · percentile rank_avg 40.6 (100=best) · rank in year 63.0 (1=best)
+- final **-0.12** (conf 1.00, pct 21) · impact -0.72 · WATCH
+- mean rating (1–10): **6.2** · accept votes **3/7** · percentile rank_avg 40.4 (100=best) · rank in year 63.0 (1=best)
 - NAIPv2 `-1.249` · NAIP-v1 `0.368` · SciJudge `0.814` · DGC-BERT `0.012`
 - CycleReviewer 8B `4.0` Reject · 70B `` 
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast `7.5` Accept (S/P/C 3.5/3.25/3.75) · 14B Fast `5.8` Reject
@@ -4804,7 +5159,7 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2607.13104` · Agents, open-endedness, AGI · 2026-07-14
 
-- final **+0.27** (conf 1.00, pct 74) · impact +0.92 · KEEP
+- final **+0.27** (conf 1.00, pct 76) · impact +0.93 · KEEP
 - mean rating (1–10): **6.3** · accept votes **6/7** · percentile rank_avg 65.6 (100=best) · rank in year 17.0 (1=best)
 - NAIPv2 `0.084` · NAIP-v1 `0.655` · SciJudge `2.367` · DGC-BERT `0.010`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
@@ -4820,8 +5175,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2605.13821` · Agents, open-endedness, AGI · 2026-05-13
 
-- final **+0.05** (conf 1.00, pct 45) · impact +0.29 · WATCH
-- mean rating (1–10): **6.3** · accept votes **5/7** · percentile rank_avg 61.3 (100=best) · rank in year 27.0 (1=best)
+- final **+0.06** (conf 1.00, pct 40) · impact +0.29 · WATCH
+- mean rating (1–10): **6.3** · accept votes **5/7** · percentile rank_avg 61.2 (100=best) · rank in year 27.0 (1=best)
 - NAIPv2 `-0.344` · NAIP-v1 `0.618` · SciJudge `0.792` · DGC-BERT `0.625`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `7.0` Accept (S/P/C 3.0/3.25/3.0) · 14B Fast `6.5` Reject
@@ -4836,8 +5191,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2603.19461` · Agents, open-endedness, AGI · 2026-03-19
 
-- final **+0.02** (conf 1.00, pct 38) · impact +1.01 · WATCH
-- mean rating (1–10): **6.2** · accept votes **6/7** · percentile rank_avg 64.6 (100=best) · rank in year 21.0 (1=best)
+- final **+0.02** (conf 1.00, pct 36) · impact +1.02 · WATCH
+- mean rating (1–10): **6.2** · accept votes **6/7** · percentile rank_avg 64.5 (100=best) · rank in year 21.0 (1=best)
 - NAIPv2 `-0.993` · NAIP-v1 `0.700` · SciJudge `1.803` · DGC-BERT `0.445`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.5` Accept (S/P/C 2.75/2.75/2.5) · 14B Fast `6.5` Accept
@@ -4852,8 +5207,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2602.07755` · Agents, open-endedness, AGI · 2026-02-08
 
-- final **+0.11** (conf 1.00, pct 54) · impact +0.13 · WATCH
-- mean rating (1–10): **6.3** · accept votes **6/7** · percentile rank_avg 56.5 (100=best) · rank in year 36.0 (1=best)
+- final **+0.12** (conf 1.00, pct 57) · impact +0.13 · WATCH
+- mean rating (1–10): **6.3** · accept votes **6/7** · percentile rank_avg 56.3 (100=best) · rank in year 36.0 (1=best)
 - NAIPv2 `-0.724` · NAIP-v1 `0.525` · SciJudge `1.527` · DGC-BERT `0.013`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.5` Accept (S/P/C 2.75/3.0/2.75) · 14B Fast `7.0` Accept
@@ -4868,8 +5223,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2601.21557` · Agents, open-endedness, AGI · 2026-01-29
 
-- final **+0.03** (conf 1.00, pct 40) · impact +0.07 · WATCH
-- mean rating (1–10): **5.5** · accept votes **5/7** · percentile rank_avg 52.7 (100=best) · rank in year 48.0 (1=best)
+- final **+0.04** (conf 1.00, pct 38) · impact +0.07 · WATCH
+- mean rating (1–10): **5.5** · accept votes **5/7** · percentile rank_avg 52.6 (100=best) · rank in year 48.0 (1=best)
 - NAIPv2 `-0.715` · NAIP-v1 `0.563` · SciJudge `0.788` · DGC-BERT `0.512`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/3.0) · 14B Fast `5.8` Reject
@@ -4884,8 +5239,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2601.07055` · Agents, open-endedness, AGI · 2026-01-11
 
-- final **+0.05** (conf 1.00, pct 44) · impact +0.57 · WATCH
-- mean rating (1–10): **6.0** · accept votes **5/7** · percentile rank_avg 56.4 (100=best) · rank in year 37.0 (1=best)
+- final **+0.06** (conf 1.00, pct 41) · impact +0.57 · WATCH
+- mean rating (1–10): **6.0** · accept votes **5/7** · percentile rank_avg 56.2 (100=best) · rank in year 37.0 (1=best)
 - NAIPv2 `-0.861` · NAIP-v1 `0.525` · SciJudge `2.962` · DGC-BERT `0.679`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `6.5` Accept (S/P/C 2.75/3.0/2.75) · 14B Fast `7.0` Accept
@@ -4900,8 +5255,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2601.03192` · Agents, open-endedness, AGI · 2026-01-06
 
-- final **+0.46** (conf 1.00, pct 93) · impact +1.36 · KEEP
-- mean rating (1–10): **6.4** · accept votes **6/7** · percentile rank_avg 75.3 (100=best) · rank in year 3.0 (1=best)
+- final **+0.46** (conf 1.00, pct 93) · impact +1.37 · KEEP
+- mean rating (1–10): **6.4** · accept votes **6/7** · percentile rank_avg 75.2 (100=best) · rank in year 3.0 (1=best)
 - NAIPv2 `1.841` · NAIP-v1 `0.729` · SciJudge `2.547` · DGC-BERT `0.796`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `7.5` Accept (S/P/C 3.25/3.25/3.25) · 14B Fast `7.0` Accept
@@ -4916,8 +5271,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2512.18746` · Agents, open-endedness, AGI · 2025-12-21
 
-- final **+0.40** (conf 1.00, pct 88) · impact +0.06 · KEEP
-- mean rating (1–10): **6.2** · accept votes **5/7** · percentile rank_avg 60.1 (100=best) · rank in year 34.0 (1=best)
+- final **+0.40** (conf 1.00, pct 89) · impact +0.06 · KEEP
+- mean rating (1–10): **6.2** · accept votes **5/7** · percentile rank_avg 60.0 (100=best) · rank in year 34.0 (1=best)
 - NAIPv2 `-0.453` · NAIP-v1 `0.626` · SciJudge `-0.532` · DGC-BERT `0.161`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `7.0` Accept (S/P/C 3.0/3.25/3.25) · 14B Fast `6.2` Accept
@@ -4932,8 +5287,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2512.18552` · Agents, open-endedness, AGI · 2025-12-21
 
-- final **-0.25** (conf 1.00, pct 17) · impact -0.56 · DROP
-- mean rating (1–10): **5.7** · accept votes **3/7** · percentile rank_avg 36.7 (100=best) · rank in year 71.0 (1=best)
+- final **-0.24** (conf 1.00, pct 16) · impact -0.56 · DROP
+- mean rating (1–10): **5.7** · accept votes **3/7** · percentile rank_avg 36.5 (100=best) · rank in year 71.0 (1=best)
 - NAIPv2 `-1.922` · NAIP-v1 `0.484` · SciJudge `-0.916` · DGC-BERT `0.233`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `4.8` Reject (S/P/C 2.25/2.75/2.25) · 14B Fast `7.0` Accept
@@ -4948,8 +5303,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2512.18160` · Agents, open-endedness, AGI · 2025-12-20
 
-- final **+0.11** (conf 1.00, pct 53) · impact -0.64 · WATCH
-- mean rating (1–10): **6.1** · accept votes **5/7** · percentile rank_avg 53.6 (100=best) · rank in year 46.0 (1=best)
+- final **+0.11** (conf 1.00, pct 56) · impact -0.64 · WATCH
+- mean rating (1–10): **6.1** · accept votes **5/7** · percentile rank_avg 53.5 (100=best) · rank in year 45.0 (1=best)
 - NAIPv2 `-1.147` · NAIP-v1 `0.551` · SciJudge `-2.947` · DGC-BERT `0.943`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.5` Accept (S/P/C 2.75/3.25/2.5) · 14B Fast `7.0` Accept
@@ -4964,8 +5319,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2511.15593` · Agents, open-endedness, AGI · 2025-11-19
 
-- final **-0.45** (conf 1.00, pct 7) · impact -1.51 · DROP
-- mean rating (1–10): **5.3** · accept votes **2/7** · percentile rank_avg 25.4 (100=best) · rank in year 78.0 (1=best)
+- final **-0.44** (conf 1.00, pct 7) · impact -1.52 · DROP
+- mean rating (1–10): **5.3** · accept votes **2/7** · percentile rank_avg 25.3 (100=best) · rank in year 78.0 (1=best)
 - NAIPv2 `-2.432` · NAIP-v1 `0.436` · SciJudge `-5.855` · DGC-BERT `0.401`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.5` Reject · 7B Fast `5.8` Accept (S/P/C 2.75/3.0/2.75) · 14B Fast `4.8` Reject
@@ -4980,8 +5335,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2508.16204` · Agents, open-endedness, AGI · 2025-08-22
 
-- final **+0.05** (conf 1.00, pct 46) · impact -1.17 · WATCH
-- mean rating (1–10): **5.8** · accept votes **4/7** · percentile rank_avg 47.1 (100=best) · rank in year 63.0 (1=best)
+- final **+0.06** (conf 1.00, pct 42) · impact -1.18 · WATCH
+- mean rating (1–10): **5.8** · accept votes **4/7** · percentile rank_avg 46.9 (100=best) · rank in year 63.0 (1=best)
 - NAIPv2 `0.670` · NAIP-v1 `0.460` · SciJudge `-3.412` · DGC-BERT `0.853`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.8` Reject · 7B Fast `6.2` Reject (S/P/C 2.75/2.75/2.5) · 14B Fast `7.5` Accept
@@ -4996,8 +5351,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2507.18074` · Agents, open-endedness, AGI · 2025-07-24
 
-- final **-0.22** (conf 1.00, pct 19) · impact +1.17 · WATCH
-- mean rating (1–10): **5.2** · accept votes **3/7** · percentile rank_avg 41.8 (100=best) · rank in year 68.0 (1=best)
+- final **-0.21** (conf 1.00, pct 17) · impact +1.18 · WATCH
+- mean rating (1–10): **5.2** · accept votes **3/7** · percentile rank_avg 41.6 (100=best) · rank in year 68.0 (1=best)
 - NAIPv2 `-0.628` · NAIP-v1 `0.658` · SciJudge `3.092` · DGC-BERT `0.119`
 - CycleReviewer 8B `5.2` Accept · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `5.0` Reject (S/P/C 2.75/2.75/2.5) · 14B Fast `5.5` Reject
@@ -5012,8 +5367,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2505.22954` · Agents, open-endedness, AGI · 2025-05-29
 
-- final **+0.05** (conf 1.00, pct 45) · impact +1.12 · WATCH
-- mean rating (1–10): **6.0** · accept votes **4/7** · percentile rank_avg 55.9 (100=best) · rank in year 42.0 (1=best)
+- final **+0.06** (conf 1.00, pct 42) · impact +1.13 · WATCH
+- mean rating (1–10): **6.0** · accept votes **4/7** · percentile rank_avg 55.7 (100=best) · rank in year 42.0 (1=best)
 - NAIPv2 `-0.615` · NAIP-v1 `0.709` · SciJudge `1.749` · DGC-BERT `0.376`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `5.8` Accept (S/P/C 2.5/2.75/2.25) · 14B Fast `7.5` Accept
@@ -5028,8 +5383,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `doi:10.21203/rs.3.rs-6688473/v1` · Agents, open-endedness, AGI · 2025-05-20
 
-- final **-0.72** (conf 1.00, pct 2) · impact -0.31 · DROP
-- mean rating (1–10): **4.5** · accept votes **2/7** · percentile rank_avg 19.3 (100=best) · rank in year 79.0 (1=best)
+- final **-0.71** (conf 1.00, pct 1) · impact -0.31 · DROP
+- mean rating (1–10): **4.5** · accept votes **2/7** · percentile rank_avg 19.2 (100=best) · rank in year 79.0 (1=best)
 - NAIPv2 `-2.812` · NAIP-v1 `0.604` · SciJudge `-2.305` · DGC-BERT `0.009`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `4.0` Reject · 7B Fast `4.0` Reject (S/P/C 2.25/2.75/1.75) · 14B Fast `3.0` Reject
@@ -5044,8 +5399,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2502.15840` · Agents, open-endedness, AGI · 2025-02-20
 
-- final **-0.30** (conf 1.00, pct 14) · impact -0.26 · DROP
-- mean rating (1–10): **4.5** · accept votes **3/7** · percentile rank_avg 31.1 (100=best) · rank in year 77.0 (1=best)
+- final **-0.28** (conf 1.00, pct 13) · impact -0.26 · DROP
+- mean rating (1–10): **4.5** · accept votes **3/7** · percentile rank_avg 31.0 (100=best) · rank in year 77.0 (1=best)
 - NAIPv2 `-1.640` · NAIP-v1 `0.395` · SciJudge `1.750` · DGC-BERT `0.032`
 - CycleReviewer 8B `1.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.3` Accept (S/P/C 2.67/3.0/2.67) · 14B Fast `4.0` Reject
@@ -5060,8 +5415,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2410.04444` · Agents, open-endedness, AGI · 2024-10-06
 
-- final **-0.05** (conf 1.00, pct 31) · impact +0.03 · WATCH
-- mean rating (1–10): **5.6** · accept votes **3/7** · percentile rank_avg 44.7 (100=best) · rank in year 27.0 (1=best)
+- final **-0.05** (conf 1.00, pct 28) · impact +0.03 · WATCH
+- mean rating (1–10): **5.6** · accept votes **3/7** · percentile rank_avg 44.5 (100=best) · rank in year 27.0 (1=best)
 - NAIPv2 `-1.400` · NAIP-v1 `0.561` · SciJudge `-0.284` · DGC-BERT `0.569`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `5.8` Reject (S/P/C 2.75/2.75/2.5) · 14B Fast `4.2` Reject
@@ -5075,8 +5430,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2408.08435` · Agents, open-endedness, AGI · 2024-08-15
 
-- final **+0.13** (conf 1.00, pct 55) · impact +1.24 · WATCH
-- mean rating (1–10): **6.2** · accept votes **4/7** · percentile rank_avg 55.0 (100=best) · rank in year 15.0 (1=best)
+- final **+0.13** (conf 1.00, pct 60) · impact +1.25 · WATCH
+- mean rating (1–10): **6.2** · accept votes **4/7** · percentile rank_avg 54.9 (100=best) · rank in year 15.0 (1=best)
 - NAIPv2 `-2.412` · NAIP-v1 `0.655` · SciJudge `3.410` · DGC-BERT `0.327`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `5.5` Reject (S/P/C 2.5/3.0/2.5) · 14B Fast `7.5` Accept
@@ -5091,8 +5446,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2407.00695` · Agents, open-endedness, AGI · 2024-06-30
 
-- final **+0.43** (conf 1.00, pct 90) · impact -0.28 · KEEP
-- mean rating (1–10): **6.4** · accept votes **3/7** · percentile rank_avg 58.5 (100=best) · rank in year 10.0 (1=best)
+- final **+0.43** (conf 1.00, pct 91) · impact -0.28 · KEEP
+- mean rating (1–10): **6.4** · accept votes **3/7** · percentile rank_avg 58.3 (100=best) · rank in year 9.0 (1=best)
 - NAIPv2 `-0.889` · NAIP-v1 `0.455` · SciJudge `0.660` · DGC-BERT `0.242`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Reject · 7B Fast `5.7` Reject (S/P/C 2.67/2.67/2.67) · 14B Fast `7.5` Accept
@@ -5107,8 +5462,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2406.04268` · Agents, open-endedness, AGI · 2024-06-06
 
-- final **-0.25** (conf 1.00, pct 18) · impact +0.33 · DROP
-- mean rating (1–10): **5.5** · accept votes **2/7** · percentile rank_avg 36.6 (100=best) · rank in year 38.0 (1=best)
+- final **-0.24** (conf 1.00, pct 16) · impact +0.34 · DROP
+- mean rating (1–10): **5.5** · accept votes **2/7** · percentile rank_avg 36.4 (100=best) · rank in year 38.0 (1=best)
 - NAIPv2 `-2.396` · NAIP-v1 `0.614` · SciJudge `0.401` · DGC-BERT `0.008`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `4.8` Reject (S/P/C 2.75/2.25/2.25) · 14B Fast `4.8` Reject
@@ -5123,8 +5478,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2402.16823` · Agents, open-endedness, AGI · 2024-02-26
 
-- final **+0.29** (conf 1.00, pct 77) · impact +0.63 · KEEP
-- mean rating (1–10): **6.1** · accept votes **3/7** · percentile rank_avg 59.5 (100=best) · rank in year 8.0 (1=best)
+- final **+0.29** (conf 1.00, pct 78) · impact +0.64 · KEEP
+- mean rating (1–10): **6.1** · accept votes **3/7** · percentile rank_avg 59.4 (100=best) · rank in year 8.0 (1=best)
 - NAIPv2 `0.780` · NAIP-v1 `0.586` · SciJudge `2.168` · DGC-BERT `0.378`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `6.0` Reject (S/P/C 2.67/2.67/2.67) · 14B Fast `5.8` Reject
@@ -5138,8 +5493,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `openreview:pOoKI3ouv1` · Agents, open-endedness, AGI · unknown
 
-- final **+0.64** (conf 1.00, pct 99) · impact +0.97 · KEEP
-- mean rating (1–10): **7.1** · accept votes **6/7** · percentile rank_avg 75.0 (100=best) · rank in year 1.0 (1=best)
+- final **+0.64** (conf 1.00, pct 99) · impact +0.98 · KEEP
+- mean rating (1–10): **7.1** · accept votes **6/7** · percentile rank_avg 74.9 (100=best) · rank in year 1.0 (1=best)
 - NAIPv2 `-0.457` · NAIP-v1 `0.615` · SciJudge `2.594` · DGC-BERT `0.221`
 - CycleReviewer 8B `8.0` Accept · 70B `` 
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `7.0` Accept (S/P/C 3.0/3.0/2.75) · 14B Fast `6.5` Accept
@@ -5154,8 +5509,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `doi:10.1038/s42256-023-00754-x` · Agents, open-endedness, AGI · 2023-11-17
 
-- final **-0.49** (conf 1.00, pct 6) · impact -1.92 · DROP
-- mean rating (1–10): **4.5** · accept votes **1/7** · percentile rank_avg 17.8 (100=best) · rank in year 48.0 (1=best)
+- final **-0.48** (conf 1.00, pct 6) · impact -1.91 · DROP
+- mean rating (1–10): **4.5** · accept votes **1/7** · percentile rank_avg 17.6 (100=best) · rank in year 47.0 (1=best)
 - NAIPv2 `-4.184` · NAIP-v1 `0.438` · SciJudge `-10.666` · DGC-BERT `0.050`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `5.0` Reject (S/P/C 2.0/3.0/2.0) · 14B Fast `5.2` Reject
@@ -5170,8 +5525,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2311.02462` · Agents, open-endedness, AGI · 2023-11-04
 
-- final **-0.31** (conf 1.00, pct 12) · impact -0.29 · DROP
-- mean rating (1–10): **5.5** · accept votes **2/7** · percentile rank_avg 31.2 (100=best) · rank in year 44.0 (1=best)
+- final **-0.31** (conf 1.00, pct 11) · impact -0.26 · DROP
+- mean rating (1–10): **5.5** · accept votes **2/7** · percentile rank_avg 31.1 (100=best) · rank in year 43.0 (1=best)
 - NAIPv2 `-2.020` · NAIP-v1 `0.513` · SciJudge `0.306` · DGC-BERT `0.009`
 - CycleReviewer 8B `5.8` Reject · 70B `` 
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `4.8` Reject (S/P/C 2.75/2.75/2.25) · 14B Fast `4.8` Reject
@@ -5186,8 +5541,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2311.00344` · Agents, open-endedness, AGI · 2023-11-01
 
-- final **-0.09** (conf 1.00, pct 25) · impact -1.59 · WATCH
-- mean rating (1–10): **5.5** · accept votes **3/7** · percentile rank_avg 29.9 (100=best) · rank in year 45.0 (1=best)
+- final **-0.09** (conf 1.00, pct 23) · impact -1.58 · WATCH
+- mean rating (1–10): **5.5** · accept votes **3/7** · percentile rank_avg 29.7 (100=best) · rank in year 44.0 (1=best)
 - NAIPv2 `-1.090` · NAIP-v1 `0.426` · SciJudge `-5.424` · DGC-BERT `0.007`
 - CycleReviewer 8B `4.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.2` Reject · 7B Fast `6.5` Accept (S/P/C 3.0/3.0/3.0) · 14B Fast `4.8` Reject
@@ -5203,7 +5558,7 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 `doi:10.1038/s41586-023-06924-6` · Agents, open-endedness, AGI · 2023-12-14
 
 - final **+0.54** (conf 1.00, pct 97) · impact +0.59 · KEEP
-- mean rating (1–10): **6.4** · accept votes **6/7** · percentile rank_avg 61.1 (100=best) · rank in year 9.0 (1=best)
+- mean rating (1–10): **6.4** · accept votes **6/7** · percentile rank_avg 61.0 (100=best) · rank in year 9.0 (1=best)
 - NAIPv2 `-1.022` · NAIP-v1 `0.500` · SciJudge `3.893` · DGC-BERT `0.193`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `5.7` Accept (S/P/C 3.0/3.0/2.33) · 14B Fast `8.5` Accept
@@ -5218,8 +5573,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:1905.10985` · Agents, open-endedness, AGI · 2019-05-27
 
-- final **-0.28** (conf 1.00, pct 14) · impact -0.34 · DROP
-- mean rating (1–10): **4.3** · accept votes **1/7** · percentile rank_avg 25.7 (100=best) · rank in year 4.0 (1=best)
+- final **-0.28** (conf 1.00, pct 13) · impact -0.37 · DROP
+- mean rating (1–10): **4.3** · accept votes **1/7** · percentile rank_avg 25.6 (100=best) · rank in year 4.0 (1=best)
 - NAIPv2 `-2.426` · NAIP-v1 `0.621` · SciJudge `-2.343` · DGC-BERT `0.007`
 - CycleReviewer 8B `1.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.5` Reject (S/P/C 2.75/2.75/2.75) · 14B Fast `3.0` Reject
@@ -5234,8 +5589,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:1901.01753` · Agents, open-endedness, AGI · 2019-01-07
 
-- final **-0.02** (conf 1.00, pct 34) · impact -0.33 · WATCH
-- mean rating (1–10): **5.3** · accept votes **1/7** · percentile rank_avg 31.6 (100=best) · rank in year 3.0 (1=best)
+- final **-0.04** (conf 1.00, pct 30) · impact -0.36 · WATCH
+- mean rating (1–10): **5.3** · accept votes **1/7** · percentile rank_avg 31.4 (100=best) · rank in year 3.0 (1=best)
 - NAIPv2 `-1.227` · NAIP-v1 `0.508` · SciJudge `0.300` · DGC-BERT `0.022`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.0` Reject · 7B Fast `5.8` Reject (S/P/C 2.75/2.5/2.5) · 14B Fast `5.8` Reject
@@ -5249,8 +5604,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2609.01437` · Harness · 2026-09-01
 
-- final **-0.04** (conf 1.00, pct 32) · impact -0.17 · WATCH
-- mean rating (1–10): **6.6** · accept votes **4/7** · percentile rank_avg 51.0 (100=best) · rank in year 51.0 (1=best)
+- final **-0.04** (conf 1.00, pct 29) · impact -0.17 · WATCH
+- mean rating (1–10): **6.6** · accept votes **4/7** · percentile rank_avg 50.9 (100=best) · rank in year 51.0 (1=best)
 - NAIPv2 `-1.231` · NAIP-v1 `0.617` · SciJudge `-1.916` · DGC-BERT `0.023`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `6.0` Accept (S/P/C 2.5/2.75/2.75) · 14B Fast `7.0` Accept
@@ -5265,8 +5620,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2606.01770` · Harness · 2026-06-01
 
-- final **+0.23** (conf 1.00, pct 70) · impact -0.47 · KEEP
-- mean rating (1–10): **6.3** · accept votes **5/7** · percentile rank_avg 54.6 (100=best) · rank in year 42.0 (1=best)
+- final **+0.23** (conf 1.00, pct 72) · impact -0.48 · KEEP
+- mean rating (1–10): **6.3** · accept votes **5/7** · percentile rank_avg 54.5 (100=best) · rank in year 42.0 (1=best)
 - NAIPv2 `0.798` · NAIP-v1 `0.486` · SciJudge `-0.271` · DGC-BERT `0.032`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `7.0` Accept (S/P/C 3.25/3.25/3.25) · 14B Fast `6.7` Accept
@@ -5281,8 +5636,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2604.25850` · Harness · 2026-04-28
 
-- final **+0.08** (conf 1.00, pct 49) · impact -0.21 · WATCH
-- mean rating (1–10): **5.9** · accept votes **3/7** · percentile rank_avg 56.7 (100=best) · rank in year 35.0 (1=best)
+- final **+0.09** (conf 1.00, pct 53) · impact -0.22 · WATCH
+- mean rating (1–10): **5.9** · accept votes **3/7** · percentile rank_avg 56.6 (100=best) · rank in year 35.0 (1=best)
 - NAIPv2 `1.099` · NAIP-v1 `0.507` · SciJudge `0.549` · DGC-BERT `0.459`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `4.8` Reject (S/P/C 2.75/2.5/2.5) · 14B Fast `6.5` Reject
@@ -5298,7 +5653,7 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 `arxiv:2604.19341` · Harness · 2026-04-21
 
 - final **+0.65** (conf 1.00, pct 100) · impact +1.54 · KEEP
-- mean rating (1–10): **6.6** · accept votes **6/7** · percentile rank_avg 74.3 (100=best) · rank in year 4.0 (1=best)
+- mean rating (1–10): **6.6** · accept votes **6/7** · percentile rank_avg 74.2 (100=best) · rank in year 4.0 (1=best)
 - NAIPv2 `-0.211` · NAIP-v1 `0.596` · SciJudge `3.658` · DGC-BERT `0.518`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `10.0` Accept · 7B Fast `8.0` Accept (S/P/C 3.5/3.5/3.5) · 14B Fast `7.0` Accept
@@ -5313,8 +5668,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2604.08224` · Harness · 2026-04-09
 
-- final **-0.20** (conf 1.00, pct 21) · impact +1.32 · WATCH
-- mean rating (1–10): **5.8** · accept votes **3/7** · percentile rank_avg 49.9 (100=best) · rank in year 54.0 (1=best)
+- final **-0.19** (conf 1.00, pct 18) · impact +1.32 · WATCH
+- mean rating (1–10): **5.8** · accept votes **3/7** · percentile rank_avg 49.7 (100=best) · rank in year 54.0 (1=best)
 - NAIPv2 `-0.827` · NAIP-v1 `0.681` · SciJudge `3.088` · DGC-BERT `0.030`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `5.2` Reject (S/P/C 3.0/3.0/2.25) · 14B Fast `6.0` Accept
@@ -5329,8 +5684,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2603.28052` · Harness · 2026-03-30
 
-- final **+0.31** (conf 1.00, pct 79) · impact -0.29 · KEEP
-- mean rating (1–10): **6.0** · accept votes **6/7** · percentile rank_avg 60.2 (100=best) · rank in year 29.0 (1=best)
+- final **+0.32** (conf 1.00, pct 81) · impact -0.30 · KEEP
+- mean rating (1–10): **6.0** · accept votes **6/7** · percentile rank_avg 60.0 (100=best) · rank in year 29.0 (1=best)
 - NAIPv2 `0.213` · NAIP-v1 `0.458` · SciJudge `1.126` · DGC-BERT `0.909`
 - CycleReviewer 8B `4.8` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.0` Accept (S/P/C 3.0/3.0/3.0) · 14B Fast `7.5` Accept
@@ -5345,8 +5700,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2607.23379` · AI safety and consciousness · 2026-07-25
 
-- final **+0.08** (conf 1.00, pct 49) · impact -0.88 · WATCH
-- mean rating (1–10): **6.5** · accept votes **4/7** · percentile rank_avg 51.1 (100=best) · rank in year 50.0 (1=best)
+- final **+0.09** (conf 1.00, pct 53) · impact -0.89 · WATCH
+- mean rating (1–10): **6.5** · accept votes **4/7** · percentile rank_avg 51.0 (100=best) · rank in year 50.0 (1=best)
 - NAIPv2 `-0.958` · NAIP-v1 `0.502` · SciJudge `-3.607` · DGC-BERT `0.398`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `7.0` Accept (S/P/C 3.0/3.0/3.0) · 14B Fast `7.0` Accept
@@ -5361,8 +5716,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2603.19426` · AI safety and consciousness · 2026-03-19
 
-- final **-0.30** (conf 1.00, pct 13) · impact -1.54 · DROP
-- mean rating (1–10): **6.0** · accept votes **5/7** · percentile rank_avg 43.7 (100=best) · rank in year 60.0 (1=best)
+- final **-0.29** (conf 1.00, pct 12) · impact -1.55 · DROP
+- mean rating (1–10): **6.0** · accept votes **5/7** · percentile rank_avg 43.5 (100=best) · rank in year 60.0 (1=best)
 - NAIPv2 `-1.178` · NAIP-v1 `0.428` · SciJudge `-3.797` · DGC-BERT `0.848`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.2` Accept (S/P/C 2.5/3.0/2.5) · 14B Fast `5.8` Accept
@@ -5377,8 +5732,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2503.16348` · AI safety and consciousness · 2025-03-20
 
-- final **-0.72** (conf 1.00, pct 1) · impact -2.39 · DROP
-- mean rating (1–10): **4.4** · accept votes **2/7** · percentile rank_avg 11.9 (100=best) · rank in year 80.0 (1=best)
+- final **-0.72** (conf 1.00, pct 1) · impact -2.43 · DROP
+- mean rating (1–10): **4.4** · accept votes **2/7** · percentile rank_avg 11.7 (100=best) · rank in year 80.0 (1=best)
 - NAIPv2 `-4.512` · NAIP-v1 `0.242` · SciJudge `-8.886` · DGC-BERT `0.013`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `3.5` Reject · 7B Fast `4.5` Reject (S/P/C 2.75/2.25/2.25) · 14B Fast `2.5` Reject
@@ -5393,8 +5748,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2502.03407` · AI safety and consciousness · 2025-02-05
 
-- final **-0.40** (conf 1.00, pct 10) · impact +0.23 · DROP
-- mean rating (1–10): **5.3** · accept votes **3/7** · percentile rank_avg 35.4 (100=best) · rank in year 73.0 (1=best)
+- final **-0.39** (conf 1.00, pct 9) · impact +0.24 · DROP
+- mean rating (1–10): **5.3** · accept votes **3/7** · percentile rank_avg 35.3 (100=best) · rank in year 73.0 (1=best)
 - NAIPv2 `-2.174` · NAIP-v1 `0.558` · SciJudge `1.016` · DGC-BERT `0.056`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast `4.2` Reject (S/P/C 2.25/2.75/2.0) · 14B Fast `5.8` Reject
@@ -5409,8 +5764,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2501.18837` · AI safety and consciousness · 2025-01-31
 
-- final **+0.13** (conf 1.00, pct 56) · impact +1.12 · WATCH
-- mean rating (1–10): **6.4** · accept votes **6/7** · percentile rank_avg 66.6 (100=best) · rank in year 15.0 (1=best)
+- final **+0.13** (conf 1.00, pct 59) · impact +1.13 · WATCH
+- mean rating (1–10): **6.4** · accept votes **6/7** · percentile rank_avg 66.4 (100=best) · rank in year 15.0 (1=best)
 - NAIPv2 `-1.560` · NAIP-v1 `0.645` · SciJudge `3.193` · DGC-BERT `0.877`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `5.7` Reject (S/P/C 2.67/2.67/2.67) · 14B Fast `6.5` Accept
@@ -5425,8 +5780,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2309.08600` · AI safety and consciousness · 2023-09-15
 
-- final **+0.09** (conf 1.00, pct 50) · impact -0.02 · WATCH
-- mean rating (1–10): **6.2** · accept votes **4/7** · percentile rank_avg 48.6 (100=best) · rank in year 27.0 (1=best)
+- final **+0.10** (conf 1.00, pct 54) · impact -0.02 · WATCH
+- mean rating (1–10): **6.2** · accept votes **4/7** · percentile rank_avg 48.4 (100=best) · rank in year 27.0 (1=best)
 - NAIPv2 `-1.755` · NAIP-v1 `0.449` · SciJudge `3.106` · DGC-BERT `0.063`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `7.0` Accept (S/P/C 3.25/3.25/3.25) · 14B Fast `6.7` Accept
@@ -5441,8 +5796,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2308.08708` · AI safety and consciousness · 2023-08-17
 
-- final **-0.03** (conf 1.00, pct 33) · impact -0.26 · WATCH
-- mean rating (1–10): **6.0** · accept votes **4/7** · percentile rank_avg 37.8 (100=best) · rank in year 40.0 (1=best)
+- final **-0.03** (conf 1.00, pct 31) · impact -0.23 · WATCH
+- mean rating (1–10): **6.0** · accept votes **4/7** · percentile rank_avg 37.7 (100=best) · rank in year 38.0 (1=best)
 - NAIPv2 `-2.592` · NAIP-v1 `0.605` · SciJudge `-0.845` · DGC-BERT `0.033`
 - CycleReviewer 8B `3.5` Reject · 70B `` 
 - DeepReviewer 7B Std `3.5` Reject · 7B Fast `6.0` Accept (S/P/C 3.0/2.5/2.75) · 14B Fast `6.5` Accept
@@ -5457,8 +5812,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2304.06528` · AI safety and consciousness · 2023-04-13
 
-- final **-0.34** (conf 1.00, pct 10) · impact +0.28 · DROP
-- mean rating (1–10): **5.0** · accept votes **3/7** · percentile rank_avg 39.8 (100=best) · rank in year 37.0 (1=best)
+- final **-0.34** (conf 1.00, pct 9) · impact +0.31 · DROP
+- mean rating (1–10): **5.0** · accept votes **3/7** · percentile rank_avg 39.8 (100=best) · rank in year 35.0 (1=best)
 - NAIPv2 `-0.491` · NAIP-v1 `0.650` · SciJudge `0.969` · DGC-BERT `0.750`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `2.5` Reject · 7B Fast `4.2` Reject (S/P/C 2.5/2.75/2.25) · 14B Fast `6.0` Reject
@@ -5473,8 +5828,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2303.07103` · AI safety and consciousness · 2023-03-04
 
-- final **-0.25** (conf 0.91, pct 16) · impact +0.69 · WATCH · salvage dr7bf
-- mean rating (1–10): **5.9** · accept votes **3/6** · percentile rank_avg 48.5 (100=best) · rank in year 28.0 (1=best)
+- final **-0.25** (conf 0.91, pct 15) · impact +0.71 · WATCH · salvage dr7bf
+- mean rating (1–10): **5.9** · accept votes **3/6** · percentile rank_avg 48.5 (100=best) · rank in year 26.0 (1=best)
 - NAIPv2 `-2.414` · NAIP-v1 `0.783` · SciJudge `-0.436` · DGC-BERT `0.037`
 - CycleReviewer 8B `6.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.0` Accept · 7B Fast ``  (S/P/C 2.5/2.5/2.5) · 14B Fast `3.5` Reject
@@ -5489,8 +5844,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2206.13477` · AI safety and consciousness · 2022-06-27
 
-- final **-0.10** (conf 1.00, pct 25) · impact +1.00 · WATCH
-- mean rating (1–10): **5.2** · accept votes **3/7** · percentile rank_avg 49.0 (100=best) · rank in year 12.0 (1=best)
+- final **-0.10** (conf 1.00, pct 22) · impact +1.08 · WATCH
+- mean rating (1–10): **5.2** · accept votes **3/7** · percentile rank_avg 49.3 (100=best) · rank in year 12.0 (1=best)
 - NAIPv2 `-0.744` · NAIP-v1 `0.739` · SciJudge `2.402` · DGC-BERT `0.269`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.8` Reject · 7B Fast `5.8` Accept (S/P/C 2.5/2.25/2.25) · 14B Fast `4.0` Reject
@@ -5505,8 +5860,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2206.13353` · AI safety and consciousness · 2022-06-16
 
-- final **+0.01** (conf 1.00, pct 37) · impact +1.25 · WATCH
-- mean rating (1–10): **5.8** · accept votes **3/7** · percentile rank_avg 49.6 (100=best) · rank in year 11.0 (1=best)
+- final **+0.00** (conf 1.00, pct 33) · impact +1.30 · WATCH
+- mean rating (1–10): **5.8** · accept votes **3/7** · percentile rank_avg 49.7 (100=best) · rank in year 11.0 (1=best)
 - NAIPv2 `-0.861` · NAIP-v1 `0.852` · SciJudge `0.681` · DGC-BERT `0.020`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `6.2` Accept · 7B Fast `6.8` Reject (S/P/C 2.75/2.75/2.75) · 14B Fast `4.8` Reject
@@ -5521,8 +5876,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:1912.01683` · AI safety and consciousness · 2019-12-03
 
-- final **+0.07** (conf 1.00, pct 47) · impact -0.18 · WATCH
-- mean rating (1–10): **5.7** · accept votes **3/7** · percentile rank_avg 44.0 (100=best) · rank in year 2.0 (1=best)
+- final **+0.05** (conf 1.00, pct 39) · impact -0.22 · WATCH
+- mean rating (1–10): **5.7** · accept votes **3/7** · percentile rank_avg 43.8 (100=best) · rank in year 2.0 (1=best)
 - NAIPv2 `-0.605` · NAIP-v1 `0.415` · SciJudge `2.700` · DGC-BERT `0.705`
 - CycleReviewer 8B `3.5` Reject · 70B `` 
 - DeepReviewer 7B Std `4.8` Reject · 7B Fast `5.2` Reject (S/P/C 2.5/2.75/2.5) · 14B Fast `5.5` Reject
@@ -5537,8 +5892,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2606.08720` · NeuroAI · 2026-06-07
 
-- final **-0.21** (conf 0.91, pct 19) · impact -1.71 · DROP · partial fulltext
-- mean rating (1–10): **6.0** · accept votes **3/7** · percentile rank_avg 35.6 (100=best) · rank in year 68.0 (1=best)
+- final **-0.21** (conf 0.91, pct 17) · impact -1.72 · DROP · partial fulltext
+- mean rating (1–10): **6.0** · accept votes **3/7** · percentile rank_avg 35.5 (100=best) · rank in year 68.0 (1=best)
 - NAIPv2 `-1.618` · NAIP-v1 `0.485` · SciJudge `-7.365` · DGC-BERT `0.213`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `1.0` Reject · 7B Fast `8.0` Accept (S/P/C 3.67/3.67/3.67) · 14B Fast `3.8` Reject
@@ -5553,8 +5908,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2505.17117` · NeuroAI · 2025-05-21
 
-- final **+0.43** (conf 1.00, pct 90) · impact +1.52 · KEEP
-- mean rating (1–10): **6.6** · accept votes **7/7** · percentile rank_avg 77.9 (100=best) · rank in year 3.0 (1=best)
+- final **+0.42** (conf 1.00, pct 91) · impact +1.52 · KEEP
+- mean rating (1–10): **6.6** · accept votes **7/7** · percentile rank_avg 77.8 (100=best) · rank in year 3.0 (1=best)
 - NAIPv2 `-0.097` · NAIP-v1 `0.768` · SciJudge `2.164` · DGC-BERT `0.626`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `7.5` Accept (S/P/C 3.0/3.25/3.25) · 14B Fast `6.5` Accept
@@ -5569,8 +5924,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `doi:10.1101/2024.02.22.581686` · NeuroAI · 2024-02-26
 
-- final **+0.10** (conf 0.91, pct 52) · impact -0.75 · WATCH · partial fulltext
-- mean rating (1–10): **5.7** · accept votes **4/7** · percentile rank_avg 40.1 (100=best) · rank in year 33.0 (1=best)
+- final **+0.11** (conf 0.91, pct 56) · impact -0.75 · WATCH · partial fulltext
+- mean rating (1–10): **5.7** · accept votes **4/7** · percentile rank_avg 40.0 (100=best) · rank in year 32.0 (1=best)
 - NAIPv2 `-2.701` · NAIP-v1 `0.501` · SciJudge `-4.099` · DGC-BERT `0.096`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `6.5` Accept · 7B Fast `6.0` Reject (S/P/C 2.75/2.5/2.5) · 14B Fast `7.3` Accept
@@ -5585,8 +5940,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `doi:10.1101/2023.04.04.535512` · NeuroAI · 2023-04-07
 
-- final **+0.02** (conf 0.91, pct 39) · impact -1.78 · WATCH · partial fulltext
-- mean rating (1–10): **6.0** · accept votes **2/7** · percentile rank_avg 37.9 (100=best) · rank in year 39.0 (1=best)
+- final **+0.02** (conf 0.91, pct 36) · impact -1.79 · WATCH · partial fulltext
+- mean rating (1–10): **6.0** · accept votes **2/7** · percentile rank_avg 37.7 (100=best) · rank in year 39.0 (1=best)
 - NAIPv2 `-2.010` · NAIP-v1 `0.301` · SciJudge `-3.736` · DGC-BERT `0.470`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `3.5` Reject · 7B Fast `6.3` Reject (S/P/C 2.67/2.67/2.67) · 14B Fast `6.8` Accept
@@ -5601,8 +5956,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `doi:10.1371/journal.pcbi.1011005` · NeuroAI · 2023-04-04
 
-- final **+0.23** (conf 0.82, pct 69) · impact -2.14 · KEEP
-- mean rating (1–10): **5.8** · accept votes **4/6** · percentile rank_avg 38.2 (100=best) · rank in year 38.0 (1=best)
+- final **+0.23** (conf 0.82, pct 71) · impact -2.14 · KEEP
+- mean rating (1–10): **5.8** · accept votes **4/6** · percentile rank_avg 38.0 (100=best) · rank in year 37.0 (1=best)
 - NAIPv2 `-1.458` · NAIP-v1 `0.341` · SciJudge `-8.494` · DGC-BERT `0.122`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std ``  · 7B Fast `6.5` Accept (S/P/C 3.0/3.0/3.0) · 14B Fast `6.5` Accept
@@ -5617,8 +5972,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `doi:10.1371/journal.pcbi.1010628` · NeuroAI · 2022-11-18
 
-- final **+0.12** (conf 1.00, pct 54) · impact -1.94 · WATCH
-- mean rating (1–10): **6.7** · accept votes **4/7** · percentile rank_avg 42.4 (100=best) · rank in year 14.0 (1=best)
+- final **+0.11** (conf 1.00, pct 56) · impact -1.93 · WATCH
+- mean rating (1–10): **6.7** · accept votes **4/7** · percentile rank_avg 42.3 (100=best) · rank in year 14.0 (1=best)
 - NAIPv2 `-3.535` · NAIP-v1 `0.377` · SciJudge `-8.708` · DGC-BERT `0.018`
 - CycleReviewer 8B `5.2` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.7` Accept (S/P/C 3.0/3.0/2.67) · 14B Fast `7.5` Accept
@@ -5633,8 +5988,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2210.08340` · NeuroAI · 2022-10-15
 
-- final **-0.06** (conf 0.91, pct 30) · impact -1.27 · WATCH · partial fulltext
-- mean rating (1–10): **5.2** · accept votes **3/7** · percentile rank_avg 23.3 (100=best) · rank in year 17.0 (1=best)
+- final **-0.05** (conf 0.91, pct 28) · impact -1.24 · WATCH · partial fulltext
+- mean rating (1–10): **5.2** · accept votes **3/7** · percentile rank_avg 23.2 (100=best) · rank in year 16.0 (1=best)
 - NAIPv2 `-3.387` · NAIP-v1 `0.479` · SciJudge `-5.664` · DGC-BERT `0.087`
 - CycleReviewer 8B `2.5` Reject · 70B `` 
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast `7.0` Accept (S/P/C 3.0/3.25/3.0) · 14B Fast `5.8` Accept
@@ -5649,8 +6004,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2112.04035` · NeuroAI · 2021-12-07
 
-- final **+0.01** (conf 0.97, pct 37) · impact -1.10 · WATCH
-- mean rating (1–10): **6.1** · accept votes **3/7** · percentile rank_avg 38.2 (100=best) · rank in year 7.0 (1=best)
+- final **+0.00** (conf 0.97, pct 33) · impact -1.10 · WATCH
+- mean rating (1–10): **6.1** · accept votes **3/7** · percentile rank_avg 38.1 (100=best) · rank in year 7.0 (1=best)
 - NAIPv2 `-1.878` · NAIP-v1 `0.421` · SciJudge `-1.192` · DGC-BERT `0.043`
 - CycleReviewer 8B `4.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.5` Reject · 7B Fast `6.0` Reject (S/P/C 2.75/2.25/2.5) · 14B Fast `6.5` Accept
@@ -5665,8 +6020,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2112.03978` · NeuroAI · 2021-12-07
 
-- final **+0.14** (conf 1.00, pct 58) · impact +0.00 · WATCH
-- mean rating (1–10): **6.2** · accept votes **5/7** · percentile rank_avg 46.1 (100=best) · rank in year 5.0 (1=best)
+- final **+0.14** (conf 1.00, pct 60) · impact +0.01 · WATCH
+- mean rating (1–10): **6.2** · accept votes **5/7** · percentile rank_avg 46.0 (100=best) · rank in year 5.0 (1=best)
 - NAIPv2 `-2.477` · NAIP-v1 `0.616` · SciJudge `0.607` · DGC-BERT `0.040`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.8` Accept (S/P/C 3.5/3.5/2.5) · 14B Fast `6.0` Accept
@@ -5681,8 +6036,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `doi:10.1038/s41467-021-26568-2` · NeuroAI · 2021-11-02
 
-- final **-0.32** (conf 1.00, pct 11) · impact -1.16 · DROP
-- mean rating (1–10): **6.0** · accept votes **3/7** · percentile rank_avg 34.6 (100=best) · rank in year 8.0 (1=best)
+- final **-0.32** (conf 1.00, pct 10) · impact -1.16 · DROP
+- mean rating (1–10): **6.0** · accept votes **3/7** · percentile rank_avg 34.4 (100=best) · rank in year 8.0 (1=best)
 - NAIPv2 `-2.781` · NAIP-v1 `0.435` · SciJudge `-2.651` · DGC-BERT `0.114`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `4.5` Reject (S/P/C 2.0/2.75/2.0) · 14B Fast `5.8` Reject
@@ -5692,13 +6047,27 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
   - [CR-8B](reviews/cyclereviewer-8b/doi_10.1038_s41467-021-26568-2.md#weaknesses): The paper is missing some important references. For example, there is a line of work studying the connection between gradient descent and evolutionary algorithms, such as (1,2,3). The authors should discuss the relationship between their work and these previous works.
   - [DR-14B Fast](reviews/deepreviewer-14b/doi_10.1038_s41467-021-26568-2.md#weaknesses): Despite its strengths, the paper exhibits several weaknesses that warrant careful consideration. A primary concern, validated by multiple reviewers, is the limited practical applicability of the specific neuroevolution algorithm analyzed.…
 
+<a id="arxiv-2605.05115"></a>
+### Manifold Steering Reveals the Shared Geometry of Neural Network Representation and Behavior
+
+`arxiv:2605.05115` · Representation alignment · 2026-05-06
+
+- final **n/a** (conf 0.00, pct 47) · impact n/a · WATCH
+- mean rating (1–10): **n/a** · accept votes **0/0** · percentile rank_avg  (100=best) · rank in year  (1=best)
+- NAIPv2 `` · NAIP-v1 `` · SciJudge `` · DGC-BERT ``
+- CycleReviewer 8B ``  · 70B `` 
+- DeepReviewer 7B Std ``  · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `` 
+- OpenReviewer ``  (S/P/C None/None/None) · SEA-E `` 
+- Telegram: [gonzo_ML/5348](https://t.me/gonzo_ML/5348)
+- Weaknesses: —
+
 <a id="arxiv-2602.14486"></a>
 ### Revisiting the Platonic Representation Hypothesis: An Aristotelian View
 
 `arxiv:2602.14486` · Representation alignment · 2026-02-16
 
-- final **+0.34** (conf 1.00, pct 82) · impact -1.13 · KEEP
-- mean rating (1–10): **7.1** · accept votes **5/7** · percentile rank_avg 66.7 (100=best) · rank in year 12.0 (1=best)
+- final **+0.34** (conf 1.00, pct 83) · impact -1.13 · KEEP
+- mean rating (1–10): **7.1** · accept votes **5/7** · percentile rank_avg 66.6 (100=best) · rank in year 12.0 (1=best)
 - NAIPv2 `-0.554` · NAIP-v1 `0.528` · SciJudge `-4.424` · DGC-BERT `0.477`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `6.2` Reject · 7B Fast `6.5` Accept (S/P/C 3.0/3.0/2.5) · 14B Fast `8.0` Accept
@@ -5713,8 +6082,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2507.01098` · Representation alignment · 2025-07-01
 
-- final **-0.09** (conf 1.00, pct 26) · impact -2.74 · WATCH
-- mean rating (1–10): **5.8** · accept votes **3/7** · percentile rank_avg 33.5 (100=best) · rank in year 75.0 (1=best)
+- final **-0.08** (conf 1.00, pct 24) · impact -2.75 · WATCH
+- mean rating (1–10): **5.8** · accept votes **3/7** · percentile rank_avg 33.4 (100=best) · rank in year 75.0 (1=best)
 - NAIPv2 `-2.256` · NAIP-v1 `0.222` · SciJudge `-9.175` · DGC-BERT `0.015`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `7.0` Accept · 7B Fast `6.2` Reject (S/P/C 2.5/2.5/2.75) · 14B Fast `6.0` Reject
@@ -5729,8 +6098,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2502.15104` · Representation alignment · 2025-02-20
 
-- final **+0.50** (conf 1.00, pct 95) · impact -0.94 · KEEP
-- mean rating (1–10): **6.5** · accept votes **6/7** · percentile rank_avg 66.2 (100=best) · rank in year 16.0 (1=best)
+- final **+0.50** (conf 1.00, pct 96) · impact -0.94 · KEEP
+- mean rating (1–10): **6.5** · accept votes **6/7** · percentile rank_avg 66.1 (100=best) · rank in year 16.0 (1=best)
 - NAIPv2 `-0.112` · NAIP-v1 `0.555` · SciJudge `-5.736` · DGC-BERT `0.833`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `8.0` Accept · 7B Fast `7.0` Accept (S/P/C 3.25/3.0/3.25) · 14B Fast `7.5` Accept
@@ -5745,8 +6114,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2405.07987` · Representation alignment · 2024-05-13
 
-- final **-0.11** (conf 0.82, pct 24) · impact -0.03 · WATCH
-- mean rating (1–10): **6.0** · accept votes **3/6** · percentile rank_avg 39.6 (100=best) · rank in year 35.0 (1=best)
+- final **-0.10** (conf 0.82, pct 22) · impact -0.03 · WATCH
+- mean rating (1–10): **6.0** · accept votes **3/6** · percentile rank_avg 39.4 (100=best) · rank in year 34.0 (1=best)
 - NAIPv2 `-2.098` · NAIP-v1 `0.557` · SciJudge `-0.318` · DGC-BERT `0.039`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std ``  · 7B Fast `5.7` Reject (S/P/C 2.67/2.33/2.67) · 14B Fast `6.5` Accept
@@ -5761,8 +6130,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2405.01012` · Representation alignment · 2024-05-02
 
-- final **-0.52** (conf 1.00, pct 6) · impact -1.44 · DROP
-- mean rating (1–10): **4.6** · accept votes **1/7** · percentile rank_avg 17.6 (100=best) · rank in year 47.0 (1=best)
+- final **-0.51** (conf 1.00, pct 5) · impact -1.47 · DROP
+- mean rating (1–10): **4.6** · accept votes **1/7** · percentile rank_avg 17.4 (100=best) · rank in year 47.0 (1=best)
 - NAIPv2 `-1.223` · NAIP-v1 `0.264` · SciJudge `-2.373` · DGC-BERT `0.024`
 - CycleReviewer 8B `4.5` Reject · 70B `` 
 - DeepReviewer 7B Std `4.2` Reject · 7B Fast `3.5` Reject (S/P/C 2.0/2.5/2.0) · 14B Fast `4.0` Reject
@@ -5777,8 +6146,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2007.02789` · Representation alignment · 2020-07-06
 
-- final **+0.71** (conf 1.00, pct 100) · impact -2.01 · KEEP
-- mean rating (1–10): **6.8** · accept votes **5/7** · percentile rank_avg 57.9 (100=best) · rank in year 6.0 (1=best)
+- final **+0.70** (conf 1.00, pct 100) · impact -2.07 · KEEP
+- mean rating (1–10): **6.8** · accept votes **5/7** · percentile rank_avg 57.8 (100=best) · rank in year 6.0 (1=best)
 - NAIPv2 `-0.351` · NAIP-v1 `0.339` · SciJudge `-4.951` · DGC-BERT `0.388`
 - CycleReviewer 8B `5.5` Reject · 70B `` 
 - DeepReviewer 7B Std `7.5` Accept · 7B Fast `6.5` Accept (S/P/C 3.0/3.0/3.25) · 14B Fast `8.0` Accept
@@ -5793,8 +6162,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `acl:2025.acl-long.126` · Finance · unknown
 
-- final **-0.18** (conf 0.91, pct 21) · impact -0.08 · WATCH · partial fulltext
-- mean rating (1–10): **5.6** · accept votes **2/7** · percentile rank_avg 40.5 (100=best) · rank in year 5.0 (1=best)
+- final **-0.18** (conf 0.91, pct 19) · impact -0.08 · WATCH · partial fulltext
+- mean rating (1–10): **5.6** · accept votes **2/7** · percentile rank_avg 40.4 (100=best) · rank in year 5.0 (1=best)
 - NAIPv2 `-2.904` · NAIP-v1 `0.557` · SciJudge `0.149` · DGC-BERT `0.468`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std `5.0` Reject · 7B Fast `6.0` Reject (S/P/C 2.5/2.75/2.5) · 14B Fast `4.0` Reject
@@ -5809,8 +6178,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2003.01859` · Finance · 2020-02-29
 
-- final **-0.72** (conf 1.00, pct 1) · impact +0.27 · DROP
-- mean rating (1–10): **4.3** · accept votes **1/7** · percentile rank_avg 20.4 (100=best) · rank in year 10.0 (1=best)
+- final **-0.72** (conf 1.00, pct 1) · impact +0.23 · DROP
+- mean rating (1–10): **4.3** · accept votes **1/7** · percentile rank_avg 20.2 (100=best) · rank in year 10.0 (1=best)
 - NAIPv2 `-6.262` · NAIP-v1 `0.747` · SciJudge `-3.593` · DGC-BERT `0.028`
 - CycleReviewer 8B `4.6` Reject · 70B `` 
 - DeepReviewer 7B Std `1.0` Reject · 7B Fast `3.0` Reject (S/P/C 2.0/2.0/1.67) · 14B Fast `3.0` Reject
@@ -5825,8 +6194,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:1807.02787` · Finance · 2018-07-08
 
-- final **-0.74** (conf 1.00, pct 1) · impact -1.93 · DROP
-- mean rating (1–10): **3.2** · accept votes **1/7** · percentile rank_avg 7.5 (100=best) · rank in year 4.0 (1=best)
+- final **-0.75** (conf 1.00, pct 1) · impact -2.01 · DROP
+- mean rating (1–10): **3.2** · accept votes **1/7** · percentile rank_avg 7.4 (100=best) · rank in year 4.0 (1=best)
 - NAIPv2 `-4.266` · NAIP-v1 `0.237` · SciJudge `-3.517` · DGC-BERT `0.592`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `2.0` Reject · 7B Fast `4.0` Reject (S/P/C 2.25/2.25/2.25) · 14B Fast `3.0` Reject
@@ -5836,29 +6205,13 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
   - [CR-8B](reviews/cyclereviewer-8b/arxiv_1807.02787.md#weaknesses): The paper is poorly written and the results are not convincing. The authors do not provide enough details about the data they used and the evaluation metrics they used to evaluate their method. The authors also do not compare their method with other state-of-the-art methods for trading in the foreign exchange market.
   - [DR-14B Fast](reviews/deepreviewer-14b/arxiv_1807.02787.md#weaknesses): While this paper presents a promising application of deep reinforcement learning to financial trading, several weaknesses limit its overall impact and generalizability. One of the primary concerns is the lack of a comprehensive related work section.…
 
-<a id="arxiv-1706.10059"></a>
-### A Deep Reinforcement Learning Framework for the Financial Portfolio Management Problem
-
-`arxiv:1706.10059` · Finance · 2017-06-30
-
-- final **-0.65** (conf 1.00, pct 3) · impact -2.21 · DROP
-- mean rating (1–10): **3.8** · accept votes **0/7** · percentile rank_avg 3.0 (100=best) · rank in year 8.0 (1=best)
-- NAIPv2 `-5.109` · NAIP-v1 `0.235` · SciJudge `-5.784` · DGC-BERT `0.003`
-- CycleReviewer 8B `3.0` Reject · 70B `` 
-- DeepReviewer 7B Std `1.0` Reject · 7B Fast `4.0` Reject (S/P/C 2.25/2.5/2.5) · 14B Fast `4.0` Reject
-- OpenReviewer `3.0` Reject (S/P/C 2.0/2.0/2.0) · SEA-E `5.0` Reject
-- Telegram: [j_links/374](https://t.me/j_links/374)
-- Weaknesses:
-  - [CR-8B](reviews/cyclereviewer-8b/arxiv_1706.10059.md#weaknesses): The paper lacks novelty. The proposed framework is a combination of existing techniques and the novelty is limited. The paper also lacks theoretical analysis and the experiments are not convincing.
-  - [DR-7B Fast](reviews/deepreviewer-7b-fast/arxiv_1706.10059.md#weaknesses): Despite the strengths of this paper, I have identified several weaknesses that warrant careful consideration. Firstly, the paper lacks a comprehensive comparison with existing state-of-the-art reinforcement learning methods for portfolio management. While the authors mention some related works, they do not provide a detailed comparison of their method's performance against these alternatives.…
-
 <a id="arxiv-2201.09746"></a>
 ### Reinforcement Learning Textbook
 
 `arxiv:2201.09746` · Books · 2022-01-19
 
-- final **-0.59** (conf 0.62, pct 4) · impact -0.58 · DROP · partial fulltext
-- mean rating (1–10): **4.5** · accept votes **1/7** · percentile rank_avg 21.1 (100=best) · rank in year 18.0 (1=best)
+- final **-0.59** (conf 0.62, pct 3) · impact -0.55 · DROP · partial fulltext
+- mean rating (1–10): **4.5** · accept votes **1/7** · percentile rank_avg 21.0 (100=best) · rank in year 17.0 (1=best)
 - NAIPv2 `-4.305` · NAIP-v1 `0.616` · SciJudge `-4.059` · DGC-BERT `0.034`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast `5.0` Reject (S/P/C 3.0/3.0/2.0) · 14B Fast `3.8` Reject
@@ -5874,7 +6227,7 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 `arxiv:2201.00650` · Books · 2021-12-30
 
 - final **-0.83** (conf 0.43, pct 0) · impact -1.39 · WATCH · partial fulltext
-- mean rating (1–10): **4.0** · accept votes **0/5** · percentile rank_avg 12.9 (100=best) · rank in year 12.0 (1=best)
+- mean rating (1–10): **4.0** · accept votes **0/5** · percentile rank_avg 12.8 (100=best) · rank in year 12.0 (1=best)
 - NAIPv2 `-3.359` · NAIP-v1 `0.475` · SciJudge `-7.691` · DGC-BERT `0.011`
 - CycleReviewer 8B `5.0` Reject · 70B `` 
 - DeepReviewer 7B Std ``  · 7B Fast `1.0` Reject (S/P/C 1.0/1.0/1.0) · 14B Fast `` 
@@ -5889,8 +6242,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `doi:10.1038/s41566-024-01394-2` · Other · 2024-02-16
 
-- final **-0.13** (conf 0.82, pct 23) · impact -1.61 · WATCH
-- mean rating (1–10): **5.5** · accept votes **2/6** · percentile rank_avg 20.8 (100=best) · rank in year 46.0 (1=best)
+- final **-0.12** (conf 0.82, pct 21) · impact -1.63 · WATCH
+- mean rating (1–10): **5.5** · accept votes **2/6** · percentile rank_avg 20.5 (100=best) · rank in year 46.0 (1=best)
 - NAIPv2 `-3.393` · NAIP-v1 `0.338` · SciJudge `-4.581` · DGC-BERT `0.020`
 - CycleReviewer 8B `4.8` Reject · 70B `` 
 - DeepReviewer 7B Std ``  · 7B Fast `5.2` Reject (S/P/C 3.0/3.0/2.25) · 14B Fast `6.5` Accept
@@ -5905,8 +6258,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2309.10232` · Other · 2023-09-19
 
-- final **-0.77** (conf 1.00, pct 0) · impact -1.90 · DROP
-- mean rating (1–10): **3.2** · accept votes **0/7** · percentile rank_avg 5.5 (100=best) · rank in year 50.0 (1=best)
+- final **-0.76** (conf 1.00, pct 0) · impact -1.90 · DROP
+- mean rating (1–10): **3.2** · accept votes **0/7** · percentile rank_avg 5.3 (100=best) · rank in year 49.0 (1=best)
 - NAIPv2 `-4.305` · NAIP-v1 `0.365` · SciJudge `-7.551` · DGC-BERT `0.022`
 - CycleReviewer 8B `3.0` Reject · 70B `` 
 - DeepReviewer 7B Std `3.5` Reject · 7B Fast `2.5` Reject (S/P/C 1.5/1.5/1.5) · 14B Fast `4.8` Reject
@@ -5921,8 +6274,8 @@ Missing impact_z, conf < 0.5, |final_score| <= 0.2, or low score with high predi
 
 `arxiv:2304.01433` · Other · 2023-04-04
 
-- final **+0.02** (conf 0.74, pct 40) · impact +0.27 · WATCH · partial fulltext
-- mean rating (1–10): **6.8** · accept votes **3/6** · percentile rank_avg 52.3 (100=best) · rank in year 21.0 (1=best)
+- final **+0.02** (conf 0.74, pct 34) · impact +0.30 · WATCH · partial fulltext
+- mean rating (1–10): **6.8** · accept votes **3/6** · percentile rank_avg 52.3 (100=best) · rank in year 20.0 (1=best)
 - NAIPv2 `-1.127` · NAIP-v1 `0.679` · SciJudge `-0.281` · DGC-BERT `0.010`
 - CycleReviewer 8B `6.0` Accept · 70B `` 
 - DeepReviewer 7B Std `3.0` Reject · 7B Fast ``  (S/P/C None/None/None) · 14B Fast `5.2` Reject

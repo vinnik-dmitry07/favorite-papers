@@ -12,7 +12,8 @@
    a few pixels away) get a wider box; leftovers are separated after
    the last tick, then shrunk if the box cannot fit. Scored / counted
    disks stay above the zero / n/a rule (edge, not just center).
-   Selection is mirrored into #sel=<key>,… and restored on load. */
+   Selection is mirrored into #sel=<key>,… and restored on load.
+   The pinned tooltip sits where it covers the fewest selected papers and links. */
 (function () {
   'use strict';
 
@@ -335,6 +336,14 @@
   var HASH_KEY = 'sel';
   var FOCUS_MAX_K = 4;    // never zoom tighter than this when focusing a selection
   var FOCUS_PAD = 70;     // screen px kept free around the selection bbox
+  var TIP_CELL = 10;
+  var TIP_GAP = 14;
+  var TIP_HIT = 1000;     // one cell of a selected disk or its label
+  var TIP_LINK = 4;       // one cell of a highlighted link or neighbour disk
+  var TIP_DIST = 0.05;    // per px beyond the held disk, so the tip stays near it
+  var TIP_STICKY = 8;     // keep the current spot unless a new one is this much cheaper
+  var tipSize = null;
+  var tipOffset = null;
   var PREFS_KEY = 'key-papers-map-prefs';
 
   function optionExists(select, value) {
@@ -428,7 +437,8 @@
       top: Math.max(MARGIN.top, header.height + 22),
       bottom: box.height - MARGIN.bottom,
       width: box.width,
-      height: box.height
+      height: box.height,
+      headerBottom: header.bottom
     };
     plot.gutter = nodes.some(function (d) { return !d.time; }) ? GUTTER : 0;
     var timeLeft = plot.left + plot.gutter + (plot.gutter ? 30 : 0);
@@ -678,14 +688,20 @@
     plot.timeLeft = timeLeft;
   }
 
-  function edgePath(e) {
+  function edgeControl(e) {
     var a = e.source, b = e.target;
     var dx = b.x - a.x, dy = b.y - a.y;
     var len = Math.hypot(dx, dy) || 1;
     var bow = Math.min(70, len * 0.15);
-    var mx = (a.x + b.x) / 2 - (dy / len) * bow;
-    var my = (a.y + b.y) / 2 + (dx / len) * bow;
-    return 'M' + a.x + ',' + a.y + 'Q' + mx + ',' + my + ' ' + b.x + ',' + b.y;
+    return {
+      x: (a.x + b.x) / 2 - (dy / len) * bow,
+      y: (a.y + b.y) / 2 + (dx / len) * bow
+    };
+  }
+
+  function edgePath(e) {
+    var a = e.source, b = e.target, c = edgeControl(e);
+    return 'M' + a.x + ',' + a.y + 'Q' + c.x + ',' + c.y + ' ' + b.x + ',' + b.y;
   }
 
   function redrawAxes() {
@@ -850,6 +866,24 @@
     });
   }
 
+  function labelBox(d, sx, sy) {
+    var half = d.tag.length * LABEL_FONT * 0.29 + 3;
+    return [sx - half, sy - LABEL_FONT, sx + half, sy + 3];
+  }
+
+  // Selected labels ignore collisions and take the first spot that fits
+  // vertically, which is what placeLabels does for the focused papers.
+  function selectedLabelBox(d) {
+    var sx = transform.applyX(d.x);
+    var cy = transform.applyY(d.y);
+    var rr = d.r * transform.k;
+    var below = cy + rr + LABEL_FONT + 1.5;
+    var above = cy - rr - 3;
+    if (below >= 8 && below <= plot.height - 4) return labelBox(d, sx, below);
+    if (above >= 8 && above <= plot.height - 4) return labelBox(d, sx, above);
+    return null;
+  }
+
   function overlaps(box, boxes) {
     for (var i = 0; i < boxes.length; i += 1) {
       var o = boxes[i];
@@ -907,13 +941,12 @@
             || cy < -40 || cy > plot.height + 40) {
           continue;
         }
-        var half = d.tag.length * LABEL_FONT * 0.29 + 3;
         var below = cy + d.r * k + LABEL_FONT + 1.5;
         var above = cy - d.r * k - 3;
         var chosen = null;
         [below, above].forEach(function (sy) {
           if (chosen || sy < 8 || sy > plot.height - 4) return;
-          var box = [sx - half, sy - LABEL_FONT, sx + half, sy + 3];
+          var box = labelBox(d, sx, sy);
           var blocked = overlaps(box, boxes)
             || (!forced[d.index] && overlaps(box, obstacles));
           if (!blocked || inFocus[d.index]) chosen = { sy: sy, box: box };
@@ -1054,7 +1087,11 @@
     var tx = (plot.timeLeft + plot.right) / 2 - k * (x0 + x1) / 2;
     var ty = (plot.top + plot.bottom) / 2 - k * (y0 + y1) / 2;
     svg.transition().duration(500)
-      .call(zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
+      .call(zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k))
+      .on('end', function () {
+        tipOffset = null;
+        if (locked) pinTip(locked);
+      });
   }
 
   function syncShareButton() {
@@ -1195,23 +1232,249 @@
         : '')
       + '<span class="meta">' + hint + '</span></div>');
     tip.style('opacity', 1);
-    if (locked) pinTip(d);
-    else moveTip(event);
+    if (locked) {
+      // Measure at the origin so the right edge cannot shrink the box.
+      tip.style('left', '0px').style('top', '0px');
+      var box = tip.node().getBoundingClientRect();
+      tipSize = { w: box.width, h: box.height };
+      tipOffset = null;
+      pinTip(d);
+    } else {
+      moveTip(event);
+    }
   }
 
+  var tipGrid = null;
+  var tipSat = null;
+  var tipStamp = null;
+  var tipCols = 0;
+  var tipRows = 0;
+
+  function ensureTipGrid(cols, rows) {
+    if (!tipGrid || tipCols !== cols || tipRows !== rows) {
+      tipCols = cols;
+      tipRows = rows;
+      tipGrid = new Float64Array(cols * rows);
+      tipSat = new Float64Array((cols + 1) * (rows + 1));
+      tipStamp = new Int32Array(cols * rows);
+      return;
+    }
+    tipGrid.fill(0);
+  }
+
+  function stampTipRect(x0, y0, x1, y1, weight) {
+    if (!(x1 > x0 && y1 > y0)) return;
+    var c0 = Math.max(0, Math.floor(x0 / TIP_CELL));
+    var r0 = Math.max(0, Math.floor(y0 / TIP_CELL));
+    var c1 = Math.min(tipCols, Math.ceil(x1 / TIP_CELL));
+    var r1 = Math.min(tipRows, Math.ceil(y1 / TIP_CELL));
+    var r, c, row;
+    for (r = r0; r < r1; r += 1) {
+      row = r * tipCols;
+      for (c = c0; c < c1; c += 1) tipGrid[row + c] += weight;
+    }
+  }
+
+  function fillTipSat() {
+    var satW = tipCols + 1;
+    var r, c, rowSum, gridRow, satRow, prevRow;
+    for (r = 0; r < tipRows; r += 1) {
+      rowSum = 0;
+      gridRow = r * tipCols;
+      satRow = (r + 1) * satW;
+      prevRow = r * satW;
+      for (c = 0; c < tipCols; c += 1) {
+        rowSum += tipGrid[gridRow + c];
+        tipSat[satRow + c + 1] = tipSat[prevRow + c + 1] + rowSum;
+      }
+    }
+  }
+
+  function areaCost(x, y, w, h) {
+    var c0 = Math.floor(x / TIP_CELL);
+    var r0 = Math.floor(y / TIP_CELL);
+    var c1 = Math.floor((x + w - 1e-6) / TIP_CELL);
+    var r1 = Math.floor((y + h - 1e-6) / TIP_CELL);
+    if (c0 < 0) c0 = 0;
+    if (r0 < 0) r0 = 0;
+    if (c1 >= tipCols) c1 = tipCols - 1;
+    if (r1 >= tipRows) r1 = tipRows - 1;
+    if (c0 > c1 || r0 > r1) return 0;
+    var satW = tipCols + 1;
+    return tipSat[(r1 + 1) * satW + (c1 + 1)]
+      - tipSat[r0 * satW + (c1 + 1)]
+      - tipSat[(r1 + 1) * satW + c0]
+      + tipSat[r0 * satW + c0];
+  }
+
+  function tipPlaceCost(x, y, w, h, hx, hy, rr) {
+    var nx = hx < x ? x : (hx > x + w ? x + w : hx);
+    var ny = hy < y ? y : (hy > y + h ? y + h : hy);
+    var dist = Math.hypot(hx - nx, hy - ny);
+    return areaCost(x, y, w, h) + TIP_DIST * Math.max(0, dist - rr - TIP_GAP);
+  }
+
+  function clampTipPos(x, y, minX, minY, maxX, maxY) {
+    if (maxX >= minX) {
+      if (x < minX) x = minX;
+      else if (x > maxX) x = maxX;
+    } else {
+      x = 8;
+    }
+    if (maxY >= minY) {
+      if (y < minY) y = minY;
+      else if (y > maxY) y = maxY;
+    } else {
+      y = 8;
+    }
+    return [x, y];
+  }
+
+  function scanTip(minX, minY, maxX, maxY, w, h, hx, hy, rr) {
+    if (maxX < minX || maxY < minY) return null;
+    var best = null;
+    var y = minY;
+    var x, cost;
+    while (y <= maxY) {
+      x = minX;
+      while (x <= maxX) {
+        cost = tipPlaceCost(x, y, w, h, hx, hy, rr);
+        if (!best || cost < best.cost) {
+          best = { x: x, y: y, cost: cost };
+          if (cost === 0) return best;
+        }
+        if (x === maxX) break;
+        x += TIP_CELL;
+        if (x > maxX) x = maxX;
+      }
+      if (y === maxY) break;
+      y += TIP_CELL;
+      if (y > maxY) y = maxY;
+    }
+    return best;
+  }
+
+  function stampTipLinks(inSel) {
+    tipStamp.fill(0);
+    var stampId = 1;
+    var i, e, cpt, x0, y0, x1, y1, x2, y2, approx, steps, s, t, u, px, py, c, r, idx;
+    for (i = 0; i < edges.length; i += 1) {
+      e = edges[i];
+      if (!inSel[e.source.index] && !inSel[e.target.index]) continue;
+      cpt = edgeControl(e);
+      x0 = transform.applyX(e.source.x);
+      y0 = transform.applyY(e.source.y);
+      x1 = transform.applyX(cpt.x);
+      y1 = transform.applyY(cpt.y);
+      x2 = transform.applyX(e.target.x);
+      y2 = transform.applyY(e.target.y);
+      approx = Math.hypot(x1 - x0, y1 - y0) + Math.hypot(x2 - x1, y2 - y1);
+      steps = Math.max(1, Math.ceil(approx / 5));
+      for (s = 0; s <= steps; s += 1) {
+        t = s / steps;
+        u = 1 - t;
+        px = u * u * x0 + 2 * u * t * x1 + t * t * x2;
+        py = u * u * y0 + 2 * u * t * y1 + t * t * y2;
+        c = Math.floor(px / TIP_CELL);
+        r = Math.floor(py / TIP_CELL);
+        if (c < 0 || r < 0 || c >= tipCols || r >= tipRows) continue;
+        idx = r * tipCols + c;
+        if (tipStamp[idx] === stampId) continue;
+        tipStamp[idx] = stampId;
+        tipGrid[idx] += TIP_LINK;
+      }
+      stampId += 1;
+    }
+  }
+
+  /* Cover selected disks and labels, then highlighted links and neighbour
+     disks. Keep the previous offset while panning unless another spot is
+     clearly cheaper. */
   function pinTip(d) {
-    var box = tip.node().getBoundingClientRect();
-    var sx = transform.applyX(d.x) + d.r * transform.k + 14;
-    var sy = transform.applyY(d.y) - 12;
-    if (sx + box.width > window.innerWidth - 8) {
-      sx = transform.applyX(d.x) - d.r * transform.k - box.width - 14;
+    // showTip measures at 0,0. A later zoom frame must not remeasure in place.
+    if (!tipSize || !(tipSize.w > 0 && tipSize.h > 0)) return;
+    var w = tipSize.w;
+    var h = tipSize.h;
+    var cols = Math.max(1, Math.ceil(window.innerWidth / TIP_CELL));
+    var rows = Math.max(1, Math.ceil(window.innerHeight / TIP_CELL));
+    ensureTipGrid(cols, rows);
+
+    var inSel = {};
+    var ownLabel = null;
+    selected.forEach(function (i) {
+      inSel[i] = true;
+      var n = nodes[i];
+      var nsx = transform.applyX(n.x);
+      var nsy = transform.applyY(n.y);
+      var nrr = n.r * transform.k;
+      stampTipRect(
+        nsx - nrr - 4, nsy - nrr - 4, nsx + nrr + 4, nsy + nrr + 4, TIP_HIT
+      );
+      var label = selectedLabelBox(n);
+      if (label) stampTipRect(label[0], label[1], label[2], label[3], TIP_HIT);
+      if (n === d) ownLabel = label;
+    });
+    var seen = {};
+    function stampNeighbour(j) {
+      if (inSel[j] || seen[j]) return;
+      seen[j] = true;
+      var n = nodes[j];
+      var nsx = transform.applyX(n.x);
+      var nsy = transform.applyY(n.y);
+      var nrr = n.r * transform.k;
+      stampTipRect(nsx - nrr, nsy - nrr, nsx + nrr, nsy + nrr, TIP_LINK);
     }
-    if (sy + box.height > window.innerHeight - 8) {
-      sy = window.innerHeight - box.height - 8;
+    selected.forEach(function (i) {
+      neighbours[i].inc.forEach(stampNeighbour);
+      neighbours[i].out.forEach(stampNeighbour);
+    });
+    if (document.getElementById('edges').checked) stampTipLinks(inSel);
+    fillTipSat();
+
+    var hx = transform.applyX(d.x);
+    var hy = transform.applyY(d.y);
+    var rr = d.r * transform.k;
+    var minX = 8;
+    var maxX = window.innerWidth - w - 8;
+    var minY = plot.headerBottom + 4;
+    var maxY = window.innerHeight - h - 8;
+    if (minY > maxY) minY = 8;
+
+    var best = null;
+    if (tipOffset) {
+      var stuck = clampTipPos(
+        hx + tipOffset.dx, hy + tipOffset.dy, minX, minY, maxX, maxY
+      );
+      best = {
+        x: stuck[0],
+        y: stuck[1],
+        cost: tipPlaceCost(stuck[0], stuck[1], w, h, hx, hy, rr)
+      };
     }
-    if (sy < 8) sy = 8;
-    if (sx < 8) sx = 8;
-    tip.style('left', sx + 'px').style('top', sy + 'px');
+    var belowY = ownLabel ? ownLabel[3] + 6 : hy + rr + TIP_GAP;
+    var spots = [
+      [hx + rr + TIP_GAP, hy - 12],
+      [hx - rr - w - TIP_GAP, hy - 12],
+      [hx - w / 2, belowY],
+      [hx - w / 2, hy - rr - h - TIP_GAP]
+    ];
+    var classic = null;
+    spots.forEach(function (spot) {
+      var p = clampTipPos(spot[0], spot[1], minX, minY, maxX, maxY);
+      var cost = tipPlaceCost(p[0], p[1], w, h, hx, hy, rr);
+      if (!classic || cost < classic.cost) {
+        classic = { x: p[0], y: p[1], cost: cost };
+      }
+    });
+    if (!best || classic.cost < best.cost - TIP_STICKY) best = classic;
+    if (best.cost > TIP_STICKY) {
+      var scanned = scanTip(minX, minY, maxX, maxY, w, h, hx, hy, rr);
+      if (scanned && scanned.cost < best.cost - TIP_STICKY) best = scanned;
+    }
+    var left = Math.round(best.x);
+    var top = Math.round(best.y);
+    tip.style('left', left + 'px').style('top', top + 'px');
+    tipOffset = { dx: left - hx, dy: top - hy };
   }
 
   function moveTip(event) {
@@ -1548,6 +1811,7 @@
   document.getElementById('edges').addEventListener('change', function () {
     savePrefs();
     syncEdges();
+    if (locked) pinTip(locked);
   });
   document.getElementById('search').addEventListener('input', function () {
     if (corpusState === 'error') corpusState = 'idle';

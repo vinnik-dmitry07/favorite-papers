@@ -4524,23 +4524,6 @@
     "status": "cached",
     "source": "https://arxiv.org/html/2306.13575"
   },
-  "url:google-research.github.io/seanet/audiopalm/examples": {
-    "arxiv": [
-      "2306.12925"
-    ],
-    "doi": [],
-    "urls": [
-      "https://arxiv.org/abs/2306.12925"
-    ],
-    "titles": [
-      "url:google-research.github.io/seanet/audiopalm/examples"
-    ],
-    "bib_items": 0,
-    "has_bibliography": false,
-    "search_chars": 5210,
-    "status": "cached",
-    "source": "https://google-research.github.io/seanet/audiopalm/examples/"
-  },
   "arxiv:2305.01625": {
     "arxiv": [
       "1810.00825",
@@ -11104,27 +11087,6 @@
     "status": "cached",
     "source": "https://arxiv.org/html/2501.05441"
   },
-  "url:ai.meta.com/blog/emu-text-to-video-generation-image-editing-research": {
-    "arxiv": [],
-    "doi": [],
-    "urls": [
-      "https://ai.facebook.com/subscribe/",
-      "https://ai.meta.com/blog/emu-text-to-video-generation-image-editing-research/",
-      "https://ai.meta.com/blog/generative-ai-text-to-video/",
-      "https://ai.meta.com/blog/greater-creative-control-for-ai-image-generation/",
-      "https://ai.meta.com/blog/muavic-audio-visual-speech-translation-benchmark/",
-      "https://ai.meta.com/blog/multiray-large-scale-AI-models/",
-      "https://ai.meta.com/blog/segment-anything-foundation-model-image-segmentation/",
-      "https://ai.meta.com/research/publications/emu-enhancing-image-generation-models-using-photogenic-needles-in-a-haystack/",
-      "https://github.com/facebookresearch/"
-    ],
-    "titles": [],
-    "bib_items": 0,
-    "has_bibliography": false,
-    "search_chars": 7373,
-    "status": "cached",
-    "source": "https://ai.meta.com/blog/emu-text-to-video-generation-image-editing-research/"
-  },
   "arxiv:2310.04378": {
     "arxiv": [
       "1312.6114",
@@ -11191,70 +11153,6 @@
     "search_chars": 8836,
     "status": "cached",
     "source": "https://arxiv.org/html/2309.15807"
-  },
-  "url:research.nvidia.com/labs/par/perfusion": {
-    "arxiv": [
-      "2108.00946",
-      "2208.01618"
-    ],
-    "doi": [],
-    "urls": [
-      "https://arxiv.org/abs/2108.00946",
-      "https://arxiv.org/abs/2208.01618",
-      "https://github.com/nerfies/nerfies.github.io",
-      "https://github.com/rinongal/textual_inversion",
-      "https://research.nvidia.com/person/gal-chechik",
-      "https://research.nvidia.com/person/yuval-atzmon"
-    ],
-    "titles": [
-      "url:research.nvidia.com/labs/par/perfusion"
-    ],
-    "bib_items": 0,
-    "has_bibliography": false,
-    "search_chars": 6206,
-    "status": "cached",
-    "source": "https://research.nvidia.com/labs/par/Perfusion/"
-  },
-  "url:hyperdreambooth.github.io": {
-    "arxiv": [
-      "2307.06949"
-    ],
-    "doi": [],
-    "urls": [
-      "https://arxiv.org/abs/2307.06949",
-      "https://research.google/people/106214/"
-    ],
-    "titles": [
-      "url:hyperdreambooth.github.io"
-    ],
-    "bib_items": 0,
-    "has_bibliography": false,
-    "search_chars": 9251,
-    "status": "cached",
-    "source": "https://hyperdreambooth.github.io/"
-  },
-  "url:ai.facebook.com/blog/voicebox-generative-ai-model-speech": {
-    "arxiv": [
-      "2210.02747"
-    ],
-    "doi": [],
-    "urls": [
-      "https://ai.facebook.com/blog/generative-ai-text-to-video/",
-      "https://ai.facebook.com/blog/greater-creative-control-for-ai-image-generation/",
-      "https://ai.facebook.com/subscribe/",
-      "https://ai.meta.com/blog/muavic-audio-visual-speech-translation-benchmark/",
-      "https://ai.meta.com/blog/multiray-large-scale-AI-models/",
-      "https://ai.meta.com/blog/segment-anything-foundation-model-image-segmentation/",
-      "https://ai.meta.com/blog/voicebox-generative-ai-model-speech/",
-      "https://arxiv.org/abs/2210.02747",
-      "https://github.com/facebookresearch/"
-    ],
-    "titles": [],
-    "bib_items": 0,
-    "has_bibliography": false,
-    "search_chars": 8912,
-    "status": "cached",
-    "source": "https://ai.meta.com/blog/voicebox-generative-ai-model-speech/"
   },
   "arxiv:2304.12210": {
     "arxiv": [
@@ -11624,17 +11522,6 @@
     "status": "cached",
     "source": "https://arxiv.org/html/2304.05977"
   },
-  "arxiv:2302.10174": {
-    "arxiv": [],
-    "doi": [],
-    "urls": [],
-    "titles": [],
-    "bib_items": 53,
-    "has_bibliography": true,
-    "search_chars": 8487,
-    "status": "cached",
-    "source": "https://arxiv.org/html/2302.10174"
-  },
   "arxiv:2301.08243": {
     "arxiv": [
       "1703.01780",
@@ -11683,46 +11570,6 @@
     "search_chars": 16202,
     "status": "cached",
     "source": "https://arxiv.org/html/2301.08243"
-  },
-  "arxiv:2212.11565": {
-    "arxiv": [
-      "1704.00675",
-      "2010.02502",
-      "2110.04627",
-      "2112.10741",
-      "2204.03458",
-      "2204.06125",
-      "2204.14217",
-      "2205.11487",
-      "2205.15868",
-      "2206.10789",
-      "2207.12598",
-      "2208.01626",
-      "2208.12242",
-      "2209.14792",
-      "2210.02303",
-      "2210.02399",
-      "2210.05559",
-      "2210.08402",
-      "2210.09276",
-      "2210.11427",
-      "2211.11018",
-      "2211.11743",
-      "2211.12572",
-      "2301.12597",
-      "2302.01329",
-      "2302.03011",
-      "2302.05543",
-      "2302.08453"
-    ],
-    "doi": [],
-    "urls": [],
-    "titles": [],
-    "bib_items": 53,
-    "has_bibliography": true,
-    "search_chars": 11227,
-    "status": "cached",
-    "source": "https://arxiv.org/html/2212.11565"
   },
   "arxiv:2208.10442": {
     "arxiv": [
@@ -13887,8 +13734,7 @@
       "https://arxiv.org/abs/2510.22954",
       "https://arxiv.org/abs/2601.05242",
       "https://arxiv.org/abs/2603.18161",
-      "https://github.com/THUDM/slime",
-      "https://research.nvidia.com/labs/nemotron/files/NVIDIA-Nemotron-3-Ultra-Technical-Report.pdf"
+      "https://github.com/THUDM/slime"
     ],
     "titles": [
       "arxiv:1901.01753",
@@ -15743,8 +15589,7 @@
     "urls": [
       "https://arxiv.org/abs/2206.08853",
       "https://arxiv.org/pdf/2206.08853.pdf",
-      "https://github.com/MineDojo/MineDojo",
-      "https://research.nvidia.com/person/ajay-mandlekar"
+      "https://github.com/MineDojo/MineDojo"
     ],
     "titles": [
       "url:minedojo.org"
@@ -19023,34 +18868,6 @@
     "status": "cached",
     "source": "https://arxiv.org/html/1807.02787"
   },
-  "arxiv:1706.10059": {
-    "arxiv": [
-      "1412.6980",
-      "1612.01277"
-    ],
-    "doi": [
-      "10.1002/asmb.2209",
-      "10.1002/j.1538-7305.1956.tb03809.x",
-      "10.1007/s10994-012-5281-z",
-      "10.1016/j.eswa.2005.10.012",
-      "10.1038/nature14236",
-      "10.1038/nature14236http://dx.doi.org/10.1038/nature14236",
-      "10.1109/72.935097",
-      "10.1145/2020408.2020588",
-      "10.1186/2251-712x-9-1",
-      "10.1561/2200000006"
-    ],
-    "urls": [
-      "http://arxiv.org/abs/1412.6980",
-      "http://link.springer.com/10.1007/s10994-012-5281-z"
-    ],
-    "titles": [],
-    "bib_items": 55,
-    "has_bibliography": true,
-    "search_chars": 11558,
-    "status": "cached",
-    "source": "https://arxiv.org/html/1706.10059"
-  },
   "url:rlhfbook.com": {
     "arxiv": [
       "2504.12501"
@@ -20170,10 +19987,7 @@
       "arxiv:2311.06242",
       "arxiv:2402.03300",
       "arxiv:2402.16822",
-      "url:ai.facebook.com/blog/voicebox-generative-ai-model-speech",
-      "url:ai.meta.com/blog/emu-text-to-video-generation-image-editing-research",
       "url:ai.meta.com/research/publications/code-llama-open-foundation-models-for-code",
-      "url:google-research.github.io/seanet/audiopalm/examples",
       "url:rlhfbook.com"
     ],
     "bib_items": 277,
@@ -23705,7 +23519,7 @@
     "bib_items": 58,
     "has_bibliography": true,
     "search_chars": 14254,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2602.06130"
   },
   "arxiv:2211.10869": {
@@ -23775,7 +23589,7 @@
     "bib_items": 46,
     "has_bibliography": true,
     "search_chars": 16735,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2211.10869"
   },
   "arxiv:2609.16454": {
@@ -23835,7 +23649,7 @@
     "bib_items": 46,
     "has_bibliography": true,
     "search_chars": 9804,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2609.16454"
   },
   "arxiv:2608.27448": {
@@ -23892,7 +23706,7 @@
     "bib_items": 37,
     "has_bibliography": true,
     "search_chars": 8410,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2608.27448"
   },
   "arxiv:2601.05053": {
@@ -23939,7 +23753,7 @@
     "bib_items": 37,
     "has_bibliography": true,
     "search_chars": 8295,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2601.05053"
   },
   "arxiv:2510.11686": {
@@ -24008,7 +23822,7 @@
     "bib_items": 90,
     "has_bibliography": true,
     "search_chars": 20088,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2510.11686"
   },
   "arxiv:2609.02737": {
@@ -24155,7 +23969,7 @@
     "bib_items": 89,
     "has_bibliography": true,
     "search_chars": 26358,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2609.02737"
   },
   "arxiv:2608.17981": {
@@ -24292,7 +24106,7 @@
     "bib_items": 100,
     "has_bibliography": true,
     "search_chars": 27392,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2608.17981"
   },
   "arxiv:2608.05806": {
@@ -24321,7 +24135,7 @@
     "bib_items": 20,
     "has_bibliography": true,
     "search_chars": 5812,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2608.05806"
   },
   "arxiv:1807.03819": {
@@ -24370,7 +24184,7 @@
     "bib_items": 35,
     "has_bibliography": true,
     "search_chars": 7834,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/1807.03819"
   },
   "arxiv:2606.29150": {
@@ -24460,7 +24274,7 @@
     "bib_items": 38,
     "has_bibliography": true,
     "search_chars": 8201,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://ar5iv.labs.arxiv.org/html/2606.29150"
   },
   "arxiv:2606.18206": {
@@ -24558,7 +24372,7 @@
     "bib_items": 69,
     "has_bibliography": true,
     "search_chars": 21243,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2606.18206"
   },
   "arxiv:2605.19376": {
@@ -24624,7 +24438,7 @@
     "bib_items": 60,
     "has_bibliography": true,
     "search_chars": 10935,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2605.19376"
   },
   "arxiv:2605.12466": {
@@ -24784,7 +24598,7 @@
     "bib_items": 97,
     "has_bibliography": true,
     "search_chars": 22119,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2605.12466"
   },
   "arxiv:2604.21999": {
@@ -24846,7 +24660,7 @@
     "bib_items": 24,
     "has_bibliography": true,
     "search_chars": 4408,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2604.21999"
   },
   "arxiv:2604.04943": {
@@ -24881,7 +24695,7 @@
     "bib_items": 12,
     "has_bibliography": true,
     "search_chars": 2866,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2604.04943"
   },
   "arxiv:2512.14693": {
@@ -24930,7 +24744,7 @@
     "bib_items": 23,
     "has_bibliography": true,
     "search_chars": 5019,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2512.14693"
   },
   "arxiv:2510.04871": {
@@ -24963,7 +24777,7 @@
     "bib_items": 38,
     "has_bibliography": true,
     "search_chars": 6534,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2510.04871"
   },
   "arxiv:2506.21734": {
@@ -25012,7 +24826,7 @@
     "bib_items": 101,
     "has_bibliography": true,
     "search_chars": 17904,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2506.21734"
   },
   "arxiv:2504.01928": {
@@ -25085,7 +24899,7 @@
     "bib_items": 61,
     "has_bibliography": true,
     "search_chars": 15011,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2504.01928"
   },
   "arxiv:2502.03387": {
@@ -25165,7 +24979,7 @@
     "bib_items": 48,
     "has_bibliography": true,
     "search_chars": 24653,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2502.03387"
   },
   "arxiv:2501.19393": {
@@ -25338,7 +25152,7 @@
     "bib_items": 90,
     "has_bibliography": true,
     "search_chars": 23831,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2501.19393"
   },
   "arxiv:2608.27370": {
@@ -25423,7 +25237,7 @@
     "bib_items": 37,
     "has_bibliography": true,
     "search_chars": 8950,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2403.07714"
   },
   "arxiv:2609.14858": {
@@ -25489,7 +25303,7 @@
     "bib_items": 52,
     "has_bibliography": true,
     "search_chars": 11246,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2609.14858"
   },
   "arxiv:2605.05115": {
@@ -25625,7 +25439,7 @@
     "bib_items": 142,
     "has_bibliography": true,
     "search_chars": 33274,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2605.05115"
   }
 }

@@ -100,13 +100,6 @@
       "Joel Veness"
     ]
   },
-  "url:ai.meta.com/blog/emu-text-to-video-generation-image-editing-research": {
-    "title": "Emu Video and Emu Edit: Our latest generative AI research milestones"
-  },
-  "url:ai.facebook.com/blog/voicebox-generative-ai-model-speech": {
-    "title": "Introducing Voicebox: The first generative AI model for speech to generalize across tasks with state-of-the-art performance",
-    "resolved": "https://ai.meta.com/blog/voicebox-generative-ai-model-speech/"
-  },
   "acl:2023.acl-demo.51": {
     "title": "A System for Answering Simple Questions in Multiple Languages"
   },
@@ -861,14 +854,8 @@
   "arxiv:2304.05977": {
     "resolved": "https://arxiv.org/html/2304.05977"
   },
-  "arxiv:2302.10174": {
-    "resolved": "https://arxiv.org/html/2302.10174"
-  },
   "arxiv:2301.08243": {
     "resolved": "https://arxiv.org/html/2301.08243"
-  },
-  "arxiv:2212.11565": {
-    "resolved": "https://arxiv.org/html/2212.11565"
   },
   "arxiv:2208.10442": {
     "resolved": "https://arxiv.org/html/2208.10442"
@@ -1088,9 +1075,6 @@
   },
   "arxiv:1807.02787": {
     "resolved": "https://arxiv.org/html/1807.02787"
-  },
-  "arxiv:1706.10059": {
-    "resolved": "https://arxiv.org/html/1706.10059"
   },
   "arxiv:2201.09746": {
     "resolved": "https://arxiv.org/html/2201.09746"

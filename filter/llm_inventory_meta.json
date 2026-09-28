@@ -321,28 +321,12 @@
       "n_tokens": 49296
     },
     {
-      "key": "arxiv:2302.10174",
-      "safe_key": "arxiv_2302.10174",
-      "title": "Towards Universal Fake Image Detectors",
-      "section": "Self-supervised learning and vision",
-      "rel_path": "filter/fulltext/arxiv_2302.10174.md",
-      "n_tokens": 15481
-    },
-    {
       "key": "arxiv:2301.08243",
       "safe_key": "arxiv_2301.08243",
       "title": "I-JEPA (Self-Supervised Learning from Images with JEPA)",
       "section": "Self-supervised learning and vision",
       "rel_path": "filter/fulltext/arxiv_2301.08243.md",
       "n_tokens": 15457
-    },
-    {
-      "key": "arxiv:2212.11565",
-      "safe_key": "arxiv_2212.11565",
-      "title": "Tune-A-Video",
-      "section": "Self-supervised learning and vision",
-      "rel_path": "filter/fulltext/arxiv_2212.11565.md",
-      "n_tokens": 10864
     },
     {
       "key": "arxiv:2111.07832",
@@ -593,14 +577,6 @@
       "n_tokens": 7188
     },
     {
-      "key": "arxiv:1706.10059",
-      "safe_key": "arxiv_1706.10059",
-      "title": "A Deep Reinforcement Learning Framework for the Financial Portfolio Management Problem",
-      "section": "Finance",
-      "rel_path": "filter/fulltext/arxiv_1706.10059.md",
-      "n_tokens": 21843
-    },
-    {
       "key": "arxiv:2201.09746",
       "safe_key": "arxiv_2201.09746",
       "title": "Reinforcement Learning Textbook (Sergey Ivanov)",
@@ -698,14 +674,6 @@
       ]
     },
     {
-      "key": "url:google-research.github.io/seanet/audiopalm/examples",
-      "title": "AudioPaLM: an LLM that can speak and listen",
-      "section": "LLMs: architectures, context, training",
-      "urls": [
-        "https://google-research.github.io/seanet/audiopalm/examples/"
-      ]
-    },
-    {
       "key": "url:people.idsia.ch/~juergen/most-cited-neural-nets.html",
       "title": "The most cited neural nets of the 20th century (Schmidhuber)",
       "section": "LLMs: architectures, context, training",
@@ -767,30 +735,6 @@
       "section": "Data, training, optimization",
       "urls": [
         "https://paperswithcode.com/paper/optimizing-millions-of-hyperparameters-by"
-      ]
-    },
-    {
-      "key": "url:ai.meta.com/blog/emu-text-to-video-generation-image-editing-research",
-      "title": "EMU Video: Factorizing Text-to-Video Generation (Meta)",
-      "section": "Self-supervised learning and vision",
-      "urls": [
-        "https://ai.meta.com/blog/emu-text-to-video-generation-image-editing-research/"
-      ]
-    },
-    {
-      "key": "url:research.nvidia.com/labs/par/perfusion",
-      "title": "Perfusion (NVIDIA)",
-      "section": "Self-supervised learning and vision",
-      "urls": [
-        "https://research.nvidia.com/labs/par/Perfusion/"
-      ]
-    },
-    {
-      "key": "url:ai.facebook.com/blog/voicebox-generative-ai-model-speech",
-      "title": "Voicebox (Meta, speech generation)",
-      "section": "Self-supervised learning and vision",
-      "urls": [
-        "https://ai.facebook.com/blog/voicebox-generative-ai-model-speech/"
       ]
     },
     {

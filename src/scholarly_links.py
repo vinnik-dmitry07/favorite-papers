@@ -22,7 +22,7 @@ SCHOLARLY = {
     'deepmind.google', 'www.deepmind.com', 'cdn.openai.com', 'sakana.ai',
     'normalcomputing.ai', 'minedojo.org', 'selfrag.github.io',
     'diamond-wm.github.io', 'latent-consistency-models.github.io',
-    'hyperdreambooth.github.io', 'wang-kevin3290.github.io',
+    'wang-kevin3290.github.io',
     'explorative-modeling.github.io', 'powerpaint.github.io',
     'emu-video.metademolab.com', 'dinov2.metademolab.com',
     'google-research.github.io', 'uber.github.io', 'johnchenresearch.github.io',
