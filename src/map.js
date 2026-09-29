@@ -12,7 +12,8 @@
    a few pixels away) get a wider box; leftovers are separated after
    the last tick, then shrunk if the box cannot fit. Scored / counted
    disks stay above the zero / n/a rule (edge, not just center).
-   Selection is mirrored into #sel=<key>,… and restored on load.
+   Each selection change is a history entry (#sel=<key>,…), so Back and
+   Forward step through selections. A URL restore replaces that entry.
    A selected paper wears a dashed ring one pixel outside the disk.
    The pinned tooltip sits where it covers the
    fewest selected papers and links. Each hold (a click or a deep
@@ -381,6 +382,7 @@
   var byId = Object.create(null);
   nodes.forEach(function (d) { byId[d.id] = d.index; });
   var HASH_KEY = 'sel';
+  var BASE_TITLE = document.title;
   var TIP_CELL = 10;
   var TIP_GAP = 14;
   var TIP_HIT = 1000;     // one cell of a selected disk or its label
@@ -1133,7 +1135,7 @@
     return hovered ? [hovered.index] : [];
   }
 
-  function setSelection(indices) {
+  function setSelection(indices, replace) {
     selected = indices.slice();
     locked = selected.length ? nodes[selected[selected.length - 1]] : null;
     if (!ghostRun || ghostRun.d !== locked) cancelGhost();
@@ -1145,8 +1147,9 @@
       clearHighlight();
       tip.style('opacity', 0);
     }
-    syncHash();
+    syncHash(replace);
     syncShareButton();
+    syncTitle();
   }
 
   function toggleSelected(d) {
@@ -1174,9 +1177,22 @@
     return window.location.href.split('#')[0] + selectionHash();
   }
 
-  function syncHash() {
-    var url = window.location.pathname + window.location.search + selectionHash();
-    window.history.replaceState(null, '', url);
+  function syncHash(replace) {
+    var hash = selectionHash();
+    if (hash === window.location.hash) return;
+    var url = window.location.pathname + window.location.search + hash;
+    if (replace) window.history.replaceState(null, '', url);
+    else window.history.pushState(null, '', url);
+  }
+
+  function syncTitle() {
+    if (!locked) {
+      document.title = BASE_TITLE;
+      return;
+    }
+    var label = locked.title;
+    if (selected.length > 1) label += ' (+' + (selected.length - 1) + ')';
+    document.title = label + ' - ' + BASE_TITLE;
   }
 
   function parseHash(hash) {
@@ -1205,14 +1221,15 @@
     var indices = parseHash(window.location.hash);
     var same = sameList(indices, selected);
     if (!same) {
-      setSelection(indices);
+      setSelection(indices, true);
     } else if (window.location.hash !== selectionHash()) {
-      syncHash();
+      syncHash(true);
     }
     if (fromHashChange && locked) queueGhost(locked);
   }
 
   window.addEventListener('hashchange', function () { applyHash(true); });
+  window.addEventListener('popstate', function () { applyHash(true); });
 
   function syncShareButton() {
     var button = document.getElementById('share');

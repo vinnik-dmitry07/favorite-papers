@@ -205,6 +205,7 @@ DEEP_LINK_JS = '''() => ({
     hash: location.hash,
     tip: getComputedStyle(document.getElementById('tip')).opacity,
     share: document.getElementById('share').disabled,
+    title: document.title,
 })'''
 
 
@@ -397,6 +398,15 @@ def check_deep_link(page, errors: list, label: str, expected: list) -> dict:
     if linked['share']:
         errors.append(f'{label} share button should be enabled')
     return linked
+
+
+def step_history(page, back: bool) -> dict:
+    if back:
+        page.go_back(wait_until='commit')
+    else:
+        page.go_forward(wait_until='commit')
+    page.wait_for_timeout(300)
+    return page.evaluate(DEEP_LINK_JS)
 
 
 def check_ghost(page, errors: list, label: str, shot, calm: bool = False) -> None:
@@ -1687,6 +1697,7 @@ def main() -> None:
         page.wait_for_timeout(1200)
         check_deep_link(page, errors, 'deep link hashchange', alt_expected)
 
+        before_unknown = page.evaluate('() => history.length')
         page.evaluate(
             f"() => {{ location.hash = '#sel={alt_seeds},no-such-key'; }}"
         )
@@ -1694,6 +1705,13 @@ def main() -> None:
         check_deep_link(
             page, errors, 'deep link hashchange unknown', alt_expected
         )
+        after_unknown = page.evaluate('() => history.length')
+        print('unknown key history:', before_unknown, '->', after_unknown)
+        if after_unknown != before_unknown + 1:
+            errors.append(
+                f'unknown key history {before_unknown} -> {after_unknown}, '
+                'expected +1'
+            )
 
         page.reload(wait_until='load')
         check_ghost(
@@ -1736,12 +1754,18 @@ def main() -> None:
             });
             if (!g) return null;
             const b = g.querySelector('circle').getBoundingClientRect();
-            return {id: g.__data__.id, x: b.x + b.width / 2, y: b.y + b.height / 2};
+            return {
+                id: g.__data__.id,
+                title: g.__data__.title,
+                x: b.x + b.width / 2,
+                y: b.y + b.height / 2,
+            };
         }''')
         print('shift-click third:', third)
         if not third:
             errors.append('no bright unselected on-screen node for shift-click')
         else:
+            hist_before = page.evaluate('() => history.length')
             page.keyboard.down('Shift')
             page.mouse.click(third['x'], third['y'])
             page.keyboard.up('Shift')
@@ -1785,6 +1809,78 @@ def main() -> None:
             errors.append(f'Esc hash {after_esc["hash"]!r}, expected empty')
         if not after_esc['share']:
             errors.append('Esc should disable share button')
+
+        if third:
+            base_title = 'Key papers - citation map'
+            hist_after = page.evaluate('() => history.length')
+            print('selection history:', hist_before, '->', hist_after)
+            if hist_after != hist_before + 2:
+                errors.append(
+                    f'selection history {hist_before} -> {hist_after}, '
+                    'expected +2'
+                )
+
+            back_three = step_history(page, True)
+            print('back to three:', back_three)
+            if back_three['held'] != want:
+                errors.append(
+                    f'back held {back_three["held"]!r}, expected {want!r}'
+                )
+            if hash_sel_ids(back_three['hash']) != want:
+                errors.append(
+                    f'back hash {back_three["hash"]!r} should decode to {want!r}'
+                )
+            if third['title'] not in back_three['title']:
+                errors.append(
+                    f'back title {back_three["title"]!r} '
+                    f'missing {third["title"]!r}'
+                )
+
+            back_alt = step_history(page, True)
+            print('back to pair:', back_alt)
+            if back_alt['held'] != alt_expected:
+                errors.append(
+                    f'back pair held {back_alt["held"]!r}, '
+                    f'expected {alt_expected!r}'
+                )
+            if hash_sel_ids(back_alt['hash']) != alt_expected:
+                errors.append(
+                    f'back pair hash {back_alt["hash"]!r} '
+                    f'should decode to {alt_expected!r}'
+                )
+
+            step_history(page, False)
+            fwd = step_history(page, False)
+            print('forward to clear:', fwd)
+            if fwd['held']:
+                errors.append(f'forward left held {fwd["held"]!r}')
+            if fwd['hash'] != '':
+                errors.append(f'forward hash {fwd["hash"]!r}, expected empty')
+            if fwd['title'] != base_title:
+                errors.append(
+                    f'forward title {fwd["title"]!r}, expected {base_title!r}'
+                )
+
+            page.mouse.click(third['x'], third['y'])
+            page.wait_for_timeout(600)
+            held_len = page.evaluate('() => history.length')
+            page.mouse.click(third['x'], third['y'])
+            page.wait_for_timeout(300)
+            reclick = page.evaluate('''() => ({
+                held: [...document.querySelectorAll('.nodes g.held')]
+                    .map(g => g.__data__.id),
+                length: history.length,
+            })''')
+            print('reclick held:', reclick)
+            if reclick['length'] != held_len:
+                errors.append(
+                    f'reclick history {held_len} -> {reclick["length"]}, '
+                    'expected unchanged'
+                )
+            if reclick['held'] != [third['id']]:
+                errors.append(
+                    f'reclick held {reclick["held"]!r}, expected {[third["id"]]!r}'
+                )
 
         page.evaluate('''() => {
             location.hash = '#sel=url:papers.ssrn.com/sol3/papers.cfm?abstract_id=5239006';
