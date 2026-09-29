@@ -2840,6 +2840,24 @@
     "date_source": "arxiv-api"
   },
   {
+    "id": "arxiv:2605.21488",
+    "kind": "arxiv",
+    "label": "Equilibrium Reasoners: Learning Attractors Enables Scalable Reasoning",
+    "title": "Equilibrium Reasoners: Learning Attractors Enables Scalable Reasoning",
+    "section": "Reasoning and the \"physics\" of language models",
+    "urls": [
+      "https://arxiv.org/abs/2605.21488"
+    ],
+    "order": 148,
+    "authors": [
+      "Benhao Huang",
+      "Zhengyang Geng",
+      "Zico Kolter"
+    ],
+    "date": "2026-05-20",
+    "date_source": "arxiv-api"
+  },
+  {
     "id": "arxiv:2605.19376",
     "kind": "arxiv",
     "label": "Generative Recursive Reasoning",
@@ -2848,7 +2866,7 @@
     "urls": [
       "https://arxiv.org/abs/2605.19376"
     ],
-    "order": 148,
+    "order": 149,
     "authors": [
       "Junyeob Baek",
       "Mingyu Jo",
@@ -2867,7 +2885,7 @@
     "urls": [
       "https://arxiv.org/abs/2605.12466"
     ],
-    "order": 149,
+    "order": 150,
     "authors": [
       "Jacob Fein-Ashley",
       "Paria Rashidinejad"
@@ -2884,7 +2902,7 @@
     "urls": [
       "https://arxiv.org/abs/2605.07654"
     ],
-    "order": 150,
+    "order": 151,
     "authors": [
       "Naoto Iwase",
       "Yuki Ichihara",
@@ -2903,7 +2921,7 @@
     "urls": [
       "https://arxiv.org/abs/2604.21999"
     ],
-    "order": 151,
+    "order": 152,
     "authors": [
       "Grigory Sapunov"
     ],
@@ -2919,7 +2937,7 @@
     "urls": [
       "https://arxiv.org/abs/2604.11791"
     ],
-    "order": 152,
+    "order": 153,
     "authors": [
       "Hugh Blayney",
       "Álvaro Arroyo",
@@ -2939,7 +2957,7 @@
     "urls": [
       "https://arxiv.org/abs/2604.04943"
     ],
-    "order": 153,
+    "order": 154,
     "authors": [
       "Julian Coda-Forno",
       "Jane X. Wang",
@@ -2957,7 +2975,7 @@
     "urls": [
       "https://arxiv.org/abs/2604.01754"
     ],
-    "order": 154,
+    "order": 155,
     "authors": [
       "Linyang He",
       "Qiyao Yu",
@@ -2976,7 +2994,7 @@
     "urls": [
       "https://arxiv.org/abs/2602.10416"
     ],
-    "order": 155,
+    "order": 156,
     "authors": [
       "Alex Bie",
       "Travis Dick",
@@ -2995,7 +3013,7 @@
     "urls": [
       "https://openreview.net/pdf?id=klU4737opt"
     ],
-    "order": 156,
+    "order": 157,
     "authors": [],
     "date": "2026-01-27",
     "date_source": "known"
@@ -3009,7 +3027,7 @@
     "urls": [
       "https://arxiv.org/abs/2512.16902"
     ],
-    "order": 157,
+    "order": 158,
     "authors": [
       "Eric Todd",
       "Jannik Brinkmann",
@@ -3028,7 +3046,7 @@
     "urls": [
       "https://arxiv.org/abs/2512.14693"
     ],
-    "order": 158,
+    "order": 159,
     "authors": [
       "Zitian Gao",
       "Lynx Chen",
@@ -3047,7 +3065,7 @@
     "urls": [
       "https://arxiv.org/abs/2510.04871"
     ],
-    "order": 159,
+    "order": 160,
     "authors": [
       "Alexia Jolicoeur-Martineau"
     ],
@@ -3063,7 +3081,7 @@
     "urls": [
       "https://arxiv.org/abs/2510.00184"
     ],
-    "order": 160,
+    "order": 161,
     "authors": [
       "Xiaoyan Bai",
       "Itamar Pres",
@@ -3082,7 +3100,7 @@
     "urls": [
       "https://arxiv.org/abs/2509.25239"
     ],
-    "order": 161,
+    "order": 162,
     "authors": [
       "Kevin Xu",
       "Issei Sato"
@@ -3099,7 +3117,7 @@
     "urls": [
       "https://arxiv.org/abs/2509.20317"
     ],
-    "order": 162,
+    "order": 163,
     "authors": [
       "Xilin Wei",
       "Xiaoran Liu",
@@ -3119,7 +3137,7 @@
     "urls": [
       "https://arxiv.org/abs/2508.02513"
     ],
-    "order": 163,
+    "order": 164,
     "authors": [
       "Tanja Baeumel",
       "Daniil Gurgurov",
@@ -3138,7 +3156,7 @@
     "urls": [
       "https://arxiv.org/abs/2506.21734"
     ],
-    "order": 164,
+    "order": 165,
     "authors": [
       "Guan Wang",
       "Jin Li",
@@ -3157,7 +3175,7 @@
     "urls": [
       "https://arxiv.org/abs/2506.10947"
     ],
-    "order": 165,
+    "order": 166,
     "authors": [
       "Rulin Shao",
       "Shuyue Stella Li",
@@ -3176,7 +3194,7 @@
     "urls": [
       "https://safe-lip-9a8.notion.site/Incorrect-Baseline-Evaluations-Call-into-Question-Recent-LLM-RL-Claims-2012f1fbf0ee8094ab8ded1953c15a37"
     ],
-    "order": 166,
+    "order": 167,
     "authors": [],
     "date": "2025-05-29",
     "date_source": "known",
@@ -3191,7 +3209,7 @@
     "urls": [
       "https://arxiv.org/abs/2505.21493"
     ],
-    "order": 167,
+    "order": 168,
     "authors": [
       "Xiangxin Zhou",
       "Zichen Liu",
@@ -3210,7 +3228,7 @@
     "urls": [
       "https://arxiv.org/abs/2505.21444"
     ],
-    "order": 168,
+    "order": 169,
     "authors": [
       "Sheikh Shafayat",
       "Fahim Tajwar",
@@ -3229,7 +3247,7 @@
     "urls": [
       "https://arxiv.org/abs/2505.15134"
     ],
-    "order": 169,
+    "order": 170,
     "authors": [
       "Shivam Agarwal",
       "Zimin Zhang",
@@ -3248,7 +3266,7 @@
     "urls": [
       "https://arxiv.org/abs/2505.13763"
     ],
-    "order": 170,
+    "order": 171,
     "authors": [
       "Li Ji-An",
       "Hua-Dong Xiong",
@@ -3266,7 +3284,7 @@
     "urls": [
       "https://arxiv.org/abs/2504.20571"
     ],
-    "order": 171,
+    "order": 172,
     "authors": [
       "Yiping Wang",
       "Qing Yang",
@@ -3285,7 +3303,7 @@
     "urls": [
       "https://arxiv.org/abs/2504.01928"
     ],
-    "order": 172,
+    "order": 173,
     "authors": [
       "Boshi Wang",
       "Huan Sun"
@@ -3302,7 +3320,7 @@
     "urls": [
       "https://arxiv.org/abs/2503.21676"
     ],
-    "order": 173,
+    "order": 174,
     "authors": [
       "Nicolas Zucchet",
       "Jörg Bornschein",
@@ -3322,7 +3340,7 @@
     "urls": [
       "https://arxiv.org/abs/2502.19981"
     ],
-    "order": 174,
+    "order": 175,
     "authors": [
       "Tanja Baeumel",
       "Josef van Genabith",
@@ -3340,7 +3358,7 @@
     "urls": [
       "https://arxiv.org/abs/2502.05171"
     ],
-    "order": 175,
+    "order": 176,
     "authors": [
       "Jonas Geiping",
       "Sean McLeish",
@@ -3360,7 +3378,7 @@
     "urls": [
       "https://arxiv.org/abs/2502.06807"
     ],
-    "order": 176,
+    "order": 177,
     "authors": [
       " OpenAI",
       " :",
@@ -3380,7 +3398,7 @@
     "urls": [
       "https://arxiv.org/abs/2502.03387"
     ],
-    "order": 177,
+    "order": 178,
     "authors": [
       "Yixin Ye",
       "Zhen Huang",
@@ -3399,7 +3417,7 @@
     "urls": [
       "https://arxiv.org/abs/2502.00873"
     ],
-    "order": 178,
+    "order": 179,
     "authors": [
       "Subhash Kantamneni",
       "Max Tegmark"
@@ -3417,7 +3435,7 @@
     "urls": [
       "https://arxiv.org/abs/2501.19393"
     ],
-    "order": 179,
+    "order": 180,
     "authors": [
       "Niklas Muennighoff",
       "Zitong Yang",
@@ -3436,7 +3454,7 @@
     "urls": [
       "https://arxiv.org/abs/2501.04519"
     ],
-    "order": 180,
+    "order": 181,
     "authors": [
       "Xinyu Guan",
       "Li Lyna Zhang",
@@ -3456,7 +3474,7 @@
     "urls": [
       "https://arxiv.org/abs/2412.14135"
     ],
-    "order": 181,
+    "order": 182,
     "authors": [
       "Zhiyuan Zeng",
       "Qinyuan Cheng",
@@ -3476,7 +3494,7 @@
     "urls": [
       "https://arxiv.org/abs/2412.06769"
     ],
-    "order": 182,
+    "order": 183,
     "authors": [
       "Shibo Hao",
       "Sainbayar Sukhbaatar",
@@ -3496,7 +3514,7 @@
     "urls": [
       "https://arxiv.org/abs/2410.21272"
     ],
-    "order": 183,
+    "order": 184,
     "authors": [
       "Yaniv Nikankin",
       "Anja Reusch",
@@ -3515,7 +3533,7 @@
     "urls": [
       "https://arxiv.org/abs/2305.13673"
     ],
-    "order": 184,
+    "order": 185,
     "authors": [
       "Zeyuan Allen-Zhu",
       "Yuanzhi Li"
@@ -3533,7 +3551,7 @@
     "urls": [
       "https://arxiv.org/abs/2407.20311"
     ],
-    "order": 185,
+    "order": 186,
     "authors": [
       "Tian Ye",
       "Zicheng Xu",
@@ -3552,7 +3570,7 @@
     "urls": [
       "https://arxiv.org/abs/2309.14316"
     ],
-    "order": 186,
+    "order": 187,
     "authors": [
       "Zeyuan Allen-Zhu",
       "Yuanzhi Li"
@@ -3569,7 +3587,7 @@
     "urls": [
       "https://arxiv.org/abs/2309.14402"
     ],
-    "order": 187,
+    "order": 188,
     "authors": [
       "Zeyuan Allen-Zhu",
       "Yuanzhi Li"
@@ -3586,7 +3604,7 @@
     "urls": [
       "https://arxiv.org/abs/2404.05405"
     ],
-    "order": 188,
+    "order": 189,
     "authors": [
       "Zeyuan Allen-Zhu",
       "Yuanzhi Li"
@@ -3604,7 +3622,7 @@
     "urls": [
       "https://arxiv.org/abs/2407.15017"
     ],
-    "order": 189,
+    "order": 190,
     "authors": [
       "Mengru Wang",
       "Yunzhi Yao",
@@ -3624,7 +3642,7 @@
     "urls": [
       "https://doi.org/10.1038/s41586-024-07522-w"
     ],
-    "order": 190,
+    "order": 191,
     "authors": [],
     "date": null,
     "date_source": null,
@@ -3639,7 +3657,7 @@
     "urls": [
       "https://arxiv.org/abs/2406.11813"
     ],
-    "order": 191,
+    "order": 192,
     "authors": [
       "Hoyeon Chang",
       "Jinho Park",
@@ -3658,7 +3676,7 @@
     "urls": [
       "https://arxiv.org/abs/2406.11741"
     ],
-    "order": 192,
+    "order": 193,
     "authors": [
       "Edwin Zhang",
       "Vincent Zhu",
@@ -3678,7 +3696,7 @@
     "urls": [
       "https://arxiv.org/abs/2406.03689"
     ],
-    "order": 193,
+    "order": 194,
     "authors": [
       "Keyon Vafa",
       "Justin Y. Chen",
@@ -3698,7 +3716,7 @@
     "urls": [
       "https://arxiv.org/abs/2406.03445"
     ],
-    "order": 194,
+    "order": 195,
     "authors": [
       "Tianyi Zhou",
       "Deqing Fu",
@@ -3717,7 +3735,7 @@
     "urls": [
       "https://arxiv.org/abs/2405.15071"
     ],
-    "order": 195,
+    "order": 196,
     "authors": [
       "Boshi Wang",
       "Xiang Yue",
@@ -3736,7 +3754,7 @@
     "urls": [
       "https://arxiv.org/abs/2405.14838"
     ],
-    "order": 196,
+    "order": 197,
     "authors": [
       "Yuntian Deng",
       "Yejin Choi",
@@ -3755,7 +3773,7 @@
     "urls": [
       "https://doi.org/10.1038/d41586-024-01413-w"
     ],
-    "order": 197,
+    "order": 198,
     "authors": [],
     "date": null,
     "date_source": null
@@ -3769,7 +3787,7 @@
     "urls": [
       "https://arxiv.org/abs/2402.01817"
     ],
-    "order": 198,
+    "order": 199,
     "authors": [
       "Subbarao Kambhampati",
       "Karthik Valmeekam",
@@ -3789,7 +3807,7 @@
     "urls": [
       "https://arxiv.org/abs/2312.13558"
     ],
-    "order": 199,
+    "order": 200,
     "authors": [
       "Pratyusha Sharma",
       "Jordan T. Ash",
@@ -3808,7 +3826,7 @@
     "urls": [
       "https://openreview.net/forum?id=hcQfTsVnBo"
     ],
-    "order": 200,
+    "order": 201,
     "authors": [
       "Dashiell Stander",
       "Qinan Yu",
@@ -3828,7 +3846,7 @@
     "urls": [
       "https://arxiv.org/abs/2309.12288"
     ],
-    "order": 201,
+    "order": 202,
     "authors": [
       "Lukas Berglund",
       "Meg Tong",
@@ -3848,7 +3866,7 @@
     "urls": [
       "https://arxiv.org/abs/2304.15004"
     ],
-    "order": 202,
+    "order": 203,
     "authors": [
       "Rylan Schaeffer",
       "Brando Miranda",
@@ -3867,7 +3885,7 @@
     "urls": [
       "https://arxiv.org/abs/2302.00923"
     ],
-    "order": 203,
+    "order": 204,
     "authors": [
       "Zhuosheng Zhang",
       "Aston Zhang",
@@ -3886,7 +3904,7 @@
     "urls": [
       "https://arxiv.org/abs/2301.06627"
     ],
-    "order": 204,
+    "order": 205,
     "authors": [
       "Kyle Mahowald",
       "Anna A. Ivanova",
@@ -3905,7 +3923,7 @@
     "urls": [
       "https://arxiv.org/abs/2301.05217"
     ],
-    "order": 205,
+    "order": 206,
     "authors": [
       "Neel Nanda",
       "Lawrence Chan",
@@ -3924,7 +3942,7 @@
     "urls": [
       "https://arxiv.org/abs/2212.09196"
     ],
-    "order": 206,
+    "order": 207,
     "authors": [
       "Taylor Webb",
       "Keith J. Holyoak",
@@ -3942,7 +3960,7 @@
     "urls": [
       "https://ai.googleblog.com/2022/11/characterizing-emergent-phenomena-in.html"
     ],
-    "order": 207,
+    "order": 208,
     "authors": [],
     "date": "2022-11-10",
     "date_source": "page",
@@ -3957,7 +3975,7 @@
     "urls": [
       "https://openreview.net/forum?id=wUU-7XTL5XO"
     ],
-    "order": 208,
+    "order": 209,
     "authors": [
       "Karthik Valmeekam",
       "Matthew Marquez",
@@ -3978,7 +3996,7 @@
     "urls": [
       "https://arxiv.org/abs/2203.11171"
     ],
-    "order": 209,
+    "order": 210,
     "authors": [
       "Xuezhi Wang",
       "Jason Wei",
@@ -3998,7 +4016,7 @@
     "urls": [
       "https://arxiv.org/abs/2608.27370"
     ],
-    "order": 210,
+    "order": 211,
     "authors": [
       "Kairong Luo",
       "Jiarui Cui",
@@ -4017,7 +4035,7 @@
     "urls": [
       "https://arxiv.org/abs/2608.05136"
     ],
-    "order": 211,
+    "order": 212,
     "authors": [
       "Devender Singh"
     ],
@@ -4036,7 +4054,7 @@
       "https://explorative-modeling.github.io/",
       "https://arxiviq.substack.com/p/explorative-modeling-unlocking-a"
     ],
-    "order": 212,
+    "order": 213,
     "authors": [
       "Alexi Gladstone",
       "Heng Ji",
@@ -4055,7 +4073,7 @@
     "urls": [
       "https://doi.org/10.5281/zenodo.21979851"
     ],
-    "order": 213,
+    "order": 214,
     "authors": [
       "Michael Timothy Bennett"
     ],
@@ -4071,7 +4089,7 @@
     "urls": [
       "https://arxiv.org/abs/2601.21343"
     ],
-    "order": 214,
+    "order": 215,
     "authors": [
       "Ellen Xiaoqing Tan",
       "Jack Lanchantin",
@@ -4093,7 +4111,7 @@
       "https://abehrouz.github.io/files/NL.pdf",
       "https://research.google/blog/introducing-nested-learning-a-new-ml-paradigm-for-continual-learning/"
     ],
-    "order": 215,
+    "order": 216,
     "authors": [
       "Ali Behrouz",
       "Meisam Razaviyayn",
@@ -4113,7 +4131,7 @@
     "urls": [
       "https://arxiv.org/abs/2510.05491"
     ],
-    "order": 216,
+    "order": 217,
     "authors": [
       "Zichong Li",
       "Liming Liu",
@@ -4132,7 +4150,7 @@
     "urls": [
       "https://arxiv.org/abs/2508.11408"
     ],
-    "order": 217,
+    "order": 218,
     "authors": [
       "Wenhao Zhang",
       "Yuexiang Xie",
@@ -4151,7 +4169,7 @@
     "urls": [
       "https://arxiv.org/abs/2507.12856"
     ],
-    "order": 218,
+    "order": 219,
     "authors": [
       "Chongli Qin",
       "Jost Tobias Springenberg"
@@ -4169,7 +4187,7 @@
     "urls": [
       "https://arxiv.org/abs/2506.08007"
     ],
-    "order": 219,
+    "order": 220,
     "authors": [
       "Qingxiu Dong",
       "Li Dong",
@@ -4191,7 +4209,7 @@
       "https://openreview.net/forum?id=bA6BgSbaUi",
       "https://openreview.net/forum?id=NhU661EZ9C"
     ],
-    "order": 220,
+    "order": 221,
     "authors": [
       "John X. Morris",
       "Chawin Sitawarin",
@@ -4211,7 +4229,7 @@
     "urls": [
       "https://arxiv.org/abs/2410.07041"
     ],
-    "order": 221,
+    "order": 222,
     "authors": [
       "François Charton",
       "Julia Kempe"
@@ -4229,7 +4247,7 @@
     "urls": [
       "https://iclr.cc/virtual/2025/poster/30565"
     ],
-    "order": 222,
+    "order": 223,
     "authors": [
       "Gyu Yeol Kim",
       "Min-hwan Oh"
@@ -4248,7 +4266,7 @@
     "urls": [
       "https://arxiv.org/abs/2409.03137"
     ],
-    "order": 223,
+    "order": 224,
     "authors": [
       "Matteo Pagliardini",
       "Pierre Ablin",
@@ -4266,7 +4284,7 @@
     "urls": [
       "https://arxiv.org/abs/2405.20541"
     ],
-    "order": 224,
+    "order": 225,
     "authors": [
       "Zachary Ankner",
       "Cody Blakeney",
@@ -4286,7 +4304,7 @@
     "urls": [
       "https://arxiv.org/abs/2405.20233"
     ],
-    "order": 225,
+    "order": 226,
     "authors": [
       "Jaerin Lee",
       "Bong Gyun Kang",
@@ -4305,7 +4323,7 @@
     "urls": [
       "https://arxiv.org/abs/2405.18392"
     ],
-    "order": 226,
+    "order": 227,
     "authors": [
       "Alexander Hägele",
       "Elie Bakouch",
@@ -4325,7 +4343,7 @@
     "urls": [
       "https://epochai.org/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year"
     ],
-    "order": 227,
+    "order": 228,
     "authors": [],
     "date": "2024-05-28",
     "date_source": "known",
@@ -4340,7 +4358,7 @@
     "urls": [
       "https://arxiv.org/abs/2405.16684"
     ],
-    "order": 228,
+    "order": 229,
     "authors": [
       "Rohan Pandey"
     ],
@@ -4356,7 +4374,7 @@
     "urls": [
       "https://arxiv.org/abs/2405.15682"
     ],
-    "order": 229,
+    "order": 230,
     "authors": [
       "Aaron Defazio",
       "Xingyu Alice Yang",
@@ -4375,7 +4393,7 @@
     "urls": [
       "https://www.educatingsilicon.com/2024/05/09/how-much-llm-training-data-is-there-in-the-limit/"
     ],
-    "order": 230,
+    "order": 231,
     "authors": [],
     "date": "2024-05-09",
     "date_source": "url",
@@ -4390,7 +4408,7 @@
     "urls": [
       "https://arxiv.org/abs/2403.05175"
     ],
-    "order": 231,
+    "order": 232,
     "authors": [
       "Gido M. van de Ven",
       "Nicholas Soures",
@@ -4408,7 +4426,7 @@
     "urls": [
       "https://arxiv.org/abs/2402.02342"
     ],
-    "order": 232,
+    "order": 233,
     "authors": [
       "Arsalan Sharifnassab",
       "Saber Salehkaleybar",
@@ -4426,7 +4444,7 @@
     "urls": [
       "https://arxiv.org/abs/2401.17401"
     ],
-    "order": 233,
+    "order": 234,
     "authors": [
       "Thomas Degris",
       "Khurram Javed",
@@ -4445,7 +4463,7 @@
     "urls": [
       "https://arxiv.org/abs/2312.17742"
     ],
-    "order": 234,
+    "order": 235,
     "authors": [
       "Yonglong Tian",
       "Lijie Fan",
@@ -4464,7 +4482,7 @@
     "urls": [
       "https://arxiv.org/abs/2312.10549"
     ],
-    "order": 235,
+    "order": 236,
     "authors": [
       "Everton L. Aleixo",
       "Juan G. Colonna",
@@ -4483,7 +4501,7 @@
     "urls": [
       "https://arxiv.org/abs/2307.06440"
     ],
-    "order": 236,
+    "order": 237,
     "authors": [
       "Jean Kaddour",
       "Oscar Key",
@@ -4502,7 +4520,7 @@
     "urls": [
       "https://doi.org/10.1038/s41586-024-07711-7"
     ],
-    "order": 237,
+    "order": 238,
     "authors": [
       "Shibhansh Dohare",
       "J. Fernando Hernandez-Garcia",
@@ -4523,7 +4541,7 @@
     "urls": [
       "https://arxiv.org/abs/2305.14342"
     ],
-    "order": 238,
+    "order": 239,
     "authors": [
       "Hong Liu",
       "Zhiyuan Li",
@@ -4543,7 +4561,7 @@
     "urls": [
       "https://arxiv.org/abs/2302.06675"
     ],
-    "order": 239,
+    "order": 240,
     "authors": [
       "Xiangning Chen",
       "Chen Liang",
@@ -4563,7 +4581,7 @@
     "urls": [
       "https://arxiv.org/abs/2212.14034"
     ],
-    "order": 240,
+    "order": 241,
     "authors": [
       "Jonas Geiping",
       "Tom Goldstein"
@@ -4581,7 +4599,7 @@
     "urls": [
       "https://arxiv.org/abs/2210.10760"
     ],
-    "order": 241,
+    "order": 242,
     "authors": [
       "Leo Gao",
       "John Schulman",
@@ -4600,7 +4618,7 @@
     "urls": [
       "https://arxiv.org/abs/2110.09485"
     ],
-    "order": 242,
+    "order": 243,
     "authors": [
       "Randall Balestriero",
       "Jerome Pesenti",
@@ -4618,7 +4636,7 @@
     "urls": [
       "https://arxiv.org/abs/2108.06325"
     ],
-    "order": 243,
+    "order": 244,
     "authors": [
       "Shibhansh Dohare",
       "Richard S. Sutton",
@@ -4637,7 +4655,7 @@
     "urls": [
       "https://arxiv.org/abs/2010.01412"
     ],
-    "order": 244,
+    "order": 245,
     "authors": [
       "Pierre Foret",
       "Ariel Kleiner",
@@ -4657,7 +4675,7 @@
     "urls": [
       "https://arxiv.org/abs/2009.11848"
     ],
-    "order": 245,
+    "order": 246,
     "authors": [
       "Keyulu Xu",
       "Mozhi Zhang",
@@ -4677,7 +4695,7 @@
       "https://arxiv.org/abs/2009.11243",
       "https://arxiv.org/abs/2002.11887"
     ],
-    "order": 246,
+    "order": 247,
     "authors": [
       "Luke Metz",
       "Niru Maheswaranathan",
@@ -4697,7 +4715,7 @@
     "urls": [
       "https://arxiv.org/abs/2001.08361"
     ],
-    "order": 247,
+    "order": 248,
     "authors": [
       "Jared Kaplan",
       "Sam McCandlish",
@@ -4717,7 +4735,7 @@
     "urls": [
       "https://openai.com/index/deep-double-descent/"
     ],
-    "order": 248,
+    "order": 249,
     "authors": [],
     "date": null,
     "date_source": null,
@@ -4732,7 +4750,7 @@
     "urls": [
       "https://paperswithcode.com/paper/optimizing-millions-of-hyperparameters-by"
     ],
-    "order": 249,
+    "order": 250,
     "authors": [],
     "date": null,
     "date_source": null
@@ -4746,7 +4764,7 @@
     "urls": [
       "https://arxiv.org/abs/1904.00962"
     ],
-    "order": 250,
+    "order": 251,
     "authors": [
       "Yang You",
       "Jing Li",
@@ -4765,7 +4783,7 @@
     "urls": [
       "https://arxiv.org/abs/1803.03635"
     ],
-    "order": 251,
+    "order": 252,
     "authors": [
       "Jonathan Frankle",
       "Michael Carbin"
@@ -4783,7 +4801,7 @@
     "urls": [
       "https://openreview.net/forum?id=ry_WPG-A-"
     ],
-    "order": 252,
+    "order": 253,
     "authors": [],
     "date": "2017-10-27",
     "date_source": "known",
@@ -4798,7 +4816,7 @@
     "urls": [
       "https://arxiv.org/abs/1708.07120"
     ],
-    "order": 253,
+    "order": 254,
     "authors": [
       "Leslie N. Smith",
       "Nicholay Topin"
@@ -4815,7 +4833,7 @@
     "urls": [
       "https://arxiv.org/abs/1708.02072"
     ],
-    "order": 254,
+    "order": 255,
     "authors": [
       "Ronald Kemker",
       "Marc McClure",
@@ -4834,7 +4852,7 @@
     "urls": [
       "https://doi.org/10.1073/pnas.1611835114"
     ],
-    "order": 255,
+    "order": 256,
     "authors": [],
     "date": null,
     "date_source": null
@@ -4848,7 +4866,7 @@
     "urls": [
       "https://arxiv.org/abs/1506.01186"
     ],
-    "order": 256,
+    "order": 257,
     "authors": [
       "Leslie N. Smith"
     ],
@@ -4866,7 +4884,7 @@
       "https://haiyuwu.github.io/visreg",
       "https://arxiviq.substack.com/p/visreg-variance-invariance-sketching"
     ],
-    "order": 257,
+    "order": 258,
     "authors": [
       "Haiyu Wu",
       "Randall Balestriero",
@@ -4885,7 +4903,7 @@
     "urls": [
       "https://arxiv.org/abs/2605.26379"
     ],
-    "order": 258,
+    "order": 259,
     "authors": [
       "David Klindt",
       "Yann LeCun",
@@ -4904,7 +4922,7 @@
     "urls": [
       "https://arxiv.org/abs/2604.09168"
     ],
-    "order": 259,
+    "order": 260,
     "authors": [
       "Sahil Goyal",
       "Swayam Agrawal",
@@ -4924,7 +4942,7 @@
     "urls": [
       "https://arxiv.org/abs/2511.08544"
     ],
-    "order": 260,
+    "order": 261,
     "authors": [
       "Randall Balestriero",
       "Yann LeCun"
@@ -4942,7 +4960,7 @@
     "urls": [
       "https://arxiv.org/abs/2501.05441"
     ],
-    "order": 261,
+    "order": 262,
     "authors": [
       "Yiwen Huang",
       "Aaron Gokaslan",
@@ -4962,7 +4980,7 @@
     "urls": [
       "https://arxiv.org/abs/2310.04378"
     ],
-    "order": 262,
+    "order": 263,
     "authors": [
       "Simian Luo",
       "Yiqin Tan",
@@ -4982,7 +5000,7 @@
     "urls": [
       "https://arxiv.org/abs/2309.15807"
     ],
-    "order": 263,
+    "order": 264,
     "authors": [
       "Xiaoliang Dai",
       "Ji Hou",
@@ -5002,7 +5020,7 @@
     "urls": [
       "https://arxiv.org/abs/2304.12210"
     ],
-    "order": 264,
+    "order": 265,
     "authors": [
       "Randall Balestriero",
       "Mark Ibrahim",
@@ -5022,7 +5040,7 @@
     "urls": [
       "https://arxiv.org/abs/2304.09355"
     ],
-    "order": 265,
+    "order": 266,
     "authors": [
       "Ravid Shwartz-Ziv",
       "Yann LeCun"
@@ -5040,7 +5058,7 @@
     "urls": [
       "https://arxiv.org/abs/2304.07193"
     ],
-    "order": 266,
+    "order": 267,
     "authors": [
       "Maxime Oquab",
       "Timothée Darcet",
@@ -5060,7 +5078,7 @@
     "urls": [
       "https://arxiv.org/abs/2304.05977"
     ],
-    "order": 267,
+    "order": 268,
     "authors": [
       "Jiazheng Xu",
       "Xiao Liu",
@@ -5080,7 +5098,7 @@
     "urls": [
       "https://arxiv.org/abs/2301.08243"
     ],
-    "order": 268,
+    "order": 269,
     "authors": [
       "Mahmoud Assran",
       "Quentin Duval",
@@ -5100,7 +5118,7 @@
     "urls": [
       "https://arxiv.org/abs/2208.10442"
     ],
-    "order": 269,
+    "order": 270,
     "authors": [
       "Wenhui Wang",
       "Hangbo Bao",
@@ -5120,7 +5138,7 @@
     "urls": [
       "https://openreview.net/forum?id=BZ5a1r-kVsf"
     ],
-    "order": 270,
+    "order": 271,
     "authors": [],
     "date": "2022-06-27",
     "date_source": "known",
@@ -5135,7 +5153,7 @@
     "urls": [
       "https://arxiv.org/abs/2111.07832"
     ],
-    "order": 271,
+    "order": 272,
     "authors": [
       "Jinghao Zhou",
       "Chen Wei",
@@ -5155,7 +5173,7 @@
     "urls": [
       "https://arxiv.org/abs/2105.04906"
     ],
-    "order": 272,
+    "order": 273,
     "authors": [
       "Adrien Bardes",
       "Jean Ponce",
@@ -5174,7 +5192,7 @@
     "urls": [
       "https://arxiv.org/abs/2104.14294"
     ],
-    "order": 273,
+    "order": 274,
     "authors": [
       "Mathilde Caron",
       "Hugo Touvron",
@@ -5194,7 +5212,7 @@
     "urls": [
       "https://arxiv.org/abs/2006.09882"
     ],
-    "order": 274,
+    "order": 275,
     "authors": [
       "Mathilde Caron",
       "Ishan Misra",
@@ -5214,7 +5232,7 @@
     "urls": [
       "https://arxiv.org/abs/2606.18543"
     ],
-    "order": 275,
+    "order": 276,
     "authors": [
       "Haozhe Chen",
       "Karthik Narasimhan",
@@ -5233,7 +5251,7 @@
     "urls": [
       "https://arxiv.org/abs/2410.07095"
     ],
-    "order": 276,
+    "order": 277,
     "authors": [
       "Jun Shern Chan",
       "Neil Chowdhury",
@@ -5253,7 +5271,7 @@
     "urls": [
       "https://arxiv.org/abs/2405.08007"
     ],
-    "order": 277,
+    "order": 278,
     "authors": [
       "Cameron R. Jones",
       "Benjamin K. Bergen"
@@ -5271,7 +5289,7 @@
     "urls": [
       "https://arxiv.org/abs/2403.07714"
     ],
-    "order": 278,
+    "order": 279,
     "authors": [
       "Zhicheng Guo",
       "Sijie Cheng",
@@ -5290,7 +5308,7 @@
     "urls": [
       "https://arxiv.org/abs/2402.16822"
     ],
-    "order": 279,
+    "order": 280,
     "authors": [
       "Mikayel Samvelyan",
       "Sharath Chandra Raparthy",
@@ -5310,7 +5328,7 @@
     "urls": [
       "https://arxiv.org/abs/2402.12483"
     ],
-    "order": 280,
+    "order": 281,
     "authors": [
       "Nishant Balepur",
       "Abhilasha Ravichander",
@@ -5329,7 +5347,7 @@
     "urls": [
       "https://arxiv.org/abs/2311.16452"
     ],
-    "order": 281,
+    "order": 282,
     "authors": [
       "Harsha Nori",
       "Yin Tat Lee",
@@ -5349,7 +5367,7 @@
     "urls": [
       "https://selfrag.github.io/"
     ],
-    "order": 282,
+    "order": 283,
     "authors": [
       "Akari Asai",
       "Zeqiu Wu",
@@ -5370,7 +5388,7 @@
     "urls": [
       "https://arxiv.org/abs/2309.16797"
     ],
-    "order": 283,
+    "order": 284,
     "authors": [
       "Chrisantha Fernando",
       "Dylan Banarse",
@@ -5390,7 +5408,7 @@
     "urls": [
       "https://aclanthology.org/2023.acl-demo.51/"
     ],
-    "order": 284,
+    "order": 285,
     "authors": [],
     "date": "2023-07-01",
     "date_source": "page",
@@ -5405,7 +5423,7 @@
     "urls": [
       "https://arxiv.org/abs/2304.08467"
     ],
-    "order": 285,
+    "order": 286,
     "authors": [
       "Jesse Mu",
       "Xiang Lisa Li",
@@ -5423,7 +5441,7 @@
     "urls": [
       "https://arxiv.org/abs/2212.14024"
     ],
-    "order": 286,
+    "order": 287,
     "authors": [
       "Omar Khattab",
       "Keshav Santhanam",
@@ -5443,7 +5461,7 @@
     "urls": [
       "https://arxiv.org/abs/2212.09741"
     ],
-    "order": 287,
+    "order": 288,
     "authors": [
       "Hongjin Su",
       "Weijia Shi",
@@ -5463,7 +5481,7 @@
     "urls": [
       "https://arxiv.org/abs/2206.04615"
     ],
-    "order": 288,
+    "order": 289,
     "authors": [
       "Aarohi Srivastava",
       "Abhinav Rastogi",
@@ -5483,7 +5501,7 @@
     "urls": [
       "https://arxiv.org/abs/2205.13147"
     ],
-    "order": 289,
+    "order": 290,
     "authors": [
       "Aditya Kusupati",
       "Gantavya Bhatt",
@@ -5503,7 +5521,7 @@
     "urls": [
       "https://aclanthology.org/2022.emnlp-main.340/"
     ],
-    "order": 290,
+    "order": 291,
     "authors": [
       "Yizhong Wang",
       "Swaroop Mishra",
@@ -5524,7 +5542,7 @@
     "urls": [
       "https://arxiv.org/abs/2112.07899"
     ],
-    "order": 291,
+    "order": 292,
     "authors": [
       "Jianmo Ni",
       "Chen Qu",
@@ -5544,7 +5562,7 @@
     "urls": [
       "https://aclanthology.org/2022.acl-long.360/"
     ],
-    "order": 292,
+    "order": 293,
     "authors": [
       "Wen Xiao",
       "Iz Beltagy",
@@ -5565,7 +5583,7 @@
     "urls": [
       "https://arxiv.org/abs/2101.02235"
     ],
-    "order": 293,
+    "order": 294,
     "authors": [
       "Mor Geva",
       "Daniel Khashabi",
@@ -5585,7 +5603,7 @@
     "urls": [
       "https://lilianweng.github.io/posts/2020-10-29-odqa/"
     ],
-    "order": 294,
+    "order": 295,
     "authors": [],
     "date": "2020-10-29",
     "date_source": "url"
@@ -5599,7 +5617,7 @@
     "urls": [
       "https://arxiv.org/abs/2609.14858"
     ],
-    "order": 295,
+    "order": 296,
     "authors": [
       "Tong Zheng",
       "Xidong Wu",
@@ -5618,7 +5636,7 @@
     "urls": [
       "https://arxiv.org/abs/2608.23875"
     ],
-    "order": 296,
+    "order": 297,
     "authors": [
       "Aaron Dharna",
       "Cong Lu",
@@ -5638,7 +5656,7 @@
     "urls": [
       "https://arxiv.org/abs/2608.19197"
     ],
-    "order": 297,
+    "order": 298,
     "authors": [
       "Bo Liu",
       "Simon Yu",
@@ -5659,7 +5677,7 @@
       "https://arxiv.org/abs/2608.08311",
       "https://razzant.github.io/ouroboros/"
     ],
-    "order": 298,
+    "order": 299,
     "authors": [
       "Anton Razzhigaev",
       "Andrei Gritsaev",
@@ -5677,7 +5695,7 @@
     "urls": [
       "https://arxiv.org/abs/2607.13104"
     ],
-    "order": 299,
+    "order": 300,
     "authors": [
       "Zhe Ren",
       "Yimeng Chen",
@@ -5697,7 +5715,7 @@
     "urls": [
       "https://arxiv.org/abs/2605.13821"
     ],
-    "order": 300,
+    "order": 301,
     "authors": [
       "Jiayi Zhang",
       "Yongfeng Gu",
@@ -5716,7 +5734,7 @@
     "urls": [
       "https://arxiv.org/abs/2603.19461"
     ],
-    "order": 301,
+    "order": 302,
     "authors": [
       "Jenny Zhang",
       "Bingchen Zhao",
@@ -5737,7 +5755,7 @@
       "https://arxiv.org/abs/2602.07755",
       "https://github.com/zksha/alma"
     ],
-    "order": 302,
+    "order": 303,
     "authors": [
       "Yiming Xiong",
       "Shengran Hu",
@@ -5756,7 +5774,7 @@
       "https://arxiv.org/abs/2601.21557",
       "https://github.com/metaevo-ai/meta-context-engineering"
     ],
-    "order": 303,
+    "order": 304,
     "authors": [
       "Haoran Ye",
       "Xuning He",
@@ -5775,7 +5793,7 @@
     "urls": [
       "https://arxiv.org/abs/2601.07055"
     ],
-    "order": 304,
+    "order": 305,
     "authors": [
       "Zhenrui Yue",
       "Kartikeya Upasani",
@@ -5795,7 +5813,7 @@
     "urls": [
       "https://arxiv.org/abs/2601.03192"
     ],
-    "order": 305,
+    "order": 306,
     "authors": [
       "Shengtao Zhang",
       "Jiaqian Wang",
@@ -5815,7 +5833,7 @@
     "urls": [
       "https://arxiv.org/abs/2512.18746"
     ],
-    "order": 306,
+    "order": 307,
     "authors": [
       "Guibin Zhang",
       "Haotian Ren",
@@ -5834,7 +5852,7 @@
     "urls": [
       "https://arxiv.org/abs/2512.18552"
     ],
-    "order": 307,
+    "order": 308,
     "authors": [
       "Yuxiang Wei",
       "Zhiqing Sun",
@@ -5854,7 +5872,7 @@
     "urls": [
       "https://arxiv.org/abs/2512.18160"
     ],
-    "order": 308,
+    "order": 309,
     "authors": [
       "Alex Wilf",
       "Pranjal Aggarwal",
@@ -5874,7 +5892,7 @@
     "urls": [
       "https://arxiv.org/abs/2511.15593"
     ],
-    "order": 309,
+    "order": 310,
     "authors": [
       "Alexis Audran-Reiss",
       "Jordi Armengol-Estapé",
@@ -5894,7 +5912,7 @@
     "urls": [
       "https://sakana.ai/shinka-evolve/"
     ],
-    "order": 310,
+    "order": 311,
     "authors": [
       "Robert Tjarko Lange",
       "Yuki Imajuku",
@@ -5914,7 +5932,7 @@
     "urls": [
       "https://arxiv.org/abs/2508.16204"
     ],
-    "order": 311,
+    "order": 312,
     "authors": [
       "João Abrantes",
       "Robert Tjarko Lange",
@@ -5933,7 +5951,7 @@
     "urls": [
       "https://arxiv.org/abs/2507.18074"
     ],
-    "order": 312,
+    "order": 313,
     "authors": [
       "Yixiu Liu",
       "Yang Nan",
@@ -5953,7 +5971,7 @@
     "urls": [
       "https://arxiv.org/abs/2505.22954"
     ],
-    "order": 313,
+    "order": 314,
     "authors": [
       "Jenny Zhang",
       "Shengran Hu",
@@ -5972,7 +5990,7 @@
     "urls": [
       "https://doi.org/10.21203/rs.3.rs-6688473/v1"
     ],
-    "order": 314,
+    "order": 315,
     "authors": [],
     "date": null,
     "date_source": null
@@ -5986,7 +6004,7 @@
     "urls": [
       "https://arxiv.org/abs/2502.15840"
     ],
-    "order": 315,
+    "order": 316,
     "authors": [
       "Axel Backlund",
       "Lukas Petersson"
@@ -6004,7 +6022,7 @@
     "urls": [
       "https://arxiv.org/abs/2410.04444"
     ],
-    "order": 316,
+    "order": 317,
     "authors": [
       "Xunjian Yin",
       "Xinyi Wang",
@@ -6025,7 +6043,7 @@
       "https://arxiv.org/abs/2408.08435",
       "https://github.com/ShengranHu/ADAS"
     ],
-    "order": 317,
+    "order": 318,
     "authors": [
       "Shengran Hu",
       "Cong Lu",
@@ -6044,7 +6062,7 @@
     "urls": [
       "https://arxiv.org/abs/2407.00695"
     ],
-    "order": 318,
+    "order": 319,
     "authors": [
       "Gabriel Poesia",
       "David Broman",
@@ -6063,7 +6081,7 @@
     "urls": [
       "https://arxiv.org/abs/2406.04268"
     ],
-    "order": 319,
+    "order": 320,
     "authors": [
       "Edward Hughes",
       "Michael Dennis",
@@ -6083,7 +6101,7 @@
     "urls": [
       "https://arxiv.org/abs/2402.16823"
     ],
-    "order": 320,
+    "order": 321,
     "authors": [
       "Mingchen Zhuge",
       "Wenyi Wang",
@@ -6103,7 +6121,7 @@
     "urls": [
       "https://research.google/blog/few-shot-tool-use-doesnt-really-work-yet/"
     ],
-    "order": 321,
+    "order": 322,
     "authors": [
       "Alon Jacovi",
       "Avi Caciularu",
@@ -6123,7 +6141,7 @@
     "urls": [
       "https://openreview.net/forum?id=pOoKI3ouv1"
     ],
-    "order": 322,
+    "order": 323,
     "authors": [
       "Jonathan Richens",
       "Tom Everitt"
@@ -6141,7 +6159,7 @@
     "urls": [
       "https://doi.org/10.1038/s42256-023-00754-x"
     ],
-    "order": 323,
+    "order": 324,
     "authors": [],
     "date": null,
     "date_source": null,
@@ -6156,7 +6174,7 @@
     "urls": [
       "https://arxiv.org/abs/2311.02462"
     ],
-    "order": 324,
+    "order": 325,
     "authors": [
       "Meredith Ringel Morris",
       "Jascha Sohl-Dickstein",
@@ -6176,7 +6194,7 @@
     "urls": [
       "https://arxiv.org/abs/2311.00344"
     ],
-    "order": 325,
+    "order": 326,
     "authors": [
       "Olivier Sigaud",
       "Gianluca Baldassarre",
@@ -6196,7 +6214,7 @@
     "urls": [
       "https://doi.org/10.1038/s41586-023-06924-6"
     ],
-    "order": 326,
+    "order": 327,
     "authors": [],
     "date": null,
     "date_source": null,
@@ -6211,7 +6229,7 @@
     "urls": [
       "https://lilianweng.github.io/posts/2023-06-23-agent/"
     ],
-    "order": 327,
+    "order": 328,
     "authors": [],
     "date": "2023-06-23",
     "date_source": "url",
@@ -6226,7 +6244,7 @@
     "urls": [
       "https://minedojo.org/"
     ],
-    "order": 328,
+    "order": 329,
     "authors": [
       "Linxi Fan",
       "Guanzhi Wang",
@@ -6247,7 +6265,7 @@
     "urls": [
       "https://arxiv.org/abs/1905.10985"
     ],
-    "order": 329,
+    "order": 330,
     "authors": [
       "Jeff Clune"
     ],
@@ -6264,7 +6282,7 @@
     "urls": [
       "https://arxiv.org/abs/1901.01753"
     ],
-    "order": 330,
+    "order": 331,
     "authors": [
       "Rui Wang",
       "Joel Lehman",
@@ -6285,7 +6303,7 @@
       "https://arxiv.org/abs/2609.01437",
       "https://self-developing-agents.github.io/"
     ],
-    "order": 331,
+    "order": 332,
     "authors": [
       "Yuhao Wu",
       "Jingyuan Zhang",
@@ -6304,7 +6322,7 @@
     "urls": [
       "https://openai.com/index/harness-engineering/"
     ],
-    "order": 332,
+    "order": 333,
     "authors": [],
     "date": null,
     "date_source": null,
@@ -6319,7 +6337,7 @@
     "urls": [
       "https://github.com/deepseek-ai/deepseek-harness"
     ],
-    "order": 333,
+    "order": 334,
     "authors": [],
     "date": "2026-08-13",
     "date_source": "github",
@@ -6335,7 +6353,7 @@
       "https://github.com/alexisfox7/RGB-Agent",
       "https://arxiv.org/abs/2607.20064"
     ],
-    "order": 334,
+    "order": 335,
     "authors": [
       "Alexis Fox",
       "Junlin Wang",
@@ -6355,7 +6373,7 @@
     "urls": [
       "https://alexzhang13.github.io/blog/2026/harness/"
     ],
-    "order": 335,
+    "order": 336,
     "authors": [],
     "date": "2026-07-20",
     "date_source": "page"
@@ -6370,7 +6388,7 @@
       "http://schema-harness.github.io",
       "https://huggingface.co/datasets/schema-harness/arc-agi-3-schema-traces"
     ],
-    "order": 336,
+    "order": 337,
     "authors": [],
     "date": "2026-07-17",
     "date_source": "known",
@@ -6385,7 +6403,7 @@
     "urls": [
       "https://www.weco.ai/blog/first-evidence-of-recursive-self-improvement"
     ],
-    "order": 337,
+    "order": 338,
     "authors": [],
     "date": null,
     "date_source": null
@@ -6399,7 +6417,7 @@
     "urls": [
       "https://lilianweng.github.io/posts/2026-07-04-harness/"
     ],
-    "order": 338,
+    "order": 339,
     "authors": [],
     "date": "2026-07-04",
     "date_source": "url"
@@ -6413,7 +6431,7 @@
     "urls": [
       "https://arxiv.org/abs/2606.01770"
     ],
-    "order": 339,
+    "order": 340,
     "authors": [
       "Zewen Liu",
       "Zhan Shi",
@@ -6432,7 +6450,7 @@
     "urls": [
       "https://tufalabs.ai/research/duck-harness/"
     ],
-    "order": 340,
+    "order": 341,
     "authors": [],
     "date": null,
     "date_source": null
@@ -6446,7 +6464,7 @@
     "urls": [
       "https://github.com/PrimeIntellect-ai/prime-agent"
     ],
-    "order": 341,
+    "order": 342,
     "authors": [],
     "date": "2026-05-08",
     "date_source": "github",
@@ -6462,7 +6480,7 @@
       "https://arxiv.org/abs/2604.25850",
       "https://github.com/china-qijizhifeng/agentic-harness-engineering"
     ],
-    "order": 342,
+    "order": 343,
     "authors": [
       "Jiahang Lin",
       "Shichun Liu",
@@ -6482,7 +6500,7 @@
       "https://arxiv.org/abs/2604.19341",
       "https://haotianye.com/blog/simpletes/"
     ],
-    "order": 343,
+    "order": 344,
     "authors": [
       "Haotian Ye",
       "Haowei Lin",
@@ -6501,7 +6519,7 @@
     "urls": [
       "https://arxiv.org/abs/2604.08224"
     ],
-    "order": 344,
+    "order": 345,
     "authors": [
       "Chenyu Zhou",
       "Huacan Chai",
@@ -6522,7 +6540,7 @@
       "https://arxiv.org/abs/2603.28052",
       "https://yoonholee.com/meta-harness/"
     ],
-    "order": 345,
+    "order": 346,
     "authors": [
       "Yoonho Lee",
       "Roshen Nair",
@@ -6542,7 +6560,7 @@
     "urls": [
       "https://arxiv.org/abs/2607.23379"
     ],
-    "order": 346,
+    "order": 347,
     "authors": [
       "Tobias Bersia",
       "Tatiana Gaintseva"
@@ -6560,7 +6578,7 @@
     "urls": [
       "https://arxiv.org/abs/2603.19426"
     ],
-    "order": 347,
+    "order": 348,
     "authors": [
       "Viliana Devbunova"
     ],
@@ -6577,7 +6595,7 @@
     "urls": [
       "https://transformer-circuits.pub/2025/introspection/index.html"
     ],
-    "order": 348,
+    "order": 349,
     "authors": [
       "Jack Lindsey"
     ],
@@ -6594,7 +6612,7 @@
     "urls": [
       "https://www.anthropic.com/research/reasoning-models-dont-say-think"
     ],
-    "order": 349,
+    "order": 350,
     "authors": [
       "Yanda Chen",
       "Joe Benton",
@@ -6615,7 +6633,7 @@
     "urls": [
       "https://ai-2027.com/"
     ],
-    "order": 350,
+    "order": 351,
     "authors": [],
     "date": "2025-04-03",
     "date_source": "page"
@@ -6629,7 +6647,7 @@
     "urls": [
       "https://www.anthropic.com/research/tracing-thoughts-language-model"
     ],
-    "order": 351,
+    "order": 352,
     "authors": [],
     "date": "2025-03-27",
     "date_source": "known",
@@ -6644,7 +6662,7 @@
     "urls": [
       "https://transformer-circuits.pub/2025/attribution-graphs/methods.html"
     ],
-    "order": 352,
+    "order": 353,
     "authors": [],
     "date": "2025-03-27",
     "date_source": "page",
@@ -6659,7 +6677,7 @@
     "urls": [
       "https://transformer-circuits.pub/2025/attribution-graphs/biology.html"
     ],
-    "order": 353,
+    "order": 354,
     "authors": [],
     "date": "2025-03-27",
     "date_source": "page",
@@ -6674,7 +6692,7 @@
     "urls": [
       "https://arxiv.org/abs/2503.16348"
     ],
-    "order": 354,
+    "order": 355,
     "authors": [
       "Murray Shanahan"
     ],
@@ -6691,7 +6709,7 @@
     "urls": [
       "https://arxiv.org/abs/2502.03407"
     ],
-    "order": 355,
+    "order": 356,
     "authors": [
       "Nicholas Goldowsky-Dill",
       "Bilal Chughtai",
@@ -6710,7 +6728,7 @@
     "urls": [
       "https://arxiv.org/abs/2501.18837"
     ],
-    "order": 356,
+    "order": 357,
     "authors": [
       "Mrinank Sharma",
       "Meg Tong",
@@ -6730,7 +6748,7 @@
     "urls": [
       "https://www.alignmentforum.org/posts/NfFST5Mio7BCAQHPA/an-extremely-opinionated-annotated-list-of-my-favourite-1"
     ],
-    "order": 357,
+    "order": 358,
     "authors": [],
     "date": null,
     "date_source": null,
@@ -6745,7 +6763,7 @@
     "urls": [
       "https://situational-awareness.ai"
     ],
-    "order": 358,
+    "order": 359,
     "authors": [],
     "date": null,
     "date_source": null,
@@ -6760,7 +6778,7 @@
     "urls": [
       "https://www.anthropic.com/news/mapping-mind-language-model"
     ],
-    "order": 359,
+    "order": 360,
     "authors": [],
     "date": "2024-05-21",
     "date_source": "known",
@@ -6775,7 +6793,7 @@
     "urls": [
       "https://openai.com/research/weak-to-strong-generalization"
     ],
-    "order": 360,
+    "order": 361,
     "authors": [
       "Collin Burns",
       "Pavel Izmailov",
@@ -6796,7 +6814,7 @@
     "urls": [
       "https://arxiv.org/abs/2309.08600"
     ],
-    "order": 361,
+    "order": 362,
     "authors": [
       "Hoagy Cunningham",
       "Aidan Ewart",
@@ -6816,7 +6834,7 @@
     "urls": [
       "https://arxiv.org/abs/2308.08708"
     ],
-    "order": 362,
+    "order": 363,
     "authors": [
       "Patrick Butlin",
       "Robert Long",
@@ -6836,7 +6854,7 @@
     "urls": [
       "https://arxiv.org/abs/2304.06528"
     ],
-    "order": 363,
+    "order": 364,
     "authors": [
       "Victoria Krakovna",
       "Janos Kramar"
@@ -6854,7 +6872,7 @@
     "urls": [
       "https://arxiv.org/abs/2303.07103"
     ],
-    "order": 364,
+    "order": 365,
     "authors": [
       "David J. Chalmers"
     ],
@@ -6871,7 +6889,7 @@
     "urls": [
       "https://arxiv.org/abs/2206.13477"
     ],
-    "order": 365,
+    "order": 366,
     "authors": [
       "Alexander Matt Turner",
       "Prasad Tadepalli"
@@ -6889,7 +6907,7 @@
     "urls": [
       "https://arxiv.org/abs/2206.13353"
     ],
-    "order": 366,
+    "order": 367,
     "authors": [
       "Joseph Carlsmith"
     ],
@@ -6906,7 +6924,7 @@
     "urls": [
       "https://arxiv.org/abs/1912.01683"
     ],
-    "order": 367,
+    "order": 368,
     "authors": [
       "Alexander Matt Turner",
       "Logan Smith",
@@ -6926,7 +6944,7 @@
     "urls": [
       "https://arxiv.org/abs/2606.08720"
     ],
-    "order": 368,
+    "order": 369,
     "authors": [
       "Randall C. O'Reilly"
     ],
@@ -6943,7 +6961,7 @@
     "urls": [
       "https://herasight-project.webflow.io/technical-paper/cogpgt-1"
     ],
-    "order": 369,
+    "order": 370,
     "authors": [],
     "date": "2025-10-21",
     "date_source": "known",
@@ -6958,7 +6976,7 @@
     "urls": [
       "https://arxiv.org/abs/2505.17117"
     ],
-    "order": 370,
+    "order": 371,
     "authors": [
       "Chen Shani",
       "Liron Soffer",
@@ -6979,7 +6997,7 @@
       "https://www.cell.com/iscience/fulltext/S2589-0042(25)00289-5",
       "https://doi.org/10.1016/j.isci.2025.112029"
     ],
-    "order": 371,
+    "order": 372,
     "authors": [],
     "date": "2024-08-14",
     "date_source": "known"
@@ -6993,7 +7011,7 @@
     "urls": [
       "https://doi.org/10.1101/2024.02.22.581686"
     ],
-    "order": 372,
+    "order": 373,
     "authors": [],
     "date": null,
     "date_source": null
@@ -7007,7 +7025,7 @@
     "urls": [
       "https://doi.org/10.1101/2023.04.04.535512"
     ],
-    "order": 373,
+    "order": 374,
     "authors": [],
     "date": null,
     "date_source": null
@@ -7021,7 +7039,7 @@
     "urls": [
       "https://doi.org/10.1371/journal.pcbi.1011005"
     ],
-    "order": 374,
+    "order": 375,
     "authors": [],
     "date": null,
     "date_source": null
@@ -7036,7 +7054,7 @@
       "https://doi.org/10.1371/journal.pcbi.1010628",
       "https://www.biorxiv.org/content/10.1101/688622v2.full"
     ],
-    "order": 375,
+    "order": 376,
     "authors": [],
     "date": null,
     "date_source": null,
@@ -7051,7 +7069,7 @@
     "urls": [
       "https://arxiv.org/abs/2210.08340"
     ],
-    "order": 376,
+    "order": 377,
     "authors": [
       "Anthony Zador",
       "Sean Escola",
@@ -7071,7 +7089,7 @@
     "urls": [
       "https://arxiv.org/abs/2112.04035"
     ],
-    "order": 377,
+    "order": 378,
     "authors": [
       "James C. R. Whittington",
       "Joseph Warren",
@@ -7091,7 +7109,7 @@
       "https://arxiv.org/abs/2112.03978",
       "https://doi.org/10.1038/s41583-022-00642-0"
     ],
-    "order": 378,
+    "order": 379,
     "authors": [
       "Mikail Khona",
       "Ila R. Fiete"
@@ -7109,7 +7127,7 @@
     "urls": [
       "https://doi.org/10.1038/s41467-021-26568-2"
     ],
-    "order": 379,
+    "order": 380,
     "authors": [],
     "date": null,
     "date_source": null
@@ -7123,7 +7141,7 @@
     "urls": [
       "https://transformer-circuits.pub/2026/workspace/"
     ],
-    "order": 380,
+    "order": 381,
     "authors": [],
     "date": "2026-07-06",
     "date_source": "page",
@@ -7138,7 +7156,7 @@
     "urls": [
       "https://arxiv.org/abs/2605.05115"
     ],
-    "order": 381,
+    "order": 382,
     "authors": [
       "Daniel Wurgaft",
       "Can Rager",
@@ -7157,7 +7175,7 @@
     "urls": [
       "https://arxiv.org/abs/2602.14486"
     ],
-    "order": 382,
+    "order": 383,
     "authors": [
       "Fabian Gröger",
       "Shuo Wen",
@@ -7176,7 +7194,7 @@
     "urls": [
       "https://arxiv.org/abs/2507.01098"
     ],
-    "order": 383,
+    "order": 384,
     "authors": [
       "Liu Ziyin",
       "Isaac Chuang"
@@ -7194,7 +7212,7 @@
     "urls": [
       "https://arxiv.org/abs/2502.15104"
     ],
-    "order": 384,
+    "order": 385,
     "authors": [
       "Chanwoo Chun",
       "Abdulkadir Canatar",
@@ -7213,7 +7231,7 @@
     "urls": [
       "https://arxiv.org/abs/2405.07987"
     ],
-    "order": 385,
+    "order": 386,
     "authors": [
       "Minyoung Huh",
       "Brian Cheung",
@@ -7233,7 +7251,7 @@
     "urls": [
       "https://arxiv.org/abs/2405.01012"
     ],
-    "order": 386,
+    "order": 387,
     "authors": [
       "Alex Murphy",
       "Joel Zylberberg",
@@ -7251,7 +7269,7 @@
     "urls": [
       "https://arxiv.org/abs/2007.02789"
     ],
-    "order": 387,
+    "order": 388,
     "authors": [
       "Jörn Diedrichsen",
       "Eva Berlot",
@@ -7270,7 +7288,7 @@
     "urls": [
       "https://thinkingmachines.ai/news/learning-to-replicate-expert-judgment-in-financial-tasks/"
     ],
-    "order": 388,
+    "order": 389,
     "authors": [],
     "date": null,
     "date_source": null
@@ -7284,7 +7302,7 @@
     "urls": [
       "https://aclanthology.org/2025.acl-long.126/"
     ],
-    "order": 389,
+    "order": 390,
     "authors": [],
     "date": "2025-07-01",
     "date_source": "page"
@@ -7301,7 +7319,7 @@
       "https://voices.uchicago.edu/stefannagel/files/2025/07/Complexity_2.pdf",
       "https://bfi.uchicago.edu/wp-content/uploads/2025/08/BFI_WP_2025-104.pdf"
     ],
-    "order": 390,
+    "order": 391,
     "authors": [],
     "date": "2025-05-07",
     "date_source": "page"
@@ -7315,7 +7333,7 @@
     "urls": [
       "https://arxiv.org/abs/2003.01859"
     ],
-    "order": 391,
+    "order": 392,
     "authors": [
       "Weiwei Jiang"
     ],
@@ -7331,7 +7349,7 @@
     "urls": [
       "https://www.groundai.com/project/an-intelligent-financial-portfolio-trading-strategy-using-deep-q-learning8432/3"
     ],
-    "order": 392,
+    "order": 393,
     "authors": [
       "Hyungjun Park",
       "Min Kyu Sim",
@@ -7350,7 +7368,7 @@
     "urls": [
       "https://www.researchgate.net/publication/331273826"
     ],
-    "order": 393,
+    "order": 394,
     "authors": [
       "Nikolaos Passalis",
       "Anastasios Tefas",
@@ -7370,7 +7388,7 @@
     "urls": [
       "https://arxiv.org/abs/1807.02787"
     ],
-    "order": 394,
+    "order": 395,
     "authors": [
       "Chien Yi Huang"
     ],
@@ -7386,7 +7404,7 @@
     "urls": [
       "https://neuroevolutionbook.com/"
     ],
-    "order": 395,
+    "order": 396,
     "authors": [],
     "date": null,
     "date_source": null,
@@ -7401,7 +7419,7 @@
     "urls": [
       "https://rlhfbook.com/"
     ],
-    "order": 396,
+    "order": 397,
     "authors": [
       "Nathan Lambert"
     ],
@@ -7419,7 +7437,7 @@
     "urls": [
       "https://link.springer.com/book/10.1007/978-3-031-45468-4"
     ],
-    "order": 397,
+    "order": 398,
     "authors": [],
     "date": "2023-11-01",
     "date_source": "page",
@@ -7434,7 +7452,7 @@
     "urls": [
       "https://arxiv.org/abs/2201.09746"
     ],
-    "order": 398,
+    "order": 399,
     "authors": [
       "Sergey Ivanov"
     ],
@@ -7451,7 +7469,7 @@
     "urls": [
       "https://arxiv.org/abs/2201.00650"
     ],
-    "order": 399,
+    "order": 400,
     "authors": [
       "Shlomo Kashani",
       "Amir Ivry"
@@ -7469,7 +7487,7 @@
       "https://doi.org/10.1038/s41566-024-01394-2",
       "https://doi.org/10.1038/s41377-022-00717-8"
     ],
-    "order": 400,
+    "order": 401,
     "authors": [],
     "date": null,
     "date_source": null,
@@ -7484,7 +7502,7 @@
     "urls": [
       "https://arxiv.org/abs/2309.10232"
     ],
-    "order": 401,
+    "order": 402,
     "authors": [
       "Yufeng Zhang",
       "Hao Yan",
@@ -7503,7 +7521,7 @@
     "urls": [
       "https://direct.mit.edu/coli/article/doi/10.1162/coli_a_00481/116160/"
     ],
-    "order": 402,
+    "order": 403,
     "authors": [],
     "date": "2023-09-01",
     "date_source": "known"
@@ -7517,7 +7535,7 @@
     "urls": [
       "https://arxiv.org/abs/2304.01433"
     ],
-    "order": 403,
+    "order": 404,
     "authors": [
       "Norman P. Jouppi",
       "George Kurian",
@@ -7537,7 +7555,7 @@
     "urls": [
       "https://www.semanticscholar.org/paper/4165542ba777ea63facc7ea9866f43ba63f054ae"
     ],
-    "order": 404,
+    "order": 405,
     "authors": [],
     "date": "2015-08-01",
     "date_source": "known"

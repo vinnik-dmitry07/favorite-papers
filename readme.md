@@ -173,6 +173,7 @@ Litmaps — [https://app.litmaps.com/shared/5bb436d0-a026-493a-a765-f48fda77ad0c
 - Emergent Capabilities Arise Randomly from Sparse Attention Patterns — [https://arxiv.org/abs/2606.25010](https://arxiv.org/abs/2606.25010) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/5867?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) · [https://arxiviq.substack.com/p/emergent-capabilities-arise-randomly](https://arxiviq.substack.com/p/emergent-capabilities-arise-randomly) [⚖ +0.03 · 4/7 · WATCH](filter/report.md#arxiv-2606.25010)
 - Fixed-Point Reasoners: Stable and Adaptive Deep Looped Transformers — [https://arxiv.org/abs/2606.18206](https://arxiv.org/abs/2606.18206)
 - Language Models Compare Quantities Using Number-specific and Unit-specific Heuristics — [https://arxiv.org/abs/2606.03982](https://arxiv.org/abs/2606.03982) [⚖ +0.00 · 4/7 · WATCH](filter/report.md#arxiv-2606.03982)
+- Equilibrium Reasoners: Learning Attractors Enables Scalable Reasoning — [https://arxiv.org/abs/2605.21488](https://arxiv.org/abs/2605.21488)
 - Generative Recursive Reasoning — [https://arxiv.org/abs/2605.19376](https://arxiv.org/abs/2605.19376)
 - Solve the Loop: Attractor Models for Language and Reasoning — [https://arxiv.org/abs/2605.12466](https://arxiv.org/abs/2605.12466)
 - Reliable Chain-of-Thought via Prefix Consistency — [https://arxiv.org/abs/2605.07654](https://arxiv.org/abs/2605.07654) [⚖ +0.25 · 6/7](filter/report.md#arxiv-2605.07654)

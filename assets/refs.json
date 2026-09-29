@@ -24369,7 +24369,8 @@
       "arxiv:2510.04871",
       "arxiv:2512.14693",
       "arxiv:2604.11791",
-      "arxiv:2605.12466"
+      "arxiv:2605.12466",
+      "arxiv:2605.21488"
     ],
     "bib_items": 69,
     "has_bibliography": true,
@@ -25674,7 +25675,8 @@
       "arxiv:2502.05171",
       "arxiv:2506.21734",
       "arxiv:2510.04871",
-      "arxiv:2605.19376"
+      "arxiv:2605.19376",
+      "arxiv:2605.21488"
     ],
     "bib_items": 49,
     "has_bibliography": true,
@@ -25822,7 +25824,36 @@
     "bib_items": 105,
     "has_bibliography": true,
     "search_chars": 26979,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2604.17121"
+  },
+  "arxiv:2605.21488": {
+    "arxiv": [],
+    "doi": [
+      "10.1007/978-3-031-72646-0%5f22",
+      "10.1126/science.aar6404",
+      "10.1162/neco.1997.9.1.1",
+      "10.1609/aaai.v36i6.20619",
+      "10.18653/v1/2025.acl-long.1137",
+      "10.18653/v1/2025.findings-emnlp.1182"
+    ],
+    "urls": [],
+    "titles": [
+      "arxiv:1807.03819",
+      "arxiv:2010.01412",
+      "arxiv:2412.06769",
+      "arxiv:2502.05171",
+      "arxiv:2506.21734",
+      "arxiv:2507.10524",
+      "arxiv:2509.20317",
+      "arxiv:2510.04871",
+      "arxiv:2512.14693",
+      "arxiv:2604.11791"
+    ],
+    "bib_items": 66,
+    "has_bibliography": true,
+    "search_chars": 14427,
+    "status": "fetched",
+    "source": "https://arxiv.org/html/2605.21488"
   }
 }
