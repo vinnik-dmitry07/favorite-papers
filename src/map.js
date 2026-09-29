@@ -22,8 +22,14 @@
 
   var data = window.GRAPH_DATA;
   var MARGIN = { top: 74, right: 96, bottom: 62, left: 62 };
+  var TOP_PAD = 72;          // between plot.top and the highest row
   var GUTTER = 132;          // parking band for entries with no known date
   var ZERO_BAND = 78;        // breathing room for zeros / missing y-values
+  // Phone (html.compact): the header is one 34px button in the corner, the
+  // footer is a single line, and the plot keeps nearly the whole height.
+  var MARGIN_COMPACT = { top: 20, right: 44, bottom: 34, left: 44 };
+  var TOP_PAD_COMPACT = 24;
+  var ZERO_BAND_COMPACT = 44;
   var LABEL_FONT = 10.5;
   var NODE_STROKE = 1.3;    // screen px; white disk outline, same tone as the page
   var HIT_STROKE = 2.4;     // screen px; orange outline on a search or filter hit
@@ -88,6 +94,30 @@
     if (v === 0) return '0';
     var mag = Math.abs(v) === 1 ? '1' : Math.abs(v).toFixed(1);
     return (v > 0 ? '+' : '-') + mag;
+  }
+
+  /* Screen geometry. index.html sets html.compact on phones and html.rotated
+     on a phone held upright, where the body is drawn turned 90 degrees.
+     Layout sizes (clientWidth/Height, offsetWidth/Height) ignore that
+     transform, so everything here works in the body's own pixels; only
+     pointer coordinates arrive in client space and must be mapped back. */
+  function isCompact() {
+    return document.documentElement.classList.contains('compact');
+  }
+
+  function isRotated() {
+    return document.documentElement.classList.contains('rotated');
+  }
+
+  function viewSize() {
+    return { w: document.body.clientWidth, h: document.body.clientHeight };
+  }
+
+  // Inverse of `rotate(90deg) translateY(-100%)`: client (X, Y) came from
+  // body (Y, bodyHeight - X).
+  function clientToView(x, y) {
+    if (!isRotated()) return [x, y];
+    return [y, document.body.clientHeight - x];
   }
 
   var svg = d3.select('#map');
@@ -310,7 +340,11 @@
 
   function plotScale() {
     if (!plot || !plot.width || !plot.height) return 1;
-    return Math.min(1, (plot.width / 1440) * (plot.height / 860));
+    var area = (plot.width / 1440) * (plot.height / 860);
+    // A phone is a quarter of the reference area; the square root keeps the
+    // disks at a tappable 2 to 11px instead of 1 to 5px.
+    if (plot.compact) area = Math.sqrt(area);
+    return Math.min(1, area);
   }
 
   function applyMetric() {
@@ -459,16 +493,24 @@
   svg.call(zoom).on('dblclick.zoom', null);
 
   function layout() {
-    var box = svg.node().getBoundingClientRect();
-    var header = document.querySelector('header').getBoundingClientRect();
+    var box = viewSize();
+    var compact = isCompact();
+    var m = compact ? MARGIN_COMPACT : MARGIN;
+    // On a phone the header is a corner button (or an overlay drawer) and
+    // takes no band of its own.
+    var header = document.querySelector('header');
+    var headerBottom = compact ? 0 : header.offsetTop + header.offsetHeight;
     plot = {
-      left: MARGIN.left,
-      right: box.width - MARGIN.right,
-      top: Math.max(MARGIN.top, header.height + 22),
-      bottom: box.height - MARGIN.bottom,
-      width: box.width,
-      height: box.height,
-      headerBottom: header.bottom
+      compact: compact,
+      topPad: compact ? TOP_PAD_COMPACT : TOP_PAD,
+      zeroBand: compact ? ZERO_BAND_COMPACT : ZERO_BAND,
+      left: m.left,
+      right: box.w - m.right,
+      top: compact ? m.top : Math.max(m.top, header.offsetHeight + 22),
+      bottom: box.h - m.bottom,
+      width: box.w,
+      height: box.h,
+      headerBottom: headerBottom
     };
     plot.gutter = nodes.some(function (d) { return !d.time; }) ? GUTTER : 0;
     var timeLeft = plot.left + plot.gutter + (plot.gutter ? 30 : 0);
@@ -484,15 +526,15 @@
     yBase = qualityMode()
       ? d3.scaleLinear()
           .domain([-1, 1])
-          .range([plot.bottom - ZERO_BAND, plot.top + 72])
+          .range([plot.bottom - plot.zeroBand, plot.top + plot.topPad])
       : d3.scaleLinear()
           .domain([yEncode(1), 1])
-          .range([plot.bottom - ZERO_BAND, plot.top + 72]);
+          .range([plot.bottom - plot.zeroBand, plot.top + plot.topPad]);
 
     // Uncited / unscored entries would otherwise pile onto a single pixel row.
     plot.zeroLow = plot.bottom - 12;
-    plot.zeroHigh = plot.bottom - ZERO_BAND + 16;
-    plot.zeroRule = plot.bottom - ZERO_BAND + 6;
+    plot.zeroHigh = plot.bottom - plot.zeroBand + 16;
+    plot.zeroRule = plot.bottom - plot.zeroBand + 6;
 
     var gutterMid = plot.left + plot.gutter / 2;
     var s = plotScale();
@@ -784,17 +826,21 @@
       .attr('y', transform.applyY((plot.zeroLow + plot.zeroHigh) / 2) + 4)
       .text(qualityMode() ? 'n/a' : '0');
 
-    gAxes.append('text')
-      .attr('class', 'caption')
-      .attr('text-anchor', 'middle')
-      .attr('x', (plot.timeLeft + plot.right) / 2)
-      .attr('y', plot.bottom + 42)
-      .text('more recently published \u2192');
+    // On a phone the bottom band only holds the tick labels and the footer;
+    // the years speak for themselves.
+    if (!plot.compact) {
+      gAxes.append('text')
+        .attr('class', 'caption')
+        .attr('text-anchor', 'middle')
+        .attr('x', (plot.timeLeft + plot.right) / 2)
+        .attr('y', plot.bottom + 42)
+        .text('more recently published \u2192');
+    }
 
     gAxes.append('text')
       .attr('class', 'caption')
-      .attr('transform', 'translate(' + (plot.right + 44) + ','
-        + (plot.top + plot.bottom) / 2 + ') rotate(-90)')
+      .attr('transform', 'translate(' + (plot.right + (plot.compact ? 28 : 44))
+        + ',' + (plot.top + plot.bottom) / 2 + ') rotate(-90)')
       .attr('text-anchor', 'middle')
       .text(yAxisCaption());
 
@@ -958,8 +1004,6 @@
     return [sx - half, sy - LABEL_FONT, sx + half, sy + 3];
   }
 
-  // Selected labels ignore collisions and take the first spot that fits
-  // vertically, which is what placeLabels does for the focused papers.
   function labelGap(d) {
     return isSelected(d.index) ? ringPast(isHit(d.index)) + 1 : 0;
   }
@@ -968,6 +1012,8 @@
     return [cy + rr + gap + LABEL_FONT + 1.5, cy - rr - gap - 3];
   }
 
+  // Selected labels ignore collisions and take the first spot that fits
+  // vertically, which is what placeLabels does for the focused papers.
   function selectedLabelBox(d) {
     var sx = transform.applyX(d.x);
     var cy = transform.applyY(d.y);
@@ -1195,9 +1241,8 @@
     var focus = focusIndices();
     var set = {};
     focus.forEach(function (i) { Object.assign(set, related(nodes[i])); });
-    var hit = matches ? new Set(matches) : null;
     function isDim(n) {
-      if (hit && !hit.has(n.index)) return true;
+      if (hitSet && !isHit(n.index)) return true;
       return !set[n.index];
     }
     nodeSel.classed('dim', isDim)
@@ -1243,14 +1288,6 @@
   function unlock() {
     if (!selected.length) return;
     setSelection([]);
-  }
-
-  function markGhostSeen() {
-    try {
-      window.localStorage.setItem(GHOST_KEY, '1');
-    } catch (err) {
-      return;
-    }
   }
 
   function cancelGhost() {
@@ -1305,7 +1342,11 @@
 
   function rememberGhost() {
     ghostDone = true;
-    markGhostSeen();
+    try {
+      window.localStorage.setItem(GHOST_KEY, '1');
+    } catch (err) {
+      return;
+    }
   }
 
   function playGhost(d) {
@@ -1315,8 +1356,9 @@
     var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var dx = calm ? 0 : 110;
     var dy = calm ? 0 : 90;
-    if (hx + dx > window.innerWidth - 16) dx = -dx;
-    if (hy + dy > window.innerHeight - 16) dy = -dy;
+    var view = viewSize();
+    if (hx + dx > view.w - 16) dx = -dx;
+    if (hy + dy > view.h - 16) dy = -dy;
     var sx = hx + dx;
     var sy = hy + dy;
     if (sx < 16) sx = 16;
@@ -1415,9 +1457,10 @@
     tip.style('opacity', 1);
     if (locked) {
       // Measure at the origin so the right edge cannot shrink the box.
+      // offsetWidth/Height are layout sizes, unaffected by html.rotated.
       tip.style('left', '0px').style('top', '0px');
-      var box = tip.node().getBoundingClientRect();
-      tipSize = { w: box.width, h: box.height };
+      var el = tip.node();
+      tipSize = { w: el.offsetWidth, h: el.offsetHeight };
       tipOffset = null;
       pinTip(d);
     } else {
@@ -1576,8 +1619,9 @@
     if (!tipSize || !(tipSize.w > 0 && tipSize.h > 0)) return;
     var w = tipSize.w;
     var h = tipSize.h;
-    var cols = Math.max(1, Math.ceil(window.innerWidth / TIP_CELL));
-    var rows = Math.max(1, Math.ceil(window.innerHeight / TIP_CELL));
+    var view = viewSize();
+    var cols = Math.max(1, Math.ceil(view.w / TIP_CELL));
+    var rows = Math.max(1, Math.ceil(view.h / TIP_CELL));
     ensureTipGrid(cols, rows);
 
     var inSel = {};
@@ -1618,9 +1662,9 @@
     var hy = transform.applyY(d.y);
     var rr = d.r * transform.k;
     var minX = 8;
-    var maxX = window.innerWidth - w - 8;
+    var maxX = view.w - w - 8;
     var minY = plot.headerBottom + 4;
-    var maxY = window.innerHeight - h - 8;
+    var maxY = view.h - h - 8;
     if (minY > maxY) minY = 8;
 
     var best = null;
@@ -1662,13 +1706,15 @@
 
   function moveTip(event) {
     var pad = 14;
-    var box = tip.node().getBoundingClientRect();
-    var x = event.clientX + pad;
-    var y = event.clientY + pad;
-    if (x + box.width > window.innerWidth - 8) x = event.clientX - box.width - pad;
-    if (y + box.height > window.innerHeight - 8) {
-      y = event.clientY - box.height - pad;
-    }
+    var el = tip.node();
+    var w = el.offsetWidth;
+    var h = el.offsetHeight;
+    var view = viewSize();
+    var at = clientToView(event.clientX, event.clientY);
+    var x = at[0] + pad;
+    var y = at[1] + pad;
+    if (x + w > view.w - 8) x = at[0] - w - pad;
+    if (y + h > view.h - 8) y = at[1] - h - pad;
     tip.style('left', x + 'px').style('top', y + 'px');
   }
 
@@ -2021,8 +2067,29 @@
       .attr('fill', nodeFill)
       .attr('fill-opacity', nodeFillOpacity);
   }
+  // Phone drawer (html.compact). The header itself is the drawer; the menu
+  // button is its only visible part while closed. Not persisted: a phone
+  // always starts with the map alone.
+  var headerEl = document.querySelector('header');
+  var menuButton = document.getElementById('menu');
+  function setDrawer(open) {
+    headerEl.classList.toggle('open', open);
+    menuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  function drawerOpen() {
+    return headerEl.classList.contains('open');
+  }
+  menuButton.addEventListener('click', function () {
+    setDrawer(!drawerOpen());
+  });
+  // Tapping the map means "I want to see it".
+  svg.on('pointerdown.drawer', function () {
+    if (drawerOpen()) setDrawer(false);
+  });
+
   document.getElementById('reset').addEventListener('click', function () {
     unlock();
+    setDrawer(false);
     svg.transition().duration(350).call(zoom.transform, d3.zoomIdentity);
   });
   svg.on('click', function (event) {
@@ -2030,6 +2097,10 @@
   });
   window.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;
+    if (drawerOpen()) {
+      setDrawer(false);
+      return;
+    }
     if (selected.length) {
       unlock();
       return;
