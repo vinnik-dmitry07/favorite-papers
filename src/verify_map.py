@@ -1,9 +1,10 @@
 '''Drive src/index.html in Chrome and report what actually rendered.
 
-Run:  python src/verify_map.py [--preview]
+Run:  python src/verify_map.py [--preview] [--mobile]
 
 Serves the repo root over HTTP so Chrome can load ../assets/.
 --preview also refreshes assets/preview.png, the still used in readme.md.
+--mobile runs only the phone checks (landscape drawer, rotated portrait).
 '''
 
 import sys
@@ -456,6 +457,60 @@ def check_ghost(page, errors: list, label: str, shot, calm: bool = False) -> Non
         errors.append(f'{label}: hint was not stored ({stored!r})')
 
 
+HIDE_JS = '''(hidden) => {
+    const proto = Document.prototype;
+    if (!window.__ghostHiddenHook) {
+        window.__ghostHiddenHook = {
+            desc: Object.getOwnPropertyDescriptor(proto, 'hidden'),
+            value: false,
+        };
+        Object.defineProperty(proto, 'hidden', {
+            configurable: true,
+            get() { return window.__ghostHiddenHook.value; },
+        });
+    }
+    window.__ghostHiddenHook.value = hidden;
+    document.dispatchEvent(new Event('visibilitychange'));
+    return document.hidden;
+}'''
+
+RESTORE_HIDE_JS = '''() => {
+    const hook = window.__ghostHiddenHook;
+    if (!hook) return;
+    Object.defineProperty(Document.prototype, 'hidden', hook.desc);
+    window.__ghostHiddenHook = null;
+}'''
+
+
+def check_ghost_waits_until_visible(page, errors: list, shot) -> None:
+    '''A hidden tab must not play the hint or mark it seen.'''
+    page.evaluate('(key) => localStorage.removeItem(key)', GHOST_KEY)
+    page.reload(wait_until='load')
+    try:
+        hidden = page.evaluate(HIDE_JS, True)
+        if hidden is not True:
+            errors.append(f'hidden tab: document.hidden is {hidden!r}')
+            return
+        print('hidden tab: waiting out the delay')
+        page.wait_for_timeout(3400)
+        state = page.evaluate(
+            '''(key) => ({
+                on: document.getElementById('ghost').classList.contains('on'),
+                stored: localStorage.getItem(key),
+            })''',
+            GHOST_KEY,
+        )
+        print('hidden tab:', state)
+        if state['on']:
+            errors.append('hidden tab: ghost played while hidden')
+        if state['stored'] == '1':
+            errors.append('hidden tab: hint was stored while hidden')
+        page.evaluate(HIDE_JS, False)
+        check_ghost(page, errors, 'shown tab', shot)
+    finally:
+        page.evaluate(RESTORE_HIDE_JS)
+
+
 def check_tip_clear(page, errors: list, label: str) -> dict:
     info = page.evaluate(TIP_CLEAR_JS)
     print(f'{label} tip:', info)
@@ -464,6 +519,264 @@ def check_tip_clear(page, errors: list, label: str) -> dict:
     if info['labelHits']:
         errors.append(f'{label} tip covers labels {info["labelHits"]!r}')
     return info
+
+
+MOBILE_STATE_JS = '''() => {
+    const html = document.documentElement;
+    const header = document.querySelector('header');
+    const hb = header.getBoundingClientRect();
+    const sb = document.getElementById('map').getBoundingClientRect();
+    const visible = el => getComputedStyle(el).display !== 'none'
+        && el.getClientRects().length > 0;
+    const circles = [...document.querySelectorAll('.nodes circle')]
+        .map(c => c.getBoundingClientRect());
+    return {
+        coarse: matchMedia('(pointer: coarse)').matches,
+        compact: html.classList.contains('compact'),
+        rotated: html.classList.contains('rotated'),
+        bodyTransform: getComputedStyle(document.body).transform,
+        bodyW: document.body.clientWidth,
+        bodyH: document.body.clientHeight,
+        headerW: hb.width,
+        headerH: hb.height,
+        open: header.classList.contains('open'),
+        expanded: document.getElementById('menu').getAttribute('aria-expanded'),
+        menu: visible(document.getElementById('menu')),
+        legend: visible(document.getElementById('legend')),
+        yaxis: visible(document.getElementById('yaxis')),
+        footerH: document.getElementById('note').getBoundingClientRect().height,
+        svgW: sb.width,
+        svgH: sb.height,
+        circles: circles.length,
+        minCircleY: Math.min(...circles.map(b => b.y)),
+        rightOfDrawer: circles.filter(b => b.x > hb.width + 4).length,
+        k: d3.zoomTransform(document.getElementById('map')).k,
+        tx: d3.zoomTransform(document.getElementById('map')).x,
+        ty: d3.zoomTransform(document.getElementById('map')).y,
+    };
+}'''
+
+MOBILE_TIP_JS = '''([px, py]) => {
+    const tip = document.getElementById('tip');
+    const b = tip.getBoundingClientRect();
+    const nx = Math.min(Math.max(px, b.left), b.right);
+    const ny = Math.min(Math.max(py, b.top), b.bottom);
+    return {
+        opacity: getComputedStyle(tip).opacity,
+        left: b.left, top: b.top, right: b.right, bottom: b.bottom,
+        dist: Math.hypot(px - nx, py - ny),
+    };
+}'''
+
+
+def approx(value: float, target: float, tol: float) -> bool:
+    return abs(value - target) <= tol
+
+
+def mobile_page(browser, url: str, width: int, height: int, errors: list,
+                label: str):
+    '''A phone-like page: device-width viewport, touch, coarse pointer.'''
+    context = browser.new_context(
+        viewport={'width': width, 'height': height},
+        device_scale_factor=2, is_mobile=True, has_touch=True,
+    )
+    page = context.new_page()
+
+    def on_console(msg):
+        if msg.type in ('error', 'warning'):
+            errors.append(f'{label} console.{msg.type}: {msg.text}')
+    page.on('console', on_console)
+    page.on('pageerror', lambda e: errors.append(f'{label} pageerror: {e}'))
+    page.goto(url, wait_until='load')
+    page.wait_for_timeout(1200)
+    return context, page
+
+
+def drag_mouse(page, x: int, y: int, dx: int, dy: int) -> None:
+    page.mouse.move(x, y)
+    page.mouse.down()
+    page.mouse.move(x + dx, y + dy, steps=10)
+    page.mouse.up()
+
+
+def drag_touch(page, x: int, y: int, dx: int, dy: int) -> None:
+    '''One finger through CDP, so d3-zoom's touch path is exercised.'''
+    cdp = page.context.new_cdp_session(page)
+    cdp.send('Input.dispatchTouchEvent',
+             {'type': 'touchStart', 'touchPoints': [{'x': x, 'y': y}]})
+    steps = 10
+    for i in range(1, steps + 1):
+        cdp.send('Input.dispatchTouchEvent', {
+            'type': 'touchMove',
+            'touchPoints': [{'x': x + dx * i / steps, 'y': y + dy * i / steps}],
+        })
+    cdp.send('Input.dispatchTouchEvent', {'type': 'touchEnd', 'touchPoints': []})
+    cdp.detach()
+
+
+def reset_view(page) -> None:
+    '''The reset button lives in the drawer on a phone; using it closes it.'''
+    page.click('#menu')
+    page.click('#reset')
+    page.wait_for_timeout(600)
+
+
+def expect_pan(page, errors: list, label: str) -> None:
+    '''A finger moved by client +150 in y on a rotated page must pan the map
+    by +150 in its own x (the CSS rotation maps client y to body x).'''
+    got = page.evaluate(MOBILE_STATE_JS)
+    print(f'{label}: k={got["k"]} tx={got["tx"]:.1f} ty={got["ty"]:.1f}')
+    if got['k'] != 1:
+        errors.append(f'{label}: k={got["k"]}, expected 1')
+    if not approx(got['tx'], 150, 4):
+        errors.append(f'{label}: tx={got["tx"]:.1f}, expected about 150')
+    if not approx(got['ty'], 0, 4):
+        errors.append(f'{label}: ty={got["ty"]:.1f}, expected about 0')
+
+
+def mobile_checks(browser, url: str, errors: list) -> None:
+    '''Phone landscape: one menu button and a drawer. Phone portrait: the page
+    is drawn sideways, and pointer, tooltip and pan follow the rotation.'''
+    context, page = mobile_page(browser, url, 844, 390, errors, 'landscape')
+    state = page.evaluate(MOBILE_STATE_JS)
+    print('landscape closed:', {k: state[k] for k in (
+        'coarse', 'compact', 'rotated', 'headerW', 'headerH', 'menu', 'legend',
+        'yaxis', 'footerH', 'minCircleY', 'circles')})
+    if not state['coarse']:
+        errors.append('landscape: emulation is not (pointer: coarse)')
+    if not state['compact'] or state['rotated']:
+        errors.append(
+            f'landscape: compact={state["compact"]} rotated={state["rotated"]}'
+        )
+    if state['headerW'] > 50 or state['headerH'] > 50:
+        errors.append(
+            f'landscape: closed header is {state["headerW"]:.0f}x'
+            f'{state["headerH"]:.0f}, expected a single button'
+        )
+    if not state['menu'] or state['legend'] or state['yaxis']:
+        errors.append('landscape: closed drawer should show only the menu button')
+    if state['footerH'] > 20:
+        errors.append(f'landscape: footer wraps ({state["footerH"]:.0f}px)')
+    if state['minCircleY'] > 90:
+        errors.append(
+            f'landscape: top row at y={state["minCircleY"]:.0f}, '
+            'expected the plot to start near the top'
+        )
+    page.screenshot(path=str(SHOTS / '15-mobile-landscape.png'))
+
+    page.click('#menu')
+    page.wait_for_timeout(300)
+    opened = page.evaluate(MOBILE_STATE_JS)
+    print('landscape open:', {k: opened[k] for k in (
+        'open', 'expanded', 'headerW', 'headerH', 'legend', 'yaxis',
+        'rightOfDrawer')})
+    if not opened['open'] or opened['expanded'] != 'true':
+        errors.append('landscape: menu button did not open the drawer')
+    if not opened['legend'] or not opened['yaxis']:
+        errors.append('landscape: drawer hides the legend or the controls')
+    if opened['headerW'] > 340 or opened['headerH'] < 380:
+        errors.append(
+            f'landscape: drawer is {opened["headerW"]:.0f}x'
+            f'{opened["headerH"]:.0f}, expected a full-height column <= 340'
+        )
+    if opened['rightOfDrawer'] < 100:
+        errors.append(
+            f'landscape: only {opened["rightOfDrawer"]} circles visible beside '
+            'the drawer'
+        )
+    page.screenshot(path=str(SHOTS / '16-mobile-drawer.png'))
+
+    page.mouse.click(760, 60)
+    page.wait_for_timeout(300)
+    closed = page.evaluate(MOBILE_STATE_JS)
+    if closed['open'] or closed['expanded'] != 'false':
+        errors.append('landscape: tapping the map did not close the drawer')
+    page.click('#menu')
+    page.keyboard.press('Escape')
+    page.wait_for_timeout(200)
+    if page.evaluate(MOBILE_STATE_JS)['open']:
+        errors.append('landscape: Escape did not close the drawer')
+    context.close()
+
+    context, page = mobile_page(browser, url, 390, 844, errors, 'portrait')
+    state = page.evaluate(MOBILE_STATE_JS)
+    print('portrait:', {k: state[k] for k in (
+        'compact', 'rotated', 'bodyTransform', 'bodyW', 'bodyH', 'svgW',
+        'svgH', 'headerW', 'headerH')})
+    if not state['rotated'] or state['bodyTransform'] == 'none':
+        errors.append(
+            f'portrait: rotated={state["rotated"]} '
+            f'transform={state["bodyTransform"]!r}'
+        )
+    if not approx(state['bodyW'], 844, 2) or not approx(state['bodyH'], 390, 2):
+        errors.append(
+            f'portrait: body is {state["bodyW"]}x{state["bodyH"]}, '
+            'expected 844x390 (the page laid out sideways)'
+        )
+    if not approx(state['svgW'], 390, 2) or not approx(state['svgH'], 844, 2):
+        errors.append(
+            f'portrait: svg on screen is {state["svgW"]:.0f}x{state["svgH"]:.0f}, '
+            'expected to fill the 390x844 screen'
+        )
+
+    target = page.evaluate('''() => {
+        const hit = [...document.querySelectorAll('.nodes circle')]
+            .map(c => c.getBoundingClientRect())
+            .find(b => b.width > 6 && b.x > 60 && b.x < 300
+                       && b.y > 120 && b.y < 700);
+        return hit ? {x: hit.x + hit.width / 2, y: hit.y + hit.height / 2} : null;
+    }''')
+    if not target:
+        errors.append('portrait: no circle away from the edges to hover')
+    else:
+        page.mouse.move(target['x'], target['y'])
+        page.wait_for_timeout(250)
+        tip = page.evaluate(MOBILE_TIP_JS, [target['x'], target['y']])
+        print('portrait tip:', {k: round(v, 1) if isinstance(v, float) else v
+                                for k, v in tip.items()})
+        if tip['opacity'] != '1':
+            errors.append('portrait: hover did not show the tooltip')
+        if (tip['left'] < 0 or tip['top'] < 0 or tip['right'] > 390
+                or tip['bottom'] > 844):
+            errors.append('portrait: tooltip leaves the screen')
+        if tip['dist'] > 40:
+            errors.append(
+                f'portrait: tooltip {tip["dist"]:.0f}px from the finger, '
+                'expected it right next to it'
+            )
+        page.mouse.move(5, 5)
+        page.wait_for_timeout(200)
+    page.screenshot(path=str(SHOTS / '17-mobile-portrait.png'))
+
+    drag_mouse(page, 195, 300, 0, 150)
+    page.wait_for_timeout(300)
+    expect_pan(page, errors, 'portrait mouse pan')
+    reset_view(page)
+    if page.evaluate(MOBILE_STATE_JS)['open']:
+        errors.append('portrait: reset view left the drawer open')
+    drag_touch(page, 195, 300, 0, 150)
+    page.wait_for_timeout(300)
+    expect_pan(page, errors, 'portrait touch pan')
+    context.close()
+
+
+def mobile_only() -> None:
+    '''Just the phone checks, for tuning the compact layout.'''
+    ensure_fulltext_search()
+    SHOTS.mkdir(parents=True, exist_ok=True)
+    server = start_server()
+    errors: list[str] = []
+    with sync_playwright() as pw:
+        browser = pw.chromium.launch(channel='chrome')
+        mobile_checks(browser, map_url(server), errors)
+        browser.close()
+    server.shutdown()
+    if errors:
+        print('\nMOBILE PROBLEMS:')
+        for line in errors:
+            print(' ', line)
+        sys.exit(1)
+    print('\nmobile ok')
 
 
 def preview() -> None:
@@ -1309,6 +1622,10 @@ def main() -> None:
         )
         page.emulate_media(reduced_motion='no-preference')
 
+        check_ghost_waits_until_visible(
+            page, errors, SHOTS / '14-ghost-shown.png',
+        )
+
         page.evaluate('''() => { window.__copied = null;
             navigator.clipboard.writeText = (t) => { window.__copied = t; return Promise.resolve(); }; }''')
         page.click('#share')
@@ -1399,6 +1716,7 @@ def main() -> None:
         if '%3F' not in href:
             errors.append(f'ssrn share URL left ? unencoded: {href!r}')
 
+        mobile_checks(browser, base_url, errors)
         browser.close()
     server.shutdown()
 
@@ -1411,6 +1729,9 @@ def main() -> None:
 
 
 if __name__ == '__main__':
-    main()
+    if '--mobile' in sys.argv:
+        mobile_only()
+    else:
+        main()
     if '--preview' in sys.argv:
         preview()

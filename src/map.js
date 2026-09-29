@@ -16,7 +16,8 @@
    A selected paper wears a dashed ring one pixel outside the disk.
    The pinned tooltip sits where it covers the
    fewest selected papers and links. The first hold (a click or a
-   deep link) plays a one-time animated double-click hint. */
+   deep link) plays a one-time animated double-click hint, once the
+   tab is visible. */
 (function () {
   'use strict';
 
@@ -392,6 +393,7 @@
   var GHOST_DELAY = 3000;
   var GHOST_GLIDE = 700;
   var GHOST_BOW = 16;
+  var GHOST_PAUSE = 200;     // a hidden tab's next frame jumps by seconds
   var GHOST_STEPS = [
     { at: 820, kind: 'press' },
     { at: 910, kind: 'release' },
@@ -403,6 +405,7 @@
   var ghost = d3.select('#ghost');
   var ghostRun = null;
   var ghostTimer = null;
+  var ghostHold = null;     // queued while the tab is hidden
   var ghostDone = false;
   try {
     ghostDone = window.localStorage.getItem(GHOST_KEY) === '1';
@@ -1295,6 +1298,7 @@
       clearTimeout(ghostTimer);
       ghostTimer = null;
     }
+    ghostHold = null;
     if (ghostRun && ghostRun.frame) cancelAnimationFrame(ghostRun.frame);
     ghost.classed('on', false).classed('press', false);
     ghost.selectAll('.ring').remove();
@@ -1304,9 +1308,30 @@
   function ghostFrame(now) {
     var run = ghostRun;
     if (!run) return;
+    if (document.hidden) {
+      run.frame = 0;
+      return;
+    }
     var d = run.d;
     var elapsed = now - run.t0;
     if (elapsed < 0) elapsed = 0;
+    // rAF does not run in a background tab, so the next timestamp skips
+    // the whole hint. Treat that gap as a pause and keep the timeline.
+    if (run.lastAt) {
+      var gap = now - run.lastAt;
+      if (gap > GHOST_PAUSE) {
+        run.t0 += gap;
+        elapsed = Math.max(0, now - run.t0);
+      }
+    } else if (elapsed > GHOST_PAUSE) {
+      run.t0 = now;
+      elapsed = 0;
+    }
+    run.lastAt = now;
+    if (!run.painted) {
+      run.painted = true;
+      rememberGhost();
+    }
     var glide = run.calm ? 1 : Math.min(1, elapsed / GHOST_GLIDE);
     var u = glide >= 1 ? 1 : d3.easeCubicInOut(glide);
     var hx = transform.applyX(d.x);
@@ -1350,7 +1375,6 @@
   }
 
   function playGhost(d) {
-    rememberGhost();
     var hx = transform.applyX(d.x);
     var hy = transform.applyY(d.y);
     var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1382,13 +1406,38 @@
   }
 
   function queueGhost(d) {
-    if (ghostDone) return;
+    if (ghostDone || ghostRun) return;
+    ghostHold = null;
     if (ghostTimer) clearTimeout(ghostTimer);
     ghostTimer = setTimeout(function () {
       ghostTimer = null;
-      if (locked === d) playGhost(d);
+      if (locked !== d || ghostDone) return;
+      if (document.hidden) {
+        ghostHold = d;
+        return;
+      }
+      playGhost(d);
     }, GHOST_DELAY);
   }
+
+  function onGhostVisible() {
+    if (document.hidden) {
+      if (ghostRun && ghostRun.frame) {
+        cancelAnimationFrame(ghostRun.frame);
+        ghostRun.frame = 0;
+      }
+      return;
+    }
+    if (ghostRun) {
+      if (!ghostRun.frame) ghostRun.frame = requestAnimationFrame(ghostFrame);
+      return;
+    }
+    var held = ghostHold;
+    ghostHold = null;
+    if (held && !ghostDone && locked === held) playGhost(held);
+  }
+
+  document.addEventListener('visibilitychange', onGhostVisible);
 
   function onClick(event, d) {
     event.preventDefault();
