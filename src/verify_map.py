@@ -17,6 +17,26 @@ from common import ASSETS, FULLTEXT_DIR, FULLTEXT_SEARCH_JS, GRAPH, ROOT, load_j
 
 SHOTS = ROOT / 'shots'
 PREVIEW = ASSETS / 'preview.png'
+GHOST_KEY = 'key-papers-map-dblclick-hint'
+GHOST_TIP_JS = '''() => {
+    const g = document.getElementById('ghost');
+    const box = g.getBoundingClientRect();
+    const x = box.x + box.width / 2;
+    const y = box.y + box.height / 2;
+    let dist = Infinity;
+    document.querySelectorAll('.nodes g.held circle').forEach(c => {
+        const b = c.getBoundingClientRect();
+        dist = Math.min(dist, Math.hypot(
+            x - (b.x + b.width / 2), y - (b.y + b.height / 2)));
+    });
+    const ring = document.querySelector('#ghost .ring');
+    return {
+        dist: dist,
+        pe: getComputedStyle(g).pointerEvents,
+        held: document.querySelectorAll('.nodes g.held').length,
+        anim: ring ? getComputedStyle(ring).animationName : '',
+    };
+}'''
 
 
 class _RootHandler(SimpleHTTPRequestHandler):
@@ -168,6 +188,7 @@ def check_overlap(page, errors: list, mode: str, max_pairs: int = 10) -> dict:
 
 DEEP_LINK_JS = '''() => ({
     held: [...document.querySelectorAll('.nodes g.held')].map(g => g.__data__.id),
+    rings: document.querySelectorAll('.rings .sel').length,
     dimmed: document.querySelectorAll('.nodes g.dim').length,
     k: d3.zoomTransform(document.getElementById('map')).k,
     hash: location.hash,
@@ -233,6 +254,115 @@ def copied_sel_ids(url: str) -> list:
     return hash_sel_ids('#' + url.split('#', 1)[1])
 
 
+ORANGE_COUNT_JS = '''() => document.querySelectorAll(
+    '.nodes circle[stroke="var(--in)"]').length'''
+
+
+def ring_gap(page, from_fill: bool) -> dict | None:
+    return page.evaluate(
+        '''(fromFill) => {
+            const held = document.querySelector('.nodes g.held circle');
+            const ring = document.querySelector('.rings .sel-ring');
+            if (!held || !ring) return null;
+            const k = d3.zoomTransform(document.getElementById('map')).k;
+            const diskR = +held.getAttribute('r') * k;
+            const stroke = +held.getAttribute('stroke-width') * k;
+            const ringInner = +ring.getAttribute('r')
+                - +ring.getAttribute('stroke-width') / 2;
+            const edge = fromFill ? diskR - stroke / 2 : diskR + stroke / 2;
+            return {
+                stroke: held.getAttribute('stroke'),
+                gap: ringInner - edge,
+            };
+        }''',
+        from_fill,
+    )
+
+
+def visible_circle(page, dim: bool) -> dict | None:
+    return page.evaluate(
+        '''(dim) => {
+            const sel = dim
+                ? '.nodes g.dim circle'
+                : '.nodes g:not(.dim) circle';
+            const pick = [...document.querySelectorAll(sel)].find(c => {
+                const b = c.getBoundingClientRect();
+                const x = b.x + b.width / 2;
+                const y = b.y + b.height / 2;
+                return document.elementFromPoint(x, y) === c;
+            });
+            if (!pick) return null;
+            const b = pick.getBoundingClientRect();
+            return {x: b.x + b.width / 2, y: b.y + b.height / 2};
+        }''',
+        dim,
+    )
+
+
+def check_hit_outline(page, errors: list) -> None:
+    '''Orange hit strokes survive a zoom, and a selected hit keeps a 1px
+    gap outside that stroke. A non-hit still keeps its 1px gap from the fill.
+    '''
+    before = page.evaluate(ORANGE_COUNT_JS)
+    k_before = page.evaluate(
+        '() => d3.zoomTransform(document.getElementById("map")).k'
+    )
+    page.mouse.move(720, 420)
+    page.mouse.wheel(0, -280)
+    page.wait_for_timeout(400)
+    after = page.evaluate(ORANGE_COUNT_JS)
+    k_after = page.evaluate(
+        '() => d3.zoomTransform(document.getElementById("map")).k'
+    )
+    print(
+        f'orange strokes through zoom: {before} -> {after} '
+        f'(k {k_before:.3f} -> {k_after:.3f})'
+    )
+    if k_after <= k_before + 0.05:
+        errors.append(f'search zoom did not move (k {k_before} -> {k_after})')
+    if before < 1 or after != before:
+        errors.append(f'zoom changed orange hit strokes {before} -> {after}')
+
+    hit = visible_circle(page, False)
+    if not hit:
+        errors.append('no visible search hit to select')
+    else:
+        page.mouse.click(hit['x'], hit['y'])
+        page.wait_for_timeout(300)
+        info = ring_gap(page, False)
+        print('selected hit ring gap:', info)
+        if not info or info['stroke'] != 'var(--in)':
+            errors.append(f'selected hit stroke {info!r}')
+        elif abs(info['gap'] - 1) > 0.05:
+            errors.append(
+                f'selected hit ring gap {info["gap"]:.3f}px, expected 1'
+            )
+
+    other = visible_circle(page, True)
+    if not other:
+        errors.append('no visible non-hit to select')
+    else:
+        page.mouse.click(other['x'], other['y'])
+        page.wait_for_timeout(300)
+        plain = ring_gap(page, True)
+        print('selected non-hit ring gap:', plain)
+        if not plain or plain['stroke'] != '#fff':
+            errors.append(f'selected non-hit stroke {plain!r}')
+        elif abs(plain['gap'] - 1) > 0.05:
+            errors.append(
+                f'selected non-hit ring gap {plain["gap"]:.3f}px, expected 1'
+            )
+
+    page.keyboard.press('Escape')
+    page.click('#reset')
+    page.wait_for_timeout(500)
+
+
+def expect_rings(errors: list, label: str, rings: int, n: int) -> None:
+    if rings != n:
+        errors.append(f'{label} rings {rings}, expected {n}')
+
+
 def check_deep_link(page, errors: list, label: str, expected: list) -> dict:
     linked = page.evaluate(DEEP_LINK_JS)
     print(f'{label}:', linked)
@@ -240,14 +370,15 @@ def check_deep_link(page, errors: list, label: str, expected: list) -> dict:
         errors.append(
             f'{label} held {linked["held"]!r}, expected {expected!r}'
         )
+    expect_rings(errors, label, linked['rings'], len(expected))
     got_hash = hash_sel_ids(linked['hash'])
     if got_hash != expected:
         errors.append(
             f'{label} hash ids {got_hash!r} from {linked["hash"]!r}, '
             f'expected {expected!r}'
         )
-    if not linked['k'] or linked['k'] <= 1:
-        errors.append(f'{label} zoom k={linked["k"]}, expected > 1')
+    if linked['k'] != 1:
+        errors.append(f'{label} zoom k={linked["k"]}, expected 1')
     if linked['dimmed'] < 200:
         errors.append(f'{label} dimmed {linked["dimmed"]}, expected >= 200')
     if linked['tip'] != '1':
@@ -255,6 +386,74 @@ def check_deep_link(page, errors: list, label: str, expected: list) -> dict:
     if linked['share']:
         errors.append(f'{label} share button should be enabled')
     return linked
+
+
+def check_ghost(page, errors: list, label: str, shot, calm: bool = False) -> None:
+    '''Fingertip lands on the held circle, then the hint is remembered.'''
+    if calm:
+        try:
+            page.wait_for_function(
+                '() => document.getElementById("ghost").classList.contains("on")',
+                timeout=8000,
+            )
+        except Exception as err:
+            errors.append(
+                f'{label}: ghost did not appear ({err.__class__.__name__})'
+            )
+            return
+        early = page.evaluate(GHOST_TIP_JS)
+        print(f'ghost {label} at fade-in:', early['dist'])
+        if not (early['dist'] <= 6):
+            errors.append(
+                f'{label}: glided under reduced motion ({early["dist"]:.1f}px)'
+            )
+    try:
+        page.wait_for_function(
+            '() => document.getElementById("ghost").classList.contains("press")',
+            timeout=8000,
+        )
+        page.wait_for_function(
+            '''() => {
+                const ring = document.querySelector('#ghost .ring');
+                const circle = document.querySelector('.nodes g.held circle');
+                if (!ring || !circle) return false;
+                return ring.getBoundingClientRect().width
+                    > circle.getBoundingClientRect().width + 6;
+            }''',
+            timeout=4000,
+        )
+    except Exception as err:
+        errors.append(
+            f'{label}: ghost press did not start ({err.__class__.__name__})'
+        )
+        return
+    page.screenshot(path=str(shot))
+    info = page.evaluate(GHOST_TIP_JS)
+    print(f'ghost {label}:', info)
+    if not info['held']:
+        errors.append(f'{label}: ghost played with no held circle')
+    elif not (info['dist'] <= 6):
+        errors.append(
+            f'{label}: ghost fingertip {info["dist"]:.1f}px from held circle'
+        )
+    if info['pe'] != 'none':
+        errors.append(f'{label}: ghost pointer-events {info["pe"]!r}')
+    if calm and info['anim'] != 'ghost-blink':
+        errors.append(
+            f'{label}: ring animation {info["anim"]!r}, expected ghost-blink'
+        )
+    try:
+        page.wait_for_function(
+            '() => !document.getElementById("ghost").classList.contains("on")',
+            timeout=4000,
+        )
+    except Exception as err:
+        errors.append(
+            f'{label}: ghost did not finish ({err.__class__.__name__})'
+        )
+    stored = page.evaluate('(key) => localStorage.getItem(key)', GHOST_KEY)
+    if stored != '1':
+        errors.append(f'{label}: hint was not stored ({stored!r})')
 
 
 def check_tip_clear(page, errors: list, label: str) -> dict:
@@ -374,10 +573,20 @@ def main() -> None:
             tipText: document.getElementById('tip').innerText,
             dimmed: document.querySelectorAll('.nodes g.dim').length,
             held: document.querySelectorAll('.nodes g.held').length,
+            rings: document.querySelectorAll('.rings .sel').length,
             litEdges: [...document.querySelectorAll('.edges path')]
                 .filter(p => +p.getAttribute('stroke-opacity') > 0.5).length,
         })''')
         print('held after click+leave:', held)
+        expect_rings(errors, 'click', held['rings'], held['held'])
+
+        check_ghost(page, errors, 'first click', SHOTS / '11-ghost-click.png')
+        page.mouse.click(target['x'], target['y'])
+        page.wait_for_timeout(3400)
+        if page.evaluate(
+            '() => document.getElementById("ghost").classList.contains("on")'
+        ):
+            errors.append('ghost replayed on the second click')
 
         page.evaluate('''() => { window.__opened = [];
             window.open = (url) => { window.__opened.push(url); }; }''')
@@ -387,11 +596,14 @@ def main() -> None:
 
         page.keyboard.press('Escape')
         page.wait_for_timeout(300)
-        print('after Esc:', page.evaluate('''() => ({
+        after_esc = page.evaluate('''() => ({
             held: document.querySelectorAll('.nodes g.held').length,
+            rings: document.querySelectorAll('.rings .sel').length,
             dimmed: document.querySelectorAll('.nodes g.dim').length,
             tipOpacity: getComputedStyle(document.getElementById('tip')).opacity,
-        })'''))
+        })''')
+        print('after Esc:', after_esc)
+        expect_rings(errors, 'Esc', after_esc['rings'], 0)
 
         # Zooming while a paper is hovered must keep its links highlighted.
         page.mouse.move(target['x'], target['y'])
@@ -418,6 +630,7 @@ def main() -> None:
         if search['dimmed'] < 1:
             errors.append('grpo search did not dim any nodes')
         page.screenshot(path=str(SHOTS / '03-search.png'))
+        check_hit_outline(page, errors)
 
         page.fill('#search', 'abducti*')
         page.wait_for_function(
@@ -1079,10 +1292,22 @@ def main() -> None:
             page, errors, 'deep link hashchange unknown', alt_expected
         )
 
+        page.evaluate('(key) => localStorage.removeItem(key)', GHOST_KEY)
         page.reload(wait_until='load')
-        page.wait_for_timeout(1500)
+        check_ghost(
+            page, errors, 'deep link reload', SHOTS / '12-ghost-deep-link.png',
+        )
         check_deep_link(page, errors, 'deep link reload', alt_expected)
         check_tip_clear(page, errors, 'deep link reload')
+
+        page.emulate_media(reduced_motion='reduce')
+        page.evaluate('(key) => localStorage.removeItem(key)', GHOST_KEY)
+        page.reload(wait_until='load')
+        check_ghost(
+            page, errors, 'reduced motion', SHOTS / '13-ghost-reduced.png',
+            calm=True,
+        )
+        page.emulate_media(reduced_motion='no-preference')
 
         page.evaluate('''() => { window.__copied = null;
             navigator.clipboard.writeText = (t) => { window.__copied = t; return Promise.resolve(); }; }''')
@@ -1118,6 +1343,7 @@ def main() -> None:
             page.wait_for_timeout(300)
             after_shift = page.evaluate('''() => ({
                 held: [...document.querySelectorAll('.nodes g.held')].map(g => g.__data__.id),
+                rings: document.querySelectorAll('.rings .sel').length,
                 hash: location.hash,
             })''')
             print('after shift-click:', after_shift)
@@ -1126,6 +1352,10 @@ def main() -> None:
                 errors.append(
                     f'shift-click held {after_shift["held"]!r}, expected {want!r}'
                 )
+            expect_rings(
+                errors, 'shift-click', after_shift['rings'],
+                len(after_shift['held']),
+            )
             if hash_sel_ids(after_shift['hash']) != want:
                 errors.append(
                     f'shift-click hash {after_shift["hash"]!r} '
@@ -1138,12 +1368,14 @@ def main() -> None:
         page.wait_for_timeout(300)
         after_esc = page.evaluate('''() => ({
             held: document.querySelectorAll('.nodes g.held').length,
+            rings: document.querySelectorAll('.rings .sel').length,
             hash: location.hash,
             share: document.getElementById('share').disabled,
         })''')
         print('deep link Esc:', after_esc)
         if after_esc['held']:
             errors.append(f'Esc left {after_esc["held"]} held')
+        expect_rings(errors, 'deep link Esc', after_esc['rings'], 0)
         if after_esc['hash'] != '':
             errors.append(f'Esc hash {after_esc["hash"]!r}, expected empty')
         if not after_esc['share']:

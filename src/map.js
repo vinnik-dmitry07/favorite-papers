@@ -13,7 +13,10 @@
    the last tick, then shrunk if the box cannot fit. Scored / counted
    disks stay above the zero / n/a rule (edge, not just center).
    Selection is mirrored into #sel=<key>,… and restored on load.
-   The pinned tooltip sits where it covers the fewest selected papers and links. */
+   A selected paper wears a dashed ring one pixel outside the disk.
+   The pinned tooltip sits where it covers the
+   fewest selected papers and links. The first hold (a click or a
+   deep link) plays a one-time animated double-click hint. */
 (function () {
   'use strict';
 
@@ -22,6 +25,12 @@
   var GUTTER = 132;          // parking band for entries with no known date
   var ZERO_BAND = 78;        // breathing room for zeros / missing y-values
   var LABEL_FONT = 10.5;
+  var NODE_STROKE = 1.3;    // screen px; white disk outline, same tone as the page
+  var HIT_STROKE = 2.4;     // screen px; orange outline on a search or filter hit
+  var RING_OUTSET = 1;      // screen px of page between the disk and the dashes
+  var RING_WIDTH = 2;
+  var RING_PERIOD = 9;       // screen px per dash + gap
+  var RING_DASHES = [4, 8];
   var CITE_TICKS = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000,
                     2000, 5000, 10000, 20000, 50000];
   var QUALITY_TICKS = [-1, -0.5, 0, 0.5, 1];
@@ -86,6 +95,8 @@
   var gRoot = svg.append('g');
   var gEdges = gRoot.append('g').attr('class', 'edges');
   var gNodes = gRoot.append('g').attr('class', 'nodes');
+  // The ring is outside the zoom transform, so its 1px gap stays 1px.
+  var gRings = svg.append('g').attr('class', 'rings');
   // Labels sit outside the zoom transform so they keep a constant size.
   var gLabels = svg.append('g').attr('class', 'labels');
   var tip = d3.select('#tip');
@@ -328,14 +339,12 @@
   applyMetric();
 
   var xBase, yBase, transform = d3.zoomIdentity, plot = {};
-  var hovered = null, locked = null, matches = null, tagFilter = null;
+  var hovered = null, locked = null, matches = null, hitSet = null, tagFilter = null;
   var filterKey = '';
   var selected = [];   // ordered node indices; the last one is the held paper (locked)
   var byId = Object.create(null);
   nodes.forEach(function (d) { byId[d.id] = d.index; });
   var HASH_KEY = 'sel';
-  var FOCUS_MAX_K = 4;    // never zoom tighter than this when focusing a selection
-  var FOCUS_PAD = 70;     // screen px kept free around the selection bbox
   var TIP_CELL = 10;
   var TIP_GAP = 14;
   var TIP_HIT = 1000;     // one cell of a selected disk or its label
@@ -345,6 +354,27 @@
   var tipSize = null;
   var tipOffset = null;
   var PREFS_KEY = 'key-papers-map-prefs';
+  var GHOST_KEY = 'key-papers-map-dblclick-hint';
+  var GHOST_DELAY = 3000;
+  var GHOST_GLIDE = 700;
+  var GHOST_BOW = 16;
+  var GHOST_STEPS = [
+    { at: 820, kind: 'press' },
+    { at: 910, kind: 'release' },
+    { at: 1020, kind: 'press' },
+    { at: 1110, kind: 'release' },
+    { at: 1500, kind: 'fade' },
+    { at: 1700, kind: 'done' }
+  ];
+  var ghost = d3.select('#ghost');
+  var ghostRun = null;
+  var ghostTimer = null;
+  var ghostDone = false;
+  try {
+    ghostDone = window.localStorage.getItem(GHOST_KEY) === '1';
+  } catch (err) {
+    ghostDone = false;
+  }
 
   function optionExists(select, value) {
     for (var i = 0; i < select.options.length; i += 1) {
@@ -845,15 +875,72 @@
       });
   }
 
-  function restyleForZoom() {
-    styleEdges();
+  function isHit(index) {
+    return Boolean(hitSet && hitSet.has(index));
+  }
+
+  // Screen px from the disk radius to the ring's outer edge. The white
+  // outline matches the page, so its gap is measured from the fill. An
+  // orange hit outline is visible, so the gap starts outside that stroke.
+  function ringPast(orange) {
+    var stroke = orange ? HIT_STROKE : NODE_STROKE;
+    var edge = orange ? stroke / 2 : -stroke / 2;
+    return edge + RING_OUTSET + RING_WIDTH;
+  }
+
+  function styleNodeStrokes() {
     nodeSel.selectAll('circle')
       .attr('stroke', function (d) {
-        return isSelected(d.index) ? 'var(--in)' : '#fff';
+        return isHit(d.index) ? 'var(--in)' : '#fff';
       })
       .attr('stroke-width', function (d) {
-        return (isSelected(d.index) ? 2.4 : 1.3) / transform.k;
+        return (isHit(d.index) ? HIT_STROKE : NODE_STROKE) / transform.k;
       });
+  }
+
+  function ringDash(rScreen) {
+    var c = 2 * Math.PI * rScreen;
+    var n = Math.max(RING_DASHES[0],
+                     Math.min(RING_DASHES[1], Math.floor(c / RING_PERIOD)));
+    var period = 100 / n;
+    var cap = RING_WIDTH * 100 / c;   // round caps eat this from each gap
+    var gap = Math.min(period * 0.8, period * 0.45 + cap);
+    return (period - gap) + ' ' + gap;
+  }
+
+  function drawRings() {
+    var k = transform.k;
+    var ringR = function (d) {
+      return d.r * k + ringPast(isHit(d.index)) - RING_WIDTH / 2;
+    };
+    var sel = gRings.selectAll('g.sel')
+      .data(selected.map(function (i) { return nodes[i]; }), function (d) {
+        return d.id;
+      })
+      .join(function (enter) {
+        var g = enter.append('g').attr('class', 'sel');
+        g.append('circle').attr('class', 'sel-ring').attr('pathLength', 100);
+        return g;
+      });
+    var nodeEls = nodeSel.nodes();
+    sel
+      .classed('dim', function (d) {
+        return nodeEls[d.index].classList.contains('dim');
+      })
+      .attr('transform', function (d) {
+        return 'translate(' + transform.applyX(d.x) + ','
+          + transform.applyY(d.y) + ')';
+      });
+    sel.select('.sel-ring')
+      .attr('r', ringR)
+      .attr('stroke-width', RING_WIDTH)
+      .attr('stroke-dasharray', function (d) { return ringDash(ringR(d)); });
+  }
+
+  function restyleForZoom() {
+    styleEdges();
+    styleNodeStrokes();
+    drawRings();
     if (locked) pinTip(locked);
   }
 
@@ -873,12 +960,21 @@
 
   // Selected labels ignore collisions and take the first spot that fits
   // vertically, which is what placeLabels does for the focused papers.
+  function labelGap(d) {
+    return isSelected(d.index) ? ringPast(isHit(d.index)) + 1 : 0;
+  }
+
+  function labelSlots(cy, rr, gap) {
+    return [cy + rr + gap + LABEL_FONT + 1.5, cy - rr - gap - 3];
+  }
+
   function selectedLabelBox(d) {
     var sx = transform.applyX(d.x);
     var cy = transform.applyY(d.y);
     var rr = d.r * transform.k;
-    var below = cy + rr + LABEL_FONT + 1.5;
-    var above = cy - rr - 3;
+    var slots = labelSlots(cy, rr, labelGap(d));
+    var below = slots[0];
+    var above = slots[1];
     if (below >= 8 && below <= plot.height - 4) return labelBox(d, sx, below);
     if (above >= 8 && above <= plot.height - 4) return labelBox(d, sx, above);
     return null;
@@ -941,8 +1037,9 @@
             || cy < -40 || cy > plot.height + 40) {
           continue;
         }
-        var below = cy + d.r * k + LABEL_FONT + 1.5;
-        var above = cy - d.r * k - 3;
+        var slots = labelSlots(cy, d.r * k, labelGap(d));
+        var below = slots[0];
+        var above = slots[1];
         var chosen = null;
         [below, above].forEach(function (sy) {
           if (chosen || sy < 8 || sy > plot.height - 4) return;
@@ -993,6 +1090,7 @@
   function setSelection(indices) {
     selected = indices.slice();
     locked = selected.length ? nodes[selected[selected.length - 1]] : null;
+    if (!ghostRun || ghostRun.d !== locked) cancelGhost();
     hovered = null;
     if (locked) {
       highlight();
@@ -1065,34 +1163,10 @@
     } else if (window.location.hash !== selectionHash()) {
       syncHash();
     }
-    if (fromHashChange && selected.length) focusSelection();
+    if (fromHashChange && locked) queueGhost(locked);
   }
 
   window.addEventListener('hashchange', function () { applyHash(true); });
-
-  function focusSelection() {
-    if (!selected.length || !plot.width) return;
-    var x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
-    selected.forEach(function (i) {
-      var d = nodes[i];
-      x0 = Math.min(x0, d.x - d.r); x1 = Math.max(x1, d.x + d.r);
-      y0 = Math.min(y0, d.y - d.r); y1 = Math.max(y1, d.y + d.r);
-    });
-    var extent = zoom.scaleExtent();
-    var vw = plot.right - plot.timeLeft, vh = plot.bottom - plot.top;
-    var k = Math.min(FOCUS_MAX_K,
-                     (vw - 2 * FOCUS_PAD) / Math.max(x1 - x0, 1),
-                     (vh - 2 * FOCUS_PAD) / Math.max(y1 - y0, 1));
-    k = Math.max(extent[0], Math.min(extent[1], k));
-    var tx = (plot.timeLeft + plot.right) / 2 - k * (x0 + x1) / 2;
-    var ty = (plot.top + plot.bottom) / 2 - k * (y0 + y1) / 2;
-    svg.transition().duration(500)
-      .call(zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k))
-      .on('end', function () {
-        tipOffset = null;
-        if (locked) pinTip(locked);
-      });
-  }
 
   function syncShareButton() {
     var button = document.getElementById('share');
@@ -1136,6 +1210,7 @@
     focus.forEach(function (i) {
       nodeSel.filter(function (n) { return n.index === i; }).raise();
     });
+    drawRings();
     scheduleLabels();
   }
 
@@ -1170,16 +1245,122 @@
     setSelection([]);
   }
 
+  function markGhostSeen() {
+    try {
+      window.localStorage.setItem(GHOST_KEY, '1');
+    } catch (err) {
+      return;
+    }
+  }
+
+  function cancelGhost() {
+    if (ghostTimer) {
+      clearTimeout(ghostTimer);
+      ghostTimer = null;
+    }
+    if (ghostRun && ghostRun.frame) cancelAnimationFrame(ghostRun.frame);
+    ghost.classed('on', false).classed('press', false);
+    ghost.selectAll('.ring').remove();
+    ghostRun = null;
+  }
+
+  function ghostFrame(now) {
+    var run = ghostRun;
+    if (!run) return;
+    var d = run.d;
+    var elapsed = now - run.t0;
+    if (elapsed < 0) elapsed = 0;
+    var glide = run.calm ? 1 : Math.min(1, elapsed / GHOST_GLIDE);
+    var u = glide >= 1 ? 1 : d3.easeCubicInOut(glide);
+    var hx = transform.applyX(d.x);
+    var hy = transform.applyY(d.y);
+    var bow = Math.sin(Math.PI * glide) * GHOST_BOW;
+    var x = run.sx + (hx - run.sx) * u + run.nx * bow;
+    var y = run.sy + (hy - run.sy) * u + run.ny * bow;
+    ghost.style('transform', 'translate(' + x + 'px,' + y + 'px)');
+    while (run.step < GHOST_STEPS.length && elapsed >= GHOST_STEPS[run.step].at) {
+      var kind = GHOST_STEPS[run.step].kind;
+      run.step += 1;
+      if (kind === 'press') {
+        ghost.classed('press', true);
+        var rr = d.r * transform.k;
+        var size = Math.max(36, rr * 2 + 20);
+        ghost.append('span').attr('class', 'ring')
+          .style('width', size + 'px')
+          .style('height', size + 'px')
+          .style('left', (-size / 2) + 'px')
+          .style('top', (-size / 2) + 'px')
+          .on('animationend', function () { d3.select(this).remove(); });
+      } else if (kind === 'release') {
+        ghost.classed('press', false);
+      } else if (kind === 'fade') {
+        ghost.classed('on', false);
+      } else if (kind === 'done') {
+        cancelGhost();
+        return;
+      }
+    }
+    run.frame = requestAnimationFrame(ghostFrame);
+  }
+
+  function rememberGhost() {
+    ghostDone = true;
+    markGhostSeen();
+  }
+
+  function playGhost(d) {
+    rememberGhost();
+    var hx = transform.applyX(d.x);
+    var hy = transform.applyY(d.y);
+    var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var dx = calm ? 0 : 110;
+    var dy = calm ? 0 : 90;
+    if (hx + dx > window.innerWidth - 16) dx = -dx;
+    if (hy + dy > window.innerHeight - 16) dy = -dy;
+    var sx = hx + dx;
+    var sy = hy + dy;
+    if (sx < 16) sx = 16;
+    if (sy < 16) sy = 16;
+    var len = Math.hypot(dx, dy) || 1;
+    ghost.selectAll('.ring').remove();
+    ghost.classed('press', false);
+    ghost.style('transform', 'translate(' + sx + 'px,' + sy + 'px)');
+    ghost.classed('on', true);
+    ghostRun = {
+      d: d,
+      t0: performance.now(),
+      sx: sx,
+      sy: sy,
+      nx: -dy / len,
+      ny: dx / len,
+      calm: calm,
+      step: 0
+    };
+    ghostRun.frame = requestAnimationFrame(ghostFrame);
+  }
+
+  function queueGhost(d) {
+    if (ghostDone) return;
+    if (ghostTimer) clearTimeout(ghostTimer);
+    ghostTimer = setTimeout(function () {
+      ghostTimer = null;
+      if (locked === d) playGhost(d);
+    }, GHOST_DELAY);
+  }
+
   function onClick(event, d) {
     event.preventDefault();
     event.stopPropagation();
     if (event.shiftKey || event.ctrlKey || event.metaKey) toggleSelected(d);
     else setSelection([d.index]);
+    if (locked) queueGhost(locked);
   }
 
   function onDblClick(event, d) {
     event.preventDefault();
     event.stopPropagation();
+    rememberGhost();
+    cancelGhost();
     window.open(d.url, '_blank');
   }
 
@@ -1407,8 +1588,10 @@
       var nsx = transform.applyX(n.x);
       var nsy = transform.applyY(n.y);
       var nrr = n.r * transform.k;
+      var pad = ringPast(isHit(n.index)) + 2;
       stampTipRect(
-        nsx - nrr - 4, nsy - nrr - 4, nsx + nrr + 4, nsy + nrr + 4, TIP_HIT
+        nsx - nrr - pad, nsy - nrr - pad, nsx + nrr + pad, nsy + nrr + pad,
+        TIP_HIT
       );
       var label = selectedLabelBox(n);
       if (label) stampTipRect(label[0], label[1], label[2], label[3], TIP_HIT);
@@ -1710,6 +1893,7 @@
       : '';
     if (!filtering) {
       matches = null;
+      hitSet = null;
       filterKey = '';
     } else if (key !== filterKey) {
       filterKey = key;
@@ -1732,18 +1916,16 @@
         }
         return true;
       }).map(function (d) { return d.index; });
+      hitSet = new Set(matches);
     }
-    var hit = matches ? new Set(matches) : null;
-    nodeSel.classed('dim', function (d) { return hit ? !hit.has(d.index) : false; });
-    labelSel.classed('dim', function (d) { return hit ? !hit.has(d.index) : false; });
-    nodeSel.selectAll('circle')
-      .attr('stroke', function (d) {
-        return hit && hit.has(d.index) ? 'var(--in)' : '#fff';
-      })
-      .attr('stroke-width', function (d) {
-        return (hit && hit.has(d.index) ? 2.4 : 1.3) / transform.k;
-      });
-    var base = note(hit ? hit.size : null);
+    nodeSel.classed('dim', function (d) {
+      return hitSet ? !hitSet.has(d.index) : false;
+    });
+    labelSel.classed('dim', function (d) {
+      return hitSet ? !hitSet.has(d.index) : false;
+    });
+    styleNodeStrokes();
+    var base = note(hitSet ? hitSet.size : null);
     var prefix = '';
     if (termActive && corpusState === 'loading') {
       prefix = 'loading full text\u2026  \u00b7  ';
