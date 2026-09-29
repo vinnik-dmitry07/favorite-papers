@@ -1815,5 +1815,32 @@
       "Matthew Kowal",
       "Vasudev Shyam"
     ]
+  },
+  "2510.27688": {
+    "title": "Continuous Autoregressive Language Models",
+    "published": "2025-10-31",
+    "authors": [
+      "Chenze Shao",
+      "Darren Li",
+      "Fandong Meng",
+      "Jie Zhou"
+    ]
+  },
+  "2609.01117": {
+    "title": "Latent Recurrent Thoughts: Recurrent Refinement of Proposed Latents for Reasoning with Frozen LLMs",
+    "published": "2026-09-01",
+    "authors": [
+      "Zhaoliang Chen",
+      "Jie Fu"
+    ]
+  },
+  "2604.17121": {
+    "title": "The Topological Trouble With Transformers",
+    "published": "2026-04-18",
+    "authors": [
+      "Michael C. Mozer",
+      "Shoaib Ahmed Siddiqui",
+      "Rosanne Liu"
+    ]
   }
 }
