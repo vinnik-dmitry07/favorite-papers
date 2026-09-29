@@ -15,9 +15,8 @@
    Selection is mirrored into #sel=<key>,… and restored on load.
    A selected paper wears a dashed ring one pixel outside the disk.
    The pinned tooltip sits where it covers the
-   fewest selected papers and links. The first hold (a click or a
-   deep link) plays a one-time animated double-click hint, once the
-   tab is visible. */
+   fewest selected papers and links. Each hold (a click or a deep
+   link) plays an animated double-click hint, once the tab is visible. */
 (function () {
   'use strict';
 
@@ -391,7 +390,6 @@
   var tipSize = null;
   var tipOffset = null;
   var PREFS_KEY = 'key-papers-map-prefs';
-  var GHOST_KEY = 'key-papers-map-dblclick-hint';
   var GHOST_DELAY = 3000;
   var GHOST_GLIDE = 700;
   var GHOST_BOW = 16;
@@ -408,12 +406,6 @@
   var ghostRun = null;
   var ghostTimer = null;
   var ghostHold = null;     // queued while the tab is hidden
-  var ghostDone = false;
-  try {
-    ghostDone = window.localStorage.getItem(GHOST_KEY) === '1';
-  } catch (err) {
-    ghostDone = false;
-  }
 
   function optionExists(select, value) {
     for (var i = 0; i < select.options.length; i += 1) {
@@ -1333,10 +1325,6 @@
       elapsed = 0;
     }
     run.lastAt = now;
-    if (!run.painted) {
-      run.painted = true;
-      rememberGhost();
-    }
     var glide = run.calm ? 1 : Math.min(1, elapsed / GHOST_GLIDE);
     var u = glide >= 1 ? 1 : d3.easeCubicInOut(glide);
     var hx = transform.applyX(d.x);
@@ -1370,15 +1358,6 @@
     run.frame = requestAnimationFrame(ghostFrame);
   }
 
-  function rememberGhost() {
-    ghostDone = true;
-    try {
-      window.localStorage.setItem(GHOST_KEY, '1');
-    } catch (err) {
-      return;
-    }
-  }
-
   function playGhost(d) {
     var hx = transform.applyX(d.x);
     var hy = transform.applyY(d.y);
@@ -1410,12 +1389,11 @@
   }
 
   function queueGhost(d) {
-    if (ghostDone || ghostRun) return;
-    ghostHold = null;
-    if (ghostTimer) clearTimeout(ghostTimer);
+    if (ghostRun && ghost.classed('on')) return;
+    cancelGhost();
     ghostTimer = setTimeout(function () {
       ghostTimer = null;
-      if (locked !== d || ghostDone) return;
+      if (locked !== d) return;
       if (document.hidden) {
         ghostHold = d;
         return;
@@ -1438,7 +1416,7 @@
     }
     var held = ghostHold;
     ghostHold = null;
-    if (held && !ghostDone && locked === held) playGhost(held);
+    if (held && locked === held) playGhost(held);
   }
 
   document.addEventListener('visibilitychange', onGhostVisible);
@@ -1455,7 +1433,6 @@
   function onDblClick(event, d) {
     event.preventDefault();
     event.stopPropagation();
-    rememberGhost();
     cancelGhost();
     window.open(d.url, '_blank');
   }

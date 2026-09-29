@@ -18,7 +18,6 @@ from common import ASSETS, FULLTEXT_DIR, FULLTEXT_SEARCH_JS, GRAPH, ROOT, load_j
 
 SHOTS = ROOT / 'shots'
 PREVIEW = ASSETS / 'preview.png'
-GHOST_KEY = 'key-papers-map-dblclick-hint'
 GHOST_TIP_JS = '''() => {
     const g = document.getElementById('ghost');
     const box = g.getBoundingClientRect();
@@ -401,7 +400,7 @@ def check_deep_link(page, errors: list, label: str, expected: list) -> dict:
 
 
 def check_ghost(page, errors: list, label: str, shot, calm: bool = False) -> None:
-    '''Fingertip lands on the held circle, then the hint is remembered.'''
+    '''Fingertip lands on the held circle, then the hint finishes.'''
     if calm:
         try:
             page.wait_for_function(
@@ -463,9 +462,6 @@ def check_ghost(page, errors: list, label: str, shot, calm: bool = False) -> Non
         errors.append(
             f'{label}: ghost did not finish ({err.__class__.__name__})'
         )
-    stored = page.evaluate('(key) => localStorage.getItem(key)', GHOST_KEY)
-    if stored != '1':
-        errors.append(f'{label}: hint was not stored ({stored!r})')
 
 
 HIDE_JS = '''(hidden) => {
@@ -494,8 +490,7 @@ RESTORE_HIDE_JS = '''() => {
 
 
 def check_ghost_waits_until_visible(page, errors: list, shot) -> None:
-    '''A hidden tab must not play the hint or mark it seen.'''
-    page.evaluate('(key) => localStorage.removeItem(key)', GHOST_KEY)
+    '''A hidden tab waits, then plays the hint when it is shown.'''
     page.reload(wait_until='load')
     try:
         hidden = page.evaluate(HIDE_JS, True)
@@ -504,18 +499,12 @@ def check_ghost_waits_until_visible(page, errors: list, shot) -> None:
             return
         print('hidden tab: waiting out the delay')
         page.wait_for_timeout(3400)
-        state = page.evaluate(
-            '''(key) => ({
-                on: document.getElementById('ghost').classList.contains('on'),
-                stored: localStorage.getItem(key),
-            })''',
-            GHOST_KEY,
+        showing = page.evaluate(
+            '() => document.getElementById("ghost").classList.contains("on")'
         )
-        print('hidden tab:', state)
-        if state['on']:
+        print('hidden tab:', showing)
+        if showing:
             errors.append('hidden tab: ghost played while hidden')
-        if state['stored'] == '1':
-            errors.append('hidden tab: hint was stored while hidden')
         page.evaluate(HIDE_JS, False)
         check_ghost(page, errors, 'shown tab', shot)
     finally:
@@ -1000,11 +989,7 @@ def main() -> None:
 
         check_ghost(page, errors, 'first click', SHOTS / '11-ghost-click.png')
         page.mouse.click(target['x'], target['y'])
-        page.wait_for_timeout(3400)
-        if page.evaluate(
-            '() => document.getElementById("ghost").classList.contains("on")'
-        ):
-            errors.append('ghost replayed on the second click')
+        check_ghost(page, errors, 'second click', SHOTS / '11-ghost-again.png')
 
         page.evaluate('''() => { window.__opened = [];
             window.open = (url) => { window.__opened.push(url); }; }''')
@@ -1710,7 +1695,6 @@ def main() -> None:
             page, errors, 'deep link hashchange unknown', alt_expected
         )
 
-        page.evaluate('(key) => localStorage.removeItem(key)', GHOST_KEY)
         page.reload(wait_until='load')
         check_ghost(
             page, errors, 'deep link reload', SHOTS / '12-ghost-deep-link.png',
@@ -1719,7 +1703,6 @@ def main() -> None:
         check_tip_clear(page, errors, 'deep link reload')
 
         page.emulate_media(reduced_motion='reduce')
-        page.evaluate('(key) => localStorage.removeItem(key)', GHOST_KEY)
         page.reload(wait_until='load')
         check_ghost(
             page, errors, 'reduced motion', SHOTS / '13-ghost-reduced.png',
