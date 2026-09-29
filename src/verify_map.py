@@ -12,7 +12,7 @@ import threading
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import unquote
 
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import Error as PlaywrightError, sync_playwright
 
 from common import ASSETS, FULLTEXT_DIR, FULLTEXT_SEARCH_JS, GRAPH, ROOT, load_json
 
@@ -82,6 +82,17 @@ def ensure_fulltext_search() -> None:
 
 def pageerrors(errors: list[str]) -> list[str]:
     return [line for line in errors if line.startswith('pageerror')]
+
+
+def watch_page(page, errors: list[str], label: str = '') -> None:
+    '''Collect console errors/warnings and uncaught exceptions into errors.'''
+    prefix = f'{label}: ' if label else ''
+
+    def on_console(msg):
+        if msg.type in ('error', 'warning'):
+            errors.append(f'console.{msg.type}: {prefix}{msg.text}')
+    page.on('console', on_console)
+    page.on('pageerror', lambda e: errors.append(f'pageerror: {prefix}{e}'))
 
 
 SEARCH_JS = '''() => {
@@ -526,8 +537,7 @@ MOBILE_STATE_JS = '''() => {
     const header = document.querySelector('header');
     const hb = header.getBoundingClientRect();
     const sb = document.getElementById('map').getBoundingClientRect();
-    const visible = el => getComputedStyle(el).display !== 'none'
-        && el.getClientRects().length > 0;
+    const visible = el => el.getClientRects().length > 0;
     const circles = [...document.querySelectorAll('.nodes circle')]
         .map(c => c.getBoundingClientRect());
     return {
@@ -547,14 +557,22 @@ MOBILE_STATE_JS = '''() => {
         footerH: document.getElementById('note').getBoundingClientRect().height,
         svgW: sb.width,
         svgH: sb.height,
-        circles: circles.length,
         minCircleY: Math.min(...circles.map(b => b.y)),
         rightOfDrawer: circles.filter(b => b.x > hb.width + 4).length,
-        k: d3.zoomTransform(document.getElementById('map')).k,
-        tx: d3.zoomTransform(document.getElementById('map')).x,
-        ty: d3.zoomTransform(document.getElementById('map')).y,
     };
 }'''
+
+DRAWER_OPEN_JS = '() => document.querySelector("header").classList.contains("open")'
+
+ZOOM_JS = '''() => {
+    const t = d3.zoomTransform(document.getElementById('map'));
+    return {k: t.k, x: t.x, y: t.y};
+}'''
+
+# One finger, dragged 150px down the screen. On the rotated portrait page
+# client y is the body's x, so the map must pan by +150 in x and 0 in y.
+PAN = {'x': 195, 'y': 300, 'dx': 0, 'dy': 150}
+PAN_EXPECT = {'x': PAN['dy'], 'y': PAN['dx']}
 
 MOBILE_TIP_JS = '''([px, py]) => {
     const tip = document.getElementById('tip');
@@ -573,30 +591,42 @@ def approx(value: float, target: float, tol: float) -> bool:
     return abs(value - target) <= tol
 
 
+HELD_JS = '() => document.querySelectorAll(".nodes g.held").length'
+
+# WebKit before spring 2026 (bugs 209220 / 308970) left the body's CSS
+# rotation out of getScreenCTM. Reproduce that on the map svg so the shim in
+# map.js gets exercised in Chrome.
+CTM_STUB_JS = '''(() => {
+    const proto = SVGGraphicsElement.prototype;
+    const native = proto.getScreenCTM;
+    proto.getScreenCTM = function () {
+        const m = native.call(this);
+        if (this.id !== 'map' || !m) return m;
+        const t = this.createSVGMatrix();
+        t.e = m.e;
+        t.f = m.f;
+        return t;
+    };
+})();'''
+
+SHIM_JS = '''() => Object.prototype.hasOwnProperty.call(
+    document.getElementById('map'), 'getScreenCTM')'''
+
+
 def mobile_page(browser, url: str, width: int, height: int, errors: list,
-                label: str):
+                label: str, init_js: str | None = None):
     '''A phone-like page: device-width viewport, touch, coarse pointer.'''
     context = browser.new_context(
         viewport={'width': width, 'height': height},
         device_scale_factor=2, is_mobile=True, has_touch=True,
     )
+    if init_js:
+        context.add_init_script(init_js)
     page = context.new_page()
-
-    def on_console(msg):
-        if msg.type in ('error', 'warning'):
-            errors.append(f'{label} console.{msg.type}: {msg.text}')
-    page.on('console', on_console)
-    page.on('pageerror', lambda e: errors.append(f'{label} pageerror: {e}'))
+    watch_page(page, errors, label)
     page.goto(url, wait_until='load')
     page.wait_for_timeout(1200)
-    return context, page
-
-
-def drag_mouse(page, x: int, y: int, dx: int, dy: int) -> None:
-    page.mouse.move(x, y)
-    page.mouse.down()
-    page.mouse.move(x + dx, y + dy, steps=10)
-    page.mouse.up()
+    return page
 
 
 def drag_touch(page, x: int, y: int, dx: int, dy: int) -> None:
@@ -614,34 +644,27 @@ def drag_touch(page, x: int, y: int, dx: int, dy: int) -> None:
     cdp.detach()
 
 
-def reset_view(page) -> None:
-    '''The reset button lives in the drawer on a phone; using it closes it.'''
-    page.click('#menu')
-    page.click('#reset')
-    page.wait_for_timeout(600)
-
-
 def expect_pan(page, errors: list, label: str) -> None:
-    '''A finger moved by client +150 in y on a rotated page must pan the map
-    by +150 in its own x (the CSS rotation maps client y to body x).'''
-    got = page.evaluate(MOBILE_STATE_JS)
-    print(f'{label}: k={got["k"]} tx={got["tx"]:.1f} ty={got["ty"]:.1f}')
+    got = page.evaluate(ZOOM_JS)
+    print(f'{label}: k={got["k"]} x={got["x"]:.1f} y={got["y"]:.1f}')
     if got['k'] != 1:
         errors.append(f'{label}: k={got["k"]}, expected 1')
-    if not approx(got['tx'], 150, 4):
-        errors.append(f'{label}: tx={got["tx"]:.1f}, expected about 150')
-    if not approx(got['ty'], 0, 4):
-        errors.append(f'{label}: ty={got["ty"]:.1f}, expected about 0')
+    for axis in ('x', 'y'):
+        if not approx(got[axis], PAN_EXPECT[axis], 4):
+            errors.append(
+                f'{label}: {axis}={got[axis]:.1f}, '
+                f'expected about {PAN_EXPECT[axis]}'
+            )
 
 
-def mobile_checks(browser, url: str, errors: list) -> None:
-    '''Phone landscape: one menu button and a drawer. Phone portrait: the page
-    is drawn sideways, and pointer, tooltip and pan follow the rotation.'''
-    context, page = mobile_page(browser, url, 844, 390, errors, 'landscape')
+def landscape_checks(browser, url: str, errors: list) -> None:
+    '''Phone landscape: one menu button, a drawer, and taps that tell the two
+    apart.'''
+    page = mobile_page(browser, url, 844, 390, errors, 'landscape')
     state = page.evaluate(MOBILE_STATE_JS)
     print('landscape closed:', {k: state[k] for k in (
         'coarse', 'compact', 'rotated', 'headerW', 'headerH', 'menu', 'legend',
-        'yaxis', 'footerH', 'minCircleY', 'circles')})
+        'yaxis', 'footerH', 'minCircleY')})
     if not state['coarse']:
         errors.append('landscape: emulation is not (pointer: coarse)')
     if not state['compact'] or state['rotated']:
@@ -664,8 +687,8 @@ def mobile_checks(browser, url: str, errors: list) -> None:
         )
     page.screenshot(path=str(SHOTS / '15-mobile-landscape.png'))
 
+    # The drawer toggles synchronously in the click handler; no wait needed.
     page.click('#menu')
-    page.wait_for_timeout(300)
     opened = page.evaluate(MOBILE_STATE_JS)
     print('landscape open:', {k: opened[k] for k in (
         'open', 'expanded', 'headerW', 'headerH', 'legend', 'yaxis',
@@ -685,38 +708,92 @@ def mobile_checks(browser, url: str, errors: list) -> None:
             'the drawer'
         )
     page.screenshot(path=str(SHOTS / '16-mobile-drawer.png'))
-
-    page.mouse.click(760, 60)
-    page.wait_for_timeout(300)
-    closed = page.evaluate(MOBILE_STATE_JS)
-    if closed['open'] or closed['expanded'] != 'false':
-        errors.append('landscape: tapping the map did not close the drawer')
-    page.click('#menu')
+    page.focus('#search')
     page.keyboard.press('Escape')
-    page.wait_for_timeout(200)
-    if page.evaluate(MOBILE_STATE_JS)['open']:
+    if page.evaluate(DRAWER_OPEN_JS):
         errors.append('landscape: Escape did not close the drawer')
-    context.close()
+    if page.evaluate('() => document.activeElement.id') != 'menu':
+        errors.append(
+            'landscape: closing the drawer left focus in the hidden controls'
+        )
 
-    context, page = mobile_page(browser, url, 390, 844, errors, 'portrait')
+    # Hold a paper, open the drawer, tap the map: the drawer closes and the
+    # paper stays held. Only the next tap releases it.
+    disk = page.evaluate('''() => {
+        const hit = [...document.querySelectorAll('.nodes circle')]
+            .map(c => c.getBoundingClientRect())
+            .find(b => b.width > 6 && b.x > 400 && b.x < 800
+                       && b.y > 80 && b.y < 330);
+        return hit ? {x: hit.x + hit.width / 2, y: hit.y + hit.height / 2} : null;
+    }''')
+    if not disk:
+        errors.append('landscape: no circle away from the edges to hold')
+    else:
+        page.mouse.click(disk['x'], disk['y'])
+        if page.evaluate(HELD_JS) != 1:
+            errors.append('landscape: tapping a disk did not hold it')
+        page.click('#menu')
+        page.mouse.click(760, 60)
+        if page.evaluate(DRAWER_OPEN_JS):
+            errors.append('landscape: tapping the map did not close the drawer')
+        if page.evaluate(HELD_JS) != 1:
+            errors.append('landscape: the tap that closed the drawer released the paper')
+        page.mouse.click(760, 60)
+        if page.evaluate(HELD_JS) != 0:
+            errors.append('landscape: tapping the bare map did not release the paper')
+
+    # Leaving compact mode (here: a bigger window) must not leave the header
+    # flagged as an open drawer.
+    page.click('#menu')
+    page.set_viewport_size({'width': 1000, 'height': 700})
+    page.wait_for_timeout(400)
+    grown = page.evaluate(MOBILE_STATE_JS)
+    print('grown:', {k: grown[k] for k in ('compact', 'open', 'expanded', 'legend')})
+    if grown['compact'] or grown['open'] or grown['expanded'] != 'false':
+        errors.append(
+            f'grown: compact={grown["compact"]} open={grown["open"]} '
+            f'expanded={grown["expanded"]}, expected the drawer state cleared'
+        )
+    if not grown['legend']:
+        errors.append('grown: full header not shown after leaving compact mode')
+    page.context.close()
+
+
+def portrait_checks(browser, url: str, errors: list, label: str,
+                    touch: bool = True, init_js: str | None = None,
+                    expect_shim: bool | None = None, shot: str | None = None
+                    ) -> None:
+    '''Phone portrait: the page is drawn sideways, and pointer, tooltip and pan
+    follow the rotation. `expect_shim` pins whether map.js had to patch
+    getScreenCTM; None accepts either (a real WebKit of unknown vintage).'''
+    page = mobile_page(browser, url, 390, 844, errors, label, init_js)
     state = page.evaluate(MOBILE_STATE_JS)
-    print('portrait:', {k: state[k] for k in (
-        'compact', 'rotated', 'bodyTransform', 'bodyW', 'bodyH', 'svgW',
-        'svgH', 'headerW', 'headerH')})
+    print(f'{label}:', {k: state[k] for k in (
+        'coarse', 'compact', 'rotated', 'bodyTransform', 'bodyW', 'bodyH',
+        'svgW', 'svgH', 'headerW', 'headerH')})
+    if not state['coarse']:
+        errors.append(f'{label}: emulation is not (pointer: coarse)')
     if not state['rotated'] or state['bodyTransform'] == 'none':
         errors.append(
-            f'portrait: rotated={state["rotated"]} '
+            f'{label}: rotated={state["rotated"]} '
             f'transform={state["bodyTransform"]!r}'
         )
     if not approx(state['bodyW'], 844, 2) or not approx(state['bodyH'], 390, 2):
         errors.append(
-            f'portrait: body is {state["bodyW"]}x{state["bodyH"]}, '
+            f'{label}: body is {state["bodyW"]}x{state["bodyH"]}, '
             'expected 844x390 (the page laid out sideways)'
         )
     if not approx(state['svgW'], 390, 2) or not approx(state['svgH'], 844, 2):
         errors.append(
-            f'portrait: svg on screen is {state["svgW"]:.0f}x{state["svgH"]:.0f}, '
+            f'{label}: svg on screen is {state["svgW"]:.0f}x{state["svgH"]:.0f}, '
             'expected to fill the 390x844 screen'
+        )
+    shim = page.evaluate(SHIM_JS)
+    print(f'{label}: getScreenCTM shim', 'installed' if shim else 'not needed')
+    if expect_shim is not None and shim != expect_shim:
+        errors.append(
+            f'{label}: getScreenCTM shim installed={shim}, '
+            f'expected {expect_shim}'
         )
 
     target = page.evaluate('''() => {
@@ -727,37 +804,70 @@ def mobile_checks(browser, url: str, errors: list) -> None:
         return hit ? {x: hit.x + hit.width / 2, y: hit.y + hit.height / 2} : null;
     }''')
     if not target:
-        errors.append('portrait: no circle away from the edges to hover')
+        errors.append(f'{label}: no circle away from the edges to hover')
     else:
         page.mouse.move(target['x'], target['y'])
         page.wait_for_timeout(250)
         tip = page.evaluate(MOBILE_TIP_JS, [target['x'], target['y']])
-        print('portrait tip:', {k: round(v, 1) if isinstance(v, float) else v
+        print(f'{label} tip:', {k: round(v, 1) if isinstance(v, float) else v
                                 for k, v in tip.items()})
         if tip['opacity'] != '1':
-            errors.append('portrait: hover did not show the tooltip')
+            errors.append(f'{label}: hover did not show the tooltip')
         if (tip['left'] < 0 or tip['top'] < 0 or tip['right'] > 390
                 or tip['bottom'] > 844):
-            errors.append('portrait: tooltip leaves the screen')
+            errors.append(f'{label}: tooltip leaves the screen')
         if tip['dist'] > 40:
             errors.append(
-                f'portrait: tooltip {tip["dist"]:.0f}px from the finger, '
+                f'{label}: tooltip {tip["dist"]:.0f}px from the finger, '
                 'expected it right next to it'
             )
-        page.mouse.move(5, 5)
-        page.wait_for_timeout(200)
-    page.screenshot(path=str(SHOTS / '17-mobile-portrait.png'))
+    if shot:
+        page.screenshot(path=str(SHOTS / shot))
 
-    drag_mouse(page, 195, 300, 0, 150)
-    page.wait_for_timeout(300)
-    expect_pan(page, errors, 'portrait mouse pan')
-    reset_view(page)
-    if page.evaluate(MOBILE_STATE_JS)['open']:
-        errors.append('portrait: reset view left the drawer open')
-    drag_touch(page, 195, 300, 0, 150)
-    page.wait_for_timeout(300)
-    expect_pan(page, errors, 'portrait touch pan')
-    context.close()
+    # d3-zoom applies each move synchronously, so the pans need no wait.
+    page.mouse.move(PAN['x'], PAN['y'])
+    page.mouse.down()
+    page.mouse.move(PAN['x'] + PAN['dx'], PAN['y'] + PAN['dy'], steps=10)
+    page.mouse.up()
+    expect_pan(page, errors, f'{label} mouse pan')
+
+    # The reset button lives in the drawer on a phone; using it closes it.
+    page.click('#menu')
+    page.click('#reset')
+    page.wait_for_function(
+        '() => d3.zoomTransform(document.getElementById("map")).x === 0'
+    )
+    if page.evaluate(DRAWER_OPEN_JS):
+        errors.append(f'{label}: reset view left the drawer open')
+
+    if touch:  # CDP, so Chromium only
+        drag_touch(page, PAN['x'], PAN['y'], PAN['dx'], PAN['dy'])
+        expect_pan(page, errors, f'{label} touch pan')
+    page.context.close()
+
+
+def webkit_checks(pw, url: str, errors: list) -> None:
+    '''The portrait pass on Playwright's WebKit, the closest thing to an
+    iPhone here. Skipped when the browser is not installed.'''
+    try:
+        browser = pw.webkit.launch()
+    except PlaywrightError as e:
+        first = str(e).splitlines()[0]
+        print(f'webkit: skipped, {first} (python -m playwright install webkit)')
+        return
+    portrait_checks(browser, url, errors, 'webkit portrait', touch=False)
+    browser.close()
+
+
+def mobile_checks(pw, browser, url: str, errors: list) -> None:
+    '''Everything phone: Chrome landscape and portrait, portrait again with an
+    old-WebKit getScreenCTM, and real WebKit when installed.'''
+    landscape_checks(browser, url, errors)
+    portrait_checks(browser, url, errors, 'portrait', expect_shim=False,
+                    shot='17-mobile-portrait.png')
+    portrait_checks(browser, url, errors, 'portrait ctm-stub',
+                    init_js=CTM_STUB_JS, expect_shim=True)
+    webkit_checks(pw, url, errors)
 
 
 def mobile_only() -> None:
@@ -768,7 +878,7 @@ def mobile_only() -> None:
     errors: list[str] = []
     with sync_playwright() as pw:
         browser = pw.chromium.launch(channel='chrome')
-        mobile_checks(browser, map_url(server), errors)
+        mobile_checks(pw, browser, map_url(server), errors)
         browser.close()
     server.shutdown()
     if errors:
@@ -803,12 +913,7 @@ def main() -> None:
     with sync_playwright() as pw:
         browser = pw.chromium.launch(channel='chrome')
         page = browser.new_page(viewport={'width': 1440, 'height': 860})
-        def on_console(msg):
-            if msg.type not in ('error', 'warning'):
-                return
-            errors.append(f'console.{msg.type}: {msg.text}')
-        page.on('console', on_console)
-        page.on('pageerror', lambda e: errors.append(f'pageerror: {e}'))
+        watch_page(page, errors)
         page.goto(target, wait_until='load')
         page.wait_for_timeout(1200)
 
@@ -1716,7 +1821,7 @@ def main() -> None:
         if '%3F' not in href:
             errors.append(f'ssrn share URL left ? unencoded: {href!r}')
 
-        mobile_checks(browser, base_url, errors)
+        mobile_checks(pw, browser, base_url, errors)
         browser.close()
     server.shutdown()
 

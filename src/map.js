@@ -97,31 +97,34 @@
     return (v > 0 ? '+' : '-') + mag;
   }
 
-  /* Screen geometry. index.html sets html.compact on phones and html.rotated
-     on a phone held upright, where the body is drawn turned 90 degrees.
-     Layout sizes (clientWidth/Height, offsetWidth/Height) ignore that
-     transform, so everything here works in the body's own pixels; only
-     pointer coordinates arrive in client space and must be mapped back. */
-  function isCompact() {
-    return document.documentElement.classList.contains('compact');
-  }
-
-  function isRotated() {
-    return document.documentElement.classList.contains('rotated');
-  }
-
-  function viewSize() {
-    return { w: document.body.clientWidth, h: document.body.clientHeight };
-  }
-
-  // Inverse of `rotate(90deg) translateY(-100%)`: client (X, Y) came from
-  // body (Y, bodyHeight - X).
-  function clientToView(x, y) {
-    if (!isRotated()) return [x, y];
-    return [y, document.body.clientHeight - x];
-  }
-
   var svg = d3.select('#map');
+  var headerEl = document.querySelector('header');
+
+  /* d3.pointer and every d3-zoom gesture invert svg.getScreenCTM(). WebKit
+     before spring 2026 (bugs 209220 / 308970) dropped the body's CSS
+     rotation from that matrix, so on such an iPhone the html.rotated page
+     would pan sideways. Probe once the turn is in effect; if the matrix
+     lacks it, answer with the known one: body (x, y) -> client
+     (bodyHeight - y, x), i.e. a=0 b=1 c=-1 d=0 e=bodyHeight f=0. */
+  var ctmShimmed = false;
+  function shimScreenCtm(rotated) {
+    if (!rotated || ctmShimmed) return;
+    var node = svg.node();
+    var m = node.getScreenCTM();
+    if (!m || Math.abs(m.b) > 0.5) return;
+    var native = node.getScreenCTM;
+    node.getScreenCTM = function () {
+      if (!document.documentElement.classList.contains('rotated')) {
+        return native.call(this);
+      }
+      var r = this.createSVGMatrix();
+      r.a = 0; r.b = 1; r.c = -1; r.d = 0;
+      r.e = document.body.clientHeight; r.f = 0;
+      return r;
+    };
+    ctmShimmed = true;
+  }
+
   var gAxes = svg.append('g');
   var gRoot = svg.append('g');
   var gEdges = gRoot.append('g').attr('class', 'edges');
@@ -344,8 +347,7 @@
     var area = (plot.width / 1440) * (plot.height / 860);
     // A phone is a quarter of the reference area; the square root keeps the
     // disks at a tappable 2 to 11px instead of 1 to 5px.
-    if (plot.compact) area = Math.sqrt(area);
-    return Math.min(1, area);
+    return Math.min(1, plot.compact ? Math.sqrt(area) : area);
   }
 
   function applyMetric() {
@@ -496,24 +498,27 @@
   svg.call(zoom).on('dblclick.zoom', null);
 
   function layout() {
-    var box = viewSize();
-    var compact = isCompact();
+    // Body sizes are layout sizes: on a phone held upright (html.rotated)
+    // the body is drawn turned 90 degrees, and these stay in its own pixels.
+    var width = document.body.clientWidth;
+    var height = document.body.clientHeight;
+    var compact = document.documentElement.classList.contains('compact');
+    shimScreenCtm(document.documentElement.classList.contains('rotated'));
     var m = compact ? MARGIN_COMPACT : MARGIN;
-    // On a phone the header is a corner button (or an overlay drawer) and
+    var topPad = compact ? TOP_PAD_COMPACT : TOP_PAD;
+    var zeroBand = compact ? ZERO_BAND_COMPACT : ZERO_BAND;
+    // On a phone the header is a corner button or an overlay drawer, so it
     // takes no band of its own.
-    var header = document.querySelector('header');
-    var headerBottom = compact ? 0 : header.offsetTop + header.offsetHeight;
+    var headerH = compact ? 0 : headerEl.offsetHeight;
     plot = {
       compact: compact,
-      topPad: compact ? TOP_PAD_COMPACT : TOP_PAD,
-      zeroBand: compact ? ZERO_BAND_COMPACT : ZERO_BAND,
       left: m.left,
-      right: box.w - m.right,
-      top: compact ? m.top : Math.max(m.top, header.offsetHeight + 22),
-      bottom: box.h - m.bottom,
-      width: box.w,
-      height: box.h,
-      headerBottom: headerBottom
+      right: width - m.right,
+      top: compact ? m.top : Math.max(m.top, headerH + 22),
+      bottom: height - m.bottom,
+      width: width,
+      height: height,
+      headerBottom: headerH
     };
     plot.gutter = nodes.some(function (d) { return !d.time; }) ? GUTTER : 0;
     var timeLeft = plot.left + plot.gutter + (plot.gutter ? 30 : 0);
@@ -529,15 +534,15 @@
     yBase = qualityMode()
       ? d3.scaleLinear()
           .domain([-1, 1])
-          .range([plot.bottom - plot.zeroBand, plot.top + plot.topPad])
+          .range([plot.bottom - zeroBand, plot.top + topPad])
       : d3.scaleLinear()
           .domain([yEncode(1), 1])
-          .range([plot.bottom - plot.zeroBand, plot.top + plot.topPad]);
+          .range([plot.bottom - zeroBand, plot.top + topPad]);
 
     // Uncited / unscored entries would otherwise pile onto a single pixel row.
     plot.zeroLow = plot.bottom - 12;
-    plot.zeroHigh = plot.bottom - plot.zeroBand + 16;
-    plot.zeroRule = plot.bottom - plot.zeroBand + 6;
+    plot.zeroHigh = plot.bottom - zeroBand + 16;
+    plot.zeroRule = plot.bottom - zeroBand + 6;
 
     var gutterMid = plot.left + plot.gutter / 2;
     var s = plotScale();
@@ -1380,9 +1385,8 @@
     var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var dx = calm ? 0 : 110;
     var dy = calm ? 0 : 90;
-    var view = viewSize();
-    if (hx + dx > view.w - 16) dx = -dx;
-    if (hy + dy > view.h - 16) dy = -dy;
+    if (hx + dx > plot.width - 16) dx = -dx;
+    if (hy + dy > plot.height - 16) dy = -dy;
     var sx = hx + dx;
     var sy = hy + dy;
     if (sx < 16) sx = 16;
@@ -1442,6 +1446,7 @@
   function onClick(event, d) {
     event.preventDefault();
     event.stopPropagation();
+    if (swallowDismissTap()) return;
     if (event.shiftKey || event.ctrlKey || event.metaKey) toggleSelected(d);
     else setSelection([d.index]);
     if (locked) queueGhost(locked);
@@ -1506,7 +1511,7 @@
     tip.style('opacity', 1);
     if (locked) {
       // Measure at the origin so the right edge cannot shrink the box.
-      // offsetWidth/Height are layout sizes, unaffected by html.rotated.
+      // Layout sizes, so the html.rotated turn does not swap them.
       tip.style('left', '0px').style('top', '0px');
       var el = tip.node();
       tipSize = { w: el.offsetWidth, h: el.offsetHeight };
@@ -1668,9 +1673,10 @@
     if (!tipSize || !(tipSize.w > 0 && tipSize.h > 0)) return;
     var w = tipSize.w;
     var h = tipSize.h;
-    var view = viewSize();
-    var cols = Math.max(1, Math.ceil(view.w / TIP_CELL));
-    var rows = Math.max(1, Math.ceil(view.h / TIP_CELL));
+    // plot.width/height rather than a live DOM read: this runs on every zoom
+    // event and a layout flush here would be paid per pointer move.
+    var cols = Math.max(1, Math.ceil(plot.width / TIP_CELL));
+    var rows = Math.max(1, Math.ceil(plot.height / TIP_CELL));
     ensureTipGrid(cols, rows);
 
     var inSel = {};
@@ -1711,9 +1717,9 @@
     var hy = transform.applyY(d.y);
     var rr = d.r * transform.k;
     var minX = 8;
-    var maxX = view.w - w - 8;
+    var maxX = plot.width - w - 8;
     var minY = plot.headerBottom + 4;
-    var maxY = view.h - h - 8;
+    var maxY = plot.height - h - 8;
     if (minY > maxY) minY = 8;
 
     var best = null;
@@ -1758,12 +1764,13 @@
     var el = tip.node();
     var w = el.offsetWidth;
     var h = el.offsetHeight;
-    var view = viewSize();
-    var at = clientToView(event.clientX, event.clientY);
+    // d3.pointer inverts the svg's screen matrix, which includes the
+    // html.rotated body turn, so this is the pointer in the svg's own pixels.
+    var at = d3.pointer(event, svg.node());
     var x = at[0] + pad;
     var y = at[1] + pad;
-    if (x + w > view.w - 8) x = at[0] - w - pad;
-    if (y + h > view.h - 8) y = at[1] - h - pad;
+    if (x + w > plot.width - 8) x = at[0] - w - pad;
+    if (y + h > plot.height - 8) y = at[1] - h - pad;
     tip.style('left', x + 'px').style('top', y + 'px');
   }
 
@@ -2116,24 +2123,36 @@
       .attr('fill', nodeFill)
       .attr('fill-opacity', nodeFillOpacity);
   }
-  // Phone drawer (html.compact). The header itself is the drawer; the menu
-  // button is its only visible part while closed. Not persisted: a phone
-  // always starts with the map alone.
-  var headerEl = document.querySelector('header');
+  // Phone drawer (html.compact): the header with the `open` class. Not
+  // persisted, so a phone always starts with the map alone.
   var menuButton = document.getElementById('menu');
   function setDrawer(open) {
-    headerEl.classList.toggle('open', open);
-    menuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
-  }
-  function drawerOpen() {
-    return headerEl.classList.contains('open');
+    var on = headerEl.classList.toggle('open', open);
+    menuButton.setAttribute('aria-expanded', on);
+    // Closing hides every control but the button; do not strand focus there.
+    if (!on && headerEl.contains(document.activeElement)) menuButton.focus();
   }
   menuButton.addEventListener('click', function () {
-    setDrawer(!drawerOpen());
+    setDrawer(!headerEl.classList.contains('open'));
   });
-  // Tapping the map means "I want to see it".
+  // Tapping the map means "I want to see it". That tap still produces a
+  // click (d3-zoom only stops propagation), which must not also release the
+  // held papers or select a disk.
+  var dismissTap = false;
   svg.on('pointerdown.drawer', function () {
-    if (drawerOpen()) setDrawer(false);
+    dismissTap = headerEl.classList.contains('open');
+    if (dismissTap) setDrawer(false);
+  });
+  function swallowDismissTap() {
+    if (!dismissTap) return false;
+    dismissTap = false;
+    return true;
+  }
+  // The head script flips html.compact / html.rotated on media changes,
+  // which need not come with a resize (pointer type, foldables).
+  document.documentElement.addEventListener('modechange', function () {
+    setDrawer(false);
+    scheduleRedraw();
   });
 
   document.getElementById('reset').addEventListener('click', function () {
@@ -2142,11 +2161,12 @@
     svg.transition().duration(350).call(zoom.transform, d3.zoomIdentity);
   });
   svg.on('click', function (event) {
+    if (swallowDismissTap()) return;
     if (event.target.tagName !== 'circle') unlock();
   });
   window.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;
-    if (drawerOpen()) {
+    if (headerEl.classList.contains('open')) {
       setDrawer(false);
       return;
     }
@@ -2164,10 +2184,11 @@
   });
 
   var resizeTimer = null;
-  window.addEventListener('resize', function () {
+  function scheduleRedraw() {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(redraw, 180);
-  });
+  }
+  window.addEventListener('resize', scheduleRedraw);
 
   buildLegend();
   syncAddCited();
