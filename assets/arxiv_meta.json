@@ -1889,5 +1889,15 @@
       "Maxim Rakhuba",
       "Ivan Oseledets"
     ]
+  },
+  "2604.11962": {
+    "title": "The Linear Centroids Hypothesis: Features as Directions Learned by Local Experts",
+    "published": "2026-04-13",
+    "authors": [
+      "Thomas Walker",
+      "Ahmed Imtiaz Humayun",
+      "Randall Balestriero",
+      "Richard Baraniuk"
+    ]
   }
 }

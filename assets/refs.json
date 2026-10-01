@@ -26106,7 +26106,40 @@
     "bib_items": 32,
     "has_bibliography": true,
     "search_chars": 7052,
-    "status": "fetched",
+    "status": "cached",
     "source": "https://arxiv.org/html/2609.33540"
+  },
+  "arxiv:2604.11962": {
+    "arxiv": [
+      "1606.06565",
+      "1606.08415",
+      "1706.03825",
+      "1708.07747",
+      "1710.05941",
+      "1805.06576",
+      "2211.05100",
+      "2304.05969",
+      "2407.02678",
+      "2407.21783",
+      "2501.16496",
+      "2508.10104"
+    ],
+    "doi": [],
+    "urls": [
+      "https://github.com/pytorch/vision",
+      "https://www.lesswrong.com/posts/cgqh99SHsCv3jJYDS/we-found-an-neuron-in-gpt-2"
+    ],
+    "titles": [
+      "arxiv:1710.05941",
+      "arxiv:2304.07193",
+      "arxiv:2309.08600",
+      "arxiv:2405.07987",
+      "arxiv:2407.21783"
+    ],
+    "bib_items": 56,
+    "has_bibliography": true,
+    "search_chars": 23242,
+    "status": "fetched",
+    "source": "https://ar5iv.labs.arxiv.org/html/2604.11962"
   }
 }

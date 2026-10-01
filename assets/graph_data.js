@@ -4406,7 +4406,7 @@ window.GRAPH_DATA = {
       "section": "LLMs: architectures, context, training",
       "kind": "arxiv",
       "url": "https://arxiv.org/abs/2407.21783",
-      "cites": 65,
+      "cites": 66,
       "refs": 8,
       "doc": true,
       "bib_items": 277,
@@ -5081,7 +5081,7 @@ window.GRAPH_DATA = {
       "section": "LLMs: architectures, context, training",
       "kind": "arxiv",
       "url": "https://arxiv.org/abs/1710.05941",
-      "cites": 5,
+      "cites": 6,
       "refs": 0,
       "doc": true,
       "bib_items": 53,
@@ -9362,7 +9362,7 @@ window.GRAPH_DATA = {
       "section": "Self-supervised learning and vision",
       "kind": "arxiv",
       "url": "https://arxiv.org/abs/2304.07193",
-      "cites": 6,
+      "cites": 7,
       "refs": 6,
       "doc": true,
       "bib_items": 137,
@@ -12564,7 +12564,7 @@ window.GRAPH_DATA = {
       "section": "AI safety and consciousness",
       "kind": "arxiv",
       "url": "https://arxiv.org/abs/2309.08600",
-      "cites": 3,
+      "cites": 4,
       "refs": 1,
       "doc": true,
       "bib_items": 28,
@@ -13237,6 +13237,36 @@ window.GRAPH_DATA = {
       ]
     },
     {
+      "id": "arxiv:2604.11962",
+      "label": "Walker, 2026",
+      "keyword": "Linear Centroids",
+      "title": "The Linear Centroids Hypothesis: Features as Directions Learned by Local Experts",
+      "entry": "The Linear Centroids Hypothesis: Features as Directions Learned by Local Experts",
+      "authors": [
+        "Thomas Walker",
+        "Ahmed Imtiaz Humayun",
+        "Randall Balestriero",
+        "Richard Baraniuk"
+      ],
+      "date": "2026-04-13",
+      "date_source": "arxiv-api",
+      "section": "Representation alignment",
+      "kind": "arxiv",
+      "url": "https://arxiv.org/abs/2604.11962",
+      "cites": 0,
+      "refs": 5,
+      "doc": true,
+      "bib_items": 56,
+      "lit_cites": null,
+      "lit_refs": null,
+      "quality": null,
+      "topic": "Repr",
+      "ideas": [],
+      "tags": [
+        "Repr"
+      ]
+    },
+    {
       "id": "arxiv:2602.14486",
       "label": "Gröger, 2026",
       "keyword": "Platonic",
@@ -13354,7 +13384,7 @@ window.GRAPH_DATA = {
       "section": "Representation alignment",
       "kind": "arxiv",
       "url": "https://arxiv.org/abs/2405.07987",
-      "cites": 6,
+      "cites": 7,
       "refs": 5,
       "doc": true,
       "bib_items": 144,
@@ -14616,7 +14646,7 @@ window.GRAPH_DATA = {
     ],
     [
       39,
-      391,
+      392,
       "id"
     ],
     [
@@ -14776,7 +14806,7 @@ window.GRAPH_DATA = {
     ],
     [
       43,
-      402,
+      403,
       "title"
     ],
     [
@@ -15016,7 +15046,7 @@ window.GRAPH_DATA = {
     ],
     [
       50,
-      402,
+      403,
       "title"
     ],
     [
@@ -15171,7 +15201,7 @@ window.GRAPH_DATA = {
     ],
     [
       53,
-      402,
+      403,
       "title"
     ],
     [
@@ -15361,7 +15391,7 @@ window.GRAPH_DATA = {
     ],
     [
       59,
-      402,
+      403,
       "title"
     ],
     [
@@ -15406,7 +15436,7 @@ window.GRAPH_DATA = {
     ],
     [
       61,
-      402,
+      403,
       "title"
     ],
     [
@@ -15766,7 +15796,7 @@ window.GRAPH_DATA = {
     ],
     [
       75,
-      402,
+      403,
       "title"
     ],
     [
@@ -15801,7 +15831,7 @@ window.GRAPH_DATA = {
     ],
     [
       76,
-      402,
+      403,
       "title"
     ],
     [
@@ -15906,7 +15936,7 @@ window.GRAPH_DATA = {
     ],
     [
       80,
-      402,
+      403,
       "title"
     ],
     [
@@ -16161,7 +16191,7 @@ window.GRAPH_DATA = {
     ],
     [
       91,
-      402,
+      403,
       "title"
     ],
     [
@@ -16171,7 +16201,7 @@ window.GRAPH_DATA = {
     ],
     [
       93,
-      402,
+      403,
       "title"
     ],
     [
@@ -16246,7 +16276,7 @@ window.GRAPH_DATA = {
     ],
     [
       98,
-      391,
+      392,
       "title"
     ],
     [
@@ -16466,7 +16496,7 @@ window.GRAPH_DATA = {
     ],
     [
       109,
-      402,
+      403,
       "url"
     ],
     [
@@ -16626,7 +16656,7 @@ window.GRAPH_DATA = {
     ],
     [
       119,
-      391,
+      392,
       "id"
     ],
     [
@@ -16731,7 +16761,7 @@ window.GRAPH_DATA = {
     ],
     [
       123,
-      402,
+      403,
       "title"
     ],
     [
@@ -16746,7 +16776,7 @@ window.GRAPH_DATA = {
     ],
     [
       125,
-      402,
+      403,
       "title"
     ],
     [
@@ -16791,7 +16821,7 @@ window.GRAPH_DATA = {
     ],
     [
       127,
-      409,
+      410,
       "title"
     ],
     [
@@ -18196,7 +18226,7 @@ window.GRAPH_DATA = {
     ],
     [
       186,
-      402,
+      403,
       "title"
     ],
     [
@@ -18421,7 +18451,7 @@ window.GRAPH_DATA = {
     ],
     [
       194,
-      391,
+      392,
       "id"
     ],
     [
@@ -18441,7 +18471,7 @@ window.GRAPH_DATA = {
     ],
     [
       194,
-      402,
+      403,
       "title"
     ],
     [
@@ -18761,7 +18791,7 @@ window.GRAPH_DATA = {
     ],
     [
       222,
-      402,
+      403,
       "title"
     ],
     [
@@ -18786,7 +18816,7 @@ window.GRAPH_DATA = {
     ],
     [
       223,
-      402,
+      403,
       "title"
     ],
     [
@@ -19101,7 +19131,7 @@ window.GRAPH_DATA = {
     ],
     [
       246,
-      402,
+      403,
       "title"
     ],
     [
@@ -19336,7 +19366,7 @@ window.GRAPH_DATA = {
     ],
     [
       272,
-      402,
+      403,
       "title"
     ],
     [
@@ -19586,7 +19616,7 @@ window.GRAPH_DATA = {
     ],
     [
       301,
-      402,
+      403,
       "url"
     ],
     [
@@ -20426,7 +20456,7 @@ window.GRAPH_DATA = {
     ],
     [
       349,
-      402,
+      403,
       "title"
     ],
     [
@@ -20551,7 +20581,7 @@ window.GRAPH_DATA = {
     ],
     [
       366,
-      402,
+      403,
       "title"
     ],
     [
@@ -20636,23 +20666,43 @@ window.GRAPH_DATA = {
     ],
     [
       388,
-      393,
+      143,
+      "id"
+    ],
+    [
+      388,
+      271,
+      "title"
+    ],
+    [
+      388,
+      367,
       "title"
     ],
     [
       388,
       392,
-      "id"
-    ],
-    [
-      388,
-      391,
       "title"
     ],
     [
       388,
-      390,
+      123,
       "id"
+    ],
+    [
+      389,
+      394,
+      "title"
+    ],
+    [
+      389,
+      393,
+      "id"
+    ],
+    [
+      389,
+      392,
+      "title"
     ],
     [
       389,
@@ -20666,36 +20716,41 @@ window.GRAPH_DATA = {
     ],
     [
       391,
+      393,
+      "id"
+    ],
+    [
+      392,
       252,
       "id"
     ],
     [
-      391,
+      392,
       278,
       "title"
     ],
     [
-      391,
+      392,
       293,
       "id"
     ],
     [
-      391,
+      392,
       271,
       "title"
     ],
     [
-      391,
+      392,
       327,
       "title"
     ],
     [
-      394,
+      395,
       66,
       "id"
     ],
     [
-      400,
+      401,
       26,
       "id"
     ]

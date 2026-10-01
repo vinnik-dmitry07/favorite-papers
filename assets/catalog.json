@@ -7261,6 +7261,25 @@
     "date_source": "arxiv-api"
   },
   {
+    "id": "arxiv:2604.11962",
+    "kind": "arxiv",
+    "label": "The Linear Centroids Hypothesis: Features as Directions Learned by Local Experts",
+    "title": "The Linear Centroids Hypothesis: Features as Directions Learned by Local Experts",
+    "section": "Representation alignment",
+    "urls": [
+      "https://arxiv.org/abs/2604.11962"
+    ],
+    "order": 388,
+    "authors": [
+      "Thomas Walker",
+      "Ahmed Imtiaz Humayun",
+      "Randall Balestriero",
+      "Richard Baraniuk"
+    ],
+    "date": "2026-04-13",
+    "date_source": "arxiv-api"
+  },
+  {
     "id": "arxiv:2602.14486",
     "kind": "arxiv",
     "label": "Revisiting the Platonic Representation Hypothesis: An Aristotelian View",
@@ -7269,7 +7288,7 @@
     "urls": [
       "https://arxiv.org/abs/2602.14486"
     ],
-    "order": 388,
+    "order": 389,
     "authors": [
       "Fabian Gröger",
       "Shuo Wen",
@@ -7288,7 +7307,7 @@
     "urls": [
       "https://arxiv.org/abs/2507.01098"
     ],
-    "order": 389,
+    "order": 390,
     "authors": [
       "Liu Ziyin",
       "Isaac Chuang"
@@ -7306,7 +7325,7 @@
     "urls": [
       "https://arxiv.org/abs/2502.15104"
     ],
-    "order": 390,
+    "order": 391,
     "authors": [
       "Chanwoo Chun",
       "Abdulkadir Canatar",
@@ -7325,7 +7344,7 @@
     "urls": [
       "https://arxiv.org/abs/2405.07987"
     ],
-    "order": 391,
+    "order": 392,
     "authors": [
       "Minyoung Huh",
       "Brian Cheung",
@@ -7345,7 +7364,7 @@
     "urls": [
       "https://arxiv.org/abs/2405.01012"
     ],
-    "order": 392,
+    "order": 393,
     "authors": [
       "Alex Murphy",
       "Joel Zylberberg",
@@ -7363,7 +7382,7 @@
     "urls": [
       "https://arxiv.org/abs/2007.02789"
     ],
-    "order": 393,
+    "order": 394,
     "authors": [
       "Jörn Diedrichsen",
       "Eva Berlot",
@@ -7382,7 +7401,7 @@
     "urls": [
       "https://thinkingmachines.ai/news/learning-to-replicate-expert-judgment-in-financial-tasks/"
     ],
-    "order": 394,
+    "order": 395,
     "authors": [],
     "date": null,
     "date_source": null
@@ -7396,7 +7415,7 @@
     "urls": [
       "https://aclanthology.org/2025.acl-long.126/"
     ],
-    "order": 395,
+    "order": 396,
     "authors": [],
     "date": "2025-07-01",
     "date_source": "page"
@@ -7413,7 +7432,7 @@
       "https://voices.uchicago.edu/stefannagel/files/2025/07/Complexity_2.pdf",
       "https://bfi.uchicago.edu/wp-content/uploads/2025/08/BFI_WP_2025-104.pdf"
     ],
-    "order": 396,
+    "order": 397,
     "authors": [],
     "date": "2025-05-07",
     "date_source": "page"
@@ -7427,7 +7446,7 @@
     "urls": [
       "https://arxiv.org/abs/2003.01859"
     ],
-    "order": 397,
+    "order": 398,
     "authors": [
       "Weiwei Jiang"
     ],
@@ -7443,7 +7462,7 @@
     "urls": [
       "https://www.groundai.com/project/an-intelligent-financial-portfolio-trading-strategy-using-deep-q-learning8432/3"
     ],
-    "order": 398,
+    "order": 399,
     "authors": [
       "Hyungjun Park",
       "Min Kyu Sim",
@@ -7462,7 +7481,7 @@
     "urls": [
       "https://www.researchgate.net/publication/331273826"
     ],
-    "order": 399,
+    "order": 400,
     "authors": [
       "Nikolaos Passalis",
       "Anastasios Tefas",
@@ -7482,7 +7501,7 @@
     "urls": [
       "https://arxiv.org/abs/1807.02787"
     ],
-    "order": 400,
+    "order": 401,
     "authors": [
       "Chien Yi Huang"
     ],
@@ -7498,7 +7517,7 @@
     "urls": [
       "https://neuroevolutionbook.com/"
     ],
-    "order": 401,
+    "order": 402,
     "authors": [],
     "date": null,
     "date_source": null,
@@ -7513,7 +7532,7 @@
     "urls": [
       "https://rlhfbook.com/"
     ],
-    "order": 402,
+    "order": 403,
     "authors": [
       "Nathan Lambert"
     ],
@@ -7531,7 +7550,7 @@
     "urls": [
       "https://link.springer.com/book/10.1007/978-3-031-45468-4"
     ],
-    "order": 403,
+    "order": 404,
     "authors": [],
     "date": "2023-11-01",
     "date_source": "page",
@@ -7546,7 +7565,7 @@
     "urls": [
       "https://arxiv.org/abs/2201.09746"
     ],
-    "order": 404,
+    "order": 405,
     "authors": [
       "Sergey Ivanov"
     ],
@@ -7563,7 +7582,7 @@
     "urls": [
       "https://arxiv.org/abs/2201.00650"
     ],
-    "order": 405,
+    "order": 406,
     "authors": [
       "Shlomo Kashani",
       "Amir Ivry"
@@ -7581,7 +7600,7 @@
       "https://doi.org/10.1038/s41566-024-01394-2",
       "https://doi.org/10.1038/s41377-022-00717-8"
     ],
-    "order": 406,
+    "order": 407,
     "authors": [],
     "date": null,
     "date_source": null,
@@ -7596,7 +7615,7 @@
     "urls": [
       "https://arxiv.org/abs/2309.10232"
     ],
-    "order": 407,
+    "order": 408,
     "authors": [
       "Yufeng Zhang",
       "Hao Yan",
@@ -7615,7 +7634,7 @@
     "urls": [
       "https://direct.mit.edu/coli/article/doi/10.1162/coli_a_00481/116160/"
     ],
-    "order": 408,
+    "order": 409,
     "authors": [],
     "date": "2023-09-01",
     "date_source": "known"
@@ -7629,7 +7648,7 @@
     "urls": [
       "https://arxiv.org/abs/2304.01433"
     ],
-    "order": 409,
+    "order": 410,
     "authors": [
       "Norman P. Jouppi",
       "George Kurian",
@@ -7649,7 +7668,7 @@
     "urls": [
       "https://www.semanticscholar.org/paper/4165542ba777ea63facc7ea9866f43ba63f054ae"
     ],
-    "order": 410,
+    "order": 411,
     "authors": [],
     "date": "2015-08-01",
     "date_source": "known"
