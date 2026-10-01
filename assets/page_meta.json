@@ -1326,5 +1326,24 @@
   },
   "arxiv:2605.21488": {
     "resolved": "https://arxiv.org/html/2605.21488"
+  },
+  "arxiv:2609.30652": {
+    "resolved": "https://arxiv.org/html/2609.30652"
+  },
+  "arxiv:2606.17056": {
+    "resolved": "https://arxiv.org/html/2606.17056"
+  },
+  "url:thinkingmachines.ai/blog/lora": {
+    "title": "LoRA Without Regret",
+    "date": "2025-09-29",
+    "authors": [
+      "Thinking Machines Lab"
+    ]
+  },
+  "arxiv:2405.14862": {
+    "resolved": "https://arxiv.org/html/2405.14862"
+  },
+  "arxiv:2609.33540": {
+    "resolved": "https://arxiv.org/html/2609.33540"
   }
 }

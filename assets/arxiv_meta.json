@@ -1851,5 +1851,43 @@
       "Zhengyang Geng",
       "Zico Kolter"
     ]
+  },
+  "2609.30652": {
+    "title": "Recursive Self-Improvement via On-Policy Distillation for Reasoning",
+    "published": "2026-09-25",
+    "authors": [
+      "Shangjian Yin",
+      "Zehao Zhao",
+      "Kavosh Asadi",
+      "Rui Liu"
+    ]
+  },
+  "2606.17056": {
+    "title": "The Value Axis: Language Models Encode Whether They're on the Right Track",
+    "published": "2026-06-15",
+    "authors": [
+      "Nick Jiang",
+      "Isaac Kauvar",
+      "Jack Lindsey"
+    ]
+  },
+  "2405.14862": {
+    "title": "Bitune: Leveraging Bidirectional Attention to Improve Decoder-Only LLMs",
+    "published": "2024-05-23",
+    "authors": [
+      "Dawid J. Kopiczko",
+      "Tijmen Blankevoort",
+      "Yuki M. Asano"
+    ]
+  },
+  "2609.33540": {
+    "title": "Reasoning on the Simplex: Geometric Fixed-Point Models",
+    "published": "2026-09-27",
+    "authors": [
+      "Talgat Daulbaev",
+      "Ilya Glazkov",
+      "Maxim Rakhuba",
+      "Ivan Oseledets"
+    ]
   }
 }
