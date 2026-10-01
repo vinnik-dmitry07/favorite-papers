@@ -592,6 +592,136 @@ def approx(value: float, target: float, tol: float) -> bool:
 
 HELD_JS = '() => document.querySelectorAll(".nodes g.held").length'
 
+CLIPBOARD_STUB_JS = '''() => {
+    window.__copied = null;
+    navigator.clipboard.writeText = (t) => {
+        window.__copied = t;
+        return Promise.resolve();
+    };
+}'''
+
+# A client point on the map that is not a disk, so a click there releases a
+# held paper. Skips the header, an open drawer and the pinned tip, all of
+# which sit above the svg.
+BARE_POINT_JS = '''() => {
+    const map = document.getElementById('map');
+    for (let y = 4; y < innerHeight - 4; y += 20) {
+        for (let x = 4; x < innerWidth - 4; x += 20) {
+            const el = document.elementFromPoint(x, y);
+            if (!el || !map.contains(el) || el.tagName === 'circle') continue;
+            return {x: x, y: y};
+        }
+    }
+    return null;
+}'''
+
+
+def check_tip_interaction(page, errors: list) -> None:
+    '''The pinned tip keeps its paper: clicks and a text drag stay on it,
+    the title copies, the wheel still zooms, and a pan shows a closed hand.
+    '''
+    cursors = page.evaluate('''() => ({
+        map: getComputedStyle(document.getElementById('map')).cursor,
+        node: getComputedStyle(document.querySelector('.nodes circle')).cursor,
+        tip: getComputedStyle(document.getElementById('tip')).cursor,
+        copy: getComputedStyle(document.querySelector('#tip .copy')).cursor,
+    })''')
+    print('tip cursors:', cursors)
+    expect = {'map': 'grab', 'node': 'pointer', 'tip': 'auto', 'copy': 'pointer'}
+    for name, want in expect.items():
+        if cursors[name] != want:
+            errors.append(f'tip cursor {name} is {cursors[name]!r}, expected {want}')
+
+    meta = page.locator('#tip .meta').first.bounding_box()
+    page.mouse.click(meta['x'] + 8, meta['y'] + meta['height'] / 2)
+    page.wait_for_timeout(150)
+    clicked = page.evaluate('''() => ({
+        held: document.querySelectorAll('.nodes g.held').length,
+        opacity: getComputedStyle(document.getElementById('tip')).opacity,
+    })''')
+    print('tip click:', clicked)
+    if clicked['held'] != 1:
+        errors.append(f'click on the tip released the paper ({clicked["held"]} held)')
+    if clicked['opacity'] != '1':
+        errors.append(f'click on the tip hid it (opacity {clicked["opacity"]})')
+
+    title_box = page.locator('#tip .title b').bounding_box()
+    y = title_box['y'] + min(8, title_box['height'] / 2)
+    page.mouse.move(title_box['x'] + 2, y)
+    page.mouse.down()
+    page.mouse.move(title_box['x'] + title_box['width'] - 2, y, steps=12)
+    page.mouse.up()
+    selected = page.evaluate('''() => {
+        const title = document.querySelector('.nodes g.held').__data__.title;
+        return {
+            sel: getSelection().toString(),
+            title: title,
+            held: document.querySelectorAll('.nodes g.held').length,
+        };
+    }''')
+    print('tip selection:', {k: selected[k] for k in ('sel', 'held')})
+    if not selected['sel'] or selected['sel'] not in selected['title']:
+        errors.append(
+            f'tip drag selected {selected["sel"]!r}, '
+            f'expected a substring of {selected["title"]!r}'
+        )
+    if selected['held'] != 1:
+        errors.append('dragging the tip title released the paper')
+
+    page.evaluate(CLIPBOARD_STUB_JS)
+    page.click('#tip .copy')
+    page.wait_for_timeout(100)
+    copied = page.evaluate('''() => ({
+        text: window.__copied,
+        title: document.querySelector('.nodes g.held').__data__.title,
+        done: document.querySelector('#tip .copy').classList.contains('done'),
+        held: document.querySelectorAll('.nodes g.held').length,
+    })''')
+    print('tip copy:', {k: copied[k] for k in ('done', 'held')})
+    if copied['text'] != copied['title']:
+        errors.append(f'copy title wrote {copied["text"]!r}')
+    if not copied['done']:
+        errors.append('copy title button did not show the copied state')
+    if copied['held'] != 1:
+        errors.append('copying the title released the paper')
+
+    tip_box = page.locator('#tip').bounding_box()
+    k_before = page.evaluate(ZOOM_JS)['k']
+    page.mouse.move(
+        tip_box['x'] + tip_box['width'] / 2,
+        tip_box['y'] + tip_box['height'] / 2,
+    )
+    page.mouse.wheel(0, -200)
+    page.wait_for_timeout(150)
+    k_after = page.evaluate(ZOOM_JS)['k']
+    print(f'tip wheel: k {k_before:.3f} -> {k_after:.3f}')
+    if k_after <= k_before + 0.05:
+        errors.append(f'wheel over the tip did not zoom (k {k_before} -> {k_after})')
+
+    bare = page.evaluate(BARE_POINT_JS)
+    if not bare:
+        errors.append('no bare map point for the grab cursor')
+        return
+    page.mouse.move(bare['x'], bare['y'])
+    page.mouse.down()
+    page.mouse.move(bare['x'] + 40, bare['y'] + 24, steps=6)
+    grabbing = page.evaluate(
+        '() => getComputedStyle(document.getElementById("map")).cursor'
+    )
+    page.mouse.up()
+    page.wait_for_timeout(50)
+    released = page.evaluate('''() => ({
+        cursor: getComputedStyle(document.getElementById('map')).cursor,
+        held: document.querySelectorAll('.nodes g.held').length,
+    })''')
+    print('tip pan cursor:', grabbing, released)
+    if grabbing != 'grabbing':
+        errors.append(f'pan cursor is {grabbing!r}, expected grabbing')
+    if released['cursor'] != 'grab':
+        errors.append(f'cursor after pan is {released["cursor"]!r}, expected grab')
+    if released['held'] != 1:
+        errors.append('panning the map released the paper')
+
 # WebKit before spring 2026 (bugs 209220 / 308970) left the body's CSS
 # rotation out of getScreenCTM. Reproduce that on the map svg so the shim in
 # map.js gets exercised in Chrome.
@@ -732,14 +862,22 @@ def landscape_checks(browser, url: str, errors: list) -> None:
         if page.evaluate(HELD_JS) != 1:
             errors.append('landscape: tapping a disk did not hold it')
         page.click('#menu')
-        page.mouse.click(760, 60)
-        if page.evaluate(DRAWER_OPEN_JS):
-            errors.append('landscape: tapping the map did not close the drawer')
-        if page.evaluate(HELD_JS) != 1:
-            errors.append('landscape: the tap that closed the drawer released the paper')
-        page.mouse.click(760, 60)
-        if page.evaluate(HELD_JS) != 0:
-            errors.append('landscape: tapping the bare map did not release the paper')
+        bare = page.evaluate(BARE_POINT_JS)
+        if not bare:
+            errors.append('landscape: no bare map point to tap')
+        else:
+            page.mouse.click(bare['x'], bare['y'])
+            if page.evaluate(DRAWER_OPEN_JS):
+                errors.append('landscape: tapping the map did not close the drawer')
+            if page.evaluate(HELD_JS) != 1:
+                errors.append(
+                    'landscape: the tap that closed the drawer released the paper'
+                )
+            page.mouse.click(bare['x'], bare['y'])
+            if page.evaluate(HELD_JS) != 0:
+                errors.append(
+                    'landscape: tapping the bare map did not release the paper'
+                )
 
     # Leaving compact mode (here: a bigger window) must not leave the header
     # flagged as an open drawer.
@@ -1030,6 +1168,13 @@ def main() -> None:
         page.wait_for_timeout(500)
         page.mouse.move(4, 400)
         page.wait_for_timeout(300)
+
+        page.mouse.click(target['x'], target['y'])
+        page.wait_for_timeout(300)
+        check_tip_interaction(page, errors)
+        page.keyboard.press('Escape')
+        page.click('#reset')
+        page.wait_for_timeout(500)
 
         page.fill('#search', 'grpo')
         page.wait_for_timeout(500)
@@ -1732,8 +1877,7 @@ def main() -> None:
             page, errors, SHOTS / '14-ghost-shown.png',
         )
 
-        page.evaluate('''() => { window.__copied = null;
-            navigator.clipboard.writeText = (t) => { window.__copied = t; return Promise.resolve(); }; }''')
+        page.evaluate(CLIPBOARD_STUB_JS)
         page.click('#share')
         page.wait_for_timeout(200)
         copied = page.evaluate('''() => ({
@@ -1749,8 +1893,13 @@ def main() -> None:
         third = page.evaluate('''() => {
             const g = [...document.querySelectorAll('.nodes g')].find(g => {
                 if (g.classList.contains('held') || g.classList.contains('dim')) return false;
-                const b = g.querySelector('circle').getBoundingClientRect();
-                return b.y > 260 && b.y < innerHeight - 80 && b.x > 80 && b.x < innerWidth - 80;
+                const c = g.querySelector('circle');
+                const b = c.getBoundingClientRect();
+                const x = b.x + b.width / 2;
+                const y = b.y + b.height / 2;
+                return b.y > 260 && b.y < innerHeight - 80
+                    && b.x > 80 && b.x < innerWidth - 80
+                    && document.elementFromPoint(x, y) === c;
             });
             if (!g) return null;
             const b = g.querySelector('circle').getBoundingClientRect();

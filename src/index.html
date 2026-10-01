@@ -118,6 +118,10 @@
      from starting its own pinch or scroll over the map on a slow frame. */
   svg { position: absolute; inset: 0; width: 100%; height: 100%;
         touch-action: none; }
+  #map { cursor: grab; }
+  /* The id beats .node circle { cursor: pointer }, so a pan stays a closed
+     hand even while the pointer passes over a disk. */
+  #map.grabbing, #map.grabbing * { cursor: grabbing; }
   .axis text { fill: var(--muted); font-size: 11px; }
   .axis line, .axis path { stroke: var(--rule); }
   .grid line { stroke: var(--rule); stroke-dasharray: 2 4; }
@@ -143,7 +147,26 @@
     padding: 9px 11px; box-shadow: 0 4px 14px rgba(20, 30, 40, .12);
     opacity: 0; transition: opacity .1s;
   }
-  #tip b { display: block; font-size: 12.5px; margin-bottom: 3px; }
+  /* Only the pinned tip takes the pointer: clicks stay on it (so the paper
+     stays held and the text can be selected) and the cursor is the arrow,
+     with the I-beam over text. The hover tip stays click-through. */
+  #tip.pinned { pointer-events: auto; cursor: auto; user-select: text; }
+  #tip .title {
+    display: flex; align-items: flex-start; gap: 6px; margin-bottom: 3px;
+  }
+  #tip .title b { font-size: 12.5px; flex: 1; min-width: 0; }
+  #tip .copy {
+    padding: 1px 3px; line-height: 0; color: var(--muted);
+    user-select: none; flex: none;
+  }
+  #tip .copy .ic-check,
+  #tip .copy.done .ic-copy, #tip .copy.failed .ic-copy { display: none; }
+  #tip .copy.done .ic-check, #tip .copy.failed .ic-check { display: block; }
+  #tip .copy.failed { color: var(--in); }
+  /* The page-wide svg rule would otherwise stretch this icon over the map. */
+  #tip .copy svg {
+    position: static; display: block; width: 12px; height: 12px;
+  }
   #tip .meta { color: var(--muted); font-size: 11.5px; }
   #tip .counts { margin-top: 5px; font-size: 11.5px; }
   #tip .counts span { margin-right: 10px; }

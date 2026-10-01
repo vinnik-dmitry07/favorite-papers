@@ -16,8 +16,10 @@
    Forward step through selections. A URL restore replaces that entry.
    A selected paper wears a dashed ring one pixel outside the disk.
    The pinned tooltip sits where it covers the
-   fewest selected papers and links. Each hold (a click or a deep
-   link) plays an animated double-click hint, once the tab is visible. */
+   fewest selected papers and links, and it takes the pointer so its
+   text can be selected and its title copied. Each hold (a click or a
+   deep link) plays an animated double-click hint, once the tab is
+   visible. */
 (function () {
   'use strict';
 
@@ -482,13 +484,29 @@
 
   applyPrefs();
 
-  var zoom = d3.zoom().scaleExtent([0.55, 9]).on('zoom', function (event) {
-    transform = event.transform;
-    gRoot.attr('transform', transform);
-    redrawAxes();
-    restyleForZoom();
-    scheduleLabels();
-  });
+  var zoom = d3.zoom().scaleExtent([0.55, 9])
+    .on('start', function (event) {
+      // A click on a disk keeps the pointer; the hand closes only for a
+      // pan that starts on the background. Wheel, touch and transitions
+      // leave the cursor alone.
+      var src = event.sourceEvent;
+      if (!src || src.type !== 'mousedown') return;
+      if (src.target && src.target.tagName === 'circle') return;
+      svg.classed('grabbing', true);
+    })
+    .on('zoom', function (event) {
+      transform = event.transform;
+      gRoot.attr('transform', transform);
+      redrawAxes();
+      restyleForZoom();
+      scheduleLabels();
+      // A pan that starts on a disk: start skipped the cursor, the drag sets it.
+      var src = event.sourceEvent;
+      if (src && src.type === 'mousemove') svg.classed('grabbing', true);
+    })
+    .on('end', function () {
+      svg.classed('grabbing', false);
+    });
   svg.call(zoom).on('dblclick.zoom', null);
 
   function layout() {
@@ -1138,6 +1156,8 @@
   function setSelection(indices, replace) {
     selected = indices.slice();
     locked = selected.length ? nodes[selected[selected.length - 1]] : null;
+    // A hidden tip must not catch clicks. Only a held paper pins it.
+    tip.classed('pinned', locked);
     if (!ghostRun || ghostRun.d !== locked) cancelGhost();
     hovered = null;
     if (locked) {
@@ -1237,21 +1257,23 @@
     if (!selected.length) button.textContent = 'copy link';
   }
 
+  function copyText(text, promptLabel, done) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { done(true); },
+                                                function () { done(false); });
+    } else {
+      window.prompt(promptLabel, text);
+      done(true);
+    }
+  }
+
   document.getElementById('share').addEventListener('click', function () {
     if (!selected.length) return;
     var button = this;
-    function done(ok) {
+    copyText(shareUrl(), 'Copy this link', function (ok) {
       button.textContent = ok ? 'copied' : 'copy failed';
       setTimeout(function () { button.textContent = 'copy link'; }, 1400);
-    }
-    var url = shareUrl();
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(url).then(function () { done(true); },
-                                             function () { done(false); });
-    } else {
-      window.prompt('Copy this link', url);
-      done(true);
-    }
+    });
   });
 
   function highlight() {
@@ -1454,6 +1476,16 @@
     window.open(d.url, '_blank');
   }
 
+  var COPY_BUTTON = '<button type="button" class="copy" title="Copy title"'
+    + ' aria-label="Copy title">'
+    + '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor"'
+    + ' stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"'
+    + ' aria-hidden="true">'
+    + '<g class="ic-copy"><rect x="5" y="5" width="9" height="9" rx="1.4"/>'
+    + '<path d="M10.5 5V3.4a1.4 1.4 0 0 0-1.4-1.4H3.4a1.4 1.4 0 0 0-1.4'
+    + ' 1.4v5.7a1.4 1.4 0 0 0 1.4 1.4H5"/></g>'
+    + '<path class="ic-check" d="M3.2 8.2l3.3 3.2 6.3-7"/></svg></button>';
+
   function showTip(d, event) {
     var authors = (d.authors || []).slice(0, 3).join(', ')
       + ((d.authors || []).length > 3 ? ' et al.' : '');
@@ -1466,7 +1498,8 @@
       : 'click to hold \u00b7 shift-click to add \u00b7 double-click to open';
     var whoWhen = [authors ? escapeHtml(authors) : '', when]
       .filter(Boolean).join(' &middot; ');
-    tip.html('<b>' + escapeHtml(d.title) + '</b>'
+    tip.html('<div class="title"><b>' + escapeHtml(d.title) + '</b>'
+      + (locked ? COPY_BUTTON : '') + '</div>'
       + (whoWhen ? '<div class="meta">' + whoWhen + '</div>' : '')
       + '<div class="meta">' + escapeHtml(d.section) + ' &middot; ' + d.kind
       + (d.telegram ? ' &middot; telegram' : '')
@@ -1515,6 +1548,28 @@
       moveTip(event);
     }
   }
+
+  var copyTimer = null;
+  tip.on('click', function (event) {
+    var button = event.target.closest('.copy');
+    if (!button || !locked) return;
+    event.preventDefault();
+    event.stopPropagation();
+    copyText(locked.title, 'Copy this title', function (ok) {
+      button.classList.remove('done', 'failed');
+      button.classList.add(ok ? 'done' : 'failed');
+      clearTimeout(copyTimer);
+      copyTimer = setTimeout(function () {
+        button.classList.remove('done', 'failed');
+      }, 1400);
+    });
+  });
+  // The pinned tip sits above the map, so a wheel over it would otherwise
+  // miss d3-zoom. Replay it on the svg; client coordinates are unchanged.
+  tip.on('wheel', function (event) {
+    event.preventDefault();
+    svg.node().dispatchEvent(new WheelEvent('wheel', event));
+  }, { passive: false });
 
   var tipGrid = null;
   var tipSat = null;
