@@ -600,6 +600,11 @@ CLIPBOARD_STUB_JS = '''() => {
     };
 }'''
 
+OPEN_STUB_JS = '''() => {
+    window.__opened = [];
+    window.open = (url) => { window.__opened.push(url); return null; };
+}'''
+
 # A client point on the map that is not a disk, so a click there releases a
 # held paper. Skips the header, an open drawer and the pinned tip, all of
 # which sit above the svg.
@@ -631,6 +636,40 @@ def check_tip_interaction(page, errors: list) -> None:
     for name, want in expect.items():
         if cursors[name] != want:
             errors.append(f'tip cursor {name} is {cursors[name]!r}, expected {want}')
+
+    quality = page.evaluate('''() => {
+        const d = document.querySelector('.nodes g.held').__data__;
+        const a = document.querySelector('#tip a.quality');
+        if (d.quality == null) return {scored: false};
+        const anchor = String(d.id).replace(/:/g, '-')
+            .replace(/[^A-Za-z0-9._-]+/g, '-').slice(0, 80);
+        const score = (d.quality > 0 ? '+' : '') + d.quality.toFixed(2);
+        let want = 'quality ' + score;
+        if (d.quality_models) {
+            want += ' · ' + (d.quality_accepts || 0) + '/' + d.quality_models;
+        }
+        if (d.quality_verdict && d.quality_verdict !== 'KEEP') {
+            want += ' · ' + d.quality_verdict;
+        }
+        return {
+            scored: true,
+            text: a ? a.textContent : '',
+            href: a ? a.getAttribute('href') : '',
+            want: want,
+            anchor: anchor,
+        };
+    }''')
+    print('tip quality link:', {k: quality[k] for k in ('text', 'href') if k in quality})
+    if quality.get('scored'):
+        if quality['text'] != quality['want']:
+            errors.append(
+                f'tip quality text {quality["text"]!r}, expected {quality["want"]!r}'
+            )
+        if not quality['href'].endswith('#' + quality['anchor']):
+            errors.append(
+                f'tip quality href {quality["href"]!r} '
+                f'missing #{quality["anchor"]}'
+            )
 
     meta = page.locator('#tip .meta').first.bounding_box()
     page.mouse.click(meta['x'] + 8, meta['y'] + meta['height'] / 2)
@@ -685,6 +724,19 @@ def check_tip_interaction(page, errors: list) -> None:
     if copied['held'] != 1:
         errors.append('copying the title released the paper')
 
+    page.evaluate(OPEN_STUB_JS)
+    page.click('#tip .open')
+    opened = page.evaluate('''() => ({
+        urls: window.__opened,
+        url: document.querySelector('.nodes g.held').__data__.url,
+        held: document.querySelectorAll('.nodes g.held').length,
+    })''')
+    print('tip open:', {k: opened[k] for k in ('urls', 'held')})
+    if opened['urls'] != [opened['url']]:
+        errors.append(f'open paper wrote {opened["urls"]!r}, expected {[opened["url"]]!r}')
+    if opened['held'] != 1:
+        errors.append('opening the paper released it')
+
     tip_box = page.locator('#tip').bounding_box()
     k_before = page.evaluate(ZOOM_JS)['k']
     page.mouse.move(
@@ -701,26 +753,38 @@ def check_tip_interaction(page, errors: list) -> None:
     bare = page.evaluate(BARE_POINT_JS)
     if not bare:
         errors.append('no bare map point for the grab cursor')
-        return
-    page.mouse.move(bare['x'], bare['y'])
-    page.mouse.down()
-    page.mouse.move(bare['x'] + 40, bare['y'] + 24, steps=6)
-    grabbing = page.evaluate(
-        '() => getComputedStyle(document.getElementById("map")).cursor'
-    )
-    page.mouse.up()
-    page.wait_for_timeout(50)
-    released = page.evaluate('''() => ({
-        cursor: getComputedStyle(document.getElementById('map')).cursor,
+    else:
+        page.mouse.move(bare['x'], bare['y'])
+        page.mouse.down()
+        page.mouse.move(bare['x'] + 40, bare['y'] + 24, steps=6)
+        grabbing = page.evaluate(
+            '() => getComputedStyle(document.getElementById("map")).cursor'
+        )
+        page.mouse.up()
+        page.wait_for_timeout(50)
+        released = page.evaluate('''() => ({
+            cursor: getComputedStyle(document.getElementById('map')).cursor,
+            held: document.querySelectorAll('.nodes g.held').length,
+        })''')
+        print('tip pan cursor:', grabbing, released)
+        if grabbing != 'grabbing':
+            errors.append(f'pan cursor is {grabbing!r}, expected grabbing')
+        if released['cursor'] != 'grab':
+            errors.append(f'cursor after pan is {released["cursor"]!r}, expected grab')
+        if released['held'] != 1:
+            errors.append('panning the map released the paper')
+
+    page.click('#tip .close')
+    page.wait_for_timeout(100)
+    closed = page.evaluate('''() => ({
         held: document.querySelectorAll('.nodes g.held').length,
+        opacity: getComputedStyle(document.getElementById('tip')).opacity,
     })''')
-    print('tip pan cursor:', grabbing, released)
-    if grabbing != 'grabbing':
-        errors.append(f'pan cursor is {grabbing!r}, expected grabbing')
-    if released['cursor'] != 'grab':
-        errors.append(f'cursor after pan is {released["cursor"]!r}, expected grab')
-    if released['held'] != 1:
-        errors.append('panning the map released the paper')
+    print('tip close:', closed)
+    if closed['held'] != 0:
+        errors.append(f'close button left {closed["held"]} papers held')
+    if closed['opacity'] != '0':
+        errors.append(f'close button left the tip visible (opacity {closed["opacity"]})')
 
 # WebKit before spring 2026 (bugs 209220 / 308970) left the body's CSS
 # rotation out of getScreenCTM. Reproduce that on the map svg so the shim in
@@ -1139,8 +1203,7 @@ def main() -> None:
         page.mouse.click(target['x'], target['y'])
         check_ghost(page, errors, 'second click', SHOTS / '11-ghost-again.png')
 
-        page.evaluate('''() => { window.__opened = [];
-            window.open = (url) => { window.__opened.push(url); }; }''')
+        page.evaluate(OPEN_STUB_JS)
         page.mouse.dblclick(target['x'], target['y'])
         page.wait_for_timeout(300)
         print('dblclick opened:', page.evaluate('() => window.__opened'))

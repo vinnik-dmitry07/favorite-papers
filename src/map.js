@@ -93,6 +93,15 @@
     return (q > 0 ? '+' : '') + q.toFixed(2);
   }
 
+  function qualityHref(id) {
+    // The map page does not ship the report, and a local .md URL downloads
+    // instead of rendering. Slug matches filter/paths.py report_anchor.
+    var anchor = String(id).replace(/:/g, '-')
+      .replace(/[^A-Za-z0-9._-]+/g, '-').slice(0, 80);
+    return 'https://github.com/vinnik-dmitry07/favorite-papers/blob/main/filter/report.md#'
+      + anchor;
+  }
+
   function formatQualityTick(v) {
     if (v === 0) return '0';
     var mag = Math.abs(v) === 1 ? '1' : Math.abs(v).toFixed(1);
@@ -1476,15 +1485,25 @@
     window.open(d.url, '_blank');
   }
 
+  var TIP_ICON_ATTRS = ' viewBox="0 0 16 16" fill="none" stroke="currentColor"'
+    + ' stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"'
+    + ' aria-hidden="true"';
+  var OPEN_BUTTON = '<button type="button" class="open" title="Open paper"'
+    + ' aria-label="Open paper">'
+    + '<svg' + TIP_ICON_ATTRS + '>'
+    + '<path d="M6.5 3.5H3.8a1.3 1.3 0 0 0-1.3 1.3v7.4a1.3 1.3 0 0 0 1.3 1.3h7.4'
+    + 'a1.3 1.3 0 0 0 1.3-1.3V9.5"/>'
+    + '<path d="M9 2.5h4.5V7"/><path d="M13.2 2.8L7.5 8.5"/>'
+    + '</svg></button>';
   var COPY_BUTTON = '<button type="button" class="copy" title="Copy title"'
     + ' aria-label="Copy title">'
-    + '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor"'
-    + ' stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"'
-    + ' aria-hidden="true">'
+    + '<svg' + TIP_ICON_ATTRS + '>'
     + '<g class="ic-copy"><rect x="5" y="5" width="9" height="9" rx="1.4"/>'
     + '<path d="M10.5 5V3.4a1.4 1.4 0 0 0-1.4-1.4H3.4a1.4 1.4 0 0 0-1.4'
     + ' 1.4v5.7a1.4 1.4 0 0 0 1.4 1.4H5"/></g>'
     + '<path class="ic-check" d="M3.2 8.2l3.3 3.2 6.3-7"/></svg></button>';
+  var CLOSE_BUTTON = '<button type="button" class="close" title="Close"'
+    + ' aria-label="Close">\u00d7</button>';
 
   function showTip(d, event) {
     var authors = (d.authors || []).slice(0, 3).join(', ')
@@ -1499,7 +1518,8 @@
     var whoWhen = [authors ? escapeHtml(authors) : '', when]
       .filter(Boolean).join(' &middot; ');
     tip.html('<div class="title"><b>' + escapeHtml(d.title) + '</b>'
-      + (locked ? COPY_BUTTON : '') + '</div>'
+      + (locked && d.url ? OPEN_BUTTON : '')
+      + (locked ? COPY_BUTTON + CLOSE_BUTTON : '') + '</div>'
       + (whoWhen ? '<div class="meta">' + whoWhen + '</div>' : '')
       + '<div class="meta">' + escapeHtml(d.section) + ' &middot; ' + d.kind
       + (d.telegram ? ' &middot; telegram' : '')
@@ -1525,14 +1545,15 @@
           + ' citations \u00b7 ' + formatCount(d.lit_refs) + ' refs</span>'
         : '')
       + (d.quality != null
-        ? '<span class="meta">quality ' + formatQuality(d.quality)
+        ? '<span class="meta"><a class="quality" target="_blank" rel="noopener" href="'
+          + escapeHtml(qualityHref(d.id)) + '">quality ' + formatQuality(d.quality)
           + (d.quality_models
             ? ' \u00b7 ' + (d.quality_accepts || 0) + '/' + d.quality_models
             : '')
           + (d.quality_verdict && d.quality_verdict !== 'KEEP'
-            ? ' \u00b7 ' + d.quality_verdict
+            ? ' \u00b7 ' + escapeHtml(d.quality_verdict)
             : '')
-          + '</span>'
+          + '</a></span>'
         : '')
       + '<span class="meta">' + hint + '</span></div>');
     tip.style('opacity', 1);
@@ -1551,10 +1572,21 @@
 
   var copyTimer = null;
   tip.on('click', function (event) {
-    var button = event.target.closest('.copy');
+    var button = event.target.closest('button');
     if (!button || !locked) return;
+    var close = button.classList.contains('close');
+    var open = button.classList.contains('open');
+    if (!close && !open && !button.classList.contains('copy')) return;
     event.preventDefault();
     event.stopPropagation();
+    if (close) {
+      unlock();
+      return;
+    }
+    if (open) {
+      window.open(locked.url, '_blank');
+      return;
+    }
     copyText(locked.title, 'Copy this title', function (ok) {
       button.classList.remove('done', 'failed');
       button.classList.add(ok ? 'done' : 'failed');
