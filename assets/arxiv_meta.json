@@ -1899,5 +1899,25 @@
       "Randall Balestriero",
       "Richard Baraniuk"
     ]
+  },
+  "2506.10139": {
+    "title": "Unsupervised Elicitation of Language Models",
+    "published": "2025-06-11",
+    "authors": [
+      "Jiaxin Wen",
+      "Zachary Ankner",
+      "Arushi Somani",
+      "Peter Hase"
+    ]
+  },
+  "2609.37633": {
+    "title": "RLTL;DR: Self-improvement by Internalizing Self-generated Feedback",
+    "published": "2026-09-29",
+    "authors": [
+      "Michael Kirchhof",
+      "Eleonora Gualdoni",
+      "Andrew Szot",
+      "Khashayar Gatmiry"
+    ]
   }
 }

@@ -49,6 +49,7 @@ Litmaps — [https://app.litmaps.com/shared/5bb436d0-a026-493a-a765-f48fda77ad0c
 ## Post-training
 
 - Litmaps — [https://app.litmaps.com/shared/9f68a972-570d-48c9-9895-8d4979d52df0](https://app.litmaps.com/shared/9f68a972-570d-48c9-9895-8d4979d52df0)
+- RLTL;DR: Self-improvement by Internalizing Self-generated Feedback — [https://arxiv.org/abs/2609.37633](https://arxiv.org/abs/2609.37633)
 - Recursive Self-Improvement via On-Policy Distillation for Reasoning — [https://arxiv.org/abs/2609.30652](https://arxiv.org/abs/2609.30652)
 - Fine-Tuning Fixes Mode Collapse and Over-Dispersion in LLMs — [https://arxiv.org/abs/2609.16454](https://arxiv.org/abs/2609.16454)
 - TTPO: Test-Time Policy Optimization — [https://arxiv.org/abs/2608.27448](https://arxiv.org/abs/2608.27448)
@@ -98,6 +99,7 @@ Litmaps — [https://app.litmaps.com/shared/5bb436d0-a026-493a-a765-f48fda77ad0c
 - GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning — [https://arxiv.org/abs/2507.19457](https://arxiv.org/abs/2507.19457) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/3879?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ +0.45 · 6/7](filter/report.md#arxiv-2507.19457)
 - Group Sequence Policy Optimization (GSPO) — [https://arxiv.org/abs/2507.18071](https://arxiv.org/abs/2507.18071) [⌲ tg](https://t-me.translate.goog/s/data_secrets/7470?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ +0.05 · 5/7 · WATCH](filter/report.md#arxiv-2507.18071)
 - MiniMax-M1: Scaling Test-Time Compute Efficiently with Lightning Attention — [https://arxiv.org/abs/2506.13585](https://arxiv.org/abs/2506.13585) [⚖ +0.35 · 4/7](filter/report.md#arxiv-2506.13585)
+- Unsupervised Elicitation of Language Models — [https://arxiv.org/abs/2506.10139](https://arxiv.org/abs/2506.10139)
 - Curriculum Reinforcement Learning from Easy to Hard Tasks — [https://arxiv.org/abs/2506.06632](https://arxiv.org/abs/2506.06632) [⚖ +0.05 · 5/7 · WATCH](filter/report.md#arxiv-2506.06632)
 - Critique-GRPO: Advancing LLM Reasoning with Natural Language and Numerical Feedback — [https://arxiv.org/abs/2506.03106](https://arxiv.org/abs/2506.03106) [⚖ +0.42 · 7/7](filter/report.md#arxiv-2506.03106)
 - Beyond the 80/20 Rule: High-Entropy Minority Tokens Drive Effective RL — [https://arxiv.org/abs/2506.01939](https://arxiv.org/abs/2506.01939) [⌲ tg](https://t-me.translate.goog/s/applied_scientist_blog/119?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ +0.28 · 4/7](filter/report.md#arxiv-2506.01939)
