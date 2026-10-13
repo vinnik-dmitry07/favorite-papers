@@ -49,6 +49,7 @@ Litmaps — [https://app.litmaps.com/shared/5bb436d0-a026-493a-a765-f48fda77ad0c
 ## Post-training
 
 - Litmaps — [https://app.litmaps.com/shared/9f68a972-570d-48c9-9895-8d4979d52df0](https://app.litmaps.com/shared/9f68a972-570d-48c9-9895-8d4979d52df0)
+- Finetuning with Sampling: SFT Learns Better Than You Think — [https://arxiv.org/abs/2610.02140](https://arxiv.org/abs/2610.02140)
 - RLTL;DR: Self-improvement by Internalizing Self-generated Feedback — [https://arxiv.org/abs/2609.37633](https://arxiv.org/abs/2609.37633)
 - Recursive Self-Improvement via On-Policy Distillation for Reasoning — [https://arxiv.org/abs/2609.30652](https://arxiv.org/abs/2609.30652)
 - Fine-Tuning Fixes Mode Collapse and Over-Dispersion in LLMs — [https://arxiv.org/abs/2609.16454](https://arxiv.org/abs/2609.16454)

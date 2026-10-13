@@ -1919,5 +1919,14 @@
       "Andrew Szot",
       "Khashayar Gatmiry"
     ]
+  },
+  "2610.02140": {
+    "title": "Finetuning with Sampling: SFT Learns Better Than You Think",
+    "published": "2026-10-01",
+    "authors": [
+      "Aayush Karan",
+      "Sitan Chen",
+      "Yilun Du"
+    ]
   }
 }
