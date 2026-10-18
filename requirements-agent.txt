@@ -1,0 +1,3 @@
+# Indexer and publisher runtime: Python standard library only.
+# pytest runs src/test_agent_index.py and src/test_publish_agent_index.py.
+pytest==8.4.2

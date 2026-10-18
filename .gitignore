@@ -27,6 +27,12 @@ cache/
 shots/
 assets/fulltext_search.js
 
+# Agent API build output (derived; the worker reads R2, not this directory)
+agent_build/
+worker/node_modules/
+worker/.wrangler/
+worker/dist/
+
 # Paper filter pipeline intermediates (scripts + scores.csv + report.md + official reviews + fulltext md are committed)
 filter/*.jsonl
 !filter/llm_models.jsonl

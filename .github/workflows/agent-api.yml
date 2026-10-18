@@ -1,0 +1,114 @@
+name: Agent API
+
+on:
+  pull_request:
+    paths: &agent_paths
+      - assets/graph.json
+      - filter/fulltext/**
+      - src/build_agent_index.py
+      - src/publish_agent_index.py
+      - src/smoke_agent_api.py
+      - src/write_discovery_links.py
+      - src/test_agent_index.py
+      - src/test_publish_agent_index.py
+      - src/common.py
+      - src/build_fulltext_search.py
+      - requirements-agent.txt
+      - worker/**
+      - .github/workflows/agent-api.yml
+  push:
+    branches: [main]
+    paths: *agent_paths
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: agent-api
+  cancel-in-progress: false
+
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Offline tests
+        run: |
+          python -m pip install -r requirements-agent.txt
+          python -m pytest src/test_agent_index.py src/test_publish_agent_index.py
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: worker/package-lock.json
+      - name: Worker tests
+        working-directory: worker
+        run: |
+          npm ci
+          npm run typecheck
+          npm test
+
+  publish:
+    needs: offline
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      AGENT_DIMENSION_BUDGET: ${{ secrets.AGENT_DIMENSION_BUDGET }}
+      AGENT_PUBLISH_ROLE: ci
+    steps:
+      - name: Checkout the pushed commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: worker/package-lock.json
+      - name: Build the release
+        run: python src/build_agent_index.py
+      - name: Capacity and permissions
+        run: python src/publish_agent_index.py preflight --live
+      - name: Isolated probe
+        run: python src/publish_agent_index.py probe
+      - name: Stage the inactive slot
+        id: stage
+        run: |
+          set -o pipefail
+          python src/publish_agent_index.py publish --stage | tee stage.json
+          python -c "import json, pathlib; print('slot=' + json.loads(pathlib.Path('stage.json').read_text(encoding='utf-8'))['slot'])" >> "$GITHUB_OUTPUT"
+      - name: Install worker dependencies
+        working-directory: worker
+        run: npm ci
+      - name: Deploy the reader
+        id: deploy
+        working-directory: worker
+        run: |
+          set -o pipefail
+          npx wrangler deploy | tee deploy.txt
+          python -c "import json, pathlib, sys; sys.path.insert(0, '../src'); from write_discovery_links import worker_origin; name=json.loads(pathlib.Path('embed.json').read_text(encoding='utf-8'))['worker_name']; origin=worker_origin(pathlib.Path('deploy.txt').read_text(encoding='utf-8'), name); sys.exit('deploy did not print the worker origin') if not origin else print('origin=' + origin)" >> "$GITHUB_OUTPUT"
+      - name: Promote the staged release
+        id: promote
+        run: python src/publish_agent_index.py publish --promote --slot "${{ steps.stage.outputs.slot }}"
+      - name: Live smoke
+        id: smoke
+        run: python src/smoke_agent_api.py "${{ steps.deploy.outputs.origin }}"
+      - name: Discovery links
+        run: python src/write_discovery_links.py
+      - name: Roll back the pointer
+        if: failure() && steps.promote.outcome == 'success' && steps.smoke.outcome == 'failure'
+        run: python src/publish_agent_index.py rollback

@@ -1,0 +1,31 @@
+name = "key-papers-api"
+main = "src/index.ts"
+compatibility_date = "2026-10-15"
+compatibility_flags = ["nodejs_compat"]
+
+[ai]
+binding = "AI"
+
+[[vectorize]]
+binding = "VECTORIZE"
+index_name = "paper-passages"
+
+[[r2_buckets]]
+binding = "CORPUS"
+bucket_name = "key-papers-corpus"
+
+[[ratelimits]]
+name = "SEARCH_LIMIT"
+namespace_id = "1001"
+
+[ratelimits.simple]
+limit = 30
+period = 60
+
+[vars]
+SEARCH_ENABLED = "1"
+
+[[rules]]
+type = "Text"
+globs = ["**/*.txt"]
+fallthrough = true

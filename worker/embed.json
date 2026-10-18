@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "reader_schema": 1,
+  "model": "@cf/baai/bge-base-en-v1.5",
+  "dimensions": 768,
+  "metric": "cosine",
+  "pooling": "cls",
+  "max_input_tokens": 512,
+  "query_template": "",
+  "passage_template": "",
+  "clean_version": 1,
+  "chunk_version": 1,
+  "max_code_points": 800,
+  "overlap_code_points": 120,
+  "tokenizer": {
+    "id": "BAAI/bge-base-en-v1.5",
+    "revision": "a5beb1e3e68b9ab74eb54cfd186867f64f240e1a",
+    "do_lower_case": true,
+    "strip_accents": true,
+    "tokenize_chinese_chars": true,
+    "max_input_chars_per_word": 100,
+    "cls_token": "[CLS]",
+    "sep_token": "[SEP]",
+    "unk_token": "[UNK]",
+    "vocab_file": "tokenizer/vocab.txt",
+    "vocab_sha256": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+  },
+  "limits": {
+    "authors": 12,
+    "citation_default": 12,
+    "citation_max": 24,
+    "traverse_hops_default": 1,
+    "traverse_hops_max": 2,
+    "traverse_nodes_max": 24,
+    "content_code_points": 6000,
+    "search_k_default": 5,
+    "search_k_max": 8,
+    "snippet_code_points": 480,
+    "id_bytes_max": 512,
+    "query_code_points_max": 2000,
+    "response_bytes_max": 262144,
+    "summary_title_code_points": 400,
+    "pointer_ttl_seconds": 30,
+    "deadline_seconds": 20,
+    "grace_seconds": 120,
+    "paper_cache_entries": 32,
+    "paper_cache_bytes": 8000000,
+    "search_cache_entries": 64
+  },
+  "search_enabled": true,
+  "rate_limit": {
+    "namespace_id": "1001",
+    "limit": 30,
+    "period_seconds": 60
+  },
+  "vectorize": {
+    "index_name": "paper-passages",
+    "free_dimensions": 5000000,
+    "probe_vectors": 8
+  },
+  "pricing": {
+    "neurons_per_million_tokens": 6058,
+    "usd_per_million_tokens": 0.0666,
+    "free_neurons_per_day": 10000
+  },
+  "worker_name": "key-papers-api",
+  "r2_bucket": "key-papers-corpus"
+}
