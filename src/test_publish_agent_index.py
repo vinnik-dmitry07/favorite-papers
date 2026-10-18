@@ -19,6 +19,7 @@ from build_agent_index import (  # noqa: E402
 from publish_agent_index import (  # noqa: E402
     ACTIVE_KEY,
     CloudflareCloud,
+    FatalError,
     GET_IDS_BATCH,
     MemoryCloud,
     ProbeError,
@@ -358,6 +359,17 @@ def test_live_upsert_is_ndjson_and_get_by_ids_reads_a_list():
     assert [len(call['payload']['ids']) for call in pages] == [GET_IDS_BATCH, 1]
     assert set(found) == set(ids)
     assert found['id-0']['namespace'] == 'a'
+
+
+def test_get_by_ids_object_is_fatal():
+    cloud = RecordingCloud()
+
+    def object_result(method, url, payload=None, *, body=None, content_type=None):
+        return {'success': True, 'result': {'vectors': [{'id': 'x'}]}}
+
+    cloud._request = object_result
+    with pytest.raises(FatalError, match='not a list'):
+        cloud.get_vectors(['x'])
 
 
 def test_delete_crash_replays_the_same_ids():

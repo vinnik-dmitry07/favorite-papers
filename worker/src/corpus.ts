@@ -127,13 +127,7 @@ export class CorpusCache {
       fail('corpus_unavailable', 503, 'release graph is missing', { release_id: releaseId })
     }
     const doc = raw as GraphDoc
-    this.graphs.set(releaseId, doc)
-    if (this.graphs.size > 2) {
-      const oldest = this.graphs.keys().next().value
-      if (oldest && oldest !== releaseId) {
-        this.graphs.delete(oldest)
-      }
-    }
+    this.remember(this.graphs, releaseId, doc, 2)
     return doc
   }
 
@@ -183,14 +177,19 @@ export class CorpusCache {
       fail('corpus_unavailable', 503, 'vector map is missing', { slot })
     }
     const doc = raw as ConfirmedDoc
-    this.confirmedDocs.set(cacheKey, doc)
-    if (this.confirmedDocs.size > 2) {
-      const oldest = this.confirmedDocs.keys().next().value
-      if (oldest && oldest !== cacheKey) {
-        this.confirmedDocs.delete(oldest)
-      }
-    }
+    this.remember(this.confirmedDocs, cacheKey, doc, 2)
     return doc
+  }
+
+  private remember<K, V>(map: Map<K, V>, key: K, value: V, cap: number): void {
+    map.set(key, value)
+    if (map.size <= cap) {
+      return
+    }
+    const oldest = map.keys().next().value
+    if (oldest !== undefined) {
+      map.delete(oldest)
+    }
   }
 
   private async read(key: string): Promise<unknown | null> {

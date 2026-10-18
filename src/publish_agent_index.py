@@ -61,8 +61,9 @@ class RetryableError(PublishError):
 
 
 class FatalError(PublishError):
-    def __init__(self, message: str):
+    def __init__(self, message: str, status: int | None = None):
         super().__init__('fatal', message)
+        self.status = status
 
 
 class QuotaError(PublishError):
@@ -574,19 +575,11 @@ class Publisher:
             else:
                 batch['status'] = 'sending'
             self._save_journal(slot, journal)
-            try:
-                mutation_id = _call_with_retry(
-                    self.cloud, lambda vectors=vectors: self.cloud.upsert(vectors),
-                )
-            except UnknownWrite as exc:
-                batch['status'] = 'unknown'
-                batch['mutation_id'] = exc.mutation_id
-                journal['status'] = 'waiting'
-                self._save_journal(slot, journal)
+            if self._accept_mutation(
+                batch, journal, slot,
+                lambda vectors=vectors: self.cloud.upsert(vectors),
+            ):
                 return True
-            batch['status'] = 'accepted'
-            batch['mutation_id'] = mutation_id
-            self._save_journal(slot, journal)
             self._hook('after_upsert_journal')
         return False
 
@@ -653,19 +646,26 @@ class Publisher:
             batch['status'] = 'sending'
             self._save_journal(slot, journal)
             chunk = list(batch['vector_ids'])
-            try:
-                mutation_id = _call_with_retry(
-                    self.cloud, lambda ids=chunk: self.cloud.delete_ids(ids),
-                )
-            except UnknownWrite as exc:
-                batch['status'] = 'unknown'
-                batch['mutation_id'] = exc.mutation_id
-                journal['status'] = 'waiting'
-                self._save_journal(slot, journal)
+            if self._accept_mutation(
+                batch, journal, slot,
+                lambda ids=chunk: self.cloud.delete_ids(ids),
+            ):
                 return True
-            batch['status'] = 'accepted'
-            batch['mutation_id'] = mutation_id
+        return False
+
+    def _accept_mutation(self, batch: dict, journal: dict, slot: str, call) -> bool:
+        '''True when the write is unconfirmed and the journal is waiting.'''
+        try:
+            mutation_id = _call_with_retry(self.cloud, call)
+        except UnknownWrite as exc:
+            batch['status'] = 'unknown'
+            batch['mutation_id'] = exc.mutation_id
+            journal['status'] = 'waiting'
             self._save_journal(slot, journal)
+            return True
+        batch['status'] = 'accepted'
+        batch['mutation_id'] = mutation_id
+        self._save_journal(slot, journal)
         return False
 
     def _visible(self, journal, desired_ids, stale_ids) -> bool:
@@ -893,8 +893,8 @@ class CloudflareCloud:
                 retry_after = float(exc.headers.get('Retry-After') or 0)
                 raise RetryableError(detail[:500], retry_after=retry_after)
             if exc.code in (401, 403):
-                raise FatalError(detail[:500])
-            raise FatalError(f'{exc.code} {detail[:500]}')
+                raise FatalError(detail[:500], status=exc.code)
+            raise FatalError(f'{exc.code} {detail[:500]}', status=exc.code)
         if not raw:
             return {}
         parsed = json.loads(raw.decode('utf-8'))
@@ -958,11 +958,7 @@ class CloudflareCloud:
             body=('\n'.join(lines) + ('\n' if lines else '')).encode('utf-8'),
             content_type='application/x-ndjson',
         )
-        mutation = (parsed.get('result') or {}).get('mutationId')
-        if not mutation:
-            raise UnknownWrite('missing-mutation')
-        self._wait_processed(mutation)
-        return mutation
+        return self._accepted_mutation(parsed)
 
     def delete_ids(self, ids: list[str]) -> str:
         if len(ids) > DELETE_IDS_BATCH:
@@ -972,6 +968,9 @@ class CloudflareCloud:
             self._vectorize('/delete_by_ids'),
             {'ids': ids},
         )
+        return self._accepted_mutation(parsed)
+
+    def _accepted_mutation(self, parsed: dict) -> str:
         mutation = (parsed.get('result') or {}).get('mutationId')
         if not mutation:
             raise UnknownWrite('missing-mutation')
@@ -1006,8 +1005,11 @@ class CloudflareCloud:
                 self._vectorize('/get_by_ids'),
                 {'ids': chunk},
             )
-            for row in _vector_rows(parsed.get('result')):
-                if row.get('id'):
+            rows = parsed.get('result')
+            if not isinstance(rows, list):
+                raise FatalError('get_by_ids result is not a list')
+            for row in rows:
+                if isinstance(row, dict) and row.get('id'):
                     found[row['id']] = row
         return found
 
@@ -1044,19 +1046,10 @@ class CloudflareCloud:
                 ),
             )
         except FatalError as exc:
-            if '404' in str(exc):
+            if exc.status == 404:
                 return None
             raise
         return parsed
-
-
-def _vector_rows(result) -> list:
-    if isinstance(result, list):
-        return [row for row in result if isinstance(row, dict)]
-    if isinstance(result, dict):
-        rows = result.get('vectors') or []
-        return [row for row in rows if isinstance(row, dict)]
-    return []
 
 
 def _cli_cloud(embed: dict):

@@ -393,7 +393,7 @@ export function createService(
           treeEdges.push({
             source: current.id,
             target: neighbor.id,
-            evidence: neighbor.evidence[0]?.evidence ?? 'id',
+            evidence: neighbor.evidence[0].evidence ?? 'id',
           })
           queue.push({ id: neighbor.id, depth: current.depth + 1 })
         }
