@@ -1,14 +1,18 @@
+import { rankedCatalog } from './catalog-search'
+import { WasmPqScorer } from './static-search-wasm'
+import { Int8Index } from './static-search-int8'
 import vocabText from '../tokenizer/vocab.txt'
 
 import { handleRest, json, requestOrigin } from './http'
 import { handleMcp } from './mcp'
 import { DomainError, errorBody, fail, parseBoundedInt, parseId, parseOffset } from './schemas'
 import type { ContentArgs, Service } from './service'
-import { PqIndex, type PqConfig } from './static-search'
+import { PqIndex, type PqConfig, type PqEngine } from './static-search'
 import { embed, pointLength, slicePoints, WordPieceTokenizer } from './tokenize'
 
 export interface ProbeEnv {
   ASSETS: { fetch(request: Request): Promise<Response> }
+  PQ_WASM?: WebAssembly.Module
 }
 
 interface AssetReference { path: string, bytes?: number }
@@ -22,8 +26,14 @@ interface Manifest extends PqConfig {
   codebooks: AssetReference
   papers: { path: string, count: number }
   records: { path: string, shards: number }
+  records_small?: { path: string, shards: number }
+  int8?: AssetReference[]
+  int8_norms?: AssetReference
+  binary?: AssetReference
 }
 interface Paper {
+  section?: string | null
+  topic?: string | null
   id: string
   title: string
   url: string | null
@@ -132,11 +142,16 @@ function documentIdentity(id: string): Identity {
 }
 
 /** No model call: hashes token IDs into a deterministic synthetic query vector. */
-function syntheticQuery(query: string, manifest: Manifest): Float32Array {
+function queryTokens(query: string): number[] {
   if (typeof query !== 'string' || !query.trim()) fail('invalid_query', 400, 'query is empty')
   if (pointLength(query) > 2000) fail('query_too_long', 400, 'query exceeds 2000 code points')
   const tokens = tokenizer.tokenIds(embed.query_template, query)
   if (tokens.length > embed.max_input_tokens) fail('query_too_long', 400, 'query exceeds the token budget')
+  return tokens
+}
+
+function syntheticQuery(query: string, manifest: Manifest): Float32Array {
+  const tokens = queryTokens(query)
   let state = (2166136261 ^ manifest.seed) >>> 0
   for (const token of tokens) state = Math.imul(state ^ token, 16777619) >>> 0
   if (!state) state = 1
@@ -150,7 +165,22 @@ function syntheticQuery(query: string, manifest: Manifest): Float32Array {
   return vector
 }
 
-export function createProbeService(env: ProbeEnv) {
+export const VARIANTS = {
+  'js-json128': { engine: 'js', small: false, algorithm: 'pq' },
+  'js-json16': { engine: 'js', small: true, algorithm: 'pq' },
+  'js4-json128': { engine: 'js4', small: false, algorithm: 'pq' },
+  'js4-json16': { engine: 'js4', small: true, algorithm: 'pq' },
+  'wasm-json128': { engine: 'wasm', small: false, algorithm: 'pq' },
+  'wasm-json16': { engine: 'wasm', small: true, algorithm: 'pq' },
+  'wasm-rerank100': { engine: 'wasm', small: true, algorithm: 'rerank' },
+  'wasm-int8': { engine: 'wasm', small: true, algorithm: 'int8' },
+  'wasm-binary200': { engine: 'wasm', small: true, algorithm: 'binary' },
+} as const
+export type Variant = keyof typeof VARIANTS
+
+export function createProbeService(env: ProbeEnv, variant: Variant = 'js-json128') {
+  const options = VARIANTS[variant]
+  let int8Promise: Promise<Int8Index> | undefined
   let manifestPromise: Promise<Manifest> | undefined
   let indexPromise: Promise<PqIndex> | undefined
   let papersPromise: Promise<Map<string, Paper>> | undefined
@@ -198,10 +228,37 @@ export function createProbeService(env: ProbeEnv) {
           asset(value.codes.path).then((response) => response.arrayBuffer()),
           asset(value.codebooks.path).then((response) => response.arrayBuffer()),
         ])
-        return new PqIndex(value, codes, books)
+        return new PqIndex(value, codes, books, options.engine === 'wasm' && env.PQ_WASM ? new WasmPqScorer(env.PQ_WASM) : undefined)
       }).catch((error) => { indexPromise = undefined; throw error })
     }
     return indexPromise
+  }
+
+  async function int8(): Promise<Int8Index> {
+    if (!int8Promise) int8Promise = manifest().then(async (value) => {
+      if (!env.PQ_WASM || !value.int8?.length || !value.int8_norms || !value.binary) {
+        fail('corpus_unavailable', 503, 'int8 fixture or WASM module missing')
+      }
+      const load = (ref: AssetReference) => asset(ref.path).then((response) => response.arrayBuffer())
+      const [vectors, norms, bits] = await Promise.all([
+        Promise.all(value.int8.map(load)), load(value.int8_norms), load(value.binary),
+      ])
+      return new Int8Index(env.PQ_WASM, value.count, value.dimensions, vectors, norms, bits)
+    }).catch((error) => { int8Promise = undefined; throw error })
+    return int8Promise
+  }
+
+  async function rank(query: Float32Array, topK = 200) {
+    if (options.algorithm === 'int8' || options.algorithm === 'binary') {
+      return (await int8()).search(query, topK, undefined, options.algorithm === 'binary')
+    }
+    const hits = (await index()).search(query, options.algorithm === 'rerank' ? 100 : topK, options.engine as PqEngine)
+    return options.algorithm === 'rerank'
+      ? (await int8()).search(query, topK, hits.map((hit) => hit.index)) : hits
+  }
+
+  async function catalog(query: string) {
+    return rankedCatalog(Object.fromEntries(await papers()), query)
   }
 
   function papers(): Promise<Map<string, Paper>> {
@@ -239,17 +296,20 @@ export function createProbeService(env: ProbeEnv) {
   }
 
   async function record(rowIndex: number, value: Manifest): Promise<RecordRow> {
-    const shard = Math.floor(rowIndex / value.record_shard_size)
-    const path = value.records.path.replace('{shard}', String(shard))
+    const size = options.small ? 16 : value.record_shard_size
+    const source = options.small ? value.records_small : value.records
+    if (!source || source.shards !== Math.ceil(value.count / size)) fail('corpus_unavailable', 503, 'missing metadata layout')
+    const shard = Math.floor(rowIndex / size)
+    const path = source.path.replace('{shard}', String(shard))
     const rows = await records.get(path, async () => {
       const result = await getJson<RecordRow[]>(path)
-      const expected = Math.min(value.record_shard_size, value.count - shard * value.record_shard_size)
+      const expected = Math.min(size, value.count - shard * size)
       if (!Array.isArray(result) || result.length !== expected) {
         fail('corpus_unavailable', 503, 'probe record shard is malformed')
       }
       return result
     })
-    const row = rows[rowIndex % value.record_shard_size]
+    const row = rows[rowIndex % size]
     assetVersion(row, value)
     if (row.index !== rowIndex || typeof row.paper_id !== 'string' || typeof row.title !== 'string'
         || !integer(row.start) || !integer(row.end, row.start) || !integer(row.chunk_index)
@@ -292,11 +352,11 @@ export function createProbeService(env: ProbeEnv) {
     const row = await paper(args.id)
     const offset = parseOffset(args.offset)
     const length = parseBoundedInt(args.length, 6000, 1, 32000, 'length')
-    if (offset > row.total_length) fail('invalid_offset', 400, 'offset is past the text')
     if (!row.available) {
       return { corpus_version: value.corpus_version, paper_id: row.id, available: false,
         reason: 'no_markdown', offset: 0, next_offset: null, total_length: 0, text: '' }
     }
+    if (offset > row.total_length) fail('invalid_offset', 400, 'offset is past the text')
     const end = Math.min(row.total_length, offset + length)
     return { corpus_version: value.corpus_version, paper_id: row.id, available: true,
       reason: null, offset,
@@ -363,7 +423,8 @@ export function createProbeService(env: ProbeEnv) {
       const k = parseBoundedInt(args.k, 5, 1, 8, 'k')
       const value = await manifest()
       const query = syntheticQuery(args.q, value)
-      const ranked = (await index()).search(query, 40)
+      const ranked = await rank(query)
+      const metadata = await catalog(args.q)
       const hits: Awaited<ReturnType<Service['search']>>['hits'] = []
       const seen = new Set<string>()
       for (const match of ranked) {
@@ -378,16 +439,35 @@ export function createProbeService(env: ProbeEnv) {
           content: `/v1/content?${params}` })
         if (hits.length >= k) break
       }
-      return { corpus_version: value.corpus_version, k, hits, metadata_hits: [] }
+      return { corpus_version: value.corpus_version, k, hits, metadata_hits: metadata.slice(0, k).map(({ node }) => ({
+        id: node.id, title: node.title, url: node.url, date: null,
+        section: node.section ?? null, quality: null, text_available: node.available,
+      })) }
     },
     async researchSearch(query, ip) {
+      queryTokens(query)
+      // Include the same catalog prepass as the production MCP path.
+      const candidates = await catalog(query)
+      const exact = candidates.filter(({ score }) => score === 100)
+      if (exact.length) {
+        const value = await manifest()
+        return { results: exact.slice(0, 8).map(({ node }) => ({
+          id: documentId({ paper: node.id, version: value.corpus_version, start: node.available ? 0 : null }),
+          title: SYNTHETIC_TITLE + node.title, url: node.url || paperUrl(node),
+        })) }
+      }
       const result = await service.search({ q: query, k: 5, ip })
-      return { results: await Promise.all(result.hits.map(async (hit) => {
+      const metadataResults = candidates.slice(0, 3).map(({ node }) => ({
+        id: documentId({ paper: node.id, version: result.corpus_version, start: null }),
+        title: SYNTHETIC_TITLE + node.title + ' (catalog record)', url: paperUrl(node),
+      }))
+      const passageResults = await Promise.all(result.hits.map(async (hit) => {
         const row = await paper(hit.paper_id)
         const start = Math.floor(hit.start / TEXT_PART_SIZE) * TEXT_PART_SIZE
         return { id: documentId({ paper: row.id, version: result.corpus_version, start }),
           title: `${hit.title} (text part ${start / TEXT_PART_SIZE + 1})`, url: row.url || paperUrl(row) }
-      })) }
+      }))
+      return { results: [...metadataResults, ...passageResults] }
     },
     async fetchDocument(id) {
       const identity = documentIdentity(id)
@@ -414,7 +494,35 @@ export function createProbeService(env: ProbeEnv) {
     },
   }
 
-  return Object.assign(service, {
+  // Log before the shared REST/MCP adapters sanitize unexpected exceptions.
+  const observed = new Proxy(service, {
+    get(target, key, receiver) {
+      const value = Reflect.get(target, key, receiver)
+      if (typeof value !== 'function') return value
+      return async (...args: unknown[]) => {
+        try { return await Reflect.apply(value, target, args) }
+        catch (error) {
+          if (!(error instanceof DomainError)) console.error({ operation: String(key), probe_error: String(error) })
+          throw error
+        }
+      }
+    },
+  })
+  return Object.assign(observed, {
+    async stage(stage: string, q: string) {
+      if (stage === 'noop') return { synthetic: true, stage }
+      const value = await manifest()
+      if (stage === 'tokenize') {
+        const ids = tokenizer.tokenIds(embed.query_template, q)
+        return { synthetic: true, stage, tokens: ids.length }
+      }
+      if (stage === 'scan') {
+        // Fixed query isolates scanning from tokenization and result assembly.
+        const hits = await rank(Float32Array.from({ length: value.dimensions }, (_, i) => Math.sin(i + 1)))
+        return { synthetic: true, stage, checksum: hits.reduce((sum, hit) => sum + hit.score, 0), hits: hits.length }
+      }
+      fail('invalid_argument', 400, 'unknown diagnostic stage')
+    },
     async probeInfo() {
       const value = await manifest()
       const rows = [...(await papers()).values()].filter((row) => row.available)
@@ -425,26 +533,38 @@ export function createProbeService(env: ProbeEnv) {
         sample_paper_id: sample.id, longest_paper_id: longest.id,
         sample_query: 'How is group relative policy optimization used?', sample_find_query: 'the',
         sample_query_max: 'a '.repeat(500).trim(),
+        sample_query_adversarial: ('q'.repeat(99) + '🧪 ').repeat(19).trim(),
+        sample_fetch_id: documentId({ paper: longest.id, version: value.corpus_version, start: 0 }),
+        variants: Object.keys(VARIANTS),
         semantic_quality_measured: false, embedding_provider_called: false }
     },
   })
 }
 
-let app: { assets: ProbeEnv['ASSETS'], service: ReturnType<typeof createProbeService> } | undefined
+let app: { assets: ProbeEnv['ASSETS'], variant: Variant, service: ReturnType<typeof createProbeService> } | undefined
 
 export default {
   async fetch(request: Request, env: ProbeEnv): Promise<Response> {
-    bootId ??= crypto.randomUUID()
     const url = new URL(request.url)
-    if (url.searchParams.get('cold') === '1' || app?.assets !== env.ASSETS) app = undefined
+    const selected = url.searchParams.get('variant') ?? 'js-json128'
+    if (!Object.hasOwn(VARIANTS, selected)) return json({ error: 'unknown_variant' }, 400)
+    const variant = selected as Variant
+    const firstRequest = !bootId
+    bootId ??= crypto.randomUUID()
+    if (url.searchParams.get('cold') === '1' || app?.assets !== env.ASSETS || app?.variant !== variant) app = undefined
     const cacheState = app ? 'warm' : 'cold'
-    if (!app) app = { assets: env.ASSETS, service: createProbeService(env) }
-    console.log(JSON.stringify({ probe_run: url.searchParams.get('probe_run'),
-      probe_case: url.searchParams.get('probe_case'), probe_seq: url.searchParams.get('probe_seq'),
-      boot_id: bootId, url: request.url }))
+    if (!app) app = { assets: env.ASSETS, variant, service: createProbeService(env, variant) }
+    const marker = request.headers.get('x-probe-marker') ?? crypto.randomUUID()
+    console.log({ probe_marker: marker, probe_run: url.searchParams.get('probe_run'),
+      probe_case: url.searchParams.get('probe_case'), probe_seq: url.searchParams.get('probe_seq'), boot_id: bootId, variant, first_request: firstRequest })
     let response: Response
     try {
-      if (url.pathname === '/mcp') {
+      if (url.pathname === '/probe/stage') {
+        if (request.method !== 'GET') fail('invalid_argument', 405, 'method not allowed')
+        const q = url.searchParams.get('q') ?? 'query'
+        if (pointLength(q) > 2000) fail('query_too_long', 400, 'query too long')
+        response = json(await app.service.stage(url.searchParams.get('stage') ?? 'noop', q))
+      } else if (url.pathname === '/mcp') {
         response = request.method === 'POST' ? await handleMcp(request, app.service)
           : new Response(null, { status: 405, headers: { allow: 'POST' } })
       } else if (url.pathname === '/' || url.pathname === '/probe/info') {
@@ -457,12 +577,16 @@ export default {
         })
       } else response = await handleRest(request, app.service)
     } catch (error) {
+      if (!(error instanceof DomainError)) console.error({ probe_marker: marker, error: String(error) })
       const domain = error instanceof DomainError ? error
         : new DomainError('corpus_unavailable', 503, 'probe request failed')
       response = json(errorBody(domain), domain.status)
     }
     const headers = new Headers(response.headers)
     headers.set('x-probe-boot-id', bootId)
+    headers.set('x-probe-marker', marker)
+    headers.set('x-probe-first-request', String(firstRequest))
+    headers.set('x-probe-variant', variant)
     headers.set('x-probe-cache', cacheState)
     headers.set('x-probe-synthetic', 'true')
     return new Response(response.body, { status: response.status, statusText: response.statusText, headers })

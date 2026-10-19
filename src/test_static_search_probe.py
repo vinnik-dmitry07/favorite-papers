@@ -115,3 +115,29 @@ def test_rebuild_preserves_unrelated_files_and_rejects_invalid_size(tmp_path):
     for seed in (-1, 2 ** 53):
         with pytest.raises(ValueError, match='JavaScript-safe integer'):
             build_probe(graph, texts, tmp_path, count=1, seed=seed)
+
+
+def test_small_shards_and_quantized_assets_share_row_identity(tmp_path):
+    graph, texts, _ = fixture()
+    manifest = build_probe(graph, texts, tmp_path, count=33)
+    base = tmp_path / 'probe'
+    rows = json.loads((base / 'records/0.json').read_text())
+    small = [row for shard in range(manifest['records_small']['shards'])
+             for row in json.loads((base / f'records16/{shard}.json').read_text())]
+    assert small == rows
+    vectors = b''.join((tmp_path / ref['path'].lstrip('/')).read_bytes()
+                       for ref in manifest['int8'])
+    norms = (base / 'int8-norms.bin').read_bytes()
+    bits = (base / 'binary.bin').read_bytes()
+    assert len(vectors) == 33 * DIMENSIONS
+    assert len(norms) == 33 * 8
+    assert len(bits) == 33 * DIMENSIONS // 8
+    for row in range(33):
+        values = struct.unpack_from(f'{DIMENSIONS}b', vectors,
+                                    row * DIMENSIONS)
+        inverse_norm = struct.unpack_from('<d', norms, row * 8)[0]
+        assert math.sqrt(sum(v * v for v in values)) * \
+            inverse_norm == pytest.approx(1)
+        for dimension, value in enumerate(values):
+            index = row * DIMENSIONS + dimension
+            assert bool(bits[index // 8] & (1 << (index % 8))) == (value >= 0)

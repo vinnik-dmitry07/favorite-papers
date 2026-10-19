@@ -23,7 +23,7 @@ def make_report(count=50):
         'run_id': 'run-123',
         'info': {'corpus_version': 'v1'},
         'requests': [
-            {'case': case,
+            {'case': case, 'marker': f'{case}-{i}',
              'url': f'https://synthetic.example/{case}/{i}',
              'success': True, 'client_wall_ms': 0.1}
             for case in EXPECTED_CASES for i in range(count)
@@ -33,7 +33,8 @@ def make_report(count=50):
 
 def events_for(report, cpu=2):
     return [
-        {'$metadata': {'id': str(i), 'url': row['url']},
+        {'$metadata': {'id': str(i), 'url': 'REDACTED', 'type': 'cf-worker-event'},
+         'source': {'probe_marker': row['marker'], 'probe_run': report['run_id']},
          '$workers': {'cpuTimeMs': cpu, 'wallTimeMs': 12, 'outcome': 'ok',
                       'requestId': str(i)}}
         for i, row in enumerate(report['requests'])
@@ -110,7 +111,7 @@ def test_observed_failure_fails_before_sufficient_samples(failure):
     assert report['cpu_gate'] == 'failed'
 
 
-def test_telemetry_matches_exact_request_url_and_keeps_platform_cpu():
+def test_telemetry_matches_markers_and_keeps_only_platform_cpu():
     report = make_report(1)
     events = events_for(report)
     events.append({'$metadata': {'url': report['requests'][0]['url']},
@@ -158,7 +159,7 @@ def test_requested_application_cold_is_not_isolate_cold(monkeypatch):
             'corpus_version': 'v1'}
     monkeypatch.setattr('run_static_search_probe.exchange', lambda *_: (
         200, {'X-Probe-Synthetic': 'true', 'X-Probe-Boot-Id': 'boot-1',
-              'X-Probe-Cache': 'cold'}, json.dumps(body)))
+              'X-Probe-Cache': 'cold', 'x-probe-marker': _[2]['x-probe-marker']}, json.dumps(body)))
     sample(report, 'rest_search', 'application_cold', 0, '/v1/search',
            {'q': 'café attention'})
     row = report['requests'][0]
@@ -200,7 +201,7 @@ def test_cold_request_requires_cold_header(monkeypatch):
             'corpus_version': 'v1'}
     monkeypatch.setattr('run_static_search_probe.exchange', lambda *_: (
         200, {'x-probe-synthetic': 'true', 'x-probe-boot-id': 'boot',
-              'x-probe-cache': 'warm'}, json.dumps(body)))
+              'x-probe-cache': 'warm', 'x-probe-marker': _[2]['x-probe-marker']}, json.dumps(body)))
     assert sample(report, 'rest_search', 'application_cold',
                   0, '/v1/search') is None
     assert 'precondition' in report['requests'][0]['error']
@@ -235,3 +236,124 @@ def test_request_failure_is_recorded(monkeypatch, status, body):
     assert report['requests'][0]['success'] is False
     summarize(report)
     assert report['cpu_gate'] == 'failed'
+
+
+def test_redacted_urls_join_across_pages_and_ignore_custom_cpu():
+    report = make_report(1)
+    row = report['requests'][0]
+    invocation = {'$metadata': {'type': 'cf-worker-event', 'url': 'REDACTED'},
+                  '$workers': {'requestId': 'platform-id', 'cpuTimeMs': 9,
+                               'outcome': 'ok'}}
+    log = {'$metadata': {'type': 'cf-worker-log'},
+           '$workers': {'requestId': 'platform-id', 'cpuTimeMs': 0},
+           'source': json.dumps({'probe_marker': row['marker'],
+                                 'probe_run': report['run_id'], 'cpu_ms': 0})}
+    attach_telemetry(report, [invocation])
+    assert 'telemetry' not in row
+    attach_telemetry(report, [log])
+    assert row['telemetry']['cpu_ms'] == 9
+    summarize(report)
+    assert report['cpu_gate'] == 'failed'
+
+
+def test_ambiguous_request_identity_cannot_pass():
+    report = make_report()
+    events = events_for(report)
+    attach_telemetry(report, events)
+    conflicting = json.loads(json.dumps(events[0]))
+    conflicting['$workers']['requestId'] = 'another-request'
+    attach_telemetry(report, [conflicting])
+    summarize(report)
+    assert report['cpu_gate'] != 'passed'
+
+
+def test_isolate_rotation_is_excluded_but_retained(monkeypatch):
+    report = make_report(0)
+    body = {'hits': [{'paper_id': 'paper', 'snippet': 'text'}],
+            'corpus_version': 'v1'}
+    monkeypatch.setattr('run_static_search_probe.exchange', lambda *args: (
+        200, {'x-probe-synthetic': 'true', 'x-probe-boot-id': 'new-boot',
+              'x-probe-cache': 'cold', 'x-probe-marker': args[2]['x-probe-marker'],
+              'x-probe-first-request': 'true'}, json.dumps(body)))
+    sample(report, 'rest_search', 'warm', 0, '/v1/search')
+    row = report['requests'][0]
+    assert row['success'] and not row['eligible'] and row['first_request']
+    summarize(report)
+    assert report['cpu_gate'] == 'unverified'
+    assert report['cases']['rest_search.warm']['excluded'] == 1
+
+
+def test_incomplete_read_keeps_run_and_request_on_disk(monkeypatch, tmp_path):
+    from http.client import IncompleteRead
+    report = make_report(0)
+    report['output_path'] = str(tmp_path / 'partial.json')
+
+    def interrupted(*_args):
+        checkpoint = json.loads(Path(report['output_path']).read_text())
+        assert checkpoint['run_id'] == report['run_id']
+        assert checkpoint['requests'][0]['state'] == 'in_flight'
+        raise IncompleteRead(b'partial')
+
+    from pathlib import Path
+    monkeypatch.setattr('run_static_search_probe.exchange', interrupted)
+    sample(report, 'rest_search', 'warm', 0, '/v1/search')
+    saved = json.loads(Path(report['output_path']).read_text())
+    assert saved['requests'][0]['excluded_reason'] == 'transport_error'
+    assert saved['requests'][0]['state'] == 'complete'
+
+
+def test_transient_telemetry_failure_is_retried(monkeypatch):
+    from run_static_search_probe import collect
+    report = make_report(1)
+    report.update(started_ms=1000, finished_ms=2000)
+    monkeypatch.setenv('CLOUDFLARE_ACCOUNT_ID', 'test-account')
+    monkeypatch.setenv('CLOUDFLARE_API_TOKEN', 'test-token')
+    calls = []
+
+    def response(_url, payload, *_args, **_kwargs):
+        calls.append(payload)
+        if len(calls) == 1:
+            return 429, {}, '{}'
+        return 200, {}, json.dumps(
+            {'result': {'events': {'events': events_for(report)}}})
+
+    monkeypatch.setattr('run_static_search_probe.exchange', response)
+    monkeypatch.setattr('run_static_search_probe.time.sleep', lambda *_: None)
+    collect(report, 10)
+    assert len(calls) == 2
+    assert 'needle' not in calls[0]['parameters']
+    assert all('telemetry' in row for row in report['requests'])
+
+
+def test_failed_baseline_does_not_reject_a_passing_variant():
+    report = make_report()
+    original = report['requests']
+    report['requests'] = [dict(row, case=v + '.' + row['case'],
+                               marker=v + row['marker'])
+                          for v in ['baseline', 'candidate'] for row in original]
+    report['variants'] = ['baseline', 'candidate']
+    report['expected_cases'] = [v + '.' + c for v in report['variants']
+                                for c in EXPECTED_CASES]
+    events = events_for(report)
+    events[0]['$workers']['cpuTimeMs'] = 10
+    attach_telemetry(report, events)
+    summarize(report)
+    assert report['variant_gates'] == {
+        'baseline': 'failed', 'candidate': 'passed'}
+    assert report['cpu_gate'] == 'passed'
+    bound = report['cases']['candidate.rest_search.warm']['zero_exceedance_upper_95']
+    assert bound == pytest.approx(0.058155079)
+
+
+def test_mid_request_checkpoint_can_be_recovered(tmp_path, monkeypatch):
+    report = make_report(0)
+    report['requests'] = [{'case': 'rest_search.warm', 'marker': 'inflight',
+                           'success': False, 'state': 'in_flight'}]
+    path = tmp_path / 'interrupted.json'
+    path.write_text(json.dumps(report))
+    monkeypatch.setattr('run_static_search_probe.collect', lambda *_: None)
+    assert main(['--collect-only', str(path), '--output', str(path),
+                 '--local']) == 2
+    saved = json.loads(path.read_text())
+    assert saved['functional_gate'] == 'unverified'
+    assert saved['cases']['rest_search.warm']['excluded'] == 1

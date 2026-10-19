@@ -10,6 +10,8 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
+import struct
 import random
 import shutil
 import sys
@@ -99,7 +101,7 @@ def build_probe(graph: dict, texts: dict[str, str | None], output: Path,
         'text_sha256': {key: hashlib.sha256(text.encode('utf-8')).hexdigest()
                         for key, text in cleaned.items()},
         'chunk_size': CHUNK_SIZE, 'chunk_step': CHUNK_STEP,
-        'text_part_size': TEXT_PART_SIZE,
+        'text_part_size': TEXT_PART_SIZE, 'probe_layout': 2,
     })).hexdigest()
     root = output / 'probe'
     if root.exists():
@@ -123,6 +125,7 @@ def build_probe(graph: dict, texts: dict[str, str | None], output: Path,
             })
         info = common | {
             'id': key, 'title': node['title'], 'url': node.get('url'),
+            'section': node.get('section'), 'topic': node.get('topic'),
             'total_length': len(text), 'available': available,
             'sections': headings(text) if available else [],
             'part_count': len(starts),
@@ -145,12 +148,43 @@ def build_probe(graph: dict, texts: dict[str, str | None], output: Path,
         rows = [candidates[i % len(candidates)] | {'index': i}
                 for i in range(first, min(first + RECORD_SHARD_SIZE, count))]
         writer.json(f'records/{first // RECORD_SHARD_SIZE}.json', rows)
+    for first in range(0, count, 16):
+        rows = [candidates[i % len(candidates)] | {'index': i}
+                for i in range(first, min(first + 16, count))]
+        writer.json(f'records16/{first // 16}.json', rows)
     writer.json('papers.json', papers)
     codes, codebooks = synthetic_vectors(count, seed)
+    # Quantize reconstructed *synthetic* PQ rows. This supports rerank/scan
+    # CPU comparisons, not a quality claim about trained embeddings.
+    books = struct.unpack(f'<{DIMENSIONS * CENTROIDS}f', codebooks)
+    subvectors = [books[i:i + 8] for i in range(0, len(books), 8)]
+    vector_files = []
+    norms = bytearray()
+    bits = bytearray()
+    for first in range(0, count, 4096):
+        packed = bytearray()
+        for row in range(first, min(count, first + 4096)):
+            vector = [value for sub in range(SUBQUANTIZERS)
+                      for value in subvectors[
+                          sub * CENTROIDS + codes[row * SUBQUANTIZERS + sub]]]
+            scale = 127 / max(abs(value) for value in vector)
+            integers = [round(value * scale) for value in vector]
+            packed.extend(value & 255 for value in integers)
+            norms.extend(struct.pack('<d', 1 / math.sqrt(
+                sum(value * value for value in integers))))
+            for pos in range(0, DIMENSIONS, 8):
+                bits.append(sum((integers[pos + b] >= 0) << b
+                                for b in range(8)))
+        vector_files.append(writer.write(f'int8/{first // 4096}.bin', packed))
+    int8_norms = writer.write('int8-norms.bin', norms)
+    binary_bits = writer.write('binary.bin', bits)
     manifest = common | {
         'format': 'pq-ip-v1', 'dimensions': DIMENSIONS,
         'subquantizers': SUBQUANTIZERS, 'centroids': CENTROIDS,
         'count': count, 'seed': seed,
+        'int8': vector_files, 'int8_norms': int8_norms, 'binary': binary_bits,
+        'records_small': {'path': '/probe/records16/{shard}.json',
+                          'shards': (count + 15) // 16},
         'codes': writer.write('codes.bin', codes),
         'codebooks': writer.write('codebooks.bin', codebooks),
         'papers': {'path': '/probe/papers.json', 'count': len(papers)},

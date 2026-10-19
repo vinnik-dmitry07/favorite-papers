@@ -39,13 +39,19 @@ function worse(score: number, index: number, otherScore: number, otherIndex: num
  * They are NOT exact cosine similarities: reconstructed PQ vectors are not
  * renormalized. Training must use the same embedding normalization and format.
  */
+export type PqEngine = 'js' | 'js4' | 'wasm'
+
+export interface PqScorer {
+  score(codes: Uint8Array, lookup: Float64Array, config: Readonly<PqConfig>): Float64Array
+}
+
 export class PqIndex {
   readonly config: Readonly<PqConfig>
   private readonly codes: Uint8Array
   private readonly codebooks: Float32Array
   private readonly subdimensions: number
 
-  constructor(config: PqConfig, codes: ArrayBuffer, codebooks: ArrayBuffer) {
+  constructor(config: PqConfig, codes: ArrayBuffer, codebooks: ArrayBuffer, private readonly scorer?: PqScorer) {
     if (!config || config.format !== 'pq-ip-v1') {
       throw new TypeError('Unsupported PQ format; expected pq-ip-v1')
     }
@@ -99,7 +105,7 @@ export class PqIndex {
     }
   }
 
-  search(query: Float32Array | number[], topK: number): PqMatch[] {
+  search(query: Float32Array | number[], topK: number, engine: PqEngine = 'js'): PqMatch[] {
     integerInRange(topK, 1, MAX_TOP_K, 'topK')
     if (!(query instanceof Float32Array) && !Array.isArray(query)) {
       throw new TypeError('query must be a Float32Array or number array')
@@ -151,6 +157,8 @@ export class PqIndex {
       }
     }
 
+    if (engine === 'wasm' && !this.scorer) throw new Error('WASM scorer is unavailable')
+    const wasmScores = engine === 'wasm' ? this.scorer!.score(this.codes, lookup, this.config) : undefined
     const heapScores = new Float64Array(limit)
     const heapIndices = new Uint32Array(limit)
     const codes = this.codes
@@ -161,19 +169,28 @@ export class PqIndex {
     let heapSize = 0
     let codeOffset = 0
     for (let index = 0; index < count; index++) {
-      let score = 0
-      let sub = 0
-      let tableOffset = 0
-      // Four consecutive additions preserve the accumulation order while
-      // reducing loop overhead for the default 96-subquantizer layout.
-      for (; sub < unrolledSubquantizers; sub += 4, tableOffset += fourCentroids) {
-        score += lookup[tableOffset + codes[codeOffset++]]
-        score += lookup[tableOffset + centroids + codes[codeOffset++]]
-        score += lookup[tableOffset + twiceCentroids + codes[codeOffset++]]
-        score += lookup[tableOffset + tripleCentroids + codes[codeOffset++]]
-      }
-      for (; sub < subquantizers; sub++, tableOffset += centroids) {
-        score += lookup[tableOffset + codes[codeOffset++]]
+      let score = wasmScores?.[index] ?? 0
+      if (!wasmScores) {
+        let a = 0, b = 0, c = 0, d = 0
+        let sub = 0
+        let tableOffset = 0
+        for (; sub < unrolledSubquantizers; sub += 4, tableOffset += fourCentroids) {
+          if (engine === 'js4') {
+            a += lookup[tableOffset + codes[codeOffset++]]
+            b += lookup[tableOffset + centroids + codes[codeOffset++]]
+            c += lookup[tableOffset + twiceCentroids + codes[codeOffset++]]
+            d += lookup[tableOffset + tripleCentroids + codes[codeOffset++]]
+          } else {
+            score += lookup[tableOffset + codes[codeOffset++]]
+            score += lookup[tableOffset + centroids + codes[codeOffset++]]
+            score += lookup[tableOffset + twiceCentroids + codes[codeOffset++]]
+            score += lookup[tableOffset + tripleCentroids + codes[codeOffset++]]
+          }
+        }
+        if (engine === 'js4') score = (a + b) + (c + d)
+        for (; sub < subquantizers; sub++, tableOffset += centroids) {
+          score += lookup[tableOffset + codes[codeOffset++]]
+        }
       }
 
       if (heapSize < limit) {

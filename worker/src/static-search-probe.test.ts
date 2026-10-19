@@ -210,7 +210,7 @@ describe('isolated synthetic probe', () => {
     expect(third.headers.get('x-probe-synthetic')).toBe('true')
     expect(assets.reads.filter((path) => path === '/probe/index.json')).toHaveLength(2)
     expect(log).toHaveBeenCalledTimes(3)
-    expect(JSON.parse(log.mock.calls[0][0])).toMatchObject({ probe_run: 'run', probe_case: 'info', probe_seq: '1' })
+    expect(log.mock.calls[0][0]).toMatchObject({ probe_run: 'run', probe_case: 'info', probe_seq: '1' })
     const info = await third.json() as { synthetic: boolean, sample_query_max: string, longest_paper_id: string }
     expect(info.synthetic).toBe(true)
     expect(info.longest_paper_id).toBe(A)
@@ -248,4 +248,25 @@ describe('isolated synthetic probe', () => {
     await expect(service.content({ id: A, offset: Number.MAX_SAFE_INTEGER, version: VERSION }))
       .rejects.toMatchObject({ code: 'invalid_offset' })
   })
+})
+
+it('includes catalog candidates in MCP and publishes a stable full-text fetch workload', async () => {
+  const { service } = build()
+  const result = await service.researchSearch('Paper', 'test')
+  const catalog = await service.fetchDocument(result.results[0].id)
+  expect(catalog.metadata.item_type).toBe('catalog')
+  const info = await service.probeInfo()
+  const document = await service.fetchDocument(info.sample_fetch_id)
+  expect(document.metadata.item_type).toBe('text_part')
+  expect(pointLength(document.text)).toBe(PART_SIZE)
+  await expect(service.researchSearch('x'.repeat(2001), 'test')).rejects.toMatchObject({ code: 'query_too_long' })
+})
+
+it('logs unexpected failures before REST sanitizes their response', async () => {
+  const { assets, service } = build()
+  assets.objects.set('/probe/codebooks.bin', new ArrayBuffer(1))
+  const log = vi.spyOn(console, 'error').mockImplementation(() => {})
+  const response = await handleRest(new Request(queryUrl('/v1/search', { q: 'policy' })), service)
+  expect(response.status).toBe(503)
+  expect(log).toHaveBeenCalledWith(expect.objectContaining({ operation: 'search', probe_error: expect.stringContaining('RangeError') }))
 })

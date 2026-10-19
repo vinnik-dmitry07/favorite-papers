@@ -1,48 +1,79 @@
 # Static search feasibility probe
 
-This is the first gate of the free-search migration, **not a semantic search
-service**. The production Worker and the independent static agent catalog keep
-their existing behavior. Do not advertise the probe as a search endpoint.
+This isolated experiment compares implementations of a possible Workers Free
+search service. It is not semantic search and is not the production API.
+The static agent catalog from PR #1 remains independently usable.
 
-The experiment uses random, reproducible product-quantized vectors alongside
-real paper excerpts. It measures the complete REST/MCP request path, including
-tokenization, exhaustive approximate inner-product scoring, result assembly,
-bounded text reads, and response serialization. It does not call Workers AI,
-train codebooks, or measure retrieval quality. The generated size fixture repeats
-some character-based excerpts to reach the target row count; these are not the
-production tokenizer's 40,575 passages.
+Codes and codebooks are deterministic random data. Snippets and text offsets
+come from the real catalog. The fixture repeats character-based excerpts to
+reach 40,575 rows; these are not the production tokenizer's passages. The int8
+vectors are quantized reconstructions of those synthetic PQ rows, and binary
+codes are their signs. None of these assets establish retrieval quality.
 
-## Current evidence
+## What changed after review
 
-The [2026-10-19 local report](probe-results/local-2026-10-19.json) records
-**600/600 successful measured requests**, plus six successful warm-up requests,
-against the complete fixture in local workerd. All 12 REST/MCP cases passed
-their functional checks. It includes source-file hashes and client wall-time
-percentiles for reproduction, with every Cloudflare CPU/memory/cold-start gate
-explicitly unverified. The test suite has 75 Python and 78 TypeScript tests.
+The probe now compares nine variants in one deployment. A failed variant does
+not reject static indexing, select centroid routing, or authorize a paid plan.
 
-**The deployment gate is still blocked on Cloudflare access.** No paid tier was
-enabled, no real embeddings were generated, and no retrieval-quality result is
-claimed. Run the isolated workflow below to obtain the next piece of evidence.
+| Variant | Scoring | Metadata shard |
+| --- | --- | --- |
+| `js-json128` | Original sequential JS accumulation | 128 rows |
+| `js-json16` | Same JS kernel | 16 rows |
+| `js4-json128` | Four independent JS accumulators | 128 rows |
+| `js4-json16` | Four independent JS accumulators | 16 rows |
+| `wasm-json128` | WASM PQ scoring, bounded JS top-k heap | 128 rows |
+| `wasm-json16` | Same WASM kernel | 16 rows |
+| `wasm-rerank100` | PQ top-100, then int8 cosine rerank | 16 rows |
+| `wasm-int8` | Scalar WASM exhaustive int8 cosine | 16 rows |
+| `wasm-binary200` | Sign-bit Hamming top-200, then int8 cosine | 16 rows |
 
-## What is built
+Both metadata layouts use an eight-shard LRU. PQ/int8/binary scores use the same
+row IDs and tie rule. PQ, exhaustive int8, and binary-rerank retain up to 200
+candidates before paper deduplication; PQ-rerank retains 100. The API returns
+one passage per paper, up to eight papers for REST and five for semantic MCP.
+The full search includes the shared production catalog ranking, including the
+MCP catalog prepass and repeated query validation. The probe also supports MCP exact title/ID/URL matches.
 
-| Component | Size / behavior |
-| --- | --- |
-| Encoded passages | 40,575 rows × 96 uint8 codes = 3,895,200 bytes |
-| Codebooks | 96 × 256 × 8 float32 values = 786,432 bytes |
-| Search | All encoded rows are scored; return up to eight distinct papers |
-| Original dimension | 768; each of the 96 subspaces has eight dimensions |
-| Paper data | Real cleaned Markdown, split into 16,000 Unicode code points |
-| Result metadata | Shards of 128 records; bounded in-memory cache |
-| Storage | Worker Static Assets; no R2 or Vectorize binding |
-| Query vector | Deterministic synthetic vector, explicitly not an embedding |
+The shared catalog code normalizes the query once and caches normalized node
+fields. The tokenizer indexes Unicode character boundaries once instead of
+repeatedly allocating and joining candidate arrays. Its greedy token IDs are
+unchanged. These are reviewable production code changes, not a deployment.
 
-The full fixture currently contains 415 paper cards and 362 available texts.
-`agent_probe/probe/measurements.json` records counts, sizes, and limitations;
-`agent_probe/probe/index.json` also records the binary hashes and corpus version.
-Generated assets are ignored by Git.
-The binary layout and exact reconstruction oracle are covered by tests.
+`/probe/stage?stage=noop|tokenize|scan&variant=...&q=...` measures diagnostic
+stages. `scan` uses a fixed vector and omits tokenization/assembly. Diagnostic
+samples are reported separately, never subtracted from full-request CPU.
+The MCP fetch workload always reads a full 16,000-point part of the longest
+paper, avoiding a cheap catalog-only fetch when title matches lead the results.
+The full path includes normal queries, near-token-limit queries and long
+unknown words. The diagnostic tokenizer cases use the latter workload.
+
+## Data and evidence
+
+- PQ: 3,895,200 code bytes + 786,432 codebook bytes.
+- Int8: 31,161,600 bytes; norms: 324,600 bytes; binary signs: 3,895,200 bytes.
+- 415 paper cards, 362 texts, split into 16,000 Unicode code points.
+- 4,959 assets, 162,792,316 bytes for both metadata layouts and all candidates.
+  Every individual asset is below 25 MiB; the largest is 3,895,200 bytes.
+- Six full operations × two cache conditions × nine variants = 108 cases.
+  Fifty samples per case yield 5,400 measured requests, plus warm-ups and
+  diagnostic stages. Asset sizes/counts are enforced during generation.
+
+The [original local report](probe-results/local-2026-10-19.json) describes the
+previous source revision. It does not describe the revised matrix. The [revised matrix report](probe-results/local-2026-10-19-matrix.json) records
+1,080/1,080 successful measured requests on the final Worker implementation,
+plus 54 warm-ups and 540 diagnostic calls. This local validation uses ten
+samples per case, not the 50-sample deployed gate. It follows an earlier
+5,400-request successful run before the final MCP workload corrections. The
+new report is generated by `src/summarize_static_search_probe.py` from the raw
+runner output, with source and raw-report hashes. Local workerd checks
+functionality and client wall time only. Cloudflare CPU, actual isolate cold
+starts, memory, Workers AI compatibility, and semantic quality remain unverified
+until separately measured. No paid plan is enabled.
+
+The current fixture loads indices from Static Assets. Embedded binary modules,
+SIMD int8 scoring and packed metadata remain possible optimizations. A failure
+of this fixture does not rule them out. In particular, the int8 baseline is
+scalar WASM, not the external review's SIMD implementation.
 
 ## Local reproduction
 
@@ -50,10 +81,10 @@ From the repository root:
 
 ```bash
 python -m pip install -r requirements-agent.txt
-python -m pytest src/test_static_search_probe.py src/test_static_search_probe_run.py
 python src/build_static_search_probe.py
 cd worker
 npm ci
+npm run build:probe
 npm run typecheck
 npm test
 npx wrangler deploy --config wrangler.probe.toml --dry-run
@@ -61,125 +92,158 @@ npx wrangler dev --config wrangler.probe.toml --ip 127.0.0.1 --port 8787 \
   --inspector-ip 127.0.0.1 --inspector-port 9229
 ```
 
-In a second terminal, from the repository root:
+In another terminal, from the repository root:
 
 ```bash
 python src/run_static_search_probe.py http://127.0.0.1:8787 \
-  --local --samples 50 --output probe-report-local.json
+  --local --samples 50 --variants all --output probe-report-local.json
+python src/summarize_static_search_probe.py probe-report-local.json \
+  --output worker/probe-results/local-matrix.json
 ```
 
-Local runs establish functional correctness and client wall time only. Neither
-Node timings nor `wrangler dev` establish deployed Cloudflare CPU consumption.
-An unverified local CPU gate is expected.
+Use `--variants js4-json16,wasm-json16` to compare a subset. All variants are
+selectable through `variant=` on REST and MCP URLs. The default manual endpoint
+retains the original `js-json128` baseline; the runner defaults to `js4-json16`.
+The WAT source is compiled with pinned `wabt@1.0.39`; no opaque supplied binary
+or external audit script is needed to reproduce these kernels.
 
 ## Run on Workers Free
 
-Use an account whose **Workers plan is Free**, checked in the Cloudflare
-dashboard. The workflow does not change subscriptions. A Paid account does not
-establish Free-plan feasibility, even if this small experiment incurs no extra
-charge.
+In GitHub Settings → Environments, create **`static-search-probe`**. Add these
+**environment secrets**, scoped to the intended Cloudflare Free account:
 
-Add these GitHub **repository secrets** under Settings → Secrets and variables
-→ Actions → New repository secret:
+- `PROBE_CLOUDFLARE_ACCOUNT_ID`.
+- `PROBE_CLOUDFLARE_API_TOKEN`: custom token with **Workers Scripts: Edit** and
+  **Workers Observability: Edit** (`Workers Scripts Write` and `Workers
+  Observability Write` in API documentation).
 
-- `CLOUDFLARE_ACCOUNT_ID`: the target account ID.
-- `CLOUDFLARE_API_TOKEN`: a custom token restricted to that account, with
-  **Workers Scripts: Edit** for deployment and **Workers Observability: Edit**
-  for the CPU-log query API. API documentation calls these permissions
-  `Workers Scripts Write` and `Workers Observability Write`.
+Keep production `CLOUDFLARE_*` secrets unchanged. The probe uses different
+secret names, so a missing environment secret cannot fall back to a production
+repository secret. The account may be the same only if it actually uses Workers
+Free. The workflow never changes subscriptions. No R2, Vectorize, Workers AI,
+billing, zone, or `AGENT_DIMENSION_BUDGET` configuration is needed.
 
-No zone, R2, Vectorize, Workers AI, billing, or `AGENT_DIMENSION_BUDGET`
-permission/configuration is used by this probe. The production workflow still
-has its separate requirements. If a narrower existing token cannot query CPU
-logs, the measurement remains unverified; do not broaden it to all resources.
-
-Before merging, dispatch the implementation branch with the GitHub CLI. The
-existing `Agent API` workflow is already present on the default branch, and
-`--ref` selects the version containing the new inputs:
+Before merging, dispatch the implementation branch:
 
 ```bash
 gh workflow run agent-api.yml --ref feat/static-search-probe \
   -f static_probe=true -f free_plan_confirmed=true
 ```
 
-Once these inputs are visible in Actions → **Agent API** → Run workflow, the
-same run can be started there by selecting the branch and enabling both inputs.
+The workflow deploys `key-papers-static-probe-RUN_ID-ATTEMPT`, checks one
+request's telemetry join, then measures all variants only if that check passes.
+It retries delayed telemetry without resending the measurement matrix, deletes
+only that run's Worker, and preserves reports/manifests for seven days. Cleanup
+runs on failure too; a hard runner termination can still prevent cleanup, so
+check the cleanup step. A residual probe consumes the Free account's shared
+quota while used. Probe-only paths do not trigger production publication on
+push; shared runtime and dependency-file changes still do.
 
-The workflow deploys **`key-papers-static-probe`** and exercises six operations
-in two cache conditions. It never deploys or promotes `key-papers-api` in probe
-mode. It stores a small report and fixture manifest as a seven-day artifact;
-the 79 MB generated fixture is not uploaded as a GitHub Actions artifact.
+For a manual run, export `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` for
+the test account. Use a unique test Worker name and pass that same name to the
+runner's `--script-name`. Delete it with `wrangler delete NAME --config
+wrangler.probe.toml --force` after collection.
 
-For a manual run, export the same credentials locally, then:
-
-```bash
-cd worker
-npx wrangler deploy --config wrangler.probe.toml
-cd ..
-python src/run_static_search_probe.py https://key-papers-static-probe.ACCOUNT.workers.dev \
-  --samples 50 --output probe-report.json
-```
-
-If logs arrive late, download/retain the report and retry collection within
-Cloudflare's log retention window, without sending another measurement batch:
+Retry logs within their retention window using the saved report:
 
 ```bash
 python src/run_static_search_probe.py \
-  --collect-only probe-report.json --output probe-report.json
+  --collect-only probe-report.json --output probe-report.json --wait-seconds 60
 ```
 
-Exit status 1 means failed requests or a failed CPU gate. Online status 2 means
-insufficient evidence. Online status 0 means the synthetic CPU matrix passed,
-**not** that the full migration is ready.
+Reports are checkpointed atomically before and after requests. An interrupted
+response is retained with its marker and run ID; `--collect-only` can recover
+its logs but cannot replace missing response validation. Telemetry HTTP 429/5xx
+and connection errors are retried within a bounded deadline. Authentication
+errors stop collection. The second CI collection also runs after measurement
+failure.
 
-## Evidence and stopping conditions
+## Telemetry and CPU interpretation
 
-Each request has a unique correlation URL. CPU values must come from
-`$workers.cpuTimeMs` in platform invocation events and match that exact URL.
-Client response time and a custom JavaScript timer cannot substitute for CPU.
-The probe enables Workers Logs at full sampling. Missing telemetry, malformed
-responses, wrong corpus versions, and HTTP/MCP errors cannot pass the gate.
+Each request sends an opaque marker in a header. The Worker echoes it and logs
+it as structured data. The collector joins that log's **platform requestId** to
+its invocation event. Only invocation `$workers.cpuTimeMs` and outcome fields
+count; custom CPU timers never do. The query is scoped to the isolated Worker
+and measurement time range, without a run-id text filter that would hide
+invocations. URLs may be redacted without breaking this join. Conflicting IDs,
+missing CPU/outcome evidence, malformed responses, and mismatched versions
+cannot pass. The one-request online pilot checks the actual log shape before
+spending the full measurement quota.
 
-The CPU matrix covers REST search, MCP search, MCP fetch, a 32,000-code-point
-content read, table of contents, and bounded find, each with 50 samples under
-two application-cache conditions. Every tenth search uses a query close to the
-512-token ceiling, within the 2,000-code-point input limit. Every case needs complete platform telemetry,
-successful outcomes, and p99 CPU **below 8 ms**. This leaves headroom below the
-Free plan's 10 ms per-invocation limit. Failure blocks the migration.
+A case passes the **observed-sample gate** only with at least 50 eligible,
+successful requests, complete telemetry, outcome `ok`, and every observed CPU
+value strictly below 8 ms. Empirical percentiles are descriptive. Fifty requests
+with zero exceedances imply a one-sided 95% upper exceedance bound of about
+5.82%, assuming independent representative draws; they do not establish p99.
+For a 1% bound under those assumptions, zero exceedances in at least 299 draws
+are needed. Repeated queries on one isolate do not establish those assumptions.
 
-`cold=1` clears application caches. It does **not** restart the V8 isolate or
-undo JIT compilation. `x-probe-boot-id` identifies an isolate's module instance;
-`x-probe-cache` reports application-cache state. True isolate cold starts need
-separate observations after fresh deployments/placement, with platform CPU
-correlation. No claim of cold-start success follows from `cold=1`.
+Warm requests arriving with a cold application cache are excluded from that
+case, retained with boot ID/first-request flag, and shown as exclusions. A
+transport interruption is also retained, not treated as a valid CPU sample.
+Too few eligible requests leave the case unverified. CPU failures in excluded
+requests must still be reviewed for cold-start readiness. `cold=1` clears
+application caches, **not** JIT state or the V8 isolate. First-request headers
+identify module lifetime only; true cold-start, memory and runtime readiness
+remain separate, unverified gates.
 
-The runner deliberately leaves `runtime_gate`, `memory_gate`, and
-`isolate_cold_gate` unverified. Before replacing production storage:
+The report has per-variant gates. One passing complete variant can pass the
+synthetic CPU experiment even if a baseline fails; it cannot approve migration.
+A missing case prevents an overall pass. Exit 1 means functional failure or all
+variants failed the sample gate; exit 2 means insufficient online evidence;
+exit 0 means local functional success or at least one verified sample-gate
+candidate. None means that the real semantic service is ready.
 
-1. Measure actual deployed cold starts, the query-embedding adapter, and memory.
-   Target under 96 MiB. Cloudflare's sampled isolate memory percentiles are
-   useful evidence, but not a per-request peak bound. Their GraphQL API requires
-   Account Analytics Read if used.
-2. Build real embeddings with a resumable, budgeted bootstrap; persist checkpoints
-   durably rather than relying on an evictable CI cache. Fit codebooks without
-   using held-out queries. Freeze 60–100 evaluation queries first.
-3. Compare against exact search over the original BGE vectors, at passage and
-   paper level, plus human relevance checks. Proposed acceptance: at least 95%
-   reference passage Recall@50 and no more than five percentage points loss in
-   paper Hit@8. Synthetic rankings cannot answer this question.
-4. Preserve versioned responses, immutable deployment assets, rollback, static
-   agent discovery, and independent Pages access. Add account-wide query-budget
-   enforcement before claiming a fixed free daily query allowance.
+## Quality and migration gates
 
-If CPU or retrieval quality fails, stop this design and evaluate the planned
-centroid-routing fallback. Do not silently reduce the corpus, truncate candidate
-sets, claim approximate scoring is exact, or enable a paid plan.
+Evaluate the entire corpus with real, canonical FP32 embeddings and a frozen
+held-out query set before promoting a candidate. The external review's subset
+results justify keeping plain PQ in the candidate set; they are not a
+full-corpus quality certificate. CPU and quality evaluations may run in either
+order when the required data exists.
+
+Define the metrics explicitly:
+
+1. **Reference top-8 containment in top-50** is the mean of
+   `|exact_FP32_top8 ∩ candidate_top50| / 8`, measured at the passage level before
+   paper deduplication. The proposed threshold is 0.95. It is not gold-passage
+   recall, and is distinct from top-8 overlap. Also report overlap@8, candidate
+   inclusion before reranking, and int8-only quantization error separately.
+2. **Paper Hit@8** and **paper-plus-relevant-passage Hit@8** measure the actual
+   output after the candidate limit, deduplication, and passage selection. A
+   correct paper with an unrelated excerpt must not count as a passage success.
+   Evaluate REST k=8 and the actual MCP result shape separately.
+3. Compare paired per-query outcomes with FP32. Predeclare the query distribution,
+   independent cluster (paper/answer/paraphrase family), weights, and one-sided
+   95% interval method. Require the upper bound on mean utility loss to be at
+   most five percentage points. A 60–100-question set is useful for manual
+   diagnosis; do not assume it has adequate power. Use at least 2,000 held-out
+   representative queries for fidelity, and size labeled evaluation from the
+   intended uncertainty and observed discordance, without repeatedly peeking
+   at the final holdout. Zero observed discordance gives a degenerate ordinary
+   bootstrap interval; an upper bound of zero is not evidence of zero risk.
+
+Before replacing production storage, additionally verify query/passages against
+Workers AI (model revision, tokenizer, pooling, normalization and rankings),
+actual cold-start CPU, memory, embedding-adapter overhead, and complete external
+agent tasks. Use a per-paper text hash alongside index/graph version identity.
+Retain the old store until rollback is demonstrated. Optimize a failing
+candidate; do not silently shrink the corpus or promote centroid routing.
+A paid upgrade remains a separate user decision.
 
 ## Primary references
 
 - [Workers limits](https://developers.cloudflare.com/workers/platform/limits/)
-- [Static Assets configuration](https://developers.cloudflare.com/workers/static-assets/binding/)
-- [Static Assets billing](https://developers.cloudflare.com/workers/static-assets/billing-and-limitations/)
+- [Static Assets](https://developers.cloudflare.com/workers/static-assets/binding/)
 - [Workers Logs](https://developers.cloudflare.com/workers/observability/logs/workers-logs/)
-- [Workers telemetry query API](https://developers.cloudflare.com/api/resources/workers/subresources/observability/subresources/telemetry/methods/query/)
-- [Workers memory metrics](https://developers.cloudflare.com/changelog/post/2026-06-30-memory-usage-metrics/)
+- [Telemetry query API](https://developers.cloudflare.com/api/resources/workers/subresources/observability/subresources/telemetry/methods/query/)
+- [WABT JavaScript API](https://github.com/AssemblyScript/wabt.js)
+
+## Bounded find contract
+
+`find` scans at most 16,000 code points plus overlap per call. An empty `matches`
+array can therefore have a non-null `next_offset`; continue until null. This
+bounded behavior is specific to the prototype and must be documented before any
+production migration. Match start/end offsets are Unicode code points. Snippets
+are capped at 480 code points and may be clipped at the scanned window; their
+context length differs from the current full-document production scan.

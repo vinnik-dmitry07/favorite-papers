@@ -15,6 +15,7 @@ on:
       - src/test_agent_pages.py
       - src/build_static_search_probe.py
       - src/run_static_search_probe.py
+      - src/summarize_static_search_probe.py
       - src/test_static_search_probe.py
       - src/test_static_search_probe_run.py
       - src/common.py
@@ -24,7 +25,22 @@ on:
       - .github/workflows/agent-api.yml
   push:
     branches: [main]
-    paths: *agent_paths
+    paths:
+      - assets/graph.json
+      - filter/fulltext/**
+      - src/build_agent_index.py
+      - src/publish_agent_index.py
+      - src/smoke_agent_api.py
+      - src/common.py
+      - worker/src/**
+      - '!worker/src/static-search*'
+      - '!worker/src/*.test.ts'
+      - '!worker/src/wasm.d.ts'
+      - worker/embed.json
+      - worker/package.json
+      - worker/package-lock.json
+      - worker/wrangler.toml
+      - worker/tokenizer/**
   workflow_dispatch:
     inputs:
       static_probe:
@@ -67,6 +83,7 @@ jobs:
         working-directory: worker
         run: |
           npm ci
+          npm run build:probe
           npm run typecheck
           npm test
       - name: Build the full synthetic fixture
@@ -79,12 +96,14 @@ jobs:
     needs: offline
     if: github.event_name == 'workflow_dispatch' && inputs.static_probe
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
+    environment: static-search-probe
     env:
-      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.PROBE_CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.PROBE_CLOUDFLARE_ACCOUNT_ID }}
       FREE_PLAN_CONFIRMED: ${{ inputs.free_plan_confirmed }}
       WRANGLER_SEND_METRICS: 'false'
+      PROBE_NAME: key-papers-static-probe-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - name: Check the selected account and credentials
         run: |
@@ -93,7 +112,7 @@ jobs:
             exit 1
           fi
           if [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_API_TOKEN" ]; then
-            echo '::error::Set CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN repository secrets. See worker/STATIC_SEARCH_PROBE.md.'
+            echo '::error::Set PROBE_CLOUDFLARE_ACCOUNT_ID and PROBE_CLOUDFLARE_API_TOKEN in the static-search-probe environment. See worker/STATIC_SEARCH_PROBE.md.'
             exit 1
           fi
       - uses: actions/checkout@v4
@@ -117,12 +136,25 @@ jobs:
         working-directory: worker
         run: |
           set -o pipefail
-          npx wrangler deploy --config wrangler.probe.toml | tee probe-deploy.txt
-          python -c "import pathlib, sys; sys.path.insert(0, '../src'); from write_discovery_links import worker_origin; origin=worker_origin(pathlib.Path('probe-deploy.txt').read_text(encoding='utf-8'), 'key-papers-static-probe'); sys.exit('deploy did not print the probe origin') if not origin else print('origin=' + origin)" >> "$GITHUB_OUTPUT"
+          npx wrangler deploy --config wrangler.probe.toml --name "$PROBE_NAME" | tee probe-deploy.txt
+          python -c "import os, pathlib, sys; sys.path.insert(0, '../src'); from write_discovery_links import worker_origin; origin=worker_origin(pathlib.Path('probe-deploy.txt').read_text(encoding='utf-8'), os.environ['PROBE_NAME']); sys.exit('deploy did not print the probe origin') if not origin else print('origin=' + origin)" >> "$GITHUB_OUTPUT"
       - name: Measure REST and MCP with platform CPU telemetry
+        id: measure
+        continue-on-error: true
         env:
           PROBE_ORIGIN: ${{ steps.deploy.outputs.origin }}
-        run: python src/run_static_search_probe.py "$PROBE_ORIGIN" --samples 50 --output probe-report.json
+        run: python src/run_static_search_probe.py "$PROBE_ORIGIN" --samples 50 --variants all --script-name "$PROBE_NAME" --output probe-report.json
+      - name: Retry delayed telemetry without resending measurements
+        if: always() && steps.measure.outcome != 'skipped'
+        continue-on-error: true
+        run: |
+          if [ -f probe-report.json ]; then
+            python src/run_static_search_probe.py --collect-only probe-report.json --output probe-report.json --wait-seconds 60
+          fi
+      - name: Remove only this run's isolated Worker
+        if: always() && (steps.deploy.outcome == 'success' || steps.deploy.outcome == 'failure')
+        working-directory: worker
+        run: npx wrangler delete "$PROBE_NAME" --config wrangler.probe.toml --force
       - name: Preserve measurements even when the gate fails
         if: always()
         uses: actions/upload-artifact@v4
@@ -135,6 +167,16 @@ jobs:
             worker/probe-deploy.txt
           if-no-files-found: ignore
           retention-days: 7
+      - name: Report the final measurement gate
+        if: always() && steps.measure.outcome != 'skipped'
+        run: |
+          python - <<'PYTHON'
+          import json
+          from pathlib import Path
+          report = json.loads(Path('probe-report.json').read_text())
+          print(json.dumps(report.get('variant_gates', {}), indent=2))
+          raise SystemExit(0 if report.get('cpu_gate') == 'passed' else 1)
+          PYTHON
 
   publish:
     needs: offline
