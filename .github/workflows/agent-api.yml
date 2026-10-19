@@ -13,6 +13,10 @@ on:
       - src/test_publish_agent_index.py
       - src/build_agent_pages.py
       - src/test_agent_pages.py
+      - src/build_static_search_probe.py
+      - src/run_static_search_probe.py
+      - src/test_static_search_probe.py
+      - src/test_static_search_probe_run.py
       - src/common.py
       - src/build_fulltext_search.py
       - requirements-agent.txt
@@ -22,6 +26,15 @@ on:
     branches: [main]
     paths: *agent_paths
   workflow_dispatch:
+    inputs:
+      static_probe:
+        description: 'Deploy only the isolated synthetic static-search probe'
+        type: boolean
+        default: false
+      free_plan_confirmed:
+        description: 'I checked that the target account uses Workers Free'
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -43,7 +56,7 @@ jobs:
       - name: Offline tests
         run: |
           python -m pip install -r requirements-agent.txt
-          python -m pytest src/test_agent_index.py src/test_publish_agent_index.py src/test_agent_pages.py
+          python -m pytest src/test_agent_index.py src/test_publish_agent_index.py src/test_agent_pages.py src/test_static_search_probe.py src/test_static_search_probe_run.py
       - name: Node
         uses: actions/setup-node@v4
         with:
@@ -56,10 +69,76 @@ jobs:
           npm ci
           npm run typecheck
           npm test
+      - name: Build the full synthetic fixture
+        run: python src/build_static_search_probe.py
+      - name: Validate the isolated probe bundle without deploying
+        working-directory: worker
+        run: npx wrangler deploy --config wrangler.probe.toml --dry-run
+
+  static_probe:
+    needs: offline
+    if: github.event_name == 'workflow_dispatch' && inputs.static_probe
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      FREE_PLAN_CONFIRMED: ${{ inputs.free_plan_confirmed }}
+      WRANGLER_SEND_METRICS: 'false'
+    steps:
+      - name: Check the selected account and credentials
+        run: |
+          if [ "$FREE_PLAN_CONFIRMED" != 'true' ]; then
+            echo '::error::This experiment requires a Workers Free account. Check its plan in Cloudflare, then select free_plan_confirmed. The workflow never changes the plan.'
+            exit 1
+          fi
+          if [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo '::error::Set CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN repository secrets. See worker/STATIC_SEARCH_PROBE.md.'
+            exit 1
+          fi
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: worker/package-lock.json
+      - name: Build the complete synthetic fixture
+        run: python src/build_static_search_probe.py
+      - name: Install pinned worker dependencies
+        working-directory: worker
+        run: npm ci
+      - name: Deploy the isolated probe
+        id: deploy
+        working-directory: worker
+        run: |
+          set -o pipefail
+          npx wrangler deploy --config wrangler.probe.toml | tee probe-deploy.txt
+          python -c "import pathlib, sys; sys.path.insert(0, '../src'); from write_discovery_links import worker_origin; origin=worker_origin(pathlib.Path('probe-deploy.txt').read_text(encoding='utf-8'), 'key-papers-static-probe'); sys.exit('deploy did not print the probe origin') if not origin else print('origin=' + origin)" >> "$GITHUB_OUTPUT"
+      - name: Measure REST and MCP with platform CPU telemetry
+        env:
+          PROBE_ORIGIN: ${{ steps.deploy.outputs.origin }}
+        run: python src/run_static_search_probe.py "$PROBE_ORIGIN" --samples 50 --output probe-report.json
+      - name: Preserve measurements even when the gate fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: static-search-probe-${{ github.run_id }}
+          path: |
+            probe-report.json
+            agent_probe/probe/measurements.json
+            agent_probe/probe/index.json
+            worker/probe-deploy.txt
+          if-no-files-found: ignore
+          retention-days: 7
 
   publish:
     needs: offline
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && !inputs.static_probe
     runs-on: ubuntu-latest
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
