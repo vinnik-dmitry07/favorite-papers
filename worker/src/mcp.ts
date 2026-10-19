@@ -1,8 +1,8 @@
 import { createMcpHandler } from 'agents/mcp/server'
 import { McpServer } from '@modelcontextprotocol/server'
-import { z } from 'zod'
 
-import { DomainError, errorBody, parseBoundedInt, parseDirection, parseOffset } from './schemas'
+import { DomainError, errorBody } from './schemas'
+import { inputs, outputs, descriptions } from './contracts'
 import { embed } from './tokenize'
 import { hostMatches, json } from './http'
 import type { Service } from './service'
@@ -12,7 +12,8 @@ const readOnly = { readOnlyHint: true }
 async function run(work: () => Promise<unknown>) {
   try {
     const body = await work()
-    return { content: [{ type: 'text' as const, text: JSON.stringify(body) }] }
+    return { structuredContent: body as Record<string, unknown>,
+      content: [{ type: 'text' as const, text: JSON.stringify(body) }] }
   } catch (error) {
     if (error instanceof DomainError) {
       return {
@@ -20,89 +21,52 @@ async function run(work: () => Promise<unknown>) {
         content: [{ type: 'text' as const, text: JSON.stringify(errorBody(error)) }],
       }
     }
-    throw error
+    return { isError: true as const, content: [{ type: 'text' as const,
+      text: JSON.stringify(errorBody(new DomainError('corpus_unavailable', 503, 'request failed'))) }] }
   }
 }
 
 function registerTools(server: McpServer, service: Service, ip: string) {
-  server.registerTool(
-    'search',
-    {
-      description: 'Search paper passages. Score is similarity, not a probability.',
-      inputSchema: z.object({
-        q: z.string(),
-        k: z.number().optional(),
-      }),
-      annotations: readOnly,
-    },
-    async ({ q, k }) => run(() => service.search({
-      q,
-      k: parseBoundedInt(k, embed.limits.search_k_default, 1, embed.limits.search_k_max, 'k'),
-      ip,
-    })),
-  )
-  server.registerTool(
-    'get_paper',
-    {
-      description: 'Paper card for a catalog id.',
-      inputSchema: z.object({ id: z.string() }),
-      annotations: readOnly,
-    },
-    async ({ id }) => run(() => service.paper(id)),
-  )
-  server.registerTool(
-    'citations',
-    {
-      description: 'Paginated citation neighbors. dir is out, in, or both.',
-      inputSchema: z.object({
-        id: z.string(),
-        dir: z.enum(['out', 'in', 'both']).optional(),
-        limit: z.number().optional(),
-        cursor: z.string().optional(),
-      }),
-      annotations: readOnly,
-    },
-    async ({ id, dir, limit, cursor }) => run(() => service.citations({
-      id,
-      dir: parseDirection(dir),
-      limit: parseBoundedInt(limit, embed.limits.citation_default, 1, embed.limits.citation_max, 'limit'),
-      cursor: cursor ?? null,
-    })),
-  )
-  server.registerTool(
-    'read_content',
-    {
-      description: 'Cleaned paper text. offset is a Unicode code-point index.',
-      inputSchema: z.object({
-        id: z.string(),
-        offset: z.number().optional(),
-        version: z.string().optional(),
-      }),
-      annotations: readOnly,
-    },
-    async ({ id, offset, version }) => run(() => service.content({
-      id,
-      offset: parseOffset(offset),
-      version: version ?? null,
-    })),
-  )
-  server.registerTool(
-    'traverse',
-    {
-      description: 'Bounded BFS over citation neighbors. Returns a discovery tree.',
-      inputSchema: z.object({
-        id: z.string(),
-        dir: z.enum(['out', 'in', 'both']).optional(),
-        hops: z.number().optional(),
-      }),
-      annotations: readOnly,
-    },
-    async ({ id, dir, hops }) => run(() => service.traverse({
-      id,
-      dir: parseDirection(dir),
-      hops: parseBoundedInt(hops, embed.limits.traverse_hops_default, 1, embed.limits.traverse_hops_max, 'hops'),
-    })),
-  )
+  server.registerTool('search', {
+    description: descriptions.search, inputSchema: inputs.search,
+    outputSchema: outputs.search, annotations: readOnly,
+  }, async ({ query }) => run(() => service.researchSearch(query, ip)))
+  server.registerTool('fetch', {
+    description: descriptions.fetch, inputSchema: inputs.fetch,
+    outputSchema: outputs.fetch, annotations: readOnly,
+  }, async ({ id }) => run(() => service.fetchDocument(id)))
+  server.registerTool('get_paper', {
+    description: descriptions.paper, inputSchema: inputs.paper,
+    outputSchema: outputs.paper, annotations: readOnly,
+  }, async ({ id }) => run(() => service.paper(id)))
+  server.registerTool('list_papers', {
+    description: descriptions.catalog, inputSchema: inputs.catalog,
+    outputSchema: outputs.catalog, annotations: readOnly,
+  }, async (args) => run(() => service.catalog(args)))
+  server.registerTool('citations', {
+    description: descriptions.citations, inputSchema: inputs.citations,
+    outputSchema: outputs.citations, annotations: readOnly,
+  }, async (args) => run(() => service.citations({ ...args, cursor: args.cursor ?? null })))
+  server.registerTool('traverse', {
+    description: descriptions.traverse, inputSchema: inputs.traverse,
+    outputSchema: outputs.traverse, annotations: readOnly,
+  }, async (args) => run(() => service.traverse(args)))
+  server.registerTool('read_content', {
+    description: descriptions.content, inputSchema: inputs.content,
+    outputSchema: outputs.content, annotations: readOnly,
+  }, async (args) => run(() => service.content({ ...args, version: args.version ?? null })))
+  server.registerTool('contents', {
+    description: descriptions.contents, inputSchema: inputs.contents,
+    outputSchema: outputs.contents, annotations: readOnly,
+  }, async ({ id, version }) => run(() => service.contents(id, version)))
+  server.registerTool('find_in_paper', {
+    description: descriptions.find, inputSchema: inputs.find,
+    outputSchema: outputs.find, annotations: readOnly,
+  }, async (args) => run(() => service.find(args)))
+  server.registerTool('search_passages', {
+    description: descriptions.passages, inputSchema: inputs.passages,
+    outputSchema: outputs.passages, annotations: readOnly,
+  }, async (args) => run(() => service.search({ ...args, ip })))
 }
 
 function rejectedOrigin(): Response {

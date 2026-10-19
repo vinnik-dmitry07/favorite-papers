@@ -8,6 +8,7 @@ import { createApp } from './index'
 import { signatures, sha256Hex } from './signatures'
 import { createService, type Service } from './service'
 import { embed, pointLength, WordPieceTokenizer } from './tokenize'
+import { outputs } from './contracts'
 
 const vocab = readFileSync(
   resolve(dirname(fileURLToPath(import.meta.url)), '../tokenizer/vocab.txt'),
@@ -168,6 +169,75 @@ async function bodyOf(response: Response) {
 }
 
 describe('reads', () => {
+  it('resolves titles, IDs and source URLs, including records without text', async () => {
+    const { service, memory } = await build()
+    for (const q of ['Web note', 'url:web', 'https://example.test/url:web']) {
+      const page = outputs.catalog.parse(await service.catalog({ q }))
+      expect(page.papers[0]).toMatchObject({ id: 'url:web', text_available: false, match: 'exact' })
+    }
+    const ids: string[] = []
+    let offset: number | null = 0
+    while (offset !== null) {
+      const page = outputs.catalog.parse(await service.catalog({ offset, limit: 24, version: 'rel' }))
+      ids.push(...page.papers.map((paper) => paper.id))
+      offset = page.next_offset
+    }
+    expect(ids).toHaveLength(36)
+    expect(new Set(ids).size).toBe(36)
+    expect(memory.embedCalls).toBe(0)
+    await expect(service.catalog({ version: 'stale' })).rejects.toMatchObject({ code: 'version_conflict' })
+  })
+
+  it('keeps incoming discovery separate from directed citation edges and provides continuation', async () => {
+    const { service } = await build()
+    const incoming = outputs.traverse.parse(await service.traverse({ id: 'arxiv:a', dir: 'in', hops: 1 }))
+    expect(incoming.tree_edges[0]).toEqual({ parent: 'arxiv:a', child: 'arxiv:b',
+      citations: [{ source: 'arxiv:b', target: 'arxiv:a', evidence: 'title' }] })
+    expect(incoming.edges).toHaveLength(2)
+    const capped = outputs.traverse.parse(await service.traverse({ id: 'arxiv:hub', dir: 'out', hops: 1 }))
+    expect(capped.continuation?.frontier).toContain('arxiv:hub')
+    const complete = outputs.traverse.parse(await service.traverse({ id: 'arxiv:hub', dir: 'out', hops: 1, max_nodes: 100 }))
+    expect(complete.nodes).toHaveLength(31)
+    expect(complete.truncated).toBe(false)
+  })
+
+  it('locates headings and literal text at Unicode offsets and accepts larger read pages', async () => {
+    const { service, memory } = await build()
+    const text = '😀 Intro\n## Method\nGroup [64] $x$\n' + 'x'.repeat(33000)
+    await putPaper(memory, 'arxiv:emoji', text)
+    const toc = outputs.contents.parse(await service.contents('arxiv:emoji'))
+    expect(toc.sections[0]).toEqual({ title: 'Method', level: 2, offset: 8 })
+    const found = outputs.find.parse(await service.find({ id: 'arxiv:emoji', q: '[64] $x$' }))
+    expect(found.matches[0].start).toBe(24)
+    const page = outputs.content.parse(await service.content({ id: 'arxiv:emoji', offset: 8, length: 32000, version: 'rel' }))
+    expect(pointLength(page.text)).toBe(32000)
+    expect(page.text.startsWith('## Method')).toBe(true)
+    const http = app(service)
+    expect((await http.fetch(new Request('http://localhost/v1/content?id=arxiv:emoji&length=32001'))).status).toBe(400)
+  })
+
+  it('fetches every text part without loss and clearly labels metadata-only records', async () => {
+    const { service, memory } = await build()
+    const text = '😀'.repeat(16001) + '\nFinal appendix.'
+    await putPaper(memory, 'arxiv:case', text)
+    const search = outputs.search.parse(await service.researchSearch('Case Study', 'test'))
+    let id: string | null = search.results[0].id
+    let collected = ''
+    while (id) {
+      const part = outputs.fetch.parse(await service.fetchDocument(id))
+      expect(part.metadata.item_type).toBe('text_part')
+      expect(pointLength(part.text)).toBeLessThanOrEqual(16000)
+      collected += part.text
+      id = part.metadata.next_id as string | null
+    }
+    expect(collected).toBe(text)
+    const web = outputs.search.parse(await service.researchSearch('Web note', 'test'))
+    const record = outputs.fetch.parse(await service.fetchDocument(web.results[0].id))
+    expect(record.metadata).toMatchObject({ item_type: 'catalog', text_available: false })
+    expect(memory.embedCalls).toBe(0)
+    await expect(service.fetchDocument('arxiv:case')).rejects.toMatchObject({ code: 'invalid_argument' })
+  })
+
   it('pages every citation neighbor once', async () => {
     const { service, children } = await build()
     const seen: string[] = []
@@ -216,7 +286,8 @@ describe('reads', () => {
       truncated: boolean
     }
     expect(cycle.nodes.map((node) => node.id)).toEqual(['arxiv:a', 'arxiv:b'])
-    expect(cycle.tree_edges).toEqual([{ source: 'arxiv:a', target: 'arxiv:b', evidence: 'id' }])
+    expect(cycle.tree_edges).toEqual([{ parent: 'arxiv:a', child: 'arxiv:b',
+      citations: [{ source: 'arxiv:a', target: 'arxiv:b', evidence: 'id' }] }])
     expect(cycle.truncated).toBe(false)
     const capped = await service.traverse({ id: 'arxiv:hub', dir: 'out', hops: 1 }) as {
       nodes: { id: string }[]
@@ -292,6 +363,14 @@ describe('reads', () => {
 })
 
 describe('search and time bounds', () => {
+  it('returns distinct paper hits and separately exposes matches without text', async () => {
+    const { service, memory } = await build()
+    memory.vectors = [{ id: 'vec1', score: 0.9 }, { id: 'vec1', score: 0.8 }]
+    const result = outputs.passages.parse(await service.search({ q: 'Web note', k: 5, ip: 'test' }))
+    expect(result.hits).toHaveLength(1)
+    expect(result.metadata_hits[0]).toMatchObject({ id: 'url:web', text_available: false })
+  })
+
   it('rejects a query before calling the embedding model', async () => {
     const { service, memory } = await build()
     await expect(service.search({ q: '   ', k: 5, ip: '1.1.1.1' }))
@@ -327,7 +406,10 @@ describe('search and time bounds', () => {
       headers: { 'cf-connecting-ip': '9.9.9.9' },
     }))
     expect(first.status).toBe(200)
-    await expect(service.search({ q: 'attention', k: 5, ip: '9.9.9.9' }))
+    // Shared cached queries do not consume another embedding or rate-limit unit.
+    await service.search({ q: 'attention', k: 5, ip: '9.9.9.9' })
+    expect(memory.embedCalls).toBe(1)
+    await expect(service.search({ q: 'different query', k: 5, ip: '9.9.9.9' }))
       .rejects.toMatchObject({ code: 'rate_limited', status: 429 })
     const other = await service.search({ q: 'attention', k: 5, ip: '8.8.8.8' }) as { hits: unknown[] }
     expect(other.hits).toHaveLength(1)
@@ -401,6 +483,10 @@ describe('http surface', () => {
     expect(document.security).toEqual([])
     expect(document.servers[0].url).toBe('http://key-papers-api.example.workers.dev')
     expect(document.paths['/v1/search'].get.operationId).toBe('searchPassages')
+    for (const [path, item] of Object.entries(document.paths)) {
+      const get = item.get as unknown as { responses: Record<string, { content: Record<string, { schema: unknown }> }> }
+      expect(Object.values(get.responses['200'].content)[0].schema, path).toBeDefined()
+    }
     const spoofed = await http.fetch(new Request('http://evil.example/openapi.json'))
     expect(spoofed.status).toBe(400)
     expect(await spoofed.text()).not.toContain('evil.example')
@@ -443,6 +529,38 @@ async function rpc(
 }
 
 describe('mcp', () => {
+  it('provides the search/fetch contract and schemas through the actual MCP transport', async () => {
+    const { service } = await build()
+    const http = app(service)
+    const listed = await rpc(http, { jsonrpc: '2.0', id: 1, method: 'tools/list' })
+    for (const tool of listed.parsed.result.tools) {
+      expect(tool.outputSchema.type).toBe('object')
+      expect(tool.annotations.readOnlyHint).toBe(true)
+    }
+    const search = await rpc(http, { jsonrpc: '2.0', id: 2, method: 'tools/call',
+      params: { name: 'search', arguments: { query: 'Case Study' } } })
+    const result = search.parsed.result
+    expect(result.isError).not.toBe(true)
+    expect(JSON.parse(result.content[0].text)).toEqual(result.structuredContent)
+    const found = outputs.search.parse(result.structuredContent)
+    const fetched = await rpc(http, { jsonrpc: '2.0', id: 3, method: 'tools/call',
+      params: { name: 'fetch', arguments: { id: found.results[0].id } } })
+    expect(fetched.parsed.result.isError).not.toBe(true)
+    expect(outputs.fetch.parse(fetched.parsed.result.structuredContent).text).toBe('Hello Corpus.')
+    expect(fetched.parsed.result.structuredContent.url).toBe(found.results[0].url)
+    for (const [name, args] of [
+      ['get_paper', { id: 'arxiv:case' }], ['list_papers', {}],
+      ['contents', { id: 'arxiv:emoji' }], ['find_in_paper', { id: 'arxiv:case', q: 'Corpus' }],
+      ['traverse', { id: 'arxiv:a', dir: 'both' }],
+      ['search_passages', { q: 'attention' }],
+    ] as const) {
+      const call = await rpc(http, { jsonrpc: '2.0', id: 4, method: 'tools/call',
+        params: { name, arguments: args } })
+      expect(call.parsed.result.isError, JSON.stringify(call.parsed)).not.toBe(true)
+      expect(call.parsed.error).toBeUndefined()
+    }
+  })
+
   it('answers initialize, lists tools, and returns domain errors without an http status', async () => {
     const { service } = await build()
     const http = app(service)

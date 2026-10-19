@@ -1,3 +1,13 @@
+# Consuming the catalog
+
+For research and browsing, start at https://vinnik-dmitry07.github.io/favorite-papers/agents/
+or https://vinnik-dmitry07.github.io/favorite-papers/llms.txt. Paper pages link
+paginated Cites/Cited by lists, bounded text parts, source Markdown, and JSON.
+Do not load the whole graph to answer a single paper query. These links work
+without a clone or JavaScript. Semantic search needs the verified API linked
+from that guide; see worker/README.md for REST/MCP setup. The instructions
+below concern maintaining and adding papers.
+
 # AGENTS.md — adding papers to key-papers
 
 `readme.md` is the source of truth. Everything else is derived from it:

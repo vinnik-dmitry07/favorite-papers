@@ -29,6 +29,7 @@ assets/fulltext_search.js
 
 # Agent API build output (derived; the worker reads R2, not this directory)
 agent_build/
+site/
 worker/node_modules/
 worker/.wrangler/
 worker/dist/

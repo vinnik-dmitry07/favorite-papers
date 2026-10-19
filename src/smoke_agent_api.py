@@ -34,10 +34,33 @@ def _post(url: str, payload: dict) -> tuple[int, str]:
         headers={
             'content-type': 'application/json',
             'accept': 'application/json, text/event-stream',
+            'mcp-protocol-version': '2025-06-18',
         },
         method='POST',
     )
     return _read(request)
+
+
+def _rpc_result(text: str) -> dict:
+    lines = [line[5:].strip() for line in text.splitlines() if line.startswith('data:')]
+    envelope = json.loads(lines[-1] if lines else text)
+    if envelope.get('error'):
+        raise ValueError(f'MCP protocol error: {envelope["error"]}')
+    return envelope['result']
+
+
+def _tool(origin: str, name: str, arguments: dict) -> dict:
+    status, text = _post(f'{origin}/mcp', {
+        'jsonrpc': '2.0', 'id': 2, 'method': 'tools/call',
+        'params': {'name': name, 'arguments': arguments},
+    })
+    result = _rpc_result(text)
+    if status != 200 or result.get('isError'):
+        raise ValueError(f'MCP tool failed: {name}: {result}')
+    structured = result.get('structuredContent')
+    if structured != json.loads(result['content'][0]['text']):
+        raise ValueError(f'MCP content disagrees with structuredContent: {name}')
+    return structured
 
 
 def smoke(origin: str, graph_path: Path) -> dict:
@@ -80,7 +103,9 @@ def smoke(origin: str, graph_path: Path) -> dict:
     status, content_text = _get(content_url)
     checks['content'] = status == 200 and 'Describe the issue below' not in content_text
     status, search_text = _get(f'{origin}/v1/search?q=attention&k=1')
-    checks['search'] = status == 200 and 'hits' in search_text
+    hits = json.loads(search_text).get('hits', [])
+    checks['search'] = (status == 200 and bool(hits)
+                        and all(hit['paper_id'] in nodes and hit['snippet'] for hit in hits))
     status, mcp_text = _post(f'{origin}/mcp', {
         'jsonrpc': '2.0',
         'id': 1,
@@ -92,6 +117,53 @@ def smoke(origin: str, graph_path: Path) -> dict:
         },
     })
     checks['mcp'] = status == 200 and 'key-papers' in mcp_text
+
+    # Exercise the exact user journey that the original external-agent audit failed.
+    key = 'arxiv:2402.03300'
+    status, catalog_text = _get(f'{origin}/v1/catalog?q=DeepSeekMath')
+    checks['title_lookup'] = status == 200 and key in {
+        paper['id'] for paper in json.loads(catalog_text).get('papers', [])
+    }
+    seen = []
+    cursor = None
+    for _ in range(len(nodes) + 1):
+        params = {'id': key, 'dir': 'in', 'limit': 24}
+        if cursor:
+            params['cursor'] = cursor
+        status, page_text = _get(f'{origin}/v1/citations?' + urllib.parse.urlencode(params))
+        if status != 200:
+            break
+        page = json.loads(page_text)
+        seen.extend(item['id'] for item in page['neighbors'])
+        cursor = page['next_cursor']
+        if not cursor:
+            break
+    expected = {edge['source'] for edge in graph['in'][key]}
+    checks['complete_incoming'] = (status == 200 and cursor is None
+                                   and set(seen) == expected and len(seen) == len(expected))
+    status, toc_text = _get(f'{origin}/v1/contents?id={key}')
+    checks['contents'] = status == 200 and bool(json.loads(toc_text).get('sections'))
+    status, found_text = _get(f'{origin}/v1/find?id={key}&q=64')
+    found = json.loads(found_text)
+    checks['find_in_paper'] = status == 200 and bool(found.get('matches'))
+    if found.get('matches'):
+        offset = found['matches'][0]['start']
+        status, passage_text = _get(f'{origin}/v1/content?' + urllib.parse.urlencode({
+            'id': key, 'offset': offset, 'length': 32000, 'version': found['corpus_version'],
+        }))
+        checks['read_at_match'] = status == 200 and json.loads(passage_text)['text'].startswith('64')
+    status, listed_text = _post(f'{origin}/mcp', {
+        'jsonrpc': '2.0', 'id': 2, 'method': 'tools/list',
+    })
+    listed = _rpc_result(listed_text).get('tools', [])
+    names = {tool['name'] for tool in listed}
+    checks['mcp_contract'] = (status == 200 and {'search', 'fetch', 'list_papers'} <= names
+                              and all(tool.get('outputSchema') for tool in listed))
+    results = _tool(origin, 'search', {'query': key})['results']
+    document = _tool(origin, 'fetch', {'id': results[0]['id']}) if results else {}
+    checks['mcp_search_fetch'] = (
+        document.get('id') == results[0]['id'] if results else False
+    ) and bool(document.get('text')) and document.get('metadata', {}).get('paper_id') == key
     return {'ok': all(checks.values()), 'origin': origin, 'checks': checks}
 
 
@@ -103,14 +175,19 @@ def main(argv: list[str] | None = None) -> int:
     graph = DEFAULT_OUT / 'graph.json'
     if not graph.is_file():
         raise SystemExit('agent_build/graph.json is missing; build the release first')
-    report = smoke(origin, graph)
+    SMOKE_PATH.unlink(missing_ok=True)
+    try:
+        report = smoke(origin, graph)
+    except (OSError, ValueError, KeyError, IndexError, TypeError) as exc:
+        print(f'smoke failed: {exc}')
+        return 1
     print(json.dumps(report['checks'], sort_keys=True))
     if not report['ok']:
         print('smoke failed')
         return 1
     SMOKE_PATH.parent.mkdir(parents=True, exist_ok=True)
     SMOKE_PATH.write_text(
-        json.dumps({'ok': True, 'origin': origin}, sort_keys=True) + '\n',
+        json.dumps(report, sort_keys=True) + '\n',
         encoding='utf-8',
     )
     print(f'smoke ok {origin}')
