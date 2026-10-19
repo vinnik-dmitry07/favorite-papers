@@ -11,6 +11,8 @@ on:
       - src/write_discovery_links.py
       - src/test_agent_index.py
       - src/test_publish_agent_index.py
+      - src/build_agent_pages.py
+      - src/test_agent_pages.py
       - src/common.py
       - src/build_fulltext_search.py
       - requirements-agent.txt
@@ -41,7 +43,7 @@ jobs:
       - name: Offline tests
         run: |
           python -m pip install -r requirements-agent.txt
-          python -m pytest src/test_agent_index.py src/test_publish_agent_index.py
+          python -m pytest src/test_agent_index.py src/test_publish_agent_index.py src/test_agent_pages.py
       - name: Node
         uses: actions/setup-node@v4
         with:
@@ -65,6 +67,17 @@ jobs:
       AGENT_DIMENSION_BUDGET: ${{ secrets.AGENT_DIMENSION_BUDGET }}
       AGENT_PUBLISH_ROLE: ci
     steps:
+      - name: Check deployment configuration
+        run: |
+          if [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo '::error::Set repository secrets CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN. See worker/README.md deployment setup. The static agent catalog publishes independently.'
+            echo 'API deployment blocked: Cloudflare credentials are missing. Static catalog publication is independent.' >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          if ! [[ "$AGENT_DIMENSION_BUDGET" =~ ^[1-9][0-9]*$ ]]; then
+            echo '::error::Set AGENT_DIMENSION_BUDGET to the provisioned capacity after reviewing the offline preflight report and Cloudflare plan. See worker/README.md.'
+            exit 1
+          fi
       - name: Checkout the pushed commit
         uses: actions/checkout@v4
         with:
@@ -107,8 +120,13 @@ jobs:
       - name: Live smoke
         id: smoke
         run: python src/smoke_agent_api.py "${{ steps.deploy.outputs.origin }}"
-      - name: Discovery links
-        run: python src/write_discovery_links.py
+      - name: Persist verified API discovery for Pages
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-api-discovery
+          path: agent_build/smoke.json
+          if-no-files-found: error
+          retention-days: 90
       - name: Roll back the pointer
         if: failure() && steps.promote.outcome == 'success' && steps.smoke.outcome == 'failure'
         run: python src/publish_agent_index.py rollback

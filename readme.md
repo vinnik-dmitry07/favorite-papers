@@ -1,5 +1,7 @@
 # Key papers of AI/AGI/ASI
 
+**For AI agents:** start at the [agent guide and paginated catalog](https://vinnik-dmitry07.github.io/favorite-papers/agents/) or [llms.txt](https://vinnik-dmitry07.github.io/favorite-papers/llms.txt). Each paper links its full text, source Markdown, and all incoming/outgoing catalog citations. No JavaScript, login, or clone is needed. The guide links REST/OpenAPI/MCP when a live API deployment has passed its checks; semantic search requires that API. [API setup and limits](worker/README.md).
+
 Score badges: [⚖ final · accepts/models · WATCH|DROP](filter/report.md) — aggregated quality in [-1, +1]. 0 is where reviewer Accept/Reject votes split 50/50. accepts/models are raw reviewer votes, not the aggregated score. WATCH/DROP is appended when the verdict is not KEEP. Older landmark papers can be inflated (pretrain leakage).
 
 ### New: Spurious rewards [analysis](llm_gains.md).

@@ -1,17 +1,17 @@
 # Key papers agent API
 
-Public read API for the citation catalog. REST and stateless MCP expose the same five operations. The GitHub Pages map is a separate publish set and does not serve this API.
+Public read API for the citation catalog. Start with the [static agent guide](https://vinnik-dmitry07.github.io/favorite-papers/agents/) for a catalog, complete paginated citation lists, and readable text. It needs no API or JavaScript. REST and stateless MCP add title lookup, section navigation, literal search and semantic search. The guide advertises the API only after deployment and live checks succeed.
 
 Acceptance criteria:
 
 - **R1.** Catalog ids, edge direction, and evidence are preserved. An edge `[source, target, evidence]` means source cites target. `cites` on a node is the in-degree. `refs` is the out-degree. Evidence is `id`, `title`, or `url` (`title` is the weaker match). API ids are the catalog strings (`arxiv:`, `doi:`, `openreview:`, `acl:`, `url:`). They are case-sensitive and are never shortened to `safe_key()`.
 - **R2.** Readable text keeps case and appendices. Bibliography headings are removed with the same rules as the map builder. Chunks are half-open code-point ranges `[start, end)` whose union is the cleaned text. Each chunk is at most 800 code points and at most 512 tokens including special tokens and the passage template. Offsets are Unicode code points, not UTF-8 bytes and not UTF-16 code units.
-- **R3.** REST and MCP return the same domain payloads, limits, and error codes. MCP signals failure with `isError`. It does not copy HTTP status numbers into the tool result.
+- **R3.** REST and the advanced MCP tools return the same domain payloads, limits, and error codes. MCP `search(query)` and `fetch(id)` are adapters for research clients; detailed passage search is `search_passages(q, k)`. MCP signals failure with `isError`. It does not copy HTTP status numbers into the tool result.
 - **R4.** A stopped or repeated publish does not change the active release. Slot `a` and slot `b` use different vector ids. The active pointer moves only after the inactive slot is ready.
-- **R5.** Pages keeps its current files: transformed `src/index.html`, `src/map.js`, `assets/graph_data.js`, `assets/fulltext_search.js`, D3, and `.nojekyll`. The workers.dev origin is written into the map and readme only after a successful live smoke.
+- **R5.** Pages keeps its current files: transformed `src/index.html`, `src/map.js`, `assets/graph_data.js`, `assets/fulltext_search.js`, D3, and `.nojekyll`. Pages also publishes `agents/` and `llms.txt`. A successful API smoke uploads a discovery artifact; Pages downloads it and checks health before adding its origin to the agent guide. README and map permanently link that guide. Failed API publication does not block static Pages publication.
 - **R6.** Offline tests cover the builder, publisher, and worker. A live publish checks Cloudflare capacity and token rights, then probes a namespace that is not `a` or `b`, then promotes.
 
-The graph is citations inside this catalog, not the open web. Semantic search returns passages. It does not rerank, blend keywords, or collapse hits to one row per paper. Papers with empty cleaned text stay on the graph and return `available: false`.
+The graph is citations inside this catalog, not the open web. Semantic search returns passages. It oversamples up to 40 chunks and returns at most one passage per paper. Separate `metadata_hits` include keyword matches without full text; those are not semantic hits. BGE is an English model; non-English retrieval quality is unmeasured. Papers with empty cleaned text stay on the graph and return `available: false`.
 
 ## Configuration
 
@@ -35,13 +35,16 @@ Vector ids are 64-character SHA-256 hex of the canonical JSON array `[slot, pape
 |---|---|
 | `GET /` | Manual, id grammar, examples |
 | `GET /openapi.json` | OpenAPI 3.1, `security: []`, server is the verified request origin |
+| `GET /v1/catalog?q=&section=&offset=&limit=&version=` | Resolve title, ID, or source URL; empty q lists every catalog record. Limit 1–24; follow next_offset with corpus_version |
 | `GET /v1/paper?id=` | Card. Authors are capped and report `authors_total` / `authors_truncated`. Quality fields are null when absent |
 | `GET /v1/citations?id=&dir=&limit=&cursor=` | `dir` is `out` (default), `in`, or `both`. Limit counts neighbors (default 12, max 24), not edges. `both` keeps every directed edge and its evidence. Pages are stable |
-| `GET /v1/traverse?id=&dir=&hops=` | BFS over the full adjacency, not the first citation page. Default direction `out`. Hops default 1, max 2. At most 24 nodes including the seed, so at most 23 discovery edges. Cycles are visited once. The edge list is a discovery tree. `truncated` describes the cap inside the requested hop depth |
-| `GET /v1/content?id=&offset=&version=` | Up to 6000 code points. Offset 0 is the default. `offset == length` is an empty page with `next_offset: null` |
+| `GET /v1/traverse?id=&dir=&hops=&max_nodes=` | BFS, hops 1–2, max_nodes 2–100 (default 24). `edges` preserves citation directions including cycles. `tree_edges` separates discovery parent/child from citations. On truncation, follow `continuation` using paginated citations |
+| `GET /v1/content?id=&offset=&length=&version=` | Default 6000, configurable up to 32000 code points. Offset 0 is the default. `offset == length` is an empty page with `next_offset: null` |
+| `GET /v1/contents?id=&version=` | Section headings and code-point offsets |
+| `GET /v1/find?id=&q=&offset=&version=` | Literal case-insensitive search in one paper, up to 12 contexts per page; follow next_offset |
 | `GET /v1/search?q=&k=` | Passage hits. `k` default 5, max 8. Score is similarity, not a probability. Snippets are at most 480 code points of the original cleaned passage |
 | `GET /health` | Reader schema, signatures, active release, passage count verified at publish, optional global index count recorded at publish. It does not embed a query |
-| `POST /mcp` | Tools `search`, `get_paper`, `citations`, `read_content`, `traverse` |
+| `POST /mcp` | Tools `search`, `fetch`, `list_papers`, `get_paper`, `citations`, `read_content`, `contents`, `find_in_paper`, `traverse`, `search_passages` |
 
 Unknown catalog id: 404 `unknown_id`. Known id without usable text: 200 `available: false` and a `reason` (`no_markdown` or `empty_cleaned`). A file on disk is not enough.
 
@@ -73,7 +76,7 @@ Codes: `unknown_id`, `invalid_cursor`, `invalid_offset`, `invalid_query`, `query
 
 The active pointer is cached for at most 30 seconds. One request, including an MCP tool call, dies at 20 seconds and does not return a late payload. A slot that just stopped being active cannot be mutated again for 120 seconds. After the pointer TTL, an R2 error is a failure. The worker does not keep serving an expired pointer. Adjacency is cached per release. Paper text is cached with a memory cap.
 
-The search rate limit is shared by REST and MCP and keyed by client IP. A shared egress IP shares one budget. Cloudflare's limiter is local and approximate. It is a burst brake, not a global spend cap.
+The search rate limit is shared by REST and MCP and keyed by client IP. A shared egress IP shares one budget of 30 uncached semantic queries/minute. Cache hits, title lookup, graph traversal and reading do not consume it. A 429 includes Retry-After: 60; clients should retry after that interval. There is no reliable individual-user identity for an anonymous shared proxy. Cloudflare's limiter is local and approximate. It is a burst brake, not a global spend cap.
 
 ## Publish
 
@@ -89,13 +92,75 @@ Local commands may build, dry-run, and run the isolated probe. Production promot
 
 ## Onboarding
 
-Import `GET /openapi.json` into a Custom GPT Action with authentication None. Add `POST /mcp` as a custom MCP connector in a client that supports remote MCP, including ChatGPT Pro read/fetch connectors where that account allows them. A public URL does not register the tool by itself. Confirm the connector in the account that will call it.
+Import `GET /openapi.json` into a Custom GPT Action with authentication None. Add `POST /mcp` as a custom MCP connector in a client that supports remote MCP, including ChatGPT where custom MCP connections are enabled for the account. A public URL does not register the tool by itself. Confirm the connector in the account that will call it.
 
 ## Offline checks
 
 ```bash
-python -m pytest src/test_agent_index.py src/test_publish_agent_index.py
+python -m pytest src/test_agent_index.py src/test_publish_agent_index.py src/test_agent_pages.py
+python src/build_agent_pages.py --out site
 npm --prefix worker ci
 npm --prefix worker run typecheck
 npm --prefix worker test
 ```
+
+
+## Research-client contract
+
+`search` accepts exactly `{"query":"DeepSeekMath"}` and returns
+`{"results":[{"id":"doc:...","title":"...","url":"..."}]}`.
+`fetch` accepts an unchanged result id and returns `{id,title,text,url,metadata}`.
+Both return the same JSON in `structuredContent` and one text content block.
+An item is explicitly a catalog record or a complete text part (at most 16000
+Unicode code points), not an implicitly truncated paper. Follow
+`metadata.next_id` to continue; catalog records expose `first_text_id` when
+text is available. A release change requires a fresh search.
+
+This follows the [OpenAI research MCP contract](https://developers.openai.com/api/docs/mcp).
+Other MCP clients can use the additional tools directly. Installing a connector
+in ChatGPT still requires account setup; a link alone cannot install tools.
+
+## Deployment setup
+
+The static catalog needs only GitHub Pages with Actions as its source. The
+Cloudflare publisher requires an existing account, resources and credentials.
+Missing credentials fail early with a diagnostic; the workflow never claims a
+successful API deployment or advertises an invented URL.
+
+1. Enable R2, Vectorize and Workers AI in the intended Cloudflare account.
+   Create the resources named in `embed.json` and `wrangler.toml`, once:
+
+   ```bash
+   cd worker
+   npm ci
+   npx wrangler r2 bucket create key-papers-corpus
+   npx wrangler vectorize create paper-passages --dimensions=768 --metric=cosine
+   ```
+
+2. Create an account-scoped API token suitable for Workers deployment and
+   read/write access to R2, Vectorize and Workers AI. Use Cloudflare's
+   [CI configuration guide](https://developers.cloudflare.com/workers/ci-cd/external-cicd/github-actions/)
+   and the permission descriptions in its token editor. Store it in repository
+   **Settings → Secrets and variables → Actions** as `CLOUDFLARE_API_TOKEN`;
+   store the account id as `CLOUDFLARE_ACCOUNT_ID`. Do not put either in a PR.
+
+3. Run `python src/publish_agent_index.py preflight` for the offline capacity
+   report. Set `AGENT_DIMENSION_BUDGET` to the actual dimension capacity you
+   have provisioned and approved. The current 415-record snapshot needs
+   62,329,344 dimensions for both slots and the probe; the configured free
+   allowance is 5,000,000. Raising this variable does not buy capacity. Check
+   current Cloudflare plan limits and costs before enabling publication.
+
+4. Run **Agent API → Run workflow** on main. The workflow checks permissions
+   and capacity, performs an isolated probe, stages data, deploys the reader,
+   promotes the release, and runs live REST/MCP checks. A failed post-promotion
+   smoke rolls back the active data pointer. A successful smoke persists a
+   discovery artifact and triggers Pages to publish the verified endpoint.
+
+5. Open the static agent guide, follow its API link, and connect `/mcp` or
+   import `/openapi.json` into a compatible client. Until the workflow succeeds,
+   use static citation navigation and text; semantic search is unavailable.
+
+The A/B publisher is retained to avoid replacing a working corpus with a partial
+upload. It is optional infrastructure for semantic search: the static browsing
+path has no dependency on R2, Vectorize, tokens, or version handshakes.

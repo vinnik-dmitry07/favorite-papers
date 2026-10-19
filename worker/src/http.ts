@@ -63,6 +63,23 @@ export async function handleRest(request: Request, service: Service): Promise<Re
       requestOrigin(request)
       return json(await service.paper(firstParam(url, 'id') ?? ''))
     }
+    if (url.pathname === '/v1/catalog') {
+      requestOrigin(request)
+      return json(await service.catalog({ q: firstParam(url, 'q') ?? '',
+        section: firstParam(url, 'section') ?? undefined,
+        offset: parseOffset(firstParam(url, 'offset')),
+        limit: parseBoundedInt(firstParam(url, 'limit'), 12, 1, 24, 'limit'),
+        version: firstParam(url, 'version') }))
+    }
+    if (url.pathname === '/v1/contents') {
+      requestOrigin(request)
+      return json(await service.contents(firstParam(url, 'id') ?? '', firstParam(url, 'version')))
+    }
+    if (url.pathname === '/v1/find') {
+      requestOrigin(request)
+      return json(await service.find({ id: firstParam(url, 'id') ?? '', q: firstParam(url, 'q') ?? '',
+        offset: parseOffset(firstParam(url, 'offset')), version: firstParam(url, 'version') }))
+    }
     if (url.pathname === '/v1/citations') {
       requestOrigin(request)
       return json(await service.citations({
@@ -90,6 +107,7 @@ export async function handleRest(request: Request, service: Service): Promise<Re
           embed.limits.traverse_hops_max,
           'hops',
         ),
+        max_nodes: parseBoundedInt(firstParam(url, 'max_nodes'), 24, 2, 100, 'max_nodes'),
       }))
     }
     if (url.pathname === '/v1/content') {
@@ -98,6 +116,7 @@ export async function handleRest(request: Request, service: Service): Promise<Re
         id: firstParam(url, 'id') ?? '',
         offset: parseOffset(firstParam(url, 'offset')),
         version: firstParam(url, 'version'),
+        length: parseBoundedInt(firstParam(url, 'length'), 6000, 1, 32000, 'length'),
       }))
     }
     if (url.pathname === '/v1/search') {
@@ -117,7 +136,9 @@ export async function handleRest(request: Request, service: Service): Promise<Re
     return json(errorBody(new DomainError('invalid_argument', 404, 'not found')), 404)
   } catch (error) {
     if (error instanceof DomainError) {
-      return json(errorBody(error), error.status)
+      const response = json(errorBody(error), error.status)
+      if (error.status === 429) response.headers.set('retry-after', '60')
+      return response
     }
     return json(errorBody(new DomainError('corpus_unavailable', 503, 'request failed')), 503)
   }

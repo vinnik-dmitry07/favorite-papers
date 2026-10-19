@@ -1,6 +1,6 @@
 import { CorpusCache, type CorpusStore, type NodeCard } from './corpus'
-import { DomainError, fail, parseId } from './schemas'
-import { canonicalJson, signatures } from './signatures'
+import { DomainError, fail, parseBoundedInt, parseId, parseOffset } from './schemas'
+import { canonicalJson, signatures, sha256Hex } from './signatures'
 import { embed, pointLength, slicePoints, type WordPieceTokenizer } from './tokenize'
 
 export interface CitationArgs {
@@ -14,18 +14,91 @@ export interface TraverseArgs {
   id: string
   dir: 'out' | 'in' | 'both'
   hops: number
+  max_nodes?: number
 }
 
 export interface ContentArgs {
   id: string
   offset: number
   version: string | null
+  length?: number
 }
 
 export interface SearchArgs {
   q: string
   k: number
   ip: string
+}
+
+export interface CatalogArgs {
+  q?: string
+  section?: string
+  offset?: number
+  limit?: number
+  version?: string | null
+}
+
+const SITE = 'https://vinnik-dmitry07.github.io/favorite-papers'
+export const CONTENT_MAX = 32000
+export const FETCH_PART_SIZE = 16000
+
+function normalize(value: string): string {
+  return value.normalize('NFKC').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim()
+}
+
+function catalogScore(node: NodeCard, query: string): number {
+  const q = normalize(query)
+  if (!q) return 1
+  const title = normalize(node.title)
+  const id = normalize(node.id)
+  const url = normalize(node.url ?? '')
+  if ([title, id, url].includes(q)) return 100
+  if (title.includes(q)) return 50
+  if (id.includes(q) || url.includes(q)) return 40
+  const terms = q.split(/\s+/)
+  const haystack = `${title} ${normalize(node.section ?? '')} ${normalize(node.topic ?? '')}`
+  return terms.every((term) => haystack.includes(term)) ? 10 : 0
+}
+
+function rankedCatalog(nodes: Record<string, NodeCard>, query: string, section?: string) {
+  return Object.values(nodes)
+    .filter((node) => !section || node.section === section)
+    .map((node) => ({ node, score: catalogScore(node, query) }))
+    .filter((item) => item.score > 0)
+    .sort((a, b) => b.score - a.score || a.node.id.localeCompare(b.node.id))
+}
+
+function contentsOf(text: string) {
+  const result: { title: string, level: number, offset: number }[] = []
+  const pattern = /^(#{1,6})\s+(.+)$/gm
+  for (const match of text.matchAll(pattern)) {
+    result.push({ title: match[2].trim(), level: match[1].length,
+      offset: pointLength(text.slice(0, match.index)) })
+  }
+  return result
+}
+
+interface FetchIdentity { paper: string, version: string, start: number | null }
+
+function fetchId(identity: FetchIdentity): string {
+  const bytes = new TextEncoder().encode(JSON.stringify(identity))
+  return 'doc:' + btoa(Array.from(bytes, (b) => String.fromCharCode(b)).join(''))
+    .replaceAll('+', '-').replaceAll('/', '_').replaceAll('=', '')
+}
+
+function parseFetchId(id: string): FetchIdentity {
+  try {
+    if (!id.startsWith('doc:') || id.length > 4096) throw new Error('id')
+    const binary = atob(id.slice(4).replaceAll('-', '+').replaceAll('_', '/'))
+    const data = JSON.parse(new TextDecoder().decode(Uint8Array.from(binary, (c) => c.charCodeAt(0))))
+    if (typeof data.paper !== 'string' || typeof data.version !== 'string'
+        || !(data.start === null || (Number.isSafeInteger(data.start) && data.start >= 0))) {
+      throw new Error('shape')
+    }
+    return data as FetchIdentity
+  } catch {
+    fail('invalid_argument', 400, 'fetch id must be copied unchanged from search results')
+  }
 }
 
 interface Neighbor {
@@ -165,6 +238,7 @@ type SearchBody = {
   corpus_version: string
   k: number
   hits: SearchHit[]
+  metadata_hits: ReturnType<typeof nodeSummary>[]
 }
 
 function byteLength(value: unknown): number {
@@ -229,6 +303,139 @@ export function createService(
   }
 
   return {
+    async catalog(args: CatalogArgs = {}) {
+      const started = store.now()
+      const { pointer, graph } = await requireGraph(started)
+      if (args.version && args.version !== pointer.release_id) {
+        fail('version_conflict', 409, 'catalog version changed; restart at offset 0', {
+          corpus_version: pointer.release_id,
+        })
+      }
+      const query = args.q ?? ''
+      if (pointLength(query) > embed.limits.query_code_points_max) {
+        fail('query_too_long', 400, 'catalog query is too long')
+      }
+      const offset = parseOffset(args.offset)
+      const limit = parseBoundedInt(args.limit, 12, 1, 24, 'limit')
+      const rows = rankedCatalog(graph.nodes, query, args.section)
+      if (offset > rows.length) fail('invalid_offset', 400, 'offset is past the catalog result')
+      const end = Math.min(rows.length, offset + limit)
+      return finish(started, {
+        corpus_version: pointer.release_id,
+        total: rows.length,
+        papers: rows.slice(offset, end).map(({ node, score }) => ({
+          ...nodeSummary(node), quality: node.quality ?? null,
+          text_available: node.text.available, match: score === 100 ? 'exact' : 'keyword',
+        })),
+        next_offset: end < rows.length ? end : null,
+      })
+    },
+
+    async contents(id: string, version?: string | null) {
+      const started = store.now()
+      const { pointer, graph } = await requireGraph(started)
+      if (version && version !== pointer.release_id) fail('version_conflict', 409, 'corpus version changed')
+      const node = requireNode(graph, parseId(id))
+      const doc = node.text.available ? await corpus.paper(pointer.release_id, node.id) : null
+      return finish(started, {
+        corpus_version: pointer.release_id, paper_id: node.id,
+        available: node.text.available, reason: node.text.reason,
+        total_length: doc ? pointLength(doc.text) : 0,
+        sections: doc ? contentsOf(doc.text) : [],
+      })
+    },
+
+    async find(args: { id: string, q: string, offset?: number, version?: string | null }) {
+      const started = store.now()
+      const { pointer, graph } = await requireGraph(started)
+      if (args.version && args.version !== pointer.release_id) fail('version_conflict', 409, 'corpus version changed')
+      const node = requireNode(graph, parseId(args.id))
+      if (!args.q.trim() || pointLength(args.q) > 200) fail('invalid_query', 400, 'find query must be 1..200 code points')
+      const offset = parseOffset(args.offset)
+      const text = node.text.available ? (await corpus.paper(pointer.release_id, node.id)).text : ''
+      const points = Array.from(text)
+      if (offset > points.length) fail('invalid_offset', 400, 'offset is past the text')
+      // RegExp indices refer to the original string, including case-folding expansions.
+      const pattern = new RegExp(args.q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'giu')
+      pattern.lastIndex = points.slice(0, offset).join('').length
+      const matches = []
+      let next: number | null = null
+      for (let match = pattern.exec(text); match; match = pattern.exec(text)) {
+        const start = pointLength(text.slice(0, match.index))
+        const end = start + pointLength(match[0])
+        if (matches.length === 12) { next = start; break }
+        matches.push({ start, end, snippet: points.slice(Math.max(0, start - 120), end + 360).join('') })
+      }
+      return finish(started, { corpus_version: pointer.release_id, paper_id: node.id,
+        available: node.text.available, matches, next_offset: next })
+    },
+
+    async fetchDocument(id: string) {
+      const started = store.now()
+      const identity = parseFetchId(id)
+      const { pointer, graph } = await requireGraph(started)
+      if (identity.version !== pointer.release_id) {
+        fail('version_conflict', 409, 'search again to fetch this item from the current corpus')
+      }
+      const node = requireNode(graph, parseId(identity.paper))
+      const url = `${SITE}/agents/papers/${await sha256Hex(node.id)}/`
+      if (identity.start === null) {
+        const text = `${node.title}\nCatalog id: ${node.id}\nSection: ${node.section ?? ''}\n`
+          + `Date: ${node.date ?? 'unknown'}\nFull text available: ${node.text.available}\n`
+          + `Original source: ${node.url ?? ''}\nRead text and all citation links: ${url}`
+        return finish(started, { id, title: `${node.title} (catalog record)`, text, url,
+          metadata: { paper_id: node.id, corpus_version: pointer.release_id, item_type: 'catalog',
+            text_available: node.text.available,
+            first_text_id: node.text.available ? fetchId({ ...identity, start: 0 }) : null } })
+      }
+      if (!node.text.available) fail('invalid_argument', 400, 'this record has no stored paper text')
+      const doc = await corpus.paper(pointer.release_id, node.id)
+      const total = pointLength(doc.text)
+      if (identity.start >= total || identity.start % FETCH_PART_SIZE !== 0) {
+        fail('invalid_offset', 400, 'fetch part is outside the document')
+      }
+      const end = Math.min(total, identity.start + FETCH_PART_SIZE)
+      return finish(started, {
+        id, title: `${node.title} (text part ${identity.start / FETCH_PART_SIZE + 1})`,
+        text: slicePoints(doc.text, identity.start, end), url: node.url || url,
+        metadata: { paper_id: node.id, corpus_version: pointer.release_id, item_type: 'text_part',
+          start: identity.start, end, total_length: total, paper_url: url,
+          next_id: end < total ? fetchId({ ...identity, start: end }) : null,
+          previous_id: identity.start > 0 ? fetchId({ ...identity, start: identity.start - FETCH_PART_SIZE }) : null },
+      })
+    },
+
+    async researchSearch(query: string, ip: string) {
+      const started = store.now()
+      const q = validateQuery(query, tokenizer)
+      const { pointer, graph } = await requireGraph(started)
+      const candidates = rankedCatalog(graph.nodes, q)
+      const exact = candidates.filter(({ score }) => score === 100)
+      if (exact.length) {
+        return finish(started, { results: await Promise.all(exact.slice(0, 8).map(async ({ node }) => ({
+          id: fetchId({ paper: node.id, version: pointer.release_id, start: node.text.available ? 0 : null }),
+          title: `${node.title} (${node.text.available ? 'text part 1' : 'catalog record'})`,
+          url: node.text.available && node.url ? node.url : `${SITE}/agents/papers/${await sha256Hex(node.id)}/`,
+        }))) })
+      }
+      const passages = await this.search({ q, k: 5, ip })
+      if (passages.corpus_version !== pointer.release_id) {
+        fail('version_conflict', 409, 'corpus changed during search; retry')
+      }
+      const results = await Promise.all(candidates.slice(0, 3).map(async ({ node }) => ({
+        id: fetchId({ paper: node.id, version: pointer.release_id, start: null }),
+        title: `${node.title} (catalog record)`,
+        url: `${SITE}/agents/papers/${await sha256Hex(node.id)}/`,
+      })))
+      for (const hit of passages.hits) {
+        const start = Math.floor(hit.start / FETCH_PART_SIZE) * FETCH_PART_SIZE
+        results.push({ id: fetchId({ paper: hit.paper_id, version: pointer.release_id, start }),
+          title: `${hit.title} (text part ${start / FETCH_PART_SIZE + 1})`,
+          url: hit.url || `${SITE}/agents/papers/${await sha256Hex(hit.paper_id)}/` })
+      }
+      return finish(started, { results })
+    },
+
     async health() {
       const local = await sigs()
       const base = {
@@ -361,9 +568,10 @@ export function createService(
       const paperId = parseId(args.id)
       const { pointer, graph } = await requireGraph(started)
       requireNode(graph, paperId)
-      const maxNodes = embed.limits.traverse_nodes_max
+      const maxNodes = parseBoundedInt(args.max_nodes, embed.limits.traverse_nodes_max, 2, 100, 'max_nodes')
       const nodes = [{ ...nodeSummary(graph.nodes[paperId]), depth: 0 }]
-      const treeEdges: { source: string, target: string, evidence: string }[] = []
+      const treeEdges: { parent: string, child: string,
+        citations: { source: string, target: string, evidence: string }[] }[] = []
       const visited = new Set<string>([paperId])
       const queue: { id: string, depth: number }[] = [{ id: paperId, depth: 0 }]
       let truncated = false
@@ -391,9 +599,13 @@ export function createService(
             depth: current.depth + 1,
           })
           treeEdges.push({
-            source: current.id,
-            target: neighbor.id,
-            evidence: neighbor.evidence[0].evidence ?? 'id',
+            parent: current.id,
+            child: neighbor.id,
+            citations: neighbor.evidence.map(({ direction, evidence }) => ({
+              source: direction === 'out' ? current.id : neighbor.id,
+              target: direction === 'out' ? neighbor.id : current.id,
+              evidence,
+            })),
           })
           queue.push({ id: neighbor.id, depth: current.depth + 1 })
         }
@@ -407,12 +619,21 @@ export function createService(
         reason,
         nodes,
         tree_edges: treeEdges,
+        edges: [...visited].flatMap((source) => (graph.out[source] ?? [])
+          .filter((edge) => visited.has(edge.target)).map((edge) => ({ source, ...edge }))),
+        continuation: truncated ? {
+          method: 'citations', id: queue[index - 1].id, dir: args.dir,
+          instruction: 'Page citations with next_cursor to recover omitted neighbors; repeat for each frontier node.',
+          frontier: queue.slice(index - 1).filter((item) => item.depth < args.hops).map((item) => item.id),
+        } : null,
       })
     },
 
     async content(args: ContentArgs) {
       const started = store.now()
       const paperId = parseId(args.id)
+      parseOffset(args.offset)
+      const length = parseBoundedInt(args.length, embed.limits.content_code_points, 1, CONTENT_MAX, 'length')
       const pointer = await requirePointer(started)
       if (args.version && args.version !== pointer.release_id) {
         fail('version_conflict', 409, 'version does not match the active corpus', {
@@ -450,7 +671,7 @@ export function createService(
           text: '',
         })
       }
-      const end = Math.min(total, args.offset + embed.limits.content_code_points)
+      const end = Math.min(total, args.offset + length)
       return finish(started, {
         corpus_version: pointer.release_id,
         paper_id: paperId,
@@ -481,10 +702,6 @@ export function createService(
       if (!searchEnabled) {
         fail('search_disabled', 503, 'search is disabled')
       }
-      const allowed = await store.rateLimit(args.ip || 'unknown')
-      if (!allowed) {
-        fail('rate_limited', 429, 'search rate limit exceeded')
-      }
       const cacheKey = [
         pointer.release_id,
         local.embedding,
@@ -497,6 +714,10 @@ export function createService(
         searchCache.set(cacheKey, cached)
         return finish(started, cached)
       }
+      const allowed = await store.rateLimit(args.ip || 'unknown')
+      if (!allowed) {
+        fail('rate_limited', 429, 'uncached semantic search rate limit exceeded; retry after 60 seconds', { retry_after: 60 })
+      }
       checkDeadline(started)
       const vector = await store.embed(embed.query_template ? embed.query_template + query : query)
       checkDeadline(started)
@@ -507,7 +728,8 @@ export function createService(
       ) {
         fail('config_mismatch', 503, 'embedding dimension or pooling did not match')
       }
-      const hits = await store.query(pointer.slot, vector, args.k)
+      // Oversample to prevent overlapping chunks from one paper filling the page.
+      const hits = await store.query(pointer.slot, vector, Math.min(40, args.k * 5))
       checkDeadline(started)
       const confirmed = await corpus.confirmed(pointer.slot, pointer.release_id)
       if (
@@ -517,11 +739,13 @@ export function createService(
         fail('config_mismatch', 503, 'vector map does not match the active release')
       }
       const rows = []
+      const seenPapers = new Set<string>()
       for (const hit of hits) {
         const mapped = confirmed.vectors[hit.id]
         if (!mapped || !Number.isFinite(hit.score)) {
           fail('dangling_hit', 503, 'search hit is not in the active vector map', { id: hit.id })
         }
+        if (seenPapers.has(mapped.paper_id)) continue
         const doc = await corpus.paper(pointer.release_id, mapped.paper_id)
         const chunk = doc.chunks.find((item) => item.index === mapped.chunk_index)
         if (!chunk || chunk.content_hash !== mapped.content_hash) {
@@ -546,11 +770,15 @@ export function createService(
           corpus_version: pointer.release_id,
           content: `/v1/content?${params.toString()}`,
         })
+        seenPapers.add(mapped.paper_id)
+        if (rows.length >= args.k) break
       }
       const body = {
         corpus_version: pointer.release_id,
         k: args.k,
         hits: rows,
+        metadata_hits: rankedCatalog(graph.nodes, query).slice(0, args.k)
+          .map(({ node }) => ({ ...nodeSummary(node), text_available: node.text.available })),
       }
       searchCache.set(cacheKey, body)
       while (searchCache.size > embed.limits.search_cache_entries) {
