@@ -75,6 +75,12 @@ SIMD int8 scoring and packed metadata remain possible optimizations. A failure
 of this fixture does not rule them out. In particular, the int8 baseline is
 scalar WASM, not the external review's SIMD implementation.
 
+The supplied real-vector archives have now been
+[reproduced separately](REVIEW_REPRODUCTION.md). That evaluation covers the
+103-paper subset and the actual JS/WASM kernels; the deployed fixture remains
+synthetic. External Faiss SQ8 and mean-centered binary results must not be
+attributed to the probe's per-row symmetric int8 and uncentered binary formats.
+
 ## Local reproduction
 
 From the repository root:
@@ -149,6 +155,8 @@ runs on failure too; a hard runner termination can still prevent cleanup, so
 check the cleanup step. A residual probe consumes the Free account's shared
 quota while used. Probe-only paths do not trigger production publication on
 push; shared runtime and dependency-file changes still do.
+Probe runs, production publications, and individual PR checks use separate
+concurrency groups, so a probe cannot replace a pending production publication.
 
 For a manual run, export `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` for
 the test account. Use a unique test Worker name and pass that same name to the

@@ -16,11 +16,13 @@ on:
       - src/build_static_search_probe.py
       - src/run_static_search_probe.py
       - src/summarize_static_search_probe.py
+      - src/reproduce_static_search_review.py
       - src/test_static_search_probe.py
       - src/test_static_search_probe_run.py
       - src/common.py
       - src/build_fulltext_search.py
       - requirements-agent.txt
+      - requirements-probe-quality.txt
       - worker/**
       - .github/workflows/agent-api.yml
   push:
@@ -63,7 +65,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: agent-api
+  group: agent-api-${{ github.event_name == 'pull_request' && github.ref || (github.event_name == 'workflow_dispatch' && inputs.static_probe && 'probe' || 'publish') }}
   cancel-in-progress: false
 
 jobs:
@@ -79,6 +81,7 @@ jobs:
       - name: Offline tests
         run: |
           python -m pip install -r requirements-agent.txt
+          python -m py_compile src/reproduce_static_search_review.py
           python -m pytest src/test_agent_index.py src/test_publish_agent_index.py src/test_agent_pages.py src/test_static_search_probe.py src/test_static_search_probe_run.py
       - name: Node
         uses: actions/setup-node@v4
