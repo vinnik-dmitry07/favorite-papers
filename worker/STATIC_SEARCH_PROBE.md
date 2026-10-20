@@ -109,25 +109,36 @@ or external audit script is needed to reproduce these kernels.
 
 ## Run on Workers Free
 
-In GitHub Settings → Environments, create **`static-search-probe`**. Add these
-**environment secrets**, scoped to the intended Cloudflare Free account:
+By default, the workflow uses the existing **repository secrets** under GitHub
+Settings → Secrets and variables → Actions:
 
-- `PROBE_CLOUDFLARE_ACCOUNT_ID`.
-- `PROBE_CLOUDFLARE_API_TOKEN`: custom token with **Workers Scripts: Edit** and
-  **Workers Observability: Edit** (`Workers Scripts Write` and `Workers
-  Observability Write` in API documentation).
+- `CLOUDFLARE_ACCOUNT_ID`.
+- `CLOUDFLARE_API_TOKEN`.
 
-Keep production `CLOUDFLARE_*` secrets unchanged. The probe uses different
-secret names, so a missing environment secret cannot fall back to a production
-repository secret. The account may be the same only if it actually uses Workers
-Free. The workflow never changes subscriptions. No R2, Vectorize, Workers AI,
+Leave `probe_credentials=repository` selected; existing values do not need to
+be copied or renamed. Check that this account actually uses **Workers Free**
+before selecting `free_plan_confirmed`. The token needs **Workers Scripts:
+Edit** and **Workers Observability: Edit** (`Workers Scripts Write` and
+`Workers Observability Write` in API documentation), scoped to that account.
+The job uses the `static-search-probe` GitHub environment, so any configured
+environment approval or branch rules still apply. Do not add same-name
+`CLOUDFLARE_*` environment secrets: GitHub gives them precedence over the
+repository values.
+
+To test a **different account**, add both `PROBE_CLOUDFLARE_ACCOUNT_ID` and
+`PROBE_CLOUDFLARE_API_TOKEN` to the `static-search-probe` environment, then
+select `probe_credentials=probe_environment`. Selection always uses the whole
+pair; a missing value fails instead of falling back to the other account.
+
+The workflow never changes subscriptions. No R2, Vectorize, Workers AI,
 billing, zone, or `AGENT_DIMENSION_BUDGET` configuration is needed.
 
 Before merging, dispatch the implementation branch:
 
 ```bash
 gh workflow run agent-api.yml --ref feat/static-search-probe \
-  -f static_probe=true -f free_plan_confirmed=true
+  -f static_probe=true -f probe_credentials=repository \
+  -f free_plan_confirmed=true
 ```
 
 The workflow deploys `key-papers-static-probe-RUN_ID-ATTEMPT`, checks one

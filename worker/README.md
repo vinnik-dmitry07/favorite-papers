@@ -5,8 +5,10 @@ Public read API for the citation catalog. Start with the [static agent guide](ht
 The [static-search feasibility probe](STATIC_SEARCH_PROBE.md) tests a possible
 Workers Free replacement for the full Vectorize index. It is isolated and uses
 synthetic vectors; it is not a deployed semantic search service. Its workflow
-uses separate `PROBE_CLOUDFLARE_*` environment secrets, does not require
-`AGENT_DIMENSION_BUDGET`, and deletes its uniquely named Worker after collection.
+reuses existing `CLOUDFLARE_*` repository secrets by default, with an explicit
+option for a separate account's `PROBE_CLOUDFLARE_*` environment secrets. It
+does not require `AGENT_DIMENSION_BUDGET` and deletes its uniquely named Worker
+after collection.
 The shared catalog/tokenizer optimizations are reviewed code changes; this probe
 does not deploy the production Worker or alter its Cloudflare bindings.
 

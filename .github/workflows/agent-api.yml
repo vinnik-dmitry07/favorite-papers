@@ -47,6 +47,13 @@ on:
         description: 'Deploy only the isolated synthetic static-search probe'
         type: boolean
         default: false
+      probe_credentials:
+        description: 'Probe credentials: existing CLOUDFLARE_* or separate PROBE_CLOUDFLARE_*'
+        type: choice
+        options:
+          - repository
+          - probe_environment
+        default: repository
       free_plan_confirmed:
         description: 'I checked that the target account uses Workers Free'
         type: boolean
@@ -99,22 +106,44 @@ jobs:
     timeout-minutes: 25
     environment: static-search-probe
     env:
-      CLOUDFLARE_API_TOKEN: ${{ secrets.PROBE_CLOUDFLARE_API_TOKEN }}
-      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.PROBE_CLOUDFLARE_ACCOUNT_ID }}
       FREE_PLAN_CONFIRMED: ${{ inputs.free_plan_confirmed }}
       WRANGLER_SEND_METRICS: 'false'
       PROBE_NAME: key-papers-static-probe-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - name: Check the selected account and credentials
+        env:
+          PROBE_CREDENTIALS: ${{ inputs.probe_credentials }}
+          REPOSITORY_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          REPOSITORY_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          PROBE_ACCOUNT_ID: ${{ secrets.PROBE_CLOUDFLARE_ACCOUNT_ID }}
+          PROBE_API_TOKEN: ${{ secrets.PROBE_CLOUDFLARE_API_TOKEN }}
         run: |
           if [ "$FREE_PLAN_CONFIRMED" != 'true' ]; then
             echo '::error::This experiment requires a Workers Free account. Check its plan in Cloudflare, then select free_plan_confirmed. The workflow never changes the plan.'
             exit 1
           fi
+          case "$PROBE_CREDENTIALS" in
+            repository)
+              CLOUDFLARE_ACCOUNT_ID="$REPOSITORY_ACCOUNT_ID"
+              CLOUDFLARE_API_TOKEN="$REPOSITORY_API_TOKEN"
+              secret_names='CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN'
+              ;;
+            probe_environment)
+              CLOUDFLARE_ACCOUNT_ID="$PROBE_ACCOUNT_ID"
+              CLOUDFLARE_API_TOKEN="$PROBE_API_TOKEN"
+              secret_names='PROBE_CLOUDFLARE_ACCOUNT_ID and PROBE_CLOUDFLARE_API_TOKEN'
+              ;;
+            *)
+              echo '::error::Select repository or probe_environment for probe_credentials.'
+              exit 1
+              ;;
+          esac
           if [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_API_TOKEN" ]; then
-            echo '::error::Set PROBE_CLOUDFLARE_ACCOUNT_ID and PROBE_CLOUDFLARE_API_TOKEN in the static-search-probe environment. See worker/STATIC_SEARCH_PROBE.md.'
+            echo "::error::The selected credential pair is incomplete. Set both $secret_names. See worker/STATIC_SEARCH_PROBE.md."
             exit 1
           fi
+          printf 'CLOUDFLARE_ACCOUNT_ID=%s\nCLOUDFLARE_API_TOKEN=%s\n' \
+            "$CLOUDFLARE_ACCOUNT_ID" "$CLOUDFLARE_API_TOKEN" >> "$GITHUB_ENV"
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
