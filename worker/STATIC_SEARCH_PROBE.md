@@ -131,6 +131,11 @@ environment approval or branch rules still apply. Do not add same-name
 `CLOUDFLARE_*` environment secrets: GitHub gives them precedence over the
 repository values.
 
+The account must already have a registered `workers.dev` subdomain under
+Cloudflare **Workers & Pages**. If CI reports that it is missing but the
+dashboard shows one, retry the job before changing credentials. The deployed
+URL identifies the subdomain that the selected account actually uses.
+
 To test a **different account**, add both `PROBE_CLOUDFLARE_ACCOUNT_ID` and
 `PROBE_CLOUDFLARE_API_TOKEN` to the `static-search-probe` environment, then
 select `probe_credentials=probe_environment`. Selection always uses the whole
@@ -147,10 +152,15 @@ gh workflow run agent-api.yml --ref feat/static-search-probe \
   -f free_plan_confirmed=true
 ```
 
-The workflow deploys `key-papers-static-probe-RUN_ID-ATTEMPT`, checks one
-request's telemetry join, then measures all variants only if that check passes.
+The workflow deploys `key-papers-static-probe-RUN_ID-ATTEMPT`, waits up to
+60 seconds for `/probe/info`, checks one request's telemetry join, then measures
+all variants only if both checks pass. Discovery HTTP statuses, bounded response
+excerpts and transport errors are checkpointed before any matrix is sent.
+Only transient discovery failures are retried; wrong targets and permission
+errors stop immediately. Discovery retries are not CPU benchmark samples.
 It retries delayed telemetry without resending the measurement matrix, deletes
-only that run's Worker, and preserves reports/manifests for seven days. Cleanup
+only that run's Worker, and preserves reports/manifests for seven days in an
+artifact named `static-search-probe-RUN_ID-ATTEMPT`. Cleanup
 runs on failure too; a hard runner termination can still prevent cleanup, so
 check the cleanup step. A residual probe consumes the Free account's shared
 quota while used. Probe-only paths do not trigger production publication on
@@ -159,9 +169,23 @@ Probe runs, production publications, and individual PR checks use separate
 concurrency groups, so a probe cannot replace a pending production publication.
 
 For a manual run, export `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` for
-the test account. Use a unique test Worker name and pass that same name to the
-runner's `--script-name`. Delete it with `wrangler delete NAME --config
-wrangler.probe.toml --force` after collection.
+the test account. Use a unique name of the form
+`key-papers-static-probe-NUMBER-ATTEMPT` (both numbers positive) and pass it to
+the runner's `--script-name`. After collection, run
+`python src/cleanup_static_search_probe.py NAME` from the repository root.
+This calls the Worker deletion API directly, without
+`force` or KV enumeration, and accepts only the run-specific name format.
+Workers Scripts Edit suffices; KV access is not required by this probe.
+
+The first live run failed before deployment because Cloudflare reported a
+missing account subdomain. [Attempt 2, on 2026-10-20](https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/39350277748/job/118887679412)
+successfully uploaded all 4,959 assets and deployed under
+`vinnik-dmitry07.workers.dev`. Its initial `/probe/info` response failed the
+runner's check, but the old runner discarded the HTTP status and body, so the
+cause is unknown. No CPU samples were measured. Wrangler then deleted the
+Worker but failed while listing legacy Workers Sites KV namespaces. The direct
+cleanup and discovery diagnostics above address those harness issues; a new
+dispatch is required to exercise the corrected revision.
 
 Retry logs within their retention window using the saved report:
 

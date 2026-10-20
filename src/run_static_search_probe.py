@@ -137,6 +137,55 @@ def all_requests(report):
     return [row for key in groups for row in report.get(key, [])]
 
 
+def probe_info(report, wait_seconds):
+    '''Check readiness without counting startup retries as measurements.'''
+    deadline = time.monotonic() + wait_seconds
+    attempts = report.setdefault('readiness_attempts', [])
+    report['readiness_gate'] = 'unverified'
+    persist(report)
+    while True:
+        row = {'started_ms': int(time.time() * 1000)}
+        retryable = True
+        try:
+            status, headers, text = exchange(
+                report['origin'] + '/probe/info',
+                timeout=min(20, max(1, deadline - time.monotonic())))
+            headers = {key.lower(): value for key, value in headers.items()}
+            row.update(status=status, response_excerpt=text[:1000],
+                       content_type=headers.get('content-type'),
+                       cf_ray=headers.get('cf-ray'),
+                       boot_id=headers.get('x-probe-boot-id'))
+            retryable = status in {404, 408, 429} or status >= 500
+            if status == 200:
+                info = decode_body(text)
+                if (info.get('synthetic') is not True
+                        or headers.get('x-probe-synthetic') != 'true'):
+                    raise ValueError('Target is not the isolated probe')
+                if (not isinstance(info.get('variants'), list)
+                        or not info['variants']
+                        or not all(isinstance(v, str)
+                                   for v in info['variants'])
+                        or not isinstance(info.get('corpus_version'), str)
+                        or not info['corpus_version']):
+                    raise ValueError('Malformed probe discovery response')
+                row.pop('response_excerpt')
+                attempts.append(row)
+                report['readiness_gate'] = 'passed'
+                persist(report)
+                return info
+            row['error'] = f'Probe discovery HTTP {status}'
+        except (http.client.HTTPException, OSError, ValueError) as exc:
+            row['error'] = type(exc).__name__ + ': ' + str(exc)[:160]
+        attempts.append(row)
+        if not retryable:
+            report['readiness_gate'] = 'failed'
+        persist(report)
+        print('Probe discovery: ' + json.dumps(row), flush=True)
+        if not retryable or time.monotonic() >= deadline:
+            return None
+        time.sleep(min(2, max(0, deadline - time.monotonic())))
+
+
 def sample(report, kind, mode, sequence, path, params=None, tool=None):
     variant = report.get('active_variant')
     case = f'{kind}.{mode}'
@@ -456,6 +505,9 @@ def summarize(report):
         'failed' if any(row.get('eligible', True)
                         and row.get('state') != 'in_flight' for row in failed)
         else 'unverified' if failed else 'passed')
+    if report.get('readiness_gate', 'passed') != 'passed':
+        report['functional_gate'] = report['readiness_gate']
+        report['cpu_gate'] = 'unverified'
     report.update(runtime_gate='unverified', memory_gate='unverified',
                   isolate_cold_gate='unverified',
                   retrieval_quality='not_tested')
@@ -484,9 +536,12 @@ def main(argv=None):
     parser.add_argument('--script-name', default='key-papers-static-probe')
     parser.add_argument('--collect-only', type=Path)
     parser.add_argument('--wait-seconds', type=int, default=30)
+    parser.add_argument('--ready-wait-seconds', type=int, default=60)
     args = parser.parse_args(argv)
-    if not 1 <= args.samples <= 500 or not 0 <= args.wait_seconds <= 60:
-        parser.error('samples must be 1..500; wait-seconds must be 0..60')
+    if (not 1 <= args.samples <= 500
+            or not 0 <= args.wait_seconds <= 60
+            or not 0 <= args.ready_wait_seconds <= 60):
+        parser.error('samples must be 1..500; wait values must be 0..60')
     if args.collect_only:
         report = json.loads(args.collect_only.read_text(encoding='utf-8'))
         report['output_path'] = str(args.output.resolve())
@@ -501,22 +556,26 @@ def main(argv=None):
                 parsed.query, parsed.fragment)):
             parser.error('Origin contains credentials, query or fragment')
         origin = args.origin.rstrip('/')
-        status, _, text = exchange(origin + '/probe/info')
-        info = decode_body(text)
-        if status != 200 or info.get('synthetic') is not True:
-            raise SystemExit('Target is not the isolated synthetic probe')
+        report = {'origin': origin, 'run_id': str(uuid.uuid4()),
+                  'started_ms': int(time.time() * 1000), 'requests': [],
+                  'output_path': str(args.output.resolve()),
+                  'script_name': args.script_name}
+        info = probe_info(report, args.ready_wait_seconds)
+        if info is None:
+            summarize(report)
+            persist(report)
+            print('Probe discovery did not pass; no matrix was sent. '
+                  'See readiness_attempts in ' + str(args.output))
+            return 1 if report['readiness_gate'] == 'failed' else 2
         variants = (info['variants'] if args.variants == 'all'
                     else args.variants.split(','))
         if not variants or len(set(variants)) != len(variants) or any(
                 variant not in info['variants'] for variant in variants):
             parser.error('Unknown or duplicate variant')
-        report = {'origin': origin, 'run_id': str(uuid.uuid4()), 'info': info,
-                  'started_ms': int(time.time() * 1000), 'requests': [],
-                  'output_path': str(args.output.resolve()),
-                  'script_name': args.script_name, 'variants': variants,
-                  'expected_cases': [v + '.' + c for v in variants
-                                     for c in EXPECTED_CASES],
-                  'diagnostic_stages': True}
+        report.update(info=info, variants=variants,
+                      expected_cases=[v + '.' + c for v in variants
+                                      for c in EXPECTED_CASES],
+                      diagnostic_stages=True)
         persist(report)
         if not args.local:
             report['preflight_running'] = True

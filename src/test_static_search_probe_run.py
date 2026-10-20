@@ -10,6 +10,7 @@ from run_static_search_probe import (
     decode_body,
     main,
     percentiles,
+    probe_info,
     run_samples,
     sample,
     summarize,
@@ -357,3 +358,81 @@ def test_mid_request_checkpoint_can_be_recovered(tmp_path, monkeypatch):
     saved = json.loads(path.read_text())
     assert saved['functional_gate'] == 'unverified'
     assert saved['cases']['rest_search.warm']['excluded'] == 1
+
+
+def test_discovery_retries_before_measurements_and_keeps_evidence(
+        tmp_path, monkeypatch):
+    report = make_report(0)
+    report['output_path'] = str(tmp_path / 'report.json')
+    responses = iter([
+        (503, {'CF-Ray': 'ray-1'}, '{"error": "asset unavailable"}'),
+        (200, {'X-Probe-Synthetic': 'true'}, json.dumps({
+            'synthetic': True, 'variants': ['js4-json16'],
+            'corpus_version': 'v1'})),
+    ])
+    monkeypatch.setattr('run_static_search_probe.exchange',
+                        lambda *_, **__: next(responses))
+    monkeypatch.setattr('run_static_search_probe.time.sleep', lambda _: None)
+    assert probe_info(report, 10)['corpus_version'] == 'v1'
+    saved = json.loads((tmp_path / 'report.json').read_text())
+    assert saved['readiness_gate'] == 'passed'
+    assert saved['requests'] == []
+    assert saved['readiness_attempts'][0]['status'] == 503
+    assert saved['readiness_attempts'][0]['cf_ray'] == 'ray-1'
+    assert 'asset unavailable' in saved['readiness_attempts'][0][
+        'response_excerpt']
+
+
+@pytest.mark.parametrize('status,body,expected', [
+    (503, '{"error": "asset unavailable"}', 2),
+    (403, 'error code: 1010', 1),
+    (200, '{"synthetic": false}', 1),
+    (200, '<html>wrong application</html>', 1),
+])
+def test_discovery_failure_is_saved_and_never_starts_matrix(
+        tmp_path, monkeypatch, status, body, expected):
+    path = tmp_path / 'failed-start.json'
+    calls = []
+
+    def exchange(url, **_kwargs):
+        calls.append(url)
+        return status, {}, body
+
+    monkeypatch.setattr('run_static_search_probe.exchange', exchange)
+    assert main(['https://synthetic.example', '--output', str(path),
+                 '--ready-wait-seconds', '0']) == expected
+    report = json.loads(path.read_text())
+    assert report['run_id']
+    assert report['cpu_gate'] == 'unverified'
+    assert report['functional_gate'] != 'passed'
+    assert report['requests'] == []
+    assert report['readiness_attempts'][0]['response_excerpt'] == body
+    assert calls == ['https://synthetic.example/probe/info']
+
+
+def test_discovery_transport_error_keeps_checkpoint(tmp_path, monkeypatch):
+    from http.client import IncompleteRead
+
+    path = tmp_path / 'interrupted-start.json'
+
+    def interrupted(*_, **__):
+        assert path.exists()
+        raise IncompleteRead(b'partial')
+
+    monkeypatch.setattr('run_static_search_probe.exchange', interrupted)
+    assert main(['https://synthetic.example', '--output', str(path),
+                 '--ready-wait-seconds', '0']) == 2
+    report = json.loads(path.read_text())
+    assert 'IncompleteRead' in report['readiness_attempts'][0]['error']
+    assert report['cpu_gate'] == 'unverified'
+
+
+def test_collect_only_cannot_turn_failed_discovery_into_success(
+        tmp_path, monkeypatch):
+    report = make_report(0)
+    report['readiness_gate'] = 'failed'
+    path = tmp_path / 'failed-start.json'
+    path.write_text(json.dumps(report))
+    monkeypatch.setattr('run_static_search_probe.collect', lambda *_: None)
+    assert main(['--collect-only', str(path), '--output', str(path)]) == 1
+    assert json.loads(path.read_text())['cpu_gate'] == 'unverified'

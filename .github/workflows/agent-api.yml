@@ -15,10 +15,12 @@ on:
       - src/test_agent_pages.py
       - src/build_static_search_probe.py
       - src/run_static_search_probe.py
+      - src/cleanup_static_search_probe.py
       - src/summarize_static_search_probe.py
       - src/reproduce_static_search_review.py
       - src/test_static_search_probe.py
       - src/test_static_search_probe_run.py
+      - src/test_static_search_probe_cleanup.py
       - src/common.py
       - src/build_fulltext_search.py
       - requirements-agent.txt
@@ -82,7 +84,7 @@ jobs:
         run: |
           python -m pip install -r requirements-agent.txt
           python -m py_compile src/reproduce_static_search_review.py
-          python -m pytest src/test_agent_index.py src/test_publish_agent_index.py src/test_agent_pages.py src/test_static_search_probe.py src/test_static_search_probe_run.py
+          python -m pytest src/test_agent_index.py src/test_publish_agent_index.py src/test_agent_pages.py src/test_static_search_probe.py src/test_static_search_probe_run.py src/test_static_search_probe_cleanup.py
       - name: Node
         uses: actions/setup-node@v4
         with:
@@ -168,7 +170,7 @@ jobs:
         working-directory: worker
         run: |
           set -o pipefail
-          npx wrangler deploy --config wrangler.probe.toml --name "$PROBE_NAME" | tee probe-deploy.txt
+          npx wrangler deploy --config wrangler.probe.toml --name "$PROBE_NAME" 2>&1 | tee probe-deploy.txt
           python -c "import os, pathlib, sys; sys.path.insert(0, '../src'); from write_discovery_links import worker_origin; origin=worker_origin(pathlib.Path('probe-deploy.txt').read_text(encoding='utf-8'), os.environ['PROBE_NAME']); sys.exit('deploy did not print the probe origin') if not origin else print('origin=' + origin)" >> "$GITHUB_OUTPUT"
       - name: Measure REST and MCP with platform CPU telemetry
         id: measure
@@ -185,13 +187,12 @@ jobs:
           fi
       - name: Remove only this run's isolated Worker
         if: always() && (steps.deploy.outcome == 'success' || steps.deploy.outcome == 'failure')
-        working-directory: worker
-        run: npx wrangler delete "$PROBE_NAME" --config wrangler.probe.toml --force
+        run: python src/cleanup_static_search_probe.py "$PROBE_NAME"
       - name: Preserve measurements even when the gate fails
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: static-search-probe-${{ github.run_id }}
+          name: static-search-probe-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
             probe-report.json
             agent_probe/probe/measurements.json
@@ -205,7 +206,11 @@ jobs:
           python - <<'PYTHON'
           import json
           from pathlib import Path
-          report = json.loads(Path('probe-report.json').read_text())
+          path = Path('probe-report.json')
+          if not path.exists():
+              raise SystemExit('Probe report is missing; inspect the measurement step. CPU remains unverified.')
+          report = json.loads(path.read_text())
+          print('Discovery:', report.get('readiness_gate', 'unverified'))
           print(json.dumps(report.get('variant_gates', {}), indent=2))
           raise SystemExit(0 if report.get('cpu_gate') == 'passed' else 1)
           PYTHON
