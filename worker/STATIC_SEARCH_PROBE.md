@@ -187,6 +187,33 @@ Worker but failed while listing legacy Workers Sites KV namespaces. The direct
 cleanup and discovery diagnostics above address those harness issues; a new
 dispatch is required to exercise the corrected revision.
 
+The [fresh run at e74cb51, on 2026-10-20](https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/39512603034/job/118937326781)
+verified both deployment and direct cleanup. Discovery stopped on **HTTP 403,
+Cloudflare Error 1010 (`browser_signature_banned`)**, before any matrix or
+telemetry-pilot request. The response had no probe identity header. Its Ray ID
+is `a4dbacae8d07ebb5-YYZ`, at `2026-10-20T23:06:42Z`, for
+`key-papers-static-probe-39512603034-1.vinnik-dmitry07.workers.dev/probe/info`.
+No CPU samples exist; this is an access blocker, not evidence against Workers
+Free or static search. The Worker was deleted successfully after the failure.
+
+The later collect-only step also recorded `Telemetry API HTTP 403`. Its response
+body was not preserved, so it cannot establish whether the cause was token
+permissions or another access restriction. Check the existing token's account
+scope and **Workers Observability: Edit** permission before the next live run;
+successful deployment proves Workers Scripts access, not telemetry access.
+
+The unchanged [raw runner report](probe-results/cloudflare-2026-10-20-blocked.json)
+is retained here because workflow artifacts expire. It came from artifact
+`static-search-probe-39512603034-1` (ID `12306577391`), whose ZIP SHA-256 is
+`0a4c408c5fbd8b739863fb602224332bfa5a1f6b382ff7f942d58ef609c977b5`.
+
+Resolve Error 1010 through the owner/provider's access configuration before
+re-running. Cloudflare's documented Browser Integrity Check controls are
+zone-scoped; their availability for this `workers.dev` hostname has **not** been
+verified. Do not assume the account has that zone setting or disable unrelated
+security controls. If no applicable setting is exposed, provide Cloudflare
+the hostname, UTC timestamp and Ray ID above to identify the blocking rule.
+
 Retry logs within their retention window using the saved report:
 
 ```bash
@@ -280,6 +307,9 @@ A paid upgrade remains a separate user decision.
 - [Static Assets](https://developers.cloudflare.com/workers/static-assets/binding/)
 - [Workers Logs](https://developers.cloudflare.com/workers/observability/logs/workers-logs/)
 - [Telemetry query API](https://developers.cloudflare.com/api/resources/workers/subresources/observability/subresources/telemetry/methods/query/)
+- [Error 1010](https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/)
+- [Browser Integrity Check](https://developers.cloudflare.com/waf/tools/browser-integrity-check/)
+- [workers.dev routing and access](https://developers.cloudflare.com/workers/configuration/routing/workers-dev/)
 - [WABT JavaScript API](https://github.com/AssemblyScript/wabt.js)
 
 ## Bounded find contract
