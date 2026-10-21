@@ -21,6 +21,12 @@ from collections import Counter
 from pathlib import Path
 
 
+PROBE_USER_AGENT = (
+    'favorite-papers-static-probe/1.0 '
+    '(+https://github.com/vinnik-dmitry07/favorite-papers)'
+)
+
+
 EXPECTED_CASES = tuple(
     f'{kind}.{mode}' for mode in ('application_cold', 'warm')
     for kind in ('rest_search', 'mcp_search', 'mcp_fetch',
@@ -31,6 +37,7 @@ EXPECTED_CASES = tuple(
 def exchange(url, payload=None, headers=None, timeout=20):
     request_headers = {
         'accept': 'application/json, text/event-stream',
+        'user-agent': PROBE_USER_AGENT,
         'content-type': 'application/json',
         'mcp-protocol-version': '2025-06-18',
         **(headers or {}),

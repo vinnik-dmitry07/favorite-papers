@@ -6,8 +6,10 @@ import pytest
 
 from run_static_search_probe import (
     EXPECTED_CASES,
+    PROBE_USER_AGENT,
     attach_telemetry,
     decode_body,
+    exchange,
     main,
     percentiles,
     probe_info,
@@ -40,6 +42,39 @@ def events_for(report, cpu=2):
                       'requestId': str(i)}}
         for i, row in enumerate(report['requests'])
     ]
+
+
+def test_exchange_identifies_client_in_get_and_post(monkeypatch):
+    requests = []
+
+    class FakeResponse:
+        status = 200
+        headers = {'content-type': 'application/json'}
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args):
+            return False
+
+        def read(self):
+            return b'{}'
+
+    def fake_urlopen(request, timeout):
+        requests.append((request, timeout))
+        return FakeResponse()
+
+    monkeypatch.setattr('run_static_search_probe.urllib.request.urlopen',
+                        fake_urlopen)
+    for payload in (None, {'queryId': 'pilot'}):
+        status, _, body = exchange('https://probe.example/probe/info',
+                                   payload=payload)
+        assert status == 200
+        assert body == '{}'
+    assert [req.get_method() for req, _ in requests] == ['GET', 'POST']
+    assert all(req.get_header('User-agent') == PROBE_USER_AGENT
+               for req, _ in requests)
+    assert all(timeout == 20 for _, timeout in requests)
 
 
 def test_cpu_comes_from_platform_and_runtime_never_passes():

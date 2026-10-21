@@ -207,12 +207,22 @@ is retained here because workflow artifacts expire. It came from artifact
 `static-search-probe-39512603034-1` (ID `12306577391`), whose ZIP SHA-256 is
 `0a4c408c5fbd8b739863fb602224332bfa5a1f6b382ff7f942d58ef609c977b5`.
 
-Resolve Error 1010 through the owner/provider's access configuration before
-re-running. Cloudflare's documented Browser Integrity Check controls are
-zone-scoped; their availability for this `workers.dev` hostname has **not** been
-verified. Do not assume the account has that zone setting or disable unrelated
-security controls. If no applicable setting is exposed, provide Cloudflare
-the hostname, UTC timestamp and Ray ID above to identify the blocking rule.
+**Error 1010 client fix (2026-10-21).** Both live failures occurred before
+the Worker saw a request. The Python runner used `urllib.request` without an
+explicit `User-Agent`, so its GET and POST requests carried the default
+`Python-urllib/3.12` signature. This particular signature has been observed to
+trigger Cloudflare's Error 1010 on other Workers. The runner now identifies itself
+as `favorite-papers-static-probe/1.0` on discovery, measurements, and telemetry
+requests. The regression test checks the actual constructed GET and POST headers;
+no Cloudflare security setting or Worker runtime was changed.
+
+This fixes a known client-side trigger, but **live access and CPU measurement
+remain unverified** until a fresh workflow dispatch from the updated branch.
+Re-running the old attempt would use its original commit. If a new run still
+returns 1010, use its hostname, UTC timestamp and Ray ID to investigate the
+owner/provider restriction. Browser Integrity Check settings are zone-scoped,
+and their availability for this `workers.dev` hostname has not been verified.
+Do not disable unrelated security controls to make the experiment pass.
 
 Retry logs within their retention window using the saved report:
 
