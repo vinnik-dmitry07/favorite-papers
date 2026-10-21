@@ -476,8 +476,8 @@ def test_telemetry_diagnostics_distinguish_events_from_joins(monkeypatch):
     }]
     events = [{
         '$metadata': {'type': 'cf-worker-event',
-                      'requestId': 'metadata-id'},
-        '$workers': {'requestId': 'worker-id',
+                      'requestId': 'platform-id'},
+        '$workers': {'requestId': 'platform-id',
                      'cpuTimeMs': 1, 'outcome': 'ok'},
     }]
     monkeypatch.setenv('CLOUDFLARE_ACCOUNT_ID', 'test-account')
