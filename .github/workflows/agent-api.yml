@@ -177,13 +177,13 @@ jobs:
         continue-on-error: true
         env:
           PROBE_ORIGIN: ${{ steps.deploy.outputs.origin }}
-        run: python src/run_static_search_probe.py "$PROBE_ORIGIN" --samples 50 --variants all --script-name "$PROBE_NAME" --output probe-report.json
+        run: python src/run_static_search_probe.py "$PROBE_ORIGIN" --samples 50 --variants all --script-name "$PROBE_NAME" --output probe-report.json --wait-seconds 180
       - name: Retry delayed telemetry without resending measurements
         if: always() && steps.measure.outcome != 'skipped'
         continue-on-error: true
         run: |
           if [ -f probe-report.json ]; then
-            python src/run_static_search_probe.py --collect-only probe-report.json --output probe-report.json --wait-seconds 60
+            python src/run_static_search_probe.py --collect-only probe-report.json --output probe-report.json --wait-seconds 120
           fi
       - name: Remove only this run's isolated Worker
         if: always() && (steps.deploy.outcome == 'success' || steps.deploy.outcome == 'failure')
@@ -211,6 +211,10 @@ jobs:
               raise SystemExit('Probe report is missing; inspect the measurement step. CPU remains unverified.')
           report = json.loads(path.read_text())
           print('Discovery:', report.get('readiness_gate', 'unverified'))
+          print('Preflight:', report.get('preflight_gate', 'unverified'))
+          print('Telemetry diagnostics:', json.dumps(
+              report.get('telemetry_diagnostics', {}), sort_keys=True))
+          print('Telemetry error:', report.get('telemetry_error'))
           print(json.dumps(report.get('variant_gates', {}), indent=2))
           raise SystemExit(0 if report.get('cpu_gate') == 'passed' else 1)
           PYTHON

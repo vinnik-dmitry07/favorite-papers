@@ -361,6 +361,65 @@ def test_transient_telemetry_failure_is_retried(monkeypatch):
     assert all('telemetry' in row for row in report['requests'])
 
 
+def test_empty_telemetry_query_preserves_diagnostic_evidence(monkeypatch):
+    from run_static_search_probe import collect
+
+    report = make_report(0)
+    report.update(started_ms=1000, finished_ms=2000)
+    report['preflight_requests'] = [{
+        'case': 'stage_noop.application_cold', 'marker': 'pilot',
+        'success': True,
+    }]
+    monkeypatch.setenv('CLOUDFLARE_ACCOUNT_ID', 'test-account')
+    monkeypatch.setenv('CLOUDFLARE_API_TOKEN', 'test-token')
+    monkeypatch.setattr('run_static_search_probe.exchange',
+                        lambda *_args, **_kwargs: (
+                            200, {}, json.dumps({'result': {
+                                'events': {'count': 0, 'events': []},
+                            }})))
+    collect(report, 0)
+    assert report['telemetry_error'] == 'Missing logs; retry --collect-only'
+    diagnostics = report['telemetry_diagnostics']
+    assert diagnostics['queries'] == 1
+    assert diagnostics['events_across_queries'] == 0
+    assert diagnostics['last_page_events'] == 0
+    assert diagnostics['last_reported_count'] == 0
+    assert diagnostics['linked_markers'] == 0
+    assert diagnostics['linked_invocations'] == 0
+
+
+def test_telemetry_diagnostics_distinguish_events_from_joins(monkeypatch):
+    from run_static_search_probe import collect
+
+    report = make_report(0)
+    report.update(started_ms=1000, finished_ms=2000)
+    report['preflight_requests'] = [{
+        'case': 'stage_noop.application_cold', 'marker': 'pilot',
+        'success': True,
+    }]
+    events = [{
+        '$metadata': {'type': 'cf-worker-event',
+                      'requestId': 'metadata-id'},
+        '$workers': {'requestId': 'worker-id',
+                     'cpuTimeMs': 1, 'outcome': 'ok'},
+    }]
+    monkeypatch.setenv('CLOUDFLARE_ACCOUNT_ID', 'test-account')
+    monkeypatch.setenv('CLOUDFLARE_API_TOKEN', 'test-token')
+    monkeypatch.setattr('run_static_search_probe.exchange',
+                        lambda *_args, **_kwargs: (
+                            200, {}, json.dumps({'result': {
+                                'events': {'count': 1, 'events': events},
+                            }})))
+    collect(report, 0)
+    diagnostics = report['telemetry_diagnostics']
+    assert diagnostics['invocation_events'] == 1
+    assert diagnostics['worker_request_ids'] == 1
+    assert diagnostics['metadata_request_ids'] == 1
+    assert diagnostics['linked_markers'] == 0
+    assert diagnostics['linked_invocations'] == 1
+    assert 'telemetry' not in report['preflight_requests'][0]
+
+
 def test_failed_baseline_does_not_reject_a_passing_variant():
     report = make_report()
     original = report['requests']

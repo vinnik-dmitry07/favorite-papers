@@ -422,8 +422,51 @@ def collect(report, wait_seconds):
                 if body.get('errors'):
                     retryable = False
                     raise ValueError('Telemetry API rejected the query')
-                events = body['result'].get('events', {}).get('events', [])
+                result = body.get('result')
+                bucket = result.get('events') if isinstance(
+                    result, dict) else None
+                if not isinstance(bucket, dict) or not isinstance(
+                        bucket.get('events'), list):
+                    retryable = False
+                    raise ValueError('Telemetry API returned no events array')
+                events = bucket['events']
+                diagnostics = report.setdefault('telemetry_diagnostics', {
+                    'queries': 0, 'events_across_queries': 0,
+                    'peak_page_events': 0, 'invocation_events': 0,
+                    'log_events': 0, 'worker_request_ids': 0,
+                    'metadata_request_ids': 0,
+                })
+                diagnostics['queries'] += 1
+                diagnostics['events_across_queries'] += len(events)
+                diagnostics['peak_page_events'] = max(
+                    diagnostics['peak_page_events'], len(events))
+                diagnostics['last_page_events'] = len(events)
+                diagnostics['last_reported_count'] = bucket.get('count')
+                diagnostics['invocation_events'] += sum(
+                    isinstance(event, dict)
+                    and isinstance(event.get('$metadata'), dict)
+                    and event['$metadata'].get('type') == 'cf-worker-event'
+                    for event in events)
+                diagnostics['log_events'] += sum(
+                    isinstance(event, dict)
+                    and isinstance(event.get('$metadata'), dict)
+                    and event['$metadata'].get('type') == 'cf-worker-log'
+                    for event in events)
+                diagnostics['worker_request_ids'] += sum(
+                    isinstance(event, dict)
+                    and isinstance(event.get('$workers'), dict)
+                    and bool(event['$workers'].get('requestId'))
+                    for event in events)
+                diagnostics['metadata_request_ids'] += sum(
+                    isinstance(event, dict)
+                    and isinstance(event.get('$metadata'), dict)
+                    and bool(event['$metadata'].get('requestId'))
+                    for event in events)
                 attach_telemetry(report, events)
+                diagnostics['linked_markers'] = len(report.get(
+                    'telemetry_links', {}))
+                diagnostics['linked_invocations'] = len(report.get(
+                    'telemetry_invocations', {}))
                 persist(report)
                 if len(events) < 2000:
                     break
@@ -546,9 +589,11 @@ def main(argv=None):
     parser.add_argument('--ready-wait-seconds', type=int, default=60)
     args = parser.parse_args(argv)
     if (not 1 <= args.samples <= 500
-            or not 0 <= args.wait_seconds <= 60
+            or not 0 <= args.wait_seconds <= 300
             or not 0 <= args.ready_wait_seconds <= 60):
-        parser.error('samples must be 1..500; wait values must be 0..60')
+        parser.error(
+            'samples must be 1..500; telemetry wait must be 0..300; '
+            'readiness wait must be 0..60')
     if args.collect_only:
         report = json.loads(args.collect_only.read_text(encoding='utf-8'))
         report['output_path'] = str(args.output.resolve())

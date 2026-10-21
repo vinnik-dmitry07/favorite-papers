@@ -224,6 +224,28 @@ owner/provider restriction. Browser Integrity Check settings are zone-scoped,
 and their availability for this `workers.dev` hostname has not been verified.
 Do not disable unrelated security controls to make the experiment pass.
 
+**Third live attempt (2026-10-21, run 39651818374 at commit 0b16200):**
+the User-Agent change resolved Error 1010. Two transient HTTP 404 / Error
+1042 responses occurred immediately after deploy; discovery retried and passed.
+The single synthetic `stage_noop` pilot returned HTTP 200 with correct marker,
+identity and cache headers. However, after roughly 90 seconds of telemetry
+polling, no platform invocation was linked to that pilot. The full matrix was
+intentionally not sent. The saved report records `Missing logs; retry
+--collect-only`, a successful functional gate and an **unverified** CPU gate.
+The Worker was successfully deleted. Artifact
+[static-search-probe-39651818374-1](https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/39651818374/artifacts/12370207384)
+preserves the report.
+
+The follow-up extends the pilot's telemetry collection to 180 seconds plus a
+120-second collect-only retry, and records response counts, event types,
+request-ID presence and marker joins without storing raw account-wide log
+content. `[observability]` already has `enabled = true` and
+`head_sampling_rate = 1`. A delay in ingestion and a filter/schema mismatch
+are both possible; neither is established by the previous report. If a later
+probe still yields no linked invocation, inspect `telemetry_diagnostics`
+before changing observability settings or CPU gate requirements. The longer
+wait still cannot manufacture missing platform CPU measurements.
+
 Retry logs within their retention window using the saved report:
 
 ```bash
