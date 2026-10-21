@@ -329,8 +329,24 @@ def attach_telemetry(report, events):
             '$metadata', {})
         if not isinstance(workers, dict) or not isinstance(metadata, dict):
             continue
-        request_id = workers.get('requestId')
-        if not isinstance(request_id, str) or not request_id:
+        # The Observability events API places requestId in $metadata.
+        # Older payloads may also put it in $workers. Do not guess an
+        # identity when both fields exist and disagree.
+        metadata_id = metadata.get('requestId')
+        workers_id = workers.get('requestId')
+        metadata_id = metadata_id if isinstance(
+            metadata_id, str) and metadata_id else None
+        workers_id = workers_id if isinstance(
+            workers_id, str) and workers_id else None
+        if metadata_id and workers_id and metadata_id != workers_id:
+            conflicts = report.setdefault(
+                'telemetry_conflicting_request_ids', [])
+            for value in (metadata_id, workers_id):
+                if value not in conflicts:
+                    conflicts.append(value)
+            continue
+        request_id = metadata_id or workers_id
+        if request_id is None:
             continue
         source = event.get('source', {})
         if isinstance(source, str):
@@ -345,7 +361,8 @@ def attach_telemetry(report, events):
                 pass
         marker = source.get('probe_marker') if isinstance(
             source, dict) else None
-        if marker in records and source.get('probe_run') == report['run_id']:
+        if (isinstance(marker, str) and marker in records
+                and source.get('probe_run') == report['run_id']):
             previous = links.get(marker)
             if previous and previous != request_id:
                 records[marker]['telemetry_conflict'] = True
@@ -370,6 +387,13 @@ def attach_telemetry(report, events):
                           or prior['outcome'] != value['outcome']):
                 value['conflict'] = True
             invocations[request_id] = value
+    # A conflicting platform request ID is never sufficient CPU evidence.
+    conflicting_ids = set(report.get(
+        'telemetry_conflicting_request_ids', []))
+    for marker, request_id in links.items():
+        if request_id in conflicting_ids and marker in records:
+            records[marker]['telemetry_conflict'] = True
+            records[marker].pop('telemetry', None)
     by_request_id = {}
     for marker, request_id in links.items():
         by_request_id.setdefault(request_id, []).append(marker)
@@ -450,7 +474,8 @@ def collect(report, wait_seconds):
                 diagnostics['log_events'] += sum(
                     isinstance(event, dict)
                     and isinstance(event.get('$metadata'), dict)
-                    and event['$metadata'].get('type') == 'cf-worker-log'
+                    and event['$metadata'].get('type') in (
+                        'cf-worker', 'cf-worker-log')
                     for event in events)
                 diagnostics['worker_request_ids'] += sum(
                     isinstance(event, dict)

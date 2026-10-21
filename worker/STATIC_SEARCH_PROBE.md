@@ -246,6 +246,27 @@ probe still yields no linked invocation, inspect `telemetry_diagnostics`
 before changing observability settings or CPU gate requirements. The longer
 wait still cannot manufacture missing platform CPU measurements.
 
+**Fourth live attempt (2026-10-21, run 39657017806 at 5edba96):**
+discovery passed (after one transient Error 1042) and the pilot returned HTTP
+200, but no CPU measurement was joined. The new diagnostics observed **308
+events across 83 queries**, including 154 `cf-worker-event` entries; counts
+include repeated polling, not unique events. All 308 event records had
+`$metadata.requestId`, and none had `$workers.requestId`. The previous
+collector incorrectly required the latter and also recognized only
+`cf-worker-log` as the custom-log type (rather than `cf-worker`).
+
+The fix joins the structured marker to **`$metadata.requestId`** with
+`$workers.requestId` as a compatibility fallback, rejects contradictory
+platform IDs, and accepts structured `cf-worker` console log events. CPU
+still comes **only from `cf-worker-event.$workers.cpuTimeMs`** with its
+platform outcome, never from custom timers, client durations or unlinked
+invocations. Synthetic regressions reproduce the actual metadata-only
+request-ID shape, event-order independence, and conflicting-ID rejection.
+This repair requires another fresh online run before claiming that Workers
+Free's sample CPU gate passes. See
+[run 39657017806](https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/39657017806)
+and [Cloudflare telemetry API schema](https://developers.cloudflare.com/api/resources/workers/subresources/observability/subresources/telemetry/methods/query/).
+
 Retry logs within their retention window using the saved report:
 
 ```bash

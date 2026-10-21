@@ -292,6 +292,83 @@ def test_redacted_urls_join_across_pages_and_ignore_custom_cpu():
     assert report['cpu_gate'] == 'failed'
 
 
+def test_metadata_request_id_and_structured_console_log_pass_cpu():
+    report = make_report()
+    invocations = []
+    logs = []
+    for index, row in enumerate(report['requests']):
+        request_id = f'platform-{index}'
+        invocations.append({
+            '$metadata': {'id': f'invocation-{index}',
+                          'type': 'cf-worker-event',
+                          'requestId': request_id, 'url': 'REDACTED'},
+            '$workers': {'cpuTimeMs': 2, 'outcome': 'ok'},
+        })
+        logs.append({
+            '$metadata': {'id': f'console-{index}',
+                          'type': 'cf-worker',
+                          'requestId': request_id},
+            '$workers': {'cpuTimeMs': 0},
+            'source': {'probe_marker': row['marker'],
+                       'probe_run': report['run_id'], 'cpu_ms': 0},
+        })
+    # Cloudflare can return invocation and console events on different pages.
+    attach_telemetry(report, invocations)
+    assert all('telemetry' not in row for row in report['requests'])
+    attach_telemetry(report, logs)
+    assert all(row['telemetry']['cpu_ms'] == 2
+               for row in report['requests'])
+    summarize(report)
+    assert report['cpu_gate'] == 'passed'
+
+
+def test_inconsistent_platform_request_ids_fail_closed():
+    report = make_report(1)
+    row = report['requests'][0]
+    events = [{
+        '$metadata': {'id': 'bad-log', 'type': 'cf-worker',
+                      'requestId': 'metadata-request'},
+        '$workers': {'requestId': 'workers-request'},
+        'source': {'probe_marker': row['marker'],
+                   'probe_run': report['run_id']},
+    }, {
+        '$metadata': {'id': 'matching-invocation',
+                      'type': 'cf-worker-event',
+                      'requestId': 'metadata-request'},
+        '$workers': {'cpuTimeMs': 1, 'outcome': 'ok'},
+    }]
+    attach_telemetry(report, events)
+    assert 'telemetry' not in row
+    assert set(report['telemetry_conflicting_request_ids']) == {
+        'metadata-request', 'workers-request',
+    }
+
+
+def test_conflicting_platform_id_detected_after_valid_join():
+    report = make_report(1)
+    row = report['requests'][0]
+    good = [{
+        '$metadata': {'type': 'cf-worker',
+                      'requestId': 'platform-request'},
+        'source': {'probe_marker': row['marker'],
+                   'probe_run': report['run_id']},
+    }, {
+        '$metadata': {'type': 'cf-worker-event',
+                      'requestId': 'platform-request'},
+        '$workers': {'cpuTimeMs': 2, 'outcome': 'ok'},
+    }]
+    attach_telemetry(report, good)
+    assert row['telemetry']['cpu_ms'] == 2
+    attach_telemetry(report, [{
+        '$metadata': {'type': 'cf-worker-event',
+                      'requestId': 'platform-request'},
+        '$workers': {'requestId': 'inconsistent-id',
+                     'cpuTimeMs': 1, 'outcome': 'ok'},
+    }])
+    assert row['telemetry_conflict'] is True
+    assert 'telemetry' not in row
+
+
 def test_ambiguous_request_identity_cannot_pass():
     report = make_report()
     events = events_for(report)
