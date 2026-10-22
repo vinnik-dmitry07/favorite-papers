@@ -149,12 +149,19 @@ Before merging, dispatch the implementation branch:
 ```bash
 gh workflow run agent-api.yml --ref feat/static-search-probe \
   -f static_probe=true -f probe_credentials=repository \
-  -f free_plan_confirmed=true
+  -f free_plan_confirmed=true -f probe_variant=wasm-json16
 ```
 
 The workflow deploys `key-papers-static-probe-RUN_ID-ATTEMPT`, waits up to
 60 seconds for `/probe/info`, checks one request's telemetry join, then measures
-all variants only if both checks pass. Discovery HTTP statuses, bounded response
+the selected `probe_variant` only if both checks pass. The default is now
+`wasm-json16`; other variants can be selected in the dispatch input.
+`probe_variant=all` remains available for comparative runs, but nine
+serial 50-sample matrices exceed the existing 25-minute job limit in
+the first live run. Run candidates separately to avoid losing the later
+variants to a timeout. A passing single-variant CPU gate establishes only
+that variant's synthetic observed-sample result, not a cross-variant
+comparison, semantic-search migration, or full Workers Free readiness. Discovery HTTP statuses, bounded response
 excerpts and transport errors are checkpointed before any matrix is sent.
 Only transient discovery failures are retried; wrong targets and permission
 errors stop immediately. Discovery retries are not CPU benchmark samples.
@@ -266,6 +273,34 @@ This repair requires another fresh online run before claiming that Workers
 Free's sample CPU gate passes. See
 [run 39657017806](https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/39657017806)
 and [Cloudflare telemetry API schema](https://developers.cloudflare.com/api/resources/workers/subresources/observability/subresources/telemetry/methods/query/).
+
+**Fifth live attempt (2026-10-21, run 39672859754 at 004d103):**
+`readiness_gate` and the marker-to-platform CPU telemetry pilot **passed**.
+The full nine-variant run was then cancelled by the 25-minute
+`static_probe` job limit during `js4-json128`. The Worker was deleted
+successfully; the report and raw samples are retained in
+[artifact 12382057129](https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/39672859754/artifacts/12382057129)
+(ZIP SHA-256 `2ebc6781950ce590cceb2666ff6becddc1d5fd2a11b9fbdc62abdffb106e7ab4`).
+A subsequent telemetry collection timed out, leaving missing records, but
+matched platform CPU measurements are real evidence. Do not treat incomplete
+telemetry or cancellation as passing any variant.
+
+| Live variant | Measured REST search CPU p50, cold/warm | MCP search CPU p50, cold/warm | Result |
+| --- | --- | --- | --- |
+| `js-json128` | 60 / 26 ms | 71 / 28 ms | Failed CPU gate |
+| `js-json16` | 54 / 32 ms | 58 / 38 ms | Failed CPU gate |
+| `js4-json128` | 43 / 34 ms | 45 / 16 ms (warm only 4 samples) | Failed, partial run |
+
+These medians describe only events with matched telemetry. All three
+variants had observed CPU values at or above the strict **8 ms** gate;
+`js4-json128` additionally produced HTTP 503 and `exceededCpu` outcomes.
+The first two ran 600 measured requests each (one transport error in
+`js-json16`); the third was interrupted after 326 attempts.
+The remaining six variants were **not tested** by this run. Worker runtime,
+memory, isolate-cold behavior and semantic retrieval quality are **unverified**.
+Avoid rerunning the already-failing JS baselines merely to reach the WASM
+candidates. This is an experiment on synthetic data, not authorization to
+upgrade Cloudflare or replace the production backend.
 
 Retry logs within their retention window using the saved report:
 

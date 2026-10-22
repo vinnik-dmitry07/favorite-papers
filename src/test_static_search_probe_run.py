@@ -497,6 +497,44 @@ def test_telemetry_diagnostics_distinguish_events_from_joins(monkeypatch):
     assert 'telemetry' not in report['preflight_requests'][0]
 
 
+def test_single_variant_scope_limits_cases_and_requests(tmp_path, monkeypatch):
+    from run_static_search_probe import EXPECTED_CASES
+
+    variants = ['js-json128', 'wasm-json16']
+    info = {
+        'synthetic': True,
+        'variants': variants,
+        'corpus_version': 'v1',
+        'longest_paper_id': 'paper',
+        'sample_query': 'query',
+    }
+    seen = []
+
+    def fake_discovery(report, _wait):
+        report['readiness_gate'] = 'passed'
+        return info
+
+    def fake_sample(report, kind, mode, seq, path, params=None, tool=None):
+        seen.append((report.get('active_variant'), kind, mode, seq))
+        return None
+
+    monkeypatch.setattr('run_static_search_probe.probe_info', fake_discovery)
+    monkeypatch.setattr('run_static_search_probe.sample', fake_sample)
+    output = tmp_path / 'single-variant.json'
+    assert main([
+        'http://127.0.0.1:8787', '--local', '--samples', '1',
+        '--variants', 'wasm-json16', '--output', str(output),
+    ]) == 0
+    report = json.loads(output.read_text(encoding='utf-8'))
+    assert report['variants'] == ['wasm-json16']
+    assert set(report['expected_cases']) == {
+        'wasm-json16.' + case for case in EXPECTED_CASES
+    }
+    assert len(report['expected_cases']) == 12
+    assert seen and all(row[0] == 'wasm-json16' for row in seen)
+    assert all('js-json128' not in case for case in report['expected_cases'])
+
+
 def test_failed_baseline_does_not_reject_a_passing_variant():
     report = make_report()
     original = report['requests']

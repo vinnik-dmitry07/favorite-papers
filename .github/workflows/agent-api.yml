@@ -62,6 +62,21 @@ on:
         description: 'I checked that the target account uses Workers Free'
         type: boolean
         default: false
+      probe_variant:
+        description: 'One synthetic variant per run; all may exceed the job timeout'
+        type: choice
+        options:
+          - wasm-json16
+          - wasm-rerank100
+          - wasm-int8
+          - wasm-binary200
+          - wasm-json128
+          - js4-json16
+          - js4-json128
+          - js-json16
+          - js-json128
+          - all
+        default: wasm-json16
 
 permissions:
   contents: read
@@ -112,6 +127,7 @@ jobs:
     environment: static-search-probe
     env:
       FREE_PLAN_CONFIRMED: ${{ inputs.free_plan_confirmed }}
+      PROBE_VARIANT: ${{ inputs.probe_variant || 'wasm-json16' }}
       WRANGLER_SEND_METRICS: 'false'
       PROBE_NAME: key-papers-static-probe-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
@@ -177,7 +193,7 @@ jobs:
         continue-on-error: true
         env:
           PROBE_ORIGIN: ${{ steps.deploy.outputs.origin }}
-        run: python src/run_static_search_probe.py "$PROBE_ORIGIN" --samples 50 --variants all --script-name "$PROBE_NAME" --output probe-report.json --wait-seconds 180
+        run: python src/run_static_search_probe.py "$PROBE_ORIGIN" --samples 50 --variants "$PROBE_VARIANT" --script-name "$PROBE_NAME" --output probe-report.json --wait-seconds 180
       - name: Retry delayed telemetry without resending measurements
         if: always() && steps.measure.outcome != 'skipped'
         continue-on-error: true
