@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import { outputs } from './contracts'
 import { handleRest } from './http'
 import probe, { createProbeService, type ProbeEnv } from './static-search-probe'
-import { pointLength } from './tokenize'
+import { pointLength, WordPieceTokenizer } from './tokenize'
 
 const VERSION = 'probe-v1'
 const PART_SIZE = 16000
@@ -136,6 +136,24 @@ describe('isolated synthetic probe', () => {
     expect(second.metadata.start).toBe(PART_SIZE)
     expect(second.metadata.previous_id).toBe(first.id)
     expect(second.text).toBe(Array.from(text).slice(PART_SIZE, PART_SIZE * 2).join(''))
+  })
+
+  it('avoids duplicate tokenization on MCP search without changing search behavior', async () => {
+    const { service } = build()
+    const tokenSpy = vi.spyOn(WordPieceTokenizer.prototype, 'tokenIds')
+
+    const result = await service.researchSearch('policy optimization', 'test')
+    expect(result.results.length).toBeGreaterThan(0)
+    expect(tokenSpy).toHaveBeenCalledTimes(1)
+
+    const direct = await service.search({ q: 'policy optimization', k: 5, ip: 'test' })
+    expect(direct.hits.length).toBeGreaterThan(0)
+    expect(tokenSpy).toHaveBeenCalledTimes(2)
+
+    tokenSpy.mockClear()
+    const exact = await service.researchSearch('Paper A', 'test')
+    expect(exact.results[0].title).toContain('Paper A')
+    expect(tokenSpy).toHaveBeenCalledTimes(1)
   })
 
   it('reads at most three static parts for arbitrary 32000-code-point windows', async () => {

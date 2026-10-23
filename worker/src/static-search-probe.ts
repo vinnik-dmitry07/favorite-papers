@@ -150,8 +150,8 @@ function queryTokens(query: string): number[] {
   return tokens
 }
 
-function syntheticQuery(query: string, manifest: Manifest): Float32Array {
-  const tokens = queryTokens(query)
+function syntheticQuery(query: string, manifest: Manifest, validatedTokens?: number[]): Float32Array {
+  const tokens = validatedTokens ?? queryTokens(query)
   let state = (2166136261 ^ manifest.seed) >>> 0
   for (const token of tokens) state = Math.imul(state ^ token, 16777619) >>> 0
   if (!state) state = 1
@@ -368,6 +368,38 @@ export function createProbeService(env: ProbeEnv, variant: Variant = 'js-json128
     fail('probe_unsupported', 501, 'this operation is outside the isolated synthetic runtime probe')
   }
 
+  // MCP search validates/tokenizes and ranks catalog candidates before it
+  // calls passage search. Reuse those values rather than repeating both tasks.
+  const performSearch = async (
+    args: Parameters<Service['search']>[0],
+    validatedTokens?: number[],
+    precomputedCatalog?: Awaited<ReturnType<typeof catalog>>,
+  ): ReturnType<Service['search']> => {
+    const k = parseBoundedInt(args.k, 5, 1, 8, 'k')
+    const value = await manifest()
+    const query = syntheticQuery(args.q, value, validatedTokens)
+    const ranked = await rank(query)
+    const metadata = precomputedCatalog ?? await catalog(args.q)
+    const hits: Awaited<ReturnType<Service['search']>>['hits'] = []
+    const seen = new Set<string>()
+    for (const match of ranked) {
+      const row = await record(match.index, value)
+      if (seen.has(row.paper_id)) continue
+      seen.add(row.paper_id)
+      const params = new URLSearchParams({ id: row.paper_id, offset: String(row.start),
+        version: value.corpus_version })
+      hits.push({ paper_id: row.paper_id, title: SYNTHETIC_TITLE + row.title, url: row.url,
+        chunk_index: row.chunk_index, score: match.score, snippet: slicePoints(row.snippet, 0, 480),
+        start: row.start, end: row.end, corpus_version: value.corpus_version,
+        content: `/v1/content?${params}` })
+      if (hits.length >= k) break
+    }
+    return { corpus_version: value.corpus_version, k, hits, metadata_hits: metadata.slice(0, k).map(({ node }) => ({
+      id: node.id, title: node.title, url: node.url, date: null,
+      section: node.section ?? null, quality: null, text_available: node.available,
+    })) }
+  }
+
   const service: Service = {
     health: unsupported, paper: unsupported, catalog: unsupported,
     citations: unsupported, traverse: unsupported,
@@ -419,33 +451,9 @@ export function createProbeService(env: ProbeEnv, variant: Variant = 'js-json128
       return { corpus_version: value.corpus_version, paper_id: row.id, available: row.available,
         matches, next_offset: next }
     },
-    async search(args) {
-      const k = parseBoundedInt(args.k, 5, 1, 8, 'k')
-      const value = await manifest()
-      const query = syntheticQuery(args.q, value)
-      const ranked = await rank(query)
-      const metadata = await catalog(args.q)
-      const hits: Awaited<ReturnType<Service['search']>>['hits'] = []
-      const seen = new Set<string>()
-      for (const match of ranked) {
-        const row = await record(match.index, value)
-        if (seen.has(row.paper_id)) continue
-        seen.add(row.paper_id)
-        const params = new URLSearchParams({ id: row.paper_id, offset: String(row.start),
-          version: value.corpus_version })
-        hits.push({ paper_id: row.paper_id, title: SYNTHETIC_TITLE + row.title, url: row.url,
-          chunk_index: row.chunk_index, score: match.score, snippet: slicePoints(row.snippet, 0, 480),
-          start: row.start, end: row.end, corpus_version: value.corpus_version,
-          content: `/v1/content?${params}` })
-        if (hits.length >= k) break
-      }
-      return { corpus_version: value.corpus_version, k, hits, metadata_hits: metadata.slice(0, k).map(({ node }) => ({
-        id: node.id, title: node.title, url: node.url, date: null,
-        section: node.section ?? null, quality: null, text_available: node.available,
-      })) }
-    },
+    search: performSearch,
     async researchSearch(query, ip) {
-      queryTokens(query)
+      const validatedTokens = queryTokens(query)
       // Include the same catalog prepass as the production MCP path.
       const candidates = await catalog(query)
       const exact = candidates.filter(({ score }) => score === 100)
@@ -456,7 +464,7 @@ export function createProbeService(env: ProbeEnv, variant: Variant = 'js-json128
           title: SYNTHETIC_TITLE + node.title, url: node.url || paperUrl(node),
         })) }
       }
-      const result = await service.search({ q: query, k: 5, ip })
+      const result = await performSearch({ q: query, k: 5, ip }, validatedTokens, candidates)
       const metadataResults = candidates.slice(0, 3).map(({ node }) => ({
         id: documentId({ paper: node.id, version: result.corpus_version, start: null }),
         title: SYNTHETIC_TITLE + node.title + ' (catalog record)', url: paperUrl(node),

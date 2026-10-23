@@ -408,3 +408,41 @@ bounded behavior is specific to the prototype and must be documented before any
 production migration. Match start/end offsets are Unicode code points. Snippets
 are capped at 480 code points and may be clipped at the scanned window; their
 context length differs from the current full-document production scan.
+
+**Sixth live attempt (2026-10-22, run 39741167440, commit 88976ab):**
+the targeted `wasm-json16` matrix completed all **600/600** measured REST/MCP
+requests successfully (12 cases × 50). Discovery, request-marker telemetry
+pilot and functional gate passed. However, Cloudflare platform CPU was linked
+for only **561/600** requests, and the observed values already fail the strict
+**<8 ms** CPU gate. The final telemetry collector also timed out; this
+does **not** invalidate the observed CPU exceedances. The Worker was deleted.
+
+| Operation | App-cold CPU p50/p95/max (ms) | Warm CPU p50/p95/max (ms) |
+| --- | --- | --- |
+| REST search | 61 / 112 / 124 | 10 / 43 / 63 |
+| MCP search | 62 / 160 / 246 | 12 / 74 / 101 |
+| MCP fetch | 6 / 26 / 51 | 3 / 9 / 49 |
+| Content | 4 / 13 / 37 | 1 / 2 / 3 |
+| Contents | 3 / 7 / 11 | 0 / 1 / 2 |
+| Find | 3 / 10 / 23 | 0 / 2 / 2 |
+
+All four search cases fail; the warm content, contents and find cases lack
+two or three CPU samples each and therefore remain unverified, not passed.
+The diagnostic warm CPU p50 was 5 ms for isolated PQ scan and 19 ms
+for adversarial tokenization; those timings are for distinct diagnostic
+requests, not additive parts of the production search timing. Even ordinary
+warm queries often exceed 8 ms. The 16-row metadata layout additionally
+requires more shard lookups. Neither simply increasing CI timeout nor
+waiting longer for telemetry can fix the observed CPU usage.
+
+See [run 39741167440](https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/39741167440),
+[the original artifact](https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/39741167440/artifacts/12409602014)
+and [permanent aggregated CPU evidence](probe-results/cloudflare-2026-10-22-wasm-json16.json).
+The follow-up removes redundant query tokenization and catalog ranking inside
+the **probe-only** MCP path, preserving the exact query validation and output
+logic. It is a source-level optimization, **not a measured CPU improvement**.
+The existing Worker Free target remains unfulfilled. Prefer separately
+profiling the remaining WASM candidates, optimizing cold asset initialization
+and hot scan/tokenization work, and rechecking the unchanged sample/quality
+gates before any migration.
+
