@@ -13,21 +13,76 @@ on:
       - src/test_publish_agent_index.py
       - src/build_agent_pages.py
       - src/test_agent_pages.py
+      - src/build_static_search_probe.py
+      - src/run_static_search_probe.py
+      - src/cleanup_static_search_probe.py
+      - src/summarize_static_search_probe.py
+      - src/reproduce_static_search_review.py
+      - src/test_static_search_probe.py
+      - src/test_static_search_probe_run.py
+      - src/test_static_search_probe_cleanup.py
       - src/common.py
       - src/build_fulltext_search.py
       - requirements-agent.txt
+      - requirements-probe-quality.txt
       - worker/**
       - .github/workflows/agent-api.yml
   push:
     branches: [main]
-    paths: *agent_paths
+    paths:
+      - assets/graph.json
+      - filter/fulltext/**
+      - src/build_agent_index.py
+      - src/publish_agent_index.py
+      - src/smoke_agent_api.py
+      - src/common.py
+      - worker/src/**
+      - '!worker/src/static-search*'
+      - '!worker/src/*.test.ts'
+      - '!worker/src/wasm.d.ts'
+      - worker/embed.json
+      - worker/package.json
+      - worker/package-lock.json
+      - worker/wrangler.toml
+      - worker/tokenizer/**
   workflow_dispatch:
+    inputs:
+      static_probe:
+        description: 'Deploy only the isolated synthetic static-search probe'
+        type: boolean
+        default: false
+      probe_credentials:
+        description: 'Probe credentials: existing CLOUDFLARE_* or separate PROBE_CLOUDFLARE_*'
+        type: choice
+        options:
+          - repository
+          - probe_environment
+        default: repository
+      free_plan_confirmed:
+        description: 'I checked that the target account uses Workers Free'
+        type: boolean
+        default: false
+      probe_variant:
+        description: 'One synthetic variant per run; all may exceed the job timeout'
+        type: choice
+        options:
+          - wasm-json16
+          - wasm-rerank100
+          - wasm-int8
+          - wasm-binary200
+          - wasm-json128
+          - js4-json16
+          - js4-json128
+          - js-json16
+          - js-json128
+          - all
+        default: wasm-json16
 
 permissions:
   contents: read
 
 concurrency:
-  group: agent-api
+  group: agent-api-${{ github.event_name == 'pull_request' && github.ref || (github.event_name == 'workflow_dispatch' && inputs.static_probe && 'probe' || 'publish') }}
   cancel-in-progress: false
 
 jobs:
@@ -43,7 +98,8 @@ jobs:
       - name: Offline tests
         run: |
           python -m pip install -r requirements-agent.txt
-          python -m pytest src/test_agent_index.py src/test_publish_agent_index.py src/test_agent_pages.py
+          python -m py_compile src/reproduce_static_search_review.py
+          python -m pytest src/test_agent_index.py src/test_publish_agent_index.py src/test_agent_pages.py src/test_static_search_probe.py src/test_static_search_probe_run.py src/test_static_search_probe_cleanup.py
       - name: Node
         uses: actions/setup-node@v4
         with:
@@ -54,12 +110,134 @@ jobs:
         working-directory: worker
         run: |
           npm ci
+          npm run build:probe
           npm run typecheck
           npm test
+      - name: Build the full synthetic fixture
+        run: python src/build_static_search_probe.py
+      - name: Validate the isolated probe bundle without deploying
+        working-directory: worker
+        run: npx wrangler deploy --config wrangler.probe.toml --dry-run
+
+  static_probe:
+    needs: offline
+    if: github.event_name == 'workflow_dispatch' && inputs.static_probe
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    environment: static-search-probe
+    env:
+      FREE_PLAN_CONFIRMED: ${{ inputs.free_plan_confirmed }}
+      PROBE_VARIANT: ${{ inputs.probe_variant || 'wasm-json16' }}
+      WRANGLER_SEND_METRICS: 'false'
+      PROBE_NAME: key-papers-static-probe-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - name: Check the selected account and credentials
+        env:
+          PROBE_CREDENTIALS: ${{ inputs.probe_credentials }}
+          REPOSITORY_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          REPOSITORY_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          PROBE_ACCOUNT_ID: ${{ secrets.PROBE_CLOUDFLARE_ACCOUNT_ID }}
+          PROBE_API_TOKEN: ${{ secrets.PROBE_CLOUDFLARE_API_TOKEN }}
+        run: |
+          if [ "$FREE_PLAN_CONFIRMED" != 'true' ]; then
+            echo '::error::This experiment requires a Workers Free account. Check its plan in Cloudflare, then select free_plan_confirmed. The workflow never changes the plan.'
+            exit 1
+          fi
+          case "$PROBE_CREDENTIALS" in
+            repository)
+              CLOUDFLARE_ACCOUNT_ID="$REPOSITORY_ACCOUNT_ID"
+              CLOUDFLARE_API_TOKEN="$REPOSITORY_API_TOKEN"
+              secret_names='CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN'
+              ;;
+            probe_environment)
+              CLOUDFLARE_ACCOUNT_ID="$PROBE_ACCOUNT_ID"
+              CLOUDFLARE_API_TOKEN="$PROBE_API_TOKEN"
+              secret_names='PROBE_CLOUDFLARE_ACCOUNT_ID and PROBE_CLOUDFLARE_API_TOKEN'
+              ;;
+            *)
+              echo '::error::Select repository or probe_environment for probe_credentials.'
+              exit 1
+              ;;
+          esac
+          if [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "::error::The selected credential pair is incomplete. Set both $secret_names. See worker/STATIC_SEARCH_PROBE.md."
+            exit 1
+          fi
+          printf 'CLOUDFLARE_ACCOUNT_ID=%s\nCLOUDFLARE_API_TOKEN=%s\n' \
+            "$CLOUDFLARE_ACCOUNT_ID" "$CLOUDFLARE_API_TOKEN" >> "$GITHUB_ENV"
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: worker/package-lock.json
+      - name: Build the complete synthetic fixture
+        run: python src/build_static_search_probe.py
+      - name: Install pinned worker dependencies
+        working-directory: worker
+        run: npm ci
+      - name: Deploy the isolated probe
+        id: deploy
+        working-directory: worker
+        run: |
+          set -o pipefail
+          npx wrangler deploy --config wrangler.probe.toml --name "$PROBE_NAME" 2>&1 | tee probe-deploy.txt
+          python -c "import os, pathlib, sys; sys.path.insert(0, '../src'); from write_discovery_links import worker_origin; origin=worker_origin(pathlib.Path('probe-deploy.txt').read_text(encoding='utf-8'), os.environ['PROBE_NAME']); sys.exit('deploy did not print the probe origin') if not origin else print('origin=' + origin)" >> "$GITHUB_OUTPUT"
+      - name: Measure REST and MCP with platform CPU telemetry
+        id: measure
+        continue-on-error: true
+        env:
+          PROBE_ORIGIN: ${{ steps.deploy.outputs.origin }}
+        run: python src/run_static_search_probe.py "$PROBE_ORIGIN" --samples 50 --variants "$PROBE_VARIANT" --script-name "$PROBE_NAME" --output probe-report.json --wait-seconds 180
+      - name: Retry delayed telemetry without resending measurements
+        if: always() && steps.measure.outcome != 'skipped'
+        continue-on-error: true
+        run: |
+          if [ -f probe-report.json ]; then
+            python src/run_static_search_probe.py --collect-only probe-report.json --output probe-report.json --wait-seconds 120
+          fi
+      - name: Remove only this run's isolated Worker
+        if: always() && (steps.deploy.outcome == 'success' || steps.deploy.outcome == 'failure')
+        run: python src/cleanup_static_search_probe.py "$PROBE_NAME"
+      - name: Preserve measurements even when the gate fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: static-search-probe-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            probe-report.json
+            agent_probe/probe/measurements.json
+            agent_probe/probe/index.json
+            worker/probe-deploy.txt
+          if-no-files-found: ignore
+          retention-days: 7
+      - name: Report the final measurement gate
+        if: always() && steps.measure.outcome != 'skipped'
+        run: |
+          python - <<'PYTHON'
+          import json
+          from pathlib import Path
+          path = Path('probe-report.json')
+          if not path.exists():
+              raise SystemExit('Probe report is missing; inspect the measurement step. CPU remains unverified.')
+          report = json.loads(path.read_text())
+          print('Discovery:', report.get('readiness_gate', 'unverified'))
+          print('Preflight:', report.get('preflight_gate', 'unverified'))
+          print('Telemetry diagnostics:', json.dumps(
+              report.get('telemetry_diagnostics', {}), sort_keys=True))
+          print('Telemetry error:', report.get('telemetry_error'))
+          print(json.dumps(report.get('variant_gates', {}), indent=2))
+          raise SystemExit(0 if report.get('cpu_gate') == 'passed' else 1)
+          PYTHON
 
   publish:
     needs: offline
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && !inputs.static_probe
     runs-on: ubuntu-latest
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

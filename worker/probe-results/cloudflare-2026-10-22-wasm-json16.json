@@ -1,0 +1,220 @@
+{
+  "schema_version": 1,
+  "source": {
+    "repository": "vinnik-dmitry07/favorite-papers",
+    "workflow_run": 39741167440,
+    "commit": "88976aba35b773be13ecf45c1cb035eb7a783fcc",
+    "artifact_id": 12409602014,
+    "artifact_name": "static-search-probe-39741167440-1",
+    "artifact_url": "https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/39741167440/artifacts/12409602014"
+  },
+  "fixture": {
+    "synthetic": true,
+    "rows": 40575,
+    "dimensions": 768,
+    "subquantizers": 96,
+    "centroids": 256,
+    "small_metadata_shard_rows": 16
+  },
+  "observations": {
+    "readiness_gate": "passed",
+    "preflight_gate": "passed",
+    "functional_gate": "passed",
+    "cpu_gate": "failed",
+    "runtime_gate": "unverified",
+    "warm_isolation": "app-cache-only",
+    "sample_count": 600,
+    "successful_requests": 600,
+    "cpu_records_matched": 561,
+    "cpu_records_missing": 39,
+    "telemetry_error": "TimeoutError: The read operation timed out",
+    "telemetry_diagnostics": {
+      "queries": 77,
+      "events_across_queries": 88076,
+      "invocation_events": 44009,
+      "log_events": 44067,
+      "linked_invocations": 637,
+      "linked_markers": 636
+    },
+    "strict_cpu_threshold_ms": 8
+  },
+  "cases": [
+    {
+      "operation": "content",
+      "cache": "application_cold",
+      "samples": 50,
+      "matched": 47,
+      "missing": 3,
+      "p50_ms": 4,
+      "p95_ms": 13,
+      "max_ms": 37,
+      "case_gate": "failed"
+    },
+    {
+      "operation": "content",
+      "cache": "warm",
+      "samples": 50,
+      "matched": 48,
+      "missing": 2,
+      "p50_ms": 1,
+      "p95_ms": 2,
+      "max_ms": 3,
+      "case_gate": "unverified"
+    },
+    {
+      "operation": "contents",
+      "cache": "application_cold",
+      "samples": 50,
+      "matched": 47,
+      "missing": 3,
+      "p50_ms": 3,
+      "p95_ms": 7,
+      "max_ms": 11,
+      "case_gate": "failed"
+    },
+    {
+      "operation": "contents",
+      "cache": "warm",
+      "samples": 50,
+      "matched": 48,
+      "missing": 2,
+      "p50_ms": 0,
+      "p95_ms": 1,
+      "max_ms": 2,
+      "case_gate": "unverified"
+    },
+    {
+      "operation": "find",
+      "cache": "application_cold",
+      "samples": 50,
+      "matched": 48,
+      "missing": 2,
+      "p50_ms": 3,
+      "p95_ms": 10,
+      "max_ms": 23,
+      "case_gate": "failed"
+    },
+    {
+      "operation": "find",
+      "cache": "warm",
+      "samples": 50,
+      "matched": 48,
+      "missing": 2,
+      "p50_ms": 0,
+      "p95_ms": 2,
+      "max_ms": 2,
+      "case_gate": "unverified"
+    },
+    {
+      "operation": "mcp_fetch",
+      "cache": "application_cold",
+      "samples": 50,
+      "matched": 46,
+      "missing": 4,
+      "p50_ms": 6,
+      "p95_ms": 26,
+      "max_ms": 51,
+      "case_gate": "failed"
+    },
+    {
+      "operation": "mcp_fetch",
+      "cache": "warm",
+      "samples": 50,
+      "matched": 46,
+      "missing": 4,
+      "p50_ms": 3,
+      "p95_ms": 9,
+      "max_ms": 49,
+      "case_gate": "failed"
+    },
+    {
+      "operation": "mcp_search",
+      "cache": "application_cold",
+      "samples": 50,
+      "matched": 44,
+      "missing": 6,
+      "p50_ms": 62,
+      "p95_ms": 160,
+      "max_ms": 246,
+      "case_gate": "failed"
+    },
+    {
+      "operation": "mcp_search",
+      "cache": "warm",
+      "samples": 50,
+      "matched": 48,
+      "missing": 2,
+      "p50_ms": 12,
+      "p95_ms": 74,
+      "max_ms": 101,
+      "case_gate": "failed"
+    },
+    {
+      "operation": "rest_search",
+      "cache": "application_cold",
+      "samples": 50,
+      "matched": 47,
+      "missing": 3,
+      "p50_ms": 61,
+      "p95_ms": 112,
+      "max_ms": 124,
+      "case_gate": "failed"
+    },
+    {
+      "operation": "rest_search",
+      "cache": "warm",
+      "samples": 50,
+      "matched": 44,
+      "missing": 6,
+      "p50_ms": 10,
+      "p95_ms": 43,
+      "max_ms": 63,
+      "case_gate": "failed"
+    }
+  ],
+  "diagnostic_stages": {
+    "stage_noop.application_cold": {
+      "samples": 10,
+      "matched": 10,
+      "p50_ms": 0,
+      "max_ms": 1
+    },
+    "stage_noop.warm": {
+      "samples": 10,
+      "matched": 10,
+      "p50_ms": 0,
+      "max_ms": 0
+    },
+    "stage_scan.application_cold": {
+      "samples": 10,
+      "matched": 9,
+      "p50_ms": 25,
+      "max_ms": 51
+    },
+    "stage_scan.warm": {
+      "samples": 10,
+      "matched": 10,
+      "p50_ms": 5,
+      "max_ms": 27
+    },
+    "stage_tokenize.application_cold": {
+      "samples": 10,
+      "matched": 7,
+      "p50_ms": 20,
+      "max_ms": 27
+    },
+    "stage_tokenize.warm": {
+      "samples": 10,
+      "matched": 10,
+      "p50_ms": 19,
+      "max_ms": 45
+    }
+  },
+  "limitations": [
+    "CPU p50/p95/max use matched platform invocations, not client wall time.",
+    "Repeated telemetry-query result counts do not represent unique events.",
+    "Missing CPU measurements prevent passing the sample gate; observed >8ms values independently establish failure.",
+    "Cold resets application caches, not the V8 isolate.",
+    "Semantic quality, isolate-cold, memory and runtime gates remain unverified."
+  ]
+}

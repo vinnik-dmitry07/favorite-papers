@@ -232,13 +232,17 @@ export class WordPieceTokenizer {
     if (whole !== undefined) {
       return [whole]
     }
+    // Index UTF-16 boundaries once; avoid allocating/joining every failed
+    // WordPiece candidate (cubic work for long unfamiliar words).
+    const offsets = [0]
+    for (const char of chars) offsets.push(offsets[offsets.length - 1] + char.length)
     const ids: number[] = []
     let start = 0
     while (start < chars.length) {
       let end = chars.length
       let found: number | undefined
       while (start < end) {
-        let piece = chars.slice(start, end).join('')
+        let piece = token.slice(offsets[start], offsets[end])
         if (start > 0) {
           piece = `##${piece}`
         }

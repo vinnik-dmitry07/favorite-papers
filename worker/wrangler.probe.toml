@@ -1,0 +1,23 @@
+# Isolated, synthetic capacity experiment. Never use as the production API.
+name = "key-papers-static-probe"
+main = "src/static-search-probe-entry.ts"
+compatibility_date = "2026-10-15"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+[assets]
+directory = "../agent_probe"
+binding = "ASSETS"
+run_worker_first = ["/", "/v1/*", "/mcp", "/probe/*"]
+
+[observability]
+enabled = true
+head_sampling_rate = 1
+
+[[rules]]
+type = "Text"
+globs = ["**/*.txt"]
+fallthrough = true
+
+[build]
+command = "npm run build:probe"

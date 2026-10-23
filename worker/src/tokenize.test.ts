@@ -43,3 +43,25 @@ describe('signatures', () => {
     expect(await sha256Hex('abc')).toHaveLength(64)
   })
 })
+
+it('keeps greedy WordPiece behavior on long words and supplementary Unicode', () => {
+  const vocabulary = ['[UNK]', '[CLS]', '[SEP]', 'q', '##q', '🧪', '##🧪']
+  const tokenizer = new WordPieceTokenizer(vocabulary.join('\n'))
+  function reference(word: string) {
+    const chars = Array.from(word)
+    if (chars.length > 100) return [0]
+    const result: number[] = []
+    for (let start = 0; start < chars.length;) {
+      let end = chars.length
+      while (end > start && !vocabulary.includes((start ? '##' : '') + chars.slice(start, end).join(''))) end--
+      if (end === start) return [0]
+      result.push(vocabulary.indexOf((start ? '##' : '') + chars.slice(start, end).join('')))
+      start = end
+    }
+    return result
+  }
+  for (const suffix of ['z', '🧪', 'q']) for (const n of [0, 1, 50, 99, 100]) {
+    const word = 'q'.repeat(n) + suffix
+    expect(tokenizer.tokenIds('', word)).toEqual([1, ...reference(word), 2])
+  }
+})

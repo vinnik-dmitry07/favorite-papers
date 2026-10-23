@@ -29,8 +29,10 @@ assets/fulltext_search.js
 
 # Agent API build output (derived; the worker reads R2, not this directory)
 agent_build/
+agent_probe/
+probe-report*.json
 site/
-worker/node_modules/
+worker/node_modules
 worker/.wrangler/
 worker/dist/
 
@@ -60,3 +62,5 @@ env/
 .vscode/
 .DS_Store
 Thumbs.db
+
+worker/probe-kernel/scan.wasm

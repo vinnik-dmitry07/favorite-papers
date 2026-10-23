@@ -2,6 +2,16 @@
 
 Public read API for the citation catalog. Start with the [static agent guide](https://vinnik-dmitry07.github.io/favorite-papers/agents/) for a catalog, complete paginated citation lists, and readable text. It needs no API or JavaScript. REST and stateless MCP add title lookup, section navigation, literal search and semantic search. The guide advertises the API only after deployment and live checks succeed.
 
+The [static-search feasibility probe](STATIC_SEARCH_PROBE.md) tests a possible
+Workers Free replacement for the full Vectorize index. It is isolated and uses
+synthetic vectors; it is not a deployed semantic search service. Its workflow
+reuses existing `CLOUDFLARE_*` repository secrets by default, with an explicit
+option for a separate account's `PROBE_CLOUDFLARE_*` environment secrets. It
+does not require `AGENT_DIMENSION_BUDGET` and deletes its uniquely named Worker
+after collection.
+The shared catalog/tokenizer optimizations are reviewed code changes; this probe
+does not deploy the production Worker or alter its Cloudflare bindings.
+
 Acceptance criteria:
 
 - **R1.** Catalog ids, edge direction, and evidence are preserved. An edge `[source, target, evidence]` means source cites target. `cites` on a node is the in-degree. `refs` is the out-degree. Evidence is `id`, `title`, or `url` (`title` is the weaker match). API ids are the catalog strings (`arxiv:`, `doi:`, `openreview:`, `acl:`, `url:`). They are case-sensitive and are never shortened to `safe_key()`.

@@ -1,3 +1,4 @@
+import { rankedCatalog } from './catalog-search'
 import { CorpusCache, type CorpusStore, type NodeCard } from './corpus'
 import { DomainError, fail, parseBoundedInt, parseId, parseOffset } from './schemas'
 import { canonicalJson, signatures, sha256Hex } from './signatures'
@@ -42,31 +43,6 @@ const SITE = 'https://vinnik-dmitry07.github.io/favorite-papers'
 export const CONTENT_MAX = 32000
 export const FETCH_PART_SIZE = 16000
 
-function normalize(value: string): string {
-  return value.normalize('NFKC').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim()
-}
-
-function catalogScore(node: NodeCard, query: string): number {
-  const q = normalize(query)
-  if (!q) return 1
-  const title = normalize(node.title)
-  const id = normalize(node.id)
-  const url = normalize(node.url ?? '')
-  if ([title, id, url].includes(q)) return 100
-  if (title.includes(q)) return 50
-  if (id.includes(q) || url.includes(q)) return 40
-  const terms = q.split(/\s+/)
-  const haystack = `${title} ${normalize(node.section ?? '')} ${normalize(node.topic ?? '')}`
-  return terms.every((term) => haystack.includes(term)) ? 10 : 0
-}
-
-function rankedCatalog(nodes: Record<string, NodeCard>, query: string, section?: string) {
-  return Object.values(nodes)
-    .filter((node) => !section || node.section === section)
-    .map((node) => ({ node, score: catalogScore(node, query) }))
-    .filter((item) => item.score > 0)
-    .sort((a, b) => b.score - a.score || a.node.id.localeCompare(b.node.id))
-}
 
 function contentsOf(text: string) {
   const result: { title: string, level: number, offset: number }[] = []
