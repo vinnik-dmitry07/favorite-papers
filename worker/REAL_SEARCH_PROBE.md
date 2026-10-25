@@ -74,10 +74,54 @@ against canonical files. A successful search/read integration is not a claim
 that the returned passage itself was correct. No external LLM agent evaluation
 or full-corpus quality gate has run.
 
-## One bounded live run
+## Live result on October 25
 
-Actual local-versus-Workers-AI compatibility has **not yet been tested**. The
-live phase first compares 200 deterministically spread canonical passages
+[Run 40238828496](https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/40238828496)
+completed on source `4723db4635bd6d2865211e1527f014460e1405da`.
+The [permanent evidence](probe-results/cloudflare-2026-10-25-real-subset.json)
+links compressed original reports, manifests and response bodies with hashes.
+
+| Measurement | Result |
+| --- | --- |
+| Local / Workers AI compatibility | 200/200 passed; minimum cosine 0.9999993413 |
+| REST / MCP search-read journeys | 6/6 each passed their contracts |
+| Source-backed answer checks | Both questions passed in both read contexts |
+| Passage diagnostic | Failed: GRPO settings still returns chunk 59 |
+| Gateway platform CPU | 44/45 records; observed maximum 3 ms |
+| Object platform CPU | 45/45 records; observed maximum 92 ms |
+| REST / MCP search client median | 212 / 156 ms, six observations each |
+| AI budget used | 212 texts, 12 query embeddings, 35,437 tokens, 25 calls |
+| Cleanup | Namespace absence verified; Worker removed |
+
+There were 46 HTTP attempts: one unidentified initial workers.dev 404, then
+45 expected responses. These include the intentional 503 before compatibility,
+409 for a stale version and 400 for an oversized query. All matched platform
+outcomes were `ok`; there were no identity conflicts. The missing gateway CPU
+record is the pre-compatibility search guard, so aggregate CPU/sample gates
+remain **unverified**. The collector timed out after 101 successful queries
+and 102 telemetry HTTP attempts. This is separate from the service budget.
+
+An independent artifact audit checked all hashes, source text/offsets and the
+35,437-token total. It verified the 200 recorded cosine values and their indices;
+the remote vectors were not retained for offline cosine recomputation. The
+unchanged local vector hash matches the earlier workstation build.
+
+The green job establishes this small development integration. It does not
+establish full-corpus quality, memory headroom, account-wide quota fit, isolate
+cold-start behavior or an external LLM agent journey. The two content checks
+use the disclosed post-observation oracle revision; the passage miss remains
+visible. No production endpoint was published.
+
+The next stage is an offline full-corpus build with an explicit memory budget
+and separate retrieval/answer quality evaluation. Do not repeat this identical
+small probe merely to obtain a green aggregate CPU gate. Logs and enabled traces
+can be investigated separately without another workload if there is a specific
+diagnostic reason.
+
+## Reproduce the bounded live run
+
+The command below has already been used for this source. The live phase first
+compares 200 deterministically spread canonical passages
 against `@cf/baai/bge-base-en-v1.5`. Every cosine must be at least **0.999**.
 Sixteen texts per batch require 13 batches. Semantic search remains blocked
 until all compatibility checks pass.
