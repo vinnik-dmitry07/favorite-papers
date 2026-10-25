@@ -246,3 +246,8 @@ Do not repeat a large matrix solely to retry until all logs happen to arrive.
 Neither a passed synthetic sample gate nor a passed pilot authorizes production
 publication. A failed implementation calls for a causal diagnosis; it does not
 select a paid plan or reject every static search design.
+
+The real-subset stage is now implemented; see [Real search integration
+probe](REAL_SEARCH_PROBE.md) for the 390-passage local evidence, the preserved
+failed passage diagnostic, and the bounded `do_probe_phase=real` command.
+Its preparation does not change this synthetic experiment's unverified CPU gate.

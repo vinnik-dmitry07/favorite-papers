@@ -1,0 +1,6 @@
+# CPU-only, pinned local BGE encoder; not installed for ordinary API publishing.
+# The +cpu wheel is distributed by the official PyTorch CPU index on Linux.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.8.0+cpu
+transformers==4.57.1
+numpy==2.3.4

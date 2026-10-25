@@ -1,0 +1,40 @@
+# Isolated real-subset experiment. CI supplies its run-specific name and secrets.
+name = "key-papers-static-probe"
+main = "src/real-search-do-probe.ts"
+compatibility_date = "2026-10-15"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+[assets]
+directory = "../agent_real_probe"
+binding = "ASSETS"
+run_worker_first = true
+
+[ai]
+binding = "AI"
+
+[[durable_objects.bindings]]
+name = "SEARCH_PROBE"
+class_name = "StaticSearchProbe"
+
+[exports.StaticSearchProbe]
+type = "durable-object"
+storage = "sqlite"
+
+[observability]
+enabled = true
+head_sampling_rate = 1
+
+[observability.logs]
+enabled = true
+head_sampling_rate = 1
+invocation_logs = true
+
+[observability.traces]
+enabled = true
+head_sampling_rate = 1
+
+[[rules]]
+type = "Text"
+globs = ["**/*.txt"]
+fallthrough = true

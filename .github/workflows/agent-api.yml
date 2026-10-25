@@ -22,6 +22,13 @@ on:
       - src/test_static_search_do_probe.py
       - src/prepare_static_search_do_collection.py
       - src/test_prepare_static_search_do_collection.py
+      - src/build_real_search_probe.py
+      - src/embed_real_search_probe.py
+      - src/run_real_search_probe.py
+      - src/test_real_search_probe.py
+      - src/test_embed_real_search_probe.py
+      - src/test_run_real_search_probe.py
+      - src/test_real_search_workflow.py
       - src/summarize_static_search_probe.py
       - src/reproduce_static_search_review.py
       - src/test_static_search_probe.py
@@ -31,6 +38,7 @@ on:
       - src/build_fulltext_search.py
       - requirements-agent.txt
       - requirements-probe-quality.txt
+      - requirements-real-probe.txt
       - worker/**
       - .github/workflows/agent-api.yml
   push:
@@ -44,6 +52,8 @@ on:
       - src/common.py
       - worker/src/**
       - '!worker/src/static-search*'
+      - '!worker/src/real-search*'
+      - '!worker/src/static-corpus-store.ts'
       - '!worker/src/*.test.ts'
       - '!worker/src/wasm.d.ts'
       - worker/embed.json
@@ -54,18 +64,18 @@ on:
   workflow_dispatch:
     inputs:
       static_probe:
-        description: 'Deploy only the isolated synthetic static-search probe'
+        description: 'Deploy only an isolated static-search probe'
         type: boolean
         default: false
       probe_runtime:
-        description: 'Execution runtime for the isolated synthetic probe'
+        description: 'Execution runtime for the isolated probe'
         type: choice
         options: [worker, durable-object]
         default: worker
       do_probe_phase:
-        description: 'DO pilot, full matrix, or read-only collection of existing run logs'
+        description: 'DO synthetic pilot/matrix, read-only log collection, or bounded real-subset integration'
         type: choice
-        options: [pilot, matrix, collect]
+        options: [pilot, matrix, collect, real]
         default: pilot
       do_pilot_run_id:
         description: 'For DO matrix only: successful pilot run ID on this exact commit'
@@ -124,7 +134,7 @@ jobs:
         run: |
           python -m pip install -r requirements-agent.txt
           python -m py_compile src/reproduce_static_search_review.py
-          python -m pytest src/test_agent_index.py src/test_publish_agent_index.py src/test_agent_pages.py src/test_static_search_probe.py src/test_static_search_probe_run.py src/test_static_search_probe_cleanup.py src/test_static_search_do_lifecycle.py src/test_static_search_do_probe.py src/test_prepare_static_search_do_collection.py
+          python -m pytest src/test_agent_index.py src/test_publish_agent_index.py src/test_agent_pages.py src/test_static_search_probe.py src/test_static_search_probe_run.py src/test_static_search_probe_cleanup.py src/test_static_search_do_lifecycle.py src/test_static_search_do_probe.py src/test_prepare_static_search_do_collection.py src/test_real_search_probe.py src/test_embed_real_search_probe.py src/test_run_real_search_probe.py src/test_real_search_workflow.py
       - name: Node
         uses: actions/setup-node@v4
         with:
@@ -140,15 +150,18 @@ jobs:
           npm test
       - name: Build the full synthetic fixture
         run: python src/build_static_search_probe.py
+      - name: Build the canonical real subset without model downloads
+        run: python src/build_real_search_probe.py --out agent_real_probe
       - name: Validate the isolated probe bundle without deploying
         working-directory: worker
         run: |
           npx wrangler deploy --config wrangler.probe.toml --dry-run
           npx wrangler deploy --config wrangler.do-probe.toml --dry-run
+          npx wrangler deploy --config wrangler.real-probe.toml --dry-run
 
   static_probe:
     needs: offline
-    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime != 'durable-object' && inputs.do_probe_phase != 'collect'
+    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime != 'durable-object' && inputs.do_probe_phase != 'collect' && inputs.do_probe_phase != 'real'
     runs-on: ubuntu-latest
     timeout-minutes: 25
     environment: static-search-probe
@@ -264,7 +277,7 @@ jobs:
 
   static_do_probe:
     needs: offline
-    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase != 'collect'
+    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase != 'collect' && inputs.do_probe_phase != 'real'
     runs-on: ubuntu-latest
     timeout-minutes: 50
     environment: static-search-probe
@@ -512,9 +525,180 @@ jobs:
           if-no-files-found: ignore
           retention-days: 90
 
+  static_real_probe:
+    needs: offline
+    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase == 'real'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    environment: static-search-probe
+    env:
+      FREE_PLAN_CONFIRMED: ${{ inputs.free_plan_confirmed }}
+      WRANGLER_SEND_METRICS: 'false'
+      PROBE_NAME: key-papers-static-do-probe-${{ github.run_id }}-${{ github.run_attempt }}
+      HF_HUB_DISABLE_TELEMETRY: '1'
+      TOKENIZERS_PARALLELISM: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: worker/package-lock.json
+      - name: Check the Free account and selected credentials
+        env:
+          PROBE_CREDENTIALS: ${{ inputs.probe_credentials }}
+          REPOSITORY_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          REPOSITORY_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          PROBE_ACCOUNT_ID: ${{ secrets.PROBE_CLOUDFLARE_ACCOUNT_ID }}
+          PROBE_API_TOKEN: ${{ secrets.PROBE_CLOUDFLARE_API_TOKEN }}
+        run: |
+          if [ "$FREE_PLAN_CONFIRMED" != 'true' ]; then
+            echo '::error::Confirm the selected account is Workers Free. This workflow never changes its plan.'
+            exit 1
+          fi
+          case "$PROBE_CREDENTIALS" in
+            repository)
+              CLOUDFLARE_ACCOUNT_ID="$REPOSITORY_ACCOUNT_ID"
+              CLOUDFLARE_API_TOKEN="$REPOSITORY_API_TOKEN"
+              ;;
+            probe_environment)
+              CLOUDFLARE_ACCOUNT_ID="$PROBE_ACCOUNT_ID"
+              CLOUDFLARE_API_TOKEN="$PROBE_API_TOKEN"
+              ;;
+            *)
+              echo '::error::Select repository or probe_environment for probe_credentials.'
+              exit 1
+              ;;
+          esac
+          if [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo '::error::The selected credential pair is incomplete.'
+            exit 1
+          fi
+          printf 'CLOUDFLARE_ACCOUNT_ID=%s\nCLOUDFLARE_API_TOKEN=%s\n' \
+            "$CLOUDFLARE_ACCOUNT_ID" "$CLOUDFLARE_API_TOKEN" >> "$GITHUB_ENV"
+      - name: Refuse to leave another probe namespace behind
+        run: python src/static_search_do_lifecycle.py preflight "$PROBE_NAME"
+      - name: Build the complete-paper real subset
+        run: python src/build_real_search_probe.py --out agent_real_probe
+      - name: Install the pinned CPU embedding environment
+        timeout-minutes: 10
+        run: python -m pip install -r requirements-real-probe.txt
+      - name: Generate pinned BGE FP32 vectors and local query vectors
+        timeout-minutes: 12
+        run: |
+          python src/embed_real_search_probe.py --out agent_real_probe \
+            --cache-dir .cache/real-probe-embeddings --threads 4 --batch-size 8 \
+            --query-vectors local-query-vectors.json --report local-encoder-report.json
+      - name: Install pinned worker dependencies
+        working-directory: worker
+        run: npm ci
+      - name: Validate real vectors through production REST and MCP locally
+        working-directory: worker
+        env:
+          REAL_PROBE_DIR: ${{ github.workspace }}/agent_real_probe
+          REAL_PROBE_QUERY_VECTORS: ${{ github.workspace }}/local-query-vectors.json
+          REAL_PROBE_REPORT: ${{ github.workspace }}/local-real-integration.json
+        run: npx vitest run src/real-search-integration.test.ts
+      - name: Pin the manifest and create expiring access credentials
+        run: |
+          python - <<'PYTHON'
+          from datetime import datetime, timedelta, timezone
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          import secrets
+          manifest = Path('agent_real_probe/probe.json')
+          digest = hashlib.sha256(manifest.read_bytes()).hexdigest()
+          token = secrets.token_urlsafe(32)
+          print('::add-mask::' + token)
+          expiry = (datetime.now(timezone.utc) + timedelta(minutes=45)).isoformat()
+          with open(os.environ['GITHUB_ENV'], 'a') as output:
+              output.write('PROBE_TOKEN=' + token + '\n')
+              output.write('PROBE_EXPIRES_AT=' + expiry + '\n')
+              output.write('PROBE_MANIFEST_SHA=' + digest + '\n')
+          secret_file = Path(os.environ['RUNNER_TEMP']) / 'real-probe-secrets.json'
+          secret_file.write_text(json.dumps({'PROBE_TOKEN': token}))
+          secret_file.chmod(0o600)
+          PYTHON
+      - name: Deploy only this run's real-subset Durable Object
+        id: deploy
+        timeout-minutes: 8
+        working-directory: worker
+        run: |
+          set -o pipefail
+          npx wrangler deploy --config wrangler.real-probe.toml --name "$PROBE_NAME" \
+            --secrets-file "$RUNNER_TEMP/real-probe-secrets.json" \
+            --var "PROBE_EXPIRES_AT:$PROBE_EXPIRES_AT" \
+            --var "PROBE_MANIFEST_SHA:$PROBE_MANIFEST_SHA" 2>&1 | tee probe-real-deploy.txt
+          python -c "import os, pathlib, sys; sys.path.insert(0, '../src'); from write_discovery_links import worker_origin; origin=worker_origin(pathlib.Path('probe-real-deploy.txt').read_text(encoding='utf-8'), os.environ['PROBE_NAME']); sys.exit('deploy did not print the probe origin') if not origin else print('origin=' + origin)" >> "$GITHUB_OUTPUT"
+      - name: Capture the owned namespace before any AI calls
+        run: python src/static_search_do_lifecycle.py capture "$PROBE_NAME"
+      - name: Run bounded compatibility and real REST MCP journeys
+        id: measure
+        timeout-minutes: 13
+        continue-on-error: true
+        env:
+          PROBE_ORIGIN: ${{ steps.deploy.outputs.origin }}
+        run: |
+          python src/run_real_search_probe.py --origin "$PROBE_ORIGIN" \
+            --manifest agent_real_probe/probe.json \
+            --expected-manifest-sha "$PROBE_MANIFEST_SHA" \
+            --script-name "$PROBE_NAME" --output probe-real-report.json \
+            --wait-seconds 120
+      - name: Remove the owned DO namespace and Worker
+        id: cleanup
+        if: always() && (steps.deploy.outcome == 'success' || steps.deploy.outcome == 'failure' || steps.deploy.outcome == 'cancelled')
+        timeout-minutes: 8
+        run: python src/static_search_do_lifecycle.py cleanup "$PROBE_NAME"
+      - name: Remove the temporary real-probe secret file
+        if: always()
+        run: rm -f "$RUNNER_TEMP/real-probe-secrets.json"
+      - name: Preserve real-subset evidence and cleanup
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: real-search-probe-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            probe-real-report.json
+            probe-do-lifecycle.json
+            probe-do-cleanup.txt
+            worker/probe-real-deploy.txt
+            local-query-vectors.json
+            local-encoder-report.json
+            local-real-integration.json
+            agent_real_probe/
+          if-no-files-found: ignore
+          retention-days: 90
+      - name: Report integration outcome without promoting production readiness
+        if: always() && steps.measure.outcome != 'skipped'
+        run: |
+          python - <<'PYTHON'
+          import json
+          from pathlib import Path
+          report = json.loads(Path('probe-real-report.json').read_text())
+          lifecycle = json.loads(Path('probe-do-lifecycle.json').read_text())
+          for key in ('compatibility_gate', 'contracts_gate', 'passage_retrieval_gate', 'answer_context_gate',
+                      'latency_gate', 'integration_gate', 'gateway_cpu_gate',
+                      'durable_object_cpu_gate', 'cpu_gate', 'runtime_gate'):
+              print(key + ':', report.get(key, 'unverified'))
+          print('Cleanup:', lifecycle.get('cleanup', 'unverified'))
+          passed = (report.get('integration_gate') == 'passed'
+                    and all(report.get(key) in ('passed', 'unverified') for key in
+                            ('gateway_cpu_gate', 'durable_object_cpu_gate', 'cpu_gate'))
+                    and lifecycle.get('cleanup') == 'passed'
+                    and lifecycle.get('namespace_absent') is True)
+          raise SystemExit(0 if passed else 1)
+          PYTHON
+
   publish:
     needs: offline
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && !inputs.static_probe && inputs.do_probe_phase != 'collect'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && !inputs.static_probe && inputs.do_probe_phase != 'collect' && inputs.do_probe_phase != 'real'
     runs-on: ubuntu-latest
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

@@ -1,0 +1,117 @@
+{
+  "scope": "local-real-subset-contract-integration",
+  "cloudflare_compatibility": "not_tested",
+  "external_llm_agent": "not_tested",
+  "full_corpus_quality": "not_tested",
+  "manifest_sha256": "c625483008b4570c7e3dcfff87a0bdbefef80abd4a44daf9b12bcfebd0b3fe81",
+  "release_id": "5c8c58d90ec7bfdbcf66c40c363ff2e8967f263eda9257f7d562f9b71fcb617f",
+  "passage_count": 390,
+  "embeddings": {
+    "attention_implementation": "eager",
+    "byte_order": "little",
+    "count": 390,
+    "device": "cpu",
+    "dimensions": 768,
+    "dtype": "float32",
+    "embedding_signature": "df5126063ec2f6589a0b994d6b7ebaaed8767dd49adb742803ab02b8a666cefe",
+    "encoder_signature": "72e810e6f1b2f39c975bd03978a7ef113be948565d527819608d4c4d782b2e29",
+    "implementation": "canonical-wordpiece-bge-cls-fp32-v1",
+    "model_id": "BAAI/bge-base-en-v1.5",
+    "model_revision": "a5beb1e3e68b9ab74eb54cfd186867f64f240e1a",
+    "normalization": "l2",
+    "path": "vectors.f32",
+    "pooling": "cls",
+    "sha256": "3ae371a2e24940b66c6b7b0fe719431a46c91d457dddf28646120a6bf3bc576c",
+    "versions": {
+      "torch": "2.8.0+cpu",
+      "transformers": "4.57.1"
+    },
+    "workers_ai_compatibility": "unverified"
+  },
+  "results": [
+    {
+      "id": "group-baseline",
+      "paper_id": "arxiv:2402.03300",
+      "chunk_index": 56,
+      "score": 0.8228405589569704,
+      "passage_oracle_checked": true,
+      "passage_oracle_passed": true,
+      "rest_answer_evidence": true,
+      "mcp_answer_evidence": true,
+      "rest_content_exact": true,
+      "mcp_fetch_exact": true
+    },
+    {
+      "id": "relative-advantage",
+      "paper_id": "arxiv:2402.03300",
+      "chunk_index": 59,
+      "score": 0.7761045066974391,
+      "passage_oracle_checked": false,
+      "passage_oracle_passed": null,
+      "rest_answer_evidence": null,
+      "mcp_answer_evidence": null,
+      "rest_content_exact": true,
+      "mcp_fetch_exact": true
+    },
+    {
+      "id": "kl-placement",
+      "paper_id": "arxiv:2402.03300",
+      "chunk_index": 59,
+      "score": 0.837466844133582,
+      "passage_oracle_checked": false,
+      "passage_oracle_passed": null,
+      "rest_answer_evidence": null,
+      "mcp_answer_evidence": null,
+      "rest_content_exact": true,
+      "mcp_fetch_exact": true
+    },
+    {
+      "id": "grpo-settings",
+      "paper_id": "arxiv:2402.03300",
+      "chunk_index": 59,
+      "score": 0.7386551977037121,
+      "passage_oracle_checked": true,
+      "passage_oracle_passed": false,
+      "rest_answer_evidence": true,
+      "mcp_answer_evidence": true,
+      "rest_content_exact": true,
+      "mcp_fetch_exact": true
+    },
+    {
+      "id": "web-math-data",
+      "paper_id": "arxiv:2402.03300",
+      "chunk_index": 18,
+      "score": 0.8525114239510533,
+      "passage_oracle_checked": false,
+      "passage_oracle_passed": null,
+      "rest_answer_evidence": null,
+      "mcp_answer_evidence": null,
+      "rest_content_exact": true,
+      "mcp_fetch_exact": true
+    },
+    {
+      "id": "online-training",
+      "paper_id": "arxiv:2402.03300",
+      "chunk_index": 91,
+      "score": 0.8004137477138314,
+      "passage_oracle_checked": false,
+      "passage_oracle_passed": null,
+      "rest_answer_evidence": null,
+      "mcp_answer_evidence": null,
+      "rest_content_exact": true,
+      "mcp_fetch_exact": true
+    }
+  ],
+  "passage_oracles": 2,
+  "oracle_revision": 2,
+  "oracle_note": {
+    "post_observation": true,
+    "reason": "After the local v1 run, source review confirmed that chunk 56 answers the baseline question using the value-function synonym. Revision 2 corrects that lexical false negative for diagnosis; it is not a held-out or preregistered retrieval pass. The GRPO settings oracle and all query strings are unchanged."
+  },
+  "passage_retrieval_gate": "failed",
+  "answer_context_gate": "passed",
+  "passage_oracle_failures": [
+    "grpo-settings"
+  ],
+  "answer_context_failures": []
+}

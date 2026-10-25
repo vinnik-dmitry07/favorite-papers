@@ -30,6 +30,12 @@ assets/fulltext_search.js
 # Agent API build output (derived; the worker reads R2, not this directory)
 agent_build/
 agent_probe/
+agent_real_probe/
+.cache/real-probe-embeddings/
+local-query-vectors.json
+local-encoder-report.json
+local-real-integration.json
+probe-real-report*.json
 probe-report*.json
 site/
 worker/node_modules
