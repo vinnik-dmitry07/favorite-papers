@@ -4,6 +4,11 @@ This isolated experiment compares implementations of a possible Workers Free
 search service. It is not semantic search and is not the production API.
 The static agent catalog from PR #1 remains independently usable.
 
+The next runtime experiment is described in [Durable Object probe](DURABLE_OBJECT_PROBE.md).
+It preserves `wasm-json16` and the full synthetic fixture, runs a short pilot
+before the matrix, and measures gateway and object CPU separately. The ordinary
+Worker's negative CPU results below remain valid for that implementation.
+
 Codes and codebooks are deterministic random data. Snippets and text offsets
 come from the real catalog. The fixture repeats character-based excerpts to
 reach 40,575 rows; these are not the production tokenizer's passages. The int8

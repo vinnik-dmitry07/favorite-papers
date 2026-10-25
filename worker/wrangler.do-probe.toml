@@ -1,0 +1,32 @@
+# Isolated synthetic runtime experiment; never the production API.
+# CI supplies a unique run-specific name, PROBE_EXPIRES_AT and secret PROBE_TOKEN.
+name = "key-papers-static-probe"
+main = "src/static-search-do-probe-entry.ts"
+compatibility_date = "2026-10-15"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+[assets]
+directory = "../agent_probe"
+binding = "ASSETS"
+run_worker_first = true
+
+[[durable_objects.bindings]]
+name = "SEARCH_PROBE"
+class_name = "StaticSearchProbe"
+
+[exports.StaticSearchProbe]
+type = "durable-object"
+storage = "sqlite"
+
+[observability]
+enabled = true
+head_sampling_rate = 1
+
+[[rules]]
+type = "Text"
+globs = ["**/*.txt"]
+fallthrough = true
+
+[build]
+command = "npm run build:probe"

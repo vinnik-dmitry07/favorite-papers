@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { outputs } from './contracts'
 import { handleRest } from './http'
-import probe, { createProbeService, type ProbeEnv } from './static-search-probe'
+import probe, { createProbeApp, createProbeService, type ProbeEnv } from './static-search-probe'
 import { pointLength, WordPieceTokenizer } from './tokenize'
 
 const VERSION = 'probe-v1'
@@ -100,6 +100,54 @@ async function rpc(env: ProbeEnv, name: string, args: Record<string, unknown>) {
 afterEach(() => vi.restoreAllMocks())
 
 describe('isolated synthetic probe', () => {
+  it('keeps service caches per owner and coalesces concurrent initialization', async () => {
+    const { assets, env } = build()
+    const left = createProbeService(env)
+    const right = createProbeService(env)
+    await Promise.all(Array.from({ length: 4 }, () => left.search({ q: 'policy', k: 2, ip: 'test' })))
+    expect(assets.reads.filter((path) => path === '/probe/codes.bin')).toHaveLength(1)
+    await right.search({ q: 'policy', k: 2, ip: 'test' })
+    expect(assets.reads.filter((path) => path === '/probe/codes.bin')).toHaveLength(2)
+  })
+
+  it('isolates app instances and gives a reset a new cache ID without a new constructor ID', async () => {
+    vi.spyOn(console, 'log').mockImplementation(() => {})
+    const { env } = build()
+    const left = createProbeApp({ runtimeRole: 'durable_object', objectId: 'left' })
+    const right = createProbeApp({ runtimeRole: 'durable_object', objectId: 'right' })
+    const call = (app: ReturnType<typeof createProbeApp>, cold = false) => app.fetch(
+      new Request(queryUrl('/probe/info', cold ? { cold: 1 } : {})), env,
+    )
+    const first = await call(left)
+    const warm = await call(left)
+    const reset = await call(left, true)
+    const other = await call(right)
+    expect(first.headers.get('x-probe-cold-kind')).toBe('object-constructor')
+    expect(warm.headers.get('x-probe-cold-kind')).toBe('warm')
+    expect(reset.headers.get('x-probe-cold-kind')).toBe('application-cache-reset')
+    expect(reset.headers.get('x-probe-boot-id')).toBe(first.headers.get('x-probe-boot-id'))
+    expect(warm.headers.get('x-probe-cache-id')).toBe(first.headers.get('x-probe-cache-id'))
+    expect(reset.headers.get('x-probe-cache-id')).not.toBe(first.headers.get('x-probe-cache-id'))
+    expect(other.headers.get('x-probe-boot-id')).not.toBe(first.headers.get('x-probe-boot-id'))
+    expect(other.headers.get('x-probe-object-id')).toBe('right')
+  })
+
+  it('preserves tokenizer state across application resets without sharing it between owners', async () => {
+    vi.spyOn(console, 'log').mockImplementation(() => {})
+    const tokens = vi.spyOn(WordPieceTokenizer.prototype, 'tokenIds')
+    const { env } = build()
+    const left = createProbeApp()
+    const right = createProbeApp()
+    const search = (app: ReturnType<typeof createProbeApp>, cold = false) => app.fetch(
+      new Request(queryUrl('/v1/search', { q: 'policy', ...(cold ? { cold: 1 } : {}) })), env,
+    )
+    expect((await search(left)).status).toBe(200)
+    expect((await search(left, true)).status).toBe(200)
+    expect((await search(right)).status).toBe(200)
+    expect(tokens.mock.contexts[0]).toBe(tokens.mock.contexts[1])
+    expect(tokens.mock.contexts[0]).not.toBe(tokens.mock.contexts[2])
+  })
+
   it('runs actual REST search with bounded snippets, deduplication and cached binary assets', async () => {
     const { service, assets } = build()
     const response = await handleRest(new Request(queryUrl('/v1/search', { q: 'policy optimization', k: 2 })), service)

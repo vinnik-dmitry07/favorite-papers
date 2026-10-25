@@ -16,6 +16,10 @@ on:
       - src/build_static_search_probe.py
       - src/run_static_search_probe.py
       - src/cleanup_static_search_probe.py
+      - src/static_search_do_lifecycle.py
+      - src/test_static_search_do_lifecycle.py
+      - src/run_static_search_do_probe.py
+      - src/test_static_search_do_probe.py
       - src/summarize_static_search_probe.py
       - src/reproduce_static_search_review.py
       - src/test_static_search_probe.py
@@ -51,6 +55,20 @@ on:
         description: 'Deploy only the isolated synthetic static-search probe'
         type: boolean
         default: false
+      probe_runtime:
+        description: 'Execution runtime for the isolated synthetic probe'
+        type: choice
+        options: [worker, durable-object]
+        default: worker
+      do_probe_phase:
+        description: 'DO pilot proves telemetry and cleanup before the larger matrix'
+        type: choice
+        options: [pilot, matrix]
+        default: pilot
+      do_pilot_run_id:
+        description: 'For DO matrix only: successful pilot run ID on this exact commit'
+        type: string
+        default: ''
       probe_credentials:
         description: 'Probe credentials: existing CLOUDFLARE_* or separate PROBE_CLOUDFLARE_*'
         type: choice
@@ -80,6 +98,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: agent-api-${{ github.event_name == 'pull_request' && github.ref || (github.event_name == 'workflow_dispatch' && inputs.static_probe && 'probe' || 'publish') }}
@@ -99,7 +118,7 @@ jobs:
         run: |
           python -m pip install -r requirements-agent.txt
           python -m py_compile src/reproduce_static_search_review.py
-          python -m pytest src/test_agent_index.py src/test_publish_agent_index.py src/test_agent_pages.py src/test_static_search_probe.py src/test_static_search_probe_run.py src/test_static_search_probe_cleanup.py
+          python -m pytest src/test_agent_index.py src/test_publish_agent_index.py src/test_agent_pages.py src/test_static_search_probe.py src/test_static_search_probe_run.py src/test_static_search_probe_cleanup.py src/test_static_search_do_lifecycle.py src/test_static_search_do_probe.py
       - name: Node
         uses: actions/setup-node@v4
         with:
@@ -117,11 +136,13 @@ jobs:
         run: python src/build_static_search_probe.py
       - name: Validate the isolated probe bundle without deploying
         working-directory: worker
-        run: npx wrangler deploy --config wrangler.probe.toml --dry-run
+        run: |
+          npx wrangler deploy --config wrangler.probe.toml --dry-run
+          npx wrangler deploy --config wrangler.do-probe.toml --dry-run
 
   static_probe:
     needs: offline
-    if: github.event_name == 'workflow_dispatch' && inputs.static_probe
+    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime != 'durable-object'
     runs-on: ubuntu-latest
     timeout-minutes: 25
     environment: static-search-probe
@@ -233,6 +254,170 @@ jobs:
           print('Telemetry error:', report.get('telemetry_error'))
           print(json.dumps(report.get('variant_gates', {}), indent=2))
           raise SystemExit(0 if report.get('cpu_gate') == 'passed' else 1)
+          PYTHON
+
+  static_do_probe:
+    needs: offline
+    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime == 'durable-object'
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    environment: static-search-probe
+    env:
+      FREE_PLAN_CONFIRMED: ${{ inputs.free_plan_confirmed }}
+      DO_PROBE_PHASE: ${{ inputs.do_probe_phase || 'pilot' }}
+      DO_PILOT_RUN_ID: ${{ inputs.do_pilot_run_id }}
+      WRANGLER_SEND_METRICS: 'false'
+      PROBE_NAME: key-papers-static-do-probe-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - name: Check the selected account and credentials
+        env:
+          PROBE_CREDENTIALS: ${{ inputs.probe_credentials }}
+          REPOSITORY_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          REPOSITORY_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          PROBE_ACCOUNT_ID: ${{ secrets.PROBE_CLOUDFLARE_ACCOUNT_ID }}
+          PROBE_API_TOKEN: ${{ secrets.PROBE_CLOUDFLARE_API_TOKEN }}
+        run: |
+          if [ "$FREE_PLAN_CONFIRMED" != 'true' ]; then
+            echo '::error::This experiment requires a Workers Free account. Check its plan in Cloudflare, then select free_plan_confirmed. The workflow never changes the plan.'
+            exit 1
+          fi
+          case "$PROBE_CREDENTIALS" in
+            repository)
+              CLOUDFLARE_ACCOUNT_ID="$REPOSITORY_ACCOUNT_ID"
+              CLOUDFLARE_API_TOKEN="$REPOSITORY_API_TOKEN"
+              secret_names='CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN'
+              ;;
+            probe_environment)
+              CLOUDFLARE_ACCOUNT_ID="$PROBE_ACCOUNT_ID"
+              CLOUDFLARE_API_TOKEN="$PROBE_API_TOKEN"
+              secret_names='PROBE_CLOUDFLARE_ACCOUNT_ID and PROBE_CLOUDFLARE_API_TOKEN'
+              ;;
+            *)
+              echo '::error::Select repository or probe_environment for probe_credentials.'
+              exit 1
+              ;;
+          esac
+          if [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "::error::The selected credential pair is incomplete. Set both $secret_names. See worker/STATIC_SEARCH_PROBE.md."
+            exit 1
+          fi
+          printf 'CLOUDFLARE_ACCOUNT_ID=%s\nCLOUDFLARE_API_TOKEN=%s\n' \
+            "$CLOUDFLARE_ACCOUNT_ID" "$CLOUDFLARE_API_TOKEN" >> "$GITHUB_ENV"
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: worker/package-lock.json
+      - name: Build the complete synthetic fixture
+        run: python src/build_static_search_probe.py
+      - name: Install pinned worker dependencies
+        working-directory: worker
+        run: npm ci
+      - name: Verify a completed pilot before a DO matrix
+        if: inputs.do_probe_phase == 'matrix'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if ! [[ "$DO_PILOT_RUN_ID" =~ ^[1-9][0-9]*$ ]]; then
+            echo '::error::First run the DO pilot; supply its successful run ID for the matrix.'
+            exit 1
+          fi
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$DO_PILOT_RUN_ID" > previous-do-pilot-run.json
+          gh run download "$DO_PILOT_RUN_ID" --repo "$GITHUB_REPOSITORY" \
+            --pattern "durable-object-probe-$DO_PILOT_RUN_ID-*" --dir previous-do-pilot
+          python src/static_search_do_lifecycle.py validate-pilot "$PROBE_NAME" \
+            --pilot-dir previous-do-pilot --pilot-run-id "$DO_PILOT_RUN_ID"
+      - name: Refuse deployment if an earlier DO namespace was not removed
+        run: python src/static_search_do_lifecycle.py preflight "$PROBE_NAME"
+      - name: Create expiring probe access credentials
+        run: |
+          python - <<'PYTHON'
+          from datetime import datetime, timedelta, timezone
+          import json
+          import os
+          from pathlib import Path
+          import secrets
+          token = secrets.token_urlsafe(32)
+          print('::add-mask::' + token)
+          expiry = (datetime.now(timezone.utc) + timedelta(minutes=45)).isoformat()
+          with open(os.environ['GITHUB_ENV'], 'a') as output:
+              output.write('PROBE_TOKEN=' + token + '\n')
+              output.write('PROBE_EXPIRES_AT=' + expiry + '\n')
+          secret_file = Path(os.environ['RUNNER_TEMP']) / 'do-probe-secrets.json'
+          secret_file.write_text(json.dumps({'PROBE_TOKEN': token}))
+          secret_file.chmod(0o600)
+          PYTHON
+      - name: Deploy only this run's Durable Object probe
+        id: deploy
+        timeout-minutes: 8
+        working-directory: worker
+        run: |
+          set -o pipefail
+          npx wrangler deploy --config wrangler.do-probe.toml --name "$PROBE_NAME" \
+            --secrets-file "$RUNNER_TEMP/do-probe-secrets.json" \
+            --var "PROBE_EXPIRES_AT:$PROBE_EXPIRES_AT" 2>&1 | tee probe-do-deploy.txt
+          python -c "import os, pathlib, sys; sys.path.insert(0, '../src'); from write_discovery_links import worker_origin; origin=worker_origin(pathlib.Path('probe-do-deploy.txt').read_text(encoding='utf-8'), os.environ['PROBE_NAME']); sys.exit('deploy did not print the probe origin') if not origin else print('origin=' + origin)" >> "$GITHUB_OUTPUT"
+      - name: Capture the owned namespace before sending any workload
+        run: python src/static_search_do_lifecycle.py capture "$PROBE_NAME"
+      - name: Run the bounded Durable Object pilot or matrix
+        id: measure
+        timeout-minutes: 20
+        continue-on-error: true
+        env:
+          PROBE_ORIGIN: ${{ steps.deploy.outputs.origin }}
+        run: python src/run_static_search_do_probe.py "$PROBE_ORIGIN" --script-name "$PROBE_NAME" --phase "$DO_PROBE_PHASE" --samples 50 --max-load-seconds 900 --output probe-do-report.json --wait-seconds 180
+      - name: Collect delayed DO telemetry without resending requests
+        if: always() && steps.measure.outcome != 'skipped'
+        timeout-minutes: 4
+        continue-on-error: true
+        run: |
+          if [ -f probe-do-report.json ]; then
+            python src/run_static_search_do_probe.py --collect-only probe-do-report.json --script-name "$PROBE_NAME" --output probe-do-report.json --wait-seconds 120
+          fi
+      - name: Remove the owned DO namespace, verify absence, then remove Worker
+        id: cleanup
+        if: always() && (steps.deploy.outcome == 'success' || steps.deploy.outcome == 'failure' || steps.deploy.outcome == 'cancelled')
+        timeout-minutes: 8
+        run: python src/static_search_do_lifecycle.py cleanup "$PROBE_NAME"
+      - name: Remove the temporary probe secret file
+        if: always()
+        run: rm -f "$RUNNER_TEMP/do-probe-secrets.json"
+      - name: Preserve DO evidence including cleanup failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: durable-object-probe-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            probe-do-report.json
+            probe-do-lifecycle.json
+            probe-do-cleanup.txt
+            agent_probe/probe/measurements.json
+            agent_probe/probe/index.json
+            worker/probe-do-deploy.txt
+          if-no-files-found: ignore
+          retention-days: 90
+      - name: Report the DO phase outcome
+        if: always() && steps.measure.outcome != 'skipped'
+        run: |
+          python - <<'PYTHON'
+          import json
+          from pathlib import Path
+          import sys
+          sys.path.insert(0, 'src')
+          from static_search_do_lifecycle import phase_passed
+          report = json.loads(Path('probe-do-report.json').read_text())
+          lifecycle = json.loads(Path('probe-do-lifecycle.json').read_text())
+          for key in ('preflight_gate', 'functional_gate', 'gateway_cpu_gate',
+                      'do_cpu_gate', 'latency_gate', 'sample_gate', 'runtime_gate'):
+              print(key + ':', report.get(key, 'unverified'))
+          print('Cleanup:', lifecycle.get('cleanup', 'unverified'))
+          raise SystemExit(0 if phase_passed(report, lifecycle) else 1)
           PYTHON
 
   publish:

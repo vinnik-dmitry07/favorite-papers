@@ -1,0 +1,386 @@
+{
+  "kind": "local_workerd_synthetic_durable_object",
+  "base_commit": "b064b4db696cb56d5383e811df4fb1cdbe5aeda5",
+  "source_hashes": {
+    ".github/workflows/agent-api.yml": "99d42364d3a8ed2a491ce1b4db05020a2ba1fac62730b4ad8d7b959be85aad84",
+    "src/run_static_search_do_probe.py": "9ae8e7456f1bc38e9f2c6a803bc12fbed384b7b20886bbfaba2e145ab82b03eb",
+    "src/static_search_do_lifecycle.py": "32df5cd2acfeb3b1de3d0a97a0f14c024dc756fa7bee78a4b68a109bdd1514a7",
+    "worker/src/static-search-probe.ts": "0589f0f51e16771f3199c08177c993c521dd3ffcf7e551b7d56ca1476ee3beca",
+    "worker/src/static-search-do-probe.ts": "539536175c4cbcabaea5d025e176021c1924be4a14539990f9df61ea435b4859",
+    "worker/src/static-search-do-probe-entry.ts": "3811265a662fa91c737c5cefbda123abdb07cdbc5d990a46de5e3f2e39ddae36",
+    "worker/wrangler.do-probe.toml": "9fbd0b1c275195d3e1d4dc3d2b3b21cf53812022585d581feabbb94de035342c",
+    "worker/src/static-search.ts": "0a888ad798ea01f58ffa855bc90d0a53fee8ecf20834d5f19abec932c568e06e",
+    "worker/src/static-search-wasm.ts": "5e59b7c4b1a5cfb1c131db5f50ef8d78bb178dca599c2d137441d4421aa22844",
+    "worker/probe-kernel/scan.wasm": "ee901fbad000de35a98d12ad48e3d8d5fff34378643dfb5ea13fe1c4b3075ae6",
+    "src/build_static_search_probe.py": "c33aadd806d30af0335c28485272949313adeaf4d8c9315a94f2aa0ba1ca6378",
+    "worker/package-lock.json": "6e82629b400c7e5e49a6fe2a5ade81d23367bfdf40edce5c10b633db71f44c4c"
+  },
+  "raw_file": "local-2026-10-25-durable-object.raw.json.gz",
+  "raw_sha256": "b24385b6b74a92fe87386b3b13d54809a5ca15e6344d5e7b9809e3b82599e7b3",
+  "compressed_sha256": "4af3111e41fe07feb124ca899326e33cdfdc574b8ddeb1fdd1afc3c9e9c37d78",
+  "fixture": {
+    "count": 40575,
+    "corpus_version": "090568974946c0f2a77eb284a709b2fa4df78b54f056640feab7fc723031ed54",
+    "synthetic": true
+  },
+  "observed_requests": {
+    "requests": 600,
+    "concurrency": 24,
+    "priming": 6,
+    "pilot": 2,
+    "discovery": 2
+  },
+  "http_attempts": 634,
+  "functional_gate": "passed",
+  "latency_gate": "passed",
+  "gateway_cpu_gate": "unverified",
+  "do_cpu_gate": "unverified",
+  "runtime_gate": "unverified",
+  "cases": {
+    "content.application_cold": {
+      "attempted": 50,
+      "samples": 50,
+      "excluded": 0,
+      "client_wall_ms": {
+        "p50": 11.019913999916753,
+        "p95": 15.358500999354874,
+        "p99": 23.033634999592323
+      },
+      "gateway": {
+        "cpu_ms": {
+          "p50": null,
+          "p95": null,
+          "p99": null
+        },
+        "cpu_max_ms": null,
+        "matched": 0
+      },
+      "durable_object": {
+        "cpu_ms": {
+          "p50": null,
+          "p95": null,
+          "p99": null
+        },
+        "cpu_max_ms": null,
+        "matched": 0
+      }
+    },
+    "content.warm": {
+      "attempted": 50,
+      "samples": 50,
+      "excluded": 0,
+      "client_wall_ms": {
+        "p50": 7.535361999543966,
+        "p95": 11.938292999730038,
+        "p99": 14.914111000507546
+      },
+      "gateway": {
+        "cpu_ms": {
+          "p50": null,
+          "p95": null,
+          "p99": null
+        },
+        "cpu_max_ms": null,
+        "matched": 0
+      },
+      "durable_object": {
+        "cpu_ms": {
+          "p50": null,
+          "p95": null,
+          "p99": null
+        },
+        "cpu_max_ms": null,
+        "matched": 0
+      }
+    },
+    "contents.application_cold": {
+      "attempted": 50,
+      "samples": 50,
+      "excluded": 0,
+      "client_wall_ms": {
+        "p50": 9.745421999468817,
+        "p95": 13.888690000385395,
+        "p99": 18.02199899975676
+      },
+      "gateway": {
+        "cpu_ms": {
+          "p50": null,
+          "p95": null,
+          "p99": null
+        },
+        "cpu_max_ms": null,
+        "matched": 0
+      },
+      "durable_object": {
+        "cpu_ms": {
+          "p50": null,
+          "p95": null,
+          "p99": null
+        },
+        "cpu_max_ms": null,
+        "matched": 0
+      }
+    },
+    "contents.warm": {
+      "attempted": 50,
+      "samples": 50,
+      "excluded": 0,
+      "client_wall_ms": {
+        "p50": 7.7918919996591285,
+        "p95": 10.311951000403496,
+        "p99": 10.886803999710537
+      },
+      "gateway": {
+        "cpu_ms": {
+          "p50": null,
+          "p95": null,
+          "p99": null
+        },
+        "cpu_max_ms": null,
+        "matched": 0
+      },
+      "durable_object": {
+        "cpu_ms": {
+          "p50": null,
+          "p95": null,
+          "p99": null
+        },
+        "cpu_max_ms": null,
+        "matched": 0
+      }
+    },
+    "find.application_cold": {
+      "attempted": 50,
+      "samples": 50,
+      "excluded": 0,
+      "client_wall_ms": {
+        "p50": 10.702761000175087,
+        "p95": 12.924693000059051,
+        "p99": 13.151598000149534
+      },
+      "gateway": {
+        "cpu_ms": {
+          "p50": null,
+          "p95": null,
+          "p99": null
+        },
+        "cpu_max_ms": null,
+        "matched": 0
+      },
+      "durable_object": {
+        "cpu_ms": {
+          "p50": null,
+          "p95": null,
+          "p99": null
+        },
+        "cpu_max_ms": null,
+        "matched": 0
+      }
+    },
+    "find.warm": {
+      "attempted": 50,
+      "samples": 50,
+      "excluded": 0,
+      "client_wall_ms": {
+        "p50": 7.17723300022044,
+        "p95": 12.01251900056377,
+        "p99": 12.553589999697579
+      },
+      "gateway": {
+        "cpu_ms": {
+          "p50": null,
+          "p95": null,
+          "p99": null
+        },
+        "cpu_max_ms": null,
+        "matched": 0
+      },
+      "durable_object": {
+        "cpu_ms": {
+          "p50": null,
+          "p95": null,
+          "p99": null
+        },
+        "cpu_max_ms": null,
+        "matched": 0
+      }
+    },
+    "mcp_fetch.application_cold": {
+      "attempted": 50,
+      "samples": 50,
+      "excluded": 0,
+      "client_wall_ms": {
+        "p50": 11.845050000374613,
+        "p95": 16.285129999232595,
+        "p99": 21.383381000305235
+      },
+      "gateway": {
+        "cpu_ms": {
+          "p50": null,
+          "p95": null,
+          "p99": null
+        },
+        "cpu_max_ms": null,
+        "matched": 0
+      },
+      "durable_object": {
+        "cpu_ms": {
+          "p50": null,
+          "p95": null,
+          "p99": null
+        },
+        "cpu_max_ms": null,
+        "matched": 0
+      }
+    },
+    "mcp_fetch.warm": {
+      "attempted": 50,
+      "samples": 50,
+      "excluded": 0,
+      "client_wall_ms": {
+        "p50": 9.211063999828184,
+        "p95": 12.26344800033985,
+        "p99": 14.779119999730028
+      },
+      "gateway": {
+        "cpu_ms": {
+          "p50": null,
+          "p95": null,
+          "p99": null
+        },
+        "cpu_max_ms": null,
+        "matched": 0
+      },
+      "durable_object": {
+        "cpu_ms": {
+          "p50": null,
+          "p95": null,
+          "p99": null
+        },
+        "cpu_max_ms": null,
+        "matched": 0
+      }
+    },
+    "mcp_search.application_cold": {
+      "attempted": 50,
+      "samples": 50,
+      "excluded": 0,
+      "client_wall_ms": {
+        "p50": 26.05744400079857,
+        "p95": 45.92547999982344,
+        "p99": 60.59145699964574
+      },
+      "gateway": {
+        "cpu_ms": {
+          "p50": null,
+          "p95": null,
+          "p99": null
+        },
+        "cpu_max_ms": null,
+        "matched": 0
+      },
+      "durable_object": {
+        "cpu_ms": {
+          "p50": null,
+          "p95": null,
+          "p99": null
+        },
+        "cpu_max_ms": null,
+        "matched": 0
+      }
+    },
+    "mcp_search.warm": {
+      "attempted": 50,
+      "samples": 50,
+      "excluded": 0,
+      "client_wall_ms": {
+        "p50": 16.709265999452327,
+        "p95": 38.87669999949139,
+        "p99": 42.985991000023205
+      },
+      "gateway": {
+        "cpu_ms": {
+          "p50": null,
+          "p95": null,
+          "p99": null
+        },
+        "cpu_max_ms": null,
+        "matched": 0
+      },
+      "durable_object": {
+        "cpu_ms": {
+          "p50": null,
+          "p95": null,
+          "p99": null
+        },
+        "cpu_max_ms": null,
+        "matched": 0
+      }
+    },
+    "rest_search.application_cold": {
+      "attempted": 50,
+      "samples": 50,
+      "excluded": 0,
+      "client_wall_ms": {
+        "p50": 27.13947000029293,
+        "p95": 48.319948999960616,
+        "p99": 53.43288399944868
+      },
+      "gateway": {
+        "cpu_ms": {
+          "p50": null,
+          "p95": null,
+          "p99": null
+        },
+        "cpu_max_ms": null,
+        "matched": 0
+      },
+      "durable_object": {
+        "cpu_ms": {
+          "p50": null,
+          "p95": null,
+          "p99": null
+        },
+        "cpu_max_ms": null,
+        "matched": 0
+      }
+    },
+    "rest_search.warm": {
+      "attempted": 50,
+      "samples": 50,
+      "excluded": 0,
+      "client_wall_ms": {
+        "p50": 18.38507699994807,
+        "p95": 40.737999999691965,
+        "p99": 41.662788999929035
+      },
+      "gateway": {
+        "cpu_ms": {
+          "p50": null,
+          "p95": null,
+          "p99": null
+        },
+        "cpu_max_ms": null,
+        "matched": 0
+      },
+      "durable_object": {
+        "cpu_ms": {
+          "p50": null,
+          "p95": null,
+          "p99": null
+        },
+        "cpu_max_ms": null,
+        "matched": 0
+      }
+    }
+  },
+  "latency_cases": null,
+  "limitations": [
+    "Synthetic vectors do not test Workers AI or semantic usefulness.",
+    "App cache reset and object construction do not prove a new isolate.",
+    "Platform CPU must be scoped separately to gateway and object.",
+    "Absent/aggregate data cannot establish request-level percentiles.",
+    "Sample gates do not establish population p99 or production readiness.",
+    "Memory, quality, account quotas and rollback need later evidence."
+  ]
+}

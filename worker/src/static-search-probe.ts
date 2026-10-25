@@ -72,8 +72,6 @@ interface Identity { paper: string, version: string, start: number | null }
 const TEXT_PART_SIZE = 16000
 const SITE = 'https://vinnik-dmitry07.github.io/favorite-papers'
 const SYNTHETIC_TITLE = '[SYNTHETIC RANKING — NOT SEMANTIC] '
-let bootId: string | undefined
-const tokenizer = new WordPieceTokenizer(vocabText)
 
 class Lru<T> {
   private readonly entries = new Map<string, Promise<T>>()
@@ -142,7 +140,7 @@ function documentIdentity(id: string): Identity {
 }
 
 /** No model call: hashes token IDs into a deterministic synthetic query vector. */
-function queryTokens(query: string): number[] {
+function queryTokens(query: string, tokenizer: WordPieceTokenizer): number[] {
   if (typeof query !== 'string' || !query.trim()) fail('invalid_query', 400, 'query is empty')
   if (pointLength(query) > 2000) fail('query_too_long', 400, 'query exceeds 2000 code points')
   const tokens = tokenizer.tokenIds(embed.query_template, query)
@@ -150,8 +148,7 @@ function queryTokens(query: string): number[] {
   return tokens
 }
 
-function syntheticQuery(query: string, manifest: Manifest, validatedTokens?: number[]): Float32Array {
-  const tokens = validatedTokens ?? queryTokens(query)
+function syntheticQuery(tokens: number[], manifest: Manifest): Float32Array {
   let state = (2166136261 ^ manifest.seed) >>> 0
   for (const token of tokens) state = Math.imul(state ^ token, 16777619) >>> 0
   if (!state) state = 1
@@ -178,8 +175,15 @@ export const VARIANTS = {
 } as const
 export type Variant = keyof typeof VARIANTS
 
-export function createProbeService(env: ProbeEnv, variant: Variant = 'js-json128') {
+export function createProbeService(
+  env: ProbeEnv,
+  variant: Variant = 'js-json128',
+  tokenizerProvider?: () => WordPieceTokenizer,
+) {
   const options = VARIANTS[variant]
+  // Construct only in the request's owning service, never during gateway module startup.
+  let tokenizer: WordPieceTokenizer | undefined
+  const getTokenizer = tokenizerProvider ?? (() => tokenizer ??= new WordPieceTokenizer(vocabText))
   let int8Promise: Promise<Int8Index> | undefined
   let manifestPromise: Promise<Manifest> | undefined
   let indexPromise: Promise<PqIndex> | undefined
@@ -377,7 +381,7 @@ export function createProbeService(env: ProbeEnv, variant: Variant = 'js-json128
   ): ReturnType<Service['search']> => {
     const k = parseBoundedInt(args.k, 5, 1, 8, 'k')
     const value = await manifest()
-    const query = syntheticQuery(args.q, value, validatedTokens)
+    const query = syntheticQuery(validatedTokens ?? queryTokens(args.q, getTokenizer()), value)
     const ranked = await rank(query)
     const metadata = precomputedCatalog ?? await catalog(args.q)
     const hits: Awaited<ReturnType<Service['search']>>['hits'] = []
@@ -453,7 +457,7 @@ export function createProbeService(env: ProbeEnv, variant: Variant = 'js-json128
     },
     search: performSearch,
     async researchSearch(query, ip) {
-      const validatedTokens = queryTokens(query)
+      const validatedTokens = queryTokens(query, getTokenizer())
       // Include the same catalog prepass as the production MCP path.
       const candidates = await catalog(query)
       const exact = candidates.filter(({ score }) => score === 100)
@@ -521,7 +525,7 @@ export function createProbeService(env: ProbeEnv, variant: Variant = 'js-json128
       if (stage === 'noop') return { synthetic: true, stage }
       const value = await manifest()
       if (stage === 'tokenize') {
-        const ids = tokenizer.tokenIds(embed.query_template, q)
+        const ids = getTokenizer().tokenIds(embed.query_template, q)
         return { synthetic: true, stage, tokens: ids.length }
       }
       if (stage === 'scan') {
@@ -549,54 +553,90 @@ export function createProbeService(env: ProbeEnv, variant: Variant = 'js-json128
   })
 }
 
-let app: { assets: ProbeEnv['ASSETS'], variant: Variant, service: ReturnType<typeof createProbeService> } | undefined
-
-export default {
-  async fetch(request: Request, env: ProbeEnv): Promise<Response> {
-    const url = new URL(request.url)
-    const selected = url.searchParams.get('variant') ?? 'js-json128'
-    if (!Object.hasOwn(VARIANTS, selected)) return json({ error: 'unknown_variant' }, 400)
-    const variant = selected as Variant
-    const firstRequest = !bootId
-    bootId ??= crypto.randomUUID()
-    if (url.searchParams.get('cold') === '1' || app?.assets !== env.ASSETS || app?.variant !== variant) app = undefined
-    const cacheState = app ? 'warm' : 'cold'
-    if (!app) app = { assets: env.ASSETS, variant, service: createProbeService(env, variant) }
-    const marker = request.headers.get('x-probe-marker') ?? crypto.randomUUID()
-    console.log({ probe_marker: marker, probe_run: url.searchParams.get('probe_run'),
-      probe_case: url.searchParams.get('probe_case'), probe_seq: url.searchParams.get('probe_seq'), boot_id: bootId, variant, first_request: firstRequest })
-    let response: Response
-    try {
-      if (url.pathname === '/probe/stage') {
-        if (request.method !== 'GET') fail('invalid_argument', 405, 'method not allowed')
-        const q = url.searchParams.get('q') ?? 'query'
-        if (pointLength(q) > 2000) fail('query_too_long', 400, 'query too long')
-        response = json(await app.service.stage(url.searchParams.get('stage') ?? 'noop', q))
-      } else if (url.pathname === '/mcp') {
-        response = request.method === 'POST' ? await handleMcp(request, app.service)
-          : new Response(null, { status: 405, headers: { allow: 'POST' } })
-      } else if (url.pathname === '/' || url.pathname === '/probe/info') {
-        requestOrigin(request)
-        if (request.method !== 'GET') fail('invalid_argument', 405, 'method not allowed')
-        response = url.pathname === '/probe/info' ? json(await app.service.probeInfo()) : json({
-          synthetic: true, warning: 'Runtime probe only. Rankings are synthetic and have no semantic meaning.',
-          info: '/probe/info', search: '/v1/search?q=example', mcp: '/mcp',
-          cold: 'cold=1 resets application caches; it does not create a new isolate.',
-        })
-      } else response = await handleRest(request, app.service)
-    } catch (error) {
-      if (!(error instanceof DomainError)) console.error({ probe_marker: marker, error: String(error) })
-      const domain = error instanceof DomainError ? error
-        : new DomainError('corpus_unavailable', 503, 'probe request failed')
-      response = json(errorBody(domain), domain.status)
-    }
-    const headers = new Headers(response.headers)
-    headers.set('x-probe-boot-id', bootId)
-    headers.set('x-probe-marker', marker)
-    headers.set('x-probe-first-request', String(firstRequest))
-    headers.set('x-probe-variant', variant)
-    headers.set('x-probe-cache', cacheState)
-    headers.set('x-probe-synthetic', 'true')
-    return new Response(response.body, { status: response.status, statusText: response.statusText, headers })
-  },
+export interface ProbeAppOptions {
+  fixedVariant?: Variant
+  runtimeRole?: 'durable_object'
+  objectId?: string
 }
+
+/** Each owner gets independent mutable caches and a stable instance identity. */
+export function createProbeApp(options: ProbeAppOptions = {}) {
+  let bootId: string | undefined
+  // Vocab belongs to the owning app/DO and survives application-cache resets,
+  // matching the original probe workload without work in gateway module startup.
+  let tokenizer: WordPieceTokenizer | undefined
+  const getTokenizer = () => tokenizer ??= new WordPieceTokenizer(vocabText)
+  let app: { cacheId: string, assets: ProbeEnv['ASSETS'], variant: Variant, service: ReturnType<typeof createProbeService> } | undefined
+
+  return {
+    async fetch(request: Request, env: ProbeEnv): Promise<Response> {
+      const url = new URL(request.url)
+      const selected = url.searchParams.get('variant') ?? options.fixedVariant ?? 'js-json128'
+      if (options.fixedVariant && selected !== options.fixedVariant) return json({ error: 'unknown_variant' }, 400)
+      if (!Object.hasOwn(VARIANTS, selected)) return json({ error: 'unknown_variant' }, 400)
+      const variant = selected as Variant
+      const firstRequest = !bootId
+      bootId ??= crypto.randomUUID()
+      const cacheReset = url.searchParams.get('cold') === '1'
+      if (cacheReset || app?.assets !== env.ASSETS || app?.variant !== variant) app = undefined
+      const cacheState = app ? 'warm' : 'cold'
+      if (!app) app = { cacheId: crypto.randomUUID(), assets: env.ASSETS, variant,
+        service: createProbeService(env, variant, getTokenizer) }
+      // Retain this generation across awaits even if another request resets the cache.
+      const current = app
+      const coldKind = firstRequest ? (options.runtimeRole ? 'object-constructor' : 'app-instance')
+        : cacheReset ? 'application-cache-reset' : cacheState === 'warm' ? 'warm' : 'application-cache-load'
+      const marker = request.headers.get('x-probe-marker') ?? crypto.randomUUID()
+      console.log({ probe_marker: marker, probe_run: url.searchParams.get('probe_run'),
+        probe_case: url.searchParams.get('probe_case'), probe_seq: url.searchParams.get('probe_seq'), boot_id: bootId, variant, first_request: firstRequest,
+        ...(options.runtimeRole ? { kind: 'static_do_probe', runtime_role: options.runtimeRole,
+          run_id: request.headers.get('x-probe-run-id'), cache_id: current.cacheId, cache_reset: cacheReset,
+          cold_kind: coldKind, object_id: options.objectId, object_first_request: firstRequest } : {}) })
+      let response: Response
+      try {
+        if (url.pathname === '/probe/stage') {
+          if (request.method !== 'GET') fail('invalid_argument', 405, 'method not allowed')
+          const q = url.searchParams.get('q') ?? 'query'
+          if (pointLength(q) > 2000) fail('query_too_long', 400, 'query too long')
+          response = json(await current.service.stage(url.searchParams.get('stage') ?? 'noop', q))
+        } else if (url.pathname === '/mcp') {
+          response = request.method === 'POST' ? await handleMcp(request, current.service)
+            : new Response(null, { status: 405, headers: { allow: 'POST' } })
+        } else if (url.pathname === '/' || url.pathname === '/probe/info') {
+          requestOrigin(request)
+          if (request.method !== 'GET') fail('invalid_argument', 405, 'method not allowed')
+          response = url.pathname === '/probe/info' ? json({ ...await current.service.probeInfo(), ...(options.runtimeRole ? {
+            runtime: 'durable-object', variants: [options.fixedVariant], object_id: options.objectId,
+            cold_isolation: 'application-cache-only', true_isolate_cold_measured: false,
+          } : {}) }) : json({
+            synthetic: true, warning: 'Runtime probe only. Rankings are synthetic and have no semantic meaning.',
+            info: '/probe/info', search: '/v1/search?q=example', mcp: '/mcp',
+            cold: 'cold=1 resets application caches; it does not create a new isolate.',
+          })
+        } else response = await handleRest(request, current.service)
+      } catch (error) {
+        if (!(error instanceof DomainError)) console.error({ probe_marker: marker, error: String(error) })
+        const domain = error instanceof DomainError ? error
+          : new DomainError('corpus_unavailable', 503, 'probe request failed')
+        response = json(errorBody(domain), domain.status)
+      }
+      const headers = new Headers(response.headers)
+      headers.set('x-probe-boot-id', bootId)
+      if (options.runtimeRole) {
+        headers.set('x-probe-runtime', 'durable-object')
+        headers.set('x-probe-cache-id', current.cacheId)
+        headers.set('x-probe-object-id', options.objectId!)
+        headers.set('x-probe-cold-kind', coldKind)
+        headers.set('x-probe-object-first-request', String(firstRequest))
+      }
+      headers.set('x-probe-marker', marker)
+      headers.set('x-probe-first-request', String(firstRequest))
+      headers.set('x-probe-variant', variant)
+      headers.set('x-probe-cache', cacheState)
+      headers.set('x-probe-synthetic', 'true')
+      return new Response(response.body, { status: response.status, statusText: response.statusText, headers })
+    },
+  }
+}
+
+export default createProbeApp()
