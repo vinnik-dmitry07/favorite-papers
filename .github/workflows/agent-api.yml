@@ -20,6 +20,8 @@ on:
       - src/test_static_search_do_lifecycle.py
       - src/run_static_search_do_probe.py
       - src/test_static_search_do_probe.py
+      - src/prepare_static_search_do_collection.py
+      - src/test_prepare_static_search_do_collection.py
       - src/summarize_static_search_probe.py
       - src/reproduce_static_search_review.py
       - src/test_static_search_probe.py
@@ -61,12 +63,16 @@ on:
         options: [worker, durable-object]
         default: worker
       do_probe_phase:
-        description: 'DO pilot proves telemetry and cleanup before the larger matrix'
+        description: 'DO pilot, full matrix, or read-only collection of existing run logs'
         type: choice
-        options: [pilot, matrix]
+        options: [pilot, matrix, collect]
         default: pilot
       do_pilot_run_id:
         description: 'For DO matrix only: successful pilot run ID on this exact commit'
+        type: string
+        default: ''
+      do_collect_run_id:
+        description: 'For DO collect only: completed pilot or matrix run ID; no new workload'
         type: string
         default: ''
       probe_credentials:
@@ -118,7 +124,7 @@ jobs:
         run: |
           python -m pip install -r requirements-agent.txt
           python -m py_compile src/reproduce_static_search_review.py
-          python -m pytest src/test_agent_index.py src/test_publish_agent_index.py src/test_agent_pages.py src/test_static_search_probe.py src/test_static_search_probe_run.py src/test_static_search_probe_cleanup.py src/test_static_search_do_lifecycle.py src/test_static_search_do_probe.py
+          python -m pytest src/test_agent_index.py src/test_publish_agent_index.py src/test_agent_pages.py src/test_static_search_probe.py src/test_static_search_probe_run.py src/test_static_search_probe_cleanup.py src/test_static_search_do_lifecycle.py src/test_static_search_do_probe.py src/test_prepare_static_search_do_collection.py
       - name: Node
         uses: actions/setup-node@v4
         with:
@@ -142,7 +148,7 @@ jobs:
 
   static_probe:
     needs: offline
-    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime != 'durable-object'
+    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime != 'durable-object' && inputs.do_probe_phase != 'collect'
     runs-on: ubuntu-latest
     timeout-minutes: 25
     environment: static-search-probe
@@ -258,7 +264,7 @@ jobs:
 
   static_do_probe:
     needs: offline
-    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime == 'durable-object'
+    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase != 'collect'
     runs-on: ubuntu-latest
     timeout-minutes: 50
     environment: static-search-probe
@@ -420,9 +426,95 @@ jobs:
           raise SystemExit(0 if phase_passed(report, lifecycle) else 1)
           PYTHON
 
+  static_do_collect:
+    needs: offline
+    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase == 'collect'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    environment: static-search-probe
+    env:
+      DO_COLLECT_RUN_ID: ${{ inputs.do_collect_run_id }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Select credentials for read-only telemetry collection
+        env:
+          PROBE_CREDENTIALS: ${{ inputs.probe_credentials }}
+          REPOSITORY_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          REPOSITORY_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          PROBE_ACCOUNT_ID: ${{ secrets.PROBE_CLOUDFLARE_ACCOUNT_ID }}
+          PROBE_API_TOKEN: ${{ secrets.PROBE_CLOUDFLARE_API_TOKEN }}
+        run: |
+          case "$PROBE_CREDENTIALS" in
+            repository)
+              CLOUDFLARE_ACCOUNT_ID="$REPOSITORY_ACCOUNT_ID"
+              CLOUDFLARE_API_TOKEN="$REPOSITORY_API_TOKEN"
+              ;;
+            probe_environment)
+              CLOUDFLARE_ACCOUNT_ID="$PROBE_ACCOUNT_ID"
+              CLOUDFLARE_API_TOKEN="$PROBE_API_TOKEN"
+              ;;
+            *)
+              echo '::error::Select repository or probe_environment for probe_credentials.'
+              exit 1
+              ;;
+          esac
+          if [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo '::error::The selected credential pair is incomplete.'
+            exit 1
+          fi
+          printf 'CLOUDFLARE_ACCOUNT_ID=%s\nCLOUDFLARE_API_TOKEN=%s\n' \
+            "$CLOUDFLARE_ACCOUNT_ID" "$CLOUDFLARE_API_TOKEN" >> "$GITHUB_ENV"
+      - name: Identify the original completed run and exact artifact attempt
+        id: source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if ! [[ "$DO_COLLECT_RUN_ID" =~ ^[1-9][0-9]*$ ]]; then
+            echo '::error::Supply a numeric do_collect_run_id for an existing DO pilot or matrix.'
+            exit 1
+          fi
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$DO_COLLECT_RUN_ID" > source-do-run.json
+          python src/prepare_static_search_do_collection.py identify --run-id "$DO_COLLECT_RUN_ID"
+      - name: Download and validate the original evidence without modifying it
+        id: prepare
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_ARTIFACT_NAME: ${{ steps.source.outputs.artifact_name }}
+        run: |
+          gh run download "$DO_COLLECT_RUN_ID" --repo "$GITHUB_REPOSITORY" \
+            --name "$SOURCE_ARTIFACT_NAME" --dir source-do-artifact
+          python src/prepare_static_search_do_collection.py prepare --run-id "$DO_COLLECT_RUN_ID"
+      - name: Collect existing telemetry only; send no service requests
+        id: collect
+        timeout-minutes: 6
+        continue-on-error: true
+        env:
+          SOURCE_SCRIPT_NAME: ${{ steps.source.outputs.script_name }}
+        run: |
+          python src/run_static_search_do_probe.py \
+            --collect-only do-collection/probe-do-report.json \
+            --script-name "$SOURCE_SCRIPT_NAME" \
+            --output do-collection/probe-do-report.json --wait-seconds 300
+      - name: Verify unchanged workload and report recovered gates
+        if: always() && steps.prepare.outcome == 'success'
+        run: python src/prepare_static_search_do_collection.py verify
+      - name: Preserve original and collected telemetry evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: durable-object-collection-${{ github.run_id }}-${{ github.run_attempt }}
+          path: do-collection/
+          if-no-files-found: ignore
+          retention-days: 90
+
   publish:
     needs: offline
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && !inputs.static_probe
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && !inputs.static_probe && inputs.do_probe_phase != 'collect'
     runs-on: ubuntu-latest
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

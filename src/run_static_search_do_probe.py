@@ -23,6 +23,8 @@ from run_static_search_probe import (
 )
 
 MAX_REQUESTS = 1500
+MAX_TELEMETRY_QUERIES = 120
+TELEMETRY_WINDOW_MS = 10000
 ROLES = ('gateway', 'durable_object')
 KINDS = ('rest_search', 'mcp_search', 'mcp_fetch',
          'content', 'contents', 'find')
@@ -272,6 +274,54 @@ def evidence_complete(row):
         and row['telemetry'][role].get('outcome') == 'ok' for role in ROLES)
 
 
+def telemetry_queries(report):
+    """Retry exact known IDs, then scan bounded overlapping time windows.
+
+    The API supports millisecond timeframes and $metadata.requestId filters.
+    Narrow windows avoid repeatedly walking the same large paginated result.
+    They do not imply that every stored event was returned or even ingested.
+    """
+    first = max(0, report['started_ms'] - 1000)
+    last = report['finished_ms'] + 1000
+    if last <= first:
+        raise ValueError('Invalid telemetry timeframe')
+    base = {
+        'queryId': report['run_id'], 'view': 'events', 'dry': True,
+        'limit': 2000,
+        'parameters': {'filterCombination': 'and', 'filters': [{
+            'key': '$workers.scriptName', 'operation': 'eq',
+            'type': 'string', 'value': report['script_name'],
+        }]},
+    }
+    request_ids = set()
+    for row in records(report):
+        for role in ROLES:
+            if role in row.get('telemetry', {}):
+                continue
+            link = report.get('telemetry_links', {}).get(
+                row['marker'] + ':' + role)
+            if link:
+                request_id, _ = json.loads(link)
+                if isinstance(request_id, str) and request_id:
+                    request_ids.add(request_id)
+    # Leave room for window scans when a report is mostly incomplete.
+    for request_id in sorted(request_ids)[:32]:
+        query = json.loads(json.dumps(base))
+        query['timeframe'] = {'from': first, 'to': last}
+        query['parameters']['filters'].append({
+            'key': '$metadata.requestId', 'operation': 'eq',
+            'type': 'string', 'value': request_id,
+        })
+        yield query
+    width = max(TELEMETRY_WINDOW_MS, math.ceil((last - first) / 64))
+    for left in range(first, last, width):
+        query = json.loads(json.dumps(base))
+        # A one-millisecond overlap avoids relying on inclusive end semantics.
+        query['timeframe'] = {'from': max(first, left - 1),
+                              'to': min(last, left + width)}
+        yield query
+
+
 def collect(report, wait_seconds):
     account = os.environ.get('CLOUDFLARE_ACCOUNT_ID')
     token = os.environ.get('CLOUDFLARE_API_TOKEN')
@@ -283,69 +333,122 @@ def collect(report, wait_seconds):
                 + urllib.parse.quote(account, safe='')
                 + '/workers/observability/telemetry/query')
     deadline = time.monotonic() + wait_seconds
-    while True:
-        payload = {
-            'queryId': report['run_id'], 'view': 'events', 'dry': True,
-            'timeframe': {'from': report['started_ms'] - 1000,
-                          'to': report['finished_ms'] + 1000}, 'limit': 2000,
-            'parameters': {'filters': [{
-                'key': '$workers.scriptName', 'operation': 'eq',
-                'type': 'string', 'value': report['script_name'],
-            }]},
-        }
-        retryable = True
-        try:
-            for page in range(20):
-                status, _, text = exchange(
-                    endpoint, payload, {'authorization': f'Bearer {token}'},
-                    timeout=min(20, max(1, deadline - time.monotonic())))
-                if status != 200:
-                    retryable = status == 429 or status >= 500
-                    raise ValueError(f'Telemetry API HTTP {status}')
-                body = json.loads(text)
-                if body.get('errors'):
-                    retryable = False
-                    raise ValueError('Telemetry query rejected')
-                bucket = body['result']['events']
-                events = bucket['events']
-                if not isinstance(events, list):
-                    retryable = False
-                    raise ValueError('Invalid events array')
-                counts = report.setdefault('telemetry_diagnostics', {})
-                counts['queries'] = counts.get('queries', 0) + 1
-                counts['events_across_queries'] = counts.get(
-                    'events_across_queries', 0) + len(events)
-                counts['object_events_across_queries'] = counts.get(
-                    'object_events_across_queries', 0) + sum(
-                        isinstance(event, dict)
-                        and isinstance(event.get('$workers'), dict)
-                        and bool(event['$workers'].get('durableObjectId'))
-                        for event in events)
-                attach_telemetry(report, events)
-                persist(report)
-                if len(events) < 2000:
-                    break
-                cursor = events[-1]['$metadata']['id']
-                if cursor == payload.get('offset') or page == 19:
-                    raise ValueError('Telemetry pagination bound reached')
-                if time.monotonic() >= deadline:
-                    raise ValueError('Telemetry pagination timed out')
-                payload.update(offset=cursor, offsetDirection='next')
-            report.pop('telemetry_error', None)
-        except (http.client.HTTPException, OSError, ValueError,
-                KeyError, TypeError, IndexError) as exc:
-            report['telemetry_error'] = f'{type(exc).__name__}: {exc}'[:200]
-            persist(report)
-            if not retryable or time.monotonic() >= deadline:
-                return
+    report.pop('telemetry_error', None)
+    attempts = 0
+    counts = report.setdefault('telemetry_diagnostics', {})
+    counts['strategy'] = 'request-id-and-time-windows-v1'
+    counts['collection_sessions'] = counts.get('collection_sessions', 0) + 1
+    while time.monotonic() < deadline and attempts < MAX_TELEMETRY_QUERIES:
         if all(evidence_complete(row) for row in records(report)):
-            return
-        if time.monotonic() >= deadline:
-            report.setdefault('telemetry_error',
-                              'Separate gateway/object evidence missing')
+            report.pop('telemetry_error', None)
             persist(report)
             return
-        time.sleep(min(3, max(0, deadline - time.monotonic())))
+        for payload in telemetry_queries(report):
+            cursors = set()
+            seen_ids = set()
+            failures = 0
+            page = 0
+            while page < 20:
+                if (time.monotonic() >= deadline
+                        or attempts >= MAX_TELEMETRY_QUERIES):
+                    break
+                retryable = True
+                attempts += 1
+                counts['http_attempts'] = counts.get('http_attempts', 0) + 1
+                counts['last_session_http_attempts'] = attempts
+                try:
+                    status, _, text = exchange(
+                        endpoint, payload,
+                        {'authorization': f'Bearer {token}'},
+                        timeout=min(20, deadline - time.monotonic()))
+                    if status != 200:
+                        retryable = status == 429 or status >= 500
+                        raise ValueError(f'Telemetry API HTTP {status}')
+                    body = json.loads(text)
+                    if (not isinstance(body, dict) or body.get('errors')
+                            or body.get('success') is False):
+                        retryable = False
+                        raise ValueError('Telemetry query rejected')
+                    result = body['result']
+                    bucket = result['events']
+                    events = bucket['events']
+                    if not isinstance(events, list):
+                        retryable = False
+                        raise ValueError('Invalid events array')
+                    counts['queries'] = counts.get('queries', 0) + 1
+                    counts['events_across_queries'] = counts.get(
+                        'events_across_queries', 0) + len(events)
+                    counts['object_events_across_queries'] = counts.get(
+                        'object_events_across_queries', 0) + sum(
+                            isinstance(event, dict)
+                            and isinstance(event.get('$workers'), dict)
+                            and bool(event['$workers'].get('durableObjectId'))
+                            for event in events)
+                    diagnostics = counts.setdefault('recent_pages', [])
+                    statistics = result.get('statistics', {})
+                    diagnostics.append({
+                        'timeframe': dict(payload['timeframe']),
+                        'request_id_query': len(
+                            payload['parameters']['filters']) > 1,
+                        'page': page, 'returned': len(events),
+                        'reported_count': bucket.get('count'),
+                        'abr_level': statistics.get('abr_level')
+                        if isinstance(statistics, dict) else None,
+                    })
+                    del diagnostics[:-64]
+                    attach_telemetry(report, events)
+                    persist(report)
+                    if all(evidence_complete(row) for row in records(report)):
+                        report.pop('telemetry_error', None)
+                        persist(report)
+                        return
+                    ids = {event.get('$metadata', {}).get('id')
+                           for event in events if isinstance(event, dict)
+                           and isinstance(event.get('$metadata'), dict)}
+                    ids.discard(None)
+                    fresh = ids - seen_ids
+                    seen_ids.update(ids)
+                    count = bucket.get('count')
+                    more = (len(events) >= payload['limit'] or
+                            finite_number(count) and count > len(seen_ids))
+                    if not events or not more:
+                        break
+                    last_event = events[-1]
+                    last_metadata = (last_event.get('$metadata')
+                                     if isinstance(last_event, dict) else None)
+                    cursor = (last_metadata.get('id')
+                              if isinstance(last_metadata, dict) else None)
+                    if (not isinstance(cursor, str) or not cursor
+                            or cursor in cursors or not fresh or page == 19):
+                        counts['pagination_stalls'] = counts.get(
+                            'pagination_stalls', 0) + 1
+                        report['telemetry_error'] = (
+                            'Telemetry pagination made no progress')
+                        persist(report)
+                        break
+                    cursors.add(cursor)
+                    payload.update(offset=cursor, offsetDirection='next')
+                    failures = 0
+                    page += 1
+                except (http.client.HTTPException, OSError, ValueError,
+                        KeyError, TypeError, IndexError) as exc:
+                    report['telemetry_error'] = (
+                        f'{type(exc).__name__}: {exc}'[:200])
+                    persist(report)
+                    if not retryable:
+                        return
+                    failures += 1
+                    if failures >= 3:
+                        # Another window may still recover these records.
+                        break
+                    time.sleep(min(1, max(0, deadline - time.monotonic())))
+        if time.monotonic() < deadline and attempts < MAX_TELEMETRY_QUERIES:
+            time.sleep(min(3, max(0, deadline - time.monotonic())))
+    counts['last_session_http_attempts'] = attempts
+    report.setdefault('telemetry_error',
+                      'Separate gateway/object evidence missing after '
+                      'bounded collection')
+    persist(report)
 
 
 def summarize(report):

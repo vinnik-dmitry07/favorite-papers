@@ -343,3 +343,184 @@ def test_provider_startup_retry_then_pilot_can_pass(tmp_path, monkeypatch):
     assert calls == ['info', 'info', 'rest_search', 'mcp_search']
     assert value['discovery'][0]['startup_retry'] is True
     assert value['sample_gate'] == 'passed'
+
+
+
+def telemetry_reply(data, count=None, abr=1):
+    bucket = {'events': data}
+    if count is not None:
+        bucket['count'] = count
+    return 200, {}, json.dumps({'success': True, 'result': {
+        'events': bucket, 'statistics': {'abr_level': abr},
+    }})
+
+
+def collection_environment(monkeypatch):
+    monkeypatch.setenv('CLOUDFLARE_ACCOUNT_ID', 'account')
+    monkeypatch.setenv('CLOUDFLARE_API_TOKEN', 'token')
+    monkeypatch.setattr(probe.time, 'sleep', lambda *_: None)
+
+
+def test_missing_invocations_are_queried_by_known_request_id(monkeypatch):
+    collection_environment(monkeypatch)
+    value = report()
+    value.update(started_ms=1000, finished_ms=2000)
+    gateway = events('gateway')
+    probe.attach_telemetry(value, gateway[::2] + events('durable_object'))
+    calls = []
+
+    def query(url, payload, _headers, **_kwargs):
+        assert url.endswith('/workers/observability/telemetry/query')
+        calls.append(json.loads(json.dumps(payload)))
+        filters = payload['parameters']['filters']
+        assert filters[0]['key'] == '$workers.scriptName'
+        assert payload['parameters']['filterCombination'] == 'and'
+        request_id = filters[1]['value']
+        assert filters[1]['key'] == '$metadata.requestId'
+        return telemetry_reply([event for event in gateway
+                                if event['$metadata']['requestId'] == request_id])
+
+    monkeypatch.setattr(probe, 'exchange', query)
+    probe.collect(value, 10)
+    assert len(calls) == 2
+    assert all(probe.evidence_complete(row) for row in value['pilot'])
+    assert value['telemetry_diagnostics']['last_session_http_attempts'] == 2
+
+
+def test_overlapping_windows_recover_links_without_large_query(monkeypatch):
+    collection_environment(monkeypatch)
+    value = report()
+    value.update(started_ms=1000, finished_ms=29000)
+    calls = []
+
+    def query(_url, payload, _headers, **_kwargs):
+        frame = payload['timeframe']
+        calls.append(frame)
+        if frame['from'] == 0:
+            return telemetry_reply(events('gateway'))
+        if frame['to'] == 30000:
+            return telemetry_reply(events('durable_object'))
+        return telemetry_reply([])
+
+    monkeypatch.setattr(probe, 'exchange', query)
+    probe.collect(value, 10)
+    assert calls == [{'from': 0, 'to': 10000},
+                     {'from': 9999, 'to': 20000},
+                     {'from': 19999, 'to': 30000}]
+    assert all(probe.evidence_complete(row) for row in value['pilot'])
+
+
+def test_window_plan_bounds_large_timeframes_and_targeted_queries():
+    value = report()
+    value.update(started_ms=1000, finished_ms=100000000)
+    queries = list(probe.telemetry_queries(value))
+    assert len(queries) == 64
+    assert queries[0]['timeframe']['from'] == 0
+    assert queries[-1]['timeframe']['to'] == 100001000
+    for previous, current in zip(queries, queries[1:]):
+        assert current['timeframe']['from'] == previous['timeframe']['to'] - 1
+
+
+def test_short_page_with_more_reported_events_is_paginated(monkeypatch):
+    collection_environment(monkeypatch)
+    value = report()
+    value.update(started_ms=1000, finished_ms=2000)
+    first = events('gateway')
+    for index, event in enumerate(first):
+        event['$metadata']['id'] = f'event-{index}'
+    calls = []
+
+    def query(_url, payload, _headers, **_kwargs):
+        calls.append(json.loads(json.dumps(payload)))
+        return (telemetry_reply(first, count=8) if len(calls) == 1
+                else telemetry_reply(events('durable_object'), count=8))
+
+    monkeypatch.setattr(probe, 'exchange', query)
+    probe.collect(value, 10)
+    assert len(calls) == 2
+    assert calls[1]['offset'] == 'event-3'
+    assert calls[1]['offsetDirection'] == 'next'
+    assert all(probe.evidence_complete(row) for row in value['pilot'])
+
+
+def test_repeated_cursor_does_not_block_other_windows(monkeypatch):
+    collection_environment(monkeypatch)
+    value = report()
+    value.update(started_ms=1000, finished_ms=19000)
+    first = events('gateway')
+    for event in first:
+        event['$metadata']['id'] = 'same-cursor'
+    calls = []
+
+    def query(_url, payload, _headers, **_kwargs):
+        calls.append(json.loads(json.dumps(payload)))
+        if payload['timeframe']['from'] == 0:
+            return telemetry_reply(first, count=100)
+        return telemetry_reply(events('durable_object'))
+
+    monkeypatch.setattr(probe, 'exchange', query)
+    probe.collect(value, 10)
+    assert len(calls) == 3
+    assert value['telemetry_diagnostics']['pagination_stalls'] == 1
+    assert all(probe.evidence_complete(row) for row in value['pilot'])
+
+
+def test_no_progress_has_hard_query_budget_and_preserves_unverified(monkeypatch):
+    collection_environment(monkeypatch)
+    monkeypatch.setattr(probe, 'MAX_TELEMETRY_QUERIES', 5)
+    value = report()
+    value.update(started_ms=1000, finished_ms=2000)
+    calls = []
+
+    def query(*_args, **_kwargs):
+        calls.append(1)
+        return telemetry_reply([], count=0, abr=4)
+
+    monkeypatch.setattr(probe, 'exchange', query)
+    probe.collect(value, 10)
+    probe.summarize(value)
+    assert len(calls) == 5
+    assert value['gateway_cpu_gate'] == 'unverified'
+    assert value['do_cpu_gate'] == 'unverified'
+    assert value['telemetry_diagnostics']['recent_pages'][0]['abr_level'] == 4
+    assert 'bounded collection' in value['telemetry_error']
+
+
+def test_timeout_retry_is_bounded_and_other_window_still_runs(monkeypatch):
+    collection_environment(monkeypatch)
+    value = report()
+    value.update(started_ms=1000, finished_ms=19000)
+    calls = []
+
+    def query(_url, payload, _headers, **_kwargs):
+        calls.append(payload['timeframe']['from'])
+        if payload['timeframe']['from'] == 0:
+            raise TimeoutError('timed out')
+        return telemetry_reply(events('gateway') + events('durable_object'))
+
+    monkeypatch.setattr(probe, 'exchange', query)
+    probe.collect(value, 10)
+    assert calls == [0, 0, 0, 9999]
+    assert 'telemetry_error' not in value
+
+
+def test_collect_only_never_replays_workload_or_rewrites_source(tmp_path,
+                                                              monkeypatch):
+    collection_environment(monkeypatch)
+    monkeypatch.delenv('PROBE_TOKEN', raising=False)
+    value = report()
+    value.update(probe_type='durable-object', started_ms=1000, finished_ms=2000,
+                 source_sha='original-workload-sha', http_attempts=2)
+    source = tmp_path / 'source.json'
+    destination = tmp_path / 'collected.json'
+    source.write_text(json.dumps(value))
+    monkeypatch.setattr(probe, 'send', lambda *_: pytest.fail('sent workload'))
+    monkeypatch.setattr(probe, 'exchange', lambda *_args, **_kwargs:
+                        telemetry_reply(events('gateway') + events('durable_object')))
+    assert probe.main(['--collect-only', str(source), '--output', str(destination),
+                       '--script-name', value['script_name']]) == 0
+    saved = json.loads(destination.read_text())
+    assert saved['source_sha'] == 'original-workload-sha'
+    assert saved['http_attempts'] == 2
+    assert json.loads(source.read_text()) == value
+    assert saved['sample_gate'] == 'passed'

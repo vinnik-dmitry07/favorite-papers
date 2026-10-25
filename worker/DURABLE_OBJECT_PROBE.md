@@ -66,6 +66,57 @@ Functional success on local workerd is not Cloudflare CPU evidence.
 
 ## Run the live pilot
 
+### Live evidence from October 25
+
+The [pilot](probe-results/cloudflare-2026-10-25-do-pilot.json) passed on source
+`10b3a354c2ff900fcb4296dfa97ace95642cad8a`. The subsequent
+[matrix](probe-results/cloudflare-2026-10-25-do-matrix.json) completed all 600
+sequential and 24 concurrency-four requests, plus six warm-ups and three
+discovery/pilot requests. All 633 service requests succeeded. One initial
+workers.dev propagation 404 was counted separately, for 634 HTTP attempts.
+Both runs removed their namespace and Worker successfully.
+
+| Matrix observation | Result |
+| --- | --- |
+| Gateway CPU | 626/633 records; observed maximum 7 ms |
+| Durable Object CPU | 622/633 records; observed maximum 109 ms |
+| Warm REST / MCP search, client p95 | 517 / 501 ms |
+| Concurrency-four REST / MCP search, client p95 | 952 / 635 ms |
+| Maximum client time across successful requests | 1,215 ms |
+| Functional / latency gates | Passed |
+| CPU / combined sample gates | **Unverified**: 18 CPU records missing |
+
+Every matched platform outcome was `ok`, with no identity conflicts. The
+collector ended with a timeout after 112 queries; the artifact does not establish
+whether the gaps came from ingestion, query sampling, pagination or delay.
+The observed values meet their targets, but missing evidence prevents a pass.
+Application-cold requests reset caches; these are not verified isolate starts.
+The workload still uses synthetic vectors and makes no embedding-provider calls.
+The summaries link compressed original evidence with SHA-256 checksums.
+
+### Recover existing telemetry without another deployment
+
+Use this mode for the incomplete matrix before considering another workload:
+
+```bash
+gh workflow run agent-api.yml -R vinnik-dmitry07/favorite-papers \
+  --ref feat/static-search-probe \
+  -f static_probe=true -f probe_runtime=durable-object \
+  -f do_probe_phase=collect -f do_collect_run_id=40233126196 \
+  -f probe_credentials=repository
+```
+
+The collection job downloads the exact original run-attempt artifact and checks
+its repository, workflow, source SHA, account fingerprint and cleanup evidence.
+It uses the current collector while preserving the original workload SHA and
+recording collection provenance separately. No Worker is deployed, no probe
+request is sent, and no new probe token is needed. The output includes both the
+original report and the augmented report. If stored logs cannot supply the
+missing invocation records, the gate remains unverified. A green collection run
+does not rewrite the original Actions run's conclusion.
+
+### Fresh workload runs
+
 The [first live attempt](probe-results/cloudflare-2026-10-25-do-preflight.json)
 stopped before deployment: the namespace HTTP parser could not handle
 `errors: null`. No workload or CPU measurement ran. The corrected parser accepts
