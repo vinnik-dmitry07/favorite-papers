@@ -1,8 +1,11 @@
 '''The DO experiment cannot orphan or delete another service's namespace.'''
 
 import hashlib
+import io
 import json
+import sys
 import tomllib
+import urllib.error
 
 import pytest
 
@@ -45,6 +48,100 @@ def no_sleep(monkeypatch):
     monkeypatch.setenv('GITHUB_REPOSITORY', 'owner/repo')
     monkeypatch.setenv('CLOUDFLARE_ACCOUNT_ID', ACCOUNT)
     monkeypatch.setenv('CLOUDFLARE_API_TOKEN', 'test-token')
+
+
+def mock_http(monkeypatch, status, body):
+    calls = []
+
+    def urlopen(request, timeout):
+        calls.append(request)
+        stream = io.BytesIO(json.dumps(body).encode())
+        if status >= 400:
+            raise urllib.error.HTTPError(
+                request.full_url, status, 'test response', {}, stream)
+        stream.status = status
+        return stream
+
+    monkeypatch.setattr(lifecycle.urllib.request, 'urlopen', urlopen)
+    return calls
+
+
+@pytest.mark.parametrize('envelope', [
+    {'success': True, 'errors': None, 'result': []},
+    {'success': True, 'errors': [], 'result': []},
+    {'success': True, 'result': []},
+])
+def test_preflight_accepts_empty_error_envelopes(monkeypatch, envelope):
+    calls = mock_http(monkeypatch, 200, envelope)
+    result = lifecycle.preflight(lifecycle.Cloudflare(), NAME)
+    assert result['preflight'] == 'passed'
+    assert len(calls) == 1
+
+
+@pytest.mark.parametrize('errors', [{}, '', 0, False, 'error'])
+def test_malformed_errors_cannot_be_treated_as_success(monkeypatch, errors):
+    mock_http(monkeypatch, 200, {'success': True, 'errors': errors})
+    with pytest.raises(ValueError, match='HTTP 200.*malformed errors'):
+        lifecycle.Cloudflare().request('/workers/durable_objects/namespaces')
+
+
+@pytest.mark.parametrize('body', [
+    {'success': True, 'errors': [{'code': 10000}]},
+    {'success': True, 'errors': [None]},
+    {'success': False, 'errors': None},
+    {'errors': None},
+    [],
+])
+def test_nonempty_errors_or_missing_success_fail_closed(monkeypatch, body):
+    mock_http(monkeypatch, 200, body)
+    with pytest.raises(ValueError, match='HTTP 200'):
+        lifecycle.Cloudflare().request('/workers/durable_objects/namespaces')
+
+
+@pytest.mark.parametrize('status,attempts', [(401, 1), (403, 1), (503, 3)])
+def test_http_errors_with_null_errors_keep_status(monkeypatch, status, attempts):
+    calls = mock_http(monkeypatch, status, {'success': False, 'errors': None})
+    with pytest.raises(ValueError, match=f'HTTP {status}'):
+        lifecycle.Cloudflare().request('/workers/durable_objects/namespaces')
+    assert len(calls) == attempts
+
+
+@pytest.mark.parametrize('errors,absent', [
+    ([{'code': 10007}], True),
+    ([{'code': 10007}, {'code': 10090}], True),
+    (None, False),
+    ([None, {'code': 10007}], False),
+    ([{'code': 10007}, {}], False),
+    ([{'code': 10007}, {'code': 99999}], False),
+    ([{'code': []}], False),
+    ({}, False),
+])
+def test_only_complete_known_404_errors_prove_absence(
+        monkeypatch, errors, absent):
+    mock_http(monkeypatch, 404, {'success': False, 'errors': errors})
+    api = lifecycle.Cloudflare()
+    path = '/workers/scripts/' + NAME
+    if absent:
+        assert api.request(path, method='DELETE', allow_absent=True) is None
+    else:
+        with pytest.raises(ValueError, match='HTTP 404'):
+            api.request(path, method='DELETE', allow_absent=True)
+
+
+def test_preflight_error_is_checkpointed_without_response_body(
+        monkeypatch, tmp_path):
+    mock_http(monkeypatch, 403, {'success': False, 'errors': None,
+                               'private_detail': 'do-not-copy'})
+    path = tmp_path / 'lifecycle.json'
+    monkeypatch.setattr(sys, 'argv', [
+        'lifecycle', 'preflight', NAME, '--report', str(path)])
+    with pytest.raises(SystemExit) as caught:
+        lifecycle.main()
+    assert caught.value.code == 1
+    saved = json.loads(path.read_text())
+    assert saved['preflight'] == 'failed'
+    assert 'HTTP 403' in saved['error']
+    assert 'do-not-copy' not in path.read_text()
 
 
 @pytest.mark.parametrize('name', ['key-papers-api', 'key-papers-static-do-probe',

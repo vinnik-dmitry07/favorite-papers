@@ -66,6 +66,12 @@ Functional success on local workerd is not Cloudflare CPU evidence.
 
 ## Run the live pilot
 
+The [first live attempt](probe-results/cloudflare-2026-10-25-do-preflight.json)
+stopped before deployment: the namespace HTTP parser could not handle
+`errors: null`. No workload or CPU measurement ran. The corrected parser accepts
+null error collections and preserves HTTP status on failure. Re-running that
+old Actions run would use its old source; dispatch the updated branch instead.
+
 Use the existing repository secrets. No additional account secret is required:
 
 ```bash

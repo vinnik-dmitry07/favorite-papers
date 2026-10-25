@@ -1,0 +1,25 @@
+{
+  "run_id": 40224576146,
+  "run_attempt": 1,
+  "source_sha": "3d601ca48d967c2f5fc61f0774e3ea911135232c",
+  "run_url": "https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/40224576146",
+  "job_id": 121263427567,
+  "phase": "namespace_preflight",
+  "conclusion": "failed_before_deployment",
+  "failed_step": "Refuse deployment if an earlier DO namespace was not removed",
+  "cause": "Cloudflare response JSON had errors:null; request() iterated it before inspecting the HTTP status.",
+  "observed_exception": "TypeError: 'NoneType' object is not iterable",
+  "http_status": "not_preserved",
+  "authentication_result": "not_established_by_this_failure",
+  "deployment": "skipped",
+  "workload_requests": 0,
+  "cpu_gate": "unverified",
+  "cleanup": "skipped_no_deployment",
+  "artifact": {
+    "id": 12610763372,
+    "name": "durable-object-probe-40224576146-1",
+    "sha256": "5491ec3222fb359f68e8d9e73914dc85d5d8c92c7bc64d8b8c5e5d0d4eb28367"
+  },
+  "evidence_source": "GitHub Actions job logs and step outcomes",
+  "followup": "Accept missing/null/array errors; reject malformed errors; preserve HTTP status and checkpoint. Requires a fresh dispatch on the fixed commit."
+}

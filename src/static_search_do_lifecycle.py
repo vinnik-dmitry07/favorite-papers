@@ -54,17 +54,27 @@ class Cloudflare:
                     body = json.loads(raw) if raw.strip() else {}
                 except ValueError:
                     body = {}
-                errors = body.get('errors', []) if isinstance(body, dict) else []
-                codes = [item.get('code') for item in errors
-                         if isinstance(item, dict)]
+                errors = body.get('errors') if isinstance(body, dict) else None
+                # Cloudflare may serialize an empty errors collection as null.
+                # Other non-list values are malformed, even if they are falsy.
+                valid_errors = errors is None or isinstance(errors, list)
+                error_items = errors if isinstance(errors, list) else []
+                codes = [item['code'] for item in error_items
+                         if isinstance(item, dict)
+                         and isinstance(item.get('code'), int)
+                         and not isinstance(item['code'], bool)]
                 if (200 <= status < 300 and isinstance(body, dict)
-                        and not errors and (body.get('success') is True
-                                            or (method == 'DELETE' and not raw))):
+                        and valid_errors and not error_items
+                        and (body.get('success') is True
+                             or (method == 'DELETE' and not raw))):
                     return body
-                if (allow_absent and status == 404 and codes
+                if (allow_absent and status == 404 and valid_errors and codes
+                        and len(codes) == len(error_items)
                         and set(codes) <= {10007, 10090}):
                     return None
                 message = f'Cloudflare HTTP {status}; error codes: {codes}'
+                if not valid_errors:
+                    message += '; malformed errors field'
                 if status != 429 and status < 500:
                     raise ValueError(message)
             except (OSError, http.client.HTTPException) as exc:
