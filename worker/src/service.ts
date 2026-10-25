@@ -740,7 +740,10 @@ export function createService(
           url: node?.url ?? null,
           chunk_index: mapped.chunk_index,
           score: hit.score,
-          snippet: slicePoints(passage, 0, embed.limits.snippet_code_points),
+          // Cached String.slice views can retain an entire evicted paper in V8.
+          // Joining this bounded code-point array creates independent snippet
+          // storage while preserving astral characters and lone surrogates.
+          snippet: Array.from(slicePoints(passage, 0, embed.limits.snippet_code_points)).join(''),
           start: chunk.start,
           end: chunk.end,
           corpus_version: pointer.release_id,

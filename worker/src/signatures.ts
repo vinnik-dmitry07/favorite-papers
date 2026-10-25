@@ -41,6 +41,8 @@ export async function signatures(): Promise<{ build: string, embedding: string }
     passage_template: embed.passage_template,
     tokenizer_id: tok.id,
     tokenizer_revision: tok.revision,
+    tokenizer_algorithm_version: tok.algorithm_version,
+    added_tokens: tok.added_tokens,
     vocab_sha256: tok.vocab_sha256,
     do_lower_case: tok.do_lower_case,
     strip_accents: tok.strip_accents,
@@ -58,8 +60,18 @@ export async function signatures(): Promise<{ build: string, embedding: string }
     query_template: embed.query_template,
     passage_template: embed.passage_template,
     max_input_tokens: embed.max_input_tokens,
+    tokenizer_id: tok.id,
     tokenizer_revision: tok.revision,
+    tokenizer_algorithm_version: tok.algorithm_version,
+    added_tokens: tok.added_tokens,
     vocab_sha256: tok.vocab_sha256,
+    do_lower_case: tok.do_lower_case,
+    strip_accents: tok.strip_accents,
+    tokenize_chinese_chars: tok.tokenize_chinese_chars,
+    max_input_chars_per_word: tok.max_input_chars_per_word,
+    cls_token: tok.cls_token,
+    sep_token: tok.sep_token,
+    unk_token: tok.unk_token,
   }))
   return { build, embedding }
 }

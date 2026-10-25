@@ -14,8 +14,10 @@ import importlib.metadata
 import json
 import math
 from pathlib import Path
+import platform
 import struct
 import time
+import unicodedata
 
 from build_agent_index import (
     BuildError, WordPieceTokenizer, build_signature, canonical_json,
@@ -26,8 +28,29 @@ from build_agent_index import (
 MODEL_ID = 'BAAI/bge-base-en-v1.5'
 MODEL_REVISION = 'a5beb1e3e68b9ab74eb54cfd186867f64f240e1a'
 DIMENSIONS = 768
-IMPLEMENTATION = 'canonical-wordpiece-bge-cls-fp32-v1'
+IMPLEMENTATION = 'canonical-wordpiece-bge-cls-fp32-v2'
 VECTOR_FILE = 'vectors.f32'
+
+
+def encoder_identity(config: dict) -> dict:
+    '''Cache namespaces bind executable tokenizer semantics, not just vocab.'''
+    sources = {name: hashlib.sha256(Path(__file__).with_name(name).read_bytes()).hexdigest()
+               for name in ('build_agent_index.py', 'embed_real_search_probe.py')}
+    return {
+        'implementation': IMPLEMENTATION,
+        'model_id': MODEL_ID, 'model_revision': MODEL_REVISION,
+        'pooling': 'cls', 'normalization': 'l2', 'dtype': 'float32',
+        'byte_order': 'little', 'dimensions': DIMENSIONS,
+        'device': 'cpu', 'attention_implementation': 'eager',
+        'embedding_signature': embedding_signature(config),
+        'tokenizer_semantics': {
+            'config': config['tokenizer'], 'source_sha256': sources,
+            'python': platform.python_version(),
+            'unicode': unicodedata.unidata_version,
+        },
+        'versions': {name: importlib.metadata.version(name)
+                     for name in ('torch', 'transformers', 'tokenizers')},
+    }
 
 
 def atomic_bytes(path: Path, data: bytes) -> None:
@@ -58,20 +81,24 @@ def checked_asset(root: Path, manifest: dict, name: str) -> bytes:
     return data
 
 
-def canonical_inputs(root: Path, config: dict) -> tuple[dict, list[str]]:
+def canonical_inputs(root: Path, config: dict, *,
+                     full_corpus: bool = False) -> tuple[dict, list[str]]:
     '''Validate complete-paper coverage and return exact model input strings.'''
     manifest = json.loads((root / 'probe.json').read_text(encoding='utf-8'))
+    kind = 'full-corpus' if full_corpus else 'real-subset'
+    slot = 'full-probe' if full_corpus else 'real-probe'
+    limit = 100_000 if full_corpus else 500
     if (manifest.get('schema_version') != 1
-            or manifest.get('kind') != 'real-subset'
+            or manifest.get('kind') != kind
             or manifest.get('synthetic') is not False
-            or manifest.get('slot') != 'real-probe'
+            or manifest.get('slot') != slot
             or manifest.get('dimensions') != DIMENSIONS
             or manifest.get('embedding_signature') != embedding_signature(config)
             or manifest.get('build_signature') != build_signature(config)):
         raise BuildError('Subset does not match the canonical embedding config')
     rows = manifest.get('rows')
     paper_ids = manifest.get('paper_ids')
-    if (not isinstance(rows, list) or not 1 <= len(rows) <= 500
+    if (not isinstance(rows, list) or not 1 <= len(rows) <= limit
             or not all(isinstance(row, dict) for row in rows)
             or manifest.get('passage_count') != len(rows)
             or not isinstance(paper_ids, list)
@@ -89,9 +116,22 @@ def canonical_inputs(root: Path, config: dict) -> tuple[dict, list[str]]:
     graph = json.loads(checked_asset(root, manifest, prefix + '/graph.json'))
     if sorted(graph.get('nodes', {})) != paper_ids:
         raise BuildError('Graph and subset paper IDs differ')
+    text_paper_ids = paper_ids
+    if full_corpus:
+        if (manifest.get('scope')
+                != 'isolated-full-corpus-evaluation-not-production'
+                or manifest.get('publication_ready') is not False):
+            raise BuildError('Invalid full-corpus evaluation scope')
+        text_paper_ids = manifest.get('text_paper_ids')
+        expected_text_ids = sorted(
+            key for key, node in graph['nodes'].items()
+            if node.get('text', {}).get('available') is True
+        )
+        if text_paper_ids != expected_text_ids:
+            raise BuildError('Text-bearing paper IDs disagree with graph')
     papers = {}
     expected_rows = []
-    for paper_id in paper_ids:
+    for paper_id in text_paper_ids:
         name = prefix + '/papers/' + sha256_hex(paper_id) + '.json'
         paper = json.loads(checked_asset(root, manifest, name))
         if (paper.get('paper_id') != paper_id
@@ -120,7 +160,7 @@ def canonical_inputs(root: Path, config: dict) -> tuple[dict, list[str]]:
                 or not 0 <= start < end <= len(paper['text'])):
             raise BuildError('Invalid code-point chunk offsets')
         piece = paper['text'][start:end]
-        if (row.get('id') != vector_id('real-probe', paper_id, index)
+        if (row.get('id') != vector_id(slot, paper_id, index)
                 or any(row.get(key) != chunk.get(key) for key in (
                     'start', 'end', 'token_count', 'content_hash', 'input_hash'))
                 or sha256_hex(piece) != row['content_hash']
@@ -169,10 +209,35 @@ def vector_bytes(vector) -> bytes:
     return struct.pack(f'<{DIMENSIONS}f', *vector)
 
 
-def cached_vector(path: Path) -> list[float] | None:
+def cache_context(encoder_signature: str, input_key: str, text: str,
+                  config: dict, tokenizer=None) -> dict:
+    return {'schema_version': 1, 'encoder_signature': encoder_signature,
+            'input_hash': input_key, 'model_input_sha256': sha256_hex(text),
+            'token_ids_sha256': sha256_hex(canonical_json(
+                (tokenizer or WordPieceTokenizer(config)).token_ids('', text)))}
+
+
+def write_cached_vector(path: Path, vector, *, expected: dict) -> None:
+    raw = vector_bytes(vector)
+    atomic_bytes(path, raw)
+    atomic_bytes(path.with_suffix(path.suffix + '.json'),
+                 (canonical_json({**expected, 'vector_sha256': hashlib.sha256(raw).hexdigest()})
+                  + '\n').encode())
+
+
+def cached_vector(path: Path, *, expected: dict | None = None) -> list[float] | None:
     if not path.exists():
         return None
     raw = path.read_bytes()
+    if expected is not None:
+        sidecar = path.with_suffix(path.suffix + '.json')
+        if not sidecar.exists():
+            # Interrupted data-before-metadata write is an uncommitted miss.
+            return None
+        metadata = json.loads(sidecar.read_text(encoding='utf-8'))
+        if (any(metadata.get(key) != value for key, value in expected.items())
+                or metadata.get('vector_sha256') != hashlib.sha256(raw).hexdigest()):
+            raise BuildError('Embedding cache identity/checksum mismatch: ' + path.name)
     if len(raw) != DIMENSIONS * 4:
         raise BuildError(f'Invalid embedding cache length: {path.name}')
     vector = list(struct.unpack(f'<{DIMENSIONS}f', raw))
@@ -197,28 +262,25 @@ class BgeEncoder:
         self.model = None
         self.hf_tokenizer = None
         self.tokenizer_matches = 0
-        self.identity = {
-            'implementation': IMPLEMENTATION,
-            'model_id': MODEL_ID, 'model_revision': MODEL_REVISION,
-            'pooling': 'cls', 'normalization': 'l2', 'dtype': 'float32',
-            'byte_order': 'little', 'dimensions': DIMENSIONS,
-            'device': 'cpu', 'attention_implementation': 'eager',
-            'embedding_signature': embedding_signature(config),
-            'versions': {name: importlib.metadata.version(name)
-                         for name in ('torch', 'transformers')},
-        }
+        self.identity = encoder_identity(config)
 
-    def _load(self):
-        if self.model is not None:
+    def _load_tokenizer(self):
+        if self.hf_tokenizer is not None:
             return
-        import torch
-        from transformers import AutoModel, AutoTokenizer
+        from transformers import AutoTokenizer
 
-        torch.set_num_threads(self.threads)
         self.hf_tokenizer = AutoTokenizer.from_pretrained(
             MODEL_ID, revision=MODEL_REVISION, use_fast=False,
             trust_remote_code=False, local_files_only=self.local_files_only,
         )
+
+    def _load_model(self):
+        if self.model is not None:
+            return
+        import torch
+        from transformers import AutoModel
+
+        torch.set_num_threads(self.threads)
         self.model = AutoModel.from_pretrained(
             MODEL_ID, revision=MODEL_REVISION, use_safetensors=True,
             trust_remote_code=False, torch_dtype=torch.float32,
@@ -230,10 +292,8 @@ class BgeEncoder:
                 or self.model.config._commit_hash != MODEL_REVISION):
             raise BuildError('Downloaded model identity or shape mismatch')
 
-    def __call__(self, inputs: list[str]) -> list[list[float]]:
-        self._load()
-        import torch
-
+    def _validated_ids(self, inputs: list[str], *, labels=None) -> list[list[int]]:
+        self._load_tokenizer()
         ids = [self.tokenizer.token_ids('', text) for text in inputs]
         if any(len(row) > self.config['max_input_tokens'] for row in ids):
             raise BuildError('Refusing to truncate a canonical model input')
@@ -241,8 +301,47 @@ class BgeEncoder:
             inputs, add_special_tokens=True, truncation=False,
         )['input_ids']
         if ids != expected:
-            raise BuildError('Canonical and pinned Hugging Face token IDs differ')
+            index = next((i for i, pair in enumerate(zip(ids, expected))
+                          if pair[0] != pair[1]), 0)
+            left, right = ids[index], expected[index]
+            at = next((i for i, pair in enumerate(zip(left, right))
+                       if pair[0] != pair[1]), min(len(left), len(right)))
+            detail = {'input': labels[index] if labels else index,
+                      'input_sha256': sha256_hex(inputs[index]),
+                      'first_difference': at, 'canonical_length': len(left),
+                      'hf_length': len(right), 'canonical_ids': left,
+                      'hf_ids': right}
+            raise BuildError('Canonical and pinned Hugging Face token IDs differ: '
+                             + canonical_json(detail))
         self.tokenizer_matches += len(inputs)
+        return ids
+
+    def validate_inputs(self, inputs: list[str], *, labels=None,
+                        batch_size=128, callback=None) -> dict:
+        '''Validate every input, including cached rows, without loading weights.'''
+        if not 1 <= batch_size <= 1024:
+            raise BuildError('Invalid tokenizer batch size')
+        digest = hashlib.sha256()
+        tokens = 0
+        for first in range(0, len(inputs), batch_size):
+            ids = self._validated_ids(
+                inputs[first:first + batch_size],
+                labels=labels[first:first + batch_size] if labels else None,
+            )
+            for row in ids:
+                digest.update((canonical_json(row) + '\n').encode())
+                tokens += len(row)
+            if callback:
+                callback(first + len(ids), ids)
+        return {'count': len(inputs), 'token_count': tokens,
+                'token_ids_sha256': digest.hexdigest()}
+
+    def __call__(self, inputs: list[str]) -> list[list[float]]:
+        # Even direct bounded canaries fail before AutoModel construction.
+        ids = self._validated_ids(inputs)
+        self._load_model()
+        import torch
+
         width = max(map(len, ids))
         pad = self.hf_tokenizer.pad_token_id
         input_ids = torch.tensor([
@@ -262,42 +361,87 @@ class BgeEncoder:
 
 
 def encode_probe(root: Path, encoder, config: dict, *, cache_dir: Path,
-                 batch_size: int = 8, progress: bool = True) -> dict:
+                 batch_size: int = 8, progress: bool = True,
+                 full_corpus: bool = False,
+                 length_bucketing: bool = False,
+                 full_run_confirmed: bool = False,
+                 preflight_certificate: Path | None = None,
+                 frozen_queries: Path | None = None) -> dict:
     if not 1 <= batch_size <= 32:
         raise BuildError('Use batch size 1..32')
-    manifest, inputs = canonical_inputs(root, config)
+    if full_corpus:
+        if not full_run_confirmed or not preflight_certificate or not frozen_queries:
+            raise BuildError('Full encoding requires --full-run-confirmed, '
+                             '--preflight-certificate and --frozen-queries')
+        from preflight_full_search_probe import verify_certificate
+        verify_certificate(preflight_certificate, corpus=root,
+                           queries=frozen_queries, config=config)
+    manifest, inputs = canonical_inputs(root, config, full_corpus=full_corpus)
+    validate = getattr(encoder, 'validate_inputs', None)
+    if validate:
+        validate(inputs, labels=[{'row': i, 'paper_id': row['paper_id'],
+                                 'chunk_index': row['chunk_index']}
+                                for i, row in enumerate(manifest['rows'])])
+        if full_corpus:
+            document = json.loads(Path(frozen_queries).read_text(encoding='utf-8'))
+            validate([model_input(config['query_template'], row['query'])
+                      for row in document['queries']],
+                     labels=[row['id'] for row in document['queries']])
     identity = encoder.identity
     signature = sha256_hex(canonical_json(identity))
-    vectors = [None] * len(inputs)
+    # Construct one tokenizer per encode, not once per cache row.
+    tokenizer = WordPieceTokenizer(config)
+    def context(index):
+        text = inputs[index]
+        return {'schema_version': 1, 'encoder_signature': signature,
+                'input_hash': manifest['rows'][index]['input_hash'],
+                'model_input_sha256': sha256_hex(text),
+                'token_ids_sha256': sha256_hex(canonical_json(tokenizer.token_ids('', text)))}
     missing = []
     started = time.monotonic()
     for index, row in enumerate(manifest['rows']):
         path = cache_dir / signature / (row['input_hash'] + '.f32')
-        vectors[index] = cached_vector(path)
-        if vectors[index] is None:
+        if cached_vector(path, expected=context(index)) is None:
             missing.append(index)
+    if length_bucketing:
+        missing.sort(key=lambda index: (
+            manifest['rows'][index]['token_count'], index,
+        ))
     for offset in range(0, len(missing), batch_size):
         indices = missing[offset:offset + batch_size]
         batch = encoder([inputs[index] for index in indices])
         if len(batch) != len(indices):
             raise BuildError('Encoder returned the wrong batch size')
         for index, vector in zip(indices, batch):
-            raw = vector_bytes(vector)
-            vectors[index] = list(struct.unpack(f'<{DIMENSIONS}f', raw))
             path = cache_dir / signature / (
                 manifest['rows'][index]['input_hash'] + '.f32')
-            atomic_bytes(path, raw)
+            write_cached_vector(path, vector, expected=context(index))
         if progress:
             completed = min(offset + len(indices), len(missing))
             print(f'Encoded {completed}/{len(missing)} new passages; '
                   f'{len(inputs) - len(missing)} cached', flush=True)
-    raw = b''.join(vector_bytes(vector) for vector in vectors)
-    digest = hashlib.sha256(raw).hexdigest()
-    atomic_bytes(root / VECTOR_FILE, raw)
+    # Never retain the full FP32 corpus as Python float objects. Cached rows
+    # also make an interrupted multi-hour build resumable without new AI calls.
+    temporary = root / (VECTOR_FILE + '.tmp')
+    checksum = hashlib.sha256()
+    max_norm_error = 0.0
+    with temporary.open('wb') as output:
+        for index, row in enumerate(manifest['rows']):
+            path = cache_dir / signature / (row['input_hash'] + '.f32')
+            vector = cached_vector(path, expected=context(index))
+            if vector is None:
+                raise BuildError('A completed embedding disappeared from cache')
+            raw = vector_bytes(vector)
+            output.write(raw)
+            checksum.update(raw)
+            max_norm_error = max(max_norm_error, abs(math.sqrt(math.fsum(
+                value * value for value in vector)) - 1))
+    digest = checksum.hexdigest()
+    temporary.replace(root / VECTOR_FILE)
     manifest['files'][VECTOR_FILE] = digest
     manifest['embeddings'] = {
         **identity, 'encoder_signature': signature,
-        'path': VECTOR_FILE, 'sha256': digest, 'count': len(vectors),
+        'path': VECTOR_FILE, 'sha256': digest, 'count': len(inputs),
         'workers_ai_compatibility': 'unverified',
     }
     atomic_bytes(root / 'probe.json',
@@ -309,8 +453,10 @@ def encode_probe(root: Path, encoder, config: dict, *, cache_dir: Path,
         'vectors_sha256': digest, 'encoder_signature': signature,
         'model_inputs_checked_against_hf_tokenizer': getattr(
             encoder, 'tokenizer_matches', None),
-        'max_norm_error': max(abs(math.sqrt(math.fsum(
-            value * value for value in vector)) - 1) for vector in vectors),
+        'max_norm_error': max_norm_error,
+        'batch_size': batch_size,
+        'length_bucketing': length_bucketing,
+        'full_corpus': full_corpus,
         'encoder': identity,
         'workers_ai_compatibility': 'unverified',
     }
@@ -319,12 +465,25 @@ def encode_probe(root: Path, encoder, config: dict, *, cache_dir: Path,
     return report
 
 
-def encode_queries(root: Path, encoder, config: dict, output: Path) -> dict:
+def encode_queries(root: Path, encoder, config: dict, output: Path, *,
+                   full_corpus: bool = False,
+                   full_run_confirmed: bool = False,
+                   preflight_certificate: Path | None = None,
+                   frozen_queries: Path | None = None) -> dict:
     '''Local-only query vectors for production-contract integration tests.'''
-    manifest, _ = canonical_inputs(root, config)
+    if full_corpus:
+        if not full_run_confirmed or not preflight_certificate or not frozen_queries:
+            raise BuildError('Full query encoding requires explicit confirmation '
+                             'and a fresh preflight certificate')
+        from preflight_full_search_probe import verify_certificate
+        verify_certificate(preflight_certificate, corpus=root,
+                           queries=frozen_queries, config=config)
+    manifest, _ = canonical_inputs(root, config, full_corpus=full_corpus)
     embeddings = manifest.get('embeddings')
     if not isinstance(embeddings, dict):
         raise BuildError('Encode passage vectors before integration queries')
+    if embeddings.get('encoder_signature') != sha256_hex(canonical_json(encoder.identity)):
+        raise BuildError('Passage and query encoder identities differ')
     queries = manifest.get('queries')
     if not isinstance(queries, list) or not 1 <= len(queries) <= 32:
         raise BuildError('Expected 1..32 predefined integration queries')
@@ -334,6 +493,9 @@ def encode_queries(root: Path, encoder, config: dict, output: Path) -> dict:
         if not isinstance(query, str) or not 0 < len(query) <= 2000:
             raise BuildError('Invalid integration query')
         texts.append(model_input(config['query_template'], query))
+    validate = getattr(encoder, 'validate_inputs', None)
+    if validate:
+        validate(texts)
     vectors = encoder(texts)
     if len(vectors) != len(queries):
         raise BuildError('Encoder returned the wrong query batch size')
@@ -363,6 +525,13 @@ def main(argv=None) -> int:
     parser.add_argument('--local-files-only', action='store_true')
     parser.add_argument('--query-vectors', type=Path)
     parser.add_argument('--report', type=Path)
+    parser.add_argument('--full-corpus', action='store_true',
+                        help='Explicitly allow the offline full-corpus manifest')
+    parser.add_argument('--length-bucketing', action='store_true',
+                        help='Batch similar input lengths without changing rows')
+    parser.add_argument('--full-run-confirmed', action='store_true')
+    parser.add_argument('--preflight-certificate', type=Path)
+    parser.add_argument('--frozen-queries', type=Path)
     args = parser.parse_args(argv)
     if not 1 <= args.batch_size <= 32 or not 1 <= args.threads <= 16:
         parser.error('Use batch size 1..32 and CPU threads 1..16')
@@ -372,11 +541,20 @@ def main(argv=None) -> int:
                              local_files_only=args.local_files_only)
         report = encode_probe(args.out, encoder, config,
                               cache_dir=args.cache_dir,
-                              batch_size=args.batch_size)
+                              batch_size=args.batch_size,
+                              full_corpus=args.full_corpus,
+                              length_bucketing=args.length_bucketing,
+                              full_run_confirmed=args.full_run_confirmed,
+                              preflight_certificate=args.preflight_certificate,
+                              frozen_queries=args.frozen_queries)
         if args.query_vectors:
             checked_before = encoder.tokenizer_matches
             queries = encode_queries(args.out, encoder, config,
-                                     args.query_vectors)
+                                     args.query_vectors,
+                                     full_corpus=args.full_corpus,
+                                     full_run_confirmed=args.full_run_confirmed,
+                                     preflight_certificate=args.preflight_certificate,
+                                     frozen_queries=args.frozen_queries)
             report['local_queries_encoded'] = len(queries['queries'])
             report['query_inputs_checked_against_hf_tokenizer'] = (
                 encoder.tokenizer_matches - checked_before)

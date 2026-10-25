@@ -23,12 +23,25 @@ on:
       - src/prepare_static_search_do_collection.py
       - src/test_prepare_static_search_do_collection.py
       - src/build_real_search_probe.py
+      - src/build_full_search_probe.py
+      - src/pack_full_search_probe.py
+      - src/evaluate_full_search_probe.py
+      - src/preflight_full_search_probe.py
+      - src/run_full_probe_canary.py
+      - src/test_full_search_probe.py
+      - src/test_pack_full_search_probe.py
+      - src/test_evaluate_full_search_probe.py
+      - src/test_preflight_full_search_probe.py
+      - src/test_full_probe_canary.py
+      - src/test_tokenizer_contract.py
       - src/embed_real_search_probe.py
       - src/run_real_search_probe.py
       - src/test_real_search_probe.py
       - src/test_embed_real_search_probe.py
       - src/test_run_real_search_probe.py
       - src/test_real_search_workflow.py
+      - src/test_full_search_workflow.py
+      - src/probe_full_search_numeric.py
       - src/summarize_static_search_probe.py
       - src/reproduce_static_search_review.py
       - src/test_static_search_probe.py
@@ -53,6 +66,8 @@ on:
       - worker/src/**
       - '!worker/src/static-search*'
       - '!worker/src/real-search*'
+      - '!worker/src/full-*'
+      - '!worker/src/probe-admission*'
       - '!worker/src/static-corpus-store.ts'
       - '!worker/src/*.test.ts'
       - '!worker/src/wasm.d.ts'
@@ -73,10 +88,22 @@ on:
         options: [worker, durable-object]
         default: worker
       do_probe_phase:
-        description: 'DO synthetic pilot/matrix, read-only log collection, or bounded real-subset integration'
+        description: 'DO pilot/matrix, log collection, real subset, or isolated offline full-corpus gates'
         type: choice
-        options: [pilot, matrix, collect, real]
+        options: [pilot, matrix, collect, real, full]
         default: pilot
+      full_run_confirmed:
+        description: 'Full phase only: allow long offline encoding and evaluation after every fresh gate passes'
+        type: boolean
+        default: false
+      provider_available_neurons:
+        description: 'Full phase only: verified remaining free Workers AI neurons for the bounded canary; 0 blocks calls'
+        type: string
+        default: '0'
+      full_numeric_run_id:
+        description: 'Pinned prior genuine-vector fixture run; changing the artifact pin requires a reviewed code update'
+        type: string
+        default: '40238828496'
       do_pilot_run_id:
         description: 'For DO matrix only: successful pilot run ID on this exact commit'
         type: string
@@ -117,7 +144,7 @@ permissions:
   actions: read
 
 concurrency:
-  group: agent-api-${{ github.event_name == 'pull_request' && github.ref || (github.event_name == 'workflow_dispatch' && inputs.static_probe && 'probe' || 'publish') }}
+  group: agent-api-${{ github.event_name == 'pull_request' && github.ref || (github.event_name == 'workflow_dispatch' && inputs.do_probe_phase == 'full' && 'full-offline' || (github.event_name == 'workflow_dispatch' && inputs.static_probe && 'probe' || 'publish')) }}
   cancel-in-progress: false
 
 jobs:
@@ -132,9 +159,9 @@ jobs:
           python-version: '3.12'
       - name: Offline tests
         run: |
-          python -m pip install -r requirements-agent.txt
+          python -m pip install -r requirements-agent.txt numpy==2.3.4
           python -m py_compile src/reproduce_static_search_review.py
-          python -m pytest src/test_agent_index.py src/test_publish_agent_index.py src/test_agent_pages.py src/test_static_search_probe.py src/test_static_search_probe_run.py src/test_static_search_probe_cleanup.py src/test_static_search_do_lifecycle.py src/test_static_search_do_probe.py src/test_prepare_static_search_do_collection.py src/test_real_search_probe.py src/test_embed_real_search_probe.py src/test_run_real_search_probe.py src/test_real_search_workflow.py
+          python -m pytest src/test_agent_index.py src/test_publish_agent_index.py src/test_agent_pages.py src/test_static_search_probe.py src/test_static_search_probe_run.py src/test_static_search_probe_cleanup.py src/test_static_search_do_lifecycle.py src/test_static_search_do_probe.py src/test_prepare_static_search_do_collection.py src/test_real_search_probe.py src/test_embed_real_search_probe.py src/test_run_real_search_probe.py src/test_real_search_workflow.py src/test_full_search_workflow.py src/test_full_search_probe.py src/test_pack_full_search_probe.py src/test_evaluate_full_search_probe.py src/test_preflight_full_search_probe.py src/test_full_probe_canary.py src/test_tokenizer_contract.py
       - name: Node
         uses: actions/setup-node@v4
         with:
@@ -161,7 +188,7 @@ jobs:
 
   static_probe:
     needs: offline
-    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime != 'durable-object' && inputs.do_probe_phase != 'collect' && inputs.do_probe_phase != 'real'
+    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime != 'durable-object' && inputs.do_probe_phase != 'collect' && inputs.do_probe_phase != 'real' && inputs.do_probe_phase != 'full'
     runs-on: ubuntu-latest
     timeout-minutes: 25
     environment: static-search-probe
@@ -277,7 +304,7 @@ jobs:
 
   static_do_probe:
     needs: offline
-    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase != 'collect' && inputs.do_probe_phase != 'real'
+    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase != 'collect' && inputs.do_probe_phase != 'real' && inputs.do_probe_phase != 'full'
     runs-on: ubuntu-latest
     timeout-minutes: 50
     environment: static-search-probe
@@ -527,7 +554,7 @@ jobs:
 
   static_real_probe:
     needs: offline
-    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase == 'real'
+    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase == 'real' && inputs.do_probe_phase != 'full'
     runs-on: ubuntu-latest
     timeout-minutes: 60
     environment: static-search-probe
@@ -696,9 +723,318 @@ jobs:
           raise SystemExit(0 if passed else 1)
           PYTHON
 
+  full_offline_probe:
+    needs: offline
+    if: github.event_name == 'workflow_dispatch' && inputs.do_probe_phase == 'full'
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    environment: static-search-probe
+    env:
+      FULL_RUN_CONFIRMED: ${{ inputs.full_run_confirmed }}
+      PROVIDER_AVAILABLE_NEURONS: ${{ inputs.provider_available_neurons }}
+      FULL_NUMERIC_RUN_ID: ${{ inputs.full_numeric_run_id }}
+      FREE_PLAN_CONFIRMED: ${{ inputs.free_plan_confirmed }}
+      HF_HUB_DISABLE_TELEMETRY: '1'
+      TOKENIZERS_PARALLELISM: 'false'
+      FULL_PROBE_PYTHON: python
+    steps:
+      - name: Checkout the exact reviewed code and source history
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: worker/package-lock.json
+      - name: Validate the bounded experiment controls
+        id: controls
+        run: |
+          mkdir -p full-probe-reports
+          python - <<'PYTHON'
+          import os
+          import re
+          if not re.fullmatch(r'[0-9]+', os.environ['PROVIDER_AVAILABLE_NEURONS']):
+              raise SystemExit('STOP: provider_available_neurons must be a nonnegative integer.')
+          if os.environ['FULL_NUMERIC_RUN_ID'] != '40238828496':
+              raise SystemExit('STOP: the genuine-vector artifact must match the reviewed run/artifact/checksum pin.')
+          if os.environ['FULL_RUN_CONFIRMED'] == 'true' and int(os.environ['PROVIDER_AVAILABLE_NEURONS']) <= 0:
+              raise SystemExit('STOP: a full run needs a verified remaining free provider allowance before any model work.')
+          PYTHON
+      - name: Install lightweight checks and build the numerical kernel
+        run: |
+          python -m pip install -r requirements-agent.txt numpy==2.3.4
+          npm --prefix worker ci
+          npm --prefix worker run build:probe
+      - name: Run cheap contracts before model dependencies
+        id: cheap_tests
+        run: |
+          python -m pytest src/test_tokenizer_contract.py src/test_full_search_probe.py src/test_pack_full_search_probe.py src/test_preflight_full_search_probe.py src/test_full_probe_canary.py src/test_full_search_workflow.py
+          npm --prefix worker run typecheck
+      - name: Download and authenticate the existing numerical fixture
+        id: numeric_source
+        timeout-minutes: 3
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$FULL_NUMERIC_RUN_ID" > full-probe-reports/numeric-source-run.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/12616396041" > full-probe-reports/numeric-source-artifact.json
+          python - <<'PYTHON'
+          import json
+          import os
+          from pathlib import Path
+          import subprocess
+          run = json.loads(Path('full-probe-reports/numeric-source-run.json').read_text())
+          artifact = json.loads(Path('full-probe-reports/numeric-source-artifact.json').read_text())
+          assert run['id'] == 40238828496 and run['status'] == 'completed' and run['conclusion'] == 'success'
+          assert run['name'] == 'Agent API' and run['event'] == 'workflow_dispatch'
+          assert run['path'] == '.github/workflows/agent-api.yml'
+          assert run['repository']['full_name'] == os.environ['GITHUB_REPOSITORY']
+          assert run['head_sha'].startswith('4723db4')
+          assert artifact['id'] == 12616396041 and not artifact['expired']
+          assert artifact['name'] == 'real-search-probe-40238828496-' + str(run['run_attempt'])
+          assert artifact['workflow_run']['id'] == run['id']
+          subprocess.run(['git', 'merge-base', '--is-ancestor', run['head_sha'], os.environ['GITHUB_SHA']], check=True)
+          PYTHON
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/12616396041/zip" > full-probe-reports/numeric-source.zip
+          python - <<'PYTHON'
+          import hashlib
+          import json
+          from pathlib import Path, PurePosixPath
+          import zipfile
+          archive = Path('full-probe-reports/numeric-source.zip')
+          expected = 'ae50de4d8de1ebc0d44c9b73d1d3e677a4523bbb9caf10a8db78acad8030a8c0'
+          assert hashlib.sha256(archive.read_bytes()).hexdigest() == expected, 'Numerical fixture archive checksum mismatch'
+          target = Path('full-probe-reports/numeric-source')
+          with zipfile.ZipFile(archive) as source:
+              entries = source.infolist()
+              assert len(entries) < 1000 and sum(item.file_size for item in entries) < 64 * 1024 * 1024
+              for item in entries:
+                  path = PurePosixPath(item.filename)
+                  assert not path.is_absolute() and '..' not in path.parts and '\\' not in item.filename
+                  assert (item.external_attr >> 16) & 0o170000 != 0o120000, 'Archive symlink rejected'
+              source.extractall(target)
+          manifest = json.loads((target / 'agent_real_probe/probe.json').read_text())
+          run = json.loads(Path('full-probe-reports/numeric-source-run.json').read_text())
+          assert manifest['source_sha'] == run['head_sha'], 'Fixture source commit differs from the authenticated run'
+          assert (target / 'agent_real_probe/vectors.f32').is_file()
+          PYTHON
+      - name: Build every canonical card and available passage
+        id: canonical
+        timeout-minutes: 3
+        run: python src/build_full_search_probe.py --out agent_full_probe
+      - name: Freeze source-derived and natural development queries
+        id: frozen_queries
+        run: |
+          python src/evaluate_full_search_probe.py prepare --corpus agent_full_probe \
+            --natural worker/quality/full-natural-questions.json \
+            --output agent_full_probe/quality-combined-frozen.json
+      - name: Install the pinned CPU environment and download tokenizer files only
+        timeout-minutes: 8
+        run: |
+          python -m pip install -r requirements-real-probe.txt
+          python - <<'PYTHON'
+          import sys
+          sys.path.insert(0, 'src')
+          from build_agent_index import load_embed
+          from transformers import AutoTokenizer
+          config = load_embed()['tokenizer']
+          AutoTokenizer.from_pretrained(config['id'], revision=config['revision'],
+                                        use_fast=False, trust_remote_code=False)
+          PYTHON
+      - name: Bind code, environment, complete sources, and frozen queries
+        id: snapshot
+        run: |
+          python src/preflight_full_search_probe.py snapshot --corpus agent_full_probe \
+            --queries agent_full_probe/quality-combined-frozen.json --out full-probe-reports/preflight
+      - name: Audit every passage and query without loading model weights
+        id: tokenizer_gate
+        timeout-minutes: 11
+        run: python src/preflight_full_search_probe.py tokenize --run full-probe-reports/preflight
+      - name: Verify genuine numerical and REST MCP contracts
+        id: numeric_gate
+        timeout-minutes: 4
+        run: |
+          python src/preflight_full_search_probe.py numeric --run full-probe-reports/preflight \
+            --real-source full-probe-reports/numeric-source/agent_real_probe
+      - name: Pack full geometry with explicit synthetic provenance
+        id: geometry_pack
+        timeout-minutes: 3
+        run: |
+          python src/pack_full_search_probe.py --source agent_full_probe \
+            --out agent_geometry_probe --geometry-fixture --seed 17
+          worker/node_modules/.bin/esbuild worker/probe-kernel/full-memory.ts \
+            --bundle --platform=node --format=esm --outfile=full-probe-reports/full-memory.mjs
+      - name: Measure full allocation, concurrency, and admission bounds
+        id: geometry_memory
+        timeout-minutes: 5
+        run: |
+          GEOMETRY_MANIFEST_SHA=$(sha256sum agent_geometry_probe/probe.json | cut -d ' ' -f 1)
+          timeout 300s node --expose-gc full-probe-reports/full-memory.mjs \
+            --assets agent_geometry_probe --manifest-sha "$GEOMETRY_MANIFEST_SHA" \
+            --wasm worker/probe-kernel/scan.wasm --vocab worker/tokenizer/vocab.txt \
+            --canonical agent_full_probe/probe.json --out full-probe-reports/geometry-memory.json \
+            --data-label geometry-fixture
+      - name: Record the validated geometry evidence
+        id: geometry_gate
+        if: always() && steps.geometry_pack.outcome == 'success'
+        run: |
+          python src/preflight_full_search_probe.py record-geometry --run full-probe-reports/preflight \
+            --report full-probe-reports/geometry-memory.json
+      - name: Verify free allowance before the bounded local and provider canary
+        id: canary_controls
+        run: |
+          python - <<'PYTHON'
+          import os
+          if os.environ['FREE_PLAN_CONFIRMED'] != 'true':
+              raise SystemExit('STOP: confirm the selected account is Workers Free before the provider canary.')
+          if int(os.environ['PROVIDER_AVAILABLE_NEURONS']) <= 0:
+              raise SystemExit('STOP: no verified free provider allowance; no canary or long encoding was started.')
+          PYTHON
+      - name: Run only the bounded compatibility canary
+        id: canary
+        timeout-minutes: 6
+        env:
+          PROBE_CREDENTIALS: ${{ inputs.probe_credentials }}
+          REPOSITORY_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          REPOSITORY_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          PROBE_ACCOUNT_ID: ${{ secrets.PROBE_CLOUDFLARE_ACCOUNT_ID }}
+          PROBE_API_TOKEN: ${{ secrets.PROBE_CLOUDFLARE_API_TOKEN }}
+        run: |
+          case "$PROBE_CREDENTIALS" in
+            repository)
+              export CLOUDFLARE_ACCOUNT_ID="$REPOSITORY_ACCOUNT_ID"
+              export CLOUDFLARE_API_TOKEN="$REPOSITORY_API_TOKEN"
+              ;;
+            probe_environment)
+              export CLOUDFLARE_ACCOUNT_ID="$PROBE_ACCOUNT_ID"
+              export CLOUDFLARE_API_TOKEN="$PROBE_API_TOKEN"
+              ;;
+            *) echo '::error::Unknown credential selection'; exit 1 ;;
+          esac
+          if [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo '::error::STOP: selected canary credentials are missing.'
+            exit 1
+          fi
+          python src/run_full_probe_canary.py --run full-probe-reports/preflight \
+            --provider --available-neurons "$PROVIDER_AVAILABLE_NEURONS" \
+            --threads 4 --allow-model-download
+      - name: Aggregate a fresh PASS or explicit STOP certificate
+        id: admission
+        if: always() && steps.snapshot.outcome == 'success'
+        run: python src/preflight_full_search_probe.py aggregate --run full-probe-reports/preflight
+      - name: Restore reusable embeddings only for an admitted full run
+        id: restore_full_cache
+        if: success() && inputs.full_run_confirmed && steps.admission.outcome == 'success'
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            .cache/full-probe-embeddings
+            .cache/full-probe-queries
+          key: ${{ runner.os }}-full-bge-a5beb1e3e68b9ab74eb54cfd186867f64f240e1a-tokenizer-v2-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            ${{ runner.os }}-full-bge-a5beb1e3e68b9ab74eb54cfd186867f64f240e1a-tokenizer-v2-${{ github.ref_name }}-
+      - name: Encode the complete corpus only after explicit approval and fresh PASS
+        id: full_encode
+        if: success() && inputs.full_run_confirmed && steps.admission.outcome == 'success'
+        timeout-minutes: 240
+        run: |
+          python src/embed_real_search_probe.py --out agent_full_probe --full-corpus \
+            --full-run-confirmed --preflight-certificate full-probe-reports/preflight/certificate.json \
+            --frozen-queries agent_full_probe/quality-combined-frozen.json \
+            --cache-dir .cache/full-probe-embeddings --threads 8 --batch-size 8 \
+            --length-bucketing --local-files-only --report full-probe-reports/full-encoder.json
+      - name: Encode the frozen queries with the same verified encoder
+        id: query_encode
+        if: success() && inputs.full_run_confirmed && steps.full_encode.outcome == 'success'
+        timeout-minutes: 45
+        run: |
+          python src/evaluate_full_search_probe.py encode --corpus agent_full_probe \
+            --queries agent_full_probe/quality-combined-frozen.json \
+            --output full-probe-reports/query-vectors.f32 --cache-dir .cache/full-probe-queries \
+            --threads 8 --batch-size 8 --full-run-confirmed \
+            --preflight-certificate full-probe-reports/preflight/certificate.json
+      - name: Pack genuine full vectors and verify the actual runtime
+        id: full_pack
+        if: success() && inputs.full_run_confirmed && steps.query_encode.outcome == 'success'
+        timeout-minutes: 6
+        run: |
+          python src/pack_full_search_probe.py --source agent_full_probe --out agent_full_runtime
+          FULL_MANIFEST_SHA=$(sha256sum agent_full_runtime/probe.json | cut -d ' ' -f 1)
+          timeout 300s node --expose-gc full-probe-reports/full-memory.mjs \
+            --assets agent_full_runtime --manifest-sha "$FULL_MANIFEST_SHA" \
+            --wasm worker/probe-kernel/scan.wasm --vocab worker/tokenizer/vocab.txt \
+            --canonical agent_full_probe/probe.json --out full-probe-reports/full-memory.json \
+            --data-label real-embeddings
+      - name: Evaluate the frozen diagnostics through the exact full runtime
+        id: full_quality
+        if: success() && inputs.full_run_confirmed && steps.full_pack.outcome == 'success'
+        timeout-minutes: 10
+        run: |
+          worker/node_modules/.bin/esbuild worker/probe-kernel/full-quality.ts \
+            --bundle --platform=node --format=esm --outfile=full-probe-reports/full-quality.mjs
+          node full-probe-reports/full-quality.mjs agent_full_runtime agent_full_probe \
+            full-probe-reports/query-vectors.f32 full-probe-reports/runtime-rankings.json \
+            worker/probe-kernel/scan.wasm agent_full_probe/quality-combined-frozen.json \
+            full-probe-reports/preflight/certificate.json --full-run-confirmed
+          python src/evaluate_full_search_probe.py evaluate --corpus agent_full_probe \
+            --queries agent_full_probe/quality-combined-frozen.json \
+            --query-vectors full-probe-reports/query-vectors.f32 \
+            --runtime-rankings full-probe-reports/runtime-rankings.json \
+            --output full-probe-reports/full-quality.json --full-run-confirmed \
+            --preflight-certificate full-probe-reports/preflight/certificate.json
+          python - <<'PYTHON'
+          import json
+          from pathlib import Path
+          report = json.loads(Path('full-probe-reports/full-quality.json').read_text())
+          if report.get('extractive_fidelity_gate') != 'passed':
+              raise SystemExit('STOP: the frozen extractive fidelity diagnostic failed; inspect full-quality.json.')
+          PYTHON
+      - name: Preserve verified partial embedding caches after any long attempt
+        if: always() && (steps.full_encode.outcome == 'success' || steps.full_encode.outcome == 'failure' || steps.full_encode.outcome == 'cancelled')
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            .cache/full-probe-embeddings
+            .cache/full-probe-queries
+          key: ${{ steps.restore_full_cache.outputs.cache-primary-key }}
+      - name: Preserve evidence after PASS, STOP, or interruption
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-offline-probe-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            full-probe-reports/
+            agent_full_probe/probe.json
+            agent_full_probe/vectors.f32
+            agent_full_probe/quality-combined-frozen.json
+            agent_geometry_probe/probe.json
+            agent_full_runtime/probe.json
+          if-no-files-found: ignore
+          retention-days: 90
+      - name: Report offline scope and explicit run mode
+        if: always()
+        run: |
+          python - <<'PYTHON'
+          import json
+          import os
+          from pathlib import Path
+          certificate = Path('full-probe-reports/preflight/certificate.json')
+          status = json.loads(certificate.read_text()).get('status', 'STOP') if certificate.exists() else 'STOP'
+          mode = 'full run requested' if os.environ['FULL_RUN_CONFIRMED'] == 'true' else 'preflight only; long encoding disabled'
+          text = f'Full offline probe: {status}; {mode}. Platform memory, platform CPU, human-heldout quality, and production readiness remain unverified.\n'
+          print(text)
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as stream:
+              stream.write(text)
+          PYTHON
+
   publish:
     needs: offline
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && !inputs.static_probe && inputs.do_probe_phase != 'collect' && inputs.do_probe_phase != 'real'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && !inputs.static_probe && inputs.do_probe_phase != 'collect' && inputs.do_probe_phase != 'real' && inputs.do_probe_phase != 'full'
     runs-on: ubuntu-latest
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

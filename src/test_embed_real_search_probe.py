@@ -7,7 +7,7 @@ import struct
 
 import pytest
 
-from build_agent_index import BuildError, canonical_json, load_embed
+from build_agent_index import BuildError, canonical_json, load_embed, vector_id
 from build_real_search_probe import build_subset, write_subset
 import embed_real_search_probe as encode
 
@@ -153,6 +153,74 @@ def test_invalid_cache_never_silently_substitutes_vectors(tmp_path, bad):
         encode.cached_vector(path)
 
 
+def test_full_corpus_requires_explicit_scope_and_preserves_canonical_order(subset, monkeypatch):
+    root, config, _, _ = subset
+
+    def full_manifest(manifest):
+        manifest.update(
+            kind='full-corpus', slot='full-probe',
+            scope='isolated-full-corpus-evaluation-not-production',
+            text_paper_ids=manifest['paper_ids'],
+        )
+        for row in manifest['rows']:
+            row['id'] = vector_id('full-probe', row['paper_id'],
+                                  row['chunk_index'])
+
+    mutate_manifest(root, full_manifest)
+    with pytest.raises(BuildError):
+        encode.canonical_inputs(root, config)
+    original, inputs = encode.canonical_inputs(root, config, full_corpus=True)
+    stopped = FakeEncoder()
+    with pytest.raises(BuildError, match='full-run-confirmed'):
+        encode.encode_probe(root, stopped, config, cache_dir=root / 'cache', full_corpus=True)
+    assert not stopped.calls
+    import preflight_full_search_probe as preflight
+    checked = []
+    monkeypatch.setattr(preflight, 'verify_certificate', lambda *a, **kw: checked.append(kw))
+    report = encode.encode_probe(
+        root, FakeEncoder(), config, cache_dir=root / 'cache',
+        full_corpus=True, length_bucketing=True, progress=False,
+        full_run_confirmed=True, preflight_certificate=root / 'certificate.json',
+        frozen_queries=root / 'frozen.json',
+    )
+    assert checked[0]['corpus'] == root
+    after = json.loads((root / 'probe.json').read_text())
+    assert report['full_corpus'] is True
+    assert report['passage_count'] == len(inputs)
+    assert after['rows'] == original['rows']
+    mutate_manifest(root, lambda m: m.update(publication_ready=True))
+    with pytest.raises(BuildError, match='scope'):
+        encode.canonical_inputs(root, config, full_corpus=True)
+
+
+def test_interrupted_encoding_resumes_validated_cache_without_partial_publish(
+    subset,
+):
+    root, config, _, _ = subset
+    original_manifest = (root / 'probe.json').read_bytes()
+
+    class InterruptedEncoder(FakeEncoder):
+        def __call__(self, texts):
+            if self.calls:
+                raise RuntimeError('Interrupted during the next batch')
+            return super().__call__(texts)
+
+    with pytest.raises(RuntimeError, match='Interrupted'):
+        encode.encode_probe(root, InterruptedEncoder(), config,
+                            cache_dir=root / 'cache', batch_size=1,
+                            progress=False)
+    assert (root / 'probe.json').read_bytes() == original_manifest
+    assert not (root / 'vectors.f32').exists()
+    resumed = FakeEncoder()
+    report = encode.encode_probe(root, resumed, config,
+                                 cache_dir=root / 'cache', batch_size=1,
+                                 progress=False)
+    assert report['cached'] >= 1
+    assert report['encoded'] + report['cached'] == report['passage_count']
+    assert len((root / 'vectors.f32').read_bytes()) == (
+        report['passage_count'] * 768 * 4)
+
+
 def test_query_vectors_use_config_template_and_stay_unverified(subset):
     root, config, _, _ = subset
     encoder = FakeEncoder()
@@ -186,7 +254,8 @@ def test_bge_refuses_truncation_without_calling_the_model(monkeypatch):
     encoder.tokenizer = type('Tokens', (), {
         'token_ids': lambda *args: list(range(513)),
     })()
-    encoder._load = lambda: None
+    encoder._load_tokenizer = lambda: None
+    encoder._load_model = lambda: pytest.fail('Model must not load for overlimit input')
     monkeypatch.setitem(__import__('sys').modules, 'torch', object())
     with pytest.raises(BuildError, match='truncate'):
         encoder(['input'])
@@ -201,7 +270,66 @@ def test_bge_refuses_hf_tokenizer_mismatch_before_model(monkeypatch):
     encoder.hf_tokenizer = lambda *_args, **_kwargs: {
         'input_ids': [[101, 999, 102]],
     }
-    encoder._load = lambda: None
+    encoder._load_tokenizer = lambda: None
+    encoder._load_model = lambda: pytest.fail('Model must not load for mismatched input')
     monkeypatch.setitem(__import__('sys').modules, 'torch', object())
     with pytest.raises(BuildError, match='token IDs differ'):
         encoder(['input'])
+
+
+def test_late_hf_mismatch_checks_all_rows_before_any_inference_including_cache(subset):
+    root, config, _, _ = subset
+    # First populate genuine-shaped fixture caches; all inputs must still pass
+    # tokenizer preflight on the next call even though none needs inference.
+    first = FakeEncoder()
+    encode.encode_probe(root, first, config, cache_dir=root / 'cache', progress=False)
+    _, inputs = encode.canonical_inputs(root, config)
+    original = (root / 'vectors.f32').read_bytes()
+
+    class ValidatingFake(FakeEncoder):
+        def validate_inputs(self, texts, **kwargs):
+            assert texts == inputs
+            for at, text in enumerate(texts):
+                if at == len(texts) - 1:
+                    raise BuildError('Canonical and pinned Hugging Face token IDs differ at final row')
+
+    stopped = ValidatingFake()
+    with pytest.raises(BuildError, match='final row'):
+        encode.encode_probe(root, stopped, config, cache_dir=root / 'cache', progress=False)
+    assert not stopped.calls
+    assert (root / 'vectors.f32').read_bytes() == original
+
+
+def test_production_tokenizer_late_batch_failure_does_not_load_weights():
+    encoder = object.__new__(encode.BgeEncoder)
+    encoder.config = {'max_input_tokens': 512}
+    encoder.tokenizer_matches = 0
+    encoder.model = None
+    encoder._load_tokenizer = lambda: None
+    encoder._load_model = lambda: pytest.fail('No model loads in all-input validation')
+    encoder.tokenizer = type('Tokenizer', (), {'token_ids': lambda *args: [101, 102]})()
+    encoder.hf_tokenizer = lambda values, **kwargs: {
+        'input_ids': [[101, 999, 102] if value == 'bad-last' else [101, 102] for value in values]}
+    with pytest.raises(BuildError, match='token IDs differ'):
+        encoder.validate_inputs(['good'] * 129 + ['bad-last'], batch_size=32)
+    assert encoder.tokenizer_matches == 128
+    assert encoder.model is None
+
+
+def test_swapped_valid_cache_vector_is_rejected(subset):
+    root, config, _, _ = subset
+    encoder = FakeEncoder()
+    encode.encode_probe(root, encoder, config, cache_dir=root / 'cache', progress=False)
+    signature = encode.sha256_hex(canonical_json(encoder.identity))
+    entry = next((root / 'cache' / signature).glob('*.f32'))
+    entry.write_bytes(encode.vector_bytes([1.0] + [0.0] * 767))
+    other = FakeEncoder()
+    with pytest.raises(BuildError, match='checksum'):
+        encode.encode_probe(root, other, config, cache_dir=root / 'cache', progress=False)
+    assert not other.calls
+
+
+def test_incomplete_cache_data_without_sidecar_is_recomputed(tmp_path):
+    path = tmp_path / 'incomplete.f32'
+    path.write_bytes(encode.vector_bytes([1.0] + [0.0] * 767))
+    assert encode.cached_vector(path, expected={'encoder_signature': 'new'}) is None

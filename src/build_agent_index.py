@@ -79,6 +79,8 @@ def build_signature(embed: dict) -> str:
         'passage_template': embed['passage_template'],
         'tokenizer_id': tok['id'],
         'tokenizer_revision': tok['revision'],
+        'tokenizer_algorithm_version': tok['algorithm_version'],
+        'added_tokens': tok['added_tokens'],
         'vocab_sha256': tok['vocab_sha256'],
         'do_lower_case': tok['do_lower_case'],
         'strip_accents': tok['strip_accents'],
@@ -101,8 +103,18 @@ def embedding_signature(embed: dict) -> str:
         'query_template': embed['query_template'],
         'passage_template': embed['passage_template'],
         'max_input_tokens': embed['max_input_tokens'],
+        'tokenizer_id': tok['id'],
         'tokenizer_revision': tok['revision'],
+        'tokenizer_algorithm_version': tok['algorithm_version'],
+        'added_tokens': tok['added_tokens'],
         'vocab_sha256': tok['vocab_sha256'],
+        'do_lower_case': tok['do_lower_case'],
+        'strip_accents': tok['strip_accents'],
+        'tokenize_chinese_chars': tok['tokenize_chinese_chars'],
+        'max_input_chars_per_word': tok['max_input_chars_per_word'],
+        'cls_token': tok['cls_token'],
+        'sep_token': tok['sep_token'],
+        'unk_token': tok['unk_token'],
     }
     return sha256_hex(canonical_json(payload))
 
@@ -241,6 +253,8 @@ class WordPieceTokenizer:
 
     def __init__(self, embed: dict):
         tok = embed['tokenizer']
+        if tok.get('algorithm_version') != 2:
+            raise BuildError('Unsupported tokenizer algorithm version')
         self.do_lower = bool(tok['do_lower_case'])
         self.strip_accents = bool(tok['strip_accents'])
         self.chinese = bool(tok['tokenize_chinese_chars'])
@@ -248,19 +262,47 @@ class WordPieceTokenizer:
         self.unk = tok['unk_token']
         self.cls = tok['cls_token']
         self.sep = tok['sep_token']
+        self.added_tokens = {}
+        for added in tok['added_tokens']:
+            if (not isinstance(added, dict)
+                    or set(added) != {'content', 'single_word', 'lstrip',
+                                      'rstrip', 'normalized', 'special'}
+                    or not isinstance(added['content'], str)
+                    or not added['content']
+                    or added['content'] in self.added_tokens
+                    or added['special'] is not True
+                    or any(added[key] is not False for key in (
+                        'single_word', 'lstrip', 'rstrip', 'normalized'))):
+                raise BuildError('Unsupported added-token semantics')
+            self.added_tokens[added['content']] = added
+        if not {self.unk, self.cls, self.sep}.issubset(self.added_tokens):
+            raise BuildError('Missing added special tokens')
+        # The pinned BERT added tokens are exact-case, non-normalized literals.
+        # Split before cleaning/lowercasing, including within ordinary words.
+        self._added_pattern = re.compile('(' + '|'.join(
+            re.escape(value) for value in sorted(
+                self.added_tokens, key=lambda value: (-len(value), value))
+        ) + ')')
         self.ids_by_token = {}
         raw = Path(embed['_vocab_path']).read_text(encoding='utf-8')
         for index, line in enumerate(raw.splitlines()):
             self.ids_by_token[line] = index
-        for special in (self.unk, self.cls, self.sep):
+        for special in self.added_tokens:
             if special not in self.ids_by_token:
                 raise BuildError(f'vocab missing {special}')
 
     def token_ids(self, template: str, text: str) -> list[int]:
-        pieces = self._basic(model_input(template, text))
         ids = [self.ids_by_token[self.cls]]
-        for piece in pieces:
-            ids.extend(self._wordpiece(piece))
+        for part in self._added_pattern.split(model_input(template, text)):
+            if part in self.added_tokens:
+                ids.append(self.ids_by_token[part])
+                continue
+            # PreTrainedTokenizer lowercases each non-special code point
+            # before BasicTokenizer (not whole words: Greek sigma differs).
+            if self.do_lower:
+                part = ''.join(char.lower() for char in part)
+            for piece in self._basic(part):
+                ids.extend(self._wordpiece(piece))
         ids.append(self.ids_by_token[self.sep])
         return ids
 
@@ -268,6 +310,7 @@ class WordPieceTokenizer:
         flattened = text.translate(_clean_table())
         if self.chinese:
             flattened = _CHINESE_RE.sub(r' \g<0> ', flattened)
+        flattened = unicodedata.normalize('NFC', flattened)
         output = []
         for token in flattened.split():
             if self.do_lower:

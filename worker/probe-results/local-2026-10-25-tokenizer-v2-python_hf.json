@@ -1,0 +1,19 @@
+{
+  "scope": "tokenizer-only-old-canonical-source-texts-no-encoding",
+  "status": "passed",
+  "checked": 42686,
+  "counts": {
+    "passages": 40575,
+    "extractive": 2000,
+    "natural": 64,
+    "regressions": 47
+  },
+  "mismatch_count": 0,
+  "mismatches": [],
+  "changed_passage_token_counts": 97,
+  "over_limit": [],
+  "elapsed_seconds": 90.1513622679995,
+  "build_signature": "6362650290666e9debb571b4bc6f8191135b7b4dc8dd443d7a7a61a6f320b673",
+  "embedding_signature": "116c4d43bcd6012a7b02e13e5114abbdc50b1193f99796d2af721c5e61786817",
+  "source_manifest_sha256": "558eb8783a57c4fb9e9b4e23941c6016a691272dcf58fd6c504daa2a83250751"
+}

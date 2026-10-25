@@ -31,6 +31,13 @@ assets/fulltext_search.js
 agent_build/
 agent_probe/
 agent_real_probe/
+agent_full_probe/
+agent_full_runtime/
+agent_full_quality/
+agent_geometry_probe/
+full-probe-reports/
+.cache/full-probe-embeddings/
+.cache/full-probe-queries/
 .cache/real-probe-embeddings/
 local-query-vectors.json
 local-encoder-report.json
@@ -70,3 +77,7 @@ env/
 Thumbs.db
 
 worker/probe-kernel/scan.wasm
+
+# Reviewed bounded preflight evidence
+!worker/probe-results/local-2026-10-25-full-memory-*.json.gz
+!worker/probe-results/local-2026-10-25-full-preflight-evidence.json.gz

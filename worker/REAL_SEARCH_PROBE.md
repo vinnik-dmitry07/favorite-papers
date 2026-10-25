@@ -178,6 +178,9 @@ log and cleanup evidence for
 
 ## Local reproduction
 
+For the subsequent full-corpus stage, see [FULL_SEARCH_PROBE.md](FULL_SEARCH_PROBE.md).
+It adds mandatory checks before model work and a separate long-run confirmation.
+
 From the repository root:
 
 ```bash
