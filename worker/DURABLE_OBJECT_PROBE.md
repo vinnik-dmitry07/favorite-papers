@@ -94,9 +94,25 @@ Application-cold requests reset caches; these are not verified isolate starts.
 The workload still uses synthetic vectors and makes no embedding-provider calls.
 The summaries link compressed original evidence with SHA-256 checksums.
 
+The [read-only recovery](probe-results/cloudflare-2026-10-25-do-collection.json)
+made 120 successful telemetry queries and recovered one additional invocation:
+MCP warm search sequence 18, object CPU 37 ms, outcome `ok`. Coverage is now
+626/633 gateway and 623/633 object records. **Seventeen CPU records remain
+missing**, so the original and recovered sample gates remain **unverified**.
+No workload requests were repeated, no previous CPU values changed, and all
+original evidence hashes and workload measurements were preserved.
+
+The retained query diagnostics report `abr_level = 1`. That describes query
+sampling, not ingestion completeness; the [API distinguishes it from ingestion
+sampling](https://developers.cloudflare.com/api/resources/workers/subresources/observability/subresources/telemetry/methods/query/).
+This does not prove a provider defect or that the missing events are permanently
+lost. Another identical collection is not justified without new evidence of a
+recoverable delay or a different data source.
+
 ### Recover existing telemetry without another deployment
 
-Use this mode for the incomplete matrix before considering another workload:
+The command below has already been used for this matrix. Retain the mode for
+future cases with a specific reason to expect recoverable telemetry:
 
 ```bash
 gh workflow run agent-api.yml -R vinnik-dmitry07/favorite-papers \
@@ -194,11 +210,23 @@ completion only; CPU, memory and runtime-readiness gates remain unverified.
 
 ## Next stages
 
-Proceed only after the live pilot and matrix evidence justify the runtime:
+The matrix supports continuing isolated implementation work: the full-size
+synthetic workload completed with useful latency and the observed CPU values
+met their targets. This is an engineering decision to continue an experiment,
+not a retroactive pass of its incomplete CPU gate. Offline preparation and local
+contract tests do not require another synthetic Cloudflare run. Production
+readiness remains unverified.
 
-1. Integrate 200–500 canonical real passages through the production
-   `CorpusStore`, `createService`, REST and MCP contracts. Check local BGE versus
-   Workers AI embeddings, then an external agent's search/read/citation journey.
+1. Build a complete-paper subset totaling 200–500 canonical real passages using
+   `build_agent_index.py::build_release`; reindex subset graph edges and preserve
+   text/code-point offsets, hashes and embedding signatures. Generate pinned
+   local BGE FP32 embeddings with CLS pooling and normalization. Start with
+   exhaustive FP32 search for this small subset. Integrate through `CorpusStore`,
+   `createService`, `handleRest` and `handleMcp` inside the DO; avoid importing
+   `index.ts`, whose module-level tokenizer would also initialize in the gateway.
+   Test search/read/fetch, graph traversal, Unicode offsets and stale versions
+   locally before any live run. Then check local BGE versus Workers AI embeddings
+   and an external agent's search/read/citation journey with bounded AI usage.
 2. Build the full canonical corpus and compare actual API results with an
    offline FP32 reference. Prefer exhaustive int8 as the simplest real candidate
    if DO memory and latency permit it; measure quantization loss. Keep fidelity,
@@ -206,6 +234,14 @@ Proceed only after the live pilot and matrix evidence justify the runtime:
 3. Establish uncached-query latency, account-wide Free quotas, bounded embedding
    usage, Unicode offsets, version consistency, rollout and rollback before
    changing the public discovery links.
+
+For a future live pilot, evaluate explicitly enabled Workers traces alongside
+Logs. Cloudflare documents per-invocation CPU, outcome and DO identity on
+[root spans](https://developers.cloudflare.com/workers/observability/traces/spans-and-attributes/).
+Verify the actual schema, exact invocation/object joins and agreement with Logs
+on a bounded pilot before accepting this as additional evidence. Neither root
+span duration nor aggregate CPU replaces a missing invocation measurement.
+Do not repeat a large matrix solely to retry until all logs happen to arrive.
 
 Neither a passed synthetic sample gate nor a passed pilot authorizes production
 publication. A failed implementation calls for a causal diagnosis; it does not
