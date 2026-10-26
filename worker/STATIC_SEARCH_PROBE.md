@@ -8,6 +8,11 @@ The next runtime experiment is described in [Durable Object probe](DURABLE_OBJEC
 It preserves `wasm-json16` and the full synthetic fixture, runs a short pilot
 before the matrix, and measures gateway and object CPU separately. The ordinary
 Worker's negative CPU results below remain valid for that implementation.
+Its routes are an experimental reimplementation: candidate depth, search cache,
+rate limiting and literal-search scan scope differ from production, and several
+graph routes are absent. These CPU values do not measure production endpoints
+or prove that every ordinary Worker design is infeasible. The real subset and
+full-memory harness exercise the shared production service instead.
 
 Codes and codebooks are deterministic random data. Snippets and text offsets
 come from the real catalog. The fixture repeats character-based excerpts to
@@ -90,6 +95,11 @@ attributed to the probe's per-row symmetric int8 and uncentered binary formats.
 
 From the repository root:
 
+Before starting the local server, export a random `PROBE_TOKEN` of at least
+32 characters and an ISO `PROBE_EXPIRES_AT` timestamp in the near future.
+Export the same token in the runner's terminal. Local mode does not bypass
+gateway authentication.
+
 ```bash
 python -m pip install -r requirements-agent.txt
 python src/build_static_search_probe.py
@@ -100,7 +110,8 @@ npm run typecheck
 npm test
 npx wrangler deploy --config wrangler.probe.toml --dry-run
 npx wrangler dev --config wrangler.probe.toml --ip 127.0.0.1 --port 8787 \
-  --inspector-ip 127.0.0.1 --inspector-port 9229
+  --inspector-ip 127.0.0.1 --inspector-port 9229 \
+  --var "PROBE_TOKEN:$PROBE_TOKEN" --var "PROBE_EXPIRES_AT:$PROBE_EXPIRES_AT"
 ```
 
 In another terminal, from the repository root:
@@ -109,25 +120,30 @@ In another terminal, from the repository root:
 python src/run_static_search_probe.py http://127.0.0.1:8787 \
   --local --samples 50 --variants all --output probe-report-local.json
 python src/summarize_static_search_probe.py probe-report-local.json \
-  --output worker/probe-results/local-matrix.json
+  --output worker/probe-results/local-2026-10-19-matrix-reproduced.json
 ```
 
 Use `--variants js4-json16,wasm-json16` to compare a subset. All variants are
 selectable through `variant=` on REST and MCP URLs. The default manual endpoint
 retains the original `js-json128` baseline; the runner defaults to `js4-json16`.
-The WAT source is compiled with pinned `wabt@1.0.39`; no opaque supplied binary
-or external audit script is needed to reproduce these kernels.
+The WAT source is compiled with pinned `wabt@1.0.39`; the build verifies its
+output against `probe-kernel/scan.sha256`. No opaque supplied binary or external
+audit script is needed to reproduce these kernels.
 
 ## Run on Workers Free
 
-By default, the workflow uses the existing **repository secrets** under GitHub
-Settings → Secrets and variables → Actions:
+The **Agent probe** workflow defaults to `probe_credentials=probe_environment`:
+set `PROBE_CLOUDFLARE_ACCOUNT_ID` and `PROBE_CLOUDFLARE_API_TOKEN` in the
+`static-search-probe` environment for a separate target account/token.
+
+To explicitly reuse the existing **repository secrets**, select
+`probe_credentials=repository`:
 
 - `CLOUDFLARE_ACCOUNT_ID`.
 - `CLOUDFLARE_API_TOKEN`.
 
-Leave `probe_credentials=repository` selected; existing values do not need to
-be copied or renamed. Check that this account actually uses **Workers Free**
+Existing values do not need to be copied or renamed. Check that the selected
+account actually uses **Workers Free**
 before selecting `free_plan_confirmed`. The token needs **Workers Scripts:
 Edit** and **Workers Observability: Edit** (`Workers Scripts Write` and
 `Workers Observability Write` in API documentation), scoped to that account.
@@ -157,6 +173,9 @@ gh workflow run agent-api.yml --ref feat/static-search-probe \
   -f free_plan_confirmed=true -f probe_variant=wasm-json16
 ```
 
+Before deployment, a read-only script inventory check refuses new workload if
+a previous static Worker probe remains. It never deletes discovered resources;
+inspect them and use the explicitly scoped cleanup command when appropriate.
 The workflow generates a masked per-run token and a 30-minute expiry before
 deploying `key-papers-static-probe-RUN_ID-ATTEMPT`. The gateway checks expiry and
 `x-probe-token` before asset reads, measurement logging or `cold=1` cache resets.

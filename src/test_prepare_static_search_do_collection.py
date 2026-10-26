@@ -199,7 +199,8 @@ def test_collection_job_cannot_deploy_or_send_new_workload():
     assert job['timeout-minutes'] == 12
     collect = next(step for step in steps if step.get('id') == 'collect')
     assert collect['timeout-minutes'] == 6
-    for name in ('static_do_probe', 'static_probe', 'publish'):
+    assert 'publish' not in workflow['jobs']
+    for name in ('static_do_probe', 'static_probe'):
         assert "inputs.do_probe_phase != 'collect'" in workflow['jobs'][name]['if']
     assert "inputs.do_probe_phase == 'collect'" in job['if']
     assert workflow['permissions']['actions'] == 'read'

@@ -7,6 +7,15 @@ const module = new WebAssembly.Module(readFileSync(new URL('../probe-kernel/scan
 const options = { module }
 
 describe('full corpus packed admission and mapping', () => {
+  it.each(['toString', 'constructor', '__proto__'])('rejects an inherited graph neighbor %s at the adjacency boundary', async (neighbor) => {
+    const data = await fullCorpusFixture()
+    const id = data.manifest.paper_ids[0]
+    data.graph.out[id] = [{ target: neighbor, evidence: 'id' }]
+    await data.put(data.manifest.graph_path, data.graph)
+    await expect(createGeometryFixtureStore(data.assets, await data.syncManifest(), async () => data.query, undefined, options))
+      .rejects.toThrow('dangling graph edge')
+  })
+
   it('rejects honest synthetic data in the real loader and fake BGE identity in fixture loader', async () => {
     const data = await fullCorpusFixture()
     await expect(createFullCorpusStore(data.assets, data.manifestSha, async () => data.query, undefined, options))

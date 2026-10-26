@@ -19,13 +19,14 @@ function artifact(id, extra = {}) {
 
 function run(id, extra = {}) {
   return {
-    id, workflow_id: 7, status: 'completed', conclusion: 'success',
+    id, workflow_id: 7, path: '.github/workflows/agent-publish.yml',
+    name: 'Agent API', status: 'completed', conclusion: 'success',
     event: 'workflow_dispatch', head_branch: 'main', head_sha: `sha-${id}`,
     head_repository: repository, repository, ...extra,
   };
 }
 
-function fixture(pages, runs = {}) {
+function fixture(pages, runs = {}, missingProduction = false) {
   const calls = [];
   const github = { rest: { actions: {
     async listArtifactsForRepo(args) {
@@ -36,8 +37,11 @@ function fixture(pages, runs = {}) {
     },
     async getWorkflow(args) {
       calls.push(['workflow', args]);
-      assert.equal(args.workflow_id, 'agent-api.yml');
-      return { data: { id: 7 } };
+      assert.ok(['agent-publish.yml', 'agent-api.yml'].includes(args.workflow_id));
+      if (missingProduction && args.workflow_id === 'agent-publish.yml') {
+        throw Object.assign(new Error('Workflow not registered'), { status: 404 });
+      }
+      return { data: { id: args.workflow_id === 'agent-publish.yml' ? 7 : 8 } };
     },
     async getWorkflowRun(args) {
       calls.push(['run', args]);
@@ -57,7 +61,7 @@ test('publication survives arbitrarily many newer successful probe runs', async 
   // Runs 2..1001 are successful probes without a discovery artifact.
   const mock = fixture([[artifact(1)]]);
   assert.deepEqual(await mock.find(), { runId: 1, artifactId: 1 });
-  assert.deepEqual(mock.calls.map(([kind]) => kind), ['artifacts', 'workflow', 'run']);
+  assert.deepEqual(mock.calls.map(([kind]) => kind), ['artifacts', 'workflow', 'workflow', 'run']);
 });
 
 test('paginates discovery artifacts and skips expired entries', async () => {
@@ -130,4 +134,26 @@ test('API failure propagates instead of authorizing unverified discovery', async
     findApiDiscovery({ github, owner: 'owner', repo: 'papers' }),
     /503 unavailable/,
   );
+});
+
+
+test('historical Agent API publication remains discoverable after workflow split', async () => {
+  const mock = fixture([[artifact(9)]], { 9: run(9, {
+    workflow_id: 8, path: '.github/workflows/agent-api.yml',
+  }) });
+  assert.deepEqual(await mock.find(), { runId: 9, artifactId: 9 });
+});
+
+test('experiment display name cannot authorize a discovery artifact', async () => {
+  const mock = fixture([[artifact(9)]], { 9: run(9, {
+    workflow_id: 8, path: '.github/workflows/agent-api.yml', name: 'Agent probe',
+  }) });
+  assert.equal(await mock.find(), null);
+});
+
+test('unregistered production workflow still allows historical discovery', async () => {
+  const mock = fixture([[artifact(9)]], { 9: run(9, {
+    workflow_id: 8, path: '.github/workflows/agent-api.yml',
+  }) }, true);
+  assert.deepEqual(await mock.find(), { runId: 9, artifactId: 9 });
 });

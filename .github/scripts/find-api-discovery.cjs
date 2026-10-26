@@ -34,11 +34,16 @@ async function findApiDiscovery({ github, owner, repo }) {
   )).sort((a, b) => b.id - a.id);
   if (candidates.length === 0) return null;
 
-  const expected = await github.rest.actions.getWorkflow({
-    owner, repo, workflow_id: 'agent-api.yml',
-  });
-  if (!Number.isSafeInteger(expected.data.id)) {
-    throw new Error('Invalid Agent API workflow identity');
+  const workflows = new Map();
+  for (const path of ['agent-publish.yml', 'agent-api.yml']) {
+    try {
+      const expected = await github.rest.actions.getWorkflow({ owner, repo, workflow_id: path });
+      if (!Number.isSafeInteger(expected.data.id)) throw new Error('Invalid Agent API workflow identity');
+      workflows.set(expected.data.id, '.github/workflows/' + path);
+    } catch (error) {
+      // The new production workflow can be unregistered before its first merge.
+      if (error.status !== 404) throw error;
+    }
   }
   const runs = new Map();
   for (const artifact of candidates) {
@@ -53,7 +58,9 @@ async function findApiDiscovery({ github, owner, repo }) {
       runs.set(runId, response.data);
     }
     const run = runs.get(runId);
-    if (run.id !== runId || run.workflow_id !== expected.data.id
+    if (run.id !== runId || !workflows.has(run.workflow_id)
+        || workflows.get(run.workflow_id) !== run.path
+        || run.name !== 'Agent API'
         || run.status !== 'completed' || run.conclusion !== 'success'
         || !['push', 'workflow_dispatch'].includes(run.event)
         || run.head_branch !== 'main'

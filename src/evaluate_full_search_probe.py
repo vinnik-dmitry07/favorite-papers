@@ -31,9 +31,10 @@ from embed_real_search_probe import (
     BgeEncoder,
     atomic_bytes,
     cache_context,
-    cached_vector,
     checked_asset,
     checked_path,
+    execution_profile,
+    recover_cached_vector,
     vector_bytes,
     write_cached_vector,
 )
@@ -487,8 +488,12 @@ def encode(
         cache_context(signature, key, text, config, tokenizer)
         for key, text in zip(keys, inputs)
     ]
+    recovered = []
     vectors = [
-        cached_vector(cache_dir / (key + '.f32'), expected=context)
+        recover_cached_vector(
+            cache_dir / (key + '.f32'), expected=context,
+            cache_root=cache_dir.parent, recovery_log=recovered,
+        )
         for key, context in zip(keys, contexts)
     ]
     missing = [i for i, value in enumerate(vectors) if value is None]
@@ -503,6 +508,10 @@ def encode(
                 cache_dir / (keys[index] + '.f32'),
                 value,
                 expected=contexts[index],
+                execution=execution_profile(
+                    encoder, batch_size=batch_size,
+                    actual_batch_size=len(indices), length_bucketing=False,
+                ),
             )
             vectors[index] = value
         print(
@@ -529,6 +538,12 @@ def encode(
         'query_template': config['query_template'],
         'cached': len(vectors) - len(missing),
         'encoded': len(missing),
+        'recovered_cache_entries': len(recovered),
+        'execution_settings_requested': execution_profile(
+            encoder, batch_size=batch_size, length_bucketing=False,
+        ),
+        'cache_trust': 'local-integrity-not-execution-attestation',
+        'cache_reuse_contract': 'semantic-identity-not-bitwise-equivalence',
     }
     write_json(str(output) + '.json', metadata)
     return metadata

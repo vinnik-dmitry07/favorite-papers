@@ -489,6 +489,49 @@ def test_all_query_inputs_are_preflighted_before_encoding_including_prefix(
         )
 
 
+def test_query_cache_corruption_is_recomputed_after_validation(
+        tmp_path, monkeypatch):
+    monkeypatch.setattr(quality, 'verify_run', lambda *args: None)
+    config = quality.load_embed()
+    frozen = tmp_path / 'frozen.json'
+    quality.write_json(frozen, {
+        'kind': 'frozen-full-corpus-quality-diagnostics',
+        'embedding_signature': quality.embedding_signature(config),
+        'queries': [{'query': 'First'}, {'query': 'Second'}],
+    })
+
+    class Encoder:
+        identity = {'test': 'no model'}
+        threads = 4
+
+        def __init__(self):
+            self.encoded = 0
+            self.validated = False
+
+        def validate_inputs(self, inputs):
+            assert len(inputs) == 2
+            self.validated = True
+
+        def __call__(self, inputs):
+            assert self.validated
+            self.encoded += len(inputs)
+            return [[1.0] + [0.0] * 767 for _ in inputs]
+
+    encoder = Encoder()
+    output, cache = tmp_path / 'queries.f32', tmp_path / 'cache'
+    first = quality.encode(frozen, output, cache, encoder=encoder)
+    assert first['encoded'] == encoder.encoded == 2
+    entry = next(cache.glob('*/*.f32'))
+    entry.write_bytes(b'corrupt interrupted data')
+    encoder.validated = False
+    second = quality.encode(frozen, output, cache, encoder=encoder)
+    assert second['encoded'] == second['recovered_cache_entries'] == 1
+    assert encoder.encoded == 3
+    third = quality.encode(frozen, output, cache, encoder=encoder)
+    assert third['encoded'] == 0 and third['cached'] == 2
+    assert third['execution_settings_requested']['threads'] == 4
+
+
 def test_injected_encoder_cannot_bypass_full_run_guard(tmp_path):
     frozen = tmp_path / 'frozen.json'
     quality.write_json(
@@ -546,6 +589,9 @@ def test_query_cache_binds_each_vector_to_input_and_rechecks_cached_inputs(
     assert encoder.calls == 1
     first, second = sorted(cache.rglob('*.f32'))
     first.write_bytes(second.read_bytes())
-    with pytest.raises(BuildError, match='cache identity/checksum mismatch'):
-        quality.encode(frozen, tmp_path / 'q.f32', cache, encoder=encoder)
-    assert encoder.calls == 1
+    recovered = quality.encode(
+        frozen, tmp_path / 'q.f32', cache, encoder=encoder,
+    )
+    assert recovered['recovered_cache_entries'] == 1
+    assert recovered['encoded'] == 1
+    assert encoder.checked == 6 and encoder.calls == 2

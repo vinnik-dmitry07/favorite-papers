@@ -185,12 +185,15 @@ From the repository root:
 
 ```bash
 python src/build_real_search_probe.py --out agent_real_probe
+python -m pip install --index-url https://download.pytorch.org/whl/cpu \
+  -r requirements-torch-probe.txt
 python -m pip install -r requirements-real-probe.txt
 python src/embed_real_search_probe.py --out agent_real_probe \
   --cache-dir .cache/real-probe-embeddings --threads 4 --batch-size 8 \
   --query-vectors local-query-vectors.json --report local-encoder-report.json
 cd worker
 npm ci
+npm run build:probe
 REAL_PROBE_REPORT="$PWD/../local-real-integration.json" \
 REAL_PROBE_DIR="$PWD/../agent_real_probe" \
 REAL_PROBE_QUERY_VECTORS="$PWD/../local-query-vectors.json" \

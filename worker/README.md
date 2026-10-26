@@ -2,13 +2,18 @@
 
 Public read API for the citation catalog. Start with the [static agent guide](https://vinnik-dmitry07.github.io/favorite-papers/agents/) for a catalog, complete paginated citation lists, and readable text. It needs no API or JavaScript. REST and stateless MCP add title lookup, section navigation, literal search and semantic search. The guide advertises the API only after deployment and live checks succeed.
 
-The [static-search feasibility probe](STATIC_SEARCH_PROBE.md) tests a possible
-Workers Free replacement for the full Vectorize index. It is isolated and uses
-synthetic vectors; it is not a deployed semantic search service. Its workflow
-reuses existing `CLOUDFLARE_*` repository secrets by default, with an explicit
-option for a separate account's `PROBE_CLOUDFLARE_*` environment secrets. It
-does not require `AGENT_DIMENSION_BUDGET` and deletes its uniquely named Worker
-after collection.
+The [static-search feasibility probe](STATIC_SEARCH_PROBE.md),
+[real subset](REAL_SEARCH_PROBE.md) and [full offline gates](FULL_SEARCH_PROBE.md)
+test a possible Workers Free replacement for Vectorize. The synthetic stage
+does not establish semantic quality; later stages use canonical text and real
+vectors. None is a production deployment. The separate **Agent probe** workflow
+(`agent-api.yml`, retaining its existing dispatch entrypoint) defaults to the
+`PROBE_CLOUDFLARE_*` environment credentials. Existing repository credentials
+remain an explicit `probe_credentials=repository` option. Cloudflare secrets
+are passed only to steps that use the API, not installation, tests or full-corpus
+encoding. The bounded compatibility canary needs its selected provider token.
+Production has its own **Agent API** workflow
+(`agent-publish.yml`) and does not depend on the probe's tests or fixture builds.
 The shared catalog/tokenizer optimizations are reviewed code changes; this probe
 does not deploy the production Worker or alter its Cloudflare bindings.
 
@@ -27,7 +32,13 @@ The graph is citations inside this catalog, not the open web. Semantic search re
 
 [`embed.json`](embed.json) is the only embedding and chunking configuration. Empty `query_template` and `passage_template` are explicit. A future prefix counts toward the 512-token budget. The model name alone does not fix preprocessing: index and query both send `pooling: "cls"`.
 
-`build_signature` covers cleaning, chunking, and the tokenizer checksum. `embedding_signature` covers model, dimensions, metric, pooling, templates, and the tokenizer checksum. Rate limits and `search_enabled` are not part of those signatures.
+`build_signature` covers cleaning, chunking and the full tokenizer configuration.
+The provider `embedding_signature` retains the legacy payload: model, dimensions,
+metric, pooling, templates, token budget, tokenizer revision and vocabulary hash.
+Tokenizer v2's local algorithm settings change the build identity without
+invalidating identical Workers AI input strings. Local FP32 caches separately
+bind their full tokenizer and numerical implementation. Rate limits and
+`search_enabled` are not part of those signatures.
 
 Tokenizer assets are local. `tokenizer/vocab.txt` is BAAI/bge-base-en-v1.5 revision `a5beb1e3e68b9ab74eb54cfd186867f64f240e1a`. Tests check its sha256 and do not download it.
 
@@ -114,6 +125,10 @@ npm --prefix worker run typecheck
 npm --prefix worker test
 ```
 
+`npm test` first rebuilds the probe kernel from WAT with the pinned compiler
+and checks the output against `probe-kernel/scan.sha256`. The production CI
+uses only the API, tokenizer and catalog tests; it does not require that kernel.
+
 
 ## Research-client contract
 
@@ -168,9 +183,10 @@ publish. This confirmation is separate from the probe and full-encode flags.
 
 4. After reviewing the capacity report and the target account's remaining AI
    allowance, run **Agent API → Run workflow** on main with
-   `production_publish_confirmed=true`, `static_probe=false`, and
-   `do_probe_phase=pilot` (the default; no pilot runs when `static_probe=false`).
-   Tokenizer v2 invalidates the old embedding signature and cache keys. A cold
+   `production_publish_confirmed=true` (`agent-publish.yml`). Tokenizer v2
+   requires a new build/release, but identical provider input strings retain
+   their legacy embedding-cache keys. This does not prove that the target
+   account has those entries. A cold
    publication of the current corpus represents about 47,664 neurons under
    `embed.json`'s estimator, before the publisher's probe; this exceeds its
    configured 10,000-neuron daily free allowance. The capacity preflight checks

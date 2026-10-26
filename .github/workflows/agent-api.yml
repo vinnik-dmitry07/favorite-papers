@@ -1,8 +1,7 @@
-name: Agent API
-
-on:
+name: Agent probe
+'on':
   pull_request:
-    paths: &agent_paths
+    paths:
       - assets/graph.json
       - filter/fulltext/**
       - src/build_agent_index.py
@@ -57,51 +56,33 @@ on:
       - .github/workflows/agent-api.yml
       - .github/workflows/pages.yml
       - .github/scripts/find-api-discovery*
-  push:
-    branches: [main]
-    paths:
-      - assets/graph.json
-      - filter/fulltext/**
-      - src/build_agent_index.py
-      - src/publish_agent_index.py
-      - src/smoke_agent_api.py
-      - src/common.py
-      - src/build_fulltext_search.py
-      - src/write_discovery_links.py
-      - requirements-agent.txt
-      - .github/workflows/agent-api.yml
-      - worker/src/**
-      - '!worker/src/static-search*'
-      - '!worker/src/real-search*'
-      - '!worker/src/full-*'
-      - '!worker/src/probe-admission*'
-      - '!worker/src/static-corpus-store.ts'
-      - '!worker/src/*.test.ts'
-      - '!worker/src/wasm.d.ts'
-      - worker/embed.json
-      - worker/package.json
-      - worker/package-lock.json
-      - worker/wrangler.toml
-      - worker/tokenizer/**
+      - .github/workflows/agent-publish.yml
+      - src/test_probe_workflow.py
+      - src/authenticate_probe_fixture.py
+      - src/test_authenticate_probe_fixture.py
+      - requirements-torch-probe.txt
   workflow_dispatch:
     inputs:
-      production_publish_confirmed:
-        description: 'Publish main to production, including Workers AI re-encoding if needed; requires reviewed capacity and quota'
-        type: boolean
-        default: false
       static_probe:
-        description: 'Deploy only an isolated static-search probe'
+        description: Deploy only an isolated static-search probe
         type: boolean
         default: false
       probe_runtime:
-        description: 'Execution runtime for the isolated probe'
+        description: Execution runtime for the isolated probe
         type: choice
-        options: [worker, durable-object]
+        options:
+          - worker
+          - durable-object
         default: worker
       do_probe_phase:
-        description: 'DO pilot/matrix, log collection, real subset, or isolated offline full-corpus gates'
+        description: DO pilot/matrix, log collection, real subset, or isolated offline full-corpus gates
         type: choice
-        options: [pilot, matrix, collect, real, full]
+        options:
+          - pilot
+          - matrix
+          - collect
+          - real
+          - full
         default: pilot
       full_run_confirmed:
         description: 'Full phase only: allow long offline encoding and evaluation after every fresh gate passes'
@@ -112,7 +93,7 @@ on:
         type: string
         default: '0'
       full_numeric_run_id:
-        description: 'Pinned prior genuine-vector fixture run; changing the artifact pin requires a reviewed code update'
+        description: Pinned prior genuine-vector fixture run; changing the artifact pin requires a reviewed code update
         type: string
         default: '40238828496'
       do_pilot_run_id:
@@ -129,13 +110,13 @@ on:
         options:
           - repository
           - probe_environment
-        default: repository
+        default: probe_environment
       free_plan_confirmed:
-        description: 'I checked that the target account uses Workers Free'
+        description: I checked that the target account uses Workers Free
         type: boolean
         default: false
       probe_variant:
-        description: 'One synthetic variant per run; all may exceed the job timeout'
+        description: One synthetic variant per run; all may exceed the job timeout
         type: choice
         options:
           - wasm-json16
@@ -149,16 +130,13 @@ on:
           - js-json128
           - all
         default: wasm-json16
-
 permissions:
   contents: read
   actions: read
-
 concurrency:
   group: agent-api-${{ github.event_name == 'pull_request' && github.ref || (github.event_name == 'workflow_dispatch' && (inputs.do_probe_phase == 'collect' && 'collect' || 'cloudflare') || 'validate-main') }}
   cancel-in-progress: false
   queue: max
-
 jobs:
   offline:
     runs-on: ubuntu-latest
@@ -173,7 +151,7 @@ jobs:
         run: |
           python -m pip install -r requirements-agent.txt numpy==2.3.4
           python -m py_compile src/reproduce_static_search_review.py
-          python -m pytest src/test_agent_index.py src/test_publish_agent_index.py src/test_agent_pages.py src/test_static_search_probe.py src/test_static_search_probe_run.py src/test_static_search_probe_cleanup.py src/test_static_search_do_lifecycle.py src/test_static_search_do_probe.py src/test_prepare_static_search_do_collection.py src/test_real_search_probe.py src/test_embed_real_search_probe.py src/test_run_real_search_probe.py src/test_real_search_workflow.py src/test_full_search_workflow.py src/test_agent_publish_workflow.py src/test_full_search_probe.py src/test_pack_full_search_probe.py src/test_evaluate_full_search_probe.py src/test_preflight_full_search_probe.py src/test_full_probe_canary.py src/test_tokenizer_contract.py
+          python -m pytest src/test_agent_index.py src/test_publish_agent_index.py src/test_agent_pages.py src/test_static_search_probe.py src/test_static_search_probe_run.py src/test_static_search_probe_cleanup.py src/test_static_search_do_lifecycle.py src/test_static_search_do_probe.py src/test_prepare_static_search_do_collection.py src/test_real_search_probe.py src/test_embed_real_search_probe.py src/test_run_real_search_probe.py src/test_real_search_workflow.py src/test_full_search_workflow.py src/test_agent_publish_workflow.py src/test_probe_workflow.py src/test_authenticate_probe_fixture.py src/test_full_search_probe.py src/test_pack_full_search_probe.py src/test_evaluate_full_search_probe.py src/test_preflight_full_search_probe.py src/test_full_probe_canary.py src/test_tokenizer_contract.py
       - name: Node
         uses: actions/setup-node@v4
         with:
@@ -199,10 +177,9 @@ jobs:
           npx wrangler deploy --config wrangler.probe.toml --dry-run
           npx wrangler deploy --config wrangler.do-probe.toml --dry-run
           npx wrangler deploy --config wrangler.real-probe.toml --dry-run
-
   static_probe:
     needs: offline
-    if: github.event_name == 'workflow_dispatch' && !inputs.production_publish_confirmed && inputs.static_probe && inputs.probe_runtime != 'durable-object' && inputs.do_probe_phase != 'collect' && inputs.do_probe_phase != 'real' && inputs.do_probe_phase != 'full'
+    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime != 'durable-object' && inputs.do_probe_phase != 'collect' && inputs.do_probe_phase != 'real' && inputs.do_probe_phase != 'full'
     runs-on: ubuntu-latest
     timeout-minutes: 25
     environment: static-search-probe
@@ -215,37 +192,21 @@ jobs:
       - name: Check the selected account and credentials
         env:
           PROBE_CREDENTIALS: ${{ inputs.probe_credentials }}
-          REPOSITORY_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          REPOSITORY_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          PROBE_ACCOUNT_ID: ${{ secrets.PROBE_CLOUDFLARE_ACCOUNT_ID }}
-          PROBE_API_TOKEN: ${{ secrets.PROBE_CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
         run: |
           if [ "$FREE_PLAN_CONFIRMED" != 'true' ]; then
             echo '::error::This experiment requires a Workers Free account. Check its plan in Cloudflare, then select free_plan_confirmed. The workflow never changes the plan.'
             exit 1
           fi
           case "$PROBE_CREDENTIALS" in
-            repository)
-              CLOUDFLARE_ACCOUNT_ID="$REPOSITORY_ACCOUNT_ID"
-              CLOUDFLARE_API_TOKEN="$REPOSITORY_API_TOKEN"
-              secret_names='CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN'
-              ;;
-            probe_environment)
-              CLOUDFLARE_ACCOUNT_ID="$PROBE_ACCOUNT_ID"
-              CLOUDFLARE_API_TOKEN="$PROBE_API_TOKEN"
-              secret_names='PROBE_CLOUDFLARE_ACCOUNT_ID and PROBE_CLOUDFLARE_API_TOKEN'
-              ;;
-            *)
-              echo '::error::Select repository or probe_environment for probe_credentials.'
-              exit 1
-              ;;
+            repository|probe_environment) ;;
+            *) echo '::error::Select repository or probe_environment.'; exit 1 ;;
           esac
           if [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_API_TOKEN" ]; then
-            echo "::error::The selected credential pair is incomplete. Set both $secret_names. See worker/STATIC_SEARCH_PROBE.md."
+            echo '::error::The selected credential pair is incomplete; no fallback account is used.'
             exit 1
           fi
-          printf 'CLOUDFLARE_ACCOUNT_ID=%s\nCLOUDFLARE_API_TOKEN=%s\n' \
-            "$CLOUDFLARE_ACCOUNT_ID" "$CLOUDFLARE_API_TOKEN" >> "$GITHUB_ENV"
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
@@ -280,6 +241,11 @@ jobs:
           secret_file.write_text(json.dumps({'PROBE_TOKEN': token}))
           secret_file.chmod(0o600)
           PYTHON
+      - name: Refuse deployment while a previous Worker probe remains
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+        run: python src/cleanup_static_search_probe.py --preflight "$PROBE_NAME"
       - name: Deploy the isolated probe
         id: deploy
         timeout-minutes: 8
@@ -290,11 +256,16 @@ jobs:
             --secrets-file "$RUNNER_TEMP/worker-probe-secrets.json" \
             --var "PROBE_EXPIRES_AT:$PROBE_EXPIRES_AT" 2>&1 | tee probe-deploy.txt
           python -c "import os, pathlib, sys; sys.path.insert(0, '../src'); from write_discovery_links import worker_origin; origin=worker_origin(pathlib.Path('probe-deploy.txt').read_text(encoding='utf-8'), os.environ['PROBE_NAME']); sys.exit('deploy did not print the probe origin') if not origin else print('origin=' + origin)" >> "$GITHUB_OUTPUT"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
       - name: Measure REST and MCP with platform CPU telemetry
         id: measure
         continue-on-error: true
         env:
           PROBE_ORIGIN: ${{ steps.deploy.outputs.origin }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
         run: python src/run_static_search_probe.py "$PROBE_ORIGIN" --samples 50 --variants "$PROBE_VARIANT" --script-name "$PROBE_NAME" --output probe-report.json --wait-seconds 180
       - name: Retry delayed telemetry without resending measurements
         if: always() && steps.measure.outcome != 'skipped'
@@ -303,10 +274,16 @@ jobs:
           if [ -f probe-report.json ]; then
             python src/run_static_search_probe.py --collect-only probe-report.json --output probe-report.json --wait-seconds 120
           fi
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
       - name: Remove only this run's isolated Worker
         if: always() && (steps.deploy.outcome == 'success' || steps.deploy.outcome == 'failure' || steps.deploy.outcome == 'cancelled')
         timeout-minutes: 3
         run: python src/cleanup_static_search_probe.py "$PROBE_NAME"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
       - name: Remove the temporary Worker probe secret file
         if: always()
         run: rm -f "$RUNNER_TEMP/worker-probe-secrets.json"
@@ -340,10 +317,9 @@ jobs:
           print(json.dumps(report.get('variant_gates', {}), indent=2))
           raise SystemExit(0 if report.get('cpu_gate') == 'passed' else 1)
           PYTHON
-
   static_do_probe:
     needs: offline
-    if: github.event_name == 'workflow_dispatch' && !inputs.production_publish_confirmed && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase != 'collect' && inputs.do_probe_phase != 'real' && inputs.do_probe_phase != 'full'
+    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase != 'collect' && inputs.do_probe_phase != 'real' && inputs.do_probe_phase != 'full'
     runs-on: ubuntu-latest
     timeout-minutes: 50
     environment: static-search-probe
@@ -357,37 +333,21 @@ jobs:
       - name: Check the selected account and credentials
         env:
           PROBE_CREDENTIALS: ${{ inputs.probe_credentials }}
-          REPOSITORY_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          REPOSITORY_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          PROBE_ACCOUNT_ID: ${{ secrets.PROBE_CLOUDFLARE_ACCOUNT_ID }}
-          PROBE_API_TOKEN: ${{ secrets.PROBE_CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
         run: |
           if [ "$FREE_PLAN_CONFIRMED" != 'true' ]; then
             echo '::error::This experiment requires a Workers Free account. Check its plan in Cloudflare, then select free_plan_confirmed. The workflow never changes the plan.'
             exit 1
           fi
           case "$PROBE_CREDENTIALS" in
-            repository)
-              CLOUDFLARE_ACCOUNT_ID="$REPOSITORY_ACCOUNT_ID"
-              CLOUDFLARE_API_TOKEN="$REPOSITORY_API_TOKEN"
-              secret_names='CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN'
-              ;;
-            probe_environment)
-              CLOUDFLARE_ACCOUNT_ID="$PROBE_ACCOUNT_ID"
-              CLOUDFLARE_API_TOKEN="$PROBE_API_TOKEN"
-              secret_names='PROBE_CLOUDFLARE_ACCOUNT_ID and PROBE_CLOUDFLARE_API_TOKEN'
-              ;;
-            *)
-              echo '::error::Select repository or probe_environment for probe_credentials.'
-              exit 1
-              ;;
+            repository|probe_environment) ;;
+            *) echo '::error::Select repository or probe_environment.'; exit 1 ;;
           esac
           if [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_API_TOKEN" ]; then
-            echo "::error::The selected credential pair is incomplete. Set both $secret_names. See worker/STATIC_SEARCH_PROBE.md."
+            echo '::error::The selected credential pair is incomplete; no fallback account is used.'
             exit 1
           fi
-          printf 'CLOUDFLARE_ACCOUNT_ID=%s\nCLOUDFLARE_API_TOKEN=%s\n' \
-            "$CLOUDFLARE_ACCOUNT_ID" "$CLOUDFLARE_API_TOKEN" >> "$GITHUB_ENV"
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
@@ -408,6 +368,8 @@ jobs:
         if: inputs.do_probe_phase == 'matrix'
         env:
           GH_TOKEN: ${{ github.token }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
         run: |
           if ! [[ "$DO_PILOT_RUN_ID" =~ ^[1-9][0-9]*$ ]]; then
             echo '::error::First run the DO pilot; supply its successful run ID for the matrix.'
@@ -420,6 +382,9 @@ jobs:
             --pilot-dir previous-do-pilot --pilot-run-id "$DO_PILOT_RUN_ID"
       - name: Refuse deployment if an earlier DO namespace was not removed
         run: python src/static_search_do_lifecycle.py preflight "$PROBE_NAME"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
       - name: Create expiring probe access credentials
         run: |
           python - <<'PYTHON'
@@ -448,14 +413,22 @@ jobs:
             --secrets-file "$RUNNER_TEMP/do-probe-secrets.json" \
             --var "PROBE_EXPIRES_AT:$PROBE_EXPIRES_AT" 2>&1 | tee probe-do-deploy.txt
           python -c "import os, pathlib, sys; sys.path.insert(0, '../src'); from write_discovery_links import worker_origin; origin=worker_origin(pathlib.Path('probe-do-deploy.txt').read_text(encoding='utf-8'), os.environ['PROBE_NAME']); sys.exit('deploy did not print the probe origin') if not origin else print('origin=' + origin)" >> "$GITHUB_OUTPUT"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
       - name: Capture the owned namespace before sending any workload
         run: python src/static_search_do_lifecycle.py capture "$PROBE_NAME"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
       - name: Run the bounded Durable Object pilot or matrix
         id: measure
         timeout-minutes: 20
         continue-on-error: true
         env:
           PROBE_ORIGIN: ${{ steps.deploy.outputs.origin }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
         run: python src/run_static_search_do_probe.py "$PROBE_ORIGIN" --script-name "$PROBE_NAME" --phase "$DO_PROBE_PHASE" --samples 50 --max-load-seconds 900 --output probe-do-report.json --wait-seconds 180
       - name: Collect delayed DO telemetry without resending requests
         if: always() && steps.measure.outcome != 'skipped'
@@ -465,11 +438,17 @@ jobs:
           if [ -f probe-do-report.json ]; then
             python src/run_static_search_do_probe.py --collect-only probe-do-report.json --script-name "$PROBE_NAME" --output probe-do-report.json --wait-seconds 120
           fi
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
       - name: Remove the owned DO namespace, verify absence, then remove Worker
         id: cleanup
         if: always() && (steps.deploy.outcome == 'success' || steps.deploy.outcome == 'failure' || steps.deploy.outcome == 'cancelled')
         timeout-minutes: 8
         run: python src/static_search_do_lifecycle.py cleanup "$PROBE_NAME"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
       - name: Remove the temporary probe secret file
         if: always()
         run: rm -f "$RUNNER_TEMP/do-probe-secrets.json"
@@ -504,10 +483,9 @@ jobs:
           print('Cleanup:', lifecycle.get('cleanup', 'unverified'))
           raise SystemExit(0 if phase_passed(report, lifecycle) else 1)
           PYTHON
-
   static_do_collect:
     needs: offline
-    if: github.event_name == 'workflow_dispatch' && !inputs.production_publish_confirmed && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase == 'collect'
+    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase == 'collect'
     runs-on: ubuntu-latest
     timeout-minutes: 12
     environment: static-search-probe
@@ -523,31 +501,17 @@ jobs:
       - name: Select credentials for read-only telemetry collection
         env:
           PROBE_CREDENTIALS: ${{ inputs.probe_credentials }}
-          REPOSITORY_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          REPOSITORY_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          PROBE_ACCOUNT_ID: ${{ secrets.PROBE_CLOUDFLARE_ACCOUNT_ID }}
-          PROBE_API_TOKEN: ${{ secrets.PROBE_CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
         run: |
           case "$PROBE_CREDENTIALS" in
-            repository)
-              CLOUDFLARE_ACCOUNT_ID="$REPOSITORY_ACCOUNT_ID"
-              CLOUDFLARE_API_TOKEN="$REPOSITORY_API_TOKEN"
-              ;;
-            probe_environment)
-              CLOUDFLARE_ACCOUNT_ID="$PROBE_ACCOUNT_ID"
-              CLOUDFLARE_API_TOKEN="$PROBE_API_TOKEN"
-              ;;
-            *)
-              echo '::error::Select repository or probe_environment for probe_credentials.'
-              exit 1
-              ;;
+            repository|probe_environment) ;;
+            *) echo '::error::Select repository or probe_environment.'; exit 1 ;;
           esac
           if [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_API_TOKEN" ]; then
-            echo '::error::The selected credential pair is incomplete.'
+            echo '::error::The selected credential pair is incomplete; no fallback account is used.'
             exit 1
           fi
-          printf 'CLOUDFLARE_ACCOUNT_ID=%s\nCLOUDFLARE_API_TOKEN=%s\n' \
-            "$CLOUDFLARE_ACCOUNT_ID" "$CLOUDFLARE_API_TOKEN" >> "$GITHUB_ENV"
       - name: Identify the original completed run and exact artifact attempt
         id: source
         env:
@@ -564,6 +528,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           SOURCE_ARTIFACT_NAME: ${{ steps.source.outputs.artifact_name }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
         run: |
           gh run download "$DO_COLLECT_RUN_ID" --repo "$GITHUB_REPOSITORY" \
             --name "$SOURCE_ARTIFACT_NAME" --dir source-do-artifact
@@ -574,6 +539,8 @@ jobs:
         continue-on-error: true
         env:
           SOURCE_SCRIPT_NAME: ${{ steps.source.outputs.script_name }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
         run: |
           python src/run_static_search_do_probe.py \
             --collect-only do-collection/probe-do-report.json \
@@ -590,10 +557,9 @@ jobs:
           path: do-collection/
           if-no-files-found: ignore
           retention-days: 90
-
   static_real_probe:
     needs: offline
-    if: github.event_name == 'workflow_dispatch' && !inputs.production_publish_confirmed && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase == 'real' && inputs.do_probe_phase != 'full'
+    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase == 'real' && inputs.do_probe_phase != 'full'
     runs-on: ubuntu-latest
     timeout-minutes: 60
     environment: static-search-probe
@@ -618,42 +584,33 @@ jobs:
       - name: Check the Free account and selected credentials
         env:
           PROBE_CREDENTIALS: ${{ inputs.probe_credentials }}
-          REPOSITORY_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          REPOSITORY_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          PROBE_ACCOUNT_ID: ${{ secrets.PROBE_CLOUDFLARE_ACCOUNT_ID }}
-          PROBE_API_TOKEN: ${{ secrets.PROBE_CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
         run: |
           if [ "$FREE_PLAN_CONFIRMED" != 'true' ]; then
             echo '::error::Confirm the selected account is Workers Free. This workflow never changes its plan.'
             exit 1
           fi
           case "$PROBE_CREDENTIALS" in
-            repository)
-              CLOUDFLARE_ACCOUNT_ID="$REPOSITORY_ACCOUNT_ID"
-              CLOUDFLARE_API_TOKEN="$REPOSITORY_API_TOKEN"
-              ;;
-            probe_environment)
-              CLOUDFLARE_ACCOUNT_ID="$PROBE_ACCOUNT_ID"
-              CLOUDFLARE_API_TOKEN="$PROBE_API_TOKEN"
-              ;;
-            *)
-              echo '::error::Select repository or probe_environment for probe_credentials.'
-              exit 1
-              ;;
+            repository|probe_environment) ;;
+            *) echo '::error::Select repository or probe_environment.'; exit 1 ;;
           esac
           if [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_API_TOKEN" ]; then
-            echo '::error::The selected credential pair is incomplete.'
+            echo '::error::The selected credential pair is incomplete; no fallback account is used.'
             exit 1
           fi
-          printf 'CLOUDFLARE_ACCOUNT_ID=%s\nCLOUDFLARE_API_TOKEN=%s\n' \
-            "$CLOUDFLARE_ACCOUNT_ID" "$CLOUDFLARE_API_TOKEN" >> "$GITHUB_ENV"
       - name: Refuse to leave another probe namespace behind
         run: python src/static_search_do_lifecycle.py preflight "$PROBE_NAME"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
       - name: Build the complete-paper real subset
         run: python src/build_real_search_probe.py --out agent_real_probe
       - name: Install the pinned CPU embedding environment
         timeout-minutes: 10
-        run: python -m pip install -r requirements-real-probe.txt
+        run: |-
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu -r requirements-torch-probe.txt
+          python -m pip install --index-url https://pypi.org/simple -r requirements-real-probe.txt
       - name: Generate pinned BGE FP32 vectors and local query vectors
         timeout-minutes: 12
         run: |
@@ -703,14 +660,22 @@ jobs:
             --var "PROBE_EXPIRES_AT:$PROBE_EXPIRES_AT" \
             --var "PROBE_MANIFEST_SHA:$PROBE_MANIFEST_SHA" 2>&1 | tee probe-real-deploy.txt
           python -c "import os, pathlib, sys; sys.path.insert(0, '../src'); from write_discovery_links import worker_origin; origin=worker_origin(pathlib.Path('probe-real-deploy.txt').read_text(encoding='utf-8'), os.environ['PROBE_NAME']); sys.exit('deploy did not print the probe origin') if not origin else print('origin=' + origin)" >> "$GITHUB_OUTPUT"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
       - name: Capture the owned namespace before any AI calls
         run: python src/static_search_do_lifecycle.py capture "$PROBE_NAME"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
       - name: Run bounded compatibility and real REST MCP journeys
         id: measure
         timeout-minutes: 13
         continue-on-error: true
         env:
           PROBE_ORIGIN: ${{ steps.deploy.outputs.origin }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
         run: |
           python src/run_real_search_probe.py --origin "$PROBE_ORIGIN" \
             --manifest agent_real_probe/probe.json \
@@ -722,6 +687,9 @@ jobs:
         if: always() && (steps.deploy.outcome == 'success' || steps.deploy.outcome == 'failure' || steps.deploy.outcome == 'cancelled')
         timeout-minutes: 8
         run: python src/static_search_do_lifecycle.py cleanup "$PROBE_NAME"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
       - name: Remove the temporary real-probe secret file
         if: always()
         run: rm -f "$RUNNER_TEMP/real-probe-secrets.json"
@@ -761,10 +729,9 @@ jobs:
                     and lifecycle.get('namespace_absent') is True)
           raise SystemExit(0 if passed else 1)
           PYTHON
-
   full_offline_probe:
     needs: offline
-    if: github.event_name == 'workflow_dispatch' && !inputs.production_publish_confirmed && inputs.do_probe_phase == 'full'
+    if: github.event_name == 'workflow_dispatch' && inputs.do_probe_phase == 'full' && inputs.static_probe && inputs.probe_runtime == 'durable-object'
     runs-on: ubuntu-latest
     timeout-minutes: 350
     environment: static-search-probe
@@ -822,46 +789,15 @@ jobs:
         run: |
           gh api "repos/$GITHUB_REPOSITORY/actions/runs/$FULL_NUMERIC_RUN_ID" > full-probe-reports/numeric-source-run.json
           gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/12616396041" > full-probe-reports/numeric-source-artifact.json
-          python - <<'PYTHON'
-          import json
-          import os
-          from pathlib import Path
-          import subprocess
-          run = json.loads(Path('full-probe-reports/numeric-source-run.json').read_text())
-          artifact = json.loads(Path('full-probe-reports/numeric-source-artifact.json').read_text())
-          assert run['id'] == 40238828496 and run['status'] == 'completed' and run['conclusion'] == 'success'
-          assert run['name'] == 'Agent API' and run['event'] == 'workflow_dispatch'
-          assert run['path'] == '.github/workflows/agent-api.yml'
-          assert run['repository']['full_name'] == os.environ['GITHUB_REPOSITORY']
-          assert run['head_sha'].startswith('4723db4')
-          assert artifact['id'] == 12616396041 and not artifact['expired']
-          assert artifact['name'] == 'real-search-probe-40238828496-' + str(run['run_attempt'])
-          assert artifact['workflow_run']['id'] == run['id']
-          subprocess.run(['git', 'merge-base', '--is-ancestor', run['head_sha'], os.environ['GITHUB_SHA']], check=True)
-          PYTHON
+          python src/authenticate_probe_fixture.py \
+            --run full-probe-reports/numeric-source-run.json \
+            --artifact full-probe-reports/numeric-source-artifact.json
           gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/12616396041/zip" > full-probe-reports/numeric-source.zip
-          python - <<'PYTHON'
-          import hashlib
-          import json
-          from pathlib import Path, PurePosixPath
-          import zipfile
-          archive = Path('full-probe-reports/numeric-source.zip')
-          expected = 'ae50de4d8de1ebc0d44c9b73d1d3e677a4523bbb9caf10a8db78acad8030a8c0'
-          assert hashlib.sha256(archive.read_bytes()).hexdigest() == expected, 'Numerical fixture archive checksum mismatch'
-          target = Path('full-probe-reports/numeric-source')
-          with zipfile.ZipFile(archive) as source:
-              entries = source.infolist()
-              assert len(entries) < 1000 and sum(item.file_size for item in entries) < 64 * 1024 * 1024
-              for item in entries:
-                  path = PurePosixPath(item.filename)
-                  assert not path.is_absolute() and '..' not in path.parts and '\\' not in item.filename
-                  assert (item.external_attr >> 16) & 0o170000 != 0o120000, 'Archive symlink rejected'
-              source.extractall(target)
-          manifest = json.loads((target / 'agent_real_probe/probe.json').read_text())
-          run = json.loads(Path('full-probe-reports/numeric-source-run.json').read_text())
-          assert manifest['source_sha'] == run['head_sha'], 'Fixture source commit differs from the authenticated run'
-          assert (target / 'agent_real_probe/vectors.f32').is_file()
-          PYTHON
+          python src/authenticate_probe_fixture.py \
+            --run full-probe-reports/numeric-source-run.json \
+            --artifact full-probe-reports/numeric-source-artifact.json \
+            --archive full-probe-reports/numeric-source.zip \
+            --target full-probe-reports/numeric-source
       - name: Build every canonical card and available passage
         id: canonical
         timeout-minutes: 3
@@ -872,10 +808,12 @@ jobs:
           python src/evaluate_full_search_probe.py prepare --corpus agent_full_probe \
             --natural worker/quality/full-natural-questions.json \
             --output agent_full_probe/quality-combined-frozen.json
+          python src/preflight_full_search_probe.py verify-queries --corpus agent_full_probe --queries agent_full_probe/quality-combined-frozen.json --pin worker/quality/full-query-pin.json
       - name: Install the pinned CPU environment and download tokenizer files only
         timeout-minutes: 8
         run: |
-          python -m pip install -r requirements-real-probe.txt
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu -r requirements-torch-probe.txt
+          python -m pip install --index-url https://pypi.org/simple -r requirements-real-probe.txt
           python - <<'PYTHON'
           import sys
           sys.path.insert(0, 'src')
@@ -939,24 +877,15 @@ jobs:
         timeout-minutes: 6
         env:
           PROBE_CREDENTIALS: ${{ inputs.probe_credentials }}
-          REPOSITORY_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          REPOSITORY_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          PROBE_ACCOUNT_ID: ${{ secrets.PROBE_CLOUDFLARE_ACCOUNT_ID }}
-          PROBE_API_TOKEN: ${{ secrets.PROBE_CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
         run: |
           case "$PROBE_CREDENTIALS" in
-            repository)
-              export CLOUDFLARE_ACCOUNT_ID="$REPOSITORY_ACCOUNT_ID"
-              export CLOUDFLARE_API_TOKEN="$REPOSITORY_API_TOKEN"
-              ;;
-            probe_environment)
-              export CLOUDFLARE_ACCOUNT_ID="$PROBE_ACCOUNT_ID"
-              export CLOUDFLARE_API_TOKEN="$PROBE_API_TOKEN"
-              ;;
-            *) echo '::error::Unknown credential selection'; exit 1 ;;
+            repository|probe_environment) ;;
+            *) echo '::error::Select repository or probe_environment.'; exit 1 ;;
           esac
           if [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_API_TOKEN" ]; then
-            echo '::error::STOP: selected canary credentials are missing.'
+            echo '::error::The selected credential pair is incomplete; no fallback account is used.'
             exit 1
           fi
           python src/run_full_probe_canary.py --run full-probe-reports/preflight \
@@ -1083,77 +1012,3 @@ jobs:
           with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as stream:
               stream.write(text)
           PYTHON
-
-  publish:
-    needs: offline
-    if: github.event_name == 'workflow_dispatch' && inputs.production_publish_confirmed && github.ref == 'refs/heads/main' && !inputs.static_probe && inputs.do_probe_phase == 'pilot' && inputs.do_probe_phase != 'collect' && inputs.do_probe_phase != 'real' && inputs.do_probe_phase != 'full'
-    runs-on: ubuntu-latest
-    env:
-      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      AGENT_DIMENSION_BUDGET: ${{ secrets.AGENT_DIMENSION_BUDGET }}
-      AGENT_PUBLISH_ROLE: ci
-    steps:
-      - name: Check deployment configuration
-        run: |
-          if [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_API_TOKEN" ]; then
-            echo '::error::Set repository secrets CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN. See worker/README.md deployment setup. The static agent catalog publishes independently.'
-            echo 'API deployment blocked: Cloudflare credentials are missing. Static catalog publication is independent.' >> "$GITHUB_STEP_SUMMARY"
-            exit 1
-          fi
-          if ! [[ "$AGENT_DIMENSION_BUDGET" =~ ^[1-9][0-9]*$ ]]; then
-            echo '::error::Set AGENT_DIMENSION_BUDGET to the provisioned capacity after reviewing the offline preflight report and Cloudflare plan. See worker/README.md.'
-            exit 1
-          fi
-      - name: Checkout the explicitly selected production commit
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.sha }}
-      - name: Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: npm
-          cache-dependency-path: worker/package-lock.json
-      - name: Build the release
-        run: python src/build_agent_index.py
-      - name: Capacity and permissions
-        run: python src/publish_agent_index.py preflight --live
-      - name: Isolated probe
-        run: python src/publish_agent_index.py probe
-      - name: Stage the inactive slot
-        id: stage
-        run: |
-          set -o pipefail
-          python src/publish_agent_index.py publish --stage | tee stage.json
-          python -c "import json, pathlib; print('slot=' + json.loads(pathlib.Path('stage.json').read_text(encoding='utf-8'))['slot'])" >> "$GITHUB_OUTPUT"
-      - name: Install worker dependencies
-        working-directory: worker
-        run: npm ci
-      - name: Deploy the reader
-        id: deploy
-        working-directory: worker
-        run: |
-          set -o pipefail
-          npx wrangler deploy | tee deploy.txt
-          python -c "import json, pathlib, sys; sys.path.insert(0, '../src'); from write_discovery_links import worker_origin; name=json.loads(pathlib.Path('embed.json').read_text(encoding='utf-8'))['worker_name']; origin=worker_origin(pathlib.Path('deploy.txt').read_text(encoding='utf-8'), name); sys.exit('deploy did not print the worker origin') if not origin else print('origin=' + origin)" >> "$GITHUB_OUTPUT"
-      - name: Promote the staged release
-        id: promote
-        run: python src/publish_agent_index.py publish --promote --slot "${{ steps.stage.outputs.slot }}"
-      - name: Live smoke
-        id: smoke
-        run: python src/smoke_agent_api.py "${{ steps.deploy.outputs.origin }}"
-      - name: Persist verified API discovery for Pages
-        uses: actions/upload-artifact@v4
-        with:
-          name: agent-api-discovery
-          path: agent_build/smoke.json
-          if-no-files-found: error
-          retention-days: 90
-      - name: Roll back the pointer
-        if: failure() && steps.promote.outcome == 'success' && steps.smoke.outcome == 'failure'
-        run: python src/publish_agent_index.py rollback

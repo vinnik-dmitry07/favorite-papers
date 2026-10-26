@@ -42,7 +42,8 @@ def test_full_dispatch_is_isolated_from_every_deployment_job():
     condition = full_job()['if']
     assert "github.event_name == 'workflow_dispatch'" in condition
     assert "inputs.do_probe_phase == 'full'" in condition
-    for name in ('publish', 'static_probe', 'static_do_probe', 'static_real_probe'):
+    assert 'publish' not in jobs
+    for name in ('static_probe', 'static_do_probe', 'static_real_probe'):
         assert "inputs.do_probe_phase != 'full'" in jobs[name]['if']
     commands = '\n'.join(step.get('run', '') for step in full_job()['steps'])
     for forbidden in ('wrangler deploy', 'publish_agent_index.py',
@@ -99,17 +100,13 @@ def test_long_entrypoints_require_explicit_confirmation_and_certificate():
     assert not steps['admission'].get('continue-on-error', False)
 
 
-def test_numeric_fixture_has_reviewed_archive_identity_and_ancestry():
+def test_numeric_fixture_uses_authenticated_digest_without_ancestry():
     script = steps_by_id()['numeric_source']['run']
-    for text in ('12616396041', '40238828496',
-                 'ae50de4d8de1ebc0d44c9b73d1d3e677a4523bbb9caf10a8db78acad8030a8c0',
-                 "run['conclusion'] == 'success'", "run['name'] == 'Agent API'",
-                 "run['path'] == '.github/workflows/agent-api.yml'",
-                 "'merge-base', '--is-ancestor'", "manifest['source_sha'] == run['head_sha']",
-                 'Archive symlink rejected'):
-        assert text in script
-    checkout = next(step for step in full_job()['steps'] if step.get('uses', '').startswith('actions/checkout'))
-    assert checkout['with']['fetch-depth'] == 0
+    assert '12616396041' in script
+    assert script.count('src/authenticate_probe_fixture.py') == 2
+    assert '--archive full-probe-reports/numeric-source.zip' in script
+    assert 'merge-base' not in script
+    assert 'assert ' not in script
 
 
 def test_canary_is_bounded_and_secrets_are_not_persisted():

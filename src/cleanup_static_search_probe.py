@@ -9,10 +9,36 @@ import time
 import urllib.error
 import urllib.request
 
+from static_search_do_lifecycle import Cloudflare
+
+
+PROBE_PATTERN = r'key-papers-static-probe-[1-9][0-9]*-[1-9][0-9]*'
+
+
+def preflight_probe(name):
+    '''Refuse new workload while a previous Worker probe needs inspection.'''
+    if not re.fullmatch(PROBE_PATTERN, name):
+        raise ValueError('Only a run-specific static probe is allowed')
+    # The Workers scripts endpoint returns a single page. Never delete anything
+    # found here: only the explicit run-specific cleanup command may mutate it.
+    body = Cloudflare().request('/workers/scripts')
+    rows = body.get('result')
+    if not isinstance(rows, list) or any(
+            not isinstance(row, dict) or not isinstance(row.get('id'), str)
+            or not row['id'] for row in rows):
+        raise ValueError('Malformed Worker script inventory')
+    remaining = sorted(row['id'] for row in rows if (
+        re.fullmatch(PROBE_PATTERN, row['id'])
+        or row['id'] == 'key-papers-static-probe'
+    ))
+    if remaining:
+        raise ValueError('Inspect and remove remaining Worker probes first: '
+                         + ', '.join(remaining))
+    return 'no remaining Worker probes'
+
 
 def delete_probe(name):
-    pattern = r'key-papers-static-probe-[1-9][0-9]*-[1-9][0-9]*'
-    if not re.fullmatch(pattern, name):
+    if not re.fullmatch(PROBE_PATTERN, name):
         raise ValueError('Only a run-specific static probe may be deleted')
     account = os.environ.get('CLOUDFLARE_ACCOUNT_ID', '')
     token = os.environ.get('CLOUDFLARE_API_TOKEN', '')
@@ -65,9 +91,11 @@ def delete_probe(name):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('name')
+    parser.add_argument('--preflight', action='store_true')
     args = parser.parse_args()
     try:
-        result = delete_probe(args.name)
+        result = (preflight_probe(args.name) if args.preflight
+                  else delete_probe(args.name))
     except ValueError as exc:
         parser.exit(1, str(exc) + '\n')
     print(f'{args.name}: {result}')

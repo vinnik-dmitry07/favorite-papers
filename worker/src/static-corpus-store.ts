@@ -182,24 +182,43 @@ export async function createStaticCorpusStore(
 ): Promise<StaticCorpusBundle> {
   requireValue(hash(expectedManifestHash), 'manifest hash must be pinned')
   let loadedBytes = 0
-  const loads = new Map<string, Promise<ArrayBuffer>>()
-  const load = (path: string, digest: string): Promise<ArrayBuffer> => {
-    const cached = loads.get(path)
-    if (cached) return cached
-    const promise = (async () => {
-      const response = await assets.fetch(new Request('https://real-probe-assets.invalid/' + path))
-      requireValue(response.status === 200, 'asset is missing: ' + path)
-      const length = Number(response.headers.get('content-length'))
-      requireValue(!Number.isFinite(length) || length <= MAX_FILE_BYTES, 'asset exceeds size bound')
-      const bytes = await response.arrayBuffer()
-      loadedBytes += bytes.byteLength
-      requireValue(bytes.byteLength <= MAX_FILE_BYTES && loadedBytes <= MAX_TOTAL_BYTES,
-        'assets exceed subset size bound')
-      requireValue(await bytesHash(bytes) === digest, 'asset checksum mismatch: ' + path)
-      return bytes
-    })()
-    loads.set(path, promise)
-    return promise
+  // The pinned asset set is read once during the shared initialization. Do not
+  // keep resolved byte-buffer promises alongside the parsed resident corpus.
+  const load = async (path: string, digest: string): Promise<ArrayBuffer> => {
+    const response = await assets.fetch(new Request('https://real-probe-assets.invalid/' + path))
+    requireValue(response.status === 200, 'asset is missing: ' + path)
+    const declared = response.headers.get('content-length')
+    const limit = Math.min(MAX_FILE_BYTES, MAX_TOTAL_BYTES - loadedBytes)
+    const validLength = declared === null || (/^\d+$/.test(declared)
+      && Number.isSafeInteger(Number(declared)) && Number(declared) <= limit)
+    if (!validLength) {
+      if (response.body) void response.body.cancel().catch(() => {})
+      requireValue(false, 'asset exceeds size bound')
+    }
+    const reader = response.body?.getReader()
+    requireValue(reader, 'asset body is missing')
+    const parts: Uint8Array[] = []
+    let length = 0, complete = false
+    try {
+      while (true) {
+        const part = await reader.read()
+        if (part.done) { complete = true; break }
+        requireValue(length + part.value.byteLength <= limit && parts.length < 1024,
+          'assets exceed subset size bound')
+        parts.push(part.value)
+        length += part.value.byteLength
+      }
+    } finally {
+      if (!complete) void reader.cancel().catch(() => {})
+      reader.releaseLock()
+    }
+    const output = new Uint8Array(length)
+    let offset = 0
+    for (const part of parts) { output.set(part, offset); offset += part.byteLength }
+    const bytes = output.buffer
+    loadedBytes += length
+    requireValue(await bytesHash(bytes) === digest, 'asset checksum mismatch: ' + path)
+    return bytes
   }
   const manifest = validateManifest(parseJson(await load('probe.json', expectedManifestHash)))
   const local = await signatures()

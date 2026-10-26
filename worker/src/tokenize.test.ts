@@ -45,7 +45,8 @@ describe('signatures', () => {
     expect(canonicalJson({ b: 1, a: 'café' })).toBe('{"a":"café","b":1}')
     const sig = await signatures()
     expect(sig.build).toBe('6362650290666e9debb571b4bc6f8191135b7b4dc8dd443d7a7a61a6f320b673')
-    expect(sig.embedding).toBe('116c4d43bcd6012a7b02e13e5114abbdc50b1193f99796d2af721c5e61786817')
+    // Exact main hash: a new payload would miss existing provider cache keys.
+    expect(sig.embedding).toBe('df5126063ec2f6589a0b994d6b7ebaaed8767dd49adb742803ab02b8a666cefe')
     expect(await vectorIdOf('a', 'arxiv:1', 0)).toBe(
       '526d07a2ae9159f141b8705db3413fcf7c7bc311fdf272de1150530e03f0bb75',
     )

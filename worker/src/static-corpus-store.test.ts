@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { createHash } from 'node:crypto'
 import { resolve } from 'node:path'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import { createStaticCorpusStore, type RealProbeManifest } from './static-corpus-store'
 import { canonicalJson, sha256Hex, signatures, vectorIdOf } from './signatures'
@@ -195,6 +195,35 @@ describe('verified static subset', () => {
 })
 
 describe('static subset evidence boundaries', () => {
+  it.each([null, '1'])('bounds an oversized stream with content-length %s before buffering it all', async (declared) => {
+    let chunks = 0
+    const cancel = vi.fn(() => new Promise<void>(() => {}))
+    const assets = { async fetch() {
+      const body = new ReadableStream<Uint8Array>({
+        pull(controller) { chunks++; controller.enqueue(new Uint8Array(1024 * 1024)) },
+        cancel,
+      })
+      return new Response(body, { headers: declared === null ? {} : { 'content-length': declared } })
+    } }
+    await expect(createStaticCorpusStore(assets, 'a'.repeat(64), async () => queryVector()))
+      .rejects.toThrow('assets exceed subset size bound')
+    expect(cancel).toHaveBeenCalledOnce()
+    // The stream could produce unbounded bytes; stop after the first excess,
+    // allowing at most one native stream prefetch.
+    expect(chunks).toBeLessThanOrEqual(6)
+  })
+
+  it.each(['-1', 'NaN', 'Infinity', '1.5', '5000000'])('rejects invalid asset length %s before reading', async (length) => {
+    let reads = 0
+    const body = new ReadableStream<Uint8Array>({
+      pull(controller) { reads++; controller.enqueue(new Uint8Array([32])) },
+    }, { highWaterMark: 0 })
+    const assets = { async fetch() { return new Response(body, { headers: { 'content-length': length } }) } }
+    await expect(createStaticCorpusStore(assets, 'a'.repeat(64), async () => queryVector()))
+      .rejects.toThrow('asset exceeds size bound')
+    expect(reads).toBe(0)
+  })
+
   it('rejects a stale manifest hash or altered asset before exposing an active corpus', async () => {
     const data = await fixture()
     await expect(createStaticCorpusStore(data.assets, 'b'.repeat(64), async () => queryVector()))

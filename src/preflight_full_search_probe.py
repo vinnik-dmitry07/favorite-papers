@@ -53,7 +53,8 @@ GATE_CHECKS = {
                      'input_identity', 'within_budget'},
     'provider-compatibility': {'targeted_coverage', 'finite_unit_768',
                                'min_cosine', 'batch_invariance', 'input_identity',
-                               'free_allowance_verified', 'within_budget'},
+                               'free_allowance_operator_asserted',
+                               'within_budget'},
 }
 BUDGET_SECONDS = {'tokenizer-parity': 600, 'numeric-contracts': 180,
                   'geometry-memory': 600, 'local-canary': 300,
@@ -88,6 +89,29 @@ def write_json(path, value):
     atomic_bytes(Path(path), (canonical_json(value) + '\n').encode())
 
 
+def verify_frozen_queries(corpus, queries, pin):
+    '''Require the reviewed ordered query payload and its source inventory.'''
+    manifest = read_json(Path(corpus) / 'probe.json')
+    document = read_json(queries)
+    expected = read_json(pin)
+    rows = document.get('queries')
+    require(isinstance(rows, list) and all(isinstance(row, dict)
+                                         for row in rows),
+            'Frozen query payload is invalid')
+    actual = {
+        'schema_version': 1,
+        'kind': 'reviewed-full-query-pin',
+        'query_count': len(rows),
+        'cohorts': dict(Counter(row.get('cohort') for row in rows)),
+        'ordered_queries_sha256': digest(rows),
+        'source_graph_sha256': manifest.get('source_graph_sha256'),
+        'source_texts_sha256': manifest.get('source_texts_sha256'),
+    }
+    require(expected == actual,
+            'Frozen queries or source inventory differ from reviewed pin')
+    return {'status': 'PASS', **actual}
+
+
 def utc_now():
     return datetime.now(timezone.utc).isoformat()
 
@@ -101,7 +125,9 @@ def code_hashes():
             paths.update((ROOT / directory).glob(pattern))
     for relative in ['worker/embed.json', 'worker/tokenizer/vocab.txt',
                      'worker/tokenizer/tokenizer_config.json', 'worker/package-lock.json',
-                     'requirements-real-probe.txt', 'requirements-probe-quality.txt']:
+                     'requirements-real-probe.txt',
+                     'requirements-torch-probe.txt',
+                     'requirements-probe-quality.txt']:
         paths.add(ROOT / relative)
     paths.update((ROOT / 'worker/fixtures').glob('*.json'))
     return {str(path.relative_to(ROOT)): sha(path.read_bytes())
@@ -320,7 +346,7 @@ def verify_memory_bundle(value, artifacts):
 
 
 def validate_raw_evidence(document, run):
-    '''Derive critical assertions from machine output, never a checks-only note.'''
+    '''Check retained consistency, not trusted execution attestation.'''
     gate, raw = document['gate'], raw_documents(document)
     bound = run['binding']
     if gate == 'tokenizer-parity':
@@ -340,6 +366,9 @@ def validate_raw_evidence(document, run):
         require(files.get('tokenizer-inputs.jsonl') == result.get('records_sha256')
                 and result.get('runtime_harness_sha256') in files.values(),
                 'Tokenizer raw inputs/bundle not retained')
+        records = next(item['path'] for item in document['artifacts']
+                       if Path(item['path']).name == 'tokenizer-inputs.jsonl')
+        validate_tokenizer_records(records, result)
     elif gate == 'numeric-contracts':
         result = raw.get('numeric-result.json', {})
         require(result.get('kind') == 'full-search-numeric-evidence'
@@ -493,8 +522,56 @@ def validate_evidence(document, snapshot_doc):
             cosine = metrics.get('min_cosine')
             require(type(cosine) in (int, float) and .999 <= cosine <= 1.000001,
                     'Provider cosine below .999')
+            allowance = metrics.get('available_neurons_operator_asserted')
+            estimate = math.ceil(
+                metrics['total_input_tokens'] * load_embed()['pricing'][
+                    'neurons_per_million_tokens'] / 1_000_000)
+            require(type(allowance) is int and allowance >= estimate
+                    and metrics.get('free_allowance_evidence')
+                    == 'operator-assertion-not-provider-verified',
+                    'Provider allowance lacks sufficient operator assertion')
     validate_raw_evidence(document, snapshot_doc)
     return document
+
+
+def validate_tokenizer_records(path, result):
+    '''Reject malformed retained IDs; reports require a trusted runner.'''
+    config = load_embed()
+    tokenizer = WordPieceTokenizer(config)
+    vocab_size = len(tokenizer.ids_by_token)
+    require(all(type(result.get(key)) is int and result[key] >= 0
+                for key in ('passages', 'queries', 'fixture_count')),
+            'Tokenizer retained coverage counts are malformed')
+    expected_count = (result['passages'] + result['queries']
+                      + result['fixture_count'])
+    require(type(result.get('count')) is int
+            and result['count'] == expected_count,
+            'Tokenizer retained record count differs from coverage')
+    count = 0
+    tokens = 0
+    with Path(path).open(encoding='utf-8') as stream:
+        for line in stream:
+            row = json.loads(line)
+            require(isinstance(row, dict) and row.get('id') == str(count)
+                    and row.get('template') == ''
+                    and isinstance(row.get('text'), str),
+                    'Tokenizer retained input record is malformed')
+            ids = row.get('ids')
+            require(isinstance(ids, list)
+                    and 2 <= len(ids) <= config['max_input_tokens']
+                    and all(type(value) is int and 0 <= value < vocab_size
+                            for value in ids)
+                    and ids[0] == tokenizer.ids_by_token[tokenizer.cls]
+                    and ids[-1] == tokenizer.ids_by_token[tokenizer.sep],
+                    'Tokenizer retained IDs are malformed')
+            count += 1
+            tokens += len(ids)
+            require(count <= expected_count,
+                    'Tokenizer retained records exceed coverage')
+    require(count == expected_count
+            and type(result.get('token_count')) is int
+            and result['token_count'] == tokens,
+            'Tokenizer retained record/token totals differ')
 
 
 def write_evidence(run_dir, gate, *, checks, measurements, artifacts,
@@ -851,6 +928,10 @@ def main(argv=None):
     create.add_argument('--corpus', type=Path, required=True)
     create.add_argument('--queries', type=Path, required=True)
     create.add_argument('--out', type=Path, required=True)
+    frozen = commands.add_parser('verify-queries')
+    frozen.add_argument('--corpus', type=Path, required=True)
+    frozen.add_argument('--queries', type=Path, required=True)
+    frozen.add_argument('--pin', type=Path, required=True)
     tokens = commands.add_parser('tokenize')
     tokens.add_argument('--run', type=Path, required=True)
     tokens.add_argument('--runtime-harness', type=Path,
@@ -871,6 +952,8 @@ def main(argv=None):
     try:
         if args.command == 'snapshot':
             result = snapshot(args.corpus, args.queries, args.out)
+        elif args.command == 'verify-queries':
+            result = verify_frozen_queries(args.corpus, args.queries, args.pin)
         elif args.command == 'tokenize':
             result = {'report': str(tokenize_supervised(args.run, runtime_harness=args.runtime_harness))}
         elif args.command == 'numeric':

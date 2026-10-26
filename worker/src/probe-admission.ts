@@ -5,6 +5,7 @@ import type { Service } from './service'
 
 export const PROBE_REQUEST_LIMITS = Object.freeze({
   active: 4, queued: 8, queue_wait_ms: 2000,
+  body_read_ms: 5000,
   request_bytes: 262144, response_bytes: 1048576, url_characters: 8192,
   header_characters: 16384, header_entries: 64,
 })
@@ -86,17 +87,29 @@ export class BoundedAdmission {
   }
 }
 
-async function boundedBody(body: ReadableStream<Uint8Array> | null, limit: number): Promise<Uint8Array> {
+async function boundedBody(body: ReadableStream<Uint8Array> | null, limit: number,
+  signal?: AbortSignal, response = false): Promise<Uint8Array> {
   if (!body) return new Uint8Array()
   const reader = body.getReader()
   const parts: Uint8Array[] = []
   let size = 0
+  let complete = false
+  let abort!: () => void
+  let timer!: ReturnType<typeof setTimeout>
+  const interrupted = new Promise<never>((_resolve, reject) => {
+    abort = () => reject(new DomainError('request_cancelled', 499, 'body read cancelled'))
+    timer = setTimeout(() => reject(new DomainError(
+      response ? 'response_timeout' : 'body_timeout', response ? 504 : 408,
+      'probe body read deadline exceeded',
+    )), PROBE_REQUEST_LIMITS.body_read_ms)
+    signal?.addEventListener('abort', abort, { once: true })
+    if (signal?.aborted) abort()
+  })
   try {
     while (true) {
-      const part = await reader.read()
-      if (part.done) break
+      const part = await Promise.race([reader.read(), interrupted])
+      if (part.done) { complete = true; break }
       if (size + part.value.byteLength > limit || parts.length >= 1024) {
-        await reader.cancel()
         throw new DomainError('body_too_large', 413, 'probe body exceeds its byte limit')
       }
       parts.push(part.value)
@@ -106,7 +119,14 @@ async function boundedBody(body: ReadableStream<Uint8Array> | null, limit: numbe
     let offset = 0
     for (const part of parts) { output.set(part, offset); offset += part.byteLength }
     return output
-  } finally { reader.releaseLock() }
+  } finally {
+    clearTimeout(timer)
+    signal?.removeEventListener('abort', abort)
+    // Closing the reader stops our pending read. An underlying source's cancel
+    // promise may never settle; it must not retain an admission permit.
+    if (!complete) void reader.cancel().catch(() => {})
+    reader.releaseLock()
+  }
 }
 
 /** Isolated probe handler. This does not change the production Worker entrypoint.
@@ -139,17 +159,17 @@ export function createBoundedProbeHandler(loadService: () => Promise<Service>, a
         return await admission.run(async () => {
           let replay = request
           if (request.body) {
-            const body = await boundedBody(request.body, PROBE_REQUEST_LIMITS.request_bytes)
+            const body = await boundedBody(request.body, PROBE_REQUEST_LIMITS.request_bytes, request.signal)
             replay = new Request(request.url, { method: request.method, headers: request.headers, body })
           }
           const service = await loadService()
           const response = new URL(request.url).pathname === '/mcp'
             ? await handleMcp(replay, service) : await handleRest(replay, service)
-          const bytes = await boundedBody(response.body, PROBE_REQUEST_LIMITS.response_bytes)
+          const bytes = await boundedBody(response.body, PROBE_REQUEST_LIMITS.response_bytes, request.signal, true)
           return new Response(bytes, { status: response.status, headers: response.headers })
         }, request.signal)
       } catch (error) {
-        if (request.body && !request.body.locked) await request.body.cancel().catch(() => {})
+        if (request.body && !request.body.locked) void request.body.cancel().catch(() => {})
         const known = error instanceof DomainError ? error
           : new DomainError('corpus_unavailable', 503, 'probe request failed')
         const response = json(errorBody(known), known.status)

@@ -4,8 +4,12 @@ This is an isolated offline experiment. It does not publish a release, change
 the production Worker, alter discovery links, or enable a paid plan. The next
 long run needs explicit user confirmation **after the reviewed code is pushed**.
 
-The earlier 390-passage result covers three papers. It does not establish full
-corpus memory, retrieval quality or Cloudflare CPU. The full source currently
+The earlier 390-passage result covers three papers and tokenizer v1. Its
+200/200 provider comparisons do not establish compatibility for tokenizer v2;
+the historical bundle is not a valid current release. Those vectors are reused
+only for numerical regression, with their original provenance retained. The
+result does not establish full-corpus memory, retrieval quality or Cloudflare
+CPU. The full source currently
 contains 415 cards, 362 available texts and 53 explicitly unavailable texts.
 
 ## Current result: STOP
@@ -16,6 +20,10 @@ full-geometry workload found cached snippets retaining complete paper strings.
 Copying only the bounded snippet reduced retained memory after search churn
 from 139.2 to 69.6 MiB and the observed peak from 207.1 to 135.5 MiB. The same
 324 REST/MCP requests and 160 synthetic-vector searches were used in both runs.
+The exact pre-fix implementation used for the "before" run was not committed.
+Its raw observations and hashes are retained, but that baseline cannot be fully
+reproduced from this repository alone. The comparison is historical evidence,
+not a reproducible benchmark of the current checkout.
 
 The unchanged 96 MiB peak filter still fails. All other measured memory/contract
 checks pass, including queue limits, one index initialization and retained
@@ -32,8 +40,11 @@ punctuation and a word. Testing only the next uncached batch found that error
 after model work had already started.
 
 Tokenizer v2 preserves the pinned added-token semantics before normalization.
-Its algorithm and configuration are bound into both embedding and build
-identities. Old cache namespaces are not silently relabelled as v2. Reusable
+Its algorithm and configuration are bound into the build identity and local
+encoder identity. The Workers AI embedding identity retains the legacy
+provider payload: unchanged model-input text can reuse its previous provider
+hash. This does not assert that a provider-side cache is populated, nor permit
+relabeling locally encoded vectors across tokenizer versions. Reusable
 cache identity binds the numerical encoder/tokenizer syntax, configuration,
 model revision and dependency versions; comments and unrelated CLI changes do
 not invalidate vectors. Full source hashes still invalidate preflight evidence.
@@ -46,6 +57,15 @@ The canonical rebuild retained all source texts and 40,575 passages; token
 count changed from 7,868,447 to 7,867,965. Source text equality is checked when
 rebasing the frozen questions. Chunk counts may change in a future legitimate
 tokenizer revision; preserving complete source coverage is the invariant.
+The early summary counted 42,686 inputs: 40,575 passages, 2,064 queries and
+47 regression fixtures. The executable gate adds two token-limit boundary
+inputs, yielding 42,688. The committed summaries are historical; the gate
+retains complete raw input/ID records as an execution artifact.
+Unicode categories depend on runtime versions. The audit reproduced a
+Python/Node mismatch for newly classified characters; corpus/fixture parity
+does not establish universal Unicode parity or the Workers runtime's behavior.
+Fresh tokenizer and provider canaries remain required for the current inputs;
+the historical v1 subset cannot discharge those checks.
 
 ## Gates and decision scope
 
@@ -64,6 +84,13 @@ valid only for its exact source, canonical release, frozen questions, code,
 dependencies and encoder identity. A change invalidates it. A partially
 completed encode can resume from validated cache entries; completion attaches
 the vector artifact atomically.
+
+This certificate checks consistency and the declared acceptance policy. It is
+not a signature, remote attestation, or independent proof that the commands
+ran. A party able to rewrite source and reports can manufacture mutually
+consistent files. Trust in execution comes from the reviewed workflow, runner
+and retained logs/artifacts. Malformed retained tokenizer IDs, row order and
+coverage totals are rejected, but shape validation cannot prove HF execution.
 
 The certificate means `GO_FOR_FULL_OFFLINE_ENCODE`. Platform CPU, platform
 memory, held-out quality and production readiness remain separate unknowns.
@@ -117,6 +144,8 @@ Provider calls use the existing `CLOUDFLARE_ACCOUNT_ID` and
 remaining free-neuron allowance before making calls. That value is an operator
 confirmation, not an automatically queried billing balance. The fixed token
 budget bounds this experiment, not other activity on the account.
+The check is named `free_allowance_operator_asserted`, and the measured value
+is `available_neurons_operator_asserted`; neither claims provider verification.
 
 An exclusive attempt ledger reserves provider calls before sending them.
 Ambiguous failures still consume the reservation. There are no automatic
@@ -140,17 +169,40 @@ hits, exact evidence containment and source read-window utility separately.
 REST deduplicates top40 into at most eight papers; semantic MCP deduplicates
 top25 into at most five, with separate catalog bypass/mixed-result behavior.
 
+`worker/quality/full-query-pin.json` commits a hash of the complete ordered
+question payload, cohort counts and source graph/text hashes. CI regenerates
+the deterministic file and verifies this pin before installing the model
+environment. Changing wording, answer spans, gold chunks, order or source
+inventory requires a reviewed pin update. The newly pinned preparation has the
+same 2,064 questions, spans and gold sets as the prior rebased manifest; 120
+`source_chunk_index` bookkeeping values differ because preparation records the
+original extraction chunk while rebase records the first containing chunk.
+
+Extraction operates on overlapping chunks, so some queries begin inside a
+sentence or word. Rendering boilerplate and duplicate passages also remain in
+the source corpus. These known defects limit absolute retrieval conclusions.
+Cleaning source text or selecting a new question cohort is a separately
+versioned data change; silently changing this frozen diagnostic while tuning
+retrieval would invalidate the comparison. No held-out quality claim is made.
+
 No real full-corpus quality result exists until that long run finishes.
 
 ## Running the stages
 
-Ordinary PR CI runs the offline tests and bundle checks. Manual `Agent API`
-dispatch with `static_probe=true`, `probe_runtime=durable-object`, and
-`do_probe_phase=full` runs the new offline pipeline. Its default
+Ordinary PR CI runs the offline tests and bundle checks. Manual `Agent probe`
+dispatch through `agent-api.yml` with `do_probe_phase=full` runs the offline
+pipeline when `static_probe=true` and `probe_runtime=durable-object` are also
+selected. These explicit probe-intent flags are required. Its default
 `full_run_confirmed=false` disables all long encoding/evaluation steps.
 `provider_available_neurons=0` also blocks provider calls by default. The prior
 genuine-vector artifact is pinned by run, artifact ID and ZIP checksum and is
 used only for numerical regression.
+
+The provider canary also requires `free_plan_confirmed=true`, a sufficient
+operator-asserted neuron allowance and the selected credential pair. Probe
+credentials default to the separate `probe_environment`; using repository
+credentials requires an explicit selection. A full-run confirmation does not
+bypass any of these conditions or a failed memory gate.
 
 The workflow builds the complete corpus, freezes queries, installs the pinned
 CPU environment, then runs `snapshot`, `tokenize`, `numeric`, the geometry
@@ -173,8 +225,9 @@ python src/preflight_full_search_probe.py record-geometry \
 python src/preflight_full_search_probe.py aggregate --run full-probe-reports/preflight
 ```
 
-`record-geometry` consumes the exact report generated by the reviewed harness,
-not a hand-written PASS. The current memory result makes it and `aggregate`
+`record-geometry` validates the report, retained bundle and source hashes
+against the reviewed harness. This is a consistency check within the trusted
+execution boundary described above. The current memory result makes it and `aggregate`
 exit nonzero. Fix the failed gate and obtain new evidence before enabling
 `full_run_confirmed`; confirmation alone cannot turn a failed gate into PASS.
 

@@ -28,13 +28,22 @@ def test_pinned_hf_special_tokens_and_normalization():
 @pytest.mark.parametrize('key,value', [
     ('algorithm_version', 3), ('do_lower_case', False),
     ('strip_accents', False), ('tokenize_chinese_chars', False),
-    ('max_input_chars_per_word', 99), ('revision', 'different-revision'),
+    ('max_input_chars_per_word', 99),
     ('added_tokens', []),
 ])
-def test_tokenizer_changes_invalidate_build_and_embedding_identities(key, value):
+def test_local_tokenizer_changes_invalidate_build_not_provider_cache(key, value):
     original = load_embed()
     changed = deepcopy(original)
     changed['tokenizer'][key] = value
+    assert build_signature(original) != build_signature(changed)
+    assert embedding_signature(original) == embedding_signature(changed)
+
+
+@pytest.mark.parametrize('key', ['revision', 'vocab_sha256'])
+def test_legacy_model_tokenizer_identity_still_invalidates_provider_cache(key):
+    original = load_embed()
+    changed = deepcopy(original)
+    changed['tokenizer'][key] = 'different-pinned-model-identity'
     assert build_signature(original) != build_signature(changed)
     assert embedding_signature(original) != embedding_signature(changed)
 

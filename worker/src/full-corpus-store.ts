@@ -244,8 +244,9 @@ async function loadFullCorpusStore(assets: Assets, expectedManifestHash: string,
     for (const [dir, adjacency] of [['out', graph.out[id]], ['in', graph.in[id]]] as const) {
       check(Array.isArray(adjacency), 'invalid adjacency')
       for (const edge of adjacency) {
+        check(object(edge), 'invalid graph edge')
         const neighbor = dir === 'out' ? (edge as { target: string }).target : (edge as { source: string }).source
-        check(object(edge) && typeof neighbor === 'string' && graph.nodes[neighbor]
+        check(typeof neighbor === 'string' && Object.hasOwn(graph.nodes, neighbor)
           && ['id', 'title', 'url'].includes(edge.evidence), 'dangling graph edge')
         ;(dir === 'out' ? out : incoming).push(JSON.stringify(dir === 'out'
           ? [id, neighbor, edge.evidence] : [neighbor, id, edge.evidence]))

@@ -364,25 +364,48 @@ def cache_context(encoder_signature: str, input_key: str, text: str,
                 (tokenizer or WordPieceTokenizer(config)).token_ids('', text)))}
 
 
-def write_cached_vector(path: Path, vector, *, expected: dict) -> None:
+def execution_profile(encoder, *, batch_size: int, length_bucketing=False,
+                      actual_batch_size=None, padded_tokens=None) -> dict:
+    '''Record producing settings separately from semantic cache identity.'''
+    return {
+        'threads': getattr(encoder, 'threads', None),
+        'batch_size': batch_size,
+        'length_bucketing': length_bucketing,
+        'actual_batch_size': actual_batch_size,
+        'padded_tokens': padded_tokens,
+    }
+
+
+def write_cached_vector(path: Path, vector, *, expected: dict,
+                        execution: dict | None = None) -> None:
     raw = vector_bytes(vector)
+    metadata = {
+        **expected, 'vector_sha256': hashlib.sha256(raw).hexdigest(),
+        'execution': execution,
+    }
     atomic_bytes(path, raw)
     atomic_bytes(path.with_suffix(path.suffix + '.json'),
-                 (canonical_json({**expected, 'vector_sha256': hashlib.sha256(raw).hexdigest()})
-                  + '\n').encode())
+                 (canonical_json(metadata) + '\n').encode())
 
 
 def cached_vector(path: Path, *, expected: dict | None = None) -> list[float] | None:
+    '''Check cache integrity, not provenance against a malicious writer.'''
     if not path.exists():
         return None
+    if path.stat().st_size != DIMENSIONS * 4:
+        raise BuildError(f'Invalid embedding cache length: {path.name}')
     raw = path.read_bytes()
     if expected is not None:
         sidecar = path.with_suffix(path.suffix + '.json')
         if not sidecar.exists():
             # Interrupted data-before-metadata write is an uncommitted miss.
             return None
+        if sidecar.stat().st_size > 8192:
+            raise BuildError('Embedding cache metadata exceeds its limit')
         metadata = json.loads(sidecar.read_text(encoding='utf-8'))
-        if (any(metadata.get(key) != value for key, value in expected.items())
+        if (not isinstance(metadata, dict)
+                or any(metadata.get(key) != value
+                       for key, value in expected.items())
                 or metadata.get('vector_sha256') != hashlib.sha256(raw).hexdigest()):
             raise BuildError('Embedding cache identity/checksum mismatch: ' + path.name)
     if len(raw) != DIMENSIONS * 4:
@@ -390,6 +413,51 @@ def cached_vector(path: Path, *, expected: dict | None = None) -> list[float] | 
     vector = list(struct.unpack(f'<{DIMENSIONS}f', raw))
     vector_bytes(vector)
     return vector
+
+
+def recover_cached_vector(path: Path, *, expected: dict, cache_root: Path,
+                          recovery_log: list | None = None):
+    '''Discard only a damaged managed entry so an admitted run can recompute.
+
+    This function never performs inference. Call it only after the normal
+    authorization and input-validation gates. Invalid paths and I/O errors
+    fail closed; only data/metadata corruption becomes a cache miss.
+    '''
+    path = Path(path).absolute()
+    root = Path(cache_root).absolute()
+    try:
+        parts = path.relative_to(root).parts
+    except ValueError as exc:
+        raise BuildError('Embedding cache entry escapes its root') from exc
+    if (len(parts) != 2 or root.is_symlink() or path.parent.is_symlink()
+            or len(parts[0]) != 64 or len(path.stem) != 64
+            or path.suffix != '.f32'
+            or any(char not in '0123456789abcdef'
+                   for char in parts[0] + path.stem)
+            or expected.get('encoder_signature') != parts[0]
+            or expected.get('input_hash') != path.stem):
+        raise BuildError('Invalid managed embedding cache entry')
+    entries = [path, path.with_suffix('.f32.json'),
+               path.with_suffix('.f32.tmp'),
+               path.with_suffix('.f32.json.tmp')]
+    # Validate every deletion target before modifying any one of them.
+    for entry in entries:
+        if entry.is_symlink() or (entry.exists() and not entry.is_file()):
+            raise BuildError('Embedding cache recovery refuses unsafe paths')
+    present = any(entry.exists() for entry in entries)
+    reason = 'incomplete_entry'
+    try:
+        value = cached_vector(path, expected=expected)
+        if value is not None:
+            return value
+    except (BuildError, json.JSONDecodeError, UnicodeDecodeError) as exc:
+        reason = type(exc).__name__
+    if present:
+        for entry in entries:
+            entry.unlink(missing_ok=True)
+        if recovery_log is not None:
+            recovery_log.append({'input_hash': path.stem, 'reason': reason})
+    return None
 
 
 class BgeEncoder:
@@ -545,10 +613,13 @@ def encode_probe(root: Path, encoder, config: dict, *, cache_dir: Path,
                 'model_input_sha256': sha256_hex(text),
                 'token_ids_sha256': sha256_hex(canonical_json(tokenizer.token_ids('', text)))}
     missing = []
+    recovered_cache = []
     started = time.monotonic()
     for index, row in enumerate(manifest['rows']):
         path = cache_dir / signature / (row['input_hash'] + '.f32')
-        if cached_vector(path, expected=context(index)) is None:
+        if recover_cached_vector(
+                path, expected=context(index), cache_root=cache_dir,
+                recovery_log=recovered_cache) is None:
             missing.append(index)
     if length_bucketing:
         missing.sort(key=lambda index: (
@@ -562,7 +633,16 @@ def encode_probe(root: Path, encoder, config: dict, *, cache_dir: Path,
         for index, vector in zip(indices, batch):
             path = cache_dir / signature / (
                 manifest['rows'][index]['input_hash'] + '.f32')
-            write_cached_vector(path, vector, expected=context(index))
+            write_cached_vector(
+                path, vector, expected=context(index),
+                execution=execution_profile(
+                    encoder, batch_size=batch_size,
+                    length_bucketing=length_bucketing,
+                    actual_batch_size=len(indices),
+                    padded_tokens=max(manifest['rows'][i]['token_count']
+                                      for i in indices),
+                ),
+            )
         if progress:
             completed = min(offset + len(indices), len(missing))
             print(f'Encoded {completed}/{len(missing)} new passages; '
@@ -603,6 +683,13 @@ def encode_probe(root: Path, encoder, config: dict, *, cache_dir: Path,
         'max_norm_error': max_norm_error,
         'batch_size': batch_size,
         'length_bucketing': length_bucketing,
+        'threads': getattr(encoder, 'threads', None),
+        'execution_settings_requested': execution_profile(
+            encoder, batch_size=batch_size, length_bucketing=length_bucketing,
+        ),
+        'recovered_cache_entries': recovered_cache,
+        'cache_trust': 'local-integrity-not-execution-attestation',
+        'cache_reuse_contract': 'semantic-identity-not-bitwise-equivalence',
         'full_corpus': full_corpus,
         'encoder': identity,
         'workers_ai_compatibility': 'unverified',

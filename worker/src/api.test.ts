@@ -363,7 +363,9 @@ describe('reads', () => {
 })
 
 describe('search and time bounds', () => {
-  it('preserves Unicode exactly when copying a bounded snippet into the search cache', async () => {
+  it('preserves Unicode values and bounds in cached search snippets', async () => {
+    // This checks API values only. Retained parent-string memory is measured
+    // by the full-size memory harness, not inferred from string equality.
     const { service, memory } = await build()
     const prefix = '😀e\u0301\ud800界\n'
     const text = prefix + 'x'.repeat(100000)

@@ -178,7 +178,7 @@ def execute(run_dir, *, provider=False, available_neurons=None, threads=4,
     config = load_embed()
     estimated_neurons = math.ceil(
         tokens * config['pricing']['neurons_per_million_tokens'] / 1_000_000)
-    if provider and (available_neurons is None
+    if provider and (type(available_neurons) is not int
                      or available_neurons < estimated_neurons):
         raise BuildError('Confirm remaining free neurons before provider canary')
     remaining_seconds(deadline, 'attempt reservation')
@@ -257,15 +257,18 @@ def execute(run_dir, *, provider=False, available_neurons=None, threads=4,
     checks = {'targeted_coverage': True, 'finite_unit_768': True,
               'min_cosine': min(cosines) >= 0.999,
               'batch_invariance': remote_difference <= 1e-5,
-              'input_identity': True, 'free_allowance_verified': True,
+              'input_identity': True,
+              'free_allowance_operator_asserted': (
+                  type(available_neurons) is int
+                  and available_neurons >= estimated_neurons),
               'within_budget': time.monotonic() < deadline}
     measurements.update({
         'min_cosine': min(cosines),
         'batch_max_abs_difference': remote_difference,
         'elapsed_seconds': time.monotonic() - started,
         'phase_timings': list(phases),
-        'available_neurons_confirmed': available_neurons,
-        'free_allowance_evidence': 'operator-confirmed-before-run',
+        'available_neurons_operator_asserted': available_neurons,
+        'free_allowance_evidence': 'operator-assertion-not-provider-verified',
         'request_count': 2,
     })
     attempt['status'] = 'PASSED' if all(checks.values()) else 'STOP'

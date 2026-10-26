@@ -97,4 +97,62 @@ describe('bounded probe admission', () => {
     expect(load).not.toHaveBeenCalled()
     expect(handler.admission.stats().active).toBe(0)
   })
+
+  it('expires stalled uploads and frees every permit even when cancellation never settles', async () => {
+    vi.useFakeTimers()
+    const load = vi.fn(async () => ({ catalog: async () => ({
+      corpus_version: 'a'.repeat(64), total: 0, papers: [], next_offset: null,
+    }) } as unknown as Service))
+    const handler = createBoundedProbeHandler(load)
+    const cancellations = vi.fn(() => new Promise<void>(() => {}))
+    const requests = Array.from({ length: 12 }, () => handler.fetch(new Request('http://localhost/mcp', {
+      method: 'POST', body: new ReadableStream<Uint8Array>({ cancel: cancellations }), duplex: 'half',
+    } as RequestInit)))
+    expect(handler.admission.stats()).toMatchObject({ active: 4, queued: 8 })
+    expect((await handler.fetch(new Request('http://localhost/v1/catalog'))).status).toBe(503)
+    await vi.advanceTimersByTimeAsync(PROBE_REQUEST_LIMITS.body_read_ms)
+    const responses = await Promise.all(requests)
+    expect(responses.slice(0, 4).map((response) => response.status)).toEqual([408, 408, 408, 408])
+    expect(responses.slice(4).every((response) => response.status === 503)).toBe(true)
+    expect(cancellations).toHaveBeenCalledTimes(12)
+    expect(load).not.toHaveBeenCalled()
+    expect(handler.admission.stats()).toMatchObject({ active: 0, queued: 0 })
+    expect((await handler.fetch(new Request('http://localhost/v1/catalog'))).status).toBe(200)
+  })
+
+  it('aborts an active body read without waiting for the source cancellation promise', async () => {
+    const load = vi.fn(async () => ({} as Service))
+    const handler = createBoundedProbeHandler(load, new BoundedAdmission(1, 0))
+    const control = new AbortController()
+    const cancel = vi.fn(() => new Promise<void>(() => {}))
+    const pending = handler.fetch(new Request('http://localhost/mcp', {
+      method: 'POST', signal: control.signal,
+      body: new ReadableStream<Uint8Array>({ cancel }), duplex: 'half',
+    } as RequestInit))
+    expect(handler.admission.stats().active).toBe(1)
+    control.abort()
+    expect((await pending).status).toBe(499)
+    expect(cancel).toHaveBeenCalledOnce()
+    expect(load).not.toHaveBeenCalled()
+    expect(handler.admission.stats().active).toBe(0)
+  })
+
+  it('uses one absolute body deadline despite a continuous trickle of chunks', async () => {
+    vi.useFakeTimers()
+    const load = vi.fn(async () => ({} as Service))
+    const handler = createBoundedProbeHandler(load)
+    let push!: ReadableStreamDefaultController<Uint8Array>
+    const pending = handler.fetch(new Request('http://localhost/mcp', {
+      method: 'POST', body: new ReadableStream<Uint8Array>({ start(controller) { push = controller } }),
+      duplex: 'half',
+    } as RequestInit))
+    for (let i = 0; i < 4; i++) {
+      await vi.advanceTimersByTimeAsync(1000)
+      push.enqueue(new Uint8Array([32]))
+    }
+    await vi.advanceTimersByTimeAsync(1000)
+    expect((await pending).status).toBe(408)
+    expect(load).not.toHaveBeenCalled()
+    expect(handler.admission.stats().active).toBe(0)
+  })
 })

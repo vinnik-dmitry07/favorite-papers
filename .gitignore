@@ -78,6 +78,6 @@ Thumbs.db
 
 worker/probe-kernel/scan.wasm
 
-# Reviewed bounded preflight evidence
-!worker/probe-results/local-2026-10-25-full-memory-*.json.gz
-!worker/probe-results/local-2026-10-25-full-preflight-evidence.json.gz
+# Reviewed probe measurements, distinct from the private Telegram export above.
+# Review bounded raw evidence for credentials/personal content before adding it.
+!worker/probe-results/*.json.gz

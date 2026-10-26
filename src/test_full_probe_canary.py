@@ -115,6 +115,24 @@ def test_late_preflight_stops_before_encoder_or_provider(
     assert not (tmp_path / 'canary-attempt.json').exists()
 
 
+@pytest.mark.parametrize('allowance', [None, False, True, -1, 0, float('nan')])
+def test_operator_allowance_must_be_sufficient_integer_before_model_setup(
+        tmp_path, monkeypatch, allowance):
+    inputs = {**plan(), 'fingerprint': 'bound', 'sha256': 'plan'}
+    monkeypatch.setattr(
+        preflight, 'check_canary_prerequisites', lambda _: None,
+    )
+    monkeypatch.setattr(preflight, 'canary_plan', lambda _: inputs)
+
+    def forbidden(*_args, **_kwargs):
+        pytest.fail('Insufficient allowance must stop before encoder setup')
+
+    monkeypatch.setattr(canary, 'BgeEncoder', forbidden)
+    with pytest.raises(BuildError, match='Confirm remaining free neurons'):
+        canary.execute(tmp_path, provider=True, available_neurons=allowance)
+    assert not (tmp_path / 'canary-attempt.json').exists()
+
+
 def test_local_measurements_include_preflight_and_label_validation_scope(
     tmp_path, monkeypatch,
 ):

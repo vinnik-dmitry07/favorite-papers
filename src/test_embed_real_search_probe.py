@@ -145,6 +145,59 @@ def test_encoder_writes_le_fp32_and_reuses_matching_cache(subset):
     assert third['encoder_signature'] != first['encoder_signature']
 
 
+def test_cache_records_producing_settings_without_relabelling_reused_rows(
+    subset,
+):
+    root, config, _, _ = subset
+    cache = root / 'cache'
+    first = FakeEncoder()
+    first.threads = 4
+    report = encode.encode_probe(
+        root, first, config, cache_dir=cache, batch_size=2,
+        length_bucketing=True, progress=False,
+    )
+    namespace = cache / report['encoder_signature']
+    before = {path.name: path.read_bytes()
+              for path in namespace.glob('*.f32.json')}
+    profiles = [json.loads(raw)['execution'] for raw in before.values()]
+    assert profiles
+    assert all(profile['threads'] == 4 and profile['batch_size'] == 2
+               and profile['length_bucketing'] is True
+               and 1 <= profile['actual_batch_size'] <= 2
+               and profile['padded_tokens'] > 0 for profile in profiles)
+    second = FakeEncoder()
+    second.threads = 8
+    reused = encode.encode_probe(
+        root, second, config, cache_dir=cache, batch_size=8, progress=False,
+    )
+    assert not second.calls
+    assert reused['execution_settings_requested']['threads'] == 8
+    assert reused['cache_reuse_contract'] == (
+        'semantic-identity-not-bitwise-equivalence'
+    )
+    assert {path.name: path.read_bytes()
+            for path in namespace.glob('*.f32.json')} == before
+
+
+def test_legacy_cache_execution_provenance_stays_unknown(tmp_path):
+    signature, key = 'a' * 64, 'b' * 64
+    path = tmp_path / signature / (key + '.f32')
+    expected = {'encoder_signature': signature, 'input_hash': key}
+    encode.write_cached_vector(
+        path, [1.0] + [0.0] * 767, expected=expected,
+    )
+    sidecar = path.with_suffix('.f32.json')
+    metadata = json.loads(sidecar.read_text())
+    metadata.pop('execution')
+    sidecar.write_text(json.dumps(metadata))
+    before = sidecar.read_bytes()
+    assert encode.recover_cached_vector(
+        path, expected=expected, cache_root=tmp_path,
+    ) is not None
+    assert sidecar.read_bytes() == before
+    assert 'execution' not in json.loads(sidecar.read_text())
+
+
 @pytest.mark.parametrize('bad', [b'x', struct.pack('<768f', *([0.0] * 768)),
                                  struct.pack('<768f', float('nan'),
                                              *([0.0] * 767))])
@@ -318,7 +371,7 @@ def test_production_tokenizer_late_batch_failure_does_not_load_weights():
     assert encoder.model is None
 
 
-def test_swapped_valid_cache_vector_is_rejected(subset):
+def test_swapped_cache_vector_is_recomputed_after_validation(subset):
     root, config, _, _ = subset
     encoder = FakeEncoder()
     encode.encode_probe(root, encoder, config, cache_dir=root / 'cache', progress=False)
@@ -326,9 +379,143 @@ def test_swapped_valid_cache_vector_is_rejected(subset):
     entry = next((root / 'cache' / signature).glob('*.f32'))
     entry.write_bytes(encode.vector_bytes([1.0] + [0.0] * 767))
     other = FakeEncoder()
-    with pytest.raises(BuildError, match='checksum'):
-        encode.encode_probe(root, other, config, cache_dir=root / 'cache', progress=False)
-    assert not other.calls
+    report = encode.encode_probe(
+        root, other, config, cache_dir=root / 'cache', progress=False,
+    )
+    assert other.calls
+    assert report['encoded'] >= 1
+    assert report['recovered_cache_entries'] == [
+        {'input_hash': entry.stem, 'reason': 'BuildError'},
+    ]
+    assert encode.cached_vector(entry)[:2] == pytest.approx([0.6, 0.8])
+    resumed = FakeEncoder()
+    encode.encode_probe(
+        root, resumed, config, cache_dir=root / 'cache', progress=False,
+    )
+    assert not resumed.calls
+
+
+def test_full_run_does_not_repair_cache_before_admission(subset):
+    root, config, _, _ = subset
+    encoder = FakeEncoder()
+    encode.encode_probe(
+        root, encoder, config, cache_dir=root / 'cache', progress=False,
+    )
+    entry = next((root / 'cache').glob('*/*.f32'))
+    entry.write_bytes(b'corrupted')
+    stopped = FakeEncoder()
+    with pytest.raises(BuildError, match='full-run-confirmed'):
+        encode.encode_probe(
+            root, stopped, config, cache_dir=root / 'cache',
+            full_corpus=True, progress=False,
+        )
+    assert not stopped.calls
+    assert entry.read_bytes() == b'corrupted'
+
+
+@pytest.mark.parametrize('kind', [
+    'length', 'checksum', 'zero_norm', 'nan', 'invalid_json', 'wrong_type',
+    'invalid_unicode', 'metadata_too_large', 'missing_sidecar', 'missing_data',
+])
+def test_corrupt_managed_entries_become_misses(tmp_path, kind):
+    signature, key = 'a' * 64, 'b' * 64
+    path = tmp_path / signature / (key + '.f32')
+    expected = {'encoder_signature': signature, 'input_hash': key}
+    encode.write_cached_vector(
+        path, [1.0] + [0.0] * 767, expected=expected,
+    )
+    sidecar = path.with_suffix('.f32.json')
+    if kind == 'length':
+        path.write_bytes(b'incomplete')
+    elif kind == 'checksum':
+        path.write_bytes(encode.vector_bytes([0.0, 1.0] + [0.0] * 766))
+    elif kind in {'zero_norm', 'nan'}:
+        values = [0.0] * 768
+        if kind == 'nan':
+            values[0] = float('nan')
+        raw = struct.pack('<768f', *values)
+        path.write_bytes(raw)
+        metadata = json.loads(sidecar.read_text())
+        metadata['vector_sha256'] = hashlib.sha256(raw).hexdigest()
+        sidecar.write_text(json.dumps(metadata))
+    elif kind == 'invalid_json':
+        sidecar.write_text('{broken')
+    elif kind == 'wrong_type':
+        sidecar.write_text('[]')
+    elif kind == 'invalid_unicode':
+        sidecar.write_bytes(b'\xff')
+    elif kind == 'metadata_too_large':
+        sidecar.write_bytes(b' ' * 8193)
+    elif kind == 'missing_sidecar':
+        sidecar.unlink()
+    else:
+        path.unlink()
+    temporary = path.with_suffix('.f32.tmp')
+    temporary.write_bytes(b'incomplete')
+    logs = []
+    assert encode.recover_cached_vector(
+        path, expected=expected, cache_root=tmp_path, recovery_log=logs,
+    ) is None
+    assert len(logs) == 1 and logs[0]['input_hash'] == key
+    assert not path.exists() and not sidecar.exists()
+    assert not temporary.exists()
+
+
+@pytest.mark.parametrize(
+    'kind', ['namespace', 'entry', 'sidecar', 'temporary'],
+)
+def test_cache_recovery_refuses_symlinks_without_deleting_anything(
+    tmp_path, kind,
+):
+    root = tmp_path / 'cache'
+    signature, key = 'a' * 64, 'b' * 64
+    path = root / signature / (key + '.f32')
+    expected = {'encoder_signature': signature, 'input_hash': key}
+    protected = tmp_path / 'protected'
+    protected.mkdir()
+    target = protected / 'keep'
+    target.write_text('preserve')
+    if kind == 'namespace':
+        root.mkdir()
+        path.parent.symlink_to(protected, target_is_directory=True)
+    else:
+        path.parent.mkdir(parents=True)
+        path.write_bytes(b'corrupted')
+        link = {
+            'entry': path,
+            'sidecar': path.with_suffix('.f32.json'),
+            'temporary': path.with_suffix('.f32.tmp'),
+        }[kind]
+        link.unlink(missing_ok=True)
+        link.symlink_to(target)
+    with pytest.raises(BuildError, match='managed|unsafe'):
+        encode.recover_cached_vector(
+            path, expected=expected, cache_root=root,
+        )
+    assert target.read_text() == 'preserve'
+    if kind not in {'namespace', 'entry'}:
+        assert path.read_bytes() == b'corrupted'
+
+
+def test_cache_recovery_does_not_swallow_permission_errors(
+    tmp_path, monkeypatch,
+):
+    signature, key = 'a' * 64, 'b' * 64
+    path = tmp_path / signature / (key + '.f32')
+    expected = {'encoder_signature': signature, 'input_hash': key}
+    encode.write_cached_vector(
+        path, [1.0] + [0.0] * 767, expected=expected,
+    )
+
+    def denied(*_args, **_kwargs):
+        raise PermissionError('Cannot access cache')
+
+    monkeypatch.setattr(encode, 'cached_vector', denied)
+    with pytest.raises(PermissionError):
+        encode.recover_cached_vector(
+            path, expected=expected, cache_root=tmp_path,
+        )
+    assert path.exists() and path.with_suffix('.f32.json').exists()
 
 
 def test_incomplete_cache_data_without_sidecar_is_recomputed(tmp_path):

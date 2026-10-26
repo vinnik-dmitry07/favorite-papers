@@ -6,7 +6,7 @@ import urllib.error
 
 import pytest
 
-from cleanup_static_search_probe import delete_probe
+from cleanup_static_search_probe import delete_probe, preflight_probe
 
 
 NAME = 'key-papers-static-probe-39350277748-2'
@@ -149,3 +149,43 @@ def test_transient_null_errors_retry_within_existing_bound(monkeypatch):
         delete_probe(NAME)
     assert len(calls) == 3 and len(set(calls)) == 1
     assert sleeps == [1, 2]
+
+
+@pytest.mark.parametrize('remaining', [NAME, 'key-papers-static-probe-1-1',
+                                       'key-papers-static-probe'])
+def test_preflight_blocks_leftovers_without_deleting(monkeypatch, remaining):
+    calls = []
+
+    def exchange(request, **_kwargs):
+        calls.append(request)
+        return Response(200, json.dumps({
+            'success': True, 'result': [{'id': 'key-papers-api'},
+                                        {'id': remaining}],
+        }).encode())
+
+    monkeypatch.setattr('cleanup_static_search_probe.urllib.request.urlopen',
+                        exchange)
+    with pytest.raises(ValueError, match='remaining Worker probes'):
+        preflight_probe(NAME)
+    assert len(calls) == 1
+    assert calls[0].get_method() == 'GET'
+    assert calls[0].full_url.endswith('/workers/scripts')
+
+
+@pytest.mark.parametrize('rows,allowed', [
+    ([], True), ([{'id': 'key-papers-api'}], True),
+    ([{'id': 'unrelated-worker'}], True),
+    (None, False), ([{}], False), ([{'id': None}], False),
+])
+def test_preflight_needs_valid_complete_inventory(monkeypatch, rows, allowed):
+    monkeypatch.setattr(
+        'cleanup_static_search_probe.urllib.request.urlopen',
+        lambda *_args, **_kwargs: Response(200, json.dumps({
+            'success': True, 'result': rows,
+        }).encode()),
+    )
+    if allowed:
+        assert preflight_probe(NAME) == 'no remaining Worker probes'
+    else:
+        with pytest.raises(ValueError, match='inventory'):
+            preflight_probe(NAME)

@@ -79,6 +79,122 @@ def test_all_true_booleans_are_not_numeric_or_memory_evidence(run):
             gate.validate_raw_evidence(evidence, document)
 
 
+@pytest.mark.parametrize('change', [
+    'wording', 'gold', 'order', 'source',
+])
+def test_reviewed_query_pin_rejects_silent_changes(tmp_path, change):
+    corpus = tmp_path / 'corpus'
+    corpus.mkdir()
+    manifest = {
+        'source_graph_sha256': 'graph', 'source_texts_sha256': 'texts',
+    }
+    queries = {'queries': [
+        {'id': 'a', 'query': 'first', 'gold_chunk_indices': [1, 2],
+         'cohort': 'extractive_fidelity'},
+        {'id': 'b', 'query': 'second', 'gold_chunk_indices': [3],
+         'cohort': 'natural_development'},
+    ]}
+    pin = {
+        'schema_version': 1, 'kind': 'reviewed-full-query-pin',
+        'query_count': 2,
+        'cohorts': {'extractive_fidelity': 1, 'natural_development': 1},
+        'ordered_queries_sha256': gate.digest(queries['queries']),
+        **manifest,
+    }
+    query_path, pin_path = tmp_path / 'queries.json', tmp_path / 'pin.json'
+    gate.write_json(corpus / 'probe.json', manifest)
+    gate.write_json(query_path, queries)
+    gate.write_json(pin_path, pin)
+    assert gate.verify_frozen_queries(
+        corpus, query_path, pin_path)['status'] == 'PASS'
+    if change == 'wording':
+        queries['queries'][0]['query'] = 'edited'
+    elif change == 'gold':
+        queries['queries'][0]['gold_chunk_indices'] = [1]
+    elif change == 'order':
+        queries['queries'].reverse()
+    else:
+        manifest['source_texts_sha256'] = 'different'
+        gate.write_json(corpus / 'probe.json', manifest)
+    gate.write_json(query_path, queries)
+    with pytest.raises(BuildError, match='reviewed pin'):
+        gate.verify_frozen_queries(corpus, query_path, pin_path)
+
+
+@pytest.mark.parametrize('ids', [
+    'garbage', [], [101, True, 102], [101, -1, 102], [101, 999999, 102],
+    [102, 101],
+])
+def test_tokenizer_evidence_rejects_malformed_retained_ids(tmp_path, ids):
+    records = tmp_path / 'tokenizer-inputs.jsonl'
+    row = {'id': '0', 'template': '', 'text': 'text', 'ids': ids}
+    records.write_text(canonical_json(row) + '\n')
+    result = {
+        'passages': 1, 'queries': 0, 'fixture_count': 0,
+        'count': 1, 'token_count': 2,
+    }
+    with pytest.raises(BuildError, match='IDs are malformed'):
+        gate.validate_tokenizer_records(records, result)
+
+
+def test_tokenizer_evidence_checks_complete_order_and_totals(tmp_path):
+    records = tmp_path / 'tokenizer-inputs.jsonl'
+    rows = [
+        {'id': str(index), 'template': '', 'text': '', 'ids': [101, 102]}
+        for index in range(2)
+    ]
+    raw = ''.join(canonical_json(row) + '\n' for row in rows)
+    records.write_text(raw)
+    result = {
+        'passages': 1, 'queries': 1, 'fixture_count': 0,
+        'count': 2, 'token_count': 4,
+    }
+    gate.validate_tokenizer_records(records, result)
+    result['token_count'] = 5
+    with pytest.raises(BuildError, match='totals differ'):
+        gate.validate_tokenizer_records(records, result)
+    result['token_count'] = 4
+    records.write_text(canonical_json(rows[0]) + '\n')
+    with pytest.raises(BuildError, match='totals differ'):
+        gate.validate_tokenizer_records(records, result)
+    records.write_text(raw.replace('"id":"1"', '"id":"0"'))
+    with pytest.raises(BuildError, match='record is malformed'):
+        gate.validate_tokenizer_records(records, result)
+
+
+def test_self_consistent_forged_tokenizer_summary_rejects_garbage_ids(run):
+    root, binding = run
+    records = root / 'tokenizer-inputs.jsonl'
+    records.write_text(canonical_json({
+        'id': '0', 'template': '', 'text': 'x', 'ids': 'garbage',
+    }) + '\n')
+    bundle = root / 'tokenizer-parity.mjs'
+    bundle.write_text('// A hash is not execution attestation.\n')
+    count = binding['counts']['passages'] + binding['counts']['queries'] + 49
+    checksum = gate.sha(records.read_bytes())
+    report = {
+        'status': 'PASS', 'model_loaded': False,
+        'passages': binding['counts']['passages'],
+        'queries': binding['counts']['queries'],
+        'count': count, 'fixture_count': 49, 'overlimit_rejected': True,
+        'token_count': 2, 'records_sha256': checksum,
+        'runtime_harness_sha256': gate.sha(bundle.read_bytes()),
+        'runtime': {
+            'checked': count, 'mismatch_count': 0, 'input_sha256': checksum,
+        },
+    }
+    path = root / 'tokenizer-result.json'
+    gate.write_json(path, report)
+    with pytest.raises(BuildError, match='IDs are malformed'):
+        gate.write_evidence(
+            root, 'tokenizer-parity',
+            checks={key: True for key in gate.GATE_CHECKS['tokenizer-parity']},
+            measurements=report, artifacts=[path, records, bundle],
+            elapsed_seconds=1,
+        )
+    assert not gate.evidence_path(root, 'tokenizer-parity').exists()
+
+
 def test_raw_memory_report_requires_current_implementation_and_baseline(run):
     root, binding = run
     report = {'schema_version': 2, 'gate': 'geometry-memory', 'status': 'PASS',

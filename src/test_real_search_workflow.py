@@ -29,7 +29,8 @@ def matches_path(path, patterns):
 
 def test_real_dispatch_does_not_run_another_deployment():
     jobs = workflow()['jobs']
-    for name in ('publish', 'static_probe', 'static_do_probe'):
+    assert 'publish' not in jobs
+    for name in ('static_probe', 'static_do_probe'):
         assert "inputs.do_probe_phase != 'real'" in jobs[name]['if']
     condition = jobs['static_real_probe']['if']
     for required in ('workflow_dispatch', 'inputs.static_probe',
@@ -39,7 +40,8 @@ def test_real_dispatch_does_not_run_another_deployment():
 
 
 def test_isolated_source_changes_cannot_trigger_production_push():
-    definition = workflow()
+    path = ROOT / '.github/workflows/agent-publish.yml'
+    definition = yaml.safe_load(path.read_text())
     trigger = definition.get('on', definition.get(True))
     patterns = trigger['push']['paths']
     for name in ('worker/src/real-search-do-probe.ts',

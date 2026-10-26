@@ -5,6 +5,9 @@ follow-up checks all fourteen findings against that revision and repairs the
 remaining cases. No live deployment, provider inference or full encoding was
 used for this audit. The PR remains a draft.
 
+The [subsequent review](PR2_SECOND_AUDIT.md) records the additional findings
+against `8f23a2e`, later workflow/signature changes and remaining limitations.
+
 | # | Finding and disposition | Regression evidence |
 |---|---|---|
 | 1 | Confirmed in the reviewed revision; already fixed. Main pushes validate only. Production requires an explicit manual confirmation on main. Actual re-encoding would also have required successful capacity/credential checks. | Actual job predicate tests reject push and default dispatch. |
