@@ -7,12 +7,15 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter
+from contextlib import contextmanager
+from contextvars import ContextVar
 from datetime import datetime, timezone
 import hashlib
 import importlib.metadata
 import json
 import math
 import multiprocessing
+import os
 from pathlib import Path
 import platform
 import subprocess
@@ -27,7 +30,8 @@ from build_agent_index import (
 )
 from common import ROOT
 from embed_real_search_probe import (
-    BgeEncoder, atomic_bytes, canonical_inputs, encoder_identity,
+    BgeEncoder, atomic_bytes, canonical_inputs, checked_asset,
+    encoder_identity,
 )
 
 SCHEMA = 1
@@ -60,6 +64,7 @@ DEPENDENCIES = {
     'local-canary': ['tokenizer-parity', 'numeric-contracts', 'geometry-memory'],
     'provider-compatibility': ['local-canary'],
 }
+_CANARY_INPUT_CACHE = ContextVar('canary_input_cache', default=None)
 
 
 def require(condition, message):
@@ -136,10 +141,49 @@ def frozen_inputs(corpus, queries, config):
                       for row in questions]
 
 
+@contextmanager
+def canary_validation_cache():
+    '''Reuse canary tokenization, checking every asset on each use.'''
+    token = _CANARY_INPUT_CACHE.set({})
+    try:
+        yield
+    finally:
+        _CANARY_INPUT_CACHE.reset(token)
+
+
+def _canonical_inputs(corpus, config):
+    cache = _CANARY_INPUT_CACHE.get()
+    corpus = Path(corpus).resolve()
+    if cache is None:
+        return canonical_inputs(corpus, config, full_corpus=True)
+
+    def fingerprint():
+        raw = (corpus / 'probe.json').read_bytes()
+        manifest = json.loads(raw)
+        require(isinstance(manifest.get('files'), dict),
+                'Invalid canary asset manifest')
+        # Hash bytes, not mtimes: same-size edits and restored timestamps must
+        # not let cached token IDs certify different inputs. checked_asset also
+        # enforces path containment and each manifest checksum.
+        for name in manifest['files']:
+            checked_asset(corpus, manifest, name)
+        return digest({'manifest_sha256': sha(raw), 'config': config})
+
+    before = fingerprint()
+    cached = cache.get(corpus)
+    if cached is not None:
+        require(cached[0] == before, 'Canary corpus/config changed during run')
+        return cached[1]
+    result = canonical_inputs(corpus, config, full_corpus=True)
+    require(before == fingerprint(), 'Canary corpus changed during validation')
+    cache[corpus] = (before, result)
+    return result
+
+
 def current_binding(corpus, queries, config=None):
     config = config or load_embed()
     corpus, queries = Path(corpus).resolve(), Path(queries).resolve()
-    manifest, _ = canonical_inputs(corpus, config, full_corpus=True)
+    manifest, _ = _canonical_inputs(corpus, config)
     document, _ = frozen_inputs(corpus, queries, config)
     stable = {key: value for key, value in manifest.items() if key != 'embeddings'}
     stable['files'] = {key: value for key, value in stable['files'].items()
@@ -490,7 +534,9 @@ def check_canary_prerequisites(run_dir):
 def canary_plan(run_dir):
     run = load_run(run_dir, refresh=False)
     config = load_embed()
-    manifest, passages = canonical_inputs(Path(run['binding']['corpus']), config, full_corpus=True)
+    manifest, passages = _canonical_inputs(
+        Path(run['binding']['corpus']), config,
+    )
     tokenizer = WordPieceTokenizer(config)
     inputs = []
 
@@ -538,6 +584,40 @@ def canary_plan(run_dir):
     return plan
 
 
+def resume_tokenizer_checkpoint(checkpoint, records, fingerprint, total):
+    '''Recover the verified committed prefix after an interrupted append.'''
+    records_digest = hashlib.sha256()
+    if not checkpoint.exists():
+        return 0, 0, records_digest
+    saved = read_json(checkpoint)
+    require(isinstance(saved, dict), 'Corrupt tokenizer checkpoint')
+    require(saved.get('fingerprint') == fingerprint,
+            'Stale tokenizer checkpoint')
+    completed = saved.get('checked')
+    token_count = saved.get('token_count')
+    require(type(completed) is int and 0 <= completed <= total
+            and type(token_count) is int and token_count >= 0
+            and records.is_file(), 'Corrupt tokenizer checkpoint')
+    with records.open('r+b') as stream:
+        # Older checkpoints omit records_bytes, so recover the boundary from
+        # their committed row count. Never trust or parse an uncommitted tail.
+        for _ in range(completed):
+            row = stream.readline()
+            require(row.endswith(b'\n'), 'Corrupt tokenizer checkpoint')
+            records_digest.update(row)
+        committed_bytes = stream.tell()
+        saved_bytes = saved.get('records_bytes', committed_bytes)
+        require(type(saved_bytes) is int and saved_bytes == committed_bytes
+                and records_digest.hexdigest() == saved.get('records_sha256'),
+                'Corrupt tokenizer checkpoint')
+        stream.seek(0, os.SEEK_END)
+        if stream.tell() != committed_bytes:
+            stream.truncate(committed_bytes)
+            stream.flush()
+            os.fsync(stream.fileno())
+    return completed, token_count, records_digest
+
+
 def tokenize(run_dir, *, runtime_harness=None, vocab=None):
     started = time.monotonic()
     run = begin_gate(run_dir, 'tokenizer-parity')
@@ -555,15 +635,9 @@ def tokenize(run_dir, *, runtime_harness=None, vocab=None):
               + [{'fixture': i} for i in range(len(fixture_inputs))])
     checkpoint = Path(run_dir) / 'tokenizer-checkpoint.json'
     records = Path(run_dir) / 'tokenizer-inputs.jsonl'
-    completed = 0
-    if checkpoint.exists():
-        saved = read_json(checkpoint)
-        require(saved['fingerprint'] == run['fingerprint'], 'Stale tokenizer checkpoint')
-        completed = saved['checked']
-        require(0 <= completed <= len(values) and records.exists()
-                and sha(records.read_bytes()) == saved['records_sha256'], 'Corrupt tokenizer checkpoint')
+    completed, token_count, records_digest = resume_tokenizer_checkpoint(
+        checkpoint, records, run['fingerprint'], len(values))
     encoder = BgeEncoder(config, local_files_only=True)
-    token_count = read_json(checkpoint).get('token_count', 0) if checkpoint.exists() else 0
     raw_report = Path(run_dir) / 'tokenizer-result.json'
     try:
         try:
@@ -572,7 +646,6 @@ def tokenize(run_dir, *, runtime_harness=None, vocab=None):
             require('truncate' in str(exc), 'Expected overlimit rejection')
         else:
             raise BuildError('Overlimit input was not rejected')
-        records_digest = hashlib.sha256(records.read_bytes() if completed else b'')
         with records.open('ab' if completed else 'wb') as stream:
             for first in range(completed, len(values), 128):
                 require(time.monotonic() - started <= BUDGET_SECONDS['tokenizer-parity'], 'Tokenizer timeout')
@@ -584,9 +657,13 @@ def tokenize(run_dir, *, runtime_harness=None, vocab=None):
                     records_digest.update(encoded)
                     token_count += len(tokens)
                 stream.flush()
+                os.fsync(stream.fileno())
                 completed = first + len(batch)
-                write_json(checkpoint, {'fingerprint': run['fingerprint'], 'checked': completed,
-                                       'records_sha256': records_digest.hexdigest(), 'token_count': token_count})
+                write_json(checkpoint, {
+                    'fingerprint': run['fingerprint'], 'checked': completed,
+                    'records_sha256': records_digest.hexdigest(),
+                    'records_bytes': stream.tell(), 'token_count': token_count,
+                })
                 print(canonical_json({'tokenizer_checked': completed, 'total': len(values)}), flush=True)
         remaining = BUDGET_SECONDS['tokenizer-parity'] - (time.monotonic() - started)
         require(remaining > 0, 'Tokenizer timeout before runtime parity')

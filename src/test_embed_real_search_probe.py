@@ -3,6 +3,8 @@
 import hashlib
 import json
 import math
+import os
+from pathlib import Path
 import struct
 
 import pytest
@@ -333,3 +335,184 @@ def test_incomplete_cache_data_without_sidecar_is_recomputed(tmp_path):
     path = tmp_path / 'incomplete.f32'
     path.write_bytes(encode.vector_bytes([1.0] + [0.0] * 767))
     assert encode.cached_vector(path, expected={'encoder_signature': 'new'}) is None
+
+
+@pytest.fixture
+def numerical_sources(tmp_path):
+    for name in encode.NUMERICAL_SYMBOLS:
+        source = Path(encode.__file__).with_name(name)
+        (tmp_path / name).write_bytes(source.read_bytes())
+    return tmp_path
+
+
+def test_cache_identity_ignores_comments_docs_and_unrelated_code(
+    numerical_sources,
+):
+    before = encode.numerical_source_hashes(numerical_sources)
+    path = numerical_sources / 'embed_real_search_probe.py'
+    source = path.read_text()
+    source = source.replace(
+        'Use the first token only, never mean pooling over the sequence.',
+        'Clarified documentation without numerical changes.',
+    )
+    source = source.replace(
+        '''parser.add_argument('--threads', type=int, default=4)''',
+        '''parser.add_argument('--threads', type=int, default=8)''',
+    )
+    path.write_text('# A harmless comment\n' + source)
+    build = numerical_sources / 'build_agent_index.py'
+    build.write_text(build.read_text() + '\nUNRELATED_REPORT_VERSION = 999\n')
+    assert encode.numerical_source_hashes(numerical_sources) == before
+
+
+@pytest.mark.parametrize('name,before,after', [
+    ('build_agent_index.py', '''startswith('P')''', '''startswith('Z')'''),
+    ('build_agent_index.py', 'end -= 1', 'end -= 2'),
+    ('embed_real_search_probe.py', 'unit_vector(sequence[0])',
+     'unit_vector(sequence[-1])'),
+    ('embed_real_search_probe.py', 'attn_implementation=\'eager\'',
+     'attn_implementation=\'sdpa\''),
+])
+def test_cache_identity_changes_with_numerical_code(
+    numerical_sources, name, before, after,
+):
+    original = encode.numerical_source_hashes(numerical_sources)
+    path = numerical_sources / name
+    source = path.read_text()
+    assert before in source
+    path.write_text(source.replace(before, after))
+    assert encode.numerical_source_hashes(numerical_sources) != original
+
+
+def test_missing_numerical_symbol_fails_closed(numerical_sources):
+    path = numerical_sources / 'build_agent_index.py'
+    path.write_text(path.read_text().replace(
+        'def _clean_table()', 'def _renamed_clean_table()',
+    ))
+    with pytest.raises(BuildError, match='source symbol'):
+        encode.numerical_source_hashes(numerical_sources)
+
+
+def test_encoder_identity_binds_config_model_and_dependency_versions(
+    monkeypatch,
+):
+    versions = {'torch': 'test-1', 'transformers': 'test-1',
+                'tokenizers': 'test-1'}
+    monkeypatch.setattr(
+        encode.importlib.metadata, 'version', versions.__getitem__,
+    )
+    config = load_embed()
+    original = encode.encoder_identity(config)
+    assert original['cache_schema'] == 2
+    assert 'source_sha256' not in original['tokenizer_semantics']
+    assert original['numerical_source_sha256']
+    changed = json.loads(json.dumps(config))
+    changed['tokenizer']['algorithm_version'] += 1
+    assert encode.encoder_identity(changed) != original
+    versions['torch'] = 'test-2'
+    assert encode.encoder_identity(config) != original
+    versions['torch'] = 'test-1'
+    monkeypatch.setattr(encode, 'MODEL_REVISION', 'different-pinned-revision')
+    assert encode.encoder_identity(config) != original
+
+
+def cache_entry(cache, namespace, key, *, size=8, timestamp=1):
+    directory = cache / namespace
+    directory.mkdir(parents=True, exist_ok=True)
+    vector = directory / (key + '.f32')
+    vector.write_bytes(b'v' * size)
+    sidecar = vector.with_suffix('.f32.json')
+    sidecar.write_bytes(b'{}')
+    for path in (vector, sidecar, directory):
+        os.utime(path, (timestamp, timestamp))
+    return vector
+
+
+def test_cache_retention_keeps_active_and_one_recent_namespace(tmp_path):
+    active = 'a' * 64
+    oldest = cache_entry(tmp_path, 'b' * 64, '1' * 64, timestamp=1)
+    recent = cache_entry(tmp_path, 'c' * 64, '2' * 64, timestamp=2)
+    current = cache_entry(tmp_path, active, '3' * 64, timestamp=0)
+    unrelated = tmp_path / 'not-an-encoder-namespace'
+    unrelated.mkdir()
+    (unrelated / 'keep.txt').write_text('Do not delete unrelated content')
+    result = encode.prune_cache_namespaces(tmp_path, active)
+    assert result['removed'] == ['b' * 64]
+    assert not oldest.parent.exists()
+    assert recent.exists() and current.exists()
+    assert (unrelated / 'keep.txt').exists()
+    assert result['retained_bytes'] == 20
+
+
+def test_cache_retention_reserves_active_namespace_before_first_encode(
+    tmp_path,
+):
+    active = 'a' * 64
+    oldest = cache_entry(tmp_path, 'b' * 64, '1' * 64, timestamp=1)
+    recent = cache_entry(tmp_path, 'c' * 64, '2' * 64, timestamp=2)
+    encode.prune_cache_namespaces(tmp_path, active)
+    assert (tmp_path / active).is_dir()
+    assert not oldest.exists() and recent.exists()
+
+
+def test_cache_byte_budget_removes_whole_old_entries_including_temps(tmp_path):
+    active = 'a' * 64
+    obsolete = cache_entry(tmp_path, 'b' * 64, '1' * 64, timestamp=99)
+    oldest = cache_entry(tmp_path, active, '2' * 64, timestamp=1)
+    newest = cache_entry(tmp_path, active, '3' * 64, timestamp=2)
+    temporary = obsolete.with_suffix('.f32.tmp')
+    temporary.write_bytes(b'partial write')
+    result = encode.prune_cache_namespaces(tmp_path, active, max_bytes=10)
+    assert result['evicted_entries'] == 2
+    assert result['retained_bytes'] == 10
+    assert not obsolete.exists() and not temporary.exists()
+    assert not obsolete.with_suffix('.f32.json').exists()
+    assert not oldest.exists() and newest.exists()
+
+
+@pytest.mark.parametrize('kind', ['namespace', 'entry', 'marker'])
+def test_cache_prune_rejects_symlinks_before_any_deletion(tmp_path, kind):
+    cache = tmp_path / 'cache'
+    active = 'a' * 64
+    oldest = cache_entry(cache, 'b' * 64, '1' * 64)
+    current = cache / active
+    external = tmp_path / 'external'
+    external.mkdir()
+    protected = external / 'protected'
+    protected.write_text('preserve')
+    if kind == 'namespace':
+        current.symlink_to(external, target_is_directory=True)
+    else:
+        current.mkdir()
+        name = '2' * 64 + '.f32' if kind == 'entry' else '.last-used'
+        (current / name).symlink_to(protected)
+    with pytest.raises(BuildError, match='directory|files|symlink'):
+        encode.prune_cache_namespaces(cache, active, keep=1)
+    assert oldest.exists() and protected.read_text() == 'preserve'
+
+
+def test_cache_prune_rejects_unexpected_managed_content(tmp_path):
+    active = 'a' * 64
+    current = cache_entry(tmp_path, active, '1' * 64)
+    extra = current.parent / 'unknown-data.json'
+    extra.write_text('{}')
+    with pytest.raises(BuildError, match='Unexpected file'):
+        encode.prune_cache_namespaces(tmp_path, active, max_bytes=1)
+    assert current.exists() and extra.exists()
+
+
+def test_cache_prune_cli_never_constructs_encoder_or_loads_model(
+    tmp_path, monkeypatch,
+):
+    monkeypatch.setattr(
+        encode, 'encoder_identity', lambda config: {'cache': 2},
+    )
+    monkeypatch.setattr(encode, 'BgeEncoder',
+                        lambda *args, **kwargs: pytest.fail('No encoder load'))
+    assert encode.main([
+        '--prune-cache-dir', str(tmp_path / 'passages'),
+        '--prune-cache-dir', str(tmp_path / 'queries'),
+    ]) == 0
+    signature = encode.sha256_hex(canonical_json({'cache': 2}))
+    assert (tmp_path / 'passages' / signature).is_dir()
+    assert (tmp_path / 'queries' / signature).is_dir()

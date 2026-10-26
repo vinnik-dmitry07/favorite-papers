@@ -19,6 +19,7 @@ from pathlib import Path
 
 from build_agent_index import BuildError, canonical_json, load_embed
 from embed_real_search_probe import BgeEncoder, atomic_bytes, unit_vector
+from preflight_full_search_probe import canary_validation_cache
 
 MAX_SECONDS = 300
 MAX_TEXTS = 32
@@ -146,6 +147,7 @@ def request_provider(run_dir, attempt, plan, indices, config, *, account,
     return values
 
 
+@canary_validation_cache()
 def execute(run_dir, *, provider=False, available_neurons=None, threads=4,
             local_files_only=True, started=None, deadline=None):
     started = time.monotonic() if started is None else started

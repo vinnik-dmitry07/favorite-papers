@@ -166,6 +166,63 @@ def test_insufficient_sentence_pool_does_not_relax_filters():
         quality.select_sentences(papers, rows, graph, count=2000)
 
 
+def test_sentence_gold_includes_neighbors_by_exact_span_not_regex_or_quote():
+    sentence = (
+        'We use a fixed set of tests to show that the model can learn '
+        'from data and give a sound result.'
+    )
+    start, end = 2, 2 + len(sentence)
+    duplicate_start = end + 1
+    text = '$ ' + sentence + '\n' + sentence
+    chunks = [
+        {'index': 0, 'start': 0, 'end': end},
+        {'index': 1, 'start': start, 'end': end},
+        {'index': 2, 'start': start + 1, 'end': end},
+        {'index': 3, 'start': start, 'end': end - 1},
+        {'index': 4, 'start': duplicate_start, 'end': len(text)},
+    ]
+    paper = {'paper_id': 'p', 'text': text, 'chunks': chunks}
+    rows = [
+        {**chunk, 'paper_id': 'p', 'chunk_index': chunk['index']}
+        for chunk in chunks
+    ]
+    items = quality.sentence_candidates(paper, rows, '')
+    item = next(
+        item
+        for item in items
+        if item['answer_spans'][0]['start'] == start
+    )
+    # Chunk 0 contains the exact span but its leading '$' disqualifies its
+    # regex match. Partial spans and another occurrence are not gold.
+    assert item['query'] == sentence
+    assert item['source_chunk_index'] == 1
+    assert item['gold_chunk_indices'] == [0, 1]
+    quality.validate_question(item, {'p': paper})
+    neighbor = quality.outcomes(
+        [0], item, rows, {'p': paper},
+        candidates=40, limit=8, protocol='rest',
+    )
+    assert neighbor['source_chunk'] is neighbor['answer_passage'] is True
+    duplicate = quality.outcomes(
+        [4], item, rows, {'p': paper},
+        candidates=40, limit=8, protocol='rest',
+    )
+    assert duplicate['source_chunk'] is duplicate['answer_passage'] is False
+
+
+def test_containing_chunks_require_every_evidence_span():
+    paper = {
+        'chunks': [
+            {'index': 0, 'start': 0, 'end': 10},
+            {'index': 1, 'start': 10, 'end': 20},
+            {'index': 2, 'start': 2, 'end': 18},
+            {'index': 3, 'start': 0, 'end': 20},
+        ]
+    }
+    spans = [{'start': 2, 'end': 8}, {'start': 12, 'end': 18}]
+    assert quality.containing_chunk_indices(paper, spans) == [2, 3]
+
+
 def test_zero_discordance_is_labeled_descriptive_not_population_proof():
     result = quality.paired_summary(
         [True] * 4, [True] * 4, ['a', 'a', 'b', 'b']
@@ -315,6 +372,7 @@ def test_rebase_preserves_questions_and_evidence_and_remaps_only_chunks(
             'chunks': [
                 {'index': 0, 'start': 0, 'end': 3},
                 {'index': 1, 'start': 2, 'end': len(text)},
+                {'index': 2, 'start': 0, 'end': len(text)},
             ],
         }
     }
@@ -352,8 +410,8 @@ def test_rebase_preserves_questions_and_evidence_and_remaps_only_chunks(
     remapped = result['queries'][0]
     for key in ('query', 'expected_answer', 'answer_spans'):
         assert remapped[key] == question[key]
-    assert remapped['gold_chunk_indices'] == [1]
-    assert remapped['gold_chunk_keys'] == ['p#1']
+    assert remapped['gold_chunk_indices'] == [1, 2]
+    assert remapped['gold_chunk_keys'] == ['p#1', 'p#2']
     assert result['rebase']['questions_and_evidence_unchanged'] is True
     assert result['rebase']['prior_query_manifest_sha256'] == quality.digest(
         before

@@ -1,4 +1,5 @@
 import { createProbeApp, type ProbeEnv } from './static-search-probe'
+import { validProbeToken } from './probe-auth'
 
 export interface DoProbeEnv extends ProbeEnv {
   SEARCH_PROBE: Pick<DurableObjectNamespace, 'idFromName' | 'get'>
@@ -38,8 +39,7 @@ export function createDoProbeGateway() {
     async fetch(request: Request, env: DoProbeEnv): Promise<Response> {
       const expiresAt = Date.parse(env.PROBE_EXPIRES_AT)
       if (!Number.isFinite(expiresAt) || Date.now() >= expiresAt) return closed(503, 'probe_expired')
-      if (typeof env.PROBE_TOKEN !== 'string' || env.PROBE_TOKEN.length < 32
-          || request.headers.get('x-probe-token') !== env.PROBE_TOKEN) return closed(403, 'probe_forbidden')
+      if (!validProbeToken(env.PROBE_TOKEN, request.headers.get('x-probe-token'))) return closed(403, 'probe_forbidden')
       const suppliedMarker = request.headers.get('x-probe-marker')
       const runId = request.headers.get('x-probe-run-id')
       if ((suppliedMarker !== null && !SAFE_LABEL.test(suppliedMarker))

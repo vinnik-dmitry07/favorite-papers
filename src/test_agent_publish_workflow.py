@@ -71,15 +71,56 @@ def test_production_opt_in_defaults_off_and_probe_jobs_reject_it():
                             phase=phase, runtime=runtime)
 
 
-def test_cleaner_changes_trigger_offline_main_checks():
+@pytest.mark.parametrize('path', [
+    'src/build_fulltext_search.py',
+    'src/write_discovery_links.py',
+    'requirements-agent.txt',
+    '.github/workflows/agent-api.yml',
+])
+def test_build_dependencies_trigger_offline_main_checks(path):
     definition = workflow()
     trigger = definition.get('on', definition.get(True))
     for event in ('push', 'pull_request'):
         patterns = trigger[event]['paths']
-        assert any(fnmatch.fnmatchcase('src/build_fulltext_search.py', item)
+        assert any(fnmatch.fnmatchcase(path, item)
                    for item in patterns if not item.startswith('!'))
     assert 'if' not in definition['jobs']['offline']
     assert not evaluate(definition['jobs']['publish']['if'], event='push')
+
+
+@pytest.mark.parametrize('outcome,expected', [
+    ('success', True), ('failure', True),
+    ('cancelled', True), ('skipped', False),
+])
+def test_worker_probe_cleanup_covers_interrupted_deploy(outcome, expected):
+    steps = workflow()['jobs']['static_probe']['steps']
+    cleanup = next(step for step in steps if step.get('run', '').startswith(
+        'python src/cleanup_static_search_probe.py'))
+    expression = cleanup['if'].replace('always()', 'True').replace(
+        'steps.deploy.outcome', repr(outcome))
+    assert bool(evaluate(expression)) is expected
+
+
+def test_worker_probe_secrets_are_injected_before_first_deploy():
+    steps = workflow()['jobs']['static_probe']['steps']
+    setup = next(
+        i for i, step in enumerate(steps)
+        if step.get('name') == 'Create expiring Worker probe credentials'
+    )
+    deploy = next(i for i, step in enumerate(steps)
+                  if step.get('id') == 'deploy')
+    assert setup < deploy
+    assert '::add-mask::' in steps[setup]['run']
+    assert 'chmod(0o600)' in steps[setup]['run']
+    secret_arg = '--secrets-file "$RUNNER_TEMP/worker-probe-secrets.json"'
+    assert secret_arg in steps[deploy]['run']
+    assert '--var "PROBE_EXPIRES_AT:$PROBE_EXPIRES_AT"' in steps[deploy]['run']
+    remove = next(step for step in steps if step.get('name')
+                  == 'Remove the temporary Worker probe secret file')
+    assert remove['if'] == 'always()'
+    uploads = [step for step in steps
+               if step.get('uses', '').startswith('actions/upload-artifact@')]
+    assert all('secrets.json' not in step['with']['path'] for step in uploads)
 
 
 def test_shared_cloudflare_account_work_is_serialized_without_cancellation():

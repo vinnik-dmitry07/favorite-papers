@@ -1,4 +1,5 @@
 import { rankedCatalog } from './catalog-search'
+import { validProbeToken } from './probe-auth'
 import { WasmPqScorer } from './static-search-wasm'
 import { Int8Index } from './static-search-int8'
 import vocabText from '../tokenizer/vocab.txt'
@@ -13,6 +14,8 @@ import { embed, pointLength, slicePoints, WordPieceTokenizer } from './tokenize'
 export interface ProbeEnv {
   ASSETS: { fetch(request: Request): Promise<Response> }
   PQ_WASM?: WebAssembly.Module
+  PROBE_TOKEN?: string
+  PROBE_EXPIRES_AT?: string
 }
 
 interface AssetReference { path: string, bytes?: number }
@@ -639,4 +642,21 @@ export function createProbeApp(options: ProbeAppOptions = {}) {
   }
 }
 
-export default createProbeApp()
+/** The public Worker entrypoint rejects requests before mutable app state. */
+export function createWorkerProbeGateway() {
+  const app = createProbeApp()
+  return {
+    async fetch(request: Request, env: ProbeEnv): Promise<Response> {
+      const expiresAt = Date.parse(env.PROBE_EXPIRES_AT ?? '')
+      if (!Number.isFinite(expiresAt) || Date.now() >= expiresAt) return json({ error: 'probe_expired' }, 503)
+      if (!validProbeToken(env.PROBE_TOKEN, request.headers.get('x-probe-token'))) {
+        return json({ error: 'probe_forbidden' }, 403)
+      }
+      const headers = new Headers(request.headers)
+      headers.delete('x-probe-token')
+      return app.fetch(new Request(request, { headers }), env)
+    },
+  }
+}
+
+export default createWorkerProbeGateway()

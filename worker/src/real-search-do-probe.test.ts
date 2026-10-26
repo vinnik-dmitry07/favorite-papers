@@ -119,6 +119,32 @@ describe('real-subset gateway', () => {
 })
 
 describe('durable real-subset validation and AI budget', () => {
+  it('retries a rejected corpus load without retaining the failed initialization promise', async () => {
+    const test = setup()
+    vi.mocked(test.loadCorpus).mockRejectedValueOnce(new Error('temporary asset failure'))
+    const failed = await Promise.all([test.call(), test.call()])
+    expect(failed.map((result) => result.response.status)).toEqual([503, 503])
+    expect(test.loadCorpus).toHaveBeenCalledTimes(1)
+    expect(test.data.size).toBe(0)
+    expect((await test.call()).response.status).toBe(200)
+    expect(test.loadCorpus).toHaveBeenCalledTimes(2)
+    expect((await test.call()).response.status).toBe(200)
+    expect(test.loadCorpus).toHaveBeenCalledTimes(2)
+    expect(test.env.AI.run).not.toHaveBeenCalled()
+  })
+
+  it('retries a rejected ledger initialization while preserving the loaded corpus', async () => {
+    const test = setup()
+    const transaction = vi.spyOn(test.state.storage, 'transaction')
+    transaction.mockRejectedValueOnce(new Error('temporary storage failure'))
+    expect((await test.call()).response.status).toBe(503)
+    expect(test.data.size).toBe(0)
+    expect((await test.call()).response.status).toBe(200)
+    expect(transaction).toHaveBeenCalledTimes(2)
+    expect(test.loadCorpus).toHaveBeenCalledTimes(1)
+    expect(test.env.AI.run).not.toHaveBeenCalled()
+  })
+
   it('labels the subset explicitly and blocks query embeddings before compatibility', async () => {
     const test = setup()
     const { response, body } = await test.call()

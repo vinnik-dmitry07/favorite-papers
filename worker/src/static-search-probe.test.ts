@@ -2,10 +2,12 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { outputs } from './contracts'
 import { handleRest } from './http'
-import probe, { createProbeApp, createProbeService, type ProbeEnv } from './static-search-probe'
+import probe, { createProbeApp, createProbeService, createWorkerProbeGateway, type ProbeEnv } from './static-search-probe'
 import { pointLength, WordPieceTokenizer } from './tokenize'
 
 const VERSION = 'probe-v1'
+const TOKEN = 'only-for-tests-not-a-real-secret-with-32-characters'
+const authHeaders = { 'x-probe-token': TOKEN }
 const PART_SIZE = 16000
 const A = 'arxiv:a'
 const B = 'arxiv:b'
@@ -73,7 +75,8 @@ function build(text = '😀'.repeat(15998) + 'Needle' + ' x'.repeat(17000)) {
         snippet: paper.id === A ? '😀'.repeat(800) : fulltexts[1] }
     }))
   }
-  const env = { ASSETS: assets }
+  const env = { ASSETS: assets, PROBE_TOKEN: TOKEN,
+    PROBE_EXPIRES_AT: new Date(Date.now() + 60000).toISOString() }
   const service = createProbeService(env)
   return { assets, env, service, text }
 }
@@ -86,7 +89,7 @@ function queryUrl(path: string, params: Record<string, string | number> = {}): s
 
 async function rpc(env: ProbeEnv, name: string, args: Record<string, unknown>) {
   const response = await probe.fetch(new Request('http://localhost/mcp', {
-    method: 'POST', headers: { 'content-type': 'application/json',
+    method: 'POST', headers: { ...authHeaders, 'content-type': 'application/json',
       accept: 'application/json, text/event-stream', 'mcp-protocol-version': '2025-06-18' },
     body: JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name, arguments: args } }),
   }), env)
@@ -100,6 +103,33 @@ async function rpc(env: ProbeEnv, name: string, args: Record<string, unknown>) {
 afterEach(() => vi.restoreAllMocks())
 
 describe('isolated synthetic probe', () => {
+  it('rejects unauthorized or expired public Worker requests before cache resets and asset access', async () => {
+    const log = vi.spyOn(console, 'log').mockImplementation(() => {})
+    const { env, assets } = build()
+    const gateway = createWorkerProbeGateway()
+    const request = (token: string | null = TOKEN, cold = false) => new Request(
+      queryUrl('/probe/info', cold ? { cold: 1 } : {}),
+      { headers: token === null ? {} : { 'x-probe-token': token } },
+    )
+    for (const token of [null, 'wrong', TOKEN.slice(0, -1) + 'x']) {
+      expect((await gateway.fetch(request(token, true), env)).status).toBe(403)
+    }
+    for (const expiry of [undefined, '', '2000-01-01']) {
+      expect((await gateway.fetch(request(TOKEN, true), { ...env, PROBE_EXPIRES_AT: expiry })).status).toBe(503)
+    }
+    expect((await gateway.fetch(request(), { ...env, PROBE_TOKEN: undefined })).status).toBe(403)
+    expect(assets.reads).toHaveLength(0)
+    expect(log).not.toHaveBeenCalled()
+    const first = await gateway.fetch(request(), env)
+    expect(first.headers.get('x-probe-first-request')).toBe('true')
+    const loaded = assets.reads.length
+    expect((await gateway.fetch(request(null, true), env)).status).toBe(403)
+    const warm = await gateway.fetch(request(), env)
+    expect(warm.headers.get('x-probe-cache')).toBe('warm')
+    expect(assets.reads).toHaveLength(loaded)
+    expect(JSON.stringify(log.mock.calls)).not.toContain(TOKEN)
+  })
+
   it('keeps service caches per owner and coalesces concurrent initialization', async () => {
     const { assets, env } = build()
     const left = createProbeService(env)
@@ -267,7 +297,7 @@ describe('isolated synthetic probe', () => {
     const { env, assets } = build()
     const call = (cold = false) => probe.fetch(new Request(queryUrl('/probe/info', {
       ...(cold ? { cold: 1 } : {}), probe_run: 'run', probe_case: 'info', probe_seq: 1,
-    })), env)
+    }), { headers: authHeaders }), env)
     const first = await call(true)
     const second = await call()
     const third = await call(true)
@@ -308,8 +338,8 @@ describe('isolated synthetic probe', () => {
     vi.spyOn(console, 'log').mockImplementation(() => {})
     const { env, service } = build()
     expect((await handleRest(new Request(queryUrl('/v1/citations', { id: A })), service)).status).toBe(501)
-    expect((await probe.fetch(new Request('https://attacker.example/probe/info'), env)).status).toBe(400)
-    expect((await probe.fetch(new Request('http://localhost/mcp'), env)).status).toBe(405)
+    expect((await probe.fetch(new Request('https://attacker.example/probe/info', { headers: authHeaders }), env)).status).toBe(400)
+    expect((await probe.fetch(new Request('http://localhost/mcp', { headers: authHeaders }), env)).status).toBe(405)
     await expect(service.fetchDocument('not-a-document')).rejects.toMatchObject({ status: 400 })
     await expect(service.content({ id: A, offset: Number.MAX_SAFE_INTEGER, version: VERSION }))
       .rejects.toMatchObject({ code: 'invalid_offset' })

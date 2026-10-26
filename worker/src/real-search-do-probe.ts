@@ -1,4 +1,5 @@
 import vocabText from '../tokenizer/vocab.txt'
+import { validProbeToken } from './probe-auth'
 
 import { handleRest, json, requestOrigin } from './http'
 import { handleMcp } from './mcp'
@@ -159,7 +160,7 @@ export class StaticSearchProbe {
         const ledger = await this.readLedger()
         return ledger.query_texts < AI_LIMITS.query_texts
       },
-    )
+    ).catch((error) => { this.corpusPromise = undefined; throw error })
     return this.corpusPromise
   }
 
@@ -190,7 +191,7 @@ export class StaticSearchProbe {
         await transaction.put(LEDGER_KEY, ledger)
       })
       return corpus
-    })()
+    })().catch((error) => { this.readyPromise = undefined; throw error })
     return this.readyPromise
   }
 
@@ -421,8 +422,7 @@ export function createRealProbeGateway() {
     async fetch(request: Request, env: RealProbeEnv): Promise<Response> {
       try {
         ensureLive(env)
-        if (typeof env.PROBE_TOKEN !== 'string' || env.PROBE_TOKEN.length < 32
-            || request.headers.get('x-probe-token') !== env.PROBE_TOKEN) {
+        if (!validProbeToken(env.PROBE_TOKEN, request.headers.get('x-probe-token'))) {
           fail('probe_forbidden', 403, 'a valid isolated-probe token is required')
         }
         const suppliedMarker = request.headers.get('x-probe-marker')

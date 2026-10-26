@@ -3,6 +3,7 @@ from copy import deepcopy
 from datetime import datetime, timezone
 import json
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
@@ -195,3 +196,139 @@ def test_provider_raw_vectors_do_not_override_unfinished_or_stale_ledger(run, mo
     gate.write_json(root / 'canary-attempt.json', ledger)
     with pytest.raises(BuildError, match='attempt'):
         gate.validate_raw_evidence(document, snapshot)
+
+
+def test_tokenizer_resumes_uncommitted_batch_after_interruption(
+        tmp_path, monkeypatch):
+    binding = {'corpus': str(tmp_path), 'queries': str(tmp_path / 'queries')}
+    run = {'binding': binding, 'fingerprint': 'test-fingerprint'}
+    passages = ['passage-' + str(index) for index in range(130)]
+    manifest = {'rows': [
+        {'paper_id': 'test-paper', 'chunk_index': index}
+        for index in range(len(passages))
+    ]}
+    monkeypatch.setattr(gate, 'begin_gate', lambda *args: run)
+    monkeypatch.setattr(gate, 'canonical_inputs',
+                        lambda *args, **kwargs: (manifest, passages))
+    monkeypatch.setattr(gate, 'frozen_inputs',
+                        lambda *args: ({'queries': []}, []))
+    monkeypatch.setattr(gate, 'write_evidence',
+                        lambda *args, **kwargs: tmp_path / 'evidence.json')
+    batches = []
+
+    class Encoder:
+        model = None
+
+        def __init__(self, *args, **kwargs):
+            self.tokenizer_matches = 0
+
+        def _validated_ids(self, values, *, labels=None):
+            if values == [' '.join(['a'] * 511)]:
+                raise BuildError('Refusing to truncate')
+            batches.append(list(values))
+            self.tokenizer_matches += len(values)
+            return [[101, 102] for _ in values]
+
+    monkeypatch.setattr(gate, 'BgeEncoder', Encoder)
+    checkpoint = tmp_path / 'tokenizer-checkpoint.json'
+    records = tmp_path / 'tokenizer-inputs.jsonl'
+    write_json = gate.write_json
+    checkpoints = 0
+
+    def interrupted_write(path, value):
+        nonlocal checkpoints
+        if path == checkpoint:
+            checkpoints += 1
+            if checkpoints == 2:
+                raise KeyboardInterrupt('killed after records flush')
+        write_json(path, value)
+
+    monkeypatch.setattr(gate, 'write_json', interrupted_write)
+    with pytest.raises(KeyboardInterrupt, match='after records flush'):
+        gate.tokenize(tmp_path)
+    saved = gate.read_json(checkpoint)
+    assert saved['checked'] == 128
+    assert gate.sha(records.read_bytes()) != saved['records_sha256']
+    committed = b''.join(records.read_bytes().splitlines(keepends=True)[:128])
+    assert gate.sha(committed) == saved['records_sha256']
+
+    def runtime_command(command, **kwargs):
+        if command[0] != 'node':
+            output = next(value[10:] for value in command
+                          if value.startswith('--outfile='))
+            Path(output).write_text('mock runtime harness')
+            return SimpleNamespace(returncode=0, stdout='', stderr='')
+        raw = records.read_bytes()
+        rows = [json.loads(line) for line in raw.splitlines()]
+        assert [row['id'] for row in rows] == [
+            str(index) for index in range(len(rows))
+        ]
+        result = {'checked': len(rows), 'mismatch_count': 0,
+                  'input_sha256': gate.sha(raw)}
+        return SimpleNamespace(returncode=0, stdout=json.dumps(result),
+                               stderr='')
+
+    monkeypatch.setattr(gate, 'write_json', write_json)
+    monkeypatch.setattr(gate.subprocess, 'run', runtime_command)
+    batches.clear()
+    gate.tokenize(tmp_path)
+    report = gate.read_json(tmp_path / 'tokenizer-result.json')
+    assert report['status'] == 'PASS'
+    assert report['resumed_rows'] == 128
+    assert batches[0][0] == passages[128]
+    assert records.read_bytes().startswith(committed)
+    assert gate.read_json(checkpoint)['records_sha256'] == gate.sha(
+        records.read_bytes())
+
+
+@pytest.mark.parametrize('legacy', [False, True])
+@pytest.mark.parametrize('tail', [b'{"unfinished":', b'garbage\xff\n'])
+def test_tokenizer_checkpoint_discards_only_uncommitted_tail(
+        tmp_path, legacy, tail):
+    checkpoint = tmp_path / 'checkpoint.json'
+    records = tmp_path / 'records.jsonl'
+    prefix = b'{"id":"0","ids":[101,102]}\n'
+    saved = {'fingerprint': 'current', 'checked': 1, 'token_count': 2,
+             'records_sha256': gate.sha(prefix)}
+    if not legacy:
+        saved['records_bytes'] = len(prefix)
+    gate.write_json(checkpoint, saved)
+    records.write_bytes(prefix + tail)
+    checked, tokens, digest = gate.resume_tokenizer_checkpoint(
+        checkpoint, records, 'current', 2)
+    assert (checked, tokens) == (1, 2)
+    assert digest.hexdigest() == gate.sha(prefix)
+    assert records.read_bytes() == prefix
+    assert gate.read_json(checkpoint) == saved
+    # A second interruption/resume at the same boundary is harmless.
+    assert gate.resume_tokenizer_checkpoint(
+        checkpoint, records, 'current', 2)[:2] == (1, 2)
+
+
+@pytest.mark.parametrize('damage', [
+    'committed-content', 'truncated-prefix', 'missing-newline',
+    'wrong-byte-boundary', 'stale-fingerprint',
+])
+def test_tokenizer_checkpoint_rejects_committed_damage_without_truncation(
+        tmp_path, damage):
+    checkpoint = tmp_path / 'checkpoint.json'
+    records = tmp_path / 'records.jsonl'
+    prefix = b'{"id":"0","ids":[101,102]}\n'
+    saved = {'fingerprint': 'current', 'checked': 1, 'token_count': 2,
+             'records_sha256': gate.sha(prefix), 'records_bytes': len(prefix)}
+    raw = prefix + b'uncommitted tail'
+    if damage == 'committed-content':
+        raw = raw.replace(b'101', b'999')
+    elif damage == 'truncated-prefix':
+        raw = prefix[:5]
+    elif damage == 'missing-newline':
+        raw = prefix[:-1]
+    elif damage == 'wrong-byte-boundary':
+        saved['records_bytes'] += 1
+    else:
+        saved['fingerprint'] = 'old'
+    gate.write_json(checkpoint, saved)
+    records.write_bytes(raw)
+    with pytest.raises(BuildError, match='tokenizer checkpoint'):
+        gate.resume_tokenizer_checkpoint(checkpoint, records, 'current', 2)
+    assert records.read_bytes() == raw

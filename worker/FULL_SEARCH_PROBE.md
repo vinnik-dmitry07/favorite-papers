@@ -33,8 +33,13 @@ after model work had already started.
 
 Tokenizer v2 preserves the pinned added-token semantics before normalization.
 Its algorithm and configuration are bound into both embedding and build
-identities. Old cache namespaces are retained but are not silently relabelled
-as v2. A tokenizer-only scan now includes every passage, cached or uncached,
+identities. Old cache namespaces are not silently relabelled as v2. Reusable
+cache identity binds the numerical encoder/tokenizer syntax, configuration,
+model revision and dependency versions; comments and unrelated CLI changes do
+not invalidate vectors. Full source hashes still invalidate preflight evidence.
+The workflow prunes each restored/saved cache root to the current namespace plus
+one prior namespace and a 512 MiB payload budget. Evicted entries are cache misses,
+never substitutes for newly admitted inference. A tokenizer-only scan includes every passage, cached or uncached,
 every frozen query, and regression cases before any model weights load.
 
 The canonical rebuild retained all source texts and 40,575 passages; token
@@ -93,10 +98,19 @@ model setup and evidence validation. Each provider request checks the remaining
 time before reserving its budget and caps its timeout to the remaining window.
 Per-phase timings and the supervisor's completion record distinguish the total
 process duration from measurements captured before final evidence validation.
+Within that child, canonical validation and tokenization are reused once per
+corpus/configuration. Every reuse rechecks the manifest and asset bytes; source,
+query, code and environment bindings remain fresh. A changed input stops the
+attempt. This removes repeated full tokenization without weakening the deadline.
 The frozen plan has 16 distinct inputs and two repeated occurrences to compare
 batch behavior. Every vector must have 768 finite values; normalized local and
 Workers AI vectors must have cosine at least 0.999. The declared maximum
 absolute difference for repeated batch embeddings is 1e-5.
+
+An interrupted tokenizer scan can resume from its last committed checkpoint.
+Recovery verifies the prefix hash and row/byte boundary before discarding an
+uncommitted tail. Damage in the committed prefix or a stale fingerprint remains
+STOP; recovery never accepts an incomplete scan as PASS.
 
 Provider calls use the existing `CLOUDFLARE_ACCOUNT_ID` and
 `CLOUDFLARE_API_TOKEN` environment variables. The runner requires an explicit

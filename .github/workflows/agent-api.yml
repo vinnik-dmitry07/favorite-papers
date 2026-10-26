@@ -55,6 +55,8 @@ on:
       - requirements-real-probe.txt
       - worker/**
       - .github/workflows/agent-api.yml
+      - .github/workflows/pages.yml
+      - .github/scripts/find-api-discovery*
   push:
     branches: [main]
     paths:
@@ -65,6 +67,9 @@ on:
       - src/smoke_agent_api.py
       - src/common.py
       - src/build_fulltext_search.py
+      - src/write_discovery_links.py
+      - requirements-agent.txt
+      - .github/workflows/agent-api.yml
       - worker/src/**
       - '!worker/src/static-search*'
       - '!worker/src/real-search*'
@@ -182,6 +187,8 @@ jobs:
           npm run build:probe
           npm run typecheck
           npm test
+      - name: Pages discovery selection tests
+        run: node --test .github/scripts/find-api-discovery.test.cjs
       - name: Build the full synthetic fixture
         run: python src/build_static_search_probe.py
       - name: Build the canonical real subset without model downloads
@@ -255,12 +262,33 @@ jobs:
       - name: Install pinned worker dependencies
         working-directory: worker
         run: npm ci
+      - name: Create expiring Worker probe credentials
+        run: |
+          python - <<'PYTHON'
+          from datetime import datetime, timedelta, timezone
+          import json
+          import os
+          from pathlib import Path
+          import secrets
+          token = secrets.token_urlsafe(32)
+          print('::add-mask::' + token)
+          expiry = (datetime.now(timezone.utc) + timedelta(minutes=30)).isoformat()
+          with open(os.environ['GITHUB_ENV'], 'a') as output:
+              output.write('PROBE_TOKEN=' + token + '\n')
+              output.write('PROBE_EXPIRES_AT=' + expiry + '\n')
+          secret_file = Path(os.environ['RUNNER_TEMP']) / 'worker-probe-secrets.json'
+          secret_file.write_text(json.dumps({'PROBE_TOKEN': token}))
+          secret_file.chmod(0o600)
+          PYTHON
       - name: Deploy the isolated probe
         id: deploy
+        timeout-minutes: 8
         working-directory: worker
         run: |
           set -o pipefail
-          npx wrangler deploy --config wrangler.probe.toml --name "$PROBE_NAME" 2>&1 | tee probe-deploy.txt
+          npx wrangler deploy --config wrangler.probe.toml --name "$PROBE_NAME" \
+            --secrets-file "$RUNNER_TEMP/worker-probe-secrets.json" \
+            --var "PROBE_EXPIRES_AT:$PROBE_EXPIRES_AT" 2>&1 | tee probe-deploy.txt
           python -c "import os, pathlib, sys; sys.path.insert(0, '../src'); from write_discovery_links import worker_origin; origin=worker_origin(pathlib.Path('probe-deploy.txt').read_text(encoding='utf-8'), os.environ['PROBE_NAME']); sys.exit('deploy did not print the probe origin') if not origin else print('origin=' + origin)" >> "$GITHUB_OUTPUT"
       - name: Measure REST and MCP with platform CPU telemetry
         id: measure
@@ -276,8 +304,12 @@ jobs:
             python src/run_static_search_probe.py --collect-only probe-report.json --output probe-report.json --wait-seconds 120
           fi
       - name: Remove only this run's isolated Worker
-        if: always() && (steps.deploy.outcome == 'success' || steps.deploy.outcome == 'failure')
+        if: always() && (steps.deploy.outcome == 'success' || steps.deploy.outcome == 'failure' || steps.deploy.outcome == 'cancelled')
+        timeout-minutes: 3
         run: python src/cleanup_static_search_probe.py "$PROBE_NAME"
+      - name: Remove the temporary Worker probe secret file
+        if: always()
+        run: rm -f "$RUNNER_TEMP/worker-probe-secrets.json"
       - name: Preserve measurements even when the gate fails
         if: always()
         uses: actions/upload-artifact@v4
@@ -942,9 +974,15 @@ jobs:
           path: |
             .cache/full-probe-embeddings
             .cache/full-probe-queries
-          key: ${{ runner.os }}-full-bge-a5beb1e3e68b9ab74eb54cfd186867f64f240e1a-tokenizer-v2-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_attempt }}
+          key: ${{ runner.os }}-full-bge-a5beb1e3e68b9ab74eb54cfd186867f64f240e1a-cache-v2-tokenizer-v2-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: |
-            ${{ runner.os }}-full-bge-a5beb1e3e68b9ab74eb54cfd186867f64f240e1a-tokenizer-v2-${{ github.ref_name }}-
+            ${{ runner.os }}-full-bge-a5beb1e3e68b9ab74eb54cfd186867f64f240e1a-cache-v2-tokenizer-v2-${{ github.ref_name }}-
+      - name: Bound restored embedding cache retention before encoding
+        if: success() && inputs.full_run_confirmed && steps.admission.outcome == 'success'
+        run: |
+          python src/embed_real_search_probe.py \
+            --prune-cache-dir .cache/full-probe-embeddings \
+            --prune-cache-dir .cache/full-probe-queries
       - name: Encode the complete corpus only after explicit approval and fresh PASS
         id: full_encode
         if: success() && inputs.full_run_confirmed && steps.admission.outcome == 'success'
@@ -1001,8 +1039,15 @@ jobs:
           if report.get('extractive_fidelity_gate') != 'passed':
               raise SystemExit('STOP: the frozen extractive fidelity diagnostic failed; inspect full-quality.json.')
           PYTHON
-      - name: Preserve verified partial embedding caches after any long attempt
+      - name: Bound embedding caches before saving partial work
+        id: prune_full_cache
         if: always() && (steps.full_encode.outcome == 'success' || steps.full_encode.outcome == 'failure' || steps.full_encode.outcome == 'cancelled')
+        run: |
+          python src/embed_real_search_probe.py \
+            --prune-cache-dir .cache/full-probe-embeddings \
+            --prune-cache-dir .cache/full-probe-queries
+      - name: Preserve verified partial embedding caches after any long attempt
+        if: always() && steps.prune_full_cache.outcome == 'success'
         uses: actions/cache/save@v4
         with:
           path: |

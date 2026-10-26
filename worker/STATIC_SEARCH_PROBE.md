@@ -157,7 +157,11 @@ gh workflow run agent-api.yml --ref feat/static-search-probe \
   -f free_plan_confirmed=true -f probe_variant=wasm-json16
 ```
 
-The workflow deploys `key-papers-static-probe-RUN_ID-ATTEMPT`, waits up to
+The workflow generates a masked per-run token and a 30-minute expiry before
+deploying `key-papers-static-probe-RUN_ID-ATTEMPT`. The gateway checks expiry and
+`x-probe-token` before asset reads, measurement logging or `cold=1` cache resets.
+The runner sends the token only to probe endpoints and never saves it in reports.
+The workflow waits up to
 60 seconds for `/probe/info`, checks one request's telemetry join, then measures
 the selected `probe_variant` only if both checks pass. The default is now
 `wasm-json16`; other variants can be selected in the dispatch input.
@@ -173,16 +177,19 @@ errors stop immediately. Discovery retries are not CPU benchmark samples.
 It retries delayed telemetry without resending the measurement matrix, deletes
 only that run's Worker, and preserves reports/manifests for seven days in an
 artifact named `static-search-probe-RUN_ID-ATTEMPT`. Cleanup
-runs on failure too; a hard runner termination can still prevent cleanup, so
-check the cleanup step. A residual probe consumes the Free account's shared
-quota while used. Pushes to main run offline validation only; production
+runs on failure and cancelled deployment too; a hard runner termination can
+still prevent cleanup, so check the cleanup step. Expiry stops a residual
+probe's workload but does not delete the Worker or prevent rejected requests
+from using the shared request allowance. Pushes to main run offline validation only; production
 publication requires a separate explicit manual confirmation. Manual Cloudflare
 probe/publication/full-canary runs share one concurrency group with
 `cancel-in-progress: false` and `queue: max` (up to 100 pending runs; excess runs
 are cancelled). Offline checks and read-only log collection use separate groups.
 
 For a manual run, export `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` for
-the test account. Use a unique name of the form
+the test account. Configure a random `PROBE_TOKEN` secret and a short-lived
+`PROBE_EXPIRES_AT` ISO timestamp at deployment, then export the same
+`PROBE_TOKEN` for the runner. Use a unique name of the form
 `key-papers-static-probe-NUMBER-ATTEMPT` (both numbers positive) and pass it to
 the runner's `--script-name`. After collection, run
 `python src/cleanup_static_search_probe.py NAME` from the repository root.

@@ -1,6 +1,7 @@
 '''The bounded compatibility canary cannot turn malformed output into PASS.'''
 
 import json
+import os
 from io import BytesIO
 from types import SimpleNamespace
 
@@ -261,3 +262,111 @@ def test_supervisor_rejects_successful_exit_after_whole_deadline(
     assert json.loads((tmp_path / 'canary-attempt.json').read_text()) == {
         'status': 'STOP',
     }
+
+
+def cached_corpus(tmp_path, monkeypatch):
+    asset = tmp_path / 'paper.json'
+    asset.write_bytes(b'original')
+    manifest = {'files': {'paper.json': preflight.sha(asset.read_bytes())}}
+    preflight.write_json(tmp_path / 'probe.json', manifest)
+    calls = []
+
+    def canonical(root, config, *, full_corpus):
+        assert root == tmp_path and full_corpus
+        calls.append(dict(config))
+        return manifest, ['exact validated input']
+
+    monkeypatch.setattr(preflight, 'canonical_inputs', canonical)
+    return asset, manifest, calls
+
+
+def test_canary_reuses_tokenization_only_within_one_scoped_attempt(
+    tmp_path, monkeypatch,
+):
+    _asset, _manifest, calls = cached_corpus(tmp_path, monkeypatch)
+    with preflight.canary_validation_cache():
+        for _ in range(10):
+            assert preflight._canonical_inputs(tmp_path, {})[1] == [
+                'exact validated input',
+            ]
+    assert len(calls) == 1
+    with preflight.canary_validation_cache():
+        preflight._canonical_inputs(tmp_path, {})
+    preflight._canonical_inputs(tmp_path, {})
+    assert len(calls) == 3
+
+
+def test_cached_canary_rechecks_asset_bytes_even_with_same_size_and_mtime(
+    tmp_path, monkeypatch,
+):
+    asset, _manifest, calls = cached_corpus(tmp_path, monkeypatch)
+    with preflight.canary_validation_cache():
+        preflight._canonical_inputs(tmp_path, {})
+        previous = asset.stat()
+        asset.write_bytes(b'modified')
+        os.utime(asset, ns=(previous.st_atime_ns, previous.st_mtime_ns))
+        with pytest.raises(BuildError, match='Artifact checksum mismatch'):
+            preflight._canonical_inputs(tmp_path, {})
+    assert len(calls) == 1
+
+
+@pytest.mark.parametrize('change', ['manifest', 'config'])
+def test_cached_canary_rejects_changed_manifest_or_config(
+    tmp_path, monkeypatch, change,
+):
+    _asset, manifest, calls = cached_corpus(tmp_path, monkeypatch)
+    with preflight.canary_validation_cache():
+        preflight._canonical_inputs(tmp_path, {})
+        config = {}
+        if change == 'manifest':
+            preflight.write_json(tmp_path / 'probe.json', {
+                **manifest, 'new_field': True,
+            })
+        else:
+            config['query_template'] = 'changed'
+        with pytest.raises(BuildError, match='corpus/config changed'):
+            preflight._canonical_inputs(tmp_path, config)
+    assert len(calls) == 1
+
+
+def test_canary_cache_rejects_mutation_during_initial_validation(
+    tmp_path, monkeypatch,
+):
+    asset, manifest, _calls = cached_corpus(tmp_path, monkeypatch)
+
+    def mutation(*args, **kwargs):
+        asset.write_bytes(b'modified')
+        preflight.write_json(tmp_path / 'probe.json', {
+            'files': {'paper.json': preflight.sha(asset.read_bytes())},
+        })
+        return manifest, ['stale input']
+
+    monkeypatch.setattr(preflight, 'canonical_inputs', mutation)
+    with preflight.canary_validation_cache():
+        with pytest.raises(BuildError, match='changed during validation'):
+            preflight._canonical_inputs(tmp_path, {})
+
+
+def test_canary_cache_does_not_cache_source_code_or_environment_binding(
+    tmp_path, monkeypatch,
+):
+    binding = {'corpus': str(tmp_path), 'queries': 'questions.json',
+               'source': 'original', 'environment': 'original'}
+    preflight.write_json(tmp_path / 'snapshot.json', {
+        'schema_version': preflight.SCHEMA,
+        'kind': 'full-search-preflight-snapshot', 'scope': preflight.SCOPE,
+        'binding': binding, 'fingerprint': preflight.digest(binding),
+    })
+    checked = []
+
+    def current(*args):
+        checked.append(True)
+        return dict(binding)
+
+    monkeypatch.setattr(preflight, 'current_binding', current)
+    with preflight.canary_validation_cache():
+        preflight.load_run(tmp_path)
+        binding['source'] = 'changed'
+        with pytest.raises(BuildError, match='Stale preflight'):
+            preflight.load_run(tmp_path)
+    assert len(checked) == 2

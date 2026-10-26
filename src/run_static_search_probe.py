@@ -156,6 +156,7 @@ def probe_info(report, wait_seconds):
         try:
             status, headers, text = exchange(
                 report['origin'] + '/probe/info',
+                headers={'x-probe-token': os.environ.get('PROBE_TOKEN', '')},
                 timeout=min(20, max(1, deadline - time.monotonic())))
             headers = {key.lower(): value for key, value in headers.items()}
             row.update(status=status, response_excerpt=text[:1000],
@@ -224,7 +225,10 @@ def sample(report, kind, mode, sequence, path, params=None, tool=None):
     started = time.perf_counter()
     body = None
     try:
-        status, headers, text = exchange(url, tool, {'x-probe-marker': marker})
+        status, headers, text = exchange(url, tool, {
+            'x-probe-marker': marker,
+            'x-probe-token': os.environ.get('PROBE_TOKEN', ''),
+        })
         headers = {key.lower(): value for key, value in headers.items()}
         record.update(status=status, boot_id=headers.get('x-probe-boot-id'),
                       observed_cache=headers.get('x-probe-cache'),
@@ -632,6 +636,8 @@ def main(argv=None):
         if any((parsed.username, parsed.password,
                 parsed.query, parsed.fragment)):
             parser.error('Origin contains credentials, query or fragment')
+        if not local and len(os.environ.get('PROBE_TOKEN', '')) < 32:
+            parser.error('PROBE_TOKEN of at least 32 characters is required')
         origin = args.origin.rstrip('/')
         report = {'origin': origin, 'run_id': str(uuid.uuid4()),
                   'started_ms': int(time.time() * 1000), 'requests': [],

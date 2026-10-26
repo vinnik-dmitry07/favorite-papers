@@ -600,6 +600,7 @@ def test_discovery_retries_before_measurements_and_keeps_evidence(
 ])
 def test_discovery_failure_is_saved_and_never_starts_matrix(
         tmp_path, monkeypatch, status, body, expected):
+    monkeypatch.setenv('PROBE_TOKEN', 't' * 43)
     path = tmp_path / 'failed-start.json'
     calls = []
 
@@ -622,6 +623,7 @@ def test_discovery_failure_is_saved_and_never_starts_matrix(
 def test_discovery_transport_error_keeps_checkpoint(tmp_path, monkeypatch):
     from http.client import IncompleteRead
 
+    monkeypatch.setenv('PROBE_TOKEN', 't' * 43)
     path = tmp_path / 'interrupted-start.json'
 
     def interrupted(*_, **__):
@@ -645,3 +647,44 @@ def test_collect_only_cannot_turn_failed_discovery_into_success(
     monkeypatch.setattr('run_static_search_probe.collect', lambda *_: None)
     assert main(['--collect-only', str(path), '--output', str(path)]) == 1
     assert json.loads(path.read_text())['cpu_gate'] == 'unverified'
+
+
+def test_remote_measurement_requires_token_before_any_request(monkeypatch):
+    monkeypatch.delenv('PROBE_TOKEN', raising=False)
+
+    def forbidden(*_args, **_kwargs):
+        pytest.fail('Unauthenticated measurement must not send a request')
+
+    monkeypatch.setattr('run_static_search_probe.exchange', forbidden)
+    with pytest.raises(SystemExit) as failure:
+        main(['https://synthetic.example'])
+    assert failure.value.code == 2
+
+
+def test_probe_token_is_sent_only_to_probe_and_never_saved(
+        tmp_path, monkeypatch):
+    from run_static_search_probe import collect
+
+    token = 'private-probe-token-' + 't' * 32
+    monkeypatch.setenv('PROBE_TOKEN', token)
+    monkeypatch.setenv('CLOUDFLARE_ACCOUNT_ID', 'account')
+    monkeypatch.setenv('CLOUDFLARE_API_TOKEN', 'api-token')
+    report = make_report(0)
+    report.update(started_ms=1, finished_ms=2,
+                  output_path=str(tmp_path / 'report.json'))
+    seen = []
+
+    def fake_exchange(url, payload=None, headers=None, **_kwargs):
+        seen.append((url, headers))
+        return 403, {}, '{}'
+
+    monkeypatch.setattr('run_static_search_probe.exchange', fake_exchange)
+    assert probe_info(report, 0) is None
+    sample(report, 'rest_search', 'warm', 0, '/v1/search')
+    collect(report, 0)
+    assert len(seen) == 3
+    assert all(headers['x-probe-token'] == token for _, headers in seen[:2])
+    assert seen[-1][0].startswith('https://api.cloudflare.com/')
+    assert 'x-probe-token' not in seen[-1][1]
+    assert token not in json.dumps(report)
+    assert token not in (tmp_path / 'report.json').read_text()

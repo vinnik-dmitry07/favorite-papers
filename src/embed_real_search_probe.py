@@ -9,12 +9,14 @@ compatibility with Workers AI or authorize a production publication.
 from __future__ import annotations
 
 import argparse
+import ast
 import hashlib
 import importlib.metadata
 import json
 import math
 from pathlib import Path
 import platform
+import shutil
 import struct
 import time
 import unicodedata
@@ -30,27 +32,172 @@ MODEL_REVISION = 'a5beb1e3e68b9ab74eb54cfd186867f64f240e1a'
 DIMENSIONS = 768
 IMPLEMENTATION = 'canonical-wordpiece-bge-cls-fp32-v2'
 VECTOR_FILE = 'vectors.f32'
+CACHE_SCHEMA = 2
+# Bind the numerical path without invalidating hours of reusable inference for
+# comments, report formatting, cache maintenance, or unrelated build changes.
+# New numerical helpers must be included here or bump IMPLEMENTATION.
+NUMERICAL_SYMBOLS = {
+    'build_agent_index.py': (
+        'model_input', '_is_punctuation', '_is_whitespace', '_is_control',
+        '_CHINESE_RE', '_CLEAN_TABLE', '_clean_table', 'WordPieceTokenizer',
+    ),
+    'embed_real_search_probe.py': (
+        'unit_vector', 'cls_vectors', 'vector_bytes', 'BgeEncoder.__init__',
+        'BgeEncoder._load_tokenizer', 'BgeEncoder._load_model',
+        'BgeEncoder._validated_ids', 'BgeEncoder.__call__',
+    ),
+}
+
+
+class _WithoutDocstrings(ast.NodeTransformer):
+    def visit_FunctionDef(self, node):
+        self.generic_visit(node)
+        if (node.body and isinstance(node.body[0], ast.Expr)
+                and isinstance(node.body[0].value, ast.Constant)
+                and isinstance(node.body[0].value.value, str)):
+            node.body.pop(0)
+        return node
+
+    visit_ClassDef = visit_FunctionDef
+
+
+def numerical_source_hashes(source_dir: Path | None = None) -> dict:
+    '''Hash selected executable syntax, excluding comments and docstrings.'''
+    source_dir = source_dir or Path(__file__).parent
+    hashes = {}
+    for name, symbols in NUMERICAL_SYMBOLS.items():
+        module = ast.parse((source_dir / name).read_text(encoding='utf-8'))
+        nodes = {}
+        for node in module.body:
+            if isinstance(node, (ast.FunctionDef, ast.ClassDef)):
+                nodes[node.name] = node
+                if isinstance(node, ast.ClassDef):
+                    for member in node.body:
+                        if isinstance(member, ast.FunctionDef):
+                            nodes[node.name + '.' + member.name] = member
+            elif isinstance(node, (ast.Assign, ast.AnnAssign)):
+                targets = (node.targets if isinstance(node, ast.Assign)
+                           else [node.target])
+                for target in targets:
+                    if isinstance(target, ast.Name):
+                        nodes[target.id] = node
+        if any(symbol not in nodes for symbol in symbols):
+            raise BuildError('Numerical cache identity misses a source symbol')
+        selected = ast.Module(
+            body=[nodes[symbol] for symbol in symbols], type_ignores=[],
+        )
+        payload = ast.dump(
+            _WithoutDocstrings().visit(selected), include_attributes=False,
+        )
+        hashes[name] = sha256_hex(payload)
+    return hashes
 
 
 def encoder_identity(config: dict) -> dict:
-    '''Cache namespaces bind executable tokenizer semantics, not just vocab.'''
-    sources = {name: hashlib.sha256(Path(__file__).with_name(name).read_bytes()).hexdigest()
-               for name in ('build_agent_index.py', 'embed_real_search_probe.py')}
+    '''Bind numerical semantics; full source provenance lives in preflight.'''
     return {
+        'cache_schema': CACHE_SCHEMA,
         'implementation': IMPLEMENTATION,
+        'numerical_source_sha256': numerical_source_hashes(),
         'model_id': MODEL_ID, 'model_revision': MODEL_REVISION,
         'pooling': 'cls', 'normalization': 'l2', 'dtype': 'float32',
         'byte_order': 'little', 'dimensions': DIMENSIONS,
         'device': 'cpu', 'attention_implementation': 'eager',
         'embedding_signature': embedding_signature(config),
         'tokenizer_semantics': {
-            'config': config['tokenizer'], 'source_sha256': sources,
+            'config': config['tokenizer'],
             'python': platform.python_version(),
             'unicode': unicodedata.unidata_version,
         },
         'versions': {name: importlib.metadata.version(name)
                      for name in ('torch', 'transformers', 'tokenizers')},
     }
+
+
+def prune_cache_namespaces(cache_dir: Path, signature: str, *,
+                           keep: int = 2,
+                           max_bytes: int = 512 * 1024 * 1024) -> dict:
+    '''Retain the active encoder and at most keep - 1 prior managed namespaces.
+
+    Limit retained vector, sidecar and temporary bytes by evicting oldest
+    written entries, preferring prior namespaces. Eviction is a cache miss.
+    Names outside the 64-hex namespace format are never removed. Validate all
+    managed paths before deletion; old numerical identities are not migrated.
+    '''
+    if (not 1 <= keep <= 5 or not isinstance(max_bytes, int)
+            or isinstance(max_bytes, bool) or max_bytes <= 0
+            or len(signature) != 64
+            or any(char not in '0123456789abcdef' for char in signature)):
+        raise BuildError('Invalid embedding cache retention policy')
+    cache_dir = Path(cache_dir)
+    if cache_dir.is_symlink():
+        raise BuildError('Embedding cache root must not be a symlink')
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    namespaces = []
+    entries = []
+    for path in cache_dir.iterdir():
+        if (len(path.name) != 64
+                or any(char not in '0123456789abcdef' for char in path.name)):
+            continue
+        if path.is_symlink() or not path.is_dir():
+            raise BuildError('Embedding cache namespace must be a directory')
+        grouped = {}
+        marker = path / '.last-used'
+        for child in path.iterdir():
+            if child.is_symlink() or not child.is_file():
+                raise BuildError('Embedding cache entries must be files')
+            if child.name == '.last-used':
+                continue
+            key, suffix = child.name[:64], child.name[64:]
+            if (len(key) != 64
+                    or any(char not in '0123456789abcdef' for char in key)
+                    or suffix not in ('.f32', '.f32.json', '.f32.tmp',
+                                      '.f32.json.tmp')):
+                raise BuildError(
+                    'Unexpected file in embedding cache namespace',
+                )
+            grouped.setdefault(key, []).append(child)
+        for paths in grouped.values():
+            entries.append({
+                'namespace': path.name,
+                'paths': paths,
+                'bytes': sum(child.stat().st_size for child in paths),
+                'modified': max(child.stat().st_mtime_ns for child in paths),
+            })
+        if path.name != signature:
+            modified = (marker.stat().st_mtime_ns if marker.exists()
+                        else path.stat().st_mtime_ns)
+            namespaces.append((modified, path.name, path))
+    namespaces.sort(reverse=True)
+    removed = []
+    for _, name, path in namespaces[keep - 1:]:
+        shutil.rmtree(path)
+        removed.append(name)
+    entries = [entry for entry in entries
+               if entry['namespace'] not in removed]
+    retained_bytes = sum(entry['bytes'] for entry in entries)
+    entries.sort(key=lambda entry: (
+        entry['namespace'] == signature, entry['modified'],
+        str(entry['paths'][0]),
+    ))
+    evicted = 0
+    for entry in entries:
+        if retained_bytes <= max_bytes:
+            break
+        for child in entry['paths']:
+            child.unlink()
+        retained_bytes -= entry['bytes']
+        evicted += 1
+    active = cache_dir / signature
+    active.mkdir(exist_ok=True)
+    marker = active / '.last-used'
+    if marker.is_symlink():
+        raise BuildError('Embedding cache marker must not be a symlink')
+    marker.touch()
+    return {'cache_dir': str(cache_dir), 'active': signature,
+            'keep_namespaces': keep, 'removed': removed,
+            'max_bytes': max_bytes, 'retained_bytes': retained_bytes,
+            'evicted_entries': evicted}
 
 
 def atomic_bytes(path: Path, data: bytes) -> None:
@@ -520,6 +667,11 @@ def main(argv=None) -> int:
     parser.add_argument('--out', type=Path, default=Path('agent_real_probe'))
     parser.add_argument('--cache-dir', type=Path,
                         default=Path('.cache/real-probe-embeddings'))
+    parser.add_argument('--prune-cache-dir', type=Path, action='append',
+                        help='Prune this root without encoding; may be '
+                             'repeated for passage and query caches')
+    parser.add_argument('--cache-keep-namespaces', type=int, default=2)
+    parser.add_argument('--cache-max-mib', type=int, default=512)
     parser.add_argument('--batch-size', type=int, default=8)
     parser.add_argument('--threads', type=int, default=4)
     parser.add_argument('--local-files-only', action='store_true')
@@ -535,8 +687,19 @@ def main(argv=None) -> int:
     args = parser.parse_args(argv)
     if not 1 <= args.batch_size <= 32 or not 1 <= args.threads <= 16:
         parser.error('Use batch size 1..32 and CPU threads 1..16')
+    if (not 1 <= args.cache_keep_namespaces <= 5
+            or not 1 <= args.cache_max_mib <= 4096):
+        parser.error('Keep 1..5 cache namespaces and use a 1..4096 MiB budget')
     try:
         config = load_embed()
+        if args.prune_cache_dir:
+            signature = sha256_hex(canonical_json(encoder_identity(config)))
+            for cache_dir in args.prune_cache_dir:
+                print(canonical_json(prune_cache_namespaces(
+                    cache_dir, signature, keep=args.cache_keep_namespaces,
+                    max_bytes=args.cache_max_mib * 1024 * 1024,
+                )), flush=True)
+            return 0
         encoder = BgeEncoder(config, threads=args.threads,
                              local_files_only=args.local_files_only)
         report = encode_probe(args.out, encoder, config,

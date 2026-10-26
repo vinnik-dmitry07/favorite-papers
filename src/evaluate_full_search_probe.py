@@ -134,6 +134,18 @@ def corpus_inputs(root):
     return manifest, papers, graph, identity
 
 
+def containing_chunk_indices(paper, spans):
+    '''Return every canonical chunk containing all exact source spans.'''
+    return [
+        chunk['index']
+        for chunk in paper['chunks']
+        if all(
+            chunk['start'] <= span['start'] < span['end'] <= chunk['end']
+            for span in spans
+        )
+    ]
+
+
 def sentence_candidates(paper, rows, title):
     '''Extract exact source spans; never paraphrase or infer answer labels.'''
     candidates = {}
@@ -173,9 +185,14 @@ def sentence_candidates(paper, rows, title):
                 ],
                 'normalized_sha256': key,
             }
-            # Overlapping chunks may contain the same sentence. Pick the
-            # earliest canonical chunk once, independent of vector scores.
+            # Keep the original extraction chunk for deterministic selection.
+            # Gold coverage is derived below from exact source coordinates,
+            # including neighbors whose regex did not extract this sentence.
             candidates.setdefault((start, end, key), item)
+    for item in candidates.values():
+        item['gold_chunk_indices'] = containing_chunk_indices(
+            paper, item['answer_spans']
+        )
     return sorted(
         candidates.values(),
         key=lambda item: digest(
@@ -365,15 +382,9 @@ def rebase(old_root, new_root, queries_path, output):
         validate_question(original, old_papers)
         item = json.loads(json.dumps(original))
         paper_id = item['expected_paper_id']
-        spans = item['answer_spans']
-        indices = [
-            chunk['index']
-            for chunk in papers[paper_id]['chunks']
-            if all(
-                chunk['start'] <= span['start'] < span['end'] <= chunk['end']
-                for span in spans
-            )
-        ]
+        indices = containing_chunk_indices(
+            papers[paper_id], item['answer_spans']
+        )
         require(
             indices,
             'Rechunking lost complete answer-span coverage: ' + item['id'],

@@ -130,15 +130,23 @@ def test_partial_caches_are_restored_only_after_admission_and_saved_after_failur
     steps = full_job()['steps']
     restore = next(step for step in steps if step.get('uses') == 'actions/cache/restore@v4')
     save = next(step for step in steps if step.get('uses') == 'actions/cache/save@v4')
+    prune = next(step for step in steps
+                 if step.get('id') == 'prune_full_cache')
     assert 'inputs.full_run_confirmed' in restore['if']
     assert "steps.admission.outcome == 'success'" in restore['if']
     assert 'always()' in save['if']
-    assert "steps.full_encode.outcome == 'failure'" in save['if']
-    assert "steps.full_encode.outcome == 'cancelled'" in save['if']
+    assert "steps.prune_full_cache.outcome == 'success'" in save['if']
+    assert 'always()' in prune['if']
+    assert "steps.full_encode.outcome == 'failure'" in prune['if']
+    assert "steps.full_encode.outcome == 'cancelled'" in prune['if']
+    assert steps.index(prune) < steps.index(save)
+    for root in ('.cache/full-probe-embeddings', '.cache/full-probe-queries'):
+        assert '--prune-cache-dir ' + root in prune['run']
     assert restore['with']['path'] == save['with']['path']
     assert '.cache/full-probe-embeddings' in restore['with']['path']
     assert '.cache/full-probe-queries' in restore['with']['path']
-    assert 'a5beb1e3e68b9ab74eb54cfd186867f64f240e1a-tokenizer-v2' in restore['with']['key']
+    identity = 'a5beb1e3e68b9ab74eb54cfd186867f64f240e1a-cache-v2-tokenizer-v2'
+    assert identity in restore['with']['key']
     assert '${{ github.run_id }}-${{ github.run_attempt }}' in restore['with']['key']
     assert '${{ github.ref_name }}-' in restore['with']['restore-keys']
     assert save['with']['key'] == '${{ steps.restore_full_cache.outputs.cache-primary-key }}'
