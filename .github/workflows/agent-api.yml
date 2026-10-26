@@ -41,6 +41,7 @@ on:
       - src/test_run_real_search_probe.py
       - src/test_real_search_workflow.py
       - src/test_full_search_workflow.py
+      - src/test_agent_publish_workflow.py
       - src/probe_full_search_numeric.py
       - src/summarize_static_search_probe.py
       - src/reproduce_static_search_review.py
@@ -63,6 +64,7 @@ on:
       - src/publish_agent_index.py
       - src/smoke_agent_api.py
       - src/common.py
+      - src/build_fulltext_search.py
       - worker/src/**
       - '!worker/src/static-search*'
       - '!worker/src/real-search*'
@@ -78,6 +80,10 @@ on:
       - worker/tokenizer/**
   workflow_dispatch:
     inputs:
+      production_publish_confirmed:
+        description: 'Publish main to production, including Workers AI re-encoding if needed; requires reviewed capacity and quota'
+        type: boolean
+        default: false
       static_probe:
         description: 'Deploy only an isolated static-search probe'
         type: boolean
@@ -144,8 +150,9 @@ permissions:
   actions: read
 
 concurrency:
-  group: agent-api-${{ github.event_name == 'pull_request' && github.ref || (github.event_name == 'workflow_dispatch' && inputs.do_probe_phase == 'full' && 'full-offline' || (github.event_name == 'workflow_dispatch' && inputs.static_probe && 'probe' || 'publish')) }}
+  group: agent-api-${{ github.event_name == 'pull_request' && github.ref || (github.event_name == 'workflow_dispatch' && (inputs.do_probe_phase == 'collect' && 'collect' || 'cloudflare') || 'validate-main') }}
   cancel-in-progress: false
+  queue: max
 
 jobs:
   offline:
@@ -161,7 +168,7 @@ jobs:
         run: |
           python -m pip install -r requirements-agent.txt numpy==2.3.4
           python -m py_compile src/reproduce_static_search_review.py
-          python -m pytest src/test_agent_index.py src/test_publish_agent_index.py src/test_agent_pages.py src/test_static_search_probe.py src/test_static_search_probe_run.py src/test_static_search_probe_cleanup.py src/test_static_search_do_lifecycle.py src/test_static_search_do_probe.py src/test_prepare_static_search_do_collection.py src/test_real_search_probe.py src/test_embed_real_search_probe.py src/test_run_real_search_probe.py src/test_real_search_workflow.py src/test_full_search_workflow.py src/test_full_search_probe.py src/test_pack_full_search_probe.py src/test_evaluate_full_search_probe.py src/test_preflight_full_search_probe.py src/test_full_probe_canary.py src/test_tokenizer_contract.py
+          python -m pytest src/test_agent_index.py src/test_publish_agent_index.py src/test_agent_pages.py src/test_static_search_probe.py src/test_static_search_probe_run.py src/test_static_search_probe_cleanup.py src/test_static_search_do_lifecycle.py src/test_static_search_do_probe.py src/test_prepare_static_search_do_collection.py src/test_real_search_probe.py src/test_embed_real_search_probe.py src/test_run_real_search_probe.py src/test_real_search_workflow.py src/test_full_search_workflow.py src/test_agent_publish_workflow.py src/test_full_search_probe.py src/test_pack_full_search_probe.py src/test_evaluate_full_search_probe.py src/test_preflight_full_search_probe.py src/test_full_probe_canary.py src/test_tokenizer_contract.py
       - name: Node
         uses: actions/setup-node@v4
         with:
@@ -188,7 +195,7 @@ jobs:
 
   static_probe:
     needs: offline
-    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime != 'durable-object' && inputs.do_probe_phase != 'collect' && inputs.do_probe_phase != 'real' && inputs.do_probe_phase != 'full'
+    if: github.event_name == 'workflow_dispatch' && !inputs.production_publish_confirmed && inputs.static_probe && inputs.probe_runtime != 'durable-object' && inputs.do_probe_phase != 'collect' && inputs.do_probe_phase != 'real' && inputs.do_probe_phase != 'full'
     runs-on: ubuntu-latest
     timeout-minutes: 25
     environment: static-search-probe
@@ -304,7 +311,7 @@ jobs:
 
   static_do_probe:
     needs: offline
-    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase != 'collect' && inputs.do_probe_phase != 'real' && inputs.do_probe_phase != 'full'
+    if: github.event_name == 'workflow_dispatch' && !inputs.production_publish_confirmed && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase != 'collect' && inputs.do_probe_phase != 'real' && inputs.do_probe_phase != 'full'
     runs-on: ubuntu-latest
     timeout-minutes: 50
     environment: static-search-probe
@@ -468,7 +475,7 @@ jobs:
 
   static_do_collect:
     needs: offline
-    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase == 'collect'
+    if: github.event_name == 'workflow_dispatch' && !inputs.production_publish_confirmed && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase == 'collect'
     runs-on: ubuntu-latest
     timeout-minutes: 12
     environment: static-search-probe
@@ -554,7 +561,7 @@ jobs:
 
   static_real_probe:
     needs: offline
-    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase == 'real' && inputs.do_probe_phase != 'full'
+    if: github.event_name == 'workflow_dispatch' && !inputs.production_publish_confirmed && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase == 'real' && inputs.do_probe_phase != 'full'
     runs-on: ubuntu-latest
     timeout-minutes: 60
     environment: static-search-probe
@@ -725,7 +732,7 @@ jobs:
 
   full_offline_probe:
     needs: offline
-    if: github.event_name == 'workflow_dispatch' && inputs.do_probe_phase == 'full'
+    if: github.event_name == 'workflow_dispatch' && !inputs.production_publish_confirmed && inputs.do_probe_phase == 'full'
     runs-on: ubuntu-latest
     timeout-minutes: 350
     environment: static-search-probe
@@ -1034,7 +1041,7 @@ jobs:
 
   publish:
     needs: offline
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && !inputs.static_probe && inputs.do_probe_phase != 'collect' && inputs.do_probe_phase != 'real' && inputs.do_probe_phase != 'full'
+    if: github.event_name == 'workflow_dispatch' && inputs.production_publish_confirmed && github.ref == 'refs/heads/main' && !inputs.static_probe && inputs.do_probe_phase == 'pilot' && inputs.do_probe_phase != 'collect' && inputs.do_probe_phase != 'real' && inputs.do_probe_phase != 'full'
     runs-on: ubuntu-latest
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -1053,7 +1060,7 @@ jobs:
             echo '::error::Set AGENT_DIMENSION_BUDGET to the provisioned capacity after reviewing the offline preflight report and Cloudflare plan. See worker/README.md.'
             exit 1
           fi
-      - name: Checkout the pushed commit
+      - name: Checkout the explicitly selected production commit
         uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}

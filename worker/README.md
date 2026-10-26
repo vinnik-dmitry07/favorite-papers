@@ -137,6 +137,11 @@ Cloudflare publisher requires an existing account, resources and credentials.
 Missing credentials fail early with a diagnostic; the workflow never claims a
 successful API deployment or advertises an invented URL.
 
+Merging or pushing to `main` runs offline validation only. Production
+publication requires a manual dispatch on `main` with
+`production_publish_confirmed=true`. The default manual dispatch does not
+publish. This confirmation is separate from the probe and full-encode flags.
+
 1. Enable R2, Vectorize and Workers AI in the intended Cloudflare account.
    Create the resources named in `embed.json` and `wrangler.toml`, once:
 
@@ -161,8 +166,17 @@ successful API deployment or advertises an invented URL.
    allowance is 5,000,000. Raising this variable does not buy capacity. Check
    current Cloudflare plan limits and costs before enabling publication.
 
-4. Run **Agent API → Run workflow** on main. The workflow checks permissions
-   and capacity, performs an isolated probe, stages data, deploys the reader,
+4. After reviewing the capacity report and the target account's remaining AI
+   allowance, run **Agent API → Run workflow** on main with
+   `production_publish_confirmed=true`, `static_probe=false`, and
+   `do_probe_phase=pilot` (the default; no pilot runs when `static_probe=false`).
+   Tokenizer v2 invalidates the old embedding signature and cache keys. A cold
+   publication of the current corpus represents about 47,664 neurons under
+   `embed.json`'s estimator, before the publisher's probe; this exceeds its
+   configured 10,000-neuron daily free allowance. The capacity preflight checks
+   permissions and dimensions, not remaining neurons, and this flag neither
+   changes the plan nor grants quota. The workflow performs an isolated probe,
+   stages data, deploys the reader,
    promotes the release, and runs live REST/MCP checks. A failed post-promotion
    smoke rolls back the active data pointer. A successful smoke persists a
    discovery artifact and triggers Pages to publish the verified endpoint.
@@ -174,3 +188,11 @@ successful API deployment or advertises an invented URL.
 The A/B publisher is retained to avoid replacing a working corpus with a partial
 upload. It is optional infrastructure for semantic search: the static browsing
 path has no dependency on R2, Vectorize, tokens, or version handshakes.
+Manual Cloudflare work shares one concurrency group, including
+the full offline workflow because its canary can use the same account. Read-only
+log collection and offline PR/main checks have separate groups. Running jobs are
+not cancelled; `queue: max` keeps up to 100 pending runs instead of replacing
+the single pending run. Additional runs are cancelled when that queue is full;
+see [GitHub's concurrency rules](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/control-workflow-concurrency).
+This serializes this workflow's runs; it cannot reserve quota against unrelated
+account usage.

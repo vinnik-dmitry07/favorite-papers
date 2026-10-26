@@ -175,10 +175,11 @@ only that run's Worker, and preserves reports/manifests for seven days in an
 artifact named `static-search-probe-RUN_ID-ATTEMPT`. Cleanup
 runs on failure too; a hard runner termination can still prevent cleanup, so
 check the cleanup step. A residual probe consumes the Free account's shared
-quota while used. Probe-only paths do not trigger production publication on
-push; shared runtime and dependency-file changes still do.
-Probe runs, production publications, and individual PR checks use separate
-concurrency groups, so a probe cannot replace a pending production publication.
+quota while used. Pushes to main run offline validation only; production
+publication requires a separate explicit manual confirmation. Manual Cloudflare
+probe/publication/full-canary runs share one concurrency group with
+`cancel-in-progress: false` and `queue: max` (up to 100 pending runs; excess runs
+are cancelled). Offline checks and read-only log collection use separate groups.
 
 For a manual run, export `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` for
 the test account. Use a unique name of the form

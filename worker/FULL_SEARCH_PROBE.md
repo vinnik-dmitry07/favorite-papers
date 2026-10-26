@@ -88,6 +88,11 @@ must be retained in any later full-corpus deployment.
 
 `src/run_full_probe_canary.py` supervises one child with a hard five-minute
 deadline. It runs only after the tokenizer, numeric and geometry gates pass.
+That deadline begins before child startup and includes source validation,
+model setup and evidence validation. Each provider request checks the remaining
+time before reserving its budget and caps its timeout to the remaining window.
+Per-phase timings and the supervisor's completion record distinguish the total
+process duration from measurements captured before final evidence validation.
 The frozen plan has 16 distinct inputs and two repeated occurrences to compare
 batch behavior. Every vector must have 768 finite values; normalized local and
 Workers AI vectors must have cosine at least 0.999. The declared maximum

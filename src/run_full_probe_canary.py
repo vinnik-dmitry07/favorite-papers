@@ -17,12 +17,19 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 
-from build_agent_index import BuildError, canonical_json, load_embed, sha256_hex
+from build_agent_index import BuildError, canonical_json, load_embed
 from embed_real_search_probe import BgeEncoder, atomic_bytes, unit_vector
 
 MAX_SECONDS = 300
 MAX_TEXTS = 32
 MAX_TOKENS = 16384
+
+
+def remaining_seconds(deadline, phase):
+    remaining = deadline - time.monotonic()
+    if remaining <= 0:
+        raise BuildError(f'Canary deadline expired before {phase}')
+    return remaining
 
 
 def normalized(values, count):
@@ -125,14 +132,46 @@ def provider_vectors(texts, config, *, account, token, timeout=45, opener=None):
     return normalized(document.get('result', {}).get('data'), len(texts))
 
 
+def request_provider(run_dir, attempt, plan, indices, config, *, account,
+                     token, deadline):
+    remaining_seconds(deadline, 'provider reservation')
+    reserve_provider(run_dir, attempt, plan, indices)
+    timeout = min(45, remaining_seconds(deadline, 'provider call'))
+    values = provider_vectors(
+        [plan['inputs'][index]['input'] for index in indices], config,
+        account=account, token=token, timeout=timeout,
+    )
+    attempt['provider_requests'][-1]['status'] = 'COMPLETE'
+    save_attempt(run_dir, attempt)
+    return values
+
+
 def execute(run_dir, *, provider=False, available_neurons=None, threads=4,
-            local_files_only=True):
+            local_files_only=True, started=None, deadline=None):
+    started = time.monotonic() if started is None else started
+    deadline = (min(deadline, started + MAX_SECONDS)
+                if deadline is not None else started + MAX_SECONDS)
+    phases = []
+
+    def stage(name, operation):
+        remaining_seconds(deadline, name)
+        before = time.monotonic()
+        try:
+            result = operation()
+        finally:
+            phases.append({
+                'phase': name, 'started_elapsed_seconds': before - started,
+                'elapsed_seconds': time.monotonic() - before,
+            })
+        remaining_seconds(deadline, 'completion of ' + name)
+        return result
+
     from preflight_full_search_probe import (
         begin_gate, canary_plan, check_canary_prerequisites, write_evidence,
     )
     run_dir = Path(run_dir)
-    check_canary_prerequisites(run_dir)
-    plan = canary_plan(run_dir)
+    stage('prerequisites', lambda: check_canary_prerequisites(run_dir))
+    plan = stage('input-plan', lambda: canary_plan(run_dir))
     count, tokens, repeats = budget(plan)
     config = load_embed()
     estimated_neurons = math.ceil(
@@ -140,17 +179,22 @@ def execute(run_dir, *, provider=False, available_neurons=None, threads=4,
     if provider and (available_neurons is None
                      or available_neurons < estimated_neurons):
         raise BuildError('Confirm remaining free neurons before provider canary')
+    remaining_seconds(deadline, 'attempt reservation')
     attempt = begin_attempt(run_dir, plan, provider=provider)
-    begin_gate(run_dir, 'local-canary')
-    begin_gate(run_dir, 'provider-compatibility')
-    started = time.monotonic()
-    encoder = BgeEncoder(config, threads=threads,
-                         local_files_only=local_files_only)
+    # Revoking local evidence already revokes the dependent provider gate.
+    stage('revoke-evidence', lambda: begin_gate(run_dir, 'local-canary'))
+    encoder = stage('encoder-setup', lambda: BgeEncoder(
+        config, threads=threads, local_files_only=local_files_only,
+    ))
     texts = [row['input'] for row in plan['inputs']]
     # All inputs, including repeats, must validate before model weights load.
-    encoder.validate_inputs(texts)
-    local = normalized(encoder(texts), len(texts))
-    repeated = normalized(encoder([texts[i] for i in repeats]), len(repeats))
+    stage('tokenizer-parity', lambda: encoder.validate_inputs(texts))
+    local = stage('local-batch', lambda: normalized(
+        encoder(texts), len(texts),
+    ))
+    repeated = stage('local-repeats', lambda: normalized(
+        encoder([texts[i] for i in repeats]), len(repeats),
+    ))
     difference = compare_batches(local, repeated, repeats)
     local_path = run_dir / 'canary-local-vectors.json'
     atomic_bytes(local_path, canonical_json({
@@ -163,32 +207,41 @@ def execute(run_dir, *, provider=False, available_neurons=None, threads=4,
         'total_input_tokens': tokens,
         'batch_max_abs_difference': difference,
         'elapsed_seconds': time.monotonic() - started,
+        'elapsed_scope': 'supervisor start through capture; excludes the '
+                         'following evidence validation',
+        'phase_timings': list(phases),
         'estimated_neurons_upper_budget': estimated_neurons,
     }
     checks = {'tokenizer_parity': True, 'finite_unit_768': True,
               'batch_invariance': difference <= 1e-5,
               'input_identity': True,
-              'within_budget': time.monotonic() - started <= MAX_SECONDS}
+              'within_budget': time.monotonic() < deadline}
     attempt['status'] = 'LOCAL_ONLY' if all(checks.values()) else 'STOP'
     save_attempt(run_dir, attempt)
-    write_evidence(run_dir, 'local-canary', checks=checks,
-                   measurements=measurements, artifacts=[local_path],
-                   elapsed_seconds=time.monotonic() - started,
-                   status='PASS' if all(checks.values()) else 'FAIL')
+    stage('local-evidence-validation', lambda: write_evidence(
+        run_dir, 'local-canary', checks=checks, measurements=measurements,
+        artifacts=[local_path], elapsed_seconds=time.monotonic() - started,
+        status='PASS' if all(checks.values()) else 'FAIL',
+    ))
     if not all(checks.values()):
         raise BuildError('Local canary failed')
     if not provider:
+        atomic_bytes(run_dir / 'canary-timings.json', canonical_json({
+            'elapsed_scope': 'supervisor start through evidence validation',
+            'elapsed_seconds': time.monotonic() - started,
+            'phase_timings': phases,
+        }).encode())
         return
     account = os.environ.get('CLOUDFLARE_ACCOUNT_ID', '')
     token = os.environ.get('CLOUDFLARE_API_TOKEN', '')
-    reserve_provider(run_dir, attempt, plan, list(range(len(texts))))
-    remote = provider_vectors(texts, config, account=account, token=token)
-    attempt['provider_requests'][-1]['status'] = 'COMPLETE'
-    save_attempt(run_dir, attempt)
-    reserve_provider(run_dir, attempt, plan, repeats)
-    remote_repeated = provider_vectors([texts[i] for i in repeats], config,
-                                       account=account, token=token)
-    attempt['provider_requests'][-1]['status'] = 'COMPLETE'
+    remote = stage('provider-batch', lambda: request_provider(
+        run_dir, attempt, plan, list(range(len(texts))), config,
+        account=account, token=token, deadline=deadline,
+    ))
+    remote_repeated = stage('provider-repeats', lambda: request_provider(
+        run_dir, attempt, plan, repeats, config,
+        account=account, token=token, deadline=deadline,
+    ))
     remote_difference = compare_batches(remote, remote_repeated, repeats)
     cosines = [math.fsum(a * b for a, b in zip(left, right))
                for left, right in zip(local, remote)]
@@ -203,25 +256,32 @@ def execute(run_dir, *, provider=False, available_neurons=None, threads=4,
               'min_cosine': min(cosines) >= 0.999,
               'batch_invariance': remote_difference <= 1e-5,
               'input_identity': True, 'free_allowance_verified': True,
-              'within_budget': time.monotonic() - started <= MAX_SECONDS}
+              'within_budget': time.monotonic() < deadline}
     measurements.update({
         'min_cosine': min(cosines),
         'batch_max_abs_difference': remote_difference,
         'elapsed_seconds': time.monotonic() - started,
+        'phase_timings': list(phases),
         'available_neurons_confirmed': available_neurons,
         'free_allowance_evidence': 'operator-confirmed-before-run',
         'request_count': 2,
     })
     attempt['status'] = 'PASSED' if all(checks.values()) else 'STOP'
     save_attempt(run_dir, attempt)
-    write_evidence(run_dir, 'provider-compatibility', checks=checks,
-                   measurements=measurements,
-                   artifacts=[local_path, remote_path,
-                              run_dir / 'canary-attempt.json'],
-                   elapsed_seconds=time.monotonic() - started,
-                   status='PASS' if all(checks.values()) else 'FAIL')
+    stage('provider-evidence-validation', lambda: write_evidence(
+        run_dir, 'provider-compatibility', checks=checks,
+        measurements=measurements,
+        artifacts=[local_path, remote_path, run_dir / 'canary-attempt.json'],
+        elapsed_seconds=time.monotonic() - started,
+        status='PASS' if all(checks.values()) else 'FAIL',
+    ))
     if not all(checks.values()):
         raise BuildError('Provider compatibility canary failed')
+    atomic_bytes(run_dir / 'canary-timings.json', canonical_json({
+        'elapsed_scope': 'supervisor start through evidence validation',
+        'elapsed_seconds': time.monotonic() - started,
+        'phase_timings': phases,
+    }).encode())
 
 
 def child(run_dir, options):
@@ -255,26 +315,42 @@ def main(argv=None):
     if not 1 <= args.threads <= 16:
         parser.error('CPU threads must be 1..16')
     args.run.mkdir(parents=True, exist_ok=True)
+    started = time.monotonic()
+    deadline = started + MAX_SECONDS
     process = multiprocessing.get_context('spawn').Process(
         target=child, args=(str(args.run), {
             'provider': args.provider, 'available_neurons': args.available_neurons,
             'threads': args.threads,
             'local_files_only': not args.allow_model_download,
+            'started': started, 'deadline': deadline,
         }))
     process.start()
-    process.join(MAX_SECONDS)
-    if process.is_alive():
+    process.join(max(0, deadline - time.monotonic()))
+    timed_out = process.is_alive()
+    if timed_out:
         process.terminate()
         process.join(5)
         if process.is_alive():
             process.kill()
             process.join()
+    elapsed = time.monotonic() - started
+    within_budget = elapsed <= MAX_SECONDS
+    stopped = timed_out or not within_budget or process.exitcode != 0
+    if stopped:
         mark_stopped(args.run)
+    if timed_out or not within_budget:
         atomic_bytes(args.run / 'canary-error.json', canonical_json({
             'status': 'STOP', 'error': 'Hard five-minute canary timeout',
         }).encode())
-        return 1
-    return process.exitcode or 0
+    atomic_bytes(args.run / 'canary-completion.json', canonical_json({
+        'schema_version': 1, 'kind': 'bounded-canary-process-completion',
+        'status': 'STOP' if stopped else 'COMPLETED',
+        'elapsed_scope': 'supervisor start through child exit or termination',
+        'elapsed_seconds': elapsed, 'budget_seconds': MAX_SECONDS,
+        'within_budget': within_budget, 'timed_out': timed_out,
+        'child_exit_code': process.exitcode,
+    }).encode())
+    return (process.exitcode or 1) if stopped else 0
 
 
 if __name__ == '__main__':

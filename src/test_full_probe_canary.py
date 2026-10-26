@@ -2,10 +2,13 @@
 
 import json
 from io import BytesIO
+from types import SimpleNamespace
 
 import pytest
 
 from build_agent_index import BuildError
+import preflight_full_search_probe as preflight
+import run_full_probe_canary as canary
 from run_full_probe_canary import (
     begin_attempt, budget, compare_batches, normalized, provider_vectors,
     reserve_provider,
@@ -83,3 +86,178 @@ def test_attempt_reserves_budget_durably_before_request_and_cannot_replay(tmp_pa
     reserve_provider(tmp_path, attempt, inputs, list(range(16)))
     with pytest.raises(BuildError, match='budget'):
         reserve_provider(tmp_path, attempt, inputs, [0])
+
+
+def test_late_preflight_stops_before_encoder_or_provider(
+    tmp_path, monkeypatch,
+):
+    clock = [0.0]
+    monkeypatch.setattr(canary, 'time', SimpleNamespace(
+        monotonic=lambda: clock[0],
+    ))
+
+    def late_preflight(_run_dir):
+        clock[0] = 301.0
+
+    def unexpected(*args, **kwargs):
+        pytest.fail('Expired preflight must not start another operation')
+
+    monkeypatch.setattr(
+        preflight, 'check_canary_prerequisites', late_preflight,
+    )
+    monkeypatch.setattr(preflight, 'canary_plan', unexpected)
+    monkeypatch.setattr(canary, 'BgeEncoder', unexpected)
+    monkeypatch.setattr(canary, 'provider_vectors', unexpected)
+    with pytest.raises(BuildError, match='completion of prerequisites'):
+        canary.execute(tmp_path, provider=True, available_neurons=100,
+                       started=0.0, deadline=300.0)
+    assert not (tmp_path / 'canary-attempt.json').exists()
+
+
+def test_local_measurements_include_preflight_and_label_validation_scope(
+    tmp_path, monkeypatch,
+):
+    clock = [0.0]
+    revoked, reports = [], []
+    monkeypatch.setattr(canary, 'time', SimpleNamespace(
+        monotonic=lambda: clock[0],
+    ))
+    inputs = {**plan(), 'fingerprint': 'bound', 'sha256': 'plan'}
+
+    def prerequisites(_run_dir):
+        clock[0] += 20
+
+    def input_plan(_run_dir):
+        clock[0] += 5
+        return inputs
+
+    def revoke(_run_dir, gate):
+        revoked.append(gate)
+        clock[0] += 10
+
+    class Encoder:
+        identity = {'test': 'fake'}
+
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def validate_inputs(self, texts):
+            clock[0] += 1
+
+        def __call__(self, texts):
+            clock[0] += 2
+            return [[1.0] + [0.0] * 767 for _ in texts]
+
+    def evidence(_run_dir, gate, **kwargs):
+        reports.append((
+            gate, kwargs['measurements'], kwargs['elapsed_seconds'],
+        ))
+        clock[0] += 5
+
+    monkeypatch.setattr(preflight, 'check_canary_prerequisites', prerequisites)
+    monkeypatch.setattr(preflight, 'canary_plan', input_plan)
+    monkeypatch.setattr(preflight, 'begin_gate', revoke)
+    monkeypatch.setattr(preflight, 'write_evidence', evidence)
+    monkeypatch.setattr(canary, 'BgeEncoder', Encoder)
+    canary.execute(tmp_path, started=0, deadline=300)
+    assert revoked == ['local-canary']
+    assert len(reports) == 1
+    gate, measurements, elapsed = reports[0]
+    assert gate == 'local-canary'
+    assert measurements['elapsed_seconds'] == elapsed == 40
+    assert 'excludes the following evidence validation' in measurements[
+        'elapsed_scope']
+    assert [phase['phase'] for phase in measurements['phase_timings']][:3] == [
+        'prerequisites', 'input-plan', 'revoke-evidence',
+    ]
+    timing = json.loads((tmp_path / 'canary-timings.json').read_text())
+    assert timing['elapsed_seconds'] == 45
+    assert timing['phase_timings'][-1]['phase'] == 'local-evidence-validation'
+
+
+def test_expired_window_cannot_reserve_or_call_provider(tmp_path, monkeypatch):
+    monkeypatch.setattr(canary, 'time', SimpleNamespace(monotonic=lambda: 301))
+    calls = []
+    monkeypatch.setattr(canary, 'reserve_provider',
+                        lambda *args: calls.append('reservation'))
+    monkeypatch.setattr(canary, 'provider_vectors',
+                        lambda *args, **kwargs: calls.append('provider'))
+    with pytest.raises(BuildError, match='before provider reservation'):
+        canary.request_provider(tmp_path, {}, {}, [], {}, account='account',
+                                token='token', deadline=300)
+    assert calls == []
+
+
+def test_provider_socket_timeout_uses_remaining_after_reservation(
+    tmp_path, monkeypatch,
+):
+    clock = [280.0]
+    monkeypatch.setattr(canary, 'time', SimpleNamespace(
+        monotonic=lambda: clock[0],
+    ))
+    inputs = {**plan(), 'fingerprint': 'bound', 'sha256': 'plan'}
+    attempt = begin_attempt(tmp_path, inputs, provider=True)
+    original = canary.reserve_provider
+
+    def reservation(*args):
+        original(*args)
+        clock[0] += 2
+
+    timeouts = []
+
+    def provider(texts, _config, **kwargs):
+        timeouts.append(kwargs['timeout'])
+        return [[1.0] + [0.0] * 767 for _ in texts]
+
+    monkeypatch.setattr(canary, 'reserve_provider', reservation)
+    monkeypatch.setattr(canary, 'provider_vectors', provider)
+    canary.request_provider(tmp_path, attempt, inputs, [0], {},
+                            account='account', token='token', deadline=300)
+    assert timeouts == [18.0]
+    saved = json.loads((tmp_path / 'canary-attempt.json').read_text())
+    assert saved['provider_requests'] == [
+        {'indices': [0], 'status': 'COMPLETE'},
+    ]
+
+
+def test_supervisor_rejects_successful_exit_after_whole_deadline(
+    tmp_path, monkeypatch,
+):
+    clock = [10.0]
+    joined = []
+    options = []
+    monkeypatch.setattr(canary, 'time', SimpleNamespace(
+        monotonic=lambda: clock[0],
+    ))
+
+    class Process:
+        exitcode = 0
+
+        def __init__(self, *, target, args):
+            options.append(args[1])
+
+        def start(self):
+            clock[0] = 15.0
+
+        def join(self, seconds):
+            joined.append(seconds)
+            clock[0] = 311.0
+
+        def is_alive(self):
+            return False
+
+    monkeypatch.setattr(canary, 'multiprocessing', SimpleNamespace(
+        get_context=lambda _name: SimpleNamespace(Process=Process),
+    ))
+    (tmp_path / 'canary-attempt.json').write_text('{"status":"PASSED"}')
+    assert canary.main(['--run', str(tmp_path)]) == 1
+    assert joined == [295.0]
+    assert options[0]['started'] == 10.0
+    assert options[0]['deadline'] == 310.0
+    completion = json.loads((tmp_path / 'canary-completion.json').read_text())
+    assert completion['status'] == 'STOP'
+    assert completion['elapsed_seconds'] == 301.0
+    assert completion['within_budget'] is False
+    assert json.loads((tmp_path / 'canary-attempt.json').read_text()) == {
+        'status': 'STOP',
+    }

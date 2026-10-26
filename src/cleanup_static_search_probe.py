@@ -35,14 +35,22 @@ def delete_probe(name):
                 body = json.loads(text) if text.strip() else {}
             except ValueError:
                 body = None
+            errors = body.get('errors') if isinstance(body, dict) else None
+            no_errors = errors is None or errors == []
             if (200 <= status < 300 and isinstance(body, dict)
                     and (not text.strip() or body.get('success') is True)
-                    and not body.get('errors')):
+                    and no_errors):
                 return 'deleted'
-            errors = body.get('errors', []) if isinstance(body, dict) else []
-            codes = [error.get('code') for error in errors
-                     if isinstance(error, dict)]
-            if status == 404 and codes and set(codes) <= {10007, 10090}:
+            codes = []
+            if isinstance(errors, list):
+                codes = [error['code'] for error in errors
+                         if isinstance(error, dict)
+                         and type(error.get('code')) is int]
+            # Null/malformed errors are not affirmative evidence of absence.
+            # Every entry must contain a recognized integer code; do not hide
+            # unknown entries by filtering them out of the diagnostic list.
+            if (status == 404 and codes and len(codes) == len(errors)
+                    and set(codes) <= {10007, 10090}):
                 return 'already absent'
             message = f'Probe deletion HTTP {status}; error codes: {codes}'
             if status != 429 and status < 500:
