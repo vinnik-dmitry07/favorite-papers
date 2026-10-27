@@ -1,8 +1,9 @@
 # Full-size memory measurement, October 26
 
-The default local memory filter remains **FAIL**. No long encoding, provider
-canary, production change, or threshold change was performed. The subsequent
-isolated Cloudflare geometry result is recorded below.
+The October 26 local measurements remain **FAIL** against the default memory
+filter. No long encoding or provider canary was performed during those
+measurements. Subsequent Cloudflare geometry and genuine-vector results are
+recorded below; the threshold is unchanged.
 
 | Configuration | Observed peak MiB | Retained final MiB | Seconds | Default gate evidence |
 | --- | ---: | ---: | ---: | --- |
@@ -207,3 +208,26 @@ live runtime/corpus pin. The raw 96 MiB diagnostic stays FAIL; platform memory
 and production readiness remain unknown. This policy admits only bounded
 compatibility testing and explicitly confirmed offline encoding/evaluation.
 A stale pin or any other local failure still stops execution.
+## Genuine full-corpus run, October 27
+
+[Run 40448979121](https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/40448979121)
+completed all 40,575 corpus embeddings and 2,064 frozen query embeddings. The
+genuine-vector workload passed all 324 contract requests with an observed Node
+heapUsed + external peak of **92.42 MiB**, below the unchanged 96 MiB diagnostic.
+This GitHub runner used Node 22.23.3; the earlier 134.52 MiB local measurement
+remains valid for its own environment. Neither value measures Cloudflare memory
+or establishes its available headroom.
+
+The workflow failed immediately before quality evaluation: the separate
+certificate/runtime validator exceeded its one-minute step timeout. The memory
+harness itself passed. That validator's budget is now five minutes, preserving
+the 350-minute job limit and all admission checks. No full-corpus quality result
+was produced by this run.
+
+The complete vector artifact and embedding caches were saved. The artifact ZIP,
+corpus vectors, query vectors and frozen-query hashes were independently checked
+after download. Continue from these vectors; the failed validation is not a reason
+to encode the corpus again. A copied certificate still binds its original paths,
+environment, source and expiry, so it is not a portable admission override.
+
+[Run summary and raw evidence](probe-results/github-2026-10-27-full-offline.json)

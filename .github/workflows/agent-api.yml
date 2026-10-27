@@ -1134,7 +1134,7 @@ jobs:
       - name: Require genuine runtime contracts before quality evaluation
         id: full_runtime_contracts
         if: always() && inputs.full_run_confirmed && steps.full_pack.outcome == 'success'
-        timeout-minutes: 1
+        timeout-minutes: 5
         run: |
           python src/preflight_full_search_probe.py check-runtime-contracts \
             --run full-probe-reports/preflight --report full-probe-reports/full-memory.json

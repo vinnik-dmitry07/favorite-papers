@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "kind": "full-offline-run-interrupted-before-quality",
+  "run_id": 40448979121,
+  "source_commit": "fa3f4ec3724949a98b2b510949cf8efe405baf8a",
+  "run_url": "https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/40448979121",
+  "workflow_conclusion": "failure",
+  "artifact": {
+    "id": 12715563729,
+    "bytes": 149682694,
+    "sha256": "8f3fd29b369ae41f1474e052e0eef931a23ca7437c99640adbc6bc13d519c65c",
+    "download_verified": true
+  },
+  "corpus": {
+    "passages": 40575,
+    "cards": 415,
+    "texts": 362,
+    "encoded": 40575,
+    "cached": 0,
+    "encoder_elapsed_seconds": 8872.649603997,
+    "step_elapsed_seconds": 9051,
+    "vectors_sha256": "85d3c5eb27591a4a459366e33c8329251475bddc36b998c13d2c9adad45afa62"
+  },
+  "queries": {
+    "encoded": 2064,
+    "cached": 0,
+    "step_elapsed_seconds": 201,
+    "vectors_sha256": "fd9cace08ce9efce9859cbdc42e2183c79f17acfcd904f03ef1a6220d807840d",
+    "query_manifest_sha256": "049e5e887505ec9c19e030559034ff5f999388c7722af0b42cfa836570d8d556"
+  },
+  "vectors_verified": true,
+  "encoder_signature": "4a4fb351db67b24b30dbdc4561302e1b14af0b317835b65f6a8ad308b4b72202",
+  "provider_canary": {
+    "status": "PASS",
+    "input_count": 18,
+    "request_count": 2,
+    "total_input_tokens": 1782,
+    "min_cosine": 0.9999992926943367,
+    "estimated_neurons_upper_budget": 11,
+    "measured_billing": false,
+    "raw_report": "github-2026-10-27-full-offline.provider.raw.json",
+    "raw_sha256": "e6f21a6ebc78b544dffcc8d741507b1643c734046b933d831774142c0a91f4bd"
+  },
+  "local_real_runtime": {
+    "status": "PASS",
+    "observed_peak_bytes": 96908446,
+    "observed_peak_mib": 92.41909599304199,
+    "threshold_mib": 96,
+    "checks": {
+      "canonical_full_coverage": true,
+      "real_embedding_provenance": true,
+      "observed_peak_below_local_threshold": true,
+      "repeated_churn_retained_growth_bounded": true,
+      "singleton_initialization": true,
+      "bounded_admission": true,
+      "bounded_queue": true,
+      "structural_allocation_bound": true,
+      "rest_wrapper": true,
+      "mcp_wrapper": true
+    },
+    "contract_requests": 324,
+    "offline_embedding_calls": 160,
+    "raw_report": "github-2026-10-27-full-offline.memory.raw.json.gz",
+    "raw_uncompressed_sha256": "414866b0a1d535cf5c48dfacd4e96d4b7e9dc6136afa721a619301471173e93d",
+    "limitation": "Observed Node heapUsed + external, not a Cloudflare memory or headroom measurement."
+  },
+  "failure": {
+    "step": "Require genuine runtime contracts before quality evaluation",
+    "configured_timeout_minutes": 1,
+    "observed_step_seconds": 72,
+    "message": "The action has timed out after 1 minutes.",
+    "classification": "Workflow timeout; validator did not finish. No evidence of a completed contract rejection."
+  },
+  "quality": "NOT_RUN",
+  "runtime_contract_validator": "INCOMPLETE_TIMEOUT",
+  "cache_save": "success",
+  "platform_memory": "UNKNOWN",
+  "production_ready": false,
+  "recovery": {
+    "full_corpus_and_query_vectors": "Complete and checksum-verified in the original artifact.",
+    "certificate_portability": "Binds original GHA paths, environment, code and 24-hour validity. A copied certificate does not authorize arbitrary scratch replay.",
+    "next_measurement": "Complete genuine runtime validation and quality evaluation using saved vectors. Do not repeat corpus encoding solely because this validation step timed out."
+  }
+}

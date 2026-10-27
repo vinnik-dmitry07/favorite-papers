@@ -84,7 +84,13 @@ def test_long_entrypoints_require_explicit_confirmation_and_certificate():
     assert full_job()['timeout-minutes'] == 350
     assert steps['full_encode']['timeout-minutes'] == 240
     assert steps['query_encode']['timeout-minutes'] == 45
-    assert sum(step.get('timeout-minutes', 0) for step in full_job()['steps']) <= 345
+    # This verifier revalidates the full corpus and retained gate evidence.
+    # Run 40448979121 exhausted a one-minute limit after successful encoding.
+    assert steps['full_runtime_contracts']['timeout-minutes'] == 5
+    step_budget = sum(
+        step.get('timeout-minutes', 0) for step in full_job()['steps']
+    )
+    assert step_budget <= 349 < full_job()['timeout-minutes']
     for name in ('full_encode', 'query_encode', 'full_pack', 'full_quality'):
         step = steps[name]
         assert 'success()' in step['if']
