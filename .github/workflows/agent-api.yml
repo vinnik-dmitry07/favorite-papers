@@ -40,6 +40,9 @@ name: Agent probe
       - src/test_run_real_search_probe.py
       - src/test_real_search_workflow.py
       - src/test_full_search_workflow.py
+      - src/test_geometry_probe_workflow.py
+      - src/run_full_geometry_probe.py
+      - src/test_run_full_geometry_probe.py
       - src/test_agent_publish_workflow.py
       - src/probe_full_search_numeric.py
       - src/summarize_static_search_probe.py
@@ -75,13 +78,14 @@ name: Agent probe
           - durable-object
         default: worker
       do_probe_phase:
-        description: DO pilot/matrix, log collection, real subset, or isolated offline full-corpus gates
+        description: DO pilot/matrix, log collection, real subset, full-size geometry diagnostic, or offline full-corpus gates
         type: choice
         options:
           - pilot
           - matrix
           - collect
           - real
+          - geometry
           - full
         default: pilot
       full_run_confirmed:
@@ -151,7 +155,7 @@ jobs:
         run: |
           python -m pip install -r requirements-agent.txt numpy==2.3.4
           python -m py_compile src/reproduce_static_search_review.py
-          python -m pytest src/test_agent_index.py src/test_publish_agent_index.py src/test_agent_pages.py src/test_static_search_probe.py src/test_static_search_probe_run.py src/test_static_search_probe_cleanup.py src/test_static_search_do_lifecycle.py src/test_static_search_do_probe.py src/test_prepare_static_search_do_collection.py src/test_real_search_probe.py src/test_embed_real_search_probe.py src/test_run_real_search_probe.py src/test_real_search_workflow.py src/test_full_search_workflow.py src/test_agent_publish_workflow.py src/test_probe_workflow.py src/test_authenticate_probe_fixture.py src/test_full_search_probe.py src/test_pack_full_search_probe.py src/test_evaluate_full_search_probe.py src/test_preflight_full_search_probe.py src/test_full_probe_canary.py src/test_tokenizer_contract.py
+          python -m pytest src/test_agent_index.py src/test_publish_agent_index.py src/test_agent_pages.py src/test_static_search_probe.py src/test_static_search_probe_run.py src/test_static_search_probe_cleanup.py src/test_static_search_do_lifecycle.py src/test_static_search_do_probe.py src/test_prepare_static_search_do_collection.py src/test_real_search_probe.py src/test_embed_real_search_probe.py src/test_run_real_search_probe.py src/test_real_search_workflow.py src/test_full_search_workflow.py src/test_geometry_probe_workflow.py src/test_run_full_geometry_probe.py src/test_agent_publish_workflow.py src/test_probe_workflow.py src/test_authenticate_probe_fixture.py src/test_full_search_probe.py src/test_pack_full_search_probe.py src/test_evaluate_full_search_probe.py src/test_preflight_full_search_probe.py src/test_full_probe_canary.py src/test_tokenizer_contract.py
       - name: Node
         uses: actions/setup-node@v4
         with:
@@ -179,7 +183,7 @@ jobs:
           npx wrangler deploy --config wrangler.real-probe.toml --dry-run
   static_probe:
     needs: offline
-    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime != 'durable-object' && inputs.do_probe_phase != 'collect' && inputs.do_probe_phase != 'real' && inputs.do_probe_phase != 'full'
+    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime != 'durable-object' && inputs.do_probe_phase != 'collect' && inputs.do_probe_phase != 'real' && inputs.do_probe_phase != 'full' && inputs.do_probe_phase != 'geometry'
     runs-on: ubuntu-latest
     timeout-minutes: 25
     environment: static-search-probe
@@ -319,7 +323,7 @@ jobs:
           PYTHON
   static_do_probe:
     needs: offline
-    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase != 'collect' && inputs.do_probe_phase != 'real' && inputs.do_probe_phase != 'full'
+    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase != 'collect' && inputs.do_probe_phase != 'real' && inputs.do_probe_phase != 'full' && inputs.do_probe_phase != 'geometry'
     runs-on: ubuntu-latest
     timeout-minutes: 50
     environment: static-search-probe
@@ -559,7 +563,7 @@ jobs:
           retention-days: 90
   static_real_probe:
     needs: offline
-    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase == 'real' && inputs.do_probe_phase != 'full'
+    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase == 'real' && inputs.do_probe_phase != 'full' && inputs.do_probe_phase != 'geometry'
     runs-on: ubuntu-latest
     timeout-minutes: 60
     environment: static-search-probe
@@ -729,9 +733,173 @@ jobs:
                     and lifecycle.get('namespace_absent') is True)
           raise SystemExit(0 if passed else 1)
           PYTHON
+  full_geometry_probe:
+    needs: offline
+    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase == 'geometry' && inputs.free_plan_confirmed
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: static-search-probe
+    env:
+      FREE_PLAN_CONFIRMED: ${{ inputs.free_plan_confirmed }}
+      WRANGLER_SEND_METRICS: 'false'
+      PROBE_NAME: key-papers-static-do-probe-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - name: Check the Free account and selected credentials
+        id: controls
+        env:
+          PROBE_CREDENTIALS: ${{ inputs.probe_credentials }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+        run: |
+          if [ "$FREE_PLAN_CONFIRMED" != 'true' ]; then
+            echo '::error::Confirm the selected account is Workers Free. This workflow never changes its plan.'
+            exit 1
+          fi
+          case "$PROBE_CREDENTIALS" in
+            repository|probe_environment) ;;
+            *) echo '::error::Select repository or probe_environment.'; exit 1 ;;
+          esac
+          if [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo '::error::The selected credential pair is incomplete; no fallback account is used.'
+            exit 1
+          fi
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: worker/package-lock.json
+      - name: Install only the geometry fixture dependencies
+        run: python -m pip install -r requirements-agent.txt numpy==2.3.4
+      - name: Build and pack the canonical full-size deterministic fixture
+        id: geometry_fixture
+        run: |
+          mkdir -p full-geometry-reports
+          python src/build_full_search_probe.py --out agent_full_probe
+          python src/pack_full_search_probe.py --source agent_full_probe \
+            --out agent_geometry_probe --geometry-fixture --seed 17
+      - name: Install pinned worker dependencies and build the scan kernel
+        working-directory: worker
+        run: |
+          npm ci
+          npm run build:probe
+      - name: Refuse deployment if an earlier DO namespace was not removed
+        id: preflight
+        timeout-minutes: 1
+        run: python src/static_search_do_lifecycle.py preflight "$PROBE_NAME"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+      - name: Pin the geometry manifest and create expiring access credentials
+        run: |
+          python - <<'PYTHON'
+          from datetime import datetime, timedelta, timezone
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          import secrets
+          manifest = Path('agent_geometry_probe/probe.json')
+          digest = hashlib.sha256(manifest.read_bytes()).hexdigest()
+          token = secrets.token_urlsafe(32)
+          print('::add-mask::' + token)
+          expiry = (datetime.now(timezone.utc) + timedelta(minutes=15)).isoformat()
+          with open(os.environ['GITHUB_ENV'], 'a') as output:
+              output.write('PROBE_TOKEN=' + token + '\n')
+              output.write('PROBE_EXPIRES_AT=' + expiry + '\n')
+              output.write('PROBE_MANIFEST_SHA=' + digest + '\n')
+          secret_file = Path(os.environ['RUNNER_TEMP']) / 'geometry-probe-secrets.json'
+          secret_file.write_text(json.dumps({'PROBE_TOKEN': token}))
+          secret_file.chmod(0o600)
+          PYTHON
+      - name: Deploy only this run's full-size geometry Durable Object
+        id: deploy
+        timeout-minutes: 3
+        working-directory: worker
+        run: |
+          set -o pipefail
+          npx wrangler deploy --config wrangler.geometry-probe.toml --name "$PROBE_NAME" \
+            --secrets-file "$RUNNER_TEMP/geometry-probe-secrets.json" \
+            --var "PROBE_EXPIRES_AT:$PROBE_EXPIRES_AT" \
+            --var "PROBE_MANIFEST_SHA:$PROBE_MANIFEST_SHA" 2>&1 | tee probe-geometry-deploy.txt
+          python -c "import os, pathlib, sys; sys.path.insert(0, '../src'); from write_discovery_links import worker_origin; origin=worker_origin(pathlib.Path('probe-geometry-deploy.txt').read_text(encoding='utf-8'), os.environ['PROBE_NAME']); sys.exit('deploy did not print the probe origin') if not origin else print('origin=' + origin)" >> "$GITHUB_OUTPUT"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+      - name: Capture the owned namespace before sending geometry requests
+        id: capture
+        timeout-minutes: 1
+        run: python src/static_search_do_lifecycle.py capture "$PROBE_NAME"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+      - name: Run bounded full-size load, scan, and hydration diagnostics
+        id: measure
+        timeout-minutes: 7
+        continue-on-error: true
+        env:
+          PROBE_ORIGIN: ${{ steps.deploy.outputs.origin }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+        run: |
+          python src/run_full_geometry_probe.py --assets agent_geometry_probe \
+            --base-url "$PROBE_ORIGIN" --token-env PROBE_TOKEN \
+            --script-name "$PROBE_NAME" --max-load-seconds 300 --wait-seconds 90 \
+            --out full-geometry-reports/run.json
+      - name: Remove the owned DO namespace, verify absence, then remove Worker
+        id: cleanup
+        if: always() && (steps.deploy.outcome == 'success' || steps.deploy.outcome == 'failure' || steps.deploy.outcome == 'cancelled')
+        timeout-minutes: 5
+        run: python src/static_search_do_lifecycle.py cleanup "$PROBE_NAME"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+      - name: Remove the temporary geometry-probe secret file
+        if: always()
+        run: rm -f "$RUNNER_TEMP/geometry-probe-secrets.json"
+      - name: Preserve geometry diagnostics and verified cleanup evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-geometry-probe-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            full-geometry-reports/
+            agent_full_probe/probe.json
+            agent_geometry_probe/probe.json
+            probe-do-lifecycle.json
+            probe-do-cleanup.txt
+            worker/probe-geometry-deploy.txt
+          if-no-files-found: ignore
+          retention-days: 90
+      - name: Report geometry diagnostics without changing full-run admission
+        if: always() && steps.measure.outcome != 'skipped'
+        run: |
+          python - <<'PYTHON'
+          import json
+          from pathlib import Path
+          report = json.loads(Path('full-geometry-reports/run.json').read_text())
+          lifecycle = json.loads(Path('probe-do-lifecycle.json').read_text())
+          for key in ('functional_gate', 'gateway_cpu_gate', 'do_cpu_gate',
+                      'memory_gate', 'production_readiness'):
+              print(key + ':', report.get(key, 'unverified'))
+          print('Cleanup:', lifecycle.get('cleanup', 'unverified'))
+          print('Geometry diagnostics do not replace the existing 96 MiB full-run admission gate.')
+          passed = (report.get('functional_gate') == 'passed'
+                    and report.get('workload_complete') is True
+                    and all(report.get(key) in ('passed', 'unverified')
+                            for key in ('gateway_cpu_gate', 'do_cpu_gate'))
+                    and lifecycle.get('cleanup') == 'passed'
+                    and lifecycle.get('namespace_absent') is True)
+          raise SystemExit(0 if passed else 1)
+          PYTHON
   full_offline_probe:
     needs: offline
-    if: github.event_name == 'workflow_dispatch' && inputs.do_probe_phase == 'full' && inputs.static_probe && inputs.probe_runtime == 'durable-object'
+    if: github.event_name == 'workflow_dispatch' && inputs.do_probe_phase == 'full' && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase != 'geometry'
     runs-on: ubuntu-latest
     timeout-minutes: 350
     environment: static-search-probe

@@ -58,6 +58,59 @@ report CPU coverage and only claim memory headroom if actual platform memory
 is obtained. A successful workload without OOM is not a memory measurement.
 No change to the local gate policy or permission for a long run is implied.
 
+### Short Cloudflare geometry diagnostic
+
+The manual `geometry` phase now deploys the same full-size synthetic pack in
+one temporary Durable Object. It shares the full corpus loader, WASM index,
+service and bounded REST/MCP handler with the local memory workload. It has
+no Workers AI, Vectorize or R2 binding, downloads no encoder model, and cannot
+perform semantic evaluation or publish production data.
+
+```bash
+gh workflow run agent-api.yml \
+  -R vinnik-dmitry07/favorite-papers \
+  --ref feat/static-search-probe \
+  -f static_probe=true \
+  -f probe_runtime=durable-object \
+  -f do_probe_phase=geometry \
+  -f probe_credentials=repository \
+  -f free_plan_confirmed=true
+```
+
+The load is bounded to 300 seconds and 350 HTTP attempts with no workload
+retries. The normal workload is 324 REST/MCP requests plus three controls:
+16 concurrent cold catalog requests, large-paper reads, four 20-request
+content bursts, 48-paper cache churn, 160 distinct synthetic searches and
+16 cached repeats. Only designated bursts accept `probe_overloaded` responses;
+every other error stops the next phase. An external supervisor also bounds
+stalled connections. The per-object request cap resets if the object restarts;
+the external runner enforces the whole-run cap.
+
+The runner pins the manifest and checks response identity, offsets and result
+geometry. Platform CPU is collected separately for the gateway and object,
+for at most 90 additional seconds; client latency is never substituted for CPU.
+Missing telemetry remains unverified. Auth expires after 15 minutes and the
+20-minute CI job removes the owned namespace and Worker, verifies absence,
+and preserves the run report and cleanup evidence as
+`full-geometry-probe-<run>-<attempt>`.
+
+Interpretation: an OOM, object reset disrupting the workload, unexpected HTTP
+error or persistent CPU excess is a reason to stop before full encoding.
+A completed workload without OOM is useful runtime evidence, but provides no
+numerical memory peak, semantic quality or Workers AI compatibility result.
+Memory and production-readiness fields therefore stay unverified. This job
+does not write an admission certificate or override the failed 96 MiB filter.
+
+The October 27 local workerd smoke completed all 327 attempts in 20.68 seconds
+including local startup. It used one object boot, admitted at most four active
+and eight queued requests, and returned 21 expected overload responses in the
+burst phases with no unexpected failures. All 160 distinct synthetic queries
+and cached repeats matched the expected counts. This verifies the deployed
+entry-point/runner integration locally, not Cloudflare CPU or memory.
+[Raw evidence and reproduction](probe-results/local-2026-10-27-full-geometry.json).
+Validation: 121 focused Python tests, 176 TypeScript tests (two opt-in tests
+skipped), both TypeScript checks and the geometry Wrangler dry-run passed.
+
 A source-review observation about concurrent same-paper cache misses
 overcounting `CorpusCache.paperBytes` is deferred. It was not added as a third
 implementation change and is not asserted to explain the measured peaks.

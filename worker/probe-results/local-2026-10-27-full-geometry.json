@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "environment": "local workerd, not Cloudflare",
+  "date": "2026-10-27",
+  "identity": {
+    "manifest_sha256": "55de7d257a8db9e9e1c8cabc7992d1207d388a2f534d12291746ff2ab9bf333d",
+    "release_id": "9b4203dbfbcd1f44005dd52c65b8b938ee37cd176e24a86d41b285555ab36c29",
+    "passages": 40575,
+    "papers": 415,
+    "text_papers": 362
+  },
+  "synthetic": true,
+  "workload_complete": true,
+  "requests": 327,
+  "distinct_synthetic_queries": 160,
+  "controlled_overloads": 21,
+  "unexpected_failures": 0,
+  "elapsed_seconds_including_local_startup": 20.68,
+  "boot_count": 1,
+  "admission": {
+    "active": 1,
+    "queued": 0,
+    "max_active": 4,
+    "max_queued": 8,
+    "rejected": 21,
+    "completed": 305,
+    "active_limit": 4,
+    "queue_limit": 8,
+    "queue_wait_ms": 2000
+  },
+  "paper_loads": {
+    "active": 0,
+    "queued": 0,
+    "pending": 0,
+    "peak_active": 1,
+    "rejected": 0,
+    "max_active": 1,
+    "max_queued": 16
+  },
+  "functional_gate": "passed",
+  "cpu_gate": "unverified",
+  "memory_gate": "unverified",
+  "semantic_quality": "not_measured",
+  "full_encoding_admission": "STOP; unchanged 96 MiB filter",
+  "raw_report": "local-2026-10-27-full-geometry.raw.json.gz",
+  "raw_report_sha256": "c6e4d9fb2f5d20ba3875af972bdb42ed47c46f9e5ed682543160a1757c4833b0",
+  "reproduction": "Build canonical geometry assets, then run python worker/probe-results/local-full-geometry-smoke.py. Requires installed worker dependencies. Harness only sends HTTP to127.0.0.1:8789 and starts wrangler --local; output is in /tmp.",
+  "source_sha256": {
+    "worker/src/full-geometry-do-probe.ts": "fbabeecea86a62ff8185276447e0c5a9620c6fbfdd4716cade7005d14d8d27c6",
+    "worker/src/full-geometry-do-probe-entry.ts": "6dfef651969d26b2d8c58be88027a73a83c366f8b8fae86507f88da03ef63b15",
+    "worker/wrangler.geometry-probe.toml": "71a34523f6e089cf4f86c01251b9326e4bd2653c0c57a2832c3c6b445a5660a6",
+    "src/run_full_geometry_probe.py": "5cc18c83e0cbde3513baa438bdc5fcca233b5c93d98407b0fc6ab40277c23936",
+    "worker/src/full-corpus-store.ts": "41d953ece730b7ecdbb7fb966bbca7dfea52f0d450c8d1c3d2ba50fe50432ed1",
+    "worker/src/full-search-index.ts": "3addb2b06102927e5339be06eec1af6d5f1981e403a0e7811648fe9ca259b4ef",
+    "worker/src/probe-admission.ts": "3966c6c34fd5a6eb16c835957cbb0862d415f6fab09c37185500493f780706e5"
+  }
+}
