@@ -3,6 +3,7 @@ from copy import deepcopy
 from datetime import datetime, timezone
 import json
 from pathlib import Path
+import shutil
 from types import SimpleNamespace
 
 import pytest
@@ -73,7 +74,7 @@ def test_all_true_booleans_are_not_numeric_or_memory_evidence(run):
     document = gate.load_run(root)
     note = root / 'claim.json'
     gate.write_json(note, {'status': 'PASS'})
-    for name in ('numeric-contracts', 'geometry-memory'):
+    for name in ('numeric-contracts', 'geometry-contracts'):
         evidence = {'gate': name, 'artifacts': [{'path': str(note)}]}
         with pytest.raises(BuildError):
             gate.validate_raw_evidence(evidence, document)
@@ -198,19 +199,20 @@ def test_self_consistent_forged_tokenizer_summary_rejects_garbage_ids(run):
 def test_raw_memory_report_requires_current_implementation_and_baseline(run):
     root, binding = run
     report = {'schema_version': 2, 'gate': 'geometry-memory', 'status': 'PASS',
-              'checks': {key: True for key in gate.GATE_CHECKS['geometry-memory']},
+              'checks': {key: True for key in gate.GATE_CHECKS['geometry-contracts']},
               'passages': 45, 'papers': 10, 'synthetic': True,
-              'source_rows_sha256': 'rows', 'source_manifest_sha256': 'source'}
+              'source_rows_sha256': 'rows', 'source_manifest_sha256': 'source',
+              'contract_requests': 324, 'offline_embedding_calls': 160}
     binding.update(rows_sha256='rows', preembedding_manifest_sha256='source')
     snapshot = {'binding': binding}
     path = root / 'raw-memory.json'
     gate.write_json(path, report)
     with pytest.raises(BuildError, match='implementation'):
-        gate.validate_raw_evidence({'gate': 'geometry-memory', 'artifacts': [{'path': str(path)}]}, snapshot)
+        gate.validate_raw_evidence({'gate': 'geometry-contracts', 'artifacts': [{'path': str(path)}]}, snapshot)
     report['passages'] = 44
     gate.write_json(path, report)
     with pytest.raises(BuildError, match='coverage'):
-        gate.validate_raw_evidence({'gate': 'geometry-memory', 'artifacts': [{'path': str(path)}]}, snapshot)
+        gate.validate_raw_evidence({'gate': 'geometry-contracts', 'artifacts': [{'path': str(path)}]}, snapshot)
 
 
 def test_canonical_coverage_is_checked_against_raw_sources(tmp_path, monkeypatch):
@@ -258,8 +260,151 @@ def test_geometry_failure_is_retained_for_aggregate(run):
                           'elapsed_ms': 10})
     with pytest.raises(BuildError, match='FAIL evidence retained'):
         gate.record_geometry(root, raw)
-    assert gate.read_json(gate.evidence_path(root, 'geometry-memory'))['status'] == 'FAIL'
+    assert gate.read_json(gate.evidence_path(root, 'geometry-contracts'))['status'] == 'FAIL'
     assert gate.aggregate(root)['status'] == 'STOP'
+
+
+def memory_contract_fixture(root, binding, *, synthetic=True, peak_mib=134):
+    packed = root / 'packed.json'
+    packed.write_text('{}')
+    corpus = Path(binding['corpus'])
+    corpus.mkdir(exist_ok=True)
+    (corpus / 'probe.json').write_text('{"embeddings":"real"}')
+    binding.update(rows_sha256='rows', preembedding_manifest_sha256='source',
+                   code_sha256=gate.code_hashes())
+    checks = {key: True for key in gate.GATE_CHECKS['geometry-contracts']
+              if key != 'reviewed_live_geometry'}
+    if not synthetic:
+        checks.pop('synthetic_provenance')
+        checks.pop('production_rejects_fixture')
+        checks['real_embedding_provenance'] = True
+    checks[gate.MEMORY_CHECK] = peak_mib < 96
+    return {
+        'schema_version': 2,
+        'gate': 'geometry-memory' if synthetic else 'full-real-memory',
+        'status': 'PASS' if peak_mib < 96 else 'FAIL', 'checks': checks,
+        'passages': 45, 'papers': 10, 'synthetic': synthetic,
+        'source_rows_sha256': 'rows',
+        'source_manifest_sha256': ('source' if synthetic else
+                                  gate.sha((corpus / 'probe.json').read_bytes())),
+        'contract_requests': 324, 'offline_embedding_calls': 160,
+        'source_sha256': {key: value for key, value in binding['code_sha256'].items()
+                          if key in ('worker/probe-kernel/full-memory.ts',
+                                     'worker/src/full-corpus-store.ts',
+                                     'worker/src/full-search-index.ts',
+                                     'worker/probe-kernel/scan.wasm')},
+        'summary': {'peaks': {'heap_plus_external': peak_mib * 1024**2}},
+        'method': {'local_threshold_bytes': gate.MEMORY_THRESHOLD,
+                   'default_threshold_bytes': gate.MEMORY_THRESHOLD},
+        'retained_growth': {'bytes': 0}, 'elapsed_ms': 1000,
+        'structural_allocation_account': {
+            'unknowns': ['V8'], 'one_source_shard_bytes': 4096 * 768,
+            'request_admission': {'max_active': 4, 'max_queued': 8}},
+        'cloudflare_memory_gate': 'unverified',
+        'packed_manifest_path': str(packed),
+        'manifest_sha256': gate.sha(packed.read_bytes()),
+    }
+
+
+@pytest.mark.parametrize('synthetic', [True, False])
+@pytest.mark.parametrize('peak_mib', [80, 134])
+def test_offline_contracts_preserve_independent_memory_diagnostic(run, synthetic, peak_mib):
+    root, binding = run
+    raw = memory_contract_fixture(root, binding, synthetic=synthetic, peak_mib=peak_mib)
+    before = deepcopy(raw)
+    result = gate.validate_memory_contracts(raw, binding, synthetic=synthetic)
+    assert result['local_memory_filter'] == ('PASS' if peak_mib < 96 else 'FAIL')
+    assert raw == before
+    assert gate.MEMORY_CHECK not in gate.GATE_CHECKS['geometry-contracts']
+    assert 'reviewed_live_geometry' in gate.GATE_CHECKS['geometry-contracts']
+
+
+@pytest.mark.parametrize('change', ['contract', 'incomplete', 'error', 'threshold',
+                                   'nan', 'false_pass', 'false_peak', 'growth', 'packed'])
+def test_memory_diagnostic_exception_never_admits_other_failures(run, change):
+    root, binding = run
+    raw = memory_contract_fixture(root, binding)
+    if change == 'contract':
+        raw['checks']['bounded_admission'] = False
+    elif change == 'incomplete':
+        raw['contract_requests'] = 323
+    elif change == 'error':
+        raw['error'] = 'timeout'
+    elif change == 'threshold':
+        raw['method']['local_threshold_bytes'] *= 2
+    elif change == 'nan':
+        raw['summary']['peaks']['heap_plus_external'] = float('nan')
+    elif change == 'false_pass':
+        raw['status'] = 'PASS'
+    elif change == 'false_peak':
+        raw['checks'][gate.MEMORY_CHECK] = True
+    elif change == 'growth':
+        raw['retained_growth']['bytes'] = 9 * 1024**2
+    else:
+        Path(raw['packed_manifest_path']).write_text('{"changed":true}')
+    with pytest.raises(BuildError):
+        gate.validate_memory_contracts(raw, binding, synthetic=True)
+
+
+def live_geometry_binding():
+    pin = gate.read_json(gate.ROOT / gate.GEOMETRY_PIN)
+    return {**{key: pin[key] for key in ('release_id', 'rows_sha256',
+                                        'source_graph_sha256', 'source_texts_sha256')},
+            'counts': {key: pin[key] for key in ('passages', 'cards', 'texts')},
+            'code_sha256': gate.code_hashes()}
+
+
+def test_actual_live_pin_admits_only_unchanged_runtime_and_corpus():
+    bound = live_geometry_binding()
+    paths = gate.validate_live_geometry(bound)
+    assert len(paths) == 3
+    assert paths[0] == gate.ROOT / gate.GEOMETRY_PIN
+    assert gate.read_json(paths[2])['namespace_absent'] is True
+
+
+@pytest.mark.parametrize('change', ['corpus', 'runtime', 'raw', 'lifecycle', 'pin'])
+def test_live_geometry_pin_rejects_drift_and_tampering(tmp_path, monkeypatch, change):
+    bound = live_geometry_binding()
+    pin = gate.read_json(gate.ROOT / gate.GEOMETRY_PIN)
+    paths = [gate.GEOMETRY_PIN, pin['report_path'], pin['lifecycle_path'],
+             *pin['source_sha256']]
+    for relative in paths:
+        target = tmp_path / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(gate.ROOT / relative, target)
+    monkeypatch.setattr(gate, 'ROOT', tmp_path)
+    if change == 'corpus':
+        bound['rows_sha256'] = 'changed'
+    elif change == 'runtime':
+        (tmp_path / 'worker/src/service.ts').write_text('changed')
+    elif change == 'raw':
+        (tmp_path / pin['report_path']).write_bytes(gate.gzip.compress(b'{}'))
+    elif change == 'lifecycle':
+        (tmp_path / pin['lifecycle_path']).write_text('{}')
+    else:
+        (tmp_path / gate.GEOMETRY_PIN).write_text('{}')
+    with pytest.raises(BuildError):
+        gate.validate_live_geometry(bound)
+
+
+def test_real_quality_admission_keeps_memory_fail_and_requires_current_bundle(run, monkeypatch):
+    root, binding = run
+    raw = memory_contract_fixture(root, binding, synthetic=False)
+    raw['executed_bundle_sha256'] = 'reviewed'
+    path = root / 'real-memory.json'
+    gate.write_json(path, raw)
+    monkeypatch.setattr(gate, 'load_run', lambda *args, **kwargs: {'binding': binding})
+    calls = []
+    monkeypatch.setattr(gate, 'verify_certificate', lambda *args, **kwargs: calls.append(args))
+    monkeypatch.setattr(gate, 'build_memory_bundle', lambda path: 'reviewed')
+    result = gate.check_runtime_contracts(root, path)
+    assert len(calls) == 1
+    assert result['status'] == 'PASS' and result['local_memory_filter'] == 'FAIL'
+    assert result['production_ready'] is False
+    assert result['platform_memory_gate'] == 'UNKNOWN'
+    monkeypatch.setattr(gate, 'build_memory_bundle', lambda path: 'changed')
+    with pytest.raises(BuildError, match='reviewed source'):
+        gate.check_runtime_contracts(root, path)
 
 
 def test_old_memory_executable_cannot_claim_new_checkout_hashes(tmp_path, monkeypatch):

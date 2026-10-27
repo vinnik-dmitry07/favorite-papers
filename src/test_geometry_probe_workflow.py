@@ -213,7 +213,7 @@ def test_final_status_retains_runtime_failures_and_cleanup_proof(tmp_path, field
     result = subprocess.run([sys.executable, '-c', python], cwd=tmp_path,
                             capture_output=True, text=True)
     assert (result.returncode == 0) is passes, result.stdout + result.stderr
-    assert '96 MiB full-run admission gate' in result.stdout
+    assert 'retain the 96 MiB memory result' in result.stdout
     assert 'production_readiness: unverified' in result.stdout
 
 

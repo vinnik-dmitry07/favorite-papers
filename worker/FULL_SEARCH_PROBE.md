@@ -12,16 +12,31 @@ result does not establish full-corpus memory, retrieval quality or Cloudflare
 CPU. The full source currently
 contains 415 cards, 362 available texts and 53 explicitly unavailable texts.
 
-## Current result: STOP
+## Current result and offline admission policy
 
-The [October 26 measurement](probe-results/local-2026-10-26-full-memory.json)
-reran the same 324-request workload on the current canonical release. Default
-Node peaks were 133.85 MiB before changes and 134.44 MiB after two small
-allocation reductions. The unchanged 96 MiB filter still fails. The same final
-code with restricted Node heap settings observed 83.70 MiB; that is a diagnostic
-of GC sensitivity, not admissible replacement evidence or Cloudflare proof.
-No canary, full encoding, or deployment followed. See
-[reproduction and the next decision](MEMORY_MEASUREMENT.md).
+The local 96 MiB diagnostic still fails: the ordinary Node workload observed
+134.44 MiB after the two allocation changes. That number is not a Cloudflare
+memory measurement. The subsequent [live full-size run](probe-results/cloudflare-2026-10-26-full-geometry.json)
+completed all 327 attempts in 57.985 seconds with one object boot, no unexpected
+HTTP error, and verified removal of the temporary namespace and Worker.
+CPU attribution and numerical memory headroom remain unverified.
+
+The revised admission decision concerns bounded compatibility testing and
+**offline encoding/evaluation only**. `geometry-contracts` requires fresh local
+coverage, provenance, initialization, queue, retained-growth and structural
+checks, together with the fixed reviewed live evidence. The raw local report
+keeps its FAIL and 96 MiB threshold; a peak-only failure does not prohibit
+independent offline quality measurements. Every other local failure still
+blocks the canary and long run. This does not approve production deployment.
+
+The fixed pin `probe-results/full-geometry-admission-pin.json` binds the original
+live report and cleanup hashes, stable corpus identities, and the deployed
+runtime/build inputs. Changed corpus content, runtime code, dependencies or
+configuration invalidate that evidence. Documentation/preflight changes can
+reuse the historical experiment because the measured runtime is unchanged.
+Fresh local evidence and certificates still expire after 24 hours and bind the
+current checkout, environment and query set. Older certificates cannot pass
+the revised policy hash. No new provider call or long encode has run yet.
 
 ### Historical October 25 comparison
 
@@ -40,7 +55,7 @@ The unchanged 96 MiB peak filter still fails. All other measured memory/contract
 checks pass, including queue limits, one index initialization and retained
 churn growth below 8 MiB. This is a local Node result, not proof that Cloudflare
 uses 135.5 MiB. The new provider canary has **not** started; the interrupted full encode has **not** resumed.
-Do not bypass or raise the memory threshold just to obtain a certificate.
+The diagnostic threshold is not raised or relabeled PASS. The current offline admission policy is described above.
 
 ## Why the order changed
 
@@ -85,7 +100,7 @@ the historical v1 subset cannot discharge those checks.
 | 1 | Source coverage, pinned model/config, frozen queries, code and dependency hashes | STOP on stale or incomplete input |
 | 2 | All canonical Python/HF/Worker token IDs, no truncation, model never loaded | STOP before inference, including cache hits |
 | 3 | Existing genuine vectors, independent int8 reference, JS/WASM, ties around top25/top40, actual REST/MCP routes | Fix packing, ranking or API contracts |
-| 4 | Full-size synthetic index with real metadata/text, cold concurrent initialization, bounded request/embedding queues, serialized responses, repeated cache churn | Fix memory/runtime implementation |
+| 4 | Fresh full-size local contracts plus pinned live completion and cleanup on the same runtime/corpus; retain Node peak separately | STOP on any non-peak failure or stale live evidence |
 | 5 | At most 32 local and 32 provider input occurrences, including repeats; the actual failing input, all five special tokens, Unicode and query/passage inputs | STOP on model/provider mismatch or unavailable allowance |
 | 6 | Fresh certificate with every mandatory gate PASS, plus explicit long-run flag | Encode only after user confirmation |
 
@@ -118,8 +133,12 @@ allocation behavior only; their search results are not semantic evidence.
 The local memory filter is an observed `heapUsed + external` below 96 MiB,
 with at most 8 MiB retained growth across comparable warmed churn rounds.
 `arrayBuffers` is already included in `external`; RSS is reported separately.
-These are provisional Node engineering filters. Sampling can miss synchronous
-peaks, and passing does not prove Cloudflare's memory limit is satisfied.
+These are provisional Node engineering diagnostics. Retained growth remains a
+blocking contract; the 96 MiB observed-peak result is retained separately from
+offline admission. Sampling can miss synchronous peaks, and passing does not
+prove Cloudflare's memory limit is satisfied. This distinction also applies
+after genuine vectors are packed: quality runs require validated runtime
+contracts, while a peak-only diagnostic failure is recorded without hiding it.
 
 Admission precedes initialization and body buffering. The isolated handler
 bounds active requests, waiting requests, request/response bytes and embedding
@@ -130,7 +149,7 @@ must be retained in any later full-corpus deployment.
 ## Bounded compatibility canary
 
 `src/run_full_probe_canary.py` supervises one child with a hard five-minute
-deadline. It runs only after the tokenizer, numeric and geometry gates pass.
+deadline. It runs only after the tokenizer, numeric and geometry-contracts gates pass.
 That deadline begins before child startup and includes source validation,
 model setup and evidence validation. Each provider request checks the remaining
 time before reserving its budget and caps its timeout to the remaining window.
@@ -141,7 +160,10 @@ corpus/configuration. Every reuse rechecks the manifest and asset bytes; source,
 query, code and environment bindings remain fresh. A changed input stops the
 attempt. This removes repeated full tokenization without weakening the deadline.
 The frozen plan has 16 distinct inputs and two repeated occurrences to compare
-batch behavior. Every vector must have 768 finite values; normalized local and
+batch behavior. For the current corpus these 18 occurrences total 1,782 tokens,
+estimated at 11 neurons under the pinned model pricing. The executable maximum
+is 32 occurrences/16,384 tokens (100 estimated neurons); reserve that maximum
+when authorizing the run. An operator assertion is not provider-verified quota. Every vector must have 768 finite values; normalized local and
 Workers AI vectors must have cosine at least 0.999. The declared maximum
 absolute difference for repeated batch embeddings is 1e-5.
 
@@ -213,7 +235,7 @@ The provider canary also requires `free_plan_confirmed=true`, a sufficient
 operator-asserted neuron allowance and the selected credential pair. Probe
 credentials default to the separate `probe_environment`; using repository
 credentials requires an explicit selection. A full-run confirmation does not
-bypass any of these conditions or a failed memory gate.
+bypass any of these conditions, stale live evidence, or a failed geometry contract.
 
 The workflow builds the complete corpus, freezes queries, installs the pinned
 CPU environment, then runs `snapshot`, `tokenize`, `numeric`, the geometry
@@ -238,9 +260,11 @@ python src/preflight_full_search_probe.py aggregate --run full-probe-reports/pre
 
 `record-geometry` validates the report, retained bundle and source hashes
 against the reviewed harness. This is a consistency check within the trusted
-execution boundary described above. The current memory result makes it and `aggregate`
-exit nonzero. Fix the failed gate and obtain new evidence before enabling
-`full_run_confirmed`; confirmation alone cannot turn a failed gate into PASS.
+execution boundary described above. It records `geometry-contracts` for offline
+admission and preserves the raw memory diagnostic. `aggregate` still exits
+nonzero if any mandatory gate is missing or fails; confirmation alone cannot
+turn a failed contract into PASS. After packing genuine vectors, the same
+non-peak contract validation must pass before quality evaluation proceeds.
 
 ## Deployment compatibility
 
@@ -249,3 +273,32 @@ returns `503 config_mismatch` for semantic search. Catalog, text and graph
 operations retain reader schema 1. Production deployment therefore needs a
 coordinated, separately reviewed index publication after compatibility and
 quality checks. This draft experiment does not perform that publication.
+
+## Reviewable long-run request
+
+After review and push, one manual `full` dispatch can perform the fail-fast
+checks, bounded canary, and (only after a fresh PASS and explicit confirmation)
+complete offline encoding and diagnostic evaluation. Existing repository
+credentials are selected explicitly. The workflow does not deploy a Worker.
+
+```bash
+gh workflow run agent-api.yml \
+  -R vinnik-dmitry07/favorite-papers \
+  --ref feat/static-search-probe \
+  -f static_probe=true \
+  -f probe_runtime=durable-object \
+  -f do_probe_phase=full \
+  -f probe_credentials=repository \
+  -f free_plan_confirmed=true \
+  -f provider_available_neurons=100 \
+  -f full_run_confirmed=true
+```
+
+This example asserts at least 100 free neurons remain; it must reflect the
+operator's actual allowance. Expected current canary use is 11 neurons. Full
+corpus and 2,064 diagnostic query embeddings run on the GitHub CPU runner,
+not Workers AI. Existing step bounds are 240 minutes for corpus encoding,
+45 minutes for query encoding, 10 minutes for quality, and 350 minutes for the
+whole job. These are ceilings, not promised durations. Partial verified cache
+entries are retained. A short canary or prerequisite failure stops the long
+steps and preserves its diagnostic artifacts.

@@ -1,7 +1,7 @@
 '''Hash-bound, resumable fail-fast gates for the intended full offline encode.
 
 This CLI never loads model weights or calls a provider. UNKNOWN is STOP. Local
-geometry checks are engineering filters and do not establish Cloudflare limits.
+geometry contracts admit offline work, not Cloudflare memory or production use.
 '''
 from __future__ import annotations
 
@@ -11,6 +11,7 @@ from contextlib import contextmanager
 from contextvars import ContextVar
 from datetime import datetime, timezone
 import hashlib
+import gzip
 import importlib.metadata
 import json
 import math
@@ -43,12 +44,12 @@ GATE_CHECKS = {
     'numeric-contracts': {'real_vectors', 'quantized_oracle', 'js_wasm',
                           'tie_boundaries', 'rest_wrapper', 'mcp_wrapper',
                           'catalog_routes', 'row_mapping'},
-    'geometry-memory': {'canonical_full_coverage', 'synthetic_provenance',
+    'geometry-contracts': {'canonical_full_coverage', 'synthetic_provenance',
                         'production_rejects_fixture',
-                        'observed_peak_below_local_threshold',
                         'repeated_churn_retained_growth_bounded',
                         'singleton_initialization', 'bounded_admission',
-                        'bounded_queue', 'structural_allocation_bound'},
+                        'bounded_queue', 'structural_allocation_bound',
+                        'rest_wrapper', 'mcp_wrapper', 'reviewed_live_geometry'},
     'local-canary': {'tokenizer_parity', 'finite_unit_768', 'batch_invariance',
                      'input_identity', 'within_budget'},
     'provider-compatibility': {'targeted_coverage', 'finite_unit_768',
@@ -57,15 +58,18 @@ GATE_CHECKS = {
                                'within_budget'},
 }
 BUDGET_SECONDS = {'tokenizer-parity': 600, 'numeric-contracts': 180,
-                  'geometry-memory': 600, 'local-canary': 300,
+                  'geometry-contracts': 600, 'local-canary': 300,
                   'provider-compatibility': 300}
 DEPENDENCIES = {
     'tokenizer-parity': [], 'numeric-contracts': ['tokenizer-parity'],
-    'geometry-memory': ['tokenizer-parity'],
-    'local-canary': ['tokenizer-parity', 'numeric-contracts', 'geometry-memory'],
+    'geometry-contracts': ['tokenizer-parity'],
+    'local-canary': ['tokenizer-parity', 'numeric-contracts', 'geometry-contracts'],
     'provider-compatibility': ['local-canary'],
 }
 _CANARY_INPUT_CACHE = ContextVar('canary_input_cache', default=None)
+GEOMETRY_PIN = 'worker/probe-results/full-geometry-admission-pin.json'
+MEMORY_CHECK = 'observed_peak_below_local_threshold'
+MEMORY_THRESHOLD = 96 * 1024**2
 
 
 def require(condition, message):
@@ -127,7 +131,10 @@ def code_hashes():
                      'worker/tokenizer/tokenizer_config.json', 'worker/package-lock.json',
                      'requirements-real-probe.txt',
                      'requirements-torch-probe.txt',
-                     'requirements-probe-quality.txt']:
+                     'requirements-probe-quality.txt',
+                     'worker/wrangler.geometry-probe.toml',
+                     'worker/package.json',
+                     'worker/probe-results/full-geometry-admission-pin.json']:
         paths.add(ROOT / relative)
     paths.update((ROOT / 'worker/fixtures').glob('*.json'))
     return {str(path.relative_to(ROOT)): sha(path.read_bytes())
@@ -345,6 +352,134 @@ def verify_memory_bundle(value, artifacts):
     require(checksum == executed, 'Memory executed bundle differs from reviewed source')
 
 
+def validate_live_geometry(bound):
+    '''Reviewed historical runtime evidence, usable only for unchanged inputs.
+
+    The pin is source-controlled policy, not a user-supplied override. Its
+    freshness comes from matching the current source closure and corpus; the
+    resulting local evidence/certificate still has the ordinary 24-hour TTL.
+    '''
+    pin_path = ROOT / GEOMETRY_PIN
+    pin = read_json(pin_path)
+    require(pin.get('schema_version') == 1
+            and pin.get('kind') == 'reviewed-full-geometry-admission'
+            and pin.get('run_id') == 40440982907
+            and pin.get('source_commit') == '0fde9440308332818572321ee7fdeeed6401d753'
+            and bound['code_sha256'].get(GEOMETRY_PIN) == sha(pin_path.read_bytes()),
+            'Reviewed live geometry pin is missing or changed')
+    sources = pin.get('source_sha256', {})
+    required = {'worker/src/full-geometry-do-probe-entry.ts',
+                'worker/src/full-geometry-do-probe.ts',
+                'worker/src/full-corpus-store.ts', 'worker/src/full-search-index.ts',
+                'worker/src/probe-admission.ts', 'worker/src/service.ts',
+                'worker/probe-kernel/scan.wasm', 'src/pack_full_search_probe.py',
+                'worker/wrangler.geometry-probe.toml', 'worker/package-lock.json'}
+    require(isinstance(sources, dict) and required <= sources.keys(),
+            'Live geometry source closure is incomplete')
+    for relative, checksum in sources.items():
+        path = (ROOT / relative).resolve()
+        require(path.is_relative_to(ROOT.resolve())
+                and bound['code_sha256'].get(relative) == checksum
+                and sha(path.read_bytes()) == checksum,
+                'Live geometry runtime implementation changed: ' + relative)
+    for key in ('release_id', 'rows_sha256', 'source_graph_sha256', 'source_texts_sha256'):
+        require(pin.get(key) == bound.get(key) and bool(pin.get(key)),
+                'Live geometry corpus identity changed: ' + key)
+    require(all(pin.get(key) == bound['counts'][key]
+                for key in ('passages', 'cards', 'texts')),
+            'Live geometry corpus coverage changed')
+    paths = []
+    for key in ('report_path', 'lifecycle_path'):
+        path = (ROOT / pin[key]).resolve()
+        require(path.is_relative_to(ROOT.resolve()), 'Live geometry path escaped repository')
+        paths.append(path)
+    with gzip.open(paths[0], 'rb') as source:
+        raw = source.read(2 * 1024**2 + 1)
+    require(len(raw) <= 2 * 1024**2 and sha(raw) == pin['report_sha256'],
+            'Live geometry raw report differs from reviewed pin')
+    require(sha(paths[1].read_bytes()) == pin['lifecycle_sha256'],
+            'Live geometry lifecycle differs from reviewed pin')
+    report, lifecycle = json.loads(raw), read_json(paths[1])
+    identity = report.get('identity', {})
+    require(identity == {'manifest_sha256': pin['live_manifest_sha256'],
+                        'release_id': pin['release_id'], 'passages': pin['passages'],
+                        'papers': pin['cards'], 'text_papers': pin['texts']},
+            'Live geometry report identity differs')
+    rows = report.get('requests', [])
+    require(report.get('synthetic') is True
+            and report.get('functional_gate') == 'passed'
+            and report.get('workload_complete') is True
+            and report.get('http_attempts') == len(rows) == 327
+            and len(report.get('boot_ids', [])) == 1
+            and not report.get('error')
+            and all(row.get('success') is True and row.get('state') == 'complete'
+                    and (row.get('status') == 200 or (
+                        row.get('status') == 503
+                        and row.get('controlled_overload') is True
+                        and row.get('phase') in ('cold-catalog-burst', 'paper-burst')))
+                    for row in rows), 'Reviewed live geometry workload did not complete')
+    require(report.get('final_status', {}).get('embedded_queries') == 160
+            and lifecycle.get('cleanup') == 'passed'
+            and lifecycle.get('namespace_absent') is True
+            and lifecycle.get('phase') == 'removed'
+            and lifecycle.get('source_sha') == pin['source_commit']
+            and lifecycle.get('name') == report.get('script_name'),
+            'Reviewed live geometry cleanup or search coverage failed')
+    return [pin_path, *paths]
+
+
+def validate_memory_contracts(value, bound, *, synthetic):
+    '''A failed 96 MiB observation remains FAIL; only non-peak contracts admit work.'''
+    required = GATE_CHECKS['geometry-contracts'] - {'reviewed_live_geometry'}
+    if not synthetic:
+        required = (required - {'synthetic_provenance', 'production_rejects_fixture'}
+                    | {'real_embedding_provenance'})
+    checks = value.get('checks', {})
+    expected_source = (bound['preembedding_manifest_sha256'] if synthetic else
+                       sha((Path(bound['corpus']) / 'probe.json').read_bytes()))
+    require(value.get('schema_version') == 2
+            and value.get('gate') == ('geometry-memory' if synthetic else 'full-real-memory')
+            and value.get('synthetic') is synthetic
+            and value.get('passages') == bound['counts']['passages']
+            and value.get('papers') == bound['counts']['cards']
+            and value.get('source_rows_sha256') == bound['rows_sha256']
+            and value.get('source_manifest_sha256') == expected_source,
+            'Memory raw provenance/coverage mismatch')
+    require(required <= checks.keys()
+            and all(checks[key] is True for key in required)
+            and all(key == MEMORY_CHECK or valid is True for key, valid in checks.items())
+            and not value.get('error') and not value.get('failed_phase')
+            and value.get('contract_requests') == 324
+            and value.get('offline_embedding_calls') == 160,
+            'Memory raw non-peak contracts failed or incomplete')
+    sources = value.get('source_sha256', {})
+    require({'worker/probe-kernel/full-memory.ts', 'worker/src/full-corpus-store.ts',
+             'worker/src/full-search-index.ts', 'worker/probe-kernel/scan.wasm'} <= sources.keys()
+            and all(bound['code_sha256'].get(key) == checksum for key, checksum in sources.items()),
+            'Memory raw implementation is stale or unbound')
+    peak = value['summary']['peaks']['heap_plus_external']
+    require(type(peak) in (int, float) and math.isfinite(peak) and peak >= 0
+            and value['method']['local_threshold_bytes'] == MEMORY_THRESHOLD
+            and value['method']['default_threshold_bytes'] == MEMORY_THRESHOLD
+            and checks.get(MEMORY_CHECK) is (peak < MEMORY_THRESHOLD)
+            and value.get('status') == ('PASS' if peak < MEMORY_THRESHOLD else 'FAIL'),
+            'Memory raw 96 MiB diagnostic is inconsistent')
+    growth = value['retained_growth']['bytes']
+    elapsed = value.get('elapsed_ms')
+    require(type(growth) in (float, int) and math.isfinite(growth)
+            and growth <= 8 * 1024**2 and type(elapsed) in (float, int)
+            and 0 <= elapsed <= 600000, 'Memory retained-growth/time bounds exceeded')
+    account = value.get('structural_allocation_account', {})
+    require(account.get('unknowns') and account['one_source_shard_bytes'] <= 4096 * 768
+            and account['request_admission']['max_active'] <= 4
+            and account['request_admission']['max_queued'] <= 8
+            and value.get('cloudflare_memory_gate') == 'unverified',
+            'Memory structural bounds/platform scope missing')
+    require(value.get('manifest_sha256') == sha(Path(value['packed_manifest_path']).read_bytes()),
+            'Memory packed manifest changed')
+    return {'local_memory_filter': value['status'], 'peak_bytes': peak}
+
+
 def validate_raw_evidence(document, run):
     '''Check retained consistency, not trusted execution attestation.'''
     gate, raw = document['gate'], raw_documents(document)
@@ -405,38 +540,18 @@ def validate_raw_evidence(document, run):
                 'Genuine390 vector numerical evidence missing or failed')
         require(real.get('source_sha256') and all(bound['code_sha256'].get(key) == value
                 for key, value in real['source_sha256'].items()), 'Stale real numerical implementation')
-    elif gate == 'geometry-memory':
-        matches = [value for value in raw.values() if value.get('gate') == 'geometry-memory'
+    elif gate == 'geometry-contracts':
+        matches = [value for value in raw.values()
+                   if value.get('gate') == 'geometry-memory'
                    and value.get('schema_version') == 2]
         require(len(matches) == 1, 'Expected one raw memory harness report')
         value = matches[0]
-        require(value.get('status') == 'PASS'
-                and all(value.get('checks', {}).get(key) is True for key in GATE_CHECKS[gate])
-                and value.get('passages') == bound['counts']['passages']
-                and value.get('papers') == bound['counts']['cards']
-                and value.get('source_rows_sha256') == bound['rows_sha256']
-                and value.get('source_manifest_sha256') == bound['preembedding_manifest_sha256']
-                and value.get('synthetic') is True,
-                'Memory raw provenance/coverage/checks mismatch')
-        sources = value.get('source_sha256', {})
-        require({'worker/probe-kernel/full-memory.ts', 'worker/src/full-corpus-store.ts',
-                 'worker/src/full-search-index.ts', 'worker/probe-kernel/scan.wasm'} <= sources.keys()
-                and all(bound['code_sha256'].get(key) == checksum for key, checksum in sources.items()),
-                'Memory raw implementation is stale or unbound')
+        validate_memory_contracts(value, bound, synthetic=True)
         verify_memory_bundle(value, document['artifacts'])
-        require(value.get('manifest_sha256') == sha(Path(value['packed_manifest_path']).read_bytes()),
-                'Memory packed manifest changed')
-        require(value['summary']['peaks']['heap_plus_external'] < 96 * 1024**2
-                and value['retained_growth']['bytes'] <= 8 * 1024**2
-                and value['method']['local_threshold_bytes'] <= 96 * 1024**2
-                and value['elapsed_ms'] <= 600000,
-                'Memory raw thresholds exceeded')
-        account = value.get('structural_allocation_account', {})
-        require(account.get('unknowns') and account['one_source_shard_bytes'] <= 4096 * 768
-                and account['request_admission']['max_active'] <= 4
-                and account['request_admission']['max_queued'] <= 8
-                and value.get('cloudflare_memory_gate') == 'unverified',
-                'Memory structural bounds/platform scope missing')
+        required = validate_live_geometry(bound)
+        retained = {str(Path(entry['path']).resolve()) for entry in document['artifacts']}
+        require(all(str(path.resolve()) in retained for path in required),
+                'Reviewed live geometry evidence is not retained')
     else:
         local = raw.get('canary-local-vectors.json', {})
         plan = canary_plan(Path(document['run_dir']))
@@ -603,7 +718,7 @@ def write_evidence(run_dir, gate, *, checks, measurements, artifacts,
 
 def check_canary_prerequisites(run_dir):
     run = load_run(run_dir)
-    for gate in ('tokenizer-parity', 'numeric-contracts', 'geometry-memory'):
+    for gate in ('tokenizer-parity', 'numeric-contracts', 'geometry-contracts'):
         validate_evidence(read_json(evidence_path(run_dir, gate)), run)
     return run
 
@@ -845,22 +960,43 @@ def numeric(run_dir, *, real_source):
 
 
 def record_geometry(run_dir, report):
-    run = begin_gate(run_dir, 'geometry-memory')
+    run = begin_gate(run_dir, 'geometry-contracts')
     raw = read_json(report)
-    if raw.get('status') != 'PASS':
-        write_evidence(run_dir, 'geometry-memory', checks=raw.get('checks', {}),
-                       measurements={'raw_status': raw.get('status')}, artifacts=[Path(report)],
-                       elapsed_seconds=raw.get('elapsed_ms', 0) / 1000, status='FAIL')
-        raise BuildError('Memory raw report is not PASS; FAIL evidence retained')
-    require(raw.get('source_sha256') and all(run['binding']['code_sha256'].get(key) == value
-            for key, value in raw['source_sha256'].items()), 'Memory report code hashes are stale or missing')
-    bundle = Path(run_dir) / 'geometry-reviewed.mjs'
-    require(build_memory_bundle(bundle) == raw.get('executed_bundle_sha256'),
-            'Memory executed bundle differs from reviewed source')
-    return write_evidence(run_dir, 'geometry-memory', checks=raw.get('checks', {}),
-                          measurements={'peak_bytes': raw['summary']['peaks']['heap_plus_external']},
-                          artifacts=[Path(report), Path(raw['packed_manifest_path']), bundle],
+    try:
+        measurements = validate_memory_contracts(raw, run['binding'], synthetic=True)
+        live_paths = validate_live_geometry(run['binding'])
+        bundle = Path(run_dir) / 'geometry-reviewed.mjs'
+        require(build_memory_bundle(bundle) == raw.get('executed_bundle_sha256'),
+                'Memory executed bundle differs from reviewed source')
+    except (BuildError, OSError, ValueError, KeyError, TypeError) as exc:
+        elapsed = raw.get('elapsed_ms', 0)
+        write_evidence(run_dir, 'geometry-contracts', checks=raw.get('checks', {}),
+                       measurements={'raw_status': raw.get('status'), 'reason': str(exc)},
+                       artifacts=[Path(report)], elapsed_seconds=(elapsed / 1000
+                       if type(elapsed) in (int, float) else 0), status='FAIL')
+        raise BuildError(str(exc) + '; FAIL evidence retained') from exc
+    return write_evidence(run_dir, 'geometry-contracts',
+                          checks={**raw.get('checks', {}), 'reviewed_live_geometry': True},
+                          measurements=measurements,
+                          artifacts=[Path(report), Path(raw['packed_manifest_path']),
+                                     bundle, *live_paths],
                           elapsed_seconds=raw['elapsed_ms'] / 1000)
+
+
+def check_runtime_contracts(run_dir, report):
+    '''Admit offline quality after a real pack; retain the independent memory FAIL.'''
+    run = load_run(run_dir)
+    bound = run['binding']
+    verify_certificate(Path(run_dir) / 'certificate.json', corpus=bound['corpus'],
+                       queries=bound['queries'])
+    raw = read_json(report)
+    measurements = validate_memory_contracts(raw, bound, synthetic=False)
+    with tempfile.TemporaryDirectory(prefix='real-memory-verify-') as directory:
+        checksum = build_memory_bundle(Path(directory) / 'reviewed.mjs')
+    require(checksum == raw.get('executed_bundle_sha256'),
+            'Memory executed bundle differs from reviewed source')
+    return {'status': 'PASS', 'scope': 'GO_FOR_OFFLINE_QUALITY_ONLY',
+            **measurements, 'platform_memory_gate': 'UNKNOWN', 'production_ready': False}
 
 
 def aggregate(run_dir):
@@ -942,6 +1078,9 @@ def main(argv=None):
     geometry = commands.add_parser('record-geometry')
     geometry.add_argument('--run', type=Path, required=True)
     geometry.add_argument('--report', type=Path, required=True)
+    runtime = commands.add_parser('check-runtime-contracts')
+    runtime.add_argument('--run', type=Path, required=True)
+    runtime.add_argument('--report', type=Path, required=True)
     record = commands.add_parser('record')
     record.add_argument('--run', type=Path, required=True)
     record.add_argument('--report', type=Path, required=True)
@@ -960,6 +1099,8 @@ def main(argv=None):
             result = {'report': str(numeric(args.run, real_source=args.real_source))}
         elif args.command == 'record-geometry':
             result = {'report': str(record_geometry(args.run, args.report))}
+        elif args.command == 'check-runtime-contracts':
+            result = check_runtime_contracts(args.run, args.report)
         elif args.command == 'record':
             report = read_json(args.report)
             validate_evidence(report, load_run(args.run))

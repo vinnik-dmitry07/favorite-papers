@@ -60,7 +60,8 @@ def test_cheap_gate_order_precedes_any_canary_or_long_encode():
                'frozen_queries', 'snapshot', 'tokenizer_gate', 'numeric_gate',
                'geometry_pack', 'geometry_memory', 'geometry_gate',
                'canary_controls', 'canary', 'admission', 'full_encode',
-               'query_encode', 'full_pack', 'full_quality']
+               'query_encode', 'full_pack', 'full_memory',
+               'full_runtime_contracts', 'full_quality']
     assert [ids.index(name) for name in ordered] == sorted(ids.index(name) for name in ordered)
     by_id = steps_by_id()
     assert 'preflight_full_search_probe.py numeric' in by_id['numeric_gate']['run']
@@ -159,7 +160,7 @@ def test_all_workflow_shell_and_embedded_python_parse_without_credentials():
 
 
 @pytest.mark.parametrize('confirmed,neurons,run_id,passes', [
-    ('false', '0', '40238828496', True),
+    ('false', '0', '40238828496', False),
     ('true', '0', '40238828496', False),
     ('true', '64', '40238828496', True),
     ('false', '-1', '40238828496', False),
@@ -168,7 +169,10 @@ def test_all_workflow_shell_and_embedded_python_parse_without_credentials():
 ])
 def test_controls_fail_closed_before_model_work(tmp_path, confirmed, neurons, run_id, passes):
     env = {**os.environ, 'FULL_RUN_CONFIRMED': confirmed,
-           'PROVIDER_AVAILABLE_NEURONS': neurons, 'FULL_NUMERIC_RUN_ID': run_id}
+           'PROVIDER_AVAILABLE_NEURONS': neurons, 'FULL_NUMERIC_RUN_ID': run_id,
+           'FREE_PLAN_CONFIRMED': 'true', 'PROBE_CREDENTIALS': 'repository',
+           'CLOUDFLARE_ACCOUNT_ID': 'test-account',
+           'CLOUDFLARE_API_TOKEN': 'test-token'}
     result = subprocess.run(['bash', '-e', '-o', 'pipefail', '-c', steps_by_id()['controls']['run']],
                             cwd=tmp_path, env=env, capture_output=True, text=True)
     assert (result.returncode == 0) is passes, result.stderr
@@ -182,3 +186,80 @@ def test_missing_provider_allowance_stops_before_any_canary(tmp_path, free, neur
     result = subprocess.run(['bash', '-e', '-c', steps_by_id()['canary_controls']['run']],
                             cwd=tmp_path, env=env, capture_output=True, text=True)
     assert (result.returncode == 0) is passes, result.stderr
+
+
+@pytest.mark.parametrize('free,selection,account,token,passes', [
+    ('true', 'repository', 'account', 'token', True),
+    ('true', 'probe_environment', 'account', 'token', True),
+    ('false', 'repository', 'account', 'token', False),
+    ('true', 'unknown', 'account', 'token', False),
+    ('true', 'repository', '', 'token', False),
+    ('true', 'repository', 'account', '', False),
+])
+def test_provider_controls_fail_before_dependencies(
+        tmp_path, free, selection, account, token, passes):
+    step = steps_by_id()['controls']
+    env = {**os.environ, 'FULL_RUN_CONFIRMED': 'false',
+           'PROVIDER_AVAILABLE_NEURONS': '11',
+           'FULL_NUMERIC_RUN_ID': '40238828496',
+           'FREE_PLAN_CONFIRMED': free, 'PROBE_CREDENTIALS': selection,
+           'CLOUDFLARE_ACCOUNT_ID': account, 'CLOUDFLARE_API_TOKEN': token}
+    result = subprocess.run(['bash', '-e', '-o', 'pipefail', '-c', step['run']],
+                            cwd=tmp_path, env=env, capture_output=True, text=True)
+    assert (result.returncode == 0) is passes, result.stderr
+    assert 'CLOUDFLARE_API_TOKEN' in step['env']
+    assert 'CLOUDFLARE_API_TOKEN' not in full_job()['env']
+    assert 'CLOUDFLARE_ACCOUNT_ID' not in full_job()['env']
+    steps = full_job()['steps']
+    control_position = next(i for i, item in enumerate(steps)
+                            if item.get('id') == 'controls')
+    install_position = next(i for i, item in enumerate(steps)
+                            if 'pip install' in item.get('run', ''))
+    assert control_position < install_position
+
+
+def test_memory_diagnostics_cannot_bypass_contract_validation():
+    steps = steps_by_id()
+    # Both harnesses retain their own raw failure. The following validators
+    # are mandatory and fail closed on missing reports or non-memory defects.
+    for name in ('geometry_memory', 'full_memory'):
+        assert steps[name]['continue-on-error'] is True
+        assert '|| true' not in steps[name]['run']
+        assert 'timeout 300s node --expose-gc' in steps[name]['run']
+    assert not steps['geometry_gate'].get('continue-on-error', False)
+    assert 'record-geometry' in steps['geometry_gate']['run']
+    contracts = steps['full_runtime_contracts']
+    assert contracts['if'] == (
+        "always() && inputs.full_run_confirmed && "
+        "steps.full_pack.outcome == 'success'")
+    assert not contracts.get('continue-on-error', False)
+    assert 'check-runtime-contracts' in contracts['run']
+    assert '--run full-probe-reports/preflight' in contracts['run']
+    assert '--report full-probe-reports/full-memory.json' in contracts['run']
+    assert 'full-memory.mjs' not in steps['full_pack']['run']
+    assert "steps.full_runtime_contracts.outcome == 'success'" in steps['full_quality']['if']
+    assert 'success()' in steps['full_quality']['if']
+
+
+def test_clean_checkout_builds_kernel_before_python_evidence_checks():
+    steps = workflow()['jobs']['offline']['steps']
+    node = next(i for i, step in enumerate(steps)
+                if step.get('uses') == 'actions/setup-node@v4')
+    kernel = next(i for i, step in enumerate(steps)
+                  if 'npm run build:probe' in step.get('run', ''))
+    python_tests = next(i for i, step in enumerate(steps)
+                        if 'src/test_preflight_full_search_probe.py'
+                        in step.get('run', ''))
+    worker_tests = next(i for i, step in enumerate(steps)
+                        if 'npm test' in step.get('run', ''))
+    assert node < kernel < python_tests < worker_tests
+    assert steps[kernel]['working-directory'] == 'worker'
+    assert 'npm ci' in steps[kernel]['run']
+    assert not steps[kernel].get('continue-on-error', False)
+    # Kernel bytes are generated in a clean checkout and checked by Python.
+    # Suppress npm's pretest hook only here because that build already ran.
+    assert 'npm test --ignore-scripts' in steps[worker_tests]['run']
+    assert 'npm run typecheck' in steps[worker_tests]['run']
+    assert sum('npm ci' in step.get('run', '') for step in steps) == 1
+    assert sum('npm run build:probe' in step.get('run', '')
+               for step in steps) == 1

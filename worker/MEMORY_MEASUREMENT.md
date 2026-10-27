@@ -197,3 +197,13 @@ succeeded. This is a completed HTTP-capable agent journey, not a demonstrated
 web-only ChatGPT journey or semantic search. The guide still has no verified
 semantic API link. [Detailed navigation evidence](probe-results/local-2026-10-26-agent-browser-journey.json)
 records requests, timing, obstacles and remaining limitations.
+
+## Subsequent offline admission decision
+
+The reviewed live result now supports the scoped policy in
+[FULL_SEARCH_PROBE.md](FULL_SEARCH_PROBE.md#current-result-and-offline-admission-policy).
+`geometry-contracts` requires fresh complete non-peak contracts and the fixed
+live runtime/corpus pin. The raw 96 MiB diagnostic stays FAIL; platform memory
+and production readiness remain unknown. This policy admits only bounded
+compatibility testing and explicitly confirmed offline encoding/evaluation.
+A stale pin or any other local failure still stops execution.
