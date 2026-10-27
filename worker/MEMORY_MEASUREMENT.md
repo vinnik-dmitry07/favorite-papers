@@ -1,7 +1,8 @@
 # Full-size memory measurement, October 26
 
 The default local memory filter remains **FAIL**. No long encoding, provider
-canary, deployment, production change, or threshold change was performed.
+canary, production change, or threshold change was performed. The subsequent
+isolated Cloudflare geometry result is recorded below.
 
 | Configuration | Observed peak MiB | Retained final MiB | Seconds | Default gate evidence |
 | --- | ---: | ---: | ---: | --- |
@@ -114,6 +115,46 @@ skipped), both TypeScript checks and the geometry Wrangler dry-run passed.
 A source-review observation about concurrent same-paper cache misses
 overcounting `CorpusCache.paperBytes` is deferred. It was not added as a third
 implementation change and is not asserted to explain the measured peaks.
+
+### Cloudflare result, October 26 Pacific time
+
+[Run 40440982907](https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/40440982907)
+on `0fde944` completed the full synthetic workload in 57.985 seconds:
+327 attempts, 297 HTTP 200 responses and 30 expected `probe_overloaded` 503
+responses confined to the designated bursts. All 160 synthetic searches and
+cached repeats passed; there was one object boot and no unexpected error.
+The owned namespace and Worker were removed, with namespace absence verified.
+
+| Aggregate platform invocation records | Count | CPU p50 | CPU p95 | CPU p99 | Max CPU |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Gateway | 326 | 0 ms | 1 ms | 2 ms | 7 ms |
+| Durable Object | 327 | 5 ms | 477 ms | 536 ms | 769 ms |
+
+All retained invocation outcomes are `ok`. These distributions use every
+retained platform invocation, including those without an unambiguous request
+mapping. They are not per-operation CPU measurements. Distinct-search client
+latency was p50 838 ms/p95 1,649 ms at concurrency four; cached-repeat p50 was
+118 ms. No embedding provider was called.
+
+The strict CPU gates remain **unverified**: 99 DO markers collide onto shared
+invocation keys in concurrent catalog/search phases. There are 32 collision
+groups: 22 triples, nine pairs and one group of 15. Only 228 DO and 323 gateway
+request matches are unambiguous. The collector exhausted its 120-query cap;
+repeating identical queries will not resolve the many-to-one mapping. The
+condensed artifact preserves all invocation values but not the source events
+needed to reconstruct those ambiguous links. Conflict checks were not relaxed.
+
+The green workflow certifies functional completion and cleanup, not complete
+CPU evidence or memory headroom. The workload completed without observed OOM
+or object reset, but no platform memory peak was measured and the 96 MiB local
+filter remains failed. This runtime result should inform an explicit admission
+decision before long encoding. The next useful measurements are genuine-vector
+compatibility, retrieval quality and an external-agent semantic-search journey;
+there is no reason to repeat unchanged geometry just for telemetry completeness.
+
+[Summary, hashes and original report](probe-results/cloudflare-2026-10-26-full-geometry.json)
+preserve the evidence and original unverified gates. Two independent readings
+of the saved report confirmed counts, aggregation, collisions and cleanup.
 
 ## Reproduce the standard measurement
 

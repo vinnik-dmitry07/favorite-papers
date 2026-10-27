@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "run_id": 40440982907,
+  "source_commit": "0fde9440308332818572321ee7fdeeed6401d753",
+  "run_url": "https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/40440982907",
+  "local_date": "2026-10-26",
+  "timezone": "America/Los_Angeles",
+  "artifact_id": 12706535597,
+  "artifact_sha256": "76530b66c083bf2981d332328d4f87a8055cb464aab1a748defe8dd15d860789",
+  "identity": {
+    "manifest_sha256": "c00ccc8ba34cd2c85710b1faf68d68e975d6765a044cb6dfd56ddb07a3b28dc4",
+    "release_id": "9b4203dbfbcd1f44005dd52c65b8b938ee37cd176e24a86d41b285555ab36c29",
+    "passages": 40575,
+    "papers": 415,
+    "text_papers": 362
+  },
+  "synthetic": true,
+  "workload_complete": true,
+  "http_attempts": 327,
+  "http_statuses": {
+    "200": 297,
+    "503": 30
+  },
+  "controlled_overloads": 30,
+  "unexpected_failures": 0,
+  "workload_seconds": 57.985,
+  "object_boots": 1,
+  "distinct_synthetic_queries": 160,
+  "functional_gate": "passed",
+  "platform_cpu_by_invocation": {
+    "gateway": {
+      "records": 326,
+      "cpu_ms": {
+        "p50": 0,
+        "p95": 1,
+        "p99": 2
+      },
+      "max_cpu_ms": 7,
+      "sum_cpu_ms": 128,
+      "outcomes": {
+        "ok": 326
+      },
+      "unambiguous_request_matches": 323
+    },
+    "durable_object": {
+      "records": 327,
+      "cpu_ms": {
+        "p50": 5,
+        "p95": 477,
+        "p99": 536
+      },
+      "max_cpu_ms": 769,
+      "sum_cpu_ms": 25851,
+      "outcomes": {
+        "ok": 327
+      },
+      "unambiguous_request_matches": 228
+    }
+  },
+  "cpu_attribution": {
+    "status": "unverified",
+    "conflicting_marker_role_pairs": 99,
+    "collision_groups": 32,
+    "group_sizes": {
+      "15": 1,
+      "3": 22,
+      "2": 9
+    },
+    "reason": "Multiple DO markers share one platform invocation key;99DO request mappings rejected. Four gateway rows lack a match. More identical queries cannot repair a many-to-one join.",
+    "method": "CPU distributions use all telemetry_invocations grouped by runtime_role, including records without unambiguous request matches. These are aggregate platform invocation statistics, not per-operation metrics. Original conflicts and gates are retained."
+  },
+  "client_wall_ms": {
+    "distinct_searches": {
+      "p50": 838.0732150000085,
+      "p95": 1648.7841120000155,
+      "p99": 1813.471929000002
+    },
+    "cached_repeats": {
+      "p50": 117.82171199999425,
+      "p95": 262.9360180000049,
+      "p99": 262.9360180000049
+    }
+  },
+  "admission": {
+    "active": 1,
+    "queued": 0,
+    "max_active": 4,
+    "max_queued": 8,
+    "rejected": 30,
+    "completed": 296,
+    "active_limit": 4,
+    "queue_limit": 8,
+    "queue_wait_ms": 2000
+  },
+  "paper_loads": {
+    "active": 0,
+    "queued": 0,
+    "pending": 0,
+    "peak_active": 1,
+    "rejected": 0,
+    "max_active": 1,
+    "max_queued": 16
+  },
+  "memory_gate": "unverified",
+  "production_readiness": "unverified",
+  "semantic_quality": "not_measured",
+  "workers_ai_compatibility": "not_measured",
+  "full_encoding_admission": "STOP; unchanged96MiB local filter",
+  "cleanup": {
+    "name": "key-papers-static-do-probe-40440982907-1",
+    "phase": "removed",
+    "preflight": "passed",
+    "namespace": {
+      "id": "ee7499ff8e77409284fba8e6587efc1f",
+      "script": "key-papers-static-do-probe-40440982907-1",
+      "class": "StaticSearchProbe",
+      "use_sqlite": true
+    },
+    "cleanup": "passed",
+    "source_sha": "0fde9440308332818572321ee7fdeeed6401d753",
+    "account_fingerprint": "572b4b152b895f4bc456120ee6f3df2680a2be48d5a5efcbbd15eadabe7042b3",
+    "namespace_absent": true
+  },
+  "raw_report": "cloudflare-2026-10-26-full-geometry.raw.json.gz",
+  "raw_report_sha256": "1ff8f623a8cdc12209fa70531c816f2a0399817fad6fce6905e396fa72421430",
+  "limitations": [
+    "Synthetic vectors do not measure retrieval quality or provider embedding compatibility.",
+    "No OOM or object reset observed in this workload; no numerical memory peak or headroom measurement.",
+    "CPU records are aggregate invocations;99DO request mappings are ambiguous and one of327gateway invocations is absent.",
+    "Client latency includes network, queueing and processing; it is not CPU time.",
+    "Green workflow means completed workload and cleanup; strict CPU and memory gates remain unverified."
+  ],
+  "next_decision": "Use this runtime evidence in an explicit reviewed admission decision before long encoding. Do not rerun identical geometry merely to obtain a complete per-request CPU join. Genuine-vector compatibility, retrieval quality and external-agent search are the next goal-relevant measurements."
+}
