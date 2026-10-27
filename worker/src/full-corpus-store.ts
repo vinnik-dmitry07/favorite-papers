@@ -270,12 +270,23 @@ async function loadFullCorpusStore(assets: Assets, expectedManifestHash: string,
   }
   const rowIndex = (id: string): number => {
     if (!HASH.test(id)) return -1
+    // Lowercase hexadecimal order equals unsigned big-endian word order.
+    // Decode the requested key once instead of allocating a 64-character
+    // candidate string at every binary-search comparison.
+    const key = new Uint32Array(8)
+    for (let word = 0; word < key.length; word++) {
+      key[word] = Number.parseInt(id.slice(word * 8, word * 8 + 8), 16)
+    }
     let low = 0, high = manifest.passage_count - 1
     while (low <= high) {
       const mid = (low + high) >>> 1
-      const candidate = hex(bytes.subarray(mid * 128, mid * 128 + 32))
-      if (candidate === id) return mid
-      if (candidate < id) low = mid + 1
+      let order = 0
+      for (let word = 0; word < key.length; word++) {
+        const candidate = view.getUint32(mid * 128 + word * 4, false)
+        if (candidate !== key[word]) { order = candidate < key[word] ? -1 : 1; break }
+      }
+      if (order === 0) return mid
+      if (order < 0) low = mid + 1
       else high = mid - 1
     }
     return -1
@@ -358,9 +369,12 @@ async function loadFullCorpusStore(assets: Assets, expectedManifestHash: string,
       boundaries.set(chunk.start, -1); boundaries.set(chunk.end, -1)
     }
     let points = 0, units = 0
-    for (const point of doc.text) {
+    // Scan numeric positions without allocating one string/iterator result
+    // per code point on every cache miss, including large papers.
+    while (units < doc.text.length) {
       if (boundaries.has(points)) boundaries.set(points, units)
-      points++; units += point.length
+      units += doc.text.codePointAt(units)! > 0xffff ? 2 : 1
+      points++
     }
     boundaries.set(points, units)
     check(points === card.code_points, 'paper code-point count mismatch')

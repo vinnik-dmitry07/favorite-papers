@@ -14,6 +14,17 @@ contains 415 cards, 362 available texts and 53 explicitly unavailable texts.
 
 ## Current result: STOP
 
+The [October 26 measurement](probe-results/local-2026-10-26-full-memory.json)
+reran the same 324-request workload on the current canonical release. Default
+Node peaks were 133.85 MiB before changes and 134.44 MiB after two small
+allocation reductions. The unchanged 96 MiB filter still fails. The same final
+code with restricted Node heap settings observed 83.70 MiB; that is a diagnostic
+of GC sensitivity, not admissible replacement evidence or Cloudflare proof.
+No canary, full encoding, or deployment followed. See
+[reproduction and the next decision](MEMORY_MEASUREMENT.md).
+
+### Historical October 25 comparison
+
 The [2026-10-25 local report](probe-results/local-2026-10-25-full-preflight.json)
 retains both memory runs and their exact compressed raw evidence. The first
 full-geometry workload found cached snippets retaining complete paper strings.

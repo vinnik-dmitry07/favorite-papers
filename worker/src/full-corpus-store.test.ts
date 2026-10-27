@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { fullCorpusFixture } from '../test-fixtures/full-corpus'
+import type { ConfirmedDoc } from './corpus'
 import { createFullCorpusStore, createGeometryFixtureStore, createGeometryFixtureStoreLoader } from './full-corpus-store'
 
 const module = new WebAssembly.Module(readFileSync(new URL('../probe-kernel/scan.wasm', import.meta.url)))
@@ -47,6 +48,37 @@ describe('full corpus packed admission and mapping', () => {
     expect(ref.input).toContain('😀')
     expect(bundle.manifest.synthetic).toBe(true)
     expect(new Set(data.packedRows.slice(0, 25).map((row) => row.paper_id)).size).toBeGreaterThanOrEqual(9)
+  })
+
+  it('resolves every packed ID and rejects absent hashes sharing any word prefix', async () => {
+    const data = await fullCorpusFixture()
+    const bundle = await createGeometryFixtureStore(data.assets, data.manifestSha, async () => data.query, undefined, options)
+    const confirmed = await bundle.store.getJson('slots/full-probe/confirmed.json') as ConfirmedDoc
+    const ids = new Set(data.packedRows.map((row) => row.id))
+    // Exercise both binary-search boundaries and every interior row.
+    for (const row of data.packedRows) {
+      expect(confirmed.vectors[row.id]).toEqual({ paper_id: row.paper_id, chunk_index: row.chunk_index,
+        content_hash: row.content_hash, input_hash: row.input_hash })
+    }
+    const missing = new Set(['0'.repeat(64), 'f'.repeat(64)])
+    const pivot = data.packedRows[(data.packedRows.length - 1) >>> 1].id
+    // A mismatch may occur in any of the eight words, including the last.
+    for (let offset = 0; offset < 64; offset += 8) {
+      const word = Number.parseInt(pivot.slice(offset, offset + 8), 16)
+      for (const delta of [-1, 1]) {
+        const changed = word + delta
+        if (changed < 0 || changed > 0xffffffff) continue
+        missing.add(pivot.slice(0, offset) + changed.toString(16).padStart(8, '0') + pivot.slice(offset + 8))
+      }
+    }
+    for (const id of missing) {
+      expect(ids.has(id)).toBe(false)
+      expect(confirmed.vectors[id]).toBeUndefined()
+    }
+    for (const id of [pivot.toUpperCase(), pivot.slice(1), pivot + '0', 'g' + pivot.slice(1),
+      ' ' + pivot, 'toString', 'constructor', '__proto__']) {
+      expect(confirmed.vectors[id]).toBeUndefined()
+    }
   })
 
   it('shares one initialization promise and one index across simultaneous cold callers', async () => {
