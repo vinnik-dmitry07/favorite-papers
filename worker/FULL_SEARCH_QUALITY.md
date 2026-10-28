@@ -5,6 +5,11 @@ remaining weakness in this diagnostic is selecting useful evidence inside the
 right paper. These are measurements on frozen development questions, not a
 held-out evaluation or a deployed-agent acceptance test.
 
+The subsequent [fresh-agent navigation measurement](AGENT_JOURNEY_MEASUREMENT.md)
+now covers 12 REST journeys and four basic MCP journeys. It tests whether agents
+can recover evidence with follow-up tools; the fixed-span results below remain
+a separate diagnostic.
+
 ## What was measured
 
 The replay used all **40,575 saved corpus vectors** and **2,064 saved query
@@ -87,11 +92,12 @@ reading budget. Questions, embeddings, ordering and gold spans were unchanged.
 [Failure cases and post-hoc counts](probe-results/replay-2026-10-28-full-quality.failures.json)
 retain the inputs and projection parameters.
 
-The next useful measurement is an agent journey on the existing index: find the
-paper, use within-paper search/read to locate the answer, then assess the cited
-evidence. Compare several passage links per paper or within-paper reranking on
-separate development cases before a held-out test. No additional embedding run
-is needed to inspect these failures.
+The subsequent agent journeys recovered supported answers on all 12 selected
+REST cases, including an initial retrieval miss. These results do not justify
+changing passage deduplication yet. The next measurement uses genuine new query
+text against the retained corpus; no corpus re-encoding is needed. Any future
+passage-layout comparison should use separate development cases before a
+held-out test.
 
 ## Reproduction and limits
 

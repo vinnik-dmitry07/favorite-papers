@@ -1,5 +1,8 @@
 import vocabText from '../tokenizer/vocab.txt'
 import { validProbeToken } from './probe-auth'
+import type { CorpusStore } from './corpus'
+import { createFullCorpusStoreLoader } from './full-corpus-store'
+import { BoundedAdmission, createBoundedProbeHandler, PROBE_REQUEST_LIMITS } from './probe-admission'
 
 import { handleRest, json, requestOrigin } from './http'
 import { handleMcp } from './mcp'
@@ -9,6 +12,9 @@ import { createStaticCorpusStore } from './static-corpus-store'
 import { embed, WordPieceTokenizer } from './tokenize'
 
 export const REAL_PROBE_OBJECT_NAME = 'real-corpus'
+export const FULL_REAL_PROBE_OBJECT_NAME = 'full-real-corpus'
+export const FULL_REAL_MANIFEST_SHA = '6b9c87883f525a128eb9a48aead5914d9524ba2f7433ff3b14c62b3c0d970b47'
+export const FULL_REAL_PASSAGES = 40575
 export const COMPATIBILITY_THRESHOLD = 0.999
 export const COMPATIBILITY_BATCH_SIZE = 16
 export const AI_TIMEOUT_MS = 20_000
@@ -26,6 +32,8 @@ export interface RealProbeEnv {
   PROBE_TOKEN: string
   PROBE_EXPIRES_AT: string
   PROBE_MANIFEST_SHA: string
+  PROBE_CORPUS_MODE?: 'subset' | 'full'
+  PQ_WASM?: WebAssembly.Module
 }
 
 interface CompatibilityResult {
@@ -56,8 +64,27 @@ interface Ledger {
   pending: number[] | null
 }
 
-type Corpus = Awaited<ReturnType<typeof createStaticCorpusStore>>
-interface Dependencies { loadCorpus?: typeof createStaticCorpusStore }
+interface Corpus {
+  store: CorpusStore
+  manifest: {
+    release_id: string, passage_count: number, paper_ids: string[], compatibility_indices: number[]
+    source_sha?: unknown, source_manifest_sha256?: string, sample_paper_id?: string, queries?: unknown
+  }
+  referencePassage(index: number): { input: string, vector: number[] }
+    | Promise<{ input: string, vector: number[] }>
+}
+interface Dependencies {
+  loadCorpus?: typeof createStaticCorpusStore
+  fullLoader?: typeof createFullCorpusStoreLoader
+}
+
+function fullMode(env: RealProbeEnv): boolean {
+  if (env.PROBE_CORPUS_MODE === undefined || env.PROBE_CORPUS_MODE === 'subset') return false
+  if (env.PROBE_CORPUS_MODE !== 'full' || env.PROBE_MANIFEST_SHA !== FULL_REAL_MANIFEST_SHA) {
+    fail('probe_config_invalid', 503, 'full mode requires the pinned retained genuine corpus')
+  }
+  return true
+}
 
 function ensureLive(env: RealProbeEnv): void {
   const expiresAt = Date.parse(env.PROBE_EXPIRES_AT)
@@ -142,6 +169,10 @@ export class StaticSearchProbe {
   private tokenizer: WordPieceTokenizer | undefined
   private service: Service | undefined
   private compatibilityInFlight: Promise<Ledger> | undefined
+  private fullLoader: ReturnType<typeof createFullCorpusStoreLoader> | undefined
+  private readonly admission = new BoundedAdmission(PROBE_REQUEST_LIMITS.active,
+    PROBE_REQUEST_LIMITS.queued, PROBE_REQUEST_LIMITS.queue_wait_ms)
+  private boundedHandler: ReturnType<typeof createBoundedProbeHandler> | undefined
 
   constructor(private readonly state: DurableObjectState, private readonly env: RealProbeEnv,
     private readonly dependencies: Dependencies = {}) {}
@@ -155,12 +186,36 @@ export class StaticSearchProbe {
     if (!SHA256.test(this.env.PROBE_MANIFEST_SHA ?? '')) {
       fail('probe_config_invalid', 503, 'a pinned manifest SHA-256 is required')
     }
-    this.corpusPromise ??= (this.dependencies.loadCorpus ?? createStaticCorpusStore)(
-      this.env.ASSETS, this.env.PROBE_MANIFEST_SHA, (text) => this.embedQuery(text), async () => {
-        const ledger = await this.readLedger()
-        return ledger.query_texts < AI_LIMITS.query_texts
-      },
-    ).catch((error) => { this.corpusPromise = undefined; throw error })
+    const limiter = async () => (await this.readLedger()).query_texts < AI_LIMITS.query_texts
+    if (!this.corpusPromise) {
+      if (fullMode(this.env)) {
+        // The genuine loader rejects synthetic provenance and retains failed
+        // immutable initialization. Never retry through a subset/fixture loader.
+        this.fullLoader ??= (this.dependencies.fullLoader ?? createFullCorpusStoreLoader)(
+          this.env.ASSETS, this.env.PROBE_MANIFEST_SHA, (text) => this.embedQuery(text), limiter,
+          { module: this.env.PQ_WASM },
+        )
+        this.corpusPromise = this.fullLoader().then((full): Corpus => {
+          const manifest = full.manifest
+          if (manifest.kind !== 'full-corpus-int8' || manifest.synthetic !== false
+              || manifest.passage_count !== FULL_REAL_PASSAGES) {
+            fail('probe_config_invalid', 503, 'full mode requires 40575 genuine retained passages')
+          }
+          return {
+            store: full.store,
+            manifest: { release_id: manifest.release_id, passage_count: manifest.passage_count,
+              paper_ids: manifest.paper_ids, compatibility_indices: manifest.compatibility.indices,
+              source_manifest_sha256: manifest.source_manifest_sha256 },
+            referencePassage: (index) => full.referencePassage(manifest.compatibility.indices.indexOf(index)),
+          }
+        })
+      } else {
+        this.corpusPromise = (this.dependencies.loadCorpus ?? createStaticCorpusStore)(
+          this.env.ASSETS, this.env.PROBE_MANIFEST_SHA, (text) => this.embedQuery(text), limiter,
+        )
+      }
+      this.corpusPromise = this.corpusPromise.catch((error) => { this.corpusPromise = undefined; throw error })
+    }
     return this.corpusPromise
   }
 
@@ -305,7 +360,7 @@ export class StaticSearchProbe {
     const indices = corpus.manifest.compatibility_indices.slice(
       ledger.compatibility.checked, ledger.compatibility.checked + COMPATIBILITY_BATCH_SIZE,
     )
-    const references = indices.map((index) => corpus.referencePassage(index))
+    const references = await Promise.all(indices.map((index) => corpus.referencePassage(index)))
     await this.reserve('compatibility', references.map((reference) => reference.input), indices)
     let results: CompatibilityResult[] = []
     let error: string | undefined
@@ -349,6 +404,50 @@ export class StaticSearchProbe {
     return this.compatibilityInFlight
   }
 
+  private async respond(request: Request): Promise<Response> {
+    const corpus = await this.ready()
+    const url = new URL(request.url)
+    const full = fullMode(this.env)
+    if (url.pathname === '/probe/info' && request.method === 'GET') {
+      const ledger = await this.readLedger()
+      return json({
+        probe_type: full ? 'real-full-corpus' : 'real-subset', synthetic: false,
+        runtime: 'durable-object', scope: full ? 'full' : 'subset',
+        release_id: corpus.manifest.release_id, source_sha: corpus.manifest.source_sha,
+        source_manifest_sha256: corpus.manifest.source_manifest_sha256,
+        manifest_sha256: this.env.PROBE_MANIFEST_SHA, passage_count: corpus.manifest.passage_count,
+        paper_ids: corpus.manifest.paper_ids, sample_paper_id: corpus.manifest.sample_paper_id,
+        queries: corpus.manifest.queries, compatibility_indices: corpus.manifest.compatibility_indices,
+        compatibility: ledger.compatibility, budget: budgetOf(ledger),
+        ...(full ? { admission: this.admission.stats(), production_readiness: 'unverified' } : {}),
+      })
+    }
+    if (url.pathname === '/probe/compatibility') {
+      if (request.method !== 'GET' && request.method !== 'POST') {
+        return new Response(null, { status: 405, headers: { allow: 'GET, POST' } })
+      }
+      // Request bodies cannot choose a model, passage, vector or batch size.
+      const ledger = request.method === 'POST' ? await this.advanceCompatibility() : await this.readLedger()
+      return json({ ...ledger.compatibility, budget: budgetOf(ledger),
+        manifest_sha256: this.env.PROBE_MANIFEST_SHA, release_id: corpus.manifest.release_id })
+    }
+    const service = this.serviceFor(corpus)
+    if (url.pathname === '/health' && (request.method === 'GET' || request.method === 'HEAD')) {
+      const ledger = await this.readLedger()
+      const compatible = ledger.compatibility.status === 'passed'
+      const health = await service.health()
+      return json({ ...health,
+        status: compatible ? health.status : 'degraded',
+        search_enabled: compatible && health.search_enabled,
+        scope: full ? 'full' : 'subset', compatibility_gate: ledger.compatibility.status,
+        production_readiness: 'unverified',
+      }, compatible ? 200 : 503)
+    }
+    if (url.pathname === '/mcp') return request.method === 'POST' ? handleMcp(request, service)
+      : new Response(null, { status: 405, headers: { allow: 'POST' } })
+    return handleRest(request, service)
+  }
+
   async fetch(request: Request): Promise<Response> {
     const marker = request.headers.get('x-probe-marker') ?? crypto.randomUUID()
     const objectId = this.state.id.toString()
@@ -360,43 +459,21 @@ export class StaticSearchProbe {
     try {
       ensureLive(this.env)
       requestOrigin(request)
-      const corpus = await this.ready()
-      const url = new URL(request.url)
-      if (url.pathname === '/probe/info' && request.method === 'GET') {
-        const ledger = await this.readLedger()
-        response = json({
-          probe_type: 'real-subset', synthetic: false, runtime: 'durable-object', scope: 'subset',
-          release_id: corpus.manifest.release_id, source_sha: corpus.manifest.source_sha,
-          manifest_sha256: this.env.PROBE_MANIFEST_SHA, passage_count: corpus.manifest.passage_count,
-          paper_ids: corpus.manifest.paper_ids, sample_paper_id: corpus.manifest.sample_paper_id,
-          queries: corpus.manifest.queries, compatibility_indices: corpus.manifest.compatibility_indices,
-          compatibility: ledger.compatibility, budget: budgetOf(ledger),
-        })
-      } else if (url.pathname === '/probe/compatibility') {
-        if (request.method !== 'GET' && request.method !== 'POST') {
-          response = new Response(null, { status: 405, headers: { allow: 'GET, POST' } })
+      if (fullMode(this.env)) {
+        if (request.url.length > PROBE_REQUEST_LIMITS.url_characters) {
+          fail('invalid_argument', 414, 'probe URL exceeds its length limit')
+        }
+        const path = new URL(request.url).pathname
+        if (path === '/probe/info' || path === '/probe/compatibility' || path === '/health') {
+          response = await this.admission.run(() => this.respond(request), request.signal)
         } else {
-          // Request bodies cannot choose a model, passage, vector or batch size.
-          const ledger = request.method === 'POST' ? await this.advanceCompatibility() : await this.readLedger()
-          response = json({ ...ledger.compatibility, budget: budgetOf(ledger),
-            manifest_sha256: this.env.PROBE_MANIFEST_SHA, release_id: corpus.manifest.release_id })
+          this.boundedHandler ??= createBoundedProbeHandler(
+            async () => this.serviceFor(await this.ready()), this.admission,
+          )
+          response = await this.boundedHandler.fetch(request)
         }
       } else {
-        const service = this.serviceFor(corpus)
-        if (url.pathname === '/health' && (request.method === 'GET' || request.method === 'HEAD')) {
-          const ledger = await this.readLedger()
-          const compatible = ledger.compatibility.status === 'passed'
-          const health = await service.health()
-          response = json({ ...health,
-            status: compatible ? health.status : 'degraded',
-            search_enabled: compatible && health.search_enabled,
-            scope: 'subset', compatibility_gate: ledger.compatibility.status,
-            production_readiness: 'unverified',
-          }, compatible ? 200 : 503)
-        } else if (url.pathname === '/mcp') {
-          response = request.method === 'POST' ? await handleMcp(request, service)
-            : new Response(null, { status: 405, headers: { allow: 'POST' } })
-        } else response = await handleRest(request, service)
+        response = await this.respond(request)
       }
     } catch (error) {
       const domain = error instanceof DomainError ? error : new DomainError('probe_unavailable', 503, 'real probe initialization failed')
@@ -405,7 +482,7 @@ export class StaticSearchProbe {
     }
     const headers = new Headers(response.headers)
     headers.set('x-probe-runtime', 'durable-object')
-    headers.set('x-probe-kind', 'real-subset')
+    headers.set('x-probe-kind', this.env.PROBE_CORPUS_MODE === 'full' ? 'real-full-corpus' : 'real-subset')
     headers.set('x-probe-synthetic', 'false')
     headers.set('x-probe-marker', marker)
     headers.set('x-probe-object-id', objectId)
@@ -438,7 +515,7 @@ export function createRealProbeGateway() {
         const headers = new Headers(request.headers)
         headers.delete('x-probe-token')
         headers.set('x-probe-marker', marker)
-        const id = env.SEARCH_PROBE.idFromName(REAL_PROBE_OBJECT_NAME)
+        const id = env.SEARCH_PROBE.idFromName(fullMode(env) ? FULL_REAL_PROBE_OBJECT_NAME : REAL_PROBE_OBJECT_NAME)
         return await env.SEARCH_PROBE.get(id).fetch(new Request(request, { headers }))
       } catch (error) {
         const domain = error instanceof DomainError ? error : new DomainError('probe_unavailable', 503, 'isolated probe routing failed')
