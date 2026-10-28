@@ -36,7 +36,10 @@ configuration invalidate that evidence. Documentation/preflight changes can
 reuse the historical experiment because the measured runtime is unchanged.
 Fresh local evidence and certificates still expire after 24 hours and bind the
 current checkout, environment and query set. Older certificates cannot pass
-the revised policy hash. No new provider call or long encode has run yet.
+the revised policy hash. Run 40448979121 subsequently passed the provider
+canary and completed all corpus/query embeddings. Its post-encoding validator
+timed out before quality evaluation; the historical data were then evaluated
+without further inference. See [the full quality readout](FULL_SEARCH_QUALITY.md).
 
 ### Historical October 25 comparison
 
@@ -218,7 +221,10 @@ Cleaning source text or selecting a new question cohort is a separately
 versioned data change; silently changing this frozen diagnostic while tuning
 retrieval would invalidate the comparison. No held-out quality claim is made.
 
-No real full-corpus quality result exists until that long run finishes.
+The [October 28 retained-vector replay](FULL_SEARCH_QUALITY.md) now measures
+all 2,064 frozen questions through the actual full int8 runtime. Fidelity to
+FP32 passes; useful answer evidence and a deployed external-agent journey
+remain separate evaluation requirements.
 
 ## Running the stages
 
