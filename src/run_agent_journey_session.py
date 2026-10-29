@@ -21,6 +21,8 @@ def arguments():
     parser.add_argument('--out', required=True, type=Path)
     parser.add_argument('--manifest-sha', required=True)
     parser.add_argument('--port', type=int, default=8765)
+    parser.add_argument('--retained-reading', action='store_true',
+                        help='Replay live search bodies, then local reading only')
     return parser.parse_args()
 
 
@@ -38,6 +40,7 @@ SERVER = subprocess.Popen(
         '--sessions', str(OPTIONS.sessions.resolve()),
         '--out', str(OPTIONS.out.resolve()),
         '--port', str(OPTIONS.port),
+        *(['--retained-reading'] if OPTIONS.retained_reading else []),
     ],
     cwd=ROOT / 'worker', stdout=subprocess.PIPE, text=True,
 )

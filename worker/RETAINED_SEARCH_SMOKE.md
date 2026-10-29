@@ -43,6 +43,69 @@ re-encoding or additional search infrastructure is needed for that comparison.
 [original report and cleanup evidence](probe-results/retained-smoke-40806851930.evidence.json.gz)
 preserve the observed result and its limits.
 
+## Agent follow-up: reading and catalog recovery
+
+Two fresh agents continued from the exact three-hit responses of the successful
+live run. Each could choose catalog keyword queries and subsequent reading through
+the current full-corpus service. Independent review graded **one supported direct
+answer and one supported partial answer**; all eight quoted passages and citation
+windows were valid. There were **16 successful API calls, zero API errors**, and
+94,818 delivered Unicode code points in total.
+
+| Question | Independently graded result | Evidence found | Calls / code points |
+| --- | --- | --- | ---: |
+| Reduce long-conversation KV-cache memory | Supported partial | TransformerFAM and Gist Tokens; learned compact-memory mechanisms, with conversation deployment and unchanged-model applicability explicitly unresolved | 8 / 47,058 |
+| Check and revise reasoning before answering | Supported correct | Self-Refine and s1 for revision; self-consistency and prefix-consistency voting explicitly distinguished from revision | 8 / 47,760 |
+
+Both agents used one replayed semantic response, three catalog queries and four
+paper reads. They selected the queries, papers and ranges themselves; neither
+received a target paper, reference answer or the prior relevance review. The
+second answer found direct revision mechanisms beyond its original three hits.
+The first recovered useful mechanisms but carefully retained the limits of the
+retrieved evidence. No unsupported material claim was found.
+
+This is **replayed live search followed by local navigation**, not another live
+Cloudflare experiment. No new query embeddings, semantic reformulations or corpus
+encoding were performed. The initial response bodies were preserved byte for
+byte; follow-up reading used the authenticated 40,575-passage corpus and current
+service handlers. Both agents used their full eight-call allowance and nearly all
+of the 48,000-code-point allowance. Two deliberately revisited cases do not give a
+general accuracy estimate or establish deployed MCP, public access or capacity.
+The agents reported no display truncation; the HTTP transcripts independently
+verify complete delivered bodies, not the outer client display.
+
+The first agent proposed the unexecuted follow-up query: `Training-free key value
+cache compression or eviction for long multi-turn conversations preserving
+important earlier tokens`. The existing tools already support useful recovery;
+this diagnostic does not justify changing ranking or adding another search backend.
+Public deployment and unrestricted semantic follow-up remain to be verified.
+
+[Verified summary](probe-results/retained-reading-2026-10-28.json) and
+[original protocol, HTTP transcripts, frozen answers and independent reviews](probe-results/retained-reading-2026-10-28.evidence.json.gz)
+record both successes and scope limitations. The evidence file stores original
+UTF-8 files with their SHA256 hashes. Model revision/sampling parameters are not
+exposed; conversational isolation was instructed, not an operating-system sandbox.
+A launcher packaging error was caught before agent retrieval and corrected by an
+explicit `--retained-reading` mode. No scored agent call was rerun. An answer-file
+serialization typo in the second session was corrected without another API call.
+
+To reproduce, restore the existing full-corpus artifact, extract the protocol and
+session registry from the evidence, and build the pinned harness from `worker/`:
+
+```bash
+node_modules/.bin/esbuild probe-kernel/retained-reading-journey.ts \
+  --bundle --platform=node --format=esm \
+  --outfile=../full-probe-reports/retained-reading/runtime.mjs
+```
+
+From the repository root, run the existing Python interactive launcher with
+`--retained-reading`, the recorded registry, bundle and manifest hash, and a new
+output directory per fresh agent. The full command template and executed source
+hashes are in the protocol. The harness never loads a query-vector bank; its
+embedding callback fails if called. The production Worker and CI workflows are
+unchanged. Validation covered 11 focused tests, TypeScript checking, Python
+compilation, and an actual launcher/search/catalog preflight.
+
 ## Earlier startup failures
 
 The [first live run](https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/40798568932)

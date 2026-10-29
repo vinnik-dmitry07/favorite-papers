@@ -111,8 +111,11 @@ export function createJourneyAdapter(options: {
   forward: (request: Request, session: JourneySession) => Promise<Response>
   record: (session: JourneySession, record: JourneyRecord) => void
   limits?: { calls: number, code_points: number }
+  searchKDefault?: number
 }) {
   const limits = options.limits ?? JOURNEY_LIMITS
+  const searchKDefault = options.searchKDefault ?? 8
+  assert(Number.isSafeInteger(searchKDefault) && searchKDefault >= 1 && searchKDefault <= 8)
   assert(limits.calls > 0 && limits.code_points >= EXHAUSTED.length)
   const states = new Map(options.sessions.map((session) => [session.id, {
     session, attempted_calls: 0, delivered_code_points: 0, delivered_bytes: 0,
@@ -135,7 +138,7 @@ export function createJourneyAdapter(options: {
         if (state.semantic_calls) return error('semantic_call_already_used')
         if (state.attempted_calls !== 1) return error('initial_semantic_call_required')
         state.semantic_calls++
-        if (!url.searchParams.has('k')) url.searchParams.set('k', '8')
+        if (!url.searchParams.has('k')) url.searchParams.set('k', String(searchKDefault))
       } else if (!state.semantic_calls) return error('initial_semantic_call_required')
       return options.forward(new Request('http://localhost' + path + url.search), state.session)
     }
@@ -180,7 +183,7 @@ export function createJourneyAdapter(options: {
         instructions: 'Make the exact question your first API call via semantic search. One semantic call only. '
           + 'All API attempts count; all complete response bodies count, including repeated text and JSON. '
           + 'Prefix every returned /v1/ link with this session base. No external sources.',
-        rest: { method: 'GET', endpoints: REST_FIELDS, search_k_default: 8,
+        rest: { method: 'GET', endpoints: REST_FIELDS, search_k_default: searchKDefault,
           content_length_default: 6000, content_length_max: 32000,
           literal_find: 'q is a literal case-insensitive string within one paper' },
         mcp: { method: 'POST', path: '/mcp', tools: MCP_FIELDS,
@@ -348,6 +351,7 @@ function parseOptions(argv: string[]) {
     vocab: resolve(args.get('--vocab') ?? 'tokenizer/vocab.txt') }
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href
+    && !process.argv.includes('--retained-reading')) {
   await runJourneyServer(parseOptions(process.argv.slice(2)))
 }

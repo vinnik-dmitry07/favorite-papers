@@ -134,16 +134,19 @@ is `9dbcb22d804a3cf5d5d9899cacbe6f4a908ef7e1`; execution and file hashes are in
 the summary. The exact inherited model revision and sampling settings are not
 exposed, so identical future model behavior is not promised.
 
-## Next live measurement
+## Subsequent live and reading measurements
 
-The next useful check is genuine new query text against the retained full corpus,
-followed by reading the returned paper. It needs no corpus re-encoding. A short
-manual smoke run can establish that wiring and provider compatibility; it will
-not itself be an autonomous-agent test, a free-tier capacity proof or permission
-to publish the endpoint. The PR remains a draft. Public access, unrestricted
-query reformulation and platform behavior still need direct verification.
+The [retained-corpus smoke](RETAINED_SEARCH_SMOKE.md) subsequently passed on the
+real 40,575-passage corpus: 200 compatibility inputs, two new semantic queries,
+and returned-paper reads, without corpus re-encoding. Search HTTP wall times were
+626.8 and 611.8 ms. The first-hit reading windows did not directly answer the two
+questions; this was a wiring success rather than an autonomous answer test.
 
-The [retained-corpus smoke workflow](RETAINED_SEARCH_SMOKE.md) is ready for that
-check. It runs 200 compatibility inputs, then two genuine new queries and reads
-their returned papers. The code and failure paths have local tests; no live run
-of this new mode is included in the results above.
+Two fresh agents then continued from those exact live search bodies using local
+catalog and reading APIs. Independent graders found one supported correct answer
+and one supported partial answer; all eight quotes/windows were valid. Each used
+eight calls. This supports recovery through existing navigation, with the limits
+and reproducible evidence recorded in the retained-corpus readout. It did not
+execute a semantic reformulation. Public access, deployed MCP, unrestricted
+semantic follow-up and sustained platform behavior remain unverified. The PR
+remains a draft; these measurements require no new corpus encoding.
