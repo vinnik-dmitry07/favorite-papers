@@ -11,8 +11,24 @@ No compatibility inputs or search queries were submitted. Namespace and Worker
 cleanup passed. The runner had omitted the explicit application User-Agent used
 by the existing probe client. It now sends that truthful application identity,
 as recommended in [Cloudflare's 1010 documentation](https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/).
-This correction has transport-level regression coverage; its live effect is
-not yet measured. [Original response and cleanup evidence](probe-results/retained-smoke-40798568932.json).
+This correction has transport-level regression coverage.
+[Original response and cleanup evidence](probe-results/retained-smoke-40798568932.json).
+
+The [second live run](https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/40799952795)
+did not encounter that 403. Immediately after deployment its first `/probe/info`
+request received edge 404 / error 1042 (`workers_dev_script_not_found`); the
+subsequent read-only ledger request returned HTTP 200 with the authenticated
+40,575-passage index and zero provider calls. The runner still correctly retained
+its failed outcome. This sequence is consistent with deployment propagation,
+not a search or embedding failure. Cleanup passed again.
+[Original startup sequence and ledger](probe-results/retained-smoke-40799952795.json).
+
+The runner now checks startup readiness with at most three initial info GETs,
+one second apart, only for that exact edge 404/1042 response. It still requires
+the expected full-index identity and a fresh zero-call ledger before provider
+work. Authentication errors, ordinary 404s and identity mismatches stop; search
+and compatibility requests are never retried. The corrected startup handling
+has not yet been run live.
 
 ## Run
 
@@ -43,7 +59,8 @@ installation and cleanup; this is not an estimate of its measured duration.
    missing/expired artifact or identity mismatch stops before deployment.
 2. It checks for an earlier probe namespace, then deploys a run-specific
    authenticated Durable Object with a 15-minute expiry. It captures namespace
-   ownership before any provider calls.
+   ownership and completes the bounded read-only readiness check before any
+   provider calls.
 3. It compares 200 retained reference vectors with Workers AI in batches of at
    most 16, requiring cosine similarity of at least 0.999. Any mismatch stops
    before new search queries. This uses new inference only for these checks,

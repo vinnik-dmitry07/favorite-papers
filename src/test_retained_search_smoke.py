@@ -30,8 +30,9 @@ def fixture(tmp_path):
 
 
 class Server:
-    def __init__(self, value, failure=None):
+    def __init__(self, value, failure=None, startup=None):
         self.fixture, self.failure = value, failure
+        self.startup = list(startup or [])
         self.checked = self.queries = self.calls = 0
         self.paths = []
 
@@ -63,6 +64,8 @@ class Server:
         release = self.fixture['manifest']['release_id']
         paper_id = next(iter(self.fixture['graph']['nodes']))
         if parsed.path == '/probe/info':
+            if self.startup:
+                return self.startup.pop(0)
             body = {
                 'probe_type': 'real-full-corpus', 'runtime': 'durable-object',
                 'scope': 'full', 'synthetic': False,
@@ -124,10 +127,10 @@ class Server:
         return 200, identity, json.dumps(body)
 
 
-def run(tmp_path, monkeypatch, failure=None, authorization=2):
+def run(tmp_path, monkeypatch, failure=None, authorization=2, startup=None):
     value = fixture(tmp_path)
     monkeypatch.setattr(smoke, 'load_fixture', lambda root: value)
-    server = Server(value, failure)
+    server = Server(value, failure, startup)
     output = tmp_path / 'run.json'
     report = smoke.run('https://probe.example', 'secret', tmp_path, output,
                        authorization, exchange=server)
@@ -171,7 +174,11 @@ def test_first_failure_stops_all_provider_work_but_recovers_read_only_ledger(
     assert server.paths.count('/v1/content') == reads
     assert server.paths.count('/probe/compatibility') == batches
     assert server.paths[-1] == '/probe/info'
-    assert report['requests'][-1]['kind'] == 'ledger_after_failure_read_only'
+    expected_kind = ('ledger_after_failure_read_only'
+                     if searches or batches else 'ledger_initial')
+    assert report['requests'][-1]['kind'] == expected_kind
+    if not searches and not batches:
+        assert len(report['requests']) == 1
     if failure.startswith('ambiguous'):
         failed = next(row for row in report['requests'] if 'error' in row)
         assert failed['state'] == 'completed' and failed['elapsed_ms'] >= 0
@@ -238,3 +245,102 @@ def test_exchange_sends_application_identity_and_preserves_auth(
     )
     assert request.get_header('X-probe-token') == 'test-probe-secret'
     assert request.get_method() == ('GET' if payload is None else 'POST')
+
+
+def pending_response():
+    return 404, {}, json.dumps({
+        'cloudflare_error': True,
+        'status': 404,
+        'error_code': 1042,
+        'error_name': 'workers_dev_script_not_found',
+    })
+
+
+@pytest.mark.parametrize('pending_attempts', [1, 2])
+def test_initial_deployment_delay_then_full_smoke(
+        tmp_path, monkeypatch, pending_attempts):
+    waits = []
+    monkeypatch.setattr(smoke.time, 'sleep', waits.append)
+    report, server = run(
+        tmp_path, monkeypatch,
+        startup=[pending_response()] * pending_attempts,
+    )
+    assert report['smoke_gate'] == 'passed', report.get('error')
+    assert waits == [1] * pending_attempts
+    assert server.paths[:pending_attempts + 1] == (
+        ['/probe/info'] * (pending_attempts + 1)
+    )
+    assert all(row['startup_retry']
+               for row in report['requests'][:pending_attempts])
+    assert server.paths.count('/probe/compatibility') == 13
+    assert server.paths.count('/v1/search') == 2
+    assert report['budget']['total_texts'] == 202
+    assert report['budget']['ai_calls'] == 15
+    assert len(report['requests']) <= smoke.MAX_HTTP_ATTEMPTS
+
+
+def test_initial_deployment_delay_stops_after_three_attempts(
+        tmp_path, monkeypatch):
+    waits = []
+    monkeypatch.setattr(smoke.time, 'sleep', waits.append)
+    report, server = run(
+        tmp_path, monkeypatch, startup=[pending_response()] * 3,
+    )
+    assert report['smoke_gate'] == 'failed'
+    assert server.paths == ['/probe/info'] * 3
+    assert waits == [1, 1]
+    assert server.calls == server.queries == server.checked == 0
+    assert report['ledgers'] == report['journeys'] == []
+
+
+@pytest.mark.parametrize('status,headers,body', [
+    (401, {}, '{}'),
+    (403, {}, '{}'),
+    (404, {}, '{}'),
+    (503, {}, '{}'),
+    (404, {}, 'invalid JSON'),
+    (404, {}, '[1042]'),
+    (404, {}, json.dumps({'error_code': 1042})),
+    (404, {'x-probe-object-id': 'already-routed'}, pending_response()[2]),
+])
+def test_other_startup_failures_are_not_retried(
+        tmp_path, monkeypatch, status, headers, body):
+    waits = []
+    monkeypatch.setattr(smoke.time, 'sleep', waits.append)
+    report, server = run(
+        tmp_path, monkeypatch, startup=[(status, headers, body)],
+    )
+    assert report['smoke_gate'] == 'failed'
+    assert server.paths == ['/probe/info']
+    assert waits == []
+    assert server.calls == server.queries == server.checked == 0
+
+
+def test_startup_success_still_requires_authenticated_identity(
+        tmp_path, monkeypatch):
+    monkeypatch.setattr(smoke.time, 'sleep', lambda seconds: None)
+    report, server = run(
+        tmp_path, monkeypatch, failure='wrong_identity',
+        startup=[pending_response()],
+    )
+    assert report['smoke_gate'] == 'failed'
+    assert 'identity mismatch' in report['error']
+    assert server.paths == ['/probe/info'] * 2
+    assert server.calls == 0
+
+
+@pytest.mark.parametrize('limit,value,expected', [
+    ('MAX_HTTP_ATTEMPTS', 1, 'HTTP request budget exhausted'),
+    ('MAX_LOAD_SECONDS', 0.5, 'Smoke deadline exhausted'),
+])
+def test_startup_wait_preserves_global_budgets(
+        tmp_path, monkeypatch, limit, value, expected):
+    monkeypatch.setattr(smoke, limit, value)
+    monkeypatch.setattr(smoke.time, 'sleep', lambda seconds: None)
+    report, server = run(
+        tmp_path, monkeypatch, startup=[pending_response()] * 3,
+    )
+    assert report['smoke_gate'] == 'failed'
+    assert expected in report['error']
+    assert server.paths == ['/probe/info']
+    assert server.calls == 0

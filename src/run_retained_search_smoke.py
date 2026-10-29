@@ -37,6 +37,8 @@ QUERIES = (
 QUERY_SUBMISSIONS = 2
 MAX_HTTP_ATTEMPTS = 32
 MAX_LOAD_SECONDS = 600
+STARTUP_ATTEMPTS = 3
+STARTUP_DELAY_SECONDS = 1
 
 
 def checked_json(path, expected):
@@ -128,6 +130,21 @@ def persist(report, output):
     temporary.replace(output)
 
 
+def deployment_pending(row):
+    if (row.get('method') != 'GET' or row.get('path') != '/probe/info'
+            or row.get('status') != 404 or row.get('object_id')):
+        return False
+    try:
+        body = json.loads(row.get('response_text', ''))
+    except (TypeError, ValueError):
+        return False
+    return (isinstance(body, dict)
+            and body.get('cloudflare_error') is True
+            and body.get('status') == 404
+            and body.get('error_code') == 1042
+            and body.get('error_name') == 'workers_dev_script_not_found')
+
+
 class Smoke:
     def __init__(self, origin, token, fixture, report, output, exchange):
         self.origin, self.token, self.fixture = origin, token, fixture
@@ -198,8 +215,25 @@ class Smoke:
         persist(self.report, self.output)
         return info
 
+    def initial_ledger(self):
+        for attempt in range(STARTUP_ATTEMPTS):
+            before = len(self.report['requests'])
+            try:
+                return self.ledger('ledger_initial')
+            except ValueError:
+                rows = self.report['requests']
+                if (attempt + 1 == STARTUP_ATTEMPTS
+                        or len(rows) != before + 1
+                        or not deployment_pending(rows[-1])):
+                    raise
+                require(self.deadline - time.monotonic()
+                        > STARTUP_DELAY_SECONDS, 'Smoke deadline exhausted')
+                rows[-1]['startup_retry'] = True
+                persist(self.report, self.output)
+                time.sleep(STARTUP_DELAY_SECONDS)
+
     def run(self):
-        initial = self.ledger('ledger_initial')
+        initial = self.initial_ledger()
         require(all(initial['budget'][key] == 0 for key in (
             'compatibility_texts', 'query_texts', 'total_texts', 'input_tokens', 'ai_calls'))
             and initial['compatibility']['status'] == 'not_started',
@@ -299,7 +333,11 @@ def run(origin, token, fixture_root, output, authorized_queries, *, exchange=exc
     except Exception as error:
         report['error'] = f'{type(error).__name__}: {error}'
         persist(report, output)
-        if smoke is not None:
+        provider_attempted = any(
+            row['kind'] in ('compatibility', 'new_query')
+            for row in report['requests']
+        )
+        if smoke is not None and provider_attempted:
             try:
                 smoke.ledger('ledger_after_failure_read_only')
             except Exception as ledger_error:
