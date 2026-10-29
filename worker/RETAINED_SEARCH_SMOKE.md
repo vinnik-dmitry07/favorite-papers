@@ -2,7 +2,17 @@
 
 This short manual experiment checks the missing connection between new query
 text, Workers AI, the real 40,575-passage int8 index and returned-paper reading.
-It does not encode the corpus again. No run of this mode has been measured yet.
+It does not encode the corpus again.
+
+The [first live run](https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/40798568932)
+restored and deployed successfully, but Cloudflare rejected the initial
+`/probe/info` request with HTTP 403 / error 1010 (`browser_signature_banned`).
+No compatibility inputs or search queries were submitted. Namespace and Worker
+cleanup passed. The runner had omitted the explicit application User-Agent used
+by the existing probe client. It now sends that truthful application identity,
+as recommended in [Cloudflare's 1010 documentation](https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/).
+This correction has transport-level regression coverage; its live effect is
+not yet measured. [Original response and cleanup evidence](probe-results/retained-smoke-40798568932.json).
 
 ## Run
 

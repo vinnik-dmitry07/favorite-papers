@@ -1,6 +1,7 @@
 '''The two-query HTTP smoke fails closed and never retries provider work.'''
 
 import hashlib
+from io import BytesIO
 import json
 import urllib.parse
 
@@ -202,3 +203,38 @@ def test_redirects_cannot_forward_the_probe_token():
     request = urllib.parse.urlsplit('https://probe.example')
     assert smoke.NoRedirect().redirect_request(request, None, 302, '', {},
                                                'https://elsewhere.example') is None
+
+
+@pytest.mark.parametrize('payload', [None, {}])
+def test_exchange_sends_application_identity_and_preserves_auth(
+        monkeypatch, payload):
+    captured = []
+
+    class Response(BytesIO):
+        status = 200
+        headers = {'content-type': 'application/json'}
+
+    class Opener:
+        def open(self, request, timeout):
+            captured.append((request, timeout))
+            return Response(b'{}')
+
+    def build_opener(*handlers):
+        assert len(handlers) == 1
+        assert isinstance(handlers[0], smoke.NoRedirect)
+        return Opener()
+
+    monkeypatch.setattr(smoke.urllib.request, 'build_opener', build_opener)
+    assert smoke.exchange_once(
+        'https://probe.example/probe/info', payload,
+        {'x-probe-token': 'test-probe-secret'}, 12,
+    ) == (200, {'content-type': 'application/json'}, '{}')
+    assert len(captured) == 1
+    request, timeout = captured[0]
+    assert timeout == 12
+    assert request.get_header('User-agent') == (
+        'favorite-papers-static-probe/1.0 '
+        '(+https://github.com/vinnik-dmitry07/favorite-papers)'
+    )
+    assert request.get_header('X-probe-token') == 'test-probe-secret'
+    assert request.get_method() == ('GET' if payload is None else 'POST')

@@ -23,6 +23,7 @@ from run_real_search_probe import (
     require, validate_budget, validate_compatibility, validate_content,
     validate_rest_search,
 )
+from run_static_search_probe import PROBE_USER_AGENT
 
 PACKED_SHA = '6b9c87883f525a128eb9a48aead5914d9524ba2f7433ff3b14c62b3c0d970b47'
 CANONICAL_SHA = 'ad36309a7b1823dd64eab28658602408afc69054aa2159b4d63074cfbe04d8fd'
@@ -107,6 +108,7 @@ def exchange_once(url, payload, headers, timeout):
     request = urllib.request.Request(
         url, data=None if payload is None else json.dumps(payload).encode(),
         headers={'accept': 'application/json', 'content-type': 'application/json',
+                 'user-agent': PROBE_USER_AGENT,
                  **headers},
     )
     try:
