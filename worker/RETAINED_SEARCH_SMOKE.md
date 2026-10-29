@@ -4,6 +4,47 @@ This short manual experiment checks the missing connection between new query
 text, Workers AI, the real 40,575-passage int8 index and returned-paper reading.
 It does not encode the corpus again.
 
+## Latest result: live integration passed
+
+[Run 40806851930](https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/40806851930)
+completed on commit `02c18b9`: **23 HTTP requests, all 200**, with no startup
+retry. The genuine 40,575-passage index passed **200/200** compatibility checks;
+minimum cosine was **0.9999992676** against the unchanged 0.999 threshold.
+Both new queries were absent from the frozen 2,064-question set and completed
+search followed by a 6,000-code-point paper read. The read text matched the
+authenticated corpus ranges. The namespace was confirmed absent after cleanup;
+Worker deletion succeeded, without a separate saved absence GET.
+
+| New query topic | First returned paper | Search wall time | Read wall time |
+| --- | --- | ---: | ---: |
+| Reduce long-conversation KV-cache memory | Recursive Language Models | 626.8 ms | 156.1 ms |
+| Check and revise reasoning with extra inference computation | Physics of Language Models: Part 2.1 | 611.8 ms | 153.7 ms |
+
+The measured scenario took **25.104 seconds**, including compatibility. The
+internal ledger recorded 15 AI calls and 38,680 input tokens: 13 calls/38,631
+tokens for compatibility, then one call per new query (26 and 23 tokens). Reads
+added no provider work. These are client wall times and internal counters, not
+platform CPU, memory or billing measurements. Two warmed searches do not
+establish sustained Free-tier capacity. The temporary endpoint was removed.
+
+**Useful answer evidence remains a separate question.** Independent qualitative
+review of the delivered snippets and top-one reading windows found related
+material, but neither window directly answered its exact question. The first
+discusses context offloading rather than a specific KV-cache reduction method;
+the second diagnoses reasoning errors rather than providing an inference-time
+checking/revision procedure. A later result suggests answer aggregation as a
+possible reading direction. Other full papers were not graded. This is not a
+formal accuracy estimate or an autonomous-agent evaluation.
+
+The next useful measurement is an agent journey with query reformulation and
+further reading, followed by verification of the cited answer. No corpus
+re-encoding or additional search infrastructure is needed for that comparison.
+[Verified summary](probe-results/retained-smoke-40806851930.json) and
+[original report and cleanup evidence](probe-results/retained-smoke-40806851930.evidence.json.gz)
+preserve the observed result and its limits.
+
+## Earlier startup failures
+
 The [first live run](https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/40798568932)
 restored and deployed successfully, but Cloudflare rejected the initial
 `/probe/info` request with HTTP 403 / error 1010 (`browser_signature_banned`).
@@ -27,8 +68,9 @@ The runner now checks startup readiness with at most three initial info GETs,
 one second apart, only for that exact edge 404/1042 response. It still requires
 the expected full-index identity and a fresh zero-call ledger before provider
 work. Authentication errors, ordinary 404s and identity mismatches stop; search
-and compatibility requests are never retried. The corrected startup handling
-has not yet been run live.
+and compatibility requests are never retried. The later successful run reached
+readiness on its first request, so the bounded retry branch itself has local
+regression coverage rather than live execution evidence.
 
 ## Run
 
