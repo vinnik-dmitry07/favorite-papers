@@ -7,8 +7,10 @@ full-corpus index in a separate `key-papers-search` Worker. It exposes the same
 REST/MCP tools, with a persistent daily AI allowance and explicit compatibility
 and activation checks. Select the manual `publish` phase of **Agent probe**;
 ordinary pushes do not deploy it. This path does not require Vectorize, R2 or a
-new corpus encoding. Its endpoint is advertised only after its own public checks
-pass; the prior temporary smoke is not a permanent deployment.
+new corpus encoding. [Publication run 41007245038](https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/41007245038)
+passed its public checks. Start at the permanent
+[agent manual](https://key-papers-search.vinnik-dmitry07.workers.dev/llms.txt),
+or connect [MCP](https://key-papers-search.vinnik-dmitry07.workers.dev/mcp).
 
 The [static-search feasibility probe](STATIC_SEARCH_PROBE.md),
 [real subset](REAL_SEARCH_PROBE.md) and [full offline gates](FULL_SEARCH_PROBE.md)

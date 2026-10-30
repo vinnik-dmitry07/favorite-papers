@@ -5,10 +5,15 @@ The `publish` phase of **Agent probe** publishes a separate permanent Worker,
 existing vectors; it does not encode the corpus, use Vectorize or R2, upgrade the
 Cloudflare plan, replace `key-papers-api`, or merge the pull request.
 
-Publication is manual. A passing earlier temporary probe is evidence for this
-implementation, not evidence that the permanent endpoint has been deployed.
-Use the origin printed by the successful publication job and its discovery
-artifact. The stable Worker remains deployed after that job finishes.
+The permanent API was published by [run 41007245038](https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/41007245038)
+at runtime commit `abe903d8c3e6ef39da0c57b20f10283ec76771c3` on
+2026-10-30 UTC. Start at
+[the public agent manual](https://key-papers-search.vinnik-dmitry07.workers.dev/llms.txt),
+use [REST/OpenAPI](https://key-papers-search.vinnik-dmitry07.workers.dev/openapi.json),
+or connect [MCP](https://key-papers-search.vinnik-dmitry07.workers.dev/mcp).
+Publication remains manual; the stable Worker stays deployed after the job ends.
+The [publication evidence](probe-results/public-publication-41007245038.json)
+records the exact deployed identity and the limits of the checks.
 
 ## Publish
 
@@ -141,12 +146,53 @@ The retained artifact was restored locally with the historical hash checks intac
 Wrangler deployment dry-run with those assets (about 352 KiB gzipped script).
 The full TypeScript suite passed 204 tests with two optional skips, and typechecking
 passed. Python publication and existing workflow regressions passed; the focused
-publication/workflow selection covered 80 tests. No live Cloudflare deployment
-of this permanent entrypoint has been performed in this preparation.
+publication/workflow selection covered 80 tests. These checks preceded the
+successful live publication described above.
 
 Independent review checked authorization, durable reservations, activation,
 provider timeouts, public contracts and publication failure handling. It led to
 separate admission for still-pending AI calls, moving OpenAPI schema generation
 inside the DO, and accepting legitimate catalog-only MCP search results in the
-publication validator. The next evidence is the explicit publication run above,
-followed by an external agent starting at the resulting public URL.
+publication validator.
+
+## First permanent publication
+
+All four public integration checks passed: discovery/admin isolation, catalog/
+graph/reading, REST query and reformulation, and MCP search/fetch. Of 37 HTTP
+attempts, 36 returned 200 and one intentionally unauthenticated admin request
+returned 403. All 200 compatibility inputs passed (minimum reported cosine
+0.9999992676). Independent offline replay verified the pinned indices, all 67
+incoming DeepSeekMath citation IDs, three 6,000-code-point REST reads and one
+16,000-code-point MCP fetch against the canonical corpus. Raw provider vectors
+are not in the report, so the reported cosines cannot be recomputed from it.
+
+The two REST searches took 462 and 298 ms; MCP search took 430 ms and fetch
+218 ms. These are client wall times from the publication runner, not platform
+CPU or memory measurements. The final daily ledger recorded three query inputs,
+200 compatibility inputs and 16 reservation attempts. Reserved tokens and
+`ai_calls` are application accounting, not independent provider billing telemetry.
+
+The scripted queries establish interface and source-text consistency. Their
+top results do not by themselves establish answer quality: the refined
+conversation-cache query still ranked Cache-to-Cache first. Full responses,
+independent audit and subsequent external-agent evidence are preserved in
+[the compressed evidence](probe-results/public-publication-41007245038.evidence.json.gz).
+
+A fresh external HTTP agent then started at the public root and answered a
+feedback-and-revision research question using only this live API. It made 12
+requests, including two semantic searches, and consumed 63,470 response code
+points; every request returned 200. Independent review verified all four text
+windows and eleven recorded excerpts. The answer correctly explained Self-Refine
+and its difference from Self-Consistency, and distinguished Critique-GRPO's
+training contribution. The grade was **supported partial**: it established one
+direct feedback/revision method when the task asked for papers in the plural.
+Semantic results still mixed inference-time and training-time methods. This is
+one development case, not a general quality score.
+
+The fresh agent's median HTTP wall time was 4.13 seconds through its execution
+environment's proxy, different from the CI timings above. Separately, direct
+`/health` and `/llms.txt` requests returned 200 with search active. This chat's
+web-browsing tool returned an empty error on two attempts to open the host;
+the cause is unknown. These results establish public HTTP access, not native
+ChatGPT browsing or a configured ChatGPT MCP connection. Main Pages discovery
+and the draft PR status remain unchanged by these checks.
