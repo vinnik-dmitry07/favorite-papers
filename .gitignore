@@ -81,3 +81,7 @@ worker/probe-kernel/scan.wasm
 # Reviewed probe measurements, distinct from the private Telegram export above.
 # Review bounded raw evidence for credentials/personal content before adding it.
 !worker/probe-results/*.json.gz
+
+public-api-reports/
+
+worker/public-search-deploy.txt

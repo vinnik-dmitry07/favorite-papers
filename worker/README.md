@@ -2,11 +2,20 @@
 
 Public read API for the citation catalog. Start with the [static agent guide](https://vinnik-dmitry07.github.io/favorite-papers/agents/) for a catalog, complete paginated citation lists, and readable text. It needs no API or JavaScript. REST and stateless MCP add title lookup, section navigation, literal search and semantic search. The guide advertises the API only after deployment and live checks succeed.
 
+The [permanent static search publication](PUBLIC_SEARCH_API.md) reuses the verified
+full-corpus index in a separate `key-papers-search` Worker. It exposes the same
+REST/MCP tools, with a persistent daily AI allowance and explicit compatibility
+and activation checks. Select the manual `publish` phase of **Agent probe**;
+ordinary pushes do not deploy it. This path does not require Vectorize, R2 or a
+new corpus encoding. Its endpoint is advertised only after its own public checks
+pass; the prior temporary smoke is not a permanent deployment.
+
 The [static-search feasibility probe](STATIC_SEARCH_PROBE.md),
 [real subset](REAL_SEARCH_PROBE.md) and [full offline gates](FULL_SEARCH_PROBE.md)
 test a possible Workers Free replacement for Vectorize. The synthetic stage
 does not establish semantic quality; later stages use canonical text and real
-vectors. None is a production deployment. The separate **Agent probe** workflow
+vectors. Those experimental phases are not production deployments. The explicit `publish`
+phase is described separately above. The **Agent probe** workflow
 (`agent-api.yml`, retaining its existing dispatch entrypoint) defaults to the
 `PROBE_CLOUDFLARE_*` environment credentials. Existing repository credentials
 remain an explicit `probe_credentials=repository` option. Cloudflare secrets
@@ -14,8 +23,9 @@ are passed only to steps that use the API, not installation, tests or full-corpu
 encoding. The bounded compatibility canary needs its selected provider token.
 Production has its own **Agent API** workflow
 (`agent-publish.yml`) and does not depend on the probe's tests or fixture builds.
-The shared catalog/tokenizer optimizations are reviewed code changes; this probe
-does not deploy the production Worker or alter its Cloudflare bindings.
+The shared catalog/tokenizer optimizations are reviewed code changes; the experimental phases
+do not deploy the production Worker or alter its Cloudflare bindings. The
+permanent publication has its own name, bindings and daily ledger.
 
 Acceptance criteria:
 
