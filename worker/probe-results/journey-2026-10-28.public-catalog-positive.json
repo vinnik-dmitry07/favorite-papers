@@ -1,0 +1,66 @@
+{
+  "task": "Fresh public HTTP catalog lookup for VICReg: Variance-Invariance-Covariance Regularization for Self-Supervised Learning",
+  "status": "protocol_invalid_stopped",
+  "reason": "First output exceeded intended output size because too many relevant_anchors matched. Tool returned truncation at 7000 tokens; the 24000-model-delivered-character constraint cannot be certified. No further retrieval was performed.",
+  "timestamp_utc": "2026-10-28T22:54:24.587896+00:00",
+  "requests": [
+    {
+      "url": "https://github.com/vinnik-dmitry07/favorite-papers/",
+      "status": 200,
+      "final_url": "https://github.com/vinnik-dmitry07/favorite-papers/",
+      "elapsed_seconds": 4.721,
+      "response_bytes": 629106,
+      "decoded_chars": 623583,
+      "shown_path": "/workspace/scratch/dc1d1c50396b/public-positive-shown-1.json",
+      "emitted_chars_before_tool_truncation": 65431,
+      "delivered_chars": null,
+      "delivery_status": "Tool truncated the first page-derived output at max_output_tokens=7000; exact model-delivered Unicode character count was not captured."
+    }
+  ],
+  "get_count": 1,
+  "response_bytes_total": 629106,
+  "response_decoded_chars_total": 623583,
+  "delivered_chars": null,
+  "emitted_chars_before_truncation": 65431,
+  "exact_delivery_log_available": false,
+  "delivery_log_limitation": "public-positive-shown-1.json contains exactly what the script emitted, not exactly what the model received. Tool truncation omitted a middle portion; omitted text is not asserted as model-read.",
+  "answer": {
+    "catalog_id": null,
+    "full_text_availability": null,
+    "readable_text_part_link": null,
+    "outcome": "Unanswered because output-budget compliance failed."
+  },
+  "discovery_chain": [
+    {
+      "url": "https://github.com/vinnik-dmitry07/favorite-papers/",
+      "source": "provided starting URL",
+      "status": 200
+    },
+    {
+      "url": "https://vinnik-dmitry07.github.io/favorite-papers/",
+      "source": "visible About anchor in delivered first output",
+      "followed": false
+    }
+  ],
+  "limits": {
+    "max_http_gets": 8,
+    "max_model_delivered_unicode_chars": 24000,
+    "http_get_limit_complied": true,
+    "model_delivered_limit_compliance": "cannot_certify",
+    "no_guessed_paths_or_ids": true,
+    "ordinary_python_urllib": true,
+    "inherited_proxy_and_tls_preserved": true,
+    "github_connector_used": false,
+    "local_repo_or_prior_reports_read": false,
+    "new_agents_spawned": false
+  },
+  "network_preflight": {
+    "file": "/etc/codex/network-policy.json",
+    "result": "missing",
+    "environment_status_tool": "unavailable"
+  },
+  "artifacts": {
+    "first_http_response": "/workspace/scratch/dc1d1c50396b/public-positive-response-1.html",
+    "first_emitted_output": "/workspace/scratch/dc1d1c50396b/public-positive-shown-1.json"
+  }
+}

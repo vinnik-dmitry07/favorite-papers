@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "kind": "historical-quality-replay-execution",
+  "artifact_id": 12715563729,
+  "run_id": 40448979121,
+  "artifact_sha256": "8f3fd29b369ae41f1474e052e0eef931a23ca7437c99640adbc6bc13d519c65c",
+  "executed_bundle_sha256": "ed45b06f485dbaefc40ef66314c775cad65a38c35d09a4dca889fbdca41f2f95",
+  "files": {
+    "replay-2026-10-28-full-quality.json": {
+      "sha256": "5750e73e49d9412d5ec81d73a2ca1ef3968bd8cd9a892edb69d0fe8a29a48d59",
+      "uncompressed_sha256": "5750e73e49d9412d5ec81d73a2ca1ef3968bd8cd9a892edb69d0fe8a29a48d59"
+    },
+    "replay-2026-10-28-full-quality.restoration.json": {
+      "sha256": "c8a58d0ba2e19601a39398ec2c305b8151f06e55db827bb1bfe41914a63f9f55",
+      "uncompressed_sha256": "c8a58d0ba2e19601a39398ec2c305b8151f06e55db827bb1bfe41914a63f9f55"
+    },
+    "replay-2026-10-28-full-quality.rankings.json.gz": {
+      "sha256": "0d5edcea259fbbcea21ce8655087fe7819eaeafdc346a97a548a07e63e6a614e",
+      "uncompressed_sha256": "d2ede78edd316e8a146a21f622b1eccdf054e63ea168716d0c6d0f7be6989aa7"
+    },
+    "replay-2026-10-28-full-quality.queries.jsonl.gz": {
+      "sha256": "1e848d2fea776b85c338b0dea63fbad9f15c9eadc0a2d2b339edb5a84a1815e2",
+      "uncompressed_sha256": "816a9f9451014154c7c1a23fde334f94ea3b05d53f70ea79576a5f0a1052a016"
+    },
+    "replay-2026-10-28-full-quality.runtime.mjs.gz": {
+      "sha256": "cba3055988544dd8b5305b10d5f6cf68908cecc91772cb03898a5ecf6cb693d2",
+      "uncompressed_sha256": "ed45b06f485dbaefc40ef66314c775cad65a38c35d09a4dca889fbdca41f2f95"
+    }
+  },
+  "source_sha256": {
+    "src/restore_full_search_artifact.py": "e79c1228bc392bb4bf952f7f4689574db5d60152ba7f3086ff684e08ef0ba3bd",
+    "src/summarize_full_search_replay.py": "8416ed82eaaefb9f40b61bbeda234174e2d1a3e62c15366c01f6164c1544b4cb",
+    "worker/probe-kernel/replay-full-quality.ts": "241b67aa1147efa4b40bb01db507b9e4d7485208f19b67bc95542807a42d4819"
+  },
+  "commands": [
+    "python src/restore_full_search_artifact.py --archive ARTIFACT.zip --out full-probe-reports/replay",
+    "worker/node_modules/.bin/esbuild worker/probe-kernel/replay-full-quality.ts --bundle --platform=node --format=esm --outfile=full-probe-reports/replay/runtime.mjs",
+    "timeout 600s node full-probe-reports/replay/runtime.mjs full-probe-reports/replay/runtime full-probe-reports/replay/corpus full-probe-reports/replay/query-vectors.f32 full-probe-reports/replay/runtime-rankings.json worker/probe-kernel/scan.wasm full-probe-reports/replay/corpus/quality-combined-frozen.json full-probe-reports/replay/restoration.json",
+    "OPENBLAS_NUM_THREADS=4 OMP_NUM_THREADS=4 timeout 600s python src/summarize_full_search_replay.py --archive ARTIFACT.zip --corpus full-probe-reports/replay/corpus --queries full-probe-reports/replay/corpus/quality-combined-frozen.json --query-vectors full-probe-reports/replay/query-vectors.f32 --runtime-rankings full-probe-reports/replay/runtime-rankings.json --output full-probe-reports/replay/quality.json"
+  ],
+  "model_loaded": false,
+  "provider_calls": 0,
+  "new_admission_certificate": false,
+  "production_deployed": false,
+  "posthoc_analysis": {
+    "file": "replay-2026-10-28-full-quality.failures.json",
+    "sha256": "bc2902d1d59bb8d1ad5021af6eeed89e0a4d5e4f56de1caf410c195d9ff0b567",
+    "method": "For each original semantic projection, fix its existing selected papers and candidate pool; retain the first N ranked chunks of every selected paper. Count target-span coverage in any selected target chunk/window. N=1,2,3,5,all. No ranks, query, or gold spans changed.",
+    "scope": "Development-data context coverage only; larger reading budget, no generated-answer or held-out claim."
+  }
+}

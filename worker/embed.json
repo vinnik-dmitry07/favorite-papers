@@ -23,7 +23,50 @@
     "sep_token": "[SEP]",
     "unk_token": "[UNK]",
     "vocab_file": "tokenizer/vocab.txt",
-    "vocab_sha256": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+    "vocab_sha256": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3",
+    "algorithm_version": 2,
+    "added_tokens": [
+      {
+        "content": "[PAD]",
+        "single_word": false,
+        "lstrip": false,
+        "rstrip": false,
+        "normalized": false,
+        "special": true
+      },
+      {
+        "content": "[UNK]",
+        "single_word": false,
+        "lstrip": false,
+        "rstrip": false,
+        "normalized": false,
+        "special": true
+      },
+      {
+        "content": "[CLS]",
+        "single_word": false,
+        "lstrip": false,
+        "rstrip": false,
+        "normalized": false,
+        "special": true
+      },
+      {
+        "content": "[SEP]",
+        "single_word": false,
+        "lstrip": false,
+        "rstrip": false,
+        "normalized": false,
+        "special": true
+      },
+      {
+        "content": "[MASK]",
+        "single_word": false,
+        "lstrip": false,
+        "rstrip": false,
+        "normalized": false,
+        "special": true
+      }
+    ]
   },
   "limits": {
     "authors": 12,

@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "kind": "fixed-initial-query-agent-navigation-development-measurement",
+  "frozen_at": "2026-10-28T22:35:13.614243+00:00",
+  "source_commit": "9dbcb22d804a3cf5d5d9899cacbe6f4a908ef7e1",
+  "artifact_id": 12715563729,
+  "artifact_sha256": "8f3fd29b369ae41f1474e052e0eef931a23ca7437c99640adbc6bc13d519c65c",
+  "frozen_query_manifest_sha256": "049e5e887505ec9c19e030559034ff5f999388c7722af0b42cfa836570d8d556",
+  "query_vectors_sha256": "fd9cace08ce9efce9859cbdc42e2183c79f17acfcd904f03ef1a6220d807840d",
+  "packed_manifest_sha256": "6b9c87883f525a128eb9a48aead5914d9524ba2f7433ff3b14c62b3c0d970b47",
+  "selection": {
+    "cohort": "natural_development",
+    "count": 12,
+    "one_per_paper": true,
+    "algorithm": "Sort by sha256(salt + newline + query id), take first question of each unseen expected paper until 12. No retrieval outcomes used.",
+    "salt": "agent-journey-baseline-v1"
+  },
+  "limits": {
+    "tool_calls": 8,
+    "delivered_unicode_code_points": 48000,
+    "semantic_search_calls": 1
+  },
+  "accounting": "Count complete API response bodies including search snippets and repeated text; setup instructions excluded. Reject response exceeding remaining budget with explicit budget_exhausted; do not silently truncate JSON. Record attempted calls, wire UTF-8 bytes, wall time. No token-count equivalence claimed.",
+  "agent": {
+    "implementation": "Fresh Codex subagent per question, fork_turns=none; inherited model/settings. Backend model revision and sampling parameters are not exposed.",
+    "allowed": "Only assigned local HTTP session setup and ordinary service endpoints. No filesystem/source/report/gold reading, no other network, no other agents. Final answer must cite retrieved evidence; abstain if insufficient.",
+    "isolation": "Fresh conversational context with instructed retrieval restrictions; not an OS filesystem sandbox.",
+    "prompt_template": "You are a fresh research agent answering one question using a local research-catalog API. Your only retrieval surface is the assigned SESSION_URL. First GET SESSION_URL/setup to obtain the question, endpoint schemas, and budgets. Then submit the exact question once to /v1/search with k=8. Choose all subsequent papers, literal find queries, section/reading offsets, and graph navigation yourself. Follow corpus_version where requested. Prefix returned relative /v1 links with SESSION_URL. Do not issue another semantic search.\nRoot provides one persistent Python REPL id. Use only tools.write_stdin on that id to call get(path, parameters) or rpc(name, arguments); these helpers send real HTTP to your assigned loopback session. Obtain setup with get('/setup'). Request enough tool-output capacity to see the complete response. No other network, local files, repository, source code, other sessions, reports, labels, or other agents. The existing tool registry is not an additional evidence source. These restrictions apply until your final answer is frozen.\nAll API attempts count toward 8 calls; all delivered response bodies count toward 48000 Unicode code points, including snippets and repeated text. /setup is excluded; read its usage if necessary. Budget exhaustion is an observed outcome; do not retry through another route. If an API call fails, you may use remaining calls but no extra semantic query.\nAnswer only from evidence returned by your session. Give a concise answer, cite the paper title and source URL with retrieved offsets where possible, and include short supporting quotations. Distinguish established evidence from an inference. If evidence is insufficient, abstain or state what remains unresolved rather than using prior knowledge. Report any material tool problem.\nAfter retrieval ends, write the frozen result JSON to OUTPUT_PATH (your sole permitted file operation). Fields: session_id, question_id, question, answer, citations [{paper_id,title,url,start,end,quote}], unresolved, tool_problems. Do not include expected answers or scores. Then return the same answer and a compact account of calls. Do not modify code or call providers. No new agents.",
+    "transport": "Each agent receives one persistent Python REPL session; get(path, parameters) and rpc(name, arguments) send real HTTP to the Node adapter in the same isolated loopback namespace. No extra evidence is injected. Root starts the process; agent uses only these helpers via write_stdin."
+  },
+  "rubric": {
+    "primary": "Supported correct answer: addresses requested factual mechanism/value, no material contradiction, all material claims backed by evidence actually returned to agent. Equivalent evidence elsewhere is accepted; fixed gold-span overlap is auxiliary.",
+    "outcomes": [
+      "supported_correct",
+      "supported_partial",
+      "unsupported_or_incorrect",
+      "abstained",
+      "tool_blocked"
+    ],
+    "grade_after": "Freeze transcript and answer before grader sees reference labels. Grader reports factual correctness, support for each material claim, citation validity separately.",
+    "budget_exhaustion": "Retain as observed outcome, do not rerun with larger limits.",
+    "interpretation": "Development diagnostic, single execution per question. No held-out, cross-model, statistical reliability, platform CPU, or public-deployment claim."
+  },
+  "sessions": [
+    {
+      "id": "baseline-01",
+      "question_id": "full-natural-055",
+      "question": "What validation had the proposed single-source optical computing design actually provided in the available preprint?",
+      "vector_row": 2054
+    },
+    {
+      "id": "baseline-02",
+      "question_id": "full-natural-062",
+      "question": "Why can accumulating tool results make selective reading of an agent's existing context useful even when retrieval is already available?",
+      "vector_row": 2061
+    },
+    {
+      "id": "baseline-03",
+      "question_id": "full-natural-009",
+      "question": "In the streaming image-classification experiment with changing classes, how did the learned learning rates evolve in early layers compared with the final layer?",
+      "vector_row": 2008
+    },
+    {
+      "id": "baseline-04",
+      "question_id": "full-natural-020",
+      "question": "In the financial forecasting review, how does an expanding training set differ from a rolling training window?",
+      "vector_row": 2019
+    },
+    {
+      "id": "baseline-05",
+      "question_id": "full-natural-045",
+      "question": "How were proposed historical space-mission routes compared fairly with reference routes, rather than with real missions' operational fuel budgets?",
+      "vector_row": 2044
+    },
+    {
+      "id": "baseline-06",
+      "question_id": "full-natural-013",
+      "question": "How much did learned context improve a general 8-billion-parameter model over the dedicated safety model on Aegis2.0?",
+      "vector_row": 2012
+    },
+    {
+      "id": "baseline-07",
+      "question_id": "full-natural-024",
+      "question": "When tested on made-up words introduced in noun-like or verb-like contexts, how well did BERT transfer their grammatical categories?",
+      "vector_row": 2023
+    },
+    {
+      "id": "baseline-08",
+      "question_id": "full-natural-044",
+      "question": "What relationship did the study report between cross-model representational agreement and downstream reasoning performance?",
+      "vector_row": 2043
+    },
+    {
+      "id": "baseline-09",
+      "question_id": "full-natural-021",
+      "question": "Why can averaging a deception detector's token scores give the wrong judgment for an entire response?",
+      "vector_row": 2020
+    },
+    {
+      "id": "baseline-10",
+      "question_id": "full-natural-025",
+      "question": "How does imposing a minimum batch standard deviation on every embedding coordinate help prevent all examples receiving the same representation?",
+      "vector_row": 2024
+    },
+    {
+      "id": "baseline-11",
+      "question_id": "full-natural-034",
+      "question": "Compared with brief image descriptions, how much more often did the two more detailed annotation levels mention actions?",
+      "vector_row": 2033
+    },
+    {
+      "id": "baseline-12",
+      "question_id": "full-natural-015",
+      "question": "What two model-size effects can make raw comparisons of neural representations misleading?",
+      "vector_row": 2014
+    }
+  ],
+  "production_changed": false,
+  "provider_calls_planned": 0,
+  "executed_bundle_sha256": "c6437811939f969edbeb54d315353ddd83c170481b5d70d822952cdfcf18ab3c",
+  "adapter_sha256": "871d10a7798d91176b5fe66f0c1e9f78667cc82304a34d35eb2487b9e27774e6",
+  "launcher_sha256": "1ff906fc074575f877f80e8a68c7a14647916ce9cb354bef139301c8e677c338"
+}

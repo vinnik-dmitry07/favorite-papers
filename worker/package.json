@@ -3,13 +3,16 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "pretest": "npm run build:probe",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build:probe": "node probe-kernel/build.mjs"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20261015.1",
     "typescript": "^7.0.2",
     "vitest": "^5.0.5",
+    "wabt": "1.0.39",
     "wrangler": "^4.151.0"
   },
   "dependencies": {

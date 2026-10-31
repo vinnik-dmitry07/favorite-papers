@@ -41,6 +41,8 @@ export async function signatures(): Promise<{ build: string, embedding: string }
     passage_template: embed.passage_template,
     tokenizer_id: tok.id,
     tokenizer_revision: tok.revision,
+    tokenizer_algorithm_version: tok.algorithm_version,
+    added_tokens: tok.added_tokens,
     vocab_sha256: tok.vocab_sha256,
     do_lower_case: tok.do_lower_case,
     strip_accents: tok.strip_accents,
@@ -50,6 +52,8 @@ export async function signatures(): Promise<{ build: string, embedding: string }
     sep_token: tok.sep_token,
     unk_token: tok.unk_token,
   }))
+  // Preserve the main provider-cache payload. Workers AI receives raw text;
+  // local tokenization remains guarded by the separate build signature.
   const embedding = await sha256Hex(canonicalJson({
     model: embed.model,
     dimensions: embed.dimensions,

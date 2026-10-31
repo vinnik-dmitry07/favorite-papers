@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "test_name": "external_agent_static_catalog_journey",
+  "status": "completed_with_http_fallback",
+  "performed_by": "one Codex subagent in this session",
+  "other_llms_tested": 0,
+  "requested_report_date": "2026-10-26",
+  "observed_execution_date_utc": "2026-10-27",
+  "timing": {
+    "first_timestamped_request_start_utc": "2026-10-27T00:55:37.623963+00:00",
+    "journey_completed_utc": "2026-10-27T00:57:11.090111+00:00",
+    "timestamped_http_journey_wall_seconds": 93.466148,
+    "caveat": "Two preceding web-tool calls were not timestamped. Their reported tool durations were 0.5 and 0.7 seconds; total journey wall time including those calls is not precisely measured."
+  },
+  "starting_url": "https://vinnik-dmitry07.github.io/favorite-papers/agents/",
+  "constraints_observed": {
+    "repository_or_local_content_read_before_journey_completed": false,
+    "knowledge_based_url_or_identifier_guesses": 0,
+    "semantic_api_calls": 0,
+    "model_inference_api_calls": 0,
+    "remote_writes_or_deployments": 0,
+    "javascript_execution_or_login_required": false,
+    "only_local_output": "worker/probe-results/local-2026-10-26-agent-browser-journey.json"
+  },
+  "counts": {
+    "retrieval_tool_operations": 9,
+    "web_tool_open_operations": 1,
+    "web_tool_search_operations": 1,
+    "direct_http_get_operations": 7,
+    "attempted_page_opens": 8,
+    "successful_page_opens": 7,
+    "distinct_successfully_opened_pages": 7,
+    "web_fetch_tool_failures": 1,
+    "observed_http_endpoint_failures": 0,
+    "empty_search_results": 1,
+    "functions_exec_wrappers_for_retrieval": 7,
+    "note": "Counts exclude collaboration messages and post-journey repository instruction reading/report writing. Two pairs of independent discovered links were fetched in parallel."
+  },
+  "retrieval_obstacles": [
+    {
+      "tool": "mcp__codex_apps__search_service_web_run.open",
+      "url": "https://vinnik-dmitry07.github.io/favorite-papers/agents/",
+      "ref": "turn179view0",
+      "result": "URL is not accessible via this tool.",
+      "classification": "tool_specific_fetch_access_failure",
+      "cause": "unknown; permission or retrieval-layer restriction was not specified",
+      "endpoint_failure": false,
+      "evidence": "The identical URL subsequently returned HTTP 200 through Python urllib."
+    },
+    {
+      "tool": "mcp__codex_apps__search_service_web_run.system2_search_query",
+      "query": "site:vinnik-dmitry07.github.io/favorite-papers/agents/",
+      "result": "Empty search results",
+      "classification": "search_index_coverage_failure",
+      "endpoint_failure": false
+    }
+  ],
+  "successful_navigation": [
+    {
+      "step": 1,
+      "url": "https://vinnik-dmitry07.github.io/favorite-papers/agents/",
+      "discovered_from": "assigned starting URL",
+      "http_status": 200,
+      "start_utc": "2026-10-27T00:55:37.623963+00:00",
+      "end_utc": "2026-10-27T00:55:41.245050+00:00",
+      "observed": "Plain HTML guide; DeepSeekMath example link; 415 records, 362 with text, 1376 internal citation edges; no verified API deployment linked."
+    },
+    {
+      "step": 2,
+      "url": "https://vinnik-dmitry07.github.io/favorite-papers/agents/papers/636fb871904bc06f742cfdea069796f9e9665f95bd58dc63260eaff5154ef985/",
+      "discovered_from": "DeepSeekMath title link in the starting guide",
+      "http_status": 200,
+      "start_utc": "2026-10-27T00:55:59.864462+00:00",
+      "end_utc": "2026-10-27T00:56:02.786072+00:00",
+      "observed": "Full title and arxiv:2402.03300 verified from page; Cited by (67), five text parts, contents links, original source and Markdown links."
+    },
+    {
+      "step": 3,
+      "url": "https://vinnik-dmitry07.github.io/favorite-papers/agents/papers/636fb871904bc06f742cfdea069796f9e9665f95bd58dc63260eaff5154ef985/in-1.html",
+      "discovered_from": "Cited by (67) link on paper page",
+      "http_status": 200,
+      "start_utc": "2026-10-27T00:56:18.673052+00:00",
+      "end_utc": "2026-10-27T00:56:24.328464+00:00",
+      "citation_entries": 24,
+      "observed": "Page 1/2/3 ordinary navigation links; evidence labels distinguish identifier and title matches."
+    },
+    {
+      "step": 4,
+      "url": "https://vinnik-dmitry07.github.io/favorite-papers/agents/papers/636fb871904bc06f742cfdea069796f9e9665f95bd58dc63260eaff5154ef985/part-3.html",
+      "discovered_from": "4.2 Training and Evaluating DeepSeekMath-RL contents link on paper page",
+      "http_status": 200,
+      "start_utc": "2026-10-27T00:56:18.673340+00:00",
+      "end_utc": "2026-10-27T00:56:23.045944+00:00",
+      "observed": "Section 4.2 explicitly gives the requested training hyperparameters."
+    },
+    {
+      "step": 5,
+      "url": "https://vinnik-dmitry07.github.io/favorite-papers/agents/papers/636fb871904bc06f742cfdea069796f9e9665f95bd58dc63260eaff5154ef985/in-2.html",
+      "discovered_from": "Page 2 link on Cited by page 1",
+      "http_status": 200,
+      "start_utc": "2026-10-27T00:56:37.144701+00:00",
+      "end_utc": "2026-10-27T00:56:39.430110+00:00",
+      "citation_entries": 24
+    },
+    {
+      "step": 6,
+      "url": "https://vinnik-dmitry07.github.io/favorite-papers/agents/papers/636fb871904bc06f742cfdea069796f9e9665f95bd58dc63260eaff5154ef985/in-3.html",
+      "discovered_from": "Page 3 link on Cited by page 1",
+      "http_status": 200,
+      "start_utc": "2026-10-27T00:56:37.144672+00:00",
+      "end_utc": "2026-10-27T00:56:39.968600+00:00",
+      "citation_entries": 19,
+      "observed": "Final citation page; first entry iGRPO was selected for follow-through."
+    },
+    {
+      "step": 7,
+      "url": "https://vinnik-dmitry07.github.io/favorite-papers/agents/papers/1cd6a66823fe24e8e2d83e817177d3a1e8cda1d7d5b59a4397f8669bee6306ae/",
+      "discovered_from": "iGRPO title link on Cited by page 3",
+      "http_status": 200,
+      "start_utc": "2026-10-27T00:57:07.288291+00:00",
+      "end_utc": "2026-10-27T00:57:11.090111+00:00",
+      "observed": "iGRPO: Self-Feedback-Driven LLM Reasoning; arxiv:2602.09000; Cites (7), Cited by (1), and four text parts. Its text was not opened."
+    }
+  ],
+  "answer": {
+    "paper_title": "DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models",
+    "section": "4.2 Training and Evaluating DeepSeekMath-RL",
+    "grpo_group_size_outputs_per_question": 64,
+    "kl_coefficient": 0.04,
+    "verified_source_url": "https://vinnik-dmitry07.github.io/favorite-papers/agents/papers/636fb871904bc06f742cfdea069796f9e9665f95bd58dc63260eaff5154ef985/part-3.html#text",
+    "verbatim_support": "The KL coefficient is 0.04. For each question, we sample 64 64 outputs.",
+    "original_source_link_discovered_but_not_opened": "https://arxiv.org/abs/2402.03300",
+    "extraction_note": "The mirrored text duplicates the numeral 64; interpreted as 64 outputs, not 6464."
+  },
+  "what_worked": [
+    "All requested catalog navigation and hyperparameter reading completed through ordinary HTML links and HTTP GETs without repository knowledge, API, login or JavaScript.",
+    "The start guide directly exposed the requested title, avoiding any guessed hashed paper identifier.",
+    "The contents link identified the relevant bounded text part without opening all five parts or downloading the full graph.",
+    "All three Cited by pages opened; 24 + 24 + 19 entries matched the displayed count of 67 internal citation edges.",
+    "A citing paper reached from the last citation page exposed its own title, identifier, citation links and text links."
+  ],
+  "limits_and_friction": [
+    "Strict use of the supplied web-open/search tools did not complete this journey; success required a direct HTTP retrieval fallback. This is not evidence that arbitrary browsing tools or other LLMs can consume the site.",
+    "Only this particular title journey was tested. DeepSeekMath appears as a start-page example, so general catalog title discovery was not measured.",
+    "The 67 edges are catalog-local; coverage of citations elsewhere on the web was not tested.",
+    "Section contents links share the coarse #text anchor within each part, so the exact section still must be found inside that part.",
+    "Math extraction includes duplicated rendered/LaTeX material and duplicated numerals, although the requested values were unambiguous.",
+    "No semantic search, REST/MCP service operation, deployment, original-source freshness, or cross-model compatibility was tested."
+  ]
+}

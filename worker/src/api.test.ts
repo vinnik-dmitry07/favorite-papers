@@ -363,6 +363,23 @@ describe('reads', () => {
 })
 
 describe('search and time bounds', () => {
+  it('preserves Unicode values and bounds in cached search snippets', async () => {
+    // This checks API values only. Retained parent-string memory is measured
+    // by the full-size memory harness, not inferred from string equality.
+    const { service, memory } = await build()
+    const prefix = '😀e\u0301\ud800界\n'
+    const text = prefix + 'x'.repeat(100000)
+    await putPaper(memory, 'arxiv:case', text)
+    const args = { q: 'unicode passage', k: 1, ip: 'test' }
+    const first = await service.search(args)
+    const cached = await service.search(args)
+    const expected = prefix + 'x'.repeat(embed.limits.snippet_code_points - pointLength(prefix))
+    expect(first.hits[0].snippet).toBe(expected)
+    expect(cached.hits[0].snippet).toBe(expected)
+    expect(first.hits[0]).toMatchObject({ start: 0, end: pointLength(text) })
+    expect(memory.embedCalls).toBe(1)
+  })
+
   it('returns distinct paper hits and separately exposes matches without text', async () => {
     const { service, memory } = await build()
     memory.vectors = [{ id: 'vec1', score: 0.9 }, { id: 'vec1', score: 0.8 }]

@@ -1,0 +1,16 @@
+{
+  "command": "python src/embed_real_search_probe.py --out agent_real_probe --cache-dir /tmp/real-probe-embeddings --threads 4 --batch-size 8",
+  "release_id": "5c8c58d90ec7bfdbcf66c40c363ff2e8967f263eda9257f7d562f9b71fcb617f",
+  "encoded": 390,
+  "cached": 0,
+  "elapsed_seconds": 119.20850144600081,
+  "vectors_sha256": "3ae371a2e24940b66c6b7b0fe719431a46c91d457dddf28646120a6bf3bc576c",
+  "max_norm_error": 6.25677909482647e-09,
+  "hf_tokenizer_agreement_inputs": 390,
+  "versions": {
+    "torch": "2.8.0+cpu",
+    "transformers": "4.57.1"
+  },
+  "workers_ai_compatibility": "unverified",
+  "evidence_kind": "recorded stdout result plus artifact inspection"
+}

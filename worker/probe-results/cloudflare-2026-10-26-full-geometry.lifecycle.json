@@ -1,0 +1,15 @@
+{
+  "name": "key-papers-static-do-probe-40440982907-1",
+  "phase": "removed",
+  "preflight": "passed",
+  "namespace": {
+    "id": "ee7499ff8e77409284fba8e6587efc1f",
+    "script": "key-papers-static-do-probe-40440982907-1",
+    "class": "StaticSearchProbe",
+    "use_sqlite": true
+  },
+  "cleanup": "passed",
+  "source_sha": "0fde9440308332818572321ee7fdeeed6401d753",
+  "account_fingerprint": "572b4b152b895f4bc456120ee6f3df2680a2be48d5a5efcbbd15eadabe7042b3",
+  "namespace_absent": true
+}

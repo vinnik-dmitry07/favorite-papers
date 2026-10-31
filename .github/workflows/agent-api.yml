@@ -1,8 +1,7 @@
-name: Agent API
-
-on:
+name: Agent probe
+'on':
   pull_request:
-    paths: &agent_paths
+    paths:
       - assets/graph.json
       - filter/fulltext/**
       - src/build_agent_index.py
@@ -13,23 +12,143 @@ on:
       - src/test_publish_agent_index.py
       - src/build_agent_pages.py
       - src/test_agent_pages.py
+      - src/build_static_search_probe.py
+      - src/run_static_search_probe.py
+      - src/cleanup_static_search_probe.py
+      - src/static_search_do_lifecycle.py
+      - src/test_static_search_do_lifecycle.py
+      - src/run_static_search_do_probe.py
+      - src/test_static_search_do_probe.py
+      - src/prepare_static_search_do_collection.py
+      - src/test_prepare_static_search_do_collection.py
+      - src/build_real_search_probe.py
+      - src/build_full_search_probe.py
+      - src/pack_full_search_probe.py
+      - src/evaluate_full_search_probe.py
+      - src/preflight_full_search_probe.py
+      - src/run_full_probe_canary.py
+      - src/test_full_search_probe.py
+      - src/test_pack_full_search_probe.py
+      - src/test_evaluate_full_search_probe.py
+      - src/test_preflight_full_search_probe.py
+      - src/test_full_probe_canary.py
+      - src/test_tokenizer_contract.py
+      - src/embed_real_search_probe.py
+      - src/run_real_search_probe.py
+      - src/test_real_search_probe.py
+      - src/test_embed_real_search_probe.py
+      - src/test_run_real_search_probe.py
+      - src/test_real_search_workflow.py
+      - src/test_full_search_workflow.py
+      - src/test_geometry_probe_workflow.py
+      - src/run_full_geometry_probe.py
+      - src/run_retained_search_smoke.py
+      - src/test_retained_search_smoke.py
+      - src/test_retained_smoke_workflow.py
+      - src/smoke_public_search_api.py
+      - src/test_public_search_publication.py
+      - src/restore_full_search_artifact.py
+      - src/test_run_full_geometry_probe.py
+      - src/test_agent_publish_workflow.py
+      - src/probe_full_search_numeric.py
+      - src/summarize_static_search_probe.py
+      - src/reproduce_static_search_review.py
+      - src/test_static_search_probe.py
+      - src/test_static_search_probe_run.py
+      - src/test_static_search_probe_cleanup.py
       - src/common.py
       - src/build_fulltext_search.py
       - requirements-agent.txt
+      - requirements-probe-quality.txt
+      - requirements-real-probe.txt
       - worker/**
       - .github/workflows/agent-api.yml
-  push:
-    branches: [main]
-    paths: *agent_paths
+      - .github/workflows/pages.yml
+      - .github/scripts/find-api-discovery*
+      - .github/workflows/agent-publish.yml
+      - src/test_probe_workflow.py
+      - src/authenticate_probe_fixture.py
+      - src/test_authenticate_probe_fixture.py
+      - requirements-torch-probe.txt
   workflow_dispatch:
-
+    inputs:
+      static_probe:
+        description: Run an isolated probe, or publish the retained API only with phase publish
+        type: boolean
+        default: false
+      probe_runtime:
+        description: Execution runtime for the isolated probe
+        type: choice
+        options:
+          - worker
+          - durable-object
+        default: worker
+      do_probe_phase:
+        description: DO pilot/matrix, collection, real subset, geometry, retained smoke, public API publication, or full-corpus gates
+        type: choice
+        options:
+          - pilot
+          - matrix
+          - collect
+          - real
+          - geometry
+          - retained
+          - publish
+          - full
+        default: pilot
+      full_run_confirmed:
+        description: 'Full phase only: allow long offline encoding and evaluation after every fresh gate passes'
+        type: boolean
+        default: false
+      provider_available_neurons:
+        description: 'Full phase only: verified remaining free Workers AI neurons for the bounded canary; 0 blocks calls'
+        type: string
+        default: '0'
+      full_numeric_run_id:
+        description: Pinned prior genuine-vector fixture run; changing the artifact pin requires a reviewed code update
+        type: string
+        default: '40238828496'
+      do_pilot_run_id:
+        description: 'For DO matrix only: successful pilot run ID on this exact commit'
+        type: string
+        default: ''
+      do_collect_run_id:
+        description: 'For DO collect only: completed pilot or matrix run ID; no new workload'
+        type: string
+        default: ''
+      probe_credentials:
+        description: 'Probe credentials: existing CLOUDFLARE_* or separate PROBE_CLOUDFLARE_*'
+        type: choice
+        options:
+          - repository
+          - probe_environment
+        default: probe_environment
+      free_plan_confirmed:
+        description: I checked that the target account uses Workers Free
+        type: boolean
+        default: false
+      probe_variant:
+        description: One synthetic variant per run; all may exceed the job timeout
+        type: choice
+        options:
+          - wasm-json16
+          - wasm-rerank100
+          - wasm-int8
+          - wasm-binary200
+          - wasm-json128
+          - js4-json16
+          - js4-json128
+          - js-json16
+          - js-json128
+          - all
+        default: wasm-json16
 permissions:
   contents: read
-
+  actions: read
 concurrency:
-  group: agent-api
+  group: agent-api-${{ github.event_name == 'pull_request' && github.ref || (github.event_name == 'workflow_dispatch' && (inputs.do_probe_phase == 'collect' && 'collect' || 'cloudflare') || 'validate-main') }}
   cancel-in-progress: false
-
+  queue: max
 jobs:
   offline:
     runs-on: ubuntu-latest
@@ -40,93 +159,1483 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Offline tests
-        run: |
-          python -m pip install -r requirements-agent.txt
-          python -m pytest src/test_agent_index.py src/test_publish_agent_index.py src/test_agent_pages.py
       - name: Node
         uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: npm
           cache-dependency-path: worker/package-lock.json
-      - name: Worker tests
+      - name: Build the numerical kernel before Python evidence tests
         working-directory: worker
         run: |
           npm ci
-          npm run typecheck
-          npm test
-
-  publish:
-    needs: offline
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    env:
-      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      AGENT_DIMENSION_BUDGET: ${{ secrets.AGENT_DIMENSION_BUDGET }}
-      AGENT_PUBLISH_ROLE: ci
-    steps:
-      - name: Check deployment configuration
+          npm run build:probe
+      - name: Offline tests
         run: |
+          python -m pip install -r requirements-agent.txt numpy==2.3.4
+          python -m py_compile src/reproduce_static_search_review.py
+          python -m pytest src/test_agent_index.py src/test_publish_agent_index.py src/test_agent_pages.py src/test_static_search_probe.py src/test_static_search_probe_run.py src/test_static_search_probe_cleanup.py src/test_static_search_do_lifecycle.py src/test_static_search_do_probe.py src/test_prepare_static_search_do_collection.py src/test_real_search_probe.py src/test_embed_real_search_probe.py src/test_run_real_search_probe.py src/test_real_search_workflow.py src/test_full_search_workflow.py src/test_geometry_probe_workflow.py src/test_run_full_geometry_probe.py src/test_retained_search_smoke.py src/test_retained_smoke_workflow.py src/test_public_search_publication.py src/test_public_search_release.py src/test_retained_search_archive.py src/test_agent_publish_workflow.py src/test_probe_workflow.py src/test_authenticate_probe_fixture.py src/test_full_search_probe.py src/test_pack_full_search_probe.py src/test_evaluate_full_search_probe.py src/test_full_search_replay.py src/test_preflight_full_search_probe.py src/test_full_probe_canary.py src/test_tokenizer_contract.py
+      - name: Worker tests
+        working-directory: worker
+        run: |
+          npm run typecheck
+          npm test --ignore-scripts
+      - name: Pages discovery selection tests
+        run: node --test .github/scripts/find-api-discovery.test.cjs
+      - name: Build the full synthetic fixture
+        run: python src/build_static_search_probe.py
+      - name: Build the canonical real subset without model downloads
+        run: python src/build_real_search_probe.py --out agent_real_probe
+      - name: Validate the isolated probe bundle without deploying
+        working-directory: worker
+        run: |
+          npx wrangler deploy --config wrangler.probe.toml --dry-run
+          npx wrangler deploy --config wrangler.do-probe.toml --dry-run
+          npx wrangler deploy --config wrangler.real-probe.toml --dry-run
+  static_probe:
+    needs: offline
+    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime != 'durable-object' && inputs.do_probe_phase != 'collect' && inputs.do_probe_phase != 'real' && inputs.do_probe_phase != 'full' && inputs.do_probe_phase != 'geometry' && inputs.do_probe_phase != 'retained' && inputs.do_probe_phase != 'publish'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    environment: static-search-probe
+    env:
+      FREE_PLAN_CONFIRMED: ${{ inputs.free_plan_confirmed }}
+      PROBE_VARIANT: ${{ inputs.probe_variant || 'wasm-json16' }}
+      WRANGLER_SEND_METRICS: 'false'
+      PROBE_NAME: key-papers-static-probe-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - name: Check the selected account and credentials
+        env:
+          PROBE_CREDENTIALS: ${{ inputs.probe_credentials }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+        run: |
+          if [ "$FREE_PLAN_CONFIRMED" != 'true' ]; then
+            echo '::error::This experiment requires a Workers Free account. Check its plan in Cloudflare, then select free_plan_confirmed. The workflow never changes the plan.'
+            exit 1
+          fi
+          case "$PROBE_CREDENTIALS" in
+            repository|probe_environment) ;;
+            *) echo '::error::Select repository or probe_environment.'; exit 1 ;;
+          esac
           if [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_API_TOKEN" ]; then
-            echo '::error::Set repository secrets CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN. See worker/README.md deployment setup. The static agent catalog publishes independently.'
-            echo 'API deployment blocked: Cloudflare credentials are missing. Static catalog publication is independent.' >> "$GITHUB_STEP_SUMMARY"
+            echo '::error::The selected credential pair is incomplete; no fallback account is used.'
             exit 1
           fi
-          if ! [[ "$AGENT_DIMENSION_BUDGET" =~ ^[1-9][0-9]*$ ]]; then
-            echo '::error::Set AGENT_DIMENSION_BUDGET to the provisioned capacity after reviewing the offline preflight report and Cloudflare plan. See worker/README.md.'
-            exit 1
-          fi
-      - name: Checkout the pushed commit
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
-      - name: Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: npm
           cache-dependency-path: worker/package-lock.json
-      - name: Build the release
-        run: python src/build_agent_index.py
-      - name: Capacity and permissions
-        run: python src/publish_agent_index.py preflight --live
-      - name: Isolated probe
-        run: python src/publish_agent_index.py probe
-      - name: Stage the inactive slot
-        id: stage
-        run: |
-          set -o pipefail
-          python src/publish_agent_index.py publish --stage | tee stage.json
-          python -c "import json, pathlib; print('slot=' + json.loads(pathlib.Path('stage.json').read_text(encoding='utf-8'))['slot'])" >> "$GITHUB_OUTPUT"
-      - name: Install worker dependencies
+      - name: Build the complete synthetic fixture
+        run: python src/build_static_search_probe.py
+      - name: Install pinned worker dependencies
         working-directory: worker
         run: npm ci
-      - name: Deploy the reader
+      - name: Create expiring Worker probe credentials
+        run: |
+          python - <<'PYTHON'
+          from datetime import datetime, timedelta, timezone
+          import json
+          import os
+          from pathlib import Path
+          import secrets
+          token = secrets.token_urlsafe(32)
+          print('::add-mask::' + token)
+          expiry = (datetime.now(timezone.utc) + timedelta(minutes=30)).isoformat()
+          with open(os.environ['GITHUB_ENV'], 'a') as output:
+              output.write('PROBE_TOKEN=' + token + '\n')
+              output.write('PROBE_EXPIRES_AT=' + expiry + '\n')
+          secret_file = Path(os.environ['RUNNER_TEMP']) / 'worker-probe-secrets.json'
+          secret_file.write_text(json.dumps({'PROBE_TOKEN': token}))
+          secret_file.chmod(0o600)
+          PYTHON
+      - name: Refuse deployment while a previous Worker probe remains
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+        run: python src/cleanup_static_search_probe.py --preflight "$PROBE_NAME"
+      - name: Deploy the isolated probe
         id: deploy
+        timeout-minutes: 8
         working-directory: worker
         run: |
           set -o pipefail
-          npx wrangler deploy | tee deploy.txt
-          python -c "import json, pathlib, sys; sys.path.insert(0, '../src'); from write_discovery_links import worker_origin; name=json.loads(pathlib.Path('embed.json').read_text(encoding='utf-8'))['worker_name']; origin=worker_origin(pathlib.Path('deploy.txt').read_text(encoding='utf-8'), name); sys.exit('deploy did not print the worker origin') if not origin else print('origin=' + origin)" >> "$GITHUB_OUTPUT"
-      - name: Promote the staged release
-        id: promote
-        run: python src/publish_agent_index.py publish --promote --slot "${{ steps.stage.outputs.slot }}"
-      - name: Live smoke
-        id: smoke
-        run: python src/smoke_agent_api.py "${{ steps.deploy.outputs.origin }}"
-      - name: Persist verified API discovery for Pages
+          npx wrangler deploy --config wrangler.probe.toml --name "$PROBE_NAME" \
+            --secrets-file "$RUNNER_TEMP/worker-probe-secrets.json" \
+            --var "PROBE_EXPIRES_AT:$PROBE_EXPIRES_AT" 2>&1 | tee probe-deploy.txt
+          python -c "import os, pathlib, sys; sys.path.insert(0, '../src'); from write_discovery_links import worker_origin; origin=worker_origin(pathlib.Path('probe-deploy.txt').read_text(encoding='utf-8'), os.environ['PROBE_NAME']); sys.exit('deploy did not print the probe origin') if not origin else print('origin=' + origin)" >> "$GITHUB_OUTPUT"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+      - name: Measure REST and MCP with platform CPU telemetry
+        id: measure
+        continue-on-error: true
+        env:
+          PROBE_ORIGIN: ${{ steps.deploy.outputs.origin }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+        run: python src/run_static_search_probe.py "$PROBE_ORIGIN" --samples 50 --variants "$PROBE_VARIANT" --script-name "$PROBE_NAME" --output probe-report.json --wait-seconds 180
+      - name: Retry delayed telemetry without resending measurements
+        if: always() && steps.measure.outcome != 'skipped'
+        continue-on-error: true
+        run: |
+          if [ -f probe-report.json ]; then
+            python src/run_static_search_probe.py --collect-only probe-report.json --output probe-report.json --wait-seconds 120
+          fi
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+      - name: Remove only this run's isolated Worker
+        if: always() && (steps.deploy.outcome == 'success' || steps.deploy.outcome == 'failure' || steps.deploy.outcome == 'cancelled')
+        timeout-minutes: 3
+        run: python src/cleanup_static_search_probe.py "$PROBE_NAME"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+      - name: Remove the temporary Worker probe secret file
+        if: always()
+        run: rm -f "$RUNNER_TEMP/worker-probe-secrets.json"
+      - name: Preserve measurements even when the gate fails
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: agent-api-discovery
-          path: agent_build/smoke.json
+          name: static-search-probe-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            probe-report.json
+            agent_probe/probe/measurements.json
+            agent_probe/probe/index.json
+            worker/probe-deploy.txt
+          if-no-files-found: ignore
+          retention-days: 7
+      - name: Report the final measurement gate
+        if: always() && steps.measure.outcome != 'skipped'
+        run: |
+          python - <<'PYTHON'
+          import json
+          from pathlib import Path
+          path = Path('probe-report.json')
+          if not path.exists():
+              raise SystemExit('Probe report is missing; inspect the measurement step. CPU remains unverified.')
+          report = json.loads(path.read_text())
+          print('Discovery:', report.get('readiness_gate', 'unverified'))
+          print('Preflight:', report.get('preflight_gate', 'unverified'))
+          print('Telemetry diagnostics:', json.dumps(
+              report.get('telemetry_diagnostics', {}), sort_keys=True))
+          print('Telemetry error:', report.get('telemetry_error'))
+          print(json.dumps(report.get('variant_gates', {}), indent=2))
+          raise SystemExit(0 if report.get('cpu_gate') == 'passed' else 1)
+          PYTHON
+  static_do_probe:
+    needs: offline
+    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase != 'collect' && inputs.do_probe_phase != 'real' && inputs.do_probe_phase != 'full' && inputs.do_probe_phase != 'geometry' && inputs.do_probe_phase != 'retained' && inputs.do_probe_phase != 'publish'
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    environment: static-search-probe
+    env:
+      FREE_PLAN_CONFIRMED: ${{ inputs.free_plan_confirmed }}
+      DO_PROBE_PHASE: ${{ inputs.do_probe_phase || 'pilot' }}
+      DO_PILOT_RUN_ID: ${{ inputs.do_pilot_run_id }}
+      WRANGLER_SEND_METRICS: 'false'
+      PROBE_NAME: key-papers-static-do-probe-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - name: Check the selected account and credentials
+        env:
+          PROBE_CREDENTIALS: ${{ inputs.probe_credentials }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+        run: |
+          if [ "$FREE_PLAN_CONFIRMED" != 'true' ]; then
+            echo '::error::This experiment requires a Workers Free account. Check its plan in Cloudflare, then select free_plan_confirmed. The workflow never changes the plan.'
+            exit 1
+          fi
+          case "$PROBE_CREDENTIALS" in
+            repository|probe_environment) ;;
+            *) echo '::error::Select repository or probe_environment.'; exit 1 ;;
+          esac
+          if [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo '::error::The selected credential pair is incomplete; no fallback account is used.'
+            exit 1
+          fi
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: worker/package-lock.json
+      - name: Build the complete synthetic fixture
+        run: python src/build_static_search_probe.py
+      - name: Install pinned worker dependencies
+        working-directory: worker
+        run: npm ci
+      - name: Verify a completed pilot before a DO matrix
+        if: inputs.do_probe_phase == 'matrix'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+        run: |
+          if ! [[ "$DO_PILOT_RUN_ID" =~ ^[1-9][0-9]*$ ]]; then
+            echo '::error::First run the DO pilot; supply its successful run ID for the matrix.'
+            exit 1
+          fi
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$DO_PILOT_RUN_ID" > previous-do-pilot-run.json
+          gh run download "$DO_PILOT_RUN_ID" --repo "$GITHUB_REPOSITORY" \
+            --pattern "durable-object-probe-$DO_PILOT_RUN_ID-*" --dir previous-do-pilot
+          python src/static_search_do_lifecycle.py validate-pilot "$PROBE_NAME" \
+            --pilot-dir previous-do-pilot --pilot-run-id "$DO_PILOT_RUN_ID"
+      - name: Refuse deployment if an earlier DO namespace was not removed
+        run: python src/static_search_do_lifecycle.py preflight "$PROBE_NAME"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+      - name: Create expiring probe access credentials
+        run: |
+          python - <<'PYTHON'
+          from datetime import datetime, timedelta, timezone
+          import json
+          import os
+          from pathlib import Path
+          import secrets
+          token = secrets.token_urlsafe(32)
+          print('::add-mask::' + token)
+          expiry = (datetime.now(timezone.utc) + timedelta(minutes=45)).isoformat()
+          with open(os.environ['GITHUB_ENV'], 'a') as output:
+              output.write('PROBE_TOKEN=' + token + '\n')
+              output.write('PROBE_EXPIRES_AT=' + expiry + '\n')
+          secret_file = Path(os.environ['RUNNER_TEMP']) / 'do-probe-secrets.json'
+          secret_file.write_text(json.dumps({'PROBE_TOKEN': token}))
+          secret_file.chmod(0o600)
+          PYTHON
+      - name: Deploy only this run's Durable Object probe
+        id: deploy
+        timeout-minutes: 8
+        working-directory: worker
+        run: |
+          set -o pipefail
+          npx wrangler deploy --config wrangler.do-probe.toml --name "$PROBE_NAME" \
+            --secrets-file "$RUNNER_TEMP/do-probe-secrets.json" \
+            --var "PROBE_EXPIRES_AT:$PROBE_EXPIRES_AT" 2>&1 | tee probe-do-deploy.txt
+          python -c "import os, pathlib, sys; sys.path.insert(0, '../src'); from write_discovery_links import worker_origin; origin=worker_origin(pathlib.Path('probe-do-deploy.txt').read_text(encoding='utf-8'), os.environ['PROBE_NAME']); sys.exit('deploy did not print the probe origin') if not origin else print('origin=' + origin)" >> "$GITHUB_OUTPUT"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+      - name: Capture the owned namespace before sending any workload
+        run: python src/static_search_do_lifecycle.py capture "$PROBE_NAME"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+      - name: Run the bounded Durable Object pilot or matrix
+        id: measure
+        timeout-minutes: 20
+        continue-on-error: true
+        env:
+          PROBE_ORIGIN: ${{ steps.deploy.outputs.origin }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+        run: python src/run_static_search_do_probe.py "$PROBE_ORIGIN" --script-name "$PROBE_NAME" --phase "$DO_PROBE_PHASE" --samples 50 --max-load-seconds 900 --output probe-do-report.json --wait-seconds 180
+      - name: Collect delayed DO telemetry without resending requests
+        if: always() && steps.measure.outcome != 'skipped'
+        timeout-minutes: 4
+        continue-on-error: true
+        run: |
+          if [ -f probe-do-report.json ]; then
+            python src/run_static_search_do_probe.py --collect-only probe-do-report.json --script-name "$PROBE_NAME" --output probe-do-report.json --wait-seconds 120
+          fi
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+      - name: Remove the owned DO namespace, verify absence, then remove Worker
+        id: cleanup
+        if: always() && (steps.deploy.outcome == 'success' || steps.deploy.outcome == 'failure' || steps.deploy.outcome == 'cancelled')
+        timeout-minutes: 8
+        run: python src/static_search_do_lifecycle.py cleanup "$PROBE_NAME"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+      - name: Remove the temporary probe secret file
+        if: always()
+        run: rm -f "$RUNNER_TEMP/do-probe-secrets.json"
+      - name: Preserve DO evidence including cleanup failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: durable-object-probe-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            probe-do-report.json
+            probe-do-lifecycle.json
+            probe-do-cleanup.txt
+            agent_probe/probe/measurements.json
+            agent_probe/probe/index.json
+            worker/probe-do-deploy.txt
+          if-no-files-found: ignore
+          retention-days: 90
+      - name: Report the DO phase outcome
+        if: always() && steps.measure.outcome != 'skipped'
+        run: |
+          python - <<'PYTHON'
+          import json
+          from pathlib import Path
+          import sys
+          sys.path.insert(0, 'src')
+          from static_search_do_lifecycle import phase_passed
+          report = json.loads(Path('probe-do-report.json').read_text())
+          lifecycle = json.loads(Path('probe-do-lifecycle.json').read_text())
+          for key in ('preflight_gate', 'functional_gate', 'gateway_cpu_gate',
+                      'do_cpu_gate', 'latency_gate', 'sample_gate', 'runtime_gate'):
+              print(key + ':', report.get(key, 'unverified'))
+          print('Cleanup:', lifecycle.get('cleanup', 'unverified'))
+          raise SystemExit(0 if phase_passed(report, lifecycle) else 1)
+          PYTHON
+  static_do_collect:
+    needs: offline
+    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase == 'collect'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    environment: static-search-probe
+    env:
+      DO_COLLECT_RUN_ID: ${{ inputs.do_collect_run_id }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Select credentials for read-only telemetry collection
+        env:
+          PROBE_CREDENTIALS: ${{ inputs.probe_credentials }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+        run: |
+          case "$PROBE_CREDENTIALS" in
+            repository|probe_environment) ;;
+            *) echo '::error::Select repository or probe_environment.'; exit 1 ;;
+          esac
+          if [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo '::error::The selected credential pair is incomplete; no fallback account is used.'
+            exit 1
+          fi
+      - name: Identify the original completed run and exact artifact attempt
+        id: source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if ! [[ "$DO_COLLECT_RUN_ID" =~ ^[1-9][0-9]*$ ]]; then
+            echo '::error::Supply a numeric do_collect_run_id for an existing DO pilot or matrix.'
+            exit 1
+          fi
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$DO_COLLECT_RUN_ID" > source-do-run.json
+          python src/prepare_static_search_do_collection.py identify --run-id "$DO_COLLECT_RUN_ID"
+      - name: Download and validate the original evidence without modifying it
+        id: prepare
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_ARTIFACT_NAME: ${{ steps.source.outputs.artifact_name }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+        run: |
+          gh run download "$DO_COLLECT_RUN_ID" --repo "$GITHUB_REPOSITORY" \
+            --name "$SOURCE_ARTIFACT_NAME" --dir source-do-artifact
+          python src/prepare_static_search_do_collection.py prepare --run-id "$DO_COLLECT_RUN_ID"
+      - name: Collect existing telemetry only; send no service requests
+        id: collect
+        timeout-minutes: 6
+        continue-on-error: true
+        env:
+          SOURCE_SCRIPT_NAME: ${{ steps.source.outputs.script_name }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+        run: |
+          python src/run_static_search_do_probe.py \
+            --collect-only do-collection/probe-do-report.json \
+            --script-name "$SOURCE_SCRIPT_NAME" \
+            --output do-collection/probe-do-report.json --wait-seconds 300
+      - name: Verify unchanged workload and report recovered gates
+        if: always() && steps.prepare.outcome == 'success'
+        run: python src/prepare_static_search_do_collection.py verify
+      - name: Preserve original and collected telemetry evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: durable-object-collection-${{ github.run_id }}-${{ github.run_attempt }}
+          path: do-collection/
+          if-no-files-found: ignore
+          retention-days: 90
+  static_real_probe:
+    needs: offline
+    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase == 'real' && inputs.do_probe_phase != 'full' && inputs.do_probe_phase != 'geometry'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    environment: static-search-probe
+    env:
+      FREE_PLAN_CONFIRMED: ${{ inputs.free_plan_confirmed }}
+      WRANGLER_SEND_METRICS: 'false'
+      PROBE_NAME: key-papers-static-do-probe-${{ github.run_id }}-${{ github.run_attempt }}
+      HF_HUB_DISABLE_TELEMETRY: '1'
+      TOKENIZERS_PARALLELISM: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: worker/package-lock.json
+      - name: Check the Free account and selected credentials
+        env:
+          PROBE_CREDENTIALS: ${{ inputs.probe_credentials }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+        run: |
+          if [ "$FREE_PLAN_CONFIRMED" != 'true' ]; then
+            echo '::error::Confirm the selected account is Workers Free. This workflow never changes its plan.'
+            exit 1
+          fi
+          case "$PROBE_CREDENTIALS" in
+            repository|probe_environment) ;;
+            *) echo '::error::Select repository or probe_environment.'; exit 1 ;;
+          esac
+          if [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo '::error::The selected credential pair is incomplete; no fallback account is used.'
+            exit 1
+          fi
+      - name: Refuse to leave another probe namespace behind
+        run: python src/static_search_do_lifecycle.py preflight "$PROBE_NAME"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+      - name: Build the complete-paper real subset
+        run: python src/build_real_search_probe.py --out agent_real_probe
+      - name: Install the pinned CPU embedding environment
+        timeout-minutes: 10
+        run: |-
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu -r requirements-torch-probe.txt
+          python -m pip install --index-url https://pypi.org/simple -r requirements-real-probe.txt
+      - name: Generate pinned BGE FP32 vectors and local query vectors
+        timeout-minutes: 12
+        run: |
+          python src/embed_real_search_probe.py --out agent_real_probe \
+            --cache-dir .cache/real-probe-embeddings --threads 4 --batch-size 8 \
+            --query-vectors local-query-vectors.json --report local-encoder-report.json
+      - name: Install pinned worker dependencies
+        working-directory: worker
+        run: npm ci
+      - name: Validate real vectors through production REST and MCP locally
+        working-directory: worker
+        env:
+          REAL_PROBE_DIR: ${{ github.workspace }}/agent_real_probe
+          REAL_PROBE_QUERY_VECTORS: ${{ github.workspace }}/local-query-vectors.json
+          REAL_PROBE_REPORT: ${{ github.workspace }}/local-real-integration.json
+        run: npx vitest run src/real-search-integration.test.ts
+      - name: Pin the manifest and create expiring access credentials
+        run: |
+          python - <<'PYTHON'
+          from datetime import datetime, timedelta, timezone
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          import secrets
+          manifest = Path('agent_real_probe/probe.json')
+          digest = hashlib.sha256(manifest.read_bytes()).hexdigest()
+          token = secrets.token_urlsafe(32)
+          print('::add-mask::' + token)
+          expiry = (datetime.now(timezone.utc) + timedelta(minutes=45)).isoformat()
+          with open(os.environ['GITHUB_ENV'], 'a') as output:
+              output.write('PROBE_TOKEN=' + token + '\n')
+              output.write('PROBE_EXPIRES_AT=' + expiry + '\n')
+              output.write('PROBE_MANIFEST_SHA=' + digest + '\n')
+          secret_file = Path(os.environ['RUNNER_TEMP']) / 'real-probe-secrets.json'
+          secret_file.write_text(json.dumps({'PROBE_TOKEN': token}))
+          secret_file.chmod(0o600)
+          PYTHON
+      - name: Deploy only this run's real-subset Durable Object
+        id: deploy
+        timeout-minutes: 8
+        working-directory: worker
+        run: |
+          set -o pipefail
+          npx wrangler deploy --config wrangler.real-probe.toml --name "$PROBE_NAME" \
+            --secrets-file "$RUNNER_TEMP/real-probe-secrets.json" \
+            --var "PROBE_EXPIRES_AT:$PROBE_EXPIRES_AT" \
+            --var "PROBE_MANIFEST_SHA:$PROBE_MANIFEST_SHA" 2>&1 | tee probe-real-deploy.txt
+          python -c "import os, pathlib, sys; sys.path.insert(0, '../src'); from write_discovery_links import worker_origin; origin=worker_origin(pathlib.Path('probe-real-deploy.txt').read_text(encoding='utf-8'), os.environ['PROBE_NAME']); sys.exit('deploy did not print the probe origin') if not origin else print('origin=' + origin)" >> "$GITHUB_OUTPUT"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+      - name: Capture the owned namespace before any AI calls
+        run: python src/static_search_do_lifecycle.py capture "$PROBE_NAME"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+      - name: Run bounded compatibility and real REST MCP journeys
+        id: measure
+        timeout-minutes: 13
+        continue-on-error: true
+        env:
+          PROBE_ORIGIN: ${{ steps.deploy.outputs.origin }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+        run: |
+          python src/run_real_search_probe.py --origin "$PROBE_ORIGIN" \
+            --manifest agent_real_probe/probe.json \
+            --expected-manifest-sha "$PROBE_MANIFEST_SHA" \
+            --script-name "$PROBE_NAME" --output probe-real-report.json \
+            --wait-seconds 120
+      - name: Remove the owned DO namespace and Worker
+        id: cleanup
+        if: always() && (steps.deploy.outcome == 'success' || steps.deploy.outcome == 'failure' || steps.deploy.outcome == 'cancelled')
+        timeout-minutes: 8
+        run: python src/static_search_do_lifecycle.py cleanup "$PROBE_NAME"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+      - name: Remove the temporary real-probe secret file
+        if: always()
+        run: rm -f "$RUNNER_TEMP/real-probe-secrets.json"
+      - name: Preserve real-subset evidence and cleanup
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: real-search-probe-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            probe-real-report.json
+            probe-do-lifecycle.json
+            probe-do-cleanup.txt
+            worker/probe-real-deploy.txt
+            local-query-vectors.json
+            local-encoder-report.json
+            local-real-integration.json
+            agent_real_probe/
+          if-no-files-found: ignore
+          retention-days: 90
+      - name: Report integration outcome without promoting production readiness
+        if: always() && steps.measure.outcome != 'skipped'
+        run: |
+          python - <<'PYTHON'
+          import json
+          from pathlib import Path
+          report = json.loads(Path('probe-real-report.json').read_text())
+          lifecycle = json.loads(Path('probe-do-lifecycle.json').read_text())
+          for key in ('compatibility_gate', 'contracts_gate', 'passage_retrieval_gate', 'answer_context_gate',
+                      'latency_gate', 'integration_gate', 'gateway_cpu_gate',
+                      'durable_object_cpu_gate', 'cpu_gate', 'runtime_gate'):
+              print(key + ':', report.get(key, 'unverified'))
+          print('Cleanup:', lifecycle.get('cleanup', 'unverified'))
+          passed = (report.get('integration_gate') == 'passed'
+                    and all(report.get(key) in ('passed', 'unverified') for key in
+                            ('gateway_cpu_gate', 'durable_object_cpu_gate', 'cpu_gate'))
+                    and lifecycle.get('cleanup') == 'passed'
+                    and lifecycle.get('namespace_absent') is True)
+          raise SystemExit(0 if passed else 1)
+          PYTHON
+  full_geometry_probe:
+    needs: offline
+    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase == 'geometry' && inputs.free_plan_confirmed
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: static-search-probe
+    env:
+      FREE_PLAN_CONFIRMED: ${{ inputs.free_plan_confirmed }}
+      WRANGLER_SEND_METRICS: 'false'
+      PROBE_NAME: key-papers-static-do-probe-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - name: Check the Free account and selected credentials
+        id: controls
+        env:
+          PROBE_CREDENTIALS: ${{ inputs.probe_credentials }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+        run: |
+          if [ "$FREE_PLAN_CONFIRMED" != 'true' ]; then
+            echo '::error::Confirm the selected account is Workers Free. This workflow never changes its plan.'
+            exit 1
+          fi
+          case "$PROBE_CREDENTIALS" in
+            repository|probe_environment) ;;
+            *) echo '::error::Select repository or probe_environment.'; exit 1 ;;
+          esac
+          if [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo '::error::The selected credential pair is incomplete; no fallback account is used.'
+            exit 1
+          fi
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: worker/package-lock.json
+      - name: Install only the geometry fixture dependencies
+        run: python -m pip install -r requirements-agent.txt numpy==2.3.4
+      - name: Build and pack the canonical full-size deterministic fixture
+        id: geometry_fixture
+        run: |
+          mkdir -p full-geometry-reports
+          python src/build_full_search_probe.py --out agent_full_probe
+          python src/pack_full_search_probe.py --source agent_full_probe \
+            --out agent_geometry_probe --geometry-fixture --seed 17
+      - name: Install pinned worker dependencies and build the scan kernel
+        working-directory: worker
+        run: |
+          npm ci
+          npm run build:probe
+      - name: Refuse deployment if an earlier DO namespace was not removed
+        id: preflight
+        timeout-minutes: 1
+        run: python src/static_search_do_lifecycle.py preflight "$PROBE_NAME"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+      - name: Pin the geometry manifest and create expiring access credentials
+        run: |
+          python - <<'PYTHON'
+          from datetime import datetime, timedelta, timezone
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          import secrets
+          manifest = Path('agent_geometry_probe/probe.json')
+          digest = hashlib.sha256(manifest.read_bytes()).hexdigest()
+          token = secrets.token_urlsafe(32)
+          print('::add-mask::' + token)
+          expiry = (datetime.now(timezone.utc) + timedelta(minutes=15)).isoformat()
+          with open(os.environ['GITHUB_ENV'], 'a') as output:
+              output.write('PROBE_TOKEN=' + token + '\n')
+              output.write('PROBE_EXPIRES_AT=' + expiry + '\n')
+              output.write('PROBE_MANIFEST_SHA=' + digest + '\n')
+          secret_file = Path(os.environ['RUNNER_TEMP']) / 'geometry-probe-secrets.json'
+          secret_file.write_text(json.dumps({'PROBE_TOKEN': token}))
+          secret_file.chmod(0o600)
+          PYTHON
+      - name: Deploy only this run's full-size geometry Durable Object
+        id: deploy
+        timeout-minutes: 3
+        working-directory: worker
+        run: |
+          set -o pipefail
+          npx wrangler deploy --config wrangler.geometry-probe.toml --name "$PROBE_NAME" \
+            --secrets-file "$RUNNER_TEMP/geometry-probe-secrets.json" \
+            --var "PROBE_EXPIRES_AT:$PROBE_EXPIRES_AT" \
+            --var "PROBE_MANIFEST_SHA:$PROBE_MANIFEST_SHA" 2>&1 | tee probe-geometry-deploy.txt
+          python -c "import os, pathlib, sys; sys.path.insert(0, '../src'); from write_discovery_links import worker_origin; origin=worker_origin(pathlib.Path('probe-geometry-deploy.txt').read_text(encoding='utf-8'), os.environ['PROBE_NAME']); sys.exit('deploy did not print the probe origin') if not origin else print('origin=' + origin)" >> "$GITHUB_OUTPUT"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+      - name: Capture the owned namespace before sending geometry requests
+        id: capture
+        timeout-minutes: 1
+        run: python src/static_search_do_lifecycle.py capture "$PROBE_NAME"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+      - name: Run bounded full-size load, scan, and hydration diagnostics
+        id: measure
+        timeout-minutes: 7
+        continue-on-error: true
+        env:
+          PROBE_ORIGIN: ${{ steps.deploy.outputs.origin }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+        run: |
+          python src/run_full_geometry_probe.py --assets agent_geometry_probe \
+            --base-url "$PROBE_ORIGIN" --token-env PROBE_TOKEN \
+            --script-name "$PROBE_NAME" --max-load-seconds 300 --wait-seconds 90 \
+            --out full-geometry-reports/run.json
+      - name: Remove the owned DO namespace, verify absence, then remove Worker
+        id: cleanup
+        if: always() && (steps.deploy.outcome == 'success' || steps.deploy.outcome == 'failure' || steps.deploy.outcome == 'cancelled')
+        timeout-minutes: 5
+        run: python src/static_search_do_lifecycle.py cleanup "$PROBE_NAME"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+      - name: Remove the temporary geometry-probe secret file
+        if: always()
+        run: rm -f "$RUNNER_TEMP/geometry-probe-secrets.json"
+      - name: Preserve geometry diagnostics and verified cleanup evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-geometry-probe-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            full-geometry-reports/
+            agent_full_probe/probe.json
+            agent_geometry_probe/probe.json
+            probe-do-lifecycle.json
+            probe-do-cleanup.txt
+            worker/probe-geometry-deploy.txt
+          if-no-files-found: ignore
+          retention-days: 90
+      - name: Report geometry diagnostics without changing full-run admission
+        if: always() && steps.measure.outcome != 'skipped'
+        run: |
+          python - <<'PYTHON'
+          import json
+          from pathlib import Path
+          report = json.loads(Path('full-geometry-reports/run.json').read_text())
+          lifecycle = json.loads(Path('probe-do-lifecycle.json').read_text())
+          for key in ('functional_gate', 'gateway_cpu_gate', 'do_cpu_gate',
+                      'memory_gate', 'production_readiness'):
+              print(key + ':', report.get(key, 'unverified'))
+          print('Cleanup:', lifecycle.get('cleanup', 'unverified'))
+          print('Geometry diagnostics retain the 96 MiB memory result and do not issue an offline admission certificate.')
+          passed = (report.get('functional_gate') == 'passed'
+                    and report.get('workload_complete') is True
+                    and all(report.get(key) in ('passed', 'unverified')
+                            for key in ('gateway_cpu_gate', 'do_cpu_gate'))
+                    and lifecycle.get('cleanup') == 'passed'
+                    and lifecycle.get('namespace_absent') is True)
+          raise SystemExit(0 if passed else 1)
+          PYTHON
+  retained_full_smoke:
+    needs: offline
+    if: github.event_name == 'workflow_dispatch' && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase == 'retained' && inputs.free_plan_confirmed
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: static-search-probe
+    env:
+      FREE_PLAN_CONFIRMED: ${{ inputs.free_plan_confirmed }}
+      WRANGLER_SEND_METRICS: 'false'
+      PROBE_NAME: key-papers-static-do-probe-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - name: Check the Free account and selected credentials
+        id: controls
+        env:
+          PROBE_CREDENTIALS: ${{ inputs.probe_credentials }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+        run: |
+          if [ "$FREE_PLAN_CONFIRMED" != 'true' ]; then
+            echo '::error::Confirm the selected account is Workers Free. This workflow never changes its plan.'
+            exit 1
+          fi
+          case "$PROBE_CREDENTIALS" in
+            repository|probe_environment) ;;
+            *) echo '::error::Select repository or probe_environment.'; exit 1 ;;
+          esac
+          if [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo '::error::The selected credential pair is incomplete; no fallback account is used.'
+            exit 1
+          fi
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: worker/package-lock.json
+      - name: Install lightweight reconstruction dependencies and build the kernel
+        run: |
+          python -m pip install -r requirements-agent.txt numpy==2.3.4
+          npm --prefix worker ci
+          npm --prefix worker run build:probe
+      - name: Authenticate and restore the pinned retained corpus without inference
+        id: restore
+        timeout-minutes: 3
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p retained-smoke-reports
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/40448979121" > retained-smoke-reports/source-run.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/12715563729" > retained-smoke-reports/source-artifact.json
+          python - <<'PYTHON'
+          import json
+          from pathlib import Path
+          import sys
+          sys.path.insert(0, 'src')
+          from restore_full_search_artifact import ARTIFACT_ID, RUN_ID, SOURCE_COMMIT
+          run = json.loads(Path('retained-smoke-reports/source-run.json').read_text())
+          artifact = json.loads(Path('retained-smoke-reports/source-artifact.json').read_text())
+          if (run.get('id') != RUN_ID or run.get('head_sha') != SOURCE_COMMIT
+                  or artifact.get('id') != ARTIFACT_ID or artifact.get('expired') is not False
+                  or artifact.get('workflow_run', {}).get('id') != RUN_ID):
+              raise SystemExit('STOP: retained artifact metadata differs from the reviewed pin.')
+          PYTHON
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/12715563729/zip" > "$RUNNER_TEMP/retained-search-artifact.zip"
+          python src/restore_full_search_artifact.py \
+            --archive "$RUNNER_TEMP/retained-search-artifact.zip" \
+            --out full-probe-reports/replay
+          python - <<'PYTHON'
+          import sys
+          sys.path.insert(0, 'src')
+          from run_retained_search_smoke import load_fixture
+          load_fixture('full-probe-reports/replay')
+          PYTHON
+      - name: Refuse deployment if an earlier DO namespace remains
+        id: preflight
+        timeout-minutes: 1
+        run: python src/static_search_do_lifecycle.py preflight "$PROBE_NAME"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+      - name: Create expiring credentials for this genuine full-corpus smoke
+        run: |
+          python - <<'PYTHON'
+          from datetime import datetime, timedelta, timezone
+          import json
+          import os
+          from pathlib import Path
+          import secrets
+          token = secrets.token_urlsafe(32)
+          print('::add-mask::' + token)
+          expiry = (datetime.now(timezone.utc) + timedelta(minutes=15)).isoformat()
+          with open(os.environ['GITHUB_ENV'], 'a') as output:
+              output.write('PROBE_TOKEN=' + token + '\n')
+              output.write('PROBE_EXPIRES_AT=' + expiry + '\n')
+          secret_file = Path(os.environ['RUNNER_TEMP']) / 'retained-probe-secrets.json'
+          secret_file.write_text(json.dumps({'PROBE_TOKEN': token}))
+          secret_file.chmod(0o600)
+          PYTHON
+      - name: Deploy only this run's retained full-corpus Durable Object
+        id: deploy
+        timeout-minutes: 3
+        working-directory: worker
+        run: |
+          set -o pipefail
+          npx wrangler deploy --config wrangler.full-real-probe.toml --name "$PROBE_NAME" \
+            --secrets-file "$RUNNER_TEMP/retained-probe-secrets.json" \
+            --var "PROBE_EXPIRES_AT:$PROBE_EXPIRES_AT" 2>&1 | tee probe-retained-deploy.txt
+          python -c "import os, pathlib, sys; sys.path.insert(0, '../src'); from write_discovery_links import worker_origin; origin=worker_origin(pathlib.Path('probe-retained-deploy.txt').read_text(encoding='utf-8'), os.environ['PROBE_NAME']); sys.exit('deploy did not print the probe origin') if not origin else print('origin=' + origin)" >> "$GITHUB_OUTPUT"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+      - name: Capture the owned namespace before any provider calls
+        id: capture
+        timeout-minutes: 1
+        run: python src/static_search_do_lifecycle.py capture "$PROBE_NAME"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+      - name: Run compatibility then exactly two new HTTP search and read journeys
+        id: measure
+        timeout-minutes: 11
+        continue-on-error: true
+        env:
+          PROBE_ORIGIN: ${{ steps.deploy.outputs.origin }}
+        run: |
+          python src/run_retained_search_smoke.py --origin "$PROBE_ORIGIN" \
+            --restored full-probe-reports/replay --authorize-query-submissions 2 \
+            --out retained-smoke-reports/run.json
+      - name: Remove the owned DO namespace, verify absence, then remove Worker
+        id: cleanup
+        if: always() && (steps.deploy.outcome == 'success' || steps.deploy.outcome == 'failure' || steps.deploy.outcome == 'cancelled')
+        timeout-minutes: 6
+        run: python src/static_search_do_lifecycle.py cleanup "$PROBE_NAME"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+      - name: Remove the temporary retained-probe secret file
+        if: always()
+        run: rm -f "$RUNNER_TEMP/retained-probe-secrets.json"
+      - name: Preserve partial smoke evidence and cleanup after every outcome
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: retained-search-smoke-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            retained-smoke-reports/
+            full-probe-reports/replay/restoration.json
+            full-probe-reports/replay/runtime/probe.json
+            probe-do-lifecycle.json
+            probe-do-cleanup.txt
+            worker/probe-retained-deploy.txt
+          if-no-files-found: ignore
+          retention-days: 90
+      - name: Report the HTTP smoke and required cleanup without quality promotion
+        if: always() && steps.measure.outcome != 'skipped'
+        run: |
+          python - <<'PYTHON'
+          import json
+          from pathlib import Path
+          report_path = Path('retained-smoke-reports/run.json')
+          lifecycle_path = Path('probe-do-lifecycle.json')
+          report = json.loads(report_path.read_text()) if report_path.exists() else {}
+          lifecycle = json.loads(lifecycle_path.read_text()) if lifecycle_path.exists() else {}
+          print('HTTP new-query -> returned-paper read smoke:', report.get('smoke_gate', 'failed'))
+          print('Budget:', json.dumps(report.get('budget', {}), sort_keys=True))
+          print('Cleanup:', lifecycle.get('cleanup', 'unverified'))
+          print('This is not an autonomous-agent evaluation or a held-out quality test. Production readiness remains unverified.')
+          passed = (report.get('smoke_gate') == 'passed'
+                    and report.get('workload_complete') is True
+                    and report.get('budget', {}).get('query_texts') == 2
+                    and lifecycle.get('cleanup') == 'passed'
+                    and lifecycle.get('namespace_absent') is True)
+          raise SystemExit(0 if passed else 1)
+          PYTHON
+  publish_retained_api:
+    needs: offline
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase == 'publish' && inputs.free_plan_confirmed
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    environment: public-search
+    env:
+      FREE_PLAN_CONFIRMED: ${{ inputs.free_plan_confirmed }}
+      WRANGLER_SEND_METRICS: 'false'
+      PUBLIC_WORKER_NAME: key-papers-search
+      PREVIEW_NAME: release-${{ github.run_id }}-${{ github.run_attempt }}
+      PUBLICATION_ID: ${{ github.run_id }}-${{ github.run_attempt }}-${{ github.sha }}
+    steps:
+      - name: Check the explicitly selected Free account
+        id: controls
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN }}
+        run: |
+          if [ "$FREE_PLAN_CONFIRMED" != 'true' ]; then
+            echo '::error::Confirm the selected account is Workers Free. No plan changes are performed.'
+            exit 1
+          fi
+          if [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo '::error::Configure the dedicated PUBLIC_SEARCH_CLOUDFLARE_* environment secrets; production/probe credentials are never used.'
+            exit 1
+          fi
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: worker/package-lock.json
+      - name: Install reconstruction dependencies and build the kernel
+        run: |
+          python -m pip install -r requirements-agent.txt numpy==2.3.4
+          npm --prefix worker ci
+          npm --prefix worker run build:probe
+      - name: Verify actual environment protections and reviewed credential
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN }}
+          TOKEN_SCOPE_SHA256: ${{ vars.PUBLIC_SEARCH_TOKEN_SCOPE_SHA256 }}
+        run: python src/public_search_release.py controls --report public-api-reports/controls.json
+      - name: Restore the permanent Release archive without inference
+        id: restore
+        timeout-minutes: 4
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p public-api-reports
+          python src/retained_search_archive.py --archive "$RUNNER_TEMP/retained-search-artifact.zip" --report public-api-reports/archive.json
+          python src/restore_full_search_artifact.py \
+            --archive "$RUNNER_TEMP/retained-search-artifact.zip" \
+            --out full-probe-reports/replay
+          python - <<'PYTHON'
+          import sys
+          sys.path.insert(0, 'src')
+          from run_retained_search_smoke import load_fixture
+          load_fixture('full-probe-reports/replay')
+          PYTHON
+      - name: Reject a stale queued publication before accessing Cloudflare
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          current_main=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq '.object.sha')
+          if [ "$GITHUB_REF" != 'refs/heads/main' ] || [ "$current_main" != "$GITHUB_SHA" ]; then
+            echo '::error::Publish only the current main commit; dispatch a fresh run.'
+            exit 1
+          fi
+      - name: Refuse to overwrite an unrelated stable Worker
+        id: ownership
+        timeout-minutes: 2
+        run: python src/smoke_public_search_api.py --check-account-ownership --out public-api-reports/ownership.json
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN }}
+      - name: Create credentials scoped to this publication
+        run: |
+          python - <<'PYTHON'
+          from datetime import datetime, timedelta, timezone
+          import json
+          import os
+          from pathlib import Path
+          import secrets
+          token = secrets.token_urlsafe(32)
+          print('::add-mask::' + token)
+          with open(os.environ['GITHUB_ENV'], 'a') as output:
+              output.write('PUBLICATION_TOKEN=' + token + '\n')
+              expiry = datetime.now(timezone.utc) + timedelta(minutes=20)
+              output.write('PREVIEW_EXPIRES_AT=' + expiry.isoformat() + '\n')
+          path = Path(os.environ['RUNNER_TEMP']) / 'public-search-secrets.json'
+          path.write_text(json.dumps({'PUBLICATION_TOKEN': token}))
+          path.chmod(0o600)
+          PYTHON
+      - name: Check the previous code version and state-preservation contract
+        id: checkpoint
+        run: python src/public_search_release.py prepare --publication-id "$PUBLICATION_ID" --report public-api-reports/recovery.json
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN }}
+      - name: Deploy a private isolated Worker Preview before replacing live code
+        id: preview_deploy
+        timeout-minutes: 4
+        working-directory: worker
+        run: |
+          npx wrangler preview --config wrangler.public-search.toml --name "$PREVIEW_NAME" --worker-name "$PUBLIC_WORKER_NAME" \
+            --ignore-base-config --json --secrets-file "$RUNNER_TEMP/public-search-secrets.json" \
+            --var "PUBLICATION_ID:$PUBLICATION_ID" --var "PUBLIC_PREVIEW_EXPIRES_AT:$PREVIEW_EXPIRES_AT" > "$RUNNER_TEMP/public-search-preview.json"
+          python ../src/public_search_release.py preview-origin --name "$PREVIEW_NAME" --report "$RUNNER_TEMP/public-search-preview.json" | sed 's/^/origin=/' >> "$GITHUB_OUTPUT"
+          python - <<'PYTHON'
+          import json
+          import os
+          from pathlib import Path
+          receipt = json.loads((Path(os.environ['RUNNER_TEMP']) / 'public-search-preview.json').read_text())
+          sanitized = {key: receipt.get('preview', {}).get(key) for key in ('name', 'slug', 'urls')}
+          Path('../public-api-reports/preview.json').write_text(json.dumps(sanitized, indent=2))
+          PYTHON
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN }}
+      - name: Check fresh provider compatibility, REST and MCP in the isolated candidate
+        id: preview_smoke
+        timeout-minutes: 11
+        env:
+          PREVIEW_ORIGIN: ${{ steps.preview_deploy.outputs.origin }}
+        run: |
+          python src/smoke_public_search_api.py --preview --origin "$PREVIEW_ORIGIN" \
+            --publication-id "$PUBLICATION_ID" --restored full-probe-reports/replay \
+            --out public-api-reports/preview-smoke.json
+      - name: Delete only this run-specific Preview after every attempted creation
+        id: preview_cleanup
+        if: always() && (steps.preview_deploy.outcome == 'success' || steps.preview_deploy.outcome == 'failure' || steps.preview_deploy.outcome == 'cancelled')
+        timeout-minutes: 3
+        working-directory: worker
+        run: npx wrangler preview delete --config wrangler.public-search.toml --name "$PREVIEW_NAME" --worker-name "$PUBLIC_WORKER_NAME" --skip-confirmation
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN }}
+      - name: Recheck main and record the exact rollback target immediately before release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN }}
+        run: |
+          current_main=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq '.object.sha')
+          if [ "$current_main" != "$GITHUB_SHA" ]; then
+            echo '::error::main changed during candidate verification; dispatch a new run.'
+            exit 1
+          fi
+          python src/public_search_release.py prepare --publication-id "$PUBLICATION_ID" --report public-api-reports/recovery.json
+      - name: Deploy the dedicated public API with semantic search initially gated
+        id: deploy
+        timeout-minutes: 3
+        working-directory: worker
+        run: |
+          set -o pipefail
+          npx wrangler deploy --config wrangler.public-search.toml --name "$PUBLIC_WORKER_NAME" \
+            --secrets-file "$RUNNER_TEMP/public-search-secrets.json" \
+            --var "PUBLICATION_ID:$PUBLICATION_ID" 2>&1 | tee public-search-deploy.txt
+          python -c "import json, pathlib; print('origin=' + json.loads(pathlib.Path('../public-api-reports/recovery.json').read_text())['origin'])" >> "$GITHUB_OUTPUT"
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN }}
+      - name: Check compatibility, activate, and verify public REST and MCP
+        id: smoke
+        timeout-minutes: 11
+        continue-on-error: true
+        env:
+          PUBLIC_API_ORIGIN: ${{ steps.deploy.outputs.origin }}
+        run: |
+          python src/smoke_public_search_api.py --origin "$PUBLIC_API_ORIGIN" \
+            --publication-id "$PUBLICATION_ID" --restored full-probe-reports/replay \
+            --out public-api-reports/smoke.json
+      - name: Disable semantic search after failed or interrupted publication
+        id: deactivate
+        if: always() && (steps.deploy.outcome == 'success' || steps.deploy.outcome == 'failure' || steps.deploy.outcome == 'cancelled') && steps.smoke.outcome != 'success'
+        continue-on-error: true
+        timeout-minutes: 2
+        env:
+          PUBLIC_API_ORIGIN: ${{ steps.deploy.outputs.origin }}
+        run: |
+          if [ -z "$PUBLIC_API_ORIGIN" ]; then
+            PUBLIC_API_ORIGIN=$(python -c "import json; print(json.load(open('public-api-reports/recovery.json'))['origin'])")
+          fi
+          python src/smoke_public_search_api.py --origin "$PUBLIC_API_ORIGIN" \
+            --publication-id "$PUBLICATION_ID" --deactivate-only \
+            --out public-api-reports/deactivation.json
+      - name: Recover previous code and activation without rewinding global spending
+        id: recover
+        if: always() && (steps.deploy.outcome == 'success' || steps.deploy.outcome == 'failure' || steps.deploy.outcome == 'cancelled') && steps.smoke.outcome != 'success'
+        timeout-minutes: 3
+        run: python src/public_search_release.py recover --publication-id "$PUBLICATION_ID" --report public-api-reports/recovery.json
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN }}
+      - name: Remove the temporary publication credential file
+        if: always()
+        run: rm -f "$RUNNER_TEMP/public-search-secrets.json" "$RUNNER_TEMP/public-search-preview.json"
+      - name: Preserve publication evidence after every outcome
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-search-publication-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            public-api-reports/
+            full-probe-reports/replay/restoration.json
+            full-probe-reports/replay/runtime/probe.json
+            worker/public-search-deploy.txt
+          if-no-files-found: ignore
+          retention-days: 90
+      - name: Preserve successful public discovery separately from production Pages
+        if: steps.smoke.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-api-discovery
+          path: public-api-reports/smoke.json
           if-no-files-found: error
           retention-days: 90
-      - name: Roll back the pointer
-        if: failure() && steps.promote.outcome == 'success' && steps.smoke.outcome == 'failure'
-        run: python src/publish_agent_index.py rollback
+      - name: Report the persistent public endpoint and publication result
+        if: always()
+        run: |
+          python - <<'PYTHON'
+          import json
+          import os
+          from pathlib import Path
+          path = Path('public-api-reports/smoke.json')
+          report = json.loads(path.read_text()) if path.exists() else {}
+          passed = report.get('ok') is True and report.get('semantic_active') is True
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+              if passed:
+                  origin = report['origin']
+                  summary.write('Public paper API: ' + origin + '\n\n')
+                  summary.write('MCP: ' + origin + '/mcp\n\n')
+                  summary.write('Corpus restored without re-encoding. This endpoint remains deployed.\n')
+              else:
+                  summary.write('Public API publication failed. Inspect smoke/deactivation evidence; the stable Worker and namespace are retained.\n')
+          print(json.dumps({'ok': passed, 'origin': report.get('origin'),
+                            'checks': report.get('checks', {})}))
+          raise SystemExit(0 if passed else 1)
+          PYTHON
+  full_offline_probe:
+    needs: offline
+    if: github.event_name == 'workflow_dispatch' && inputs.do_probe_phase == 'full' && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase != 'geometry'
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    environment: static-search-probe
+    env:
+      FULL_RUN_CONFIRMED: ${{ inputs.full_run_confirmed }}
+      PROVIDER_AVAILABLE_NEURONS: ${{ inputs.provider_available_neurons }}
+      FULL_NUMERIC_RUN_ID: ${{ inputs.full_numeric_run_id }}
+      FREE_PLAN_CONFIRMED: ${{ inputs.free_plan_confirmed }}
+      HF_HUB_DISABLE_TELEMETRY: '1'
+      TOKENIZERS_PARALLELISM: 'false'
+      FULL_PROBE_PYTHON: python
+    steps:
+      - name: Checkout the exact reviewed code and source history
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: worker/package-lock.json
+      - name: Validate credentials and experiment controls before model setup
+        id: controls
+        env:
+          PROBE_CREDENTIALS: ${{ inputs.probe_credentials }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+        run: |
+          mkdir -p full-probe-reports
+          python - <<'PYTHON'
+          import os
+          import re
+          if not re.fullmatch(r'[0-9]+', os.environ['PROVIDER_AVAILABLE_NEURONS']):
+              raise SystemExit('STOP: provider_available_neurons must be a nonnegative integer.')
+          if os.environ['FULL_NUMERIC_RUN_ID'] != '40238828496':
+              raise SystemExit('STOP: the genuine-vector artifact must match the reviewed run/artifact/checksum pin.')
+          if os.environ['FREE_PLAN_CONFIRMED'] != 'true':
+              raise SystemExit('STOP: confirm the selected account is Workers Free before model setup.')
+          if int(os.environ['PROVIDER_AVAILABLE_NEURONS']) <= 0:
+              raise SystemExit('STOP: both preflight and full modes need a verified remaining free provider allowance.')
+          if os.environ['PROBE_CREDENTIALS'] not in ('repository', 'probe_environment'):
+              raise SystemExit('STOP: select repository or probe_environment credentials.')
+          if not os.environ.get('CLOUDFLARE_ACCOUNT_ID') or not os.environ.get('CLOUDFLARE_API_TOKEN'):
+              raise SystemExit('STOP: the selected credential pair is incomplete; no fallback account is used.')
+          PYTHON
+      - name: Install lightweight checks and build the numerical kernel
+        run: |
+          python -m pip install -r requirements-agent.txt numpy==2.3.4
+          npm --prefix worker ci
+          npm --prefix worker run build:probe
+      - name: Run cheap contracts before model dependencies
+        id: cheap_tests
+        run: |
+          python -m pytest src/test_tokenizer_contract.py src/test_full_search_probe.py src/test_pack_full_search_probe.py src/test_preflight_full_search_probe.py src/test_full_probe_canary.py src/test_full_search_workflow.py
+          npm --prefix worker run typecheck
+      - name: Download and authenticate the existing numerical fixture
+        id: numeric_source
+        timeout-minutes: 3
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$FULL_NUMERIC_RUN_ID" > full-probe-reports/numeric-source-run.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/12616396041" > full-probe-reports/numeric-source-artifact.json
+          python src/authenticate_probe_fixture.py \
+            --run full-probe-reports/numeric-source-run.json \
+            --artifact full-probe-reports/numeric-source-artifact.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/12616396041/zip" > full-probe-reports/numeric-source.zip
+          python src/authenticate_probe_fixture.py \
+            --run full-probe-reports/numeric-source-run.json \
+            --artifact full-probe-reports/numeric-source-artifact.json \
+            --archive full-probe-reports/numeric-source.zip \
+            --target full-probe-reports/numeric-source
+      - name: Build every canonical card and available passage
+        id: canonical
+        timeout-minutes: 3
+        run: python src/build_full_search_probe.py --out agent_full_probe
+      - name: Freeze source-derived and natural development queries
+        id: frozen_queries
+        run: |
+          python src/evaluate_full_search_probe.py prepare --corpus agent_full_probe \
+            --natural worker/quality/full-natural-questions.json \
+            --output agent_full_probe/quality-combined-frozen.json
+          python src/preflight_full_search_probe.py verify-queries --corpus agent_full_probe --queries agent_full_probe/quality-combined-frozen.json --pin worker/quality/full-query-pin.json
+      - name: Install the pinned CPU environment and download tokenizer files only
+        timeout-minutes: 8
+        run: |
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu -r requirements-torch-probe.txt
+          python -m pip install --index-url https://pypi.org/simple -r requirements-real-probe.txt
+          python - <<'PYTHON'
+          import sys
+          sys.path.insert(0, 'src')
+          from build_agent_index import load_embed
+          from transformers import AutoTokenizer
+          config = load_embed()['tokenizer']
+          AutoTokenizer.from_pretrained(config['id'], revision=config['revision'],
+                                        use_fast=False, trust_remote_code=False)
+          PYTHON
+      - name: Bind code, environment, complete sources, and frozen queries
+        id: snapshot
+        run: |
+          python src/preflight_full_search_probe.py snapshot --corpus agent_full_probe \
+            --queries agent_full_probe/quality-combined-frozen.json --out full-probe-reports/preflight
+      - name: Audit every passage and query without loading model weights
+        id: tokenizer_gate
+        timeout-minutes: 11
+        run: python src/preflight_full_search_probe.py tokenize --run full-probe-reports/preflight
+      - name: Verify genuine numerical and REST MCP contracts
+        id: numeric_gate
+        timeout-minutes: 4
+        run: |
+          python src/preflight_full_search_probe.py numeric --run full-probe-reports/preflight \
+            --real-source full-probe-reports/numeric-source/agent_real_probe
+      - name: Pack full geometry with explicit synthetic provenance
+        id: geometry_pack
+        timeout-minutes: 3
+        run: |
+          python src/pack_full_search_probe.py --source agent_full_probe \
+            --out agent_geometry_probe --geometry-fixture --seed 17
+          worker/node_modules/.bin/esbuild worker/probe-kernel/full-memory.ts \
+            --bundle --platform=node --format=esm --outfile=full-probe-reports/full-memory.mjs
+      - name: Measure local allocation and contracts with the 96 MiB diagnostic intact
+        id: geometry_memory
+        timeout-minutes: 5
+        continue-on-error: true
+        run: |
+          GEOMETRY_MANIFEST_SHA=$(sha256sum agent_geometry_probe/probe.json | cut -d ' ' -f 1)
+          timeout 300s node --expose-gc full-probe-reports/full-memory.mjs \
+            --assets agent_geometry_probe --manifest-sha "$GEOMETRY_MANIFEST_SHA" \
+            --wasm worker/probe-kernel/scan.wasm --vocab worker/tokenizer/vocab.txt \
+            --canonical agent_full_probe/probe.json --out full-probe-reports/geometry-memory.json \
+            --data-label geometry-fixture
+      - name: Record the validated geometry evidence
+        id: geometry_gate
+        if: always() && steps.geometry_pack.outcome == 'success'
+        run: |
+          python src/preflight_full_search_probe.py record-geometry --run full-probe-reports/preflight \
+            --report full-probe-reports/geometry-memory.json
+      - name: Verify free allowance before the bounded local and provider canary
+        id: canary_controls
+        run: |
+          python - <<'PYTHON'
+          import os
+          if os.environ['FREE_PLAN_CONFIRMED'] != 'true':
+              raise SystemExit('STOP: confirm the selected account is Workers Free before the provider canary.')
+          if int(os.environ['PROVIDER_AVAILABLE_NEURONS']) <= 0:
+              raise SystemExit('STOP: no verified free provider allowance; no canary or long encoding was started.')
+          PYTHON
+      - name: Run only the bounded compatibility canary
+        id: canary
+        timeout-minutes: 6
+        env:
+          PROBE_CREDENTIALS: ${{ inputs.probe_credentials }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_ACCOUNT_ID || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_ACCOUNT_ID || '' }}
+          CLOUDFLARE_API_TOKEN: ${{ inputs.probe_credentials == 'repository' && secrets.CLOUDFLARE_API_TOKEN || inputs.probe_credentials == 'probe_environment' && secrets.PROBE_CLOUDFLARE_API_TOKEN || '' }}
+        run: |
+          case "$PROBE_CREDENTIALS" in
+            repository|probe_environment) ;;
+            *) echo '::error::Select repository or probe_environment.'; exit 1 ;;
+          esac
+          if [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo '::error::The selected credential pair is incomplete; no fallback account is used.'
+            exit 1
+          fi
+          python src/run_full_probe_canary.py --run full-probe-reports/preflight \
+            --provider --available-neurons "$PROVIDER_AVAILABLE_NEURONS" \
+            --threads 4 --allow-model-download
+      - name: Aggregate a fresh PASS or explicit STOP certificate
+        id: admission
+        if: always() && steps.snapshot.outcome == 'success'
+        run: python src/preflight_full_search_probe.py aggregate --run full-probe-reports/preflight
+      - name: Restore reusable embeddings only for an admitted full run
+        id: restore_full_cache
+        if: success() && inputs.full_run_confirmed && steps.admission.outcome == 'success'
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            .cache/full-probe-embeddings
+            .cache/full-probe-queries
+          key: ${{ runner.os }}-full-bge-a5beb1e3e68b9ab74eb54cfd186867f64f240e1a-cache-v2-tokenizer-v2-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            ${{ runner.os }}-full-bge-a5beb1e3e68b9ab74eb54cfd186867f64f240e1a-cache-v2-tokenizer-v2-${{ github.ref_name }}-
+      - name: Bound restored embedding cache retention before encoding
+        if: success() && inputs.full_run_confirmed && steps.admission.outcome == 'success'
+        run: |
+          python src/embed_real_search_probe.py \
+            --prune-cache-dir .cache/full-probe-embeddings \
+            --prune-cache-dir .cache/full-probe-queries
+      - name: Encode the complete corpus only after explicit approval and fresh PASS
+        id: full_encode
+        if: success() && inputs.full_run_confirmed && steps.admission.outcome == 'success'
+        timeout-minutes: 240
+        run: |
+          python src/embed_real_search_probe.py --out agent_full_probe --full-corpus \
+            --full-run-confirmed --preflight-certificate full-probe-reports/preflight/certificate.json \
+            --frozen-queries agent_full_probe/quality-combined-frozen.json \
+            --cache-dir .cache/full-probe-embeddings --threads 8 --batch-size 8 \
+            --length-bucketing --local-files-only --report full-probe-reports/full-encoder.json
+      - name: Encode the frozen queries with the same verified encoder
+        id: query_encode
+        if: success() && inputs.full_run_confirmed && steps.full_encode.outcome == 'success'
+        timeout-minutes: 45
+        run: |
+          python src/evaluate_full_search_probe.py encode --corpus agent_full_probe \
+            --queries agent_full_probe/quality-combined-frozen.json \
+            --output full-probe-reports/query-vectors.f32 --cache-dir .cache/full-probe-queries \
+            --threads 8 --batch-size 8 --full-run-confirmed \
+            --preflight-certificate full-probe-reports/preflight/certificate.json
+      - name: Pack genuine full vectors for the actual runtime
+        id: full_pack
+        if: success() && inputs.full_run_confirmed && steps.query_encode.outcome == 'success'
+        timeout-minutes: 1
+        run: python src/pack_full_search_probe.py --source agent_full_probe --out agent_full_runtime
+      - name: Measure genuine runtime allocation and contracts
+        id: full_memory
+        if: success() && inputs.full_run_confirmed && steps.full_pack.outcome == 'success'
+        timeout-minutes: 5
+        continue-on-error: true
+        run: |
+          FULL_MANIFEST_SHA=$(sha256sum agent_full_runtime/probe.json | cut -d ' ' -f 1)
+          timeout 300s node --expose-gc full-probe-reports/full-memory.mjs \
+            --assets agent_full_runtime --manifest-sha "$FULL_MANIFEST_SHA" \
+            --wasm worker/probe-kernel/scan.wasm --vocab worker/tokenizer/vocab.txt \
+            --canonical agent_full_probe/probe.json --out full-probe-reports/full-memory.json \
+            --data-label real-embeddings
+      - name: Require genuine runtime contracts before quality evaluation
+        id: full_runtime_contracts
+        if: always() && inputs.full_run_confirmed && steps.full_pack.outcome == 'success'
+        timeout-minutes: 5
+        run: |
+          python src/preflight_full_search_probe.py check-runtime-contracts \
+            --run full-probe-reports/preflight --report full-probe-reports/full-memory.json
+      - name: Evaluate the frozen diagnostics through the exact full runtime
+        id: full_quality
+        if: success() && inputs.full_run_confirmed && steps.full_runtime_contracts.outcome == 'success'
+        timeout-minutes: 10
+        run: |
+          worker/node_modules/.bin/esbuild worker/probe-kernel/full-quality.ts \
+            --bundle --platform=node --format=esm --outfile=full-probe-reports/full-quality.mjs
+          node full-probe-reports/full-quality.mjs agent_full_runtime agent_full_probe \
+            full-probe-reports/query-vectors.f32 full-probe-reports/runtime-rankings.json \
+            worker/probe-kernel/scan.wasm agent_full_probe/quality-combined-frozen.json \
+            full-probe-reports/preflight/certificate.json --full-run-confirmed
+          python src/evaluate_full_search_probe.py evaluate --corpus agent_full_probe \
+            --queries agent_full_probe/quality-combined-frozen.json \
+            --query-vectors full-probe-reports/query-vectors.f32 \
+            --runtime-rankings full-probe-reports/runtime-rankings.json \
+            --output full-probe-reports/full-quality.json --full-run-confirmed \
+            --preflight-certificate full-probe-reports/preflight/certificate.json
+          python - <<'PYTHON'
+          import json
+          from pathlib import Path
+          report = json.loads(Path('full-probe-reports/full-quality.json').read_text())
+          if report.get('extractive_fidelity_gate') != 'passed':
+              raise SystemExit('STOP: the frozen extractive fidelity diagnostic failed; inspect full-quality.json.')
+          PYTHON
+      - name: Bound embedding caches before saving partial work
+        id: prune_full_cache
+        if: always() && (steps.full_encode.outcome == 'success' || steps.full_encode.outcome == 'failure' || steps.full_encode.outcome == 'cancelled')
+        run: |
+          python src/embed_real_search_probe.py \
+            --prune-cache-dir .cache/full-probe-embeddings \
+            --prune-cache-dir .cache/full-probe-queries
+      - name: Preserve verified partial embedding caches after any long attempt
+        if: always() && steps.prune_full_cache.outcome == 'success'
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            .cache/full-probe-embeddings
+            .cache/full-probe-queries
+          key: ${{ steps.restore_full_cache.outputs.cache-primary-key }}
+      - name: Preserve evidence after PASS, STOP, or interruption
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-offline-probe-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            full-probe-reports/
+            agent_full_probe/probe.json
+            agent_full_probe/vectors.f32
+            agent_full_probe/quality-combined-frozen.json
+            agent_geometry_probe/probe.json
+            agent_full_runtime/probe.json
+          if-no-files-found: ignore
+          retention-days: 90
+      - name: Report offline scope and explicit run mode
+        if: always()
+        run: |
+          python - <<'PYTHON'
+          import json
+          import os
+          from pathlib import Path
+          certificate = Path('full-probe-reports/preflight/certificate.json')
+          status = json.loads(certificate.read_text()).get('status', 'STOP') if certificate.exists() else 'STOP'
+          mode = 'full run requested' if os.environ['FULL_RUN_CONFIRMED'] == 'true' else 'preflight only; long encoding disabled'
+          text = f'Full offline probe: {status}; {mode}. Platform memory, platform CPU, human-heldout quality, and production readiness remain unverified.\n'
+          print(text)
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as stream:
+              stream.write(text)
+          PYTHON

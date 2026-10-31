@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "scope": "local-full-corpus-fail-fast",
+  "date": "2026-10-25",
+  "status": "STOP",
+  "source_commit": "96919836dc418cd5bd9773de498e83e39d84bb96",
+  "implementation": "uncommitted reviewed changes; raw after report binds implementation file hashes",
+  "canonical": {
+    "cards": 415,
+    "text_papers": 362,
+    "unavailable_text_papers": 53,
+    "passages": 40575,
+    "input_tokens": 7867965,
+    "release_id": "ee69ddcd630af30e75e8efbc0a41ef73706b0cb3ac66cbf821bde13a7ec223d9"
+  },
+  "tokenizer": {
+    "python_hf_worker_inputs": 42686,
+    "mismatches": 0,
+    "changed_passage_token_counts": 97,
+    "model_loaded": false,
+    "python_hf_report": "local-2026-10-25-tokenizer-v2-python_hf.json",
+    "python_hf_sha256": "f2808e79a7f2f3498e288d89a26ef69589b6a7356bf01e22e37ea1b0367d5c3f",
+    "worker_report": "local-2026-10-25-tokenizer-v2-worker.json",
+    "worker_sha256": "afc920d91870e3471b624fe0f759aeef4bd96d9603b69aa1fe5d52b52a23f41c"
+  },
+  "frozen_queries": {
+    "count": 2064,
+    "extractive": 2000,
+    "natural_development": 64,
+    "rebase_sha256": "8e13d0824ed373e9fb743196d7075404303f3707b4cbc85eb502ad031f5c160c",
+    "all_question_text_and_evidence_unchanged": true,
+    "remapped_gold_lists": 137,
+    "heldout_quality": "unverified"
+  },
+  "memory": {
+    "before": {
+      "status": "FAIL",
+      "observed_peak_bytes": 217141812,
+      "retained_after_churn_bytes": 145957984,
+      "local_threshold_bytes": 100663296,
+      "churn_growth_bytes": 923992,
+      "elapsed_ms": 57826.976762,
+      "contract_requests": 324,
+      "synthetic": true,
+      "checks": {
+        "canonical_full_coverage": true,
+        "synthetic_provenance": true,
+        "production_rejects_fixture": true,
+        "observed_peak_below_local_threshold": false,
+        "repeated_churn_retained_growth_bounded": true,
+        "singleton_initialization": true,
+        "bounded_admission": true,
+        "bounded_queue": true,
+        "structural_allocation_bound": true,
+        "rest_wrapper": true,
+        "mcp_wrapper": true
+      },
+      "raw_file": "local-2026-10-25-full-memory-before.json.gz",
+      "raw_sha256": "f44edc5edb11fa35e7b0bf44cbbf4b20ae46ac46822c2edd97b2e1a72667238e",
+      "gzip_sha256": "b7a0a05a0d86b85ce5527bd85e5ed227a41d938289d0688de7da24e259a6d636"
+    },
+    "after": {
+      "status": "FAIL",
+      "observed_peak_bytes": 142029773,
+      "retained_after_churn_bytes": 72943590,
+      "local_threshold_bytes": 100663296,
+      "churn_growth_bytes": 933200,
+      "elapsed_ms": 62374.425793999995,
+      "contract_requests": 324,
+      "synthetic": true,
+      "checks": {
+        "canonical_full_coverage": true,
+        "synthetic_provenance": true,
+        "production_rejects_fixture": true,
+        "observed_peak_below_local_threshold": false,
+        "repeated_churn_retained_growth_bounded": true,
+        "singleton_initialization": true,
+        "bounded_admission": true,
+        "bounded_queue": true,
+        "structural_allocation_bound": true,
+        "rest_wrapper": true,
+        "mcp_wrapper": true
+      },
+      "raw_file": "local-2026-10-25-full-memory-after.json.gz",
+      "raw_sha256": "4867dd866477b5a6a7feb91bcb9f5a8deaf431f082c2efd0cc7cac61ee7fb632",
+      "gzip_sha256": "292ed7aad13e0ce8de0707369708ad6e31de5eb8baf1e92d5e68bbf0c6b7f8dc"
+    }
+  },
+  "platform_cpu": "unverified",
+  "platform_memory": "unverified",
+  "full_corpus_semantic_quality": "unverified",
+  "production_ready": false,
+  "validation": {
+    "python_tests": 422,
+    "typescript_tests": 152,
+    "typescript_opt_in_skipped": 2,
+    "typecheck": "passed",
+    "wrangler_dry_runs": 3,
+    "no_deployment": true
+  },
+  "full_encoding_started_this_stage": false,
+  "new_provider_canary_started": false,
+  "prior_interrupted_attempt": {
+    "newly_encoded_passages": 1360,
+    "reason": "canonical versus HF token mismatch; not resumed"
+  },
+  "final_executable_preflight": {
+    "status": "STOP",
+    "tokenizer_inputs": 42688,
+    "tokenizer_mismatches": 0,
+    "passed_gates": [
+      "numeric-contracts",
+      "tokenizer-parity"
+    ],
+    "gate_states": {
+      "tokenizer-parity": "PASS",
+      "numeric-contracts": "PASS",
+      "geometry-memory": "FAIL",
+      "local-canary": "UNKNOWN",
+      "provider-compatibility": "UNKNOWN"
+    },
+    "evidence_file": "local-2026-10-25-full-preflight-evidence.json.gz",
+    "raw_sha256": "a5b2624a176bf5da2ff1f11e49562d3b4603e4cd55dbe8be6cfb40115c431dfc",
+    "gzip_sha256": "c660ef394ea0ec90a34dcf4716b47991c2e35ec1b6a1b2f9ea38ac23d32d5bbf",
+    "historical_only": true
+  }
+}

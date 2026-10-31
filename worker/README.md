@@ -2,6 +2,43 @@
 
 Public read API for the citation catalog. Start with the [static agent guide](https://vinnik-dmitry07.github.io/favorite-papers/agents/) for a catalog, complete paginated citation lists, and readable text. It needs no API or JavaScript. REST and stateless MCP add title lookup, section navigation, literal search and semantic search. The guide advertises the API only after deployment and live checks succeed.
 
+The [permanent static search publication](PUBLIC_SEARCH_API.md) reuses the verified
+full-corpus index in a separate `key-papers-search` Worker. It exposes the same
+REST/MCP tools, with a persistent daily AI allowance and explicit compatibility
+and activation checks. Select the manual `publish` phase of **Agent probe**;
+ordinary pushes do not deploy it. This path does not require Vectorize, R2 or a
+new corpus encoding. [Publication run 41007245038](https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/41007245038)
+passed its public checks. Start at the permanent
+[agent manual](https://key-papers-search.vinnik-dmitry07.workers.dev/llms.txt),
+or connect [MCP](https://key-papers-search.vinnik-dmitry07.workers.dev/mcp).
+Future permanent publications require current `main`, the protected
+`public-search` environment and dedicated `PUBLIC_SEARCH_CLOUDFLARE_*` secrets;
+the temporary probes' repository-credential option does not apply to that job.
+Publication now checks a private isolated Worker Preview first, requires a fresh
+32-input provider check for each publication, and has an exact-version recovery
+path with preserved publication state and global quota. Uncached requests have
+per-address limits in addition to the shared daily ceiling. The corpus is saved
+in a pinned GitHub Release without re-encoding. These code changes are not a
+deployment; external environment/token setup and live rollout/recovery checks
+remain required. Historical geometry evidence does not certify the changed loader.
+
+The [static-search feasibility probe](STATIC_SEARCH_PROBE.md),
+[real subset](REAL_SEARCH_PROBE.md) and [full offline gates](FULL_SEARCH_PROBE.md)
+test a possible Workers Free replacement for Vectorize. The synthetic stage
+does not establish semantic quality; later stages use canonical text and real
+vectors. Those experimental phases are not production deployments. The explicit `publish`
+phase is described separately above. The **Agent probe** workflow
+(`agent-api.yml`, retaining its existing dispatch entrypoint) defaults to the
+`PROBE_CLOUDFLARE_*` environment credentials. Existing repository credentials
+remain an explicit `probe_credentials=repository` option. Cloudflare secrets
+are passed only to steps that use the API, not installation, tests or full-corpus
+encoding. The bounded compatibility canary needs its selected provider token.
+Production has its own **Agent API** workflow
+(`agent-publish.yml`) and does not depend on the probe's tests or fixture builds.
+The shared catalog/tokenizer optimizations are reviewed code changes; the experimental phases
+do not deploy the production Worker or alter its Cloudflare bindings. The
+permanent publication has its own name, bindings and daily ledger.
+
 Acceptance criteria:
 
 - **R1.** Catalog ids, edge direction, and evidence are preserved. An edge `[source, target, evidence]` means source cites target. `cites` on a node is the in-degree. `refs` is the out-degree. Evidence is `id`, `title`, or `url` (`title` is the weaker match). API ids are the catalog strings (`arxiv:`, `doi:`, `openreview:`, `acl:`, `url:`). They are case-sensitive and are never shortened to `safe_key()`.
@@ -17,7 +54,13 @@ The graph is citations inside this catalog, not the open web. Semantic search re
 
 [`embed.json`](embed.json) is the only embedding and chunking configuration. Empty `query_template` and `passage_template` are explicit. A future prefix counts toward the 512-token budget. The model name alone does not fix preprocessing: index and query both send `pooling: "cls"`.
 
-`build_signature` covers cleaning, chunking, and the tokenizer checksum. `embedding_signature` covers model, dimensions, metric, pooling, templates, and the tokenizer checksum. Rate limits and `search_enabled` are not part of those signatures.
+`build_signature` covers cleaning, chunking and the full tokenizer configuration.
+The provider `embedding_signature` retains the legacy payload: model, dimensions,
+metric, pooling, templates, token budget, tokenizer revision and vocabulary hash.
+Tokenizer v2's local algorithm settings change the build identity without
+invalidating identical Workers AI input strings. Local FP32 caches separately
+bind their full tokenizer and numerical implementation. Rate limits and
+`search_enabled` are not part of those signatures.
 
 Tokenizer assets are local. `tokenizer/vocab.txt` is BAAI/bge-base-en-v1.5 revision `a5beb1e3e68b9ab74eb54cfd186867f64f240e1a`. Tests check its sha256 and do not download it.
 
@@ -104,6 +147,10 @@ npm --prefix worker run typecheck
 npm --prefix worker test
 ```
 
+`npm test` first rebuilds the probe kernel from WAT with the pinned compiler
+and checks the output against `probe-kernel/scan.sha256`. The production CI
+uses only the API, tokenizer and catalog tests; it does not require that kernel.
+
 
 ## Research-client contract
 
@@ -126,6 +173,11 @@ The static catalog needs only GitHub Pages with Actions as its source. The
 Cloudflare publisher requires an existing account, resources and credentials.
 Missing credentials fail early with a diagnostic; the workflow never claims a
 successful API deployment or advertises an invented URL.
+
+Merging or pushing to `main` runs offline validation only. Production
+publication requires a manual dispatch on `main` with
+`production_publish_confirmed=true`. The default manual dispatch does not
+publish. This confirmation is separate from the probe and full-encode flags.
 
 1. Enable R2, Vectorize and Workers AI in the intended Cloudflare account.
    Create the resources named in `embed.json` and `wrangler.toml`, once:
@@ -151,8 +203,18 @@ successful API deployment or advertises an invented URL.
    allowance is 5,000,000. Raising this variable does not buy capacity. Check
    current Cloudflare plan limits and costs before enabling publication.
 
-4. Run **Agent API → Run workflow** on main. The workflow checks permissions
-   and capacity, performs an isolated probe, stages data, deploys the reader,
+4. After reviewing the capacity report and the target account's remaining AI
+   allowance, run **Agent API → Run workflow** on main with
+   `production_publish_confirmed=true` (`agent-publish.yml`). Tokenizer v2
+   requires a new build/release, but identical provider input strings retain
+   their legacy embedding-cache keys. This does not prove that the target
+   account has those entries. A cold
+   publication of the current corpus represents about 47,664 neurons under
+   `embed.json`'s estimator, before the publisher's probe; this exceeds its
+   configured 10,000-neuron daily free allowance. The capacity preflight checks
+   permissions and dimensions, not remaining neurons, and this flag neither
+   changes the plan nor grants quota. The workflow performs an isolated probe,
+   stages data, deploys the reader,
    promotes the release, and runs live REST/MCP checks. A failed post-promotion
    smoke rolls back the active data pointer. A successful smoke persists a
    discovery artifact and triggers Pages to publish the verified endpoint.
@@ -164,3 +226,11 @@ successful API deployment or advertises an invented URL.
 The A/B publisher is retained to avoid replacing a working corpus with a partial
 upload. It is optional infrastructure for semantic search: the static browsing
 path has no dependency on R2, Vectorize, tokens, or version handshakes.
+Manual Cloudflare work shares one concurrency group, including
+the full offline workflow because its canary can use the same account. Read-only
+log collection and offline PR/main checks have separate groups. Running jobs are
+not cancelled; `queue: max` keeps up to 100 pending runs instead of replacing
+the single pending run. Additional runs are cancelled when that queue is full;
+see [GitHub's concurrency rules](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/control-workflow-concurrency).
+This serializes this workflow's runs; it cannot reserve quota against unrelated
+account usage.

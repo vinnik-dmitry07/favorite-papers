@@ -1,0 +1,373 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-26",
+  "status": "STOP",
+  "baseline_commit": "b865dc75438cd3cc4607f7aead76541cf3584458",
+  "source_release_id": "9b4203dbfbcd1f44005dd52c65b8b938ee37cd176e24a86d41b285555ab36c29",
+  "canonical_passages": 40575,
+  "text_papers": 362,
+  "catalog_papers": 415,
+  "geometry_manifest_sha256": "55de7d257a8db9e9e1c8cabc7992d1207d388a2f534d12291746ff2ab9bf333d",
+  "threshold_mib": 96,
+  "reports": [
+    {
+      "label": "baseline",
+      "implementation": "unmodified b865dc7",
+      "node_flags": [
+        "--expose-gc"
+      ],
+      "raw_file": "local-2026-10-26-full-memory-baseline.json.gz",
+      "raw_sha256": "152ff8e3a53b536c0a364d973e4b1e1427a3361575c20435073c0535c198a056",
+      "gzip_sha256": "932f9281b4523e38ce7be105231495adec9d4781319b366c08ba16147c102745",
+      "raw_harness_status": "FAIL",
+      "eligible_as_default_memory_evidence": true,
+      "used_for_inference_admission": false,
+      "peak_mib": 133.8541955947876,
+      "retained_final_mib": 69.63028526306152,
+      "elapsed_seconds": 36.950376959,
+      "contract_requests": 324,
+      "synthetic_searches": 160,
+      "all_non_peak_checks_pass": true,
+      "phases": [
+        {
+          "name": "initialize-concurrent-cold-burst",
+          "peak_mib": 74.6724853515625,
+          "retained_mib": 56.905569076538086
+        },
+        {
+          "name": "real-loader-rejects-geometry",
+          "peak_mib": 58.72584342956543,
+          "retained_mib": 56.91986656188965
+        },
+        {
+          "name": "largest-paper-rest-mcp",
+          "peak_mib": 70.88796043395996,
+          "retained_mib": 59.53561210632324
+        },
+        {
+          "name": "sustained-admitted-and-rejected-paper-bursts",
+          "peak_mib": 109.2185468673706,
+          "retained_mib": 66.60656547546387
+        },
+        {
+          "name": "paper-cache-churn",
+          "peak_mib": 133.8541955947876,
+          "retained_mib": 68.17653465270996
+        },
+        {
+          "name": "prepare-reference-query-vectors",
+          "peak_mib": 124.86225414276123,
+          "retained_mib": 68.92650413513184
+        },
+        {
+          "name": "search-cache-churn-1",
+          "peak_mib": 130.73861980438232,
+          "retained_mib": 68.69351005554199
+        },
+        {
+          "name": "search-cache-churn-2",
+          "peak_mib": 131.61111068725586,
+          "retained_mib": 69.61625480651855
+        },
+        {
+          "name": "repeat-cached-queries",
+          "peak_mib": 76.52518272399902,
+          "retained_mib": 69.63028526306152
+        }
+      ]
+    },
+    {
+      "label": "key-lookup",
+      "implementation": "packed hash lookup only",
+      "node_flags": [
+        "--expose-gc"
+      ],
+      "raw_file": "local-2026-10-26-full-memory-key-lookup.json.gz",
+      "raw_sha256": "ac9ef5560d95f23c2adce4413acc117afbfcd93a8588655c033e49481e56a76d",
+      "gzip_sha256": "9c7856b343378107bf20c9df3480e5f1ecb603b46347165c30fc47d85978fc4f",
+      "raw_harness_status": "FAIL",
+      "eligible_as_default_memory_evidence": true,
+      "used_for_inference_admission": false,
+      "peak_mib": 134.31717586517334,
+      "retained_final_mib": 69.61578559875488,
+      "elapsed_seconds": 32.65456798899999,
+      "contract_requests": 324,
+      "synthetic_searches": 160,
+      "all_non_peak_checks_pass": true,
+      "phases": [
+        {
+          "name": "initialize-concurrent-cold-burst",
+          "peak_mib": 82.89997577667236,
+          "retained_mib": 56.907670974731445
+        },
+        {
+          "name": "real-loader-rejects-geometry",
+          "peak_mib": 58.72690010070801,
+          "retained_mib": 56.92061805725098
+        },
+        {
+          "name": "largest-paper-rest-mcp",
+          "peak_mib": 77.1654052734375,
+          "retained_mib": 59.542924880981445
+        },
+        {
+          "name": "sustained-admitted-and-rejected-paper-bursts",
+          "peak_mib": 109.71290397644043,
+          "retained_mib": 66.60140419006348
+        },
+        {
+          "name": "paper-cache-churn",
+          "peak_mib": 134.31717586517334,
+          "retained_mib": 68.14426612854004
+        },
+        {
+          "name": "prepare-reference-query-vectors",
+          "peak_mib": 128.1369800567627,
+          "retained_mib": 68.90391731262207
+        },
+        {
+          "name": "search-cache-churn-1",
+          "peak_mib": 131.09150791168213,
+          "retained_mib": 68.68497657775879
+        },
+        {
+          "name": "search-cache-churn-2",
+          "peak_mib": 131.55763244628906,
+          "retained_mib": 69.6000919342041
+        },
+        {
+          "name": "repeat-cached-queries",
+          "peak_mib": 76.5128345489502,
+          "retained_mib": 69.61578559875488
+        }
+      ]
+    },
+    {
+      "label": "numeric-scan",
+      "implementation": "packed lookup plus numeric code-point scan",
+      "node_flags": [
+        "--expose-gc"
+      ],
+      "raw_file": "local-2026-10-26-full-memory-numeric-scan.json.gz",
+      "raw_sha256": "cb24c6d1f5d5b4db16c7bea17f92f24c52f42e3aa7efc43a6e33881b70c55740",
+      "gzip_sha256": "dfa50d520750a12efc4029db6c165690227d256ab7bee3343b82473ea7f46a14",
+      "raw_harness_status": "FAIL",
+      "eligible_as_default_memory_evidence": true,
+      "used_for_inference_admission": false,
+      "peak_mib": 134.43999099731445,
+      "retained_final_mib": 69.64110946655273,
+      "elapsed_seconds": 32.919224517,
+      "contract_requests": 324,
+      "synthetic_searches": 160,
+      "all_non_peak_checks_pass": true,
+      "phases": [
+        {
+          "name": "initialize-concurrent-cold-burst",
+          "peak_mib": 88.46082973480225,
+          "retained_mib": 56.949161529541016
+        },
+        {
+          "name": "real-loader-rejects-geometry",
+          "peak_mib": 58.764225006103516,
+          "retained_mib": 56.96853256225586
+        },
+        {
+          "name": "largest-paper-rest-mcp",
+          "peak_mib": 75.33470439910889,
+          "retained_mib": 59.5783805847168
+        },
+        {
+          "name": "sustained-admitted-and-rejected-paper-bursts",
+          "peak_mib": 110.5009937286377,
+          "retained_mib": 66.61474227905273
+        },
+        {
+          "name": "paper-cache-churn",
+          "peak_mib": 129.80281352996826,
+          "retained_mib": 68.15679550170898
+        },
+        {
+          "name": "prepare-reference-query-vectors",
+          "peak_mib": 131.29020023345947,
+          "retained_mib": 68.91707229614258
+        },
+        {
+          "name": "search-cache-churn-1",
+          "peak_mib": 133.4263458251953,
+          "retained_mib": 68.71728134155273
+        },
+        {
+          "name": "search-cache-churn-2",
+          "peak_mib": 134.43999099731445,
+          "retained_mib": 69.62894821166992
+        },
+        {
+          "name": "repeat-cached-queries",
+          "peak_mib": 76.52691268920898,
+          "retained_mib": 69.64110946655273
+        }
+      ]
+    },
+    {
+      "label": "constrained-diagnostic",
+      "implementation": "same final code; altered Node heap limits; diagnostic only",
+      "node_flags": [
+        "--expose-gc",
+        "--max-old-space-size=64",
+        "--max-semi-space-size=4"
+      ],
+      "raw_file": "local-2026-10-26-full-memory-constrained-diagnostic.json.gz",
+      "raw_sha256": "e074f962b78d1aaf4b06e96aaa4119891430c96c02ab6d755a99a661ccd219b2",
+      "gzip_sha256": "63cdace537069e78173783ebd8b70335b46218a63af61abb0684a4511f2e4c85",
+      "raw_harness_status": "PASS",
+      "eligible_as_default_memory_evidence": false,
+      "used_for_inference_admission": false,
+      "peak_mib": 83.70079040527344,
+      "retained_final_mib": 69.62038040161133,
+      "elapsed_seconds": 32.459390995,
+      "contract_requests": 324,
+      "synthetic_searches": 160,
+      "all_non_peak_checks_pass": true,
+      "phases": [
+        {
+          "name": "initialize-concurrent-cold-burst",
+          "peak_mib": 73.70097255706787,
+          "retained_mib": 56.876461029052734
+        },
+        {
+          "name": "real-loader-rejects-geometry",
+          "peak_mib": 58.69560623168945,
+          "retained_mib": 56.889339447021484
+        },
+        {
+          "name": "largest-paper-rest-mcp",
+          "peak_mib": 65.39739990234375,
+          "retained_mib": 59.51340103149414
+        },
+        {
+          "name": "sustained-admitted-and-rejected-paper-bursts",
+          "peak_mib": 83.63906192779541,
+          "retained_mib": 66.59401321411133
+        },
+        {
+          "name": "paper-cache-churn",
+          "peak_mib": 83.70079040527344,
+          "retained_mib": 68.15532302856445
+        },
+        {
+          "name": "prepare-reference-query-vectors",
+          "peak_mib": 75.26334190368652,
+          "retained_mib": 68.90616226196289
+        },
+        {
+          "name": "search-cache-churn-1",
+          "peak_mib": 81.98743057250977,
+          "retained_mib": 68.68241500854492
+        },
+        {
+          "name": "search-cache-churn-2",
+          "peak_mib": 82.49150371551514,
+          "retained_mib": 69.58826065063477
+        },
+        {
+          "name": "repeat-cached-queries",
+          "peak_mib": 74.04246711730957,
+          "retained_mib": 69.62038040161133
+        }
+      ]
+    },
+    {
+      "label": "profiled",
+      "implementation": "unmodified b865dc7 with allocation sampling; not a comparable peak",
+      "node_flags": [
+        "--expose-gc"
+      ],
+      "raw_file": "local-2026-10-26-full-memory-profiled.json.gz",
+      "raw_sha256": "40d655dd011e5b1230e930eb86ca978de9510d03d31fb2c78760429df6c47eef",
+      "gzip_sha256": "6a896e54c89b450643ccb457ce3c5f398a8047dd41a0818dc81aa907a4f344ec",
+      "raw_harness_status": "FAIL",
+      "eligible_as_default_memory_evidence": false,
+      "used_for_inference_admission": false,
+      "peak_mib": 132.06125831604004,
+      "retained_final_mib": 69.5719051361084,
+      "elapsed_seconds": 38.586639907999995,
+      "contract_requests": 324,
+      "synthetic_searches": 160,
+      "all_non_peak_checks_pass": true,
+      "phases": [
+        {
+          "name": "initialize-concurrent-cold-burst",
+          "peak_mib": 76.34249973297119,
+          "retained_mib": 56.84577751159668
+        },
+        {
+          "name": "real-loader-rejects-geometry",
+          "peak_mib": 58.665937423706055,
+          "retained_mib": 56.860090255737305
+        },
+        {
+          "name": "largest-paper-rest-mcp",
+          "peak_mib": 69.90357112884521,
+          "retained_mib": 59.47574424743652
+        },
+        {
+          "name": "sustained-admitted-and-rejected-paper-bursts",
+          "peak_mib": 108.88024997711182,
+          "retained_mib": 66.54474449157715
+        },
+        {
+          "name": "paper-cache-churn",
+          "peak_mib": 132.06125831604004,
+          "retained_mib": 68.11486625671387
+        },
+        {
+          "name": "prepare-reference-query-vectors",
+          "peak_mib": 124.53929710388184,
+          "retained_mib": 68.86687278747559
+        },
+        {
+          "name": "search-cache-churn-1",
+          "peak_mib": 129.49456405639648,
+          "retained_mib": 68.64349937438965
+        },
+        {
+          "name": "search-cache-churn-2",
+          "peak_mib": 131.16439723968506,
+          "retained_mib": 69.55680656433105
+        },
+        {
+          "name": "repeat-cached-queries",
+          "peak_mib": 76.46233177185059,
+          "retained_mib": 69.5719051361084
+        }
+      ]
+    }
+  ],
+  "allocation_profile": {
+    "file": "local-2026-10-26-full-memory-allocations.heapprofile.gz",
+    "raw_sha256": "6c3f5cef2708620ee985439d3de3b849ae7c80a9d44415d93f996fec7c131e9c",
+    "sampling_interval_bytes": 65536,
+    "includes_collected_objects": true,
+    "scope": "cumulative sampled allocations; not retained memory or simultaneous peak"
+  },
+  "validation": {
+    "typescript_passed": 171,
+    "typescript_optional_skipped": 2,
+    "typecheck": "passed",
+    "production_typecheck": "passed",
+    "independent_source_review": "no correctness issue found"
+  },
+  "platform_memory": "unverified",
+  "full_corpus_semantic_quality": "unverified",
+  "canary_started": false,
+  "long_encode_started": false,
+  "deployment_performed": false,
+  "decision": "Keep the unchanged default memory filter at FAIL. Restricted-heap PASS is diagnostic only. Stop after two targeted changes; measure the complete runtime on Cloudflare before further speculative optimization or a policy revision.",
+  "limitations": [
+    "One run per configuration; timings are observations, not a proven speedup.",
+    "Node heapUsed+external is not Cloudflare accounting; sampling can miss peaks.",
+    "Synthetic vectors cover geometry and contracts, not semantic quality.",
+    "Restricted-heap diagnostic overlapped with the local TypeScript test suite; wall times are not a controlled comparison.",
+    "Cache-byte overcount under concurrent same-paper misses was found in source review and is deferred; not changed in this two-change experiment."
+  ]
+}

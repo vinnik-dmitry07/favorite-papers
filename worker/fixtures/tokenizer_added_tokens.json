@@ -1,0 +1,690 @@
+{
+  "model_id": "BAAI/bge-base-en-v1.5",
+  "model_revision": "a5beb1e3e68b9ab74eb54cfd186867f64f240e1a",
+  "oracle": "transformers.AutoTokenizer(use_fast=False); local_files_only; no model inference",
+  "added_tokens": [
+    {
+      "content": "[PAD]",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": false,
+      "special": true
+    },
+    {
+      "content": "[UNK]",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": false,
+      "special": true
+    },
+    {
+      "content": "[CLS]",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": false,
+      "special": true
+    },
+    {
+      "content": "[SEP]",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": false,
+      "special": true
+    },
+    {
+      "content": "[MASK]",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": false,
+      "special": true
+    }
+  ],
+  "cases": [
+    {
+      "name": "[PAD]-literal",
+      "template": "",
+      "text": "[PAD]",
+      "ids": [
+        101,
+        0,
+        102
+      ]
+    },
+    {
+      "name": "[PAD]-inside-word",
+      "template": "",
+      "text": "a[PAD]b",
+      "ids": [
+        101,
+        1037,
+        0,
+        1038,
+        102
+      ]
+    },
+    {
+      "name": "[PAD]-adjacent",
+      "template": "",
+      "text": "[PAD][PAD]",
+      "ids": [
+        101,
+        0,
+        0,
+        102
+      ]
+    },
+    {
+      "name": "[PAD]-lowercase",
+      "template": "",
+      "text": "[pad]",
+      "ids": [
+        101,
+        1031,
+        11687,
+        1033,
+        102
+      ]
+    },
+    {
+      "name": "[PAD]-mixed",
+      "template": "",
+      "text": "[Pad]",
+      "ids": [
+        101,
+        1031,
+        11687,
+        1033,
+        102
+      ]
+    },
+    {
+      "name": "[PAD]-control",
+      "template": "",
+      "text": "[P\u0000AD]",
+      "ids": [
+        101,
+        1031,
+        11687,
+        1033,
+        102
+      ]
+    },
+    {
+      "name": "[UNK]-literal",
+      "template": "",
+      "text": "[UNK]",
+      "ids": [
+        101,
+        100,
+        102
+      ]
+    },
+    {
+      "name": "[UNK]-inside-word",
+      "template": "",
+      "text": "a[UNK]b",
+      "ids": [
+        101,
+        1037,
+        100,
+        1038,
+        102
+      ]
+    },
+    {
+      "name": "[UNK]-adjacent",
+      "template": "",
+      "text": "[UNK][UNK]",
+      "ids": [
+        101,
+        100,
+        100,
+        102
+      ]
+    },
+    {
+      "name": "[UNK]-lowercase",
+      "template": "",
+      "text": "[unk]",
+      "ids": [
+        101,
+        1031,
+        4895,
+        2243,
+        1033,
+        102
+      ]
+    },
+    {
+      "name": "[UNK]-mixed",
+      "template": "",
+      "text": "[Unk]",
+      "ids": [
+        101,
+        1031,
+        4895,
+        2243,
+        1033,
+        102
+      ]
+    },
+    {
+      "name": "[UNK]-control",
+      "template": "",
+      "text": "[U\u0000NK]",
+      "ids": [
+        101,
+        1031,
+        4895,
+        2243,
+        1033,
+        102
+      ]
+    },
+    {
+      "name": "[CLS]-literal",
+      "template": "",
+      "text": "[CLS]",
+      "ids": [
+        101,
+        101,
+        102
+      ]
+    },
+    {
+      "name": "[CLS]-inside-word",
+      "template": "",
+      "text": "a[CLS]b",
+      "ids": [
+        101,
+        1037,
+        101,
+        1038,
+        102
+      ]
+    },
+    {
+      "name": "[CLS]-adjacent",
+      "template": "",
+      "text": "[CLS][CLS]",
+      "ids": [
+        101,
+        101,
+        101,
+        102
+      ]
+    },
+    {
+      "name": "[CLS]-lowercase",
+      "template": "",
+      "text": "[cls]",
+      "ids": [
+        101,
+        1031,
+        18856,
+        2015,
+        1033,
+        102
+      ]
+    },
+    {
+      "name": "[CLS]-mixed",
+      "template": "",
+      "text": "[Cls]",
+      "ids": [
+        101,
+        1031,
+        18856,
+        2015,
+        1033,
+        102
+      ]
+    },
+    {
+      "name": "[CLS]-control",
+      "template": "",
+      "text": "[C\u0000LS]",
+      "ids": [
+        101,
+        1031,
+        18856,
+        2015,
+        1033,
+        102
+      ]
+    },
+    {
+      "name": "[SEP]-literal",
+      "template": "",
+      "text": "[SEP]",
+      "ids": [
+        101,
+        102,
+        102
+      ]
+    },
+    {
+      "name": "[SEP]-inside-word",
+      "template": "",
+      "text": "a[SEP]b",
+      "ids": [
+        101,
+        1037,
+        102,
+        1038,
+        102
+      ]
+    },
+    {
+      "name": "[SEP]-adjacent",
+      "template": "",
+      "text": "[SEP][SEP]",
+      "ids": [
+        101,
+        102,
+        102,
+        102
+      ]
+    },
+    {
+      "name": "[SEP]-lowercase",
+      "template": "",
+      "text": "[sep]",
+      "ids": [
+        101,
+        1031,
+        19802,
+        1033,
+        102
+      ]
+    },
+    {
+      "name": "[SEP]-mixed",
+      "template": "",
+      "text": "[Sep]",
+      "ids": [
+        101,
+        1031,
+        19802,
+        1033,
+        102
+      ]
+    },
+    {
+      "name": "[SEP]-control",
+      "template": "",
+      "text": "[S\u0000EP]",
+      "ids": [
+        101,
+        1031,
+        19802,
+        1033,
+        102
+      ]
+    },
+    {
+      "name": "[MASK]-literal",
+      "template": "",
+      "text": "[MASK]",
+      "ids": [
+        101,
+        103,
+        102
+      ]
+    },
+    {
+      "name": "[MASK]-inside-word",
+      "template": "",
+      "text": "a[MASK]b",
+      "ids": [
+        101,
+        1037,
+        103,
+        1038,
+        102
+      ]
+    },
+    {
+      "name": "[MASK]-adjacent",
+      "template": "",
+      "text": "[MASK][MASK]",
+      "ids": [
+        101,
+        103,
+        103,
+        102
+      ]
+    },
+    {
+      "name": "[MASK]-lowercase",
+      "template": "",
+      "text": "[mask]",
+      "ids": [
+        101,
+        1031,
+        7308,
+        1033,
+        102
+      ]
+    },
+    {
+      "name": "[MASK]-mixed",
+      "template": "",
+      "text": "[Mask]",
+      "ids": [
+        101,
+        1031,
+        7308,
+        1033,
+        102
+      ]
+    },
+    {
+      "name": "[MASK]-control",
+      "template": "",
+      "text": "[M\u0000ASK]",
+      "ids": [
+        101,
+        1031,
+        7308,
+        1033,
+        102
+      ]
+    },
+    {
+      "name": "unicode-0",
+      "template": "",
+      "text": "ΟΣ",
+      "ids": [
+        101,
+        1169,
+        29733,
+        102
+      ]
+    },
+    {
+      "name": "unicode-1",
+      "template": "",
+      "text": "ΣΣ",
+      "ids": [
+        101,
+        1173,
+        29733,
+        102
+      ]
+    },
+    {
+      "name": "unicode-2",
+      "template": "",
+      "text": "İIıi",
+      "ids": [
+        101,
+        2462,
+        11722,
+        2072,
+        102
+      ]
+    },
+    {
+      "name": "unicode-3",
+      "template": "",
+      "text": "é café",
+      "ids": [
+        101,
+        1041,
+        7668,
+        102
+      ]
+    },
+    {
+      "name": "unicode-4",
+      "template": "",
+      "text": "[MÁSK]",
+      "ids": [
+        101,
+        1031,
+        7308,
+        1033,
+        102
+      ]
+    },
+    {
+      "name": "unicode-5",
+      "template": "",
+      "text": "[MA​SK]",
+      "ids": [
+        101,
+        1031,
+        7308,
+        1033,
+        102
+      ]
+    },
+    {
+      "name": "unicode-6",
+      "template": "",
+      "text": "中文[MASK]漢字",
+      "ids": [
+        101,
+        1746,
+        1861,
+        103,
+        1904,
+        100,
+        102
+      ]
+    },
+    {
+      "name": "unicode-7",
+      "template": "",
+      "text": "ab",
+      "ids": [
+        101,
+        11113,
+        102
+      ]
+    },
+    {
+      "name": "unicode-8",
+      "template": "",
+      "text": "a b",
+      "ids": [
+        101,
+        1037,
+        1038,
+        102
+      ]
+    },
+    {
+      "name": "unicode-9",
+      "template": "",
+      "text": "a﻿b",
+      "ids": [
+        101,
+        11113,
+        102
+      ]
+    },
+    {
+      "name": "unicode-10",
+      "template": "",
+      "text": "a b",
+      "ids": [
+        101,
+        1037,
+        1038,
+        102
+      ]
+    },
+    {
+      "name": "unicode-11",
+      "template": "",
+      "text": "𠀀[MASK]🧪",
+      "ids": [
+        101,
+        100,
+        103,
+        100,
+        102
+      ]
+    },
+    {
+      "name": "unicode-12",
+      "template": "",
+      "text": "[MASKED]",
+      "ids": [
+        101,
+        1031,
+        16520,
+        1033,
+        102
+      ]
+    },
+    {
+      "name": "unicode-13",
+      "template": "",
+      "text": "[unused0]",
+      "ids": [
+        101,
+        1031,
+        15171,
+        2692,
+        1033,
+        102
+      ]
+    },
+    {
+      "name": "unicode-14",
+      "template": "",
+      "text": "[MASK][mask][MASK]",
+      "ids": [
+        101,
+        103,
+        1031,
+        7308,
+        1033,
+        103,
+        102
+      ]
+    },
+    {
+      "name": "template-boundary",
+      "template": "[MA",
+      "text": "SK]",
+      "ids": [
+        101,
+        103,
+        102
+      ]
+    },
+    {
+      "name": "arxiv:2211.10869/chunk44",
+      "template": "",
+      "text": "worse) performance to BERT for context length five, using GPT seems to give an advantage for longer sequence lengths. In particular, note that a larger context length enables GPT to increase performance, while performance worsens for single-task Uni​ [MASK] . This suggests that if one were able to use a GPT architecture and train it with random masking and fine-tuning, it might be possible to get the best of both worlds.\n\n## 6 Limitations and Future Work",
+      "ids": [
+        101,
+        4788,
+        1007,
+        2836,
+        2000,
+        14324,
+        2005,
+        6123,
+        3091,
+        2274,
+        1010,
+        2478,
+        14246,
+        2102,
+        3849,
+        2000,
+        2507,
+        2019,
+        5056,
+        2005,
+        2936,
+        5537,
+        10742,
+        1012,
+        1999,
+        3327,
+        1010,
+        3602,
+        2008,
+        1037,
+        3469,
+        6123,
+        3091,
+        12939,
+        14246,
+        2102,
+        2000,
+        3623,
+        2836,
+        1010,
+        2096,
+        2836,
+        4788,
+        3619,
+        2005,
+        2309,
+        1011,
+        4708,
+        4895,
+        2072,
+        103,
+        1012,
+        2023,
+        6083,
+        2008,
+        2065,
+        2028,
+        2020,
+        2583,
+        2000,
+        2224,
+        1037,
+        14246,
+        2102,
+        4294,
+        1998,
+        3345,
+        2009,
+        2007,
+        6721,
+        7308,
+        2075,
+        1998,
+        2986,
+        1011,
+        17372,
+        1010,
+        2009,
+        2453,
+        2022,
+        2825,
+        2000,
+        2131,
+        1996,
+        2190,
+        1997,
+        2119,
+        8484,
+        1012,
+        1001,
+        1001,
+        1020,
+        12546,
+        1998,
+        2925,
+        2147,
+        102
+      ]
+    }
+  ]
+}

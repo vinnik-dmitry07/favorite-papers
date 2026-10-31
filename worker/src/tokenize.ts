@@ -17,6 +17,9 @@ export interface EmbedConfig {
   tokenizer: {
     id: string
     revision: string
+    algorithm_version: number
+    added_tokens: { content: string, single_word: boolean, lstrip: boolean,
+      rstrip: boolean, normalized: boolean, special: boolean }[]
     do_lower_case: boolean
     strip_accents: boolean
     tokenize_chinese_chars: boolean
@@ -134,6 +137,8 @@ export class WordPieceTokenizer {
   private readonly unkId: number
   private readonly clsId: number
   private readonly sepId: number
+  private readonly addedTokens = new Set<string>()
+  private readonly addedPattern: RegExp
 
   constructor(vocabText: string) {
     const lines = vocabText.split(/\r?\n/)
@@ -144,6 +149,23 @@ export class WordPieceTokenizer {
       this.ids.set(line, index)
     })
     const tok = embed.tokenizer
+    if (tok.algorithm_version !== 2) throw new Error('Unsupported tokenizer algorithm version')
+    for (const added of tok.added_tokens) {
+      if (!added || Object.keys(added).sort().join(',') !== 'content,lstrip,normalized,rstrip,single_word,special'
+        || typeof added.content !== 'string' || !added.content || this.addedTokens.has(added.content)
+        || added.special !== true || added.single_word !== false || added.lstrip !== false
+        || added.rstrip !== false || added.normalized !== false) {
+        throw new Error('Unsupported added-token semantics')
+      }
+      if (!this.ids.has(added.content)) throw new Error('vocab is missing a special token')
+      this.addedTokens.add(added.content)
+    }
+    if (![tok.unk_token, tok.cls_token, tok.sep_token].every((value) => this.addedTokens.has(value))) {
+      throw new Error('Missing added special tokens')
+    }
+    this.addedPattern = new RegExp('(' + [...this.addedTokens]
+      .sort((left, right) => right.length - left.length || (left < right ? -1 : 1))
+      .map((value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')', 'u')
     const unk = this.ids.get(tok.unk_token)
     const cls = this.ids.get(tok.cls_token)
     const sep = this.ids.get(tok.sep_token)
@@ -156,10 +178,16 @@ export class WordPieceTokenizer {
   }
 
   tokenIds(template: string, text: string): number[] {
-    const pieces = this.basic(template ? template + text : text)
     const ids = [this.clsId]
-    for (const piece of pieces) {
-      ids.push(...this.wordpiece(piece))
+    // Added special tokens are exact-case literals even inside another word;
+    // cleaning or lowercasing first would change the pinned HF token IDs.
+    for (let part of (template + text).split(this.addedPattern)) {
+      if (this.addedTokens.has(part)) {
+        ids.push(this.ids.get(part)!)
+        continue
+      }
+      if (embed.tokenizer.do_lower_case) part = Array.from(part, (char) => char.toLowerCase()).join('')
+      for (const piece of this.basic(part)) ids.push(...this.wordpiece(piece))
     }
     ids.push(this.sepId)
     return ids
@@ -186,6 +214,7 @@ export class WordPieceTokenizer {
       }
       flattened = spaced
     }
+    flattened = flattened.normalize('NFC')
     const output: string[] = []
     for (const raw of flattened.split(/\s+/)) {
       if (!raw) {
@@ -232,13 +261,17 @@ export class WordPieceTokenizer {
     if (whole !== undefined) {
       return [whole]
     }
+    // Index UTF-16 boundaries once; avoid allocating/joining every failed
+    // WordPiece candidate (cubic work for long unfamiliar words).
+    const offsets = [0]
+    for (const char of chars) offsets.push(offsets[offsets.length - 1] + char.length)
     const ids: number[] = []
     let start = 0
     while (start < chars.length) {
       let end = chars.length
       let found: number | undefined
       while (start < end) {
-        let piece = chars.slice(start, end).join('')
+        let piece = token.slice(offsets[start], offsets[end])
         if (start > 0) {
           piece = `##${piece}`
         }
