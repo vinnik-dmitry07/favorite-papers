@@ -112,11 +112,14 @@ def test_probe_dependencies_never_receive_cloudflare_secrets():
     ('invalid', 'repo-secret', 'probe-secret', ''),
 ])
 def test_selected_secrets_never_fallback(choice, repository, probe, expected):
-    for job in workflow()['jobs'].values():
+    for job_name, job in workflow()['jobs'].items():
         for step in job['steps']:
             for name, expression in step.get('env', {}).items():
                 if name not in {
                         'CLOUDFLARE_ACCOUNT_ID', 'CLOUDFLARE_API_TOKEN'}:
+                    continue
+                if job_name == 'publish_retained_api':
+                    assert expression == '${{ secrets.PUBLIC_SEARCH_' + name + ' }}'
                     continue
                 values = {
                     'inputs.probe_credentials': choice,

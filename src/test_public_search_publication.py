@@ -92,6 +92,8 @@ class FakeApi:
             return status, {}, json.dumps(body)
         if path.startswith('/admin/') and headers.get('x-publication-token') != TOKEN:
             return 403, {}, json.dumps({'error': {'code': 'unauthorized'}})
+        if path.startswith('/admin/') and headers.get('x-publication-id') != 'publication-1':
+            return 409, {}, json.dumps({'error': {'code': 'version_conflict'}})
         if path == '/admin/state':
             body = self.state()
         elif path == '/admin/deactivate':
@@ -223,8 +225,50 @@ def test_failed_read_disables_semantic_without_deletion(
 def test_passed_compatibility_is_not_recomputed_after_restart(
         tmp_path, monkeypatch):
     api = FakeApi(already_passed=True)
-    assert execute(tmp_path, monkeypatch, api)['ok'] is True
+    report = execute(tmp_path, monkeypatch, api)
+    assert report['ok'] is True
+    assert report['compatibility_evidence'] == {
+        'source': 'reused', 'previously_checked': 200,
+        'new_inputs_checked': 0, 'fresh_model_drift_check': False,
+    }
     assert not any(path == '/admin/compatibility' for path, _, _ in api.calls)
+
+
+def test_deactivate_only_does_not_depend_on_state_or_assets(tmp_path):
+    api = FakeApi(startup=(503, {'error': 'corrupt state'}))
+    api.active = True
+    report = publication.run(
+        ORIGIN, TOKEN, 'publication-1', None, tmp_path / 'pause.json',
+        deactivate_only=True, exchange=api,
+    )
+    assert report['ok'] is True and api.active is False
+    assert [path for path, _, _ in api.calls] == ['/admin/deactivate']
+
+
+@pytest.mark.parametrize('token,identity', [
+    ('wrong-token', 'publication-1'), (TOKEN, 'another-publication'),
+])
+def test_emergency_pause_rejects_wrong_credentials_or_publication(
+        tmp_path, token, identity):
+    api = FakeApi()
+    api.active = True
+    report = publication.run(
+        ORIGIN, token, identity, None, tmp_path / 'pause.json',
+        deactivate_only=True, exchange=api,
+    )
+    assert report['ok'] is False and api.active is True
+
+
+def test_emergency_pause_requires_an_identified_receipt(tmp_path):
+    def exchange(*args):
+        return 200, {}, json.dumps({'active': False})
+
+    report = publication.run(
+        ORIGIN, TOKEN, 'publication-1', None, tmp_path / 'pause.json',
+        deactivate_only=True, exchange=exchange,
+    )
+    assert report['ok'] is False
+    assert 'Deactivation receipt' in report['error']
 
 
 @pytest.mark.parametrize('status,error,retries', [
@@ -367,6 +411,7 @@ def test_manual_publish_is_exclusive_and_shares_cloudflare_lock():
                 if 'if' in value and evaluate(value['if'], **values)]
     assert selected == ['publish_retained_api']
     for key, value in [('github.event_name', 'pull_request'),
+                       ('github.ref', 'refs/heads/feat/static-search-probe'),
                        ('inputs.static_probe', False),
                        ('inputs.probe_runtime', 'worker'),
                        ('inputs.free_plan_confirmed', False),
@@ -409,6 +454,22 @@ def test_publication_reuses_artifact_without_encoding_or_probe_cleanup():
     assert 'CLOUDFLARE_API_TOKEN' not in steps['smoke'].get('env', {})
     assert list(steps).index('ownership') < list(steps).index('deploy')
     assert '--check-account-ownership' in steps['ownership']['run']
+
+
+def test_public_api_uses_separate_environment_credentials_and_current_main():
+    definition = job()
+    assert definition['environment'] == 'public-search'
+    assert "github.ref == 'refs/heads/main'" in definition['if']
+    commands = '\n'.join(step.get('run', '') for step in definition['steps'])
+    assert 'current_main=$(gh api' in commands
+    assert '"$current_main" != "$GITHUB_SHA"' in commands
+    for step in definition['steps']:
+        env = step.get('env', {})
+        if 'CLOUDFLARE_API_TOKEN' in env:
+            assert env['CLOUDFLARE_API_TOKEN'] == '${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN }}'
+            assert env['CLOUDFLARE_ACCOUNT_ID'] == '${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_ACCOUNT_ID }}'
+    config = (ROOT / 'worker/wrangler.public-search.toml').read_text()
+    assert '[build]' not in config
 
 
 def test_workflow_embedded_commands_parse_without_credentials():

@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import type { createFullCorpusStoreLoader } from './full-corpus-store'
 import { createPublicGateway, PublicSearch, PUBLIC_LIMITS, PUBLIC_MANIFEST_SHA,
-  PUBLIC_OBJECT_NAME, type PublicSearchEnv } from './public-search'
+  PUBLIC_OBJECT_NAME, PUBLIC_RELEASE_KEY, type PublicSearchEnv } from './public-search'
 import { signatures, sha256Hex } from './signatures'
 
 const TOKEN = 'publication-test-token-at-least-thirty-two-characters'
@@ -161,7 +161,7 @@ describe('permanent public full-corpus API', () => {
     expect((await waiting).every((row) => row.status === 'rejected')).toBe(true)
     await expect(f.embedQuery('another query')).rejects.toMatchObject({ code: 'probe_overloaded' })
     expect(f.env.AI.run).toHaveBeenCalledTimes(before + 4)
-    expect((await f.call()).body.budget.query_texts).toBe(5)
+    expect((await f.call()).body.budget.query_texts).toBe(4)
   })
 
   it('fails an incompatible canary and allows only authenticated inactive reset without refund', async () => {
@@ -176,12 +176,95 @@ describe('permanent public full-corpus API', () => {
 
   it('fails closed on interrupted canary reservation and invalid durable counters', async () => {
     const f = await setup(); await f.call()
-    const release = f.data.get('public-release-v1')
+    const release = f.data.get(PUBLIC_RELEASE_KEY)
     release.compatibility.status = 'running'; release.compatibility.pending = INDICES.slice(0, 16)
     f.restart()
     expect((await f.call()).body.compatibility).toMatchObject({ status: 'failed', error: 'interrupted_compatibility_batch' })
-    f.data.get('public-ai-day-v1').query_tokens_reserved = -1
+    f.data.set('public-ai-day-v1', { day: new Date().toISOString().slice(0, 10),
+      query_texts: 0, query_tokens_reserved: -1, compatibility_texts: 0,
+      compatibility_tokens_reserved: 0, ai_calls: 0 })
     f.restart(); expect((await f.call()).response.status).toBe(503)
     expect(f.env.AI.run).not.toHaveBeenCalled()
+  })
+
+  it('keeps catalog, text and degraded health available when current AI state is corrupt', async () => {
+    const f = await setup(); await f.activate()
+    f.data.get('public-ai-day-v1').query_tokens_reserved = -1
+    f.restart()
+    expect((await f.call('/v1/catalog')).response.status).toBe(200)
+    expect((await f.call('/v1/content?id=' + ID)).body.text).toBe(TEXT)
+    expect((await f.call('/health')).body).toMatchObject({ status: 'degraded', search_enabled: false,
+      search_error: 'public_state_invalid' })
+    expect((await f.call('/v1/search?q=new')).response.status).toBe(503)
+    f.data.set(PUBLIC_RELEASE_KEY, { manifest_sha256: PUBLIC_MANIFEST_SHA, compatibility: null })
+    f.restart()
+    expect((await f.call('/v1/catalog')).response.status).toBe(200)
+    expect((await f.call('/health')).body.search_enabled).toBe(false)
+    expect((await f.call('/admin/deactivate', 'POST')).body.active).toBe(false)
+  })
+
+  it('discards expired counters before validating them and treats a reduced cap as exhaustion', async () => {
+    vi.useFakeTimers(); vi.setSystemTime(new Date('2026-10-29T12:00:00Z'))
+    const f = await setup(); await f.activate()
+    const budget = f.data.get('public-ai-day-v1')
+    budget.query_texts = 1001; budget.query_tokens_reserved = 1001 * 512; budget.ai_calls += 1001
+    expect((await f.call()).response.status).toBe(200)
+    expect((await f.call('/v1/search?q=uncached')).response.status).toBe(429)
+    expect((await f.call('/v1/catalog')).response.status).toBe(200)
+    // Even obsolete/corrupt counters from yesterday cannot poison today's ledger.
+    budget.query_tokens_reserved = -1
+    vi.setSystemTime(new Date('2026-10-30T00:00:00Z')); f.restart()
+    expect((await f.call()).body.budget).toMatchObject({ query_texts: 0, compatibility_texts: 0 })
+    await f.embedQuery('next day')
+    expect((await f.call()).body.budget.query_texts).toBe(1)
+  })
+
+  it('migrates only matching legacy compatibility and never resets the global daily ledger', async () => {
+    const f = await setup(); await f.activate(); await f.embedQuery('already used')
+    const old = structuredClone(f.data.get(PUBLIC_RELEASE_KEY))
+    f.data.set('public-release-v1', old); f.data.delete(PUBLIC_RELEASE_KEY); f.restart()
+    expect((await f.call()).body.active).toBe(true)
+    expect((await f.call()).body.budget.query_texts).toBe(1)
+    old.manifest_sha256 = 'f'.repeat(64)
+    f.data.set('public-release-v1', old); f.data.delete(PUBLIC_RELEASE_KEY); f.restart()
+    const next = (await f.call()).body
+    expect(next.compatibility.status).toBe('not_started'); expect(next.active).toBe(false)
+    expect(next.budget.query_texts).toBe(1)
+    expect(f.data.get('public-release-v1').manifest_sha256).toBe('f'.repeat(64))
+  })
+
+  it('can pause before loading any assets and keeps the pause over restart', async () => {
+    const f = await setup()
+    vi.mocked(f.loader).mockImplementationOnce(() => async () => { throw new Error('assets unavailable') })
+    const paused = await f.call('/admin/deactivate', 'POST')
+    expect(paused.response.status).toBe(200)
+    expect(paused.body).toMatchObject({ kind: 'public-static-search', publication_id: 'publication-one', active: false })
+    expect(f.loader).not.toHaveBeenCalled()
+    expect((await f.call('/v1/catalog')).response.status).toBe(503)
+    f.restart(); await f.activate()
+    await f.call('/admin/deactivate', 'POST'); f.restart()
+    expect((await f.call()).body.active).toBe(false)
+    await expect(f.embedQuery('paused')).rejects.toMatchObject({ code: 'search_disabled' })
+    expect((await f.call('/v1/content?id=' + ID)).body.text).toBe(TEXT)
+  })
+
+  it('pauses immediately while every request permit is occupied by a hung provider', async () => {
+    vi.useFakeTimers()
+    const f = await setup(); await f.activate()
+    vi.mocked(f.env.AI.run).mockImplementation(() => new Promise(() => {}))
+    const pending = Promise.all(Array.from({ length: 4 }, (_, i) => f.call('/v1/search?q=hanging' + i)))
+    await vi.advanceTimersByTimeAsync(0)
+    expect((await f.call('/admin/deactivate', 'POST')).body.active).toBe(false)
+    await vi.advanceTimersByTimeAsync(PUBLIC_LIMITS.ai_timeout_ms)
+    expect((await pending).every((r) => r.response.status === 503)).toBe(true)
+    expect((await f.call()).body.active).toBe(false)
+  })
+
+  it('rejects a pause targeting another publication before changing durable state', async () => {
+    const f = await setup(); await f.activate()
+    const request = f.request('/admin/deactivate', 'POST', {})
+    request.headers.set('x-publication-id', 'another-publication')
+    expect((await new PublicSearch({ storage: {} } as DurableObjectState, f.env).fetch(request)).status).toBe(409)
+    expect((await f.call()).body.active).toBe(true)
   })
 })

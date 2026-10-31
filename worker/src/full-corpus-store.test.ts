@@ -1,11 +1,12 @@
 import { readFileSync } from 'node:fs'
-import { describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { fullCorpusFixture } from '../test-fixtures/full-corpus'
 import type { ConfirmedDoc } from './corpus'
-import { createFullCorpusStore, createGeometryFixtureStore, createGeometryFixtureStoreLoader } from './full-corpus-store'
+import { ASSET_RETRY_MS, createFullCorpusStore, createGeometryFixtureStore, createGeometryFixtureStoreLoader } from './full-corpus-store'
 
 const module = new WebAssembly.Module(readFileSync(new URL('../probe-kernel/scan.wasm', import.meta.url)))
 const options = { module }
+afterEach(() => vi.restoreAllMocks())
 
 describe('full corpus packed admission and mapping', () => {
   it.each(['toString', 'constructor', '__proto__'])('rejects an inherited graph neighbor %s at the adjacency boundary', async (neighbor) => {
@@ -95,10 +96,47 @@ describe('full corpus packed admission and mapping', () => {
     const data = await fullCorpusFixture()
     data.files.delete('vectors-0000.i8')
     const get = createGeometryFixtureStoreLoader(data.assets, data.manifestSha, async () => data.query, undefined, options)
-    await expect(get()).rejects.toThrow('missing asset')
-    await expect(get()).rejects.toThrow('missing asset')
+    await expect(get()).rejects.toThrow('HTTP 404')
+    await expect(get()).rejects.toThrow('HTTP 404')
     expect(data.reads.get('probe.json')).toBe(1)
     expect(data.reads.get('vectors-0000.i8')).toBe(1)
+  })
+
+  it.each(['http', 'network', 'stream'])('recovers a transient %s asset failure after shared backoff', async (kind) => {
+    let now = 0
+    vi.spyOn(Date, 'now').mockImplementation(() => now)
+    const data = await fullCorpusFixture()
+    let first = true
+    const assets = { fetch: vi.fn(async (request: Request) => {
+      if (!first) return data.assets.fetch(request)
+      first = false
+      if (kind === 'network') throw new Error('temporary network failure')
+      if (kind === 'stream') return new Response(new ReadableStream({ start(controller) { controller.error(new Error('interrupted')) } }))
+      return new Response('temporary', { status: 503 })
+    }) }
+    const get = createGeometryFixtureStoreLoader(assets, data.manifestSha, async () => data.query, undefined, options)
+    await expect(get()).rejects.toMatchObject({ code: 'asset_temporarily_unavailable' })
+    now = ASSET_RETRY_MS - 1
+    await expect(get()).rejects.toMatchObject({ code: 'asset_temporarily_unavailable' })
+    expect(assets.fetch).toHaveBeenCalledTimes(1)
+    now++
+    const a = get(), b = get()
+    expect(a).toBe(b)
+    const bundle = await a
+    expect(bundle.manifest.passage_count).toBe(data.manifest.passage_count)
+    expect(data.reads.get('vectors-0000.i8')).toBe(1)
+  })
+
+  it('never retries authenticated corruption just because the backoff elapsed', async () => {
+    let now = 0
+    vi.spyOn(Date, 'now').mockImplementation(() => now)
+    const data = await fullCorpusFixture()
+    data.files.get('metadata.bin')![0] ^= 1
+    const get = createGeometryFixtureStoreLoader(data.assets, data.manifestSha, async () => data.query, undefined, options)
+    await expect(get()).rejects.toThrow('checksum mismatch')
+    now += ASSET_RETRY_MS * 10
+    await expect(get()).rejects.toThrow('checksum mismatch')
+    expect(data.reads.get('metadata.bin')).toBe(1)
   })
 
   it.each(['checksum', 'offset', 'source', 'source-permutation', 'norm', 'short-shard'])('rejects authenticated or raw corruption: %s', async (change) => {

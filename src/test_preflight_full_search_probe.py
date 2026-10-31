@@ -354,12 +354,13 @@ def live_geometry_binding():
             'code_sha256': gate.code_hashes()}
 
 
-def test_actual_live_pin_admits_only_unchanged_runtime_and_corpus():
+def test_actual_live_pin_does_not_admit_the_updated_asset_loader():
     bound = live_geometry_binding()
-    paths = gate.validate_live_geometry(bound)
-    assert len(paths) == 3
-    assert paths[0] == gate.ROOT / gate.GEOMETRY_PIN
-    assert gate.read_json(paths[2])['namespace_absent'] is True
+    pin = gate.read_json(gate.ROOT / gate.GEOMETRY_PIN)
+    assert bound['code_sha256']['worker/src/full-corpus-store.ts'] != (
+        pin['source_sha256']['worker/src/full-corpus-store.ts'])
+    with pytest.raises(BuildError, match='runtime implementation changed'):
+        gate.validate_live_geometry(bound)
 
 
 @pytest.mark.parametrize('change', ['corpus', 'runtime', 'raw', 'lifecycle', 'pin'])
@@ -373,6 +374,19 @@ def test_live_geometry_pin_rejects_drift_and_tampering(tmp_path, monkeypatch, ch
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(gate.ROOT / relative, target)
     monkeypatch.setattr(gate, 'ROOT', tmp_path)
+    # Isolated validator fixture, not a replacement for the published live pin.
+    # Match this fixture's source closure before injecting the one intended
+    # failure. Otherwise all five cases fail on the changed loader instead of
+    # exercising corpus/report/lifecycle/policy tampering independently.
+    pin['source_sha256'] = {
+        relative: gate.sha((tmp_path / relative).read_bytes())
+        for relative in pin['source_sha256']
+    }
+    gate.write_json(tmp_path / gate.GEOMETRY_PIN, pin)
+    bound['code_sha256'].update(pin['source_sha256'])
+    bound['code_sha256'][gate.GEOMETRY_PIN] = gate.sha(
+        (tmp_path / gate.GEOMETRY_PIN).read_bytes())
+    assert len(gate.validate_live_geometry(bound)) == 3
     if change == 'corpus':
         bound['rows_sha256'] = 'changed'
     elif change == 'runtime':

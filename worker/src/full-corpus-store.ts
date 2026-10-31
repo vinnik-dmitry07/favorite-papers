@@ -88,6 +88,12 @@ type Embedder = (text: string) => Promise<number[]>
 type Limiter = (key: string) => Promise<boolean>
 const allow: Limiter = async () => true
 export const PAPER_LOAD_LIMITS = Object.freeze({ active: 1, queued: 16 })
+export const ASSET_RETRY_MS = 5000
+
+/** Transport failures can recover; authenticated content mismatches cannot. */
+export class TransientAssetError extends DomainError {
+  constructor(message: string) { super('asset_temporarily_unavailable', 503, message) }
+}
 
 /** Real encoder envelope only. Synthetic input must use the explicit fixture API. */
 export function createFullCorpusStore(assets: Assets, expectedManifestHash: string,
@@ -103,8 +109,16 @@ export function createGeometryFixtureStore(assets: Assets, expectedManifestHash:
 
 function singleton<T>(initialize: () => Promise<T>): () => Promise<T> {
   let pending: Promise<T> | undefined
-  // Retain failures as well: a bad immutable release must not trigger retry storms.
-  return () => pending ??= initialize()
+  let retryAt = 0
+  return () => {
+    if (retryAt && Date.now() >= retryAt) { pending = undefined; retryAt = 0 }
+    // Share retries too. Integrity/configuration errors remain latched for this
+    // immutable release; only transport failures become eligible after backoff.
+    return pending ??= initialize().catch((error) => {
+      if (error instanceof TransientAssetError) retryAt = Date.now() + ASSET_RETRY_MS
+      throw error
+    })
+  }
 }
 
 /** Own one getter per runtime instance; concurrent cold callers share every allocation. */
@@ -124,8 +138,13 @@ async function loadFullCorpusStore(assets: Assets, expectedManifestHash: string,
     phase, resident_index_bytes: residentIndexBytes, current_asset_bytes: currentAssetBytes,
   })
   const fetchBytes = async (path: string, expected: string, size?: number) => {
-    const response = await assets.fetch(new Request('https://full-probe-assets.invalid/' + path))
-    check(response.status === 200, 'missing asset: ' + path)
+    let response: Response
+    try { response = await assets.fetch(new Request('https://full-probe-assets.invalid/' + path)) }
+    catch { throw new TransientAssetError('Asset request failed: ' + path) }
+    if (response.status !== 200) {
+      void response.body?.cancel().catch(() => {})
+      throw new TransientAssetError('Asset request returned HTTP ' + response.status + ': ' + path)
+    }
     const declared = response.headers.get('content-length')
     check(declared === null || (Number.isSafeInteger(Number(declared))
       && Number(declared) >= 0 && Number(declared) <= (size ?? 1024 * 1024)), 'asset length header exceeds bound')
@@ -137,7 +156,9 @@ async function loadFullCorpusStore(assets: Assets, expectedManifestHash: string,
     const storage = new Uint8Array(limit)
     let length = 0
     while (true) {
-      const part = await reader.read()
+      let part: ReadableStreamReadResult<Uint8Array>
+      try { part = await reader.read() }
+      catch { throw new TransientAssetError('Asset stream interrupted: ' + path) }
       if (part.done) break
       length += part.value.byteLength
       if (length > limit) {

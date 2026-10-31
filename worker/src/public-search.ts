@@ -14,7 +14,10 @@ export const PUBLIC_OBJECT_NAME = 'public-search'
 export const PUBLIC_LIMITS = Object.freeze({ query_texts: 1000, query_tokens_reserved: 512000,
   compatibility_texts: 200, compatibility_tokens_reserved: 102400, ai_timeout_ms: 20000 })
 const BUDGET_KEY = 'public-ai-day-v1'
-const STATE_KEY = 'public-release-v1'
+const LEGACY_STATE_KEY = 'public-release-v1'
+export const PUBLIC_RELEASE_KEY = 'public-release-v2:' + PUBLIC_MANIFEST_SHA
+const STATE_KEY = PUBLIC_RELEASE_KEY
+const PAUSE_KEY = 'public-search-paused-v1'
 const THRESHOLD = 0.999
 const BATCH = 16
 type Corpus = Awaited<ReturnType<ReturnType<typeof createFullCorpusStoreLoader>>>
@@ -46,17 +49,19 @@ function freshBudget(): Budget {
 function checkedBudget(raw: Budget | undefined): Budget {
   const today = freshBudget()
   if (!raw) return today
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(raw.day) || raw.day > today.day
-      || !Number.isSafeInteger(raw.ai_calls) || raw.ai_calls < 0
-      || Object.entries(PUBLIC_LIMITS).filter(([key]) => key !== 'ai_timeout_ms').some(([key, max]) =>
-        !Number.isSafeInteger(raw[key as keyof Budget]) || Number(raw[key as keyof Budget]) < 0
-        || Number(raw[key as keyof Budget]) > max)
+  if (typeof raw.day !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(raw.day) || raw.day > today.day) {
+    fail('public_state_invalid', 503, 'Daily AI reservation date is invalid')
+  }
+  if (raw.day < today.day) return today
+  if (!Number.isSafeInteger(raw.ai_calls) || raw.ai_calls < 0
+      || Object.entries(PUBLIC_LIMITS).filter(([key]) => key !== 'ai_timeout_ms').some(([key]) =>
+        !Number.isSafeInteger(raw[key as keyof Budget]) || Number(raw[key as keyof Budget]) < 0)
       || raw.query_tokens_reserved !== raw.query_texts * 512
       || raw.compatibility_tokens_reserved !== raw.compatibility_texts * 512
       || raw.ai_calls > raw.query_texts + raw.compatibility_texts) {
     fail('public_state_invalid', 503, 'Daily AI reservations are invalid')
   }
-  return raw.day < today.day ? today : raw
+  return raw
 }
 function checkedRelease(raw: Release | undefined, indices: number[]): Release {
   if (!raw) return { manifest_sha256: PUBLIC_MANIFEST_SHA, activation: null, compatibility: freshCompatibility() }
@@ -87,6 +92,10 @@ function authorize(request: Request, env: PublicSearchEnv) {
   if (!validProbeToken(env.PUBLICATION_TOKEN, request.headers.get('x-publication-token'))) {
     fail('forbidden', 403, 'Publication authorization required')
   }
+  const expectedPublication = request.headers.get('x-publication-id')
+  if (expectedPublication !== null && expectedPublication !== env.PUBLICATION_ID) {
+    fail('version_conflict', 409, 'Administrative request targets another publication')
+  }
 }
 function publicOpenApi(origin: string) {
   const spec = openApiDocument(origin)
@@ -105,6 +114,7 @@ export class PublicSearch {
   private tokenizer: WordPieceTokenizer | undefined
   private service: Service | undefined
   private compatibilityInFlight: Promise<unknown> | undefined
+  private releaseInitialized: Promise<void> | undefined
   private readonly admission = new BoundedAdmission(PROBE_REQUEST_LIMITS.active,
     PROBE_REQUEST_LIMITS.queued, PROBE_REQUEST_LIMITS.queue_wait_ms)
   // Unlike the HTTP deadline, this permit follows the actual provider promise.
@@ -126,24 +136,32 @@ export class PublicSearch {
           || corpus.manifest.passage_count !== 40575 || corpus.manifest.compatibility.indices.length !== 200) {
         fail('config_mismatch', 503, 'Expected the retained genuine full corpus')
       }
-      await this.state.storage.transaction(async (tx) => {
-        const release = checkedRelease(await tx.get<Release>(STATE_KEY), corpus.manifest.compatibility.indices)
-        if (release.compatibility.pending !== null) {
-          release.compatibility.pending = null
-          release.compatibility.status = 'failed'
-          release.compatibility.error = 'interrupted_compatibility_batch'
-          release.activation = null
-        }
-        await tx.put(STATE_KEY, release)
-        await tx.put(BUDGET_KEY, checkedBudget(await tx.get<Budget>(BUDGET_KEY)))
-      })
       return corpus
     })().catch((error) => { this.initialized = undefined; throw error })
     return this.initialized
   }
   private async release() {
     const corpus = await this.ready()
-    return checkedRelease(await this.state.storage.get<Release>(STATE_KEY), corpus.manifest.compatibility.indices)
+    this.releaseInitialized ??= this.state.storage.transaction(async (tx) => {
+      let raw = await tx.get<Release>(STATE_KEY)
+      if (!raw) {
+        const legacy = await tx.get<Release>(LEGACY_STATE_KEY)
+        // Copy only this corpus's legacy state; never migrate activation or
+        // compatibility from a different corpus. The daily ledger stays global.
+        if (legacy?.manifest_sha256 === PUBLIC_MANIFEST_SHA) raw = legacy
+      }
+      const release = checkedRelease(raw, corpus.manifest.compatibility.indices)
+      if (release.compatibility.pending !== null) {
+        release.compatibility.pending = null
+        release.compatibility.status = 'failed'
+        release.compatibility.error = 'interrupted_compatibility_batch'
+        release.activation = null
+      }
+      await tx.put(STATE_KEY, release)
+    }).catch((error) => { this.releaseInitialized = undefined; throw error })
+    await this.releaseInitialized
+    const release = checkedRelease(await this.state.storage.get<Release>(STATE_KEY), corpus.manifest.compatibility.indices)
+    return await this.state.storage.get<boolean>(PAUSE_KEY) === true ? { ...release, activation: null } : release
   }
   private active(release: Release) {
     return release.activation === this.env.PUBLICATION_ID && release.compatibility.status === 'passed'
@@ -153,17 +171,21 @@ export class PublicSearch {
   }
   private async reserve(kind: 'query' | 'compatibility', count: number, indices?: number[]) {
     const corpus = await this.ready()
+    await this.release()
     await this.state.storage.transaction(async (tx) => {
       const release = checkedRelease(await tx.get<Release>(STATE_KEY), corpus.manifest.compatibility.indices)
       const budget = checkedBudget(await tx.get<Budget>(BUDGET_KEY))
-      if (kind === 'query' && !this.active(release)) fail('search_disabled', 503, 'Semantic search is disabled')
+      if (kind === 'query' && (!this.active(release) || await tx.get<boolean>(PAUSE_KEY) === true)) {
+        fail('search_disabled', 503, 'Semantic search is disabled')
+      }
       if (kind === 'compatibility' && (release.compatibility.pending !== null
           || !['not_started', 'running'].includes(release.compatibility.status))) {
         fail('compatibility_conflict', 409, 'Compatibility cannot advance')
       }
       const textKey = kind === 'query' ? 'query_texts' : 'compatibility_texts'
       const tokenKey = kind === 'query' ? 'query_tokens_reserved' : 'compatibility_tokens_reserved'
-      if (budget[textKey] + count > PUBLIC_LIMITS[textKey]) fail('daily_ai_budget_exhausted', 429,
+      if (budget[textKey] + count > PUBLIC_LIMITS[textKey]
+          || budget[tokenKey] + count * 512 > PUBLIC_LIMITS[tokenKey]) fail('daily_ai_budget_exhausted', 429,
         'Daily public AI allowance exhausted; catalog and reading remain available', { retry_after: retrySeconds() })
       budget[textKey] += count
       budget[tokenKey] += count * 512
@@ -176,10 +198,13 @@ export class PublicSearch {
       await tx.put(BUDGET_KEY, budget)
     })
   }
-  private async callAi(texts: string[]): Promise<number[][]> {
+  private async callAi(texts: string[], reserve: () => Promise<void>): Promise<number[][]> {
     let timer: ReturnType<typeof setTimeout> | undefined
     try {
-      const result = await Promise.race([this.aiAdmission.run(() => this.env.AI.run(embed.model, { text: texts, pooling: embed.pooling })),
+      const result = await Promise.race([this.aiAdmission.run(async () => {
+        await reserve()
+        return this.env.AI.run(embed.model, { text: texts, pooling: embed.pooling })
+      }),
         new Promise<never>((_resolve, reject) => { timer = setTimeout(() => reject(
           new DomainError('embedding_timeout', 503, 'Embedding deadline exceeded; reservation retained')), PUBLIC_LIMITS.ai_timeout_ms) })])
       const data = result?.data
@@ -196,8 +221,7 @@ export class PublicSearch {
   private getTokenizer() { return this.tokenizer ??= new WordPieceTokenizer(vocabText) }
   private async embedQuery(text: string) {
     if (this.getTokenizer().tokenIds('', text).length > 512) fail('query_too_long', 400, 'Embedding input exceeds 512 tokens')
-    await this.reserve('query', 1)
-    return (await this.callAi([text]))[0]
+    return (await this.callAi([text], () => this.reserve('query', 1)))[0]
   }
   private async getService(): Promise<Service> {
     if (!this.service) {
@@ -207,10 +231,18 @@ export class PublicSearch {
         search: async (args) => { await this.requireActive(); return service.search(args) },
         researchSearch: async (query, ip) => { await this.requireActive(); return service.researchSearch(query, ip) },
         health: async () => {
-          const health = await service.health(), active = this.active(await this.release())
+          const health = await service.health()
+          let active = false, searchError: string | undefined
+          try {
+            active = this.active(await this.release())
+            checkedBudget(await this.state.storage.get<Budget>(BUDGET_KEY))
+          } catch (error) {
+            active = false
+            searchError = error instanceof DomainError ? error.code : 'public_state_unavailable'
+          }
           return { ...health, status: active && health.status === 'ready' ? 'ready' : 'degraded',
             search_enabled: active, manifest_sha256: PUBLIC_MANIFEST_SHA, passage_count: 40575,
-            publication_id: this.env.PUBLICATION_ID }
+            publication_id: this.env.PUBLICATION_ID, ...(searchError ? { search_error: searchError } : {}) }
         },
       }
     }
@@ -230,17 +262,23 @@ export class PublicSearch {
     const refs = await Promise.all(positions.map((i) => corpus.referencePassage(i)))
     if (refs.some((ref) => this.getTokenizer().tokenIds('', ref.input).length > 512)) fail('config_mismatch', 503, 'Canary input exceeds token limit')
     const indices = positions.map((i) => corpus.manifest.compatibility.indices[i])
-    await this.reserve('compatibility', refs.length, indices)
+    let reserved = false
     let results: Result[] = [], error: string | undefined
     try {
-      const vectors = await this.callAi(refs.map((ref) => ref.input))
+      const vectors = await this.callAi(refs.map((ref) => ref.input), async () => {
+        await this.reserve('compatibility', refs.length, indices)
+        reserved = true
+      })
       results = vectors.map((v, i) => {
         const ref = refs[i].vector, norm = Math.sqrt(v.reduce((s, x) => s + x * x, 0))
         const cosine = v.reduce((s, x, j) => s + x * ref[j], 0) / (norm * Math.sqrt(ref.reduce((s, x) => s + x * x, 0)))
         if (!Number.isFinite(cosine)) fail('embedding_response_invalid', 503, 'Invalid cosine')
         return { index: indices[i], cosine: Math.max(-1, Math.min(1, cosine)), remote_norm: norm }
       })
-    } catch (cause) { error = cause instanceof DomainError ? cause.code : 'embedding_request_failed' }
+    } catch (cause) {
+      if (!reserved) throw cause
+      error = cause instanceof DomainError ? cause.code : 'embedding_request_failed'
+    }
     await this.state.storage.transaction(async (tx) => {
       const release = checkedRelease(await tx.get<Release>(STATE_KEY), corpus.manifest.compatibility.indices)
       if (JSON.stringify(release.compatibility.pending) !== JSON.stringify(indices)) fail('compatibility_conflict', 409, 'Canary reservation changed')
@@ -266,19 +304,27 @@ export class PublicSearch {
     const path = new URL(request.url).pathname
     if (path === '/admin/state' && request.method === 'GET') return json(await this.status())
     if (request.method !== 'POST') fail('invalid_argument', 405, 'Admin mutation requires POST')
+    if (path === '/admin/deactivate') {
+      // Emergency pause must work with unavailable assets or corrupt AI state.
+      // A separate durable latch also survives an in-flight compatibility batch.
+      await this.state.storage.put(PAUSE_KEY, true)
+      return json({ kind: 'public-static-search', manifest_sha256: PUBLIC_MANIFEST_SHA,
+        publication_id: this.env.PUBLICATION_ID, active: false })
+    }
     if (path === '/admin/compatibility') {
       this.compatibilityInFlight ??= this.compatibility().finally(() => { this.compatibilityInFlight = undefined })
       return json(await this.compatibilityInFlight)
     }
-    if (!['/admin/activate', '/admin/deactivate', '/admin/reset-compatibility'].includes(path)) fail('invalid_argument', 404, 'Unknown admin operation')
+    if (!['/admin/activate', '/admin/reset-compatibility'].includes(path)) fail('invalid_argument', 404, 'Unknown admin operation')
     const corpus = await this.ready()
+    await this.release()
     await this.state.storage.transaction(async (tx) => {
       const release = checkedRelease(await tx.get<Release>(STATE_KEY), corpus.manifest.compatibility.indices)
       if (path === '/admin/activate') {
         if (release.compatibility.status !== 'passed') fail('embedding_compatibility_unverified', 409, 'Canary must pass before activation')
         release.activation = this.env.PUBLICATION_ID
-      } else if (path === '/admin/deactivate') release.activation = null
-      else {
+        await tx.put(PAUSE_KEY, false)
+      } else {
         if (this.active(release) || this.compatibilityInFlight || release.compatibility.status !== 'failed') {
           fail('compatibility_conflict', 409, 'Only inactive failed compatibility may be reset')
         }
@@ -297,6 +343,8 @@ export class PublicSearch {
       }
       if (new URL(request.url).pathname.startsWith('/admin/')) {
         authorize(request, this.env)
+        // The authenticated one-write pause cannot wait behind hung searches.
+        if (url.pathname === '/admin/deactivate' && request.method === 'POST') return await this.admin(request)
         return await this.admission.run(() => this.admin(request), request.signal)
       }
       const response = await this.handler.fetch(request)

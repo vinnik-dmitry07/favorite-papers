@@ -34,5 +34,4 @@ type = "Text"
 globs = ["**/*.txt"]
 fallthrough = true
 
-[build]
-command = "npm run build:probe"
+# The workflow builds scan.wasm before supplying Cloudflare credentials.

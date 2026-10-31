@@ -163,6 +163,7 @@ class PublicSmoke:
                    'mcp-protocol-version': '2025-06-18'}
         if admin:
             headers['x-publication-token'] = self.token
+            headers['x-publication-id'] = self.publication
         row = {'kind': kind, 'path': path, 'method': 'GET' if payload is None
                else 'POST', 'authenticated_admin': admin, 'state': 'in_flight'}
         self.report['requests'].append(row)
@@ -216,7 +217,11 @@ class PublicSmoke:
     def deactivate(self, *, rollback=False):
         body = self.request('deactivate', '/admin/deactivate', {},
                             admin=True, rollback=rollback)
-        require(body.get('active') is False, 'Deactivation unverified')
+        require(body.get('active') is False
+                and body.get('kind') == 'public-static-search'
+                and body.get('publication_id') == self.publication
+                and body.get('manifest_sha256') == PACKED_SHA,
+                'Deactivation receipt does not identify this publication')
         self.report['semantic_active'] = False
         return body
 
@@ -251,6 +256,7 @@ class PublicSmoke:
         state = self.state(initial=True)
         self.deactivate()
         compatibility = state['compatibility']
+        initial_checked = compatibility['checked']
         status = validate_compatibility(compatibility, self.fixture)
         require(status != 'failed',
                 'Compatibility failed earlier; review before explicit reset')
@@ -267,6 +273,13 @@ class PublicSmoke:
         require(status == 'passed', 'All 200 compatibility checks must pass')
         self.report['compatibility'] = compatibility
         self.report['compatibility_gate'] = 'passed'
+        self.report['compatibility_evidence'] = {
+            'source': 'reused' if initial_checked == 200 else (
+                'fresh' if initial_checked == 0 else 'resumed'),
+            'previously_checked': initial_checked,
+            'new_inputs_checked': compatibility['checked'] - initial_checked,
+            'fresh_model_drift_check': compatibility['checked'] > initial_checked,
+        }
         active = self.request('activate', '/admin/activate', {}, admin=True)
         require(active.get('active') is True, 'Publication did not activate')
         self.report['semantic_active'] = True
@@ -388,7 +401,9 @@ def run(origin, token, publication, restored, output, *, deactivate_only=False,
         smoke = PublicSmoke(origin, token, publication, fixture, output,
                             report, exchange)
         if deactivate_only:
-            smoke.state(initial=True)
+            # The dedicated HTTPS origin, per-publication credential and
+            # expected-publication header constrain this operation. Do not
+            # require a healthy corpus or AI ledger before emergency pause.
             smoke.deactivate(rollback=True)
             report['ok'] = True
         else:

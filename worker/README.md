@@ -11,6 +11,11 @@ new corpus encoding. [Publication run 41007245038](https://github.com/vinnik-dmi
 passed its public checks. Start at the permanent
 [agent manual](https://key-papers-search.vinnik-dmitry07.workers.dev/llms.txt),
 or connect [MCP](https://key-papers-search.vinnik-dmitry07.workers.dev/mcp).
+Future permanent publications require current `main`, the protected
+`public-search` environment and dedicated `PUBLIC_SEARCH_CLOUDFLARE_*` secrets;
+the temporary probes' repository-credential option does not apply to that job.
+The recovery patch is not a deployment, and historical live evidence does not
+certify the changed loader. See the publication guide's remaining release conditions.
 
 The [static-search feasibility probe](STATIC_SEARCH_PROBE.md),
 [real subset](REAL_SEARCH_PROBE.md) and [full offline gates](FULL_SEARCH_PROBE.md)
