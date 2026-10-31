@@ -174,7 +174,7 @@ jobs:
         run: |
           python -m pip install -r requirements-agent.txt numpy==2.3.4
           python -m py_compile src/reproduce_static_search_review.py
-          python -m pytest src/test_agent_index.py src/test_publish_agent_index.py src/test_agent_pages.py src/test_static_search_probe.py src/test_static_search_probe_run.py src/test_static_search_probe_cleanup.py src/test_static_search_do_lifecycle.py src/test_static_search_do_probe.py src/test_prepare_static_search_do_collection.py src/test_real_search_probe.py src/test_embed_real_search_probe.py src/test_run_real_search_probe.py src/test_real_search_workflow.py src/test_full_search_workflow.py src/test_geometry_probe_workflow.py src/test_run_full_geometry_probe.py src/test_retained_search_smoke.py src/test_retained_smoke_workflow.py src/test_public_search_publication.py src/test_agent_publish_workflow.py src/test_probe_workflow.py src/test_authenticate_probe_fixture.py src/test_full_search_probe.py src/test_pack_full_search_probe.py src/test_evaluate_full_search_probe.py src/test_full_search_replay.py src/test_preflight_full_search_probe.py src/test_full_probe_canary.py src/test_tokenizer_contract.py
+          python -m pytest src/test_agent_index.py src/test_publish_agent_index.py src/test_agent_pages.py src/test_static_search_probe.py src/test_static_search_probe_run.py src/test_static_search_probe_cleanup.py src/test_static_search_do_lifecycle.py src/test_static_search_do_probe.py src/test_prepare_static_search_do_collection.py src/test_real_search_probe.py src/test_embed_real_search_probe.py src/test_run_real_search_probe.py src/test_real_search_workflow.py src/test_full_search_workflow.py src/test_geometry_probe_workflow.py src/test_run_full_geometry_probe.py src/test_retained_search_smoke.py src/test_retained_smoke_workflow.py src/test_public_search_publication.py src/test_public_search_release.py src/test_retained_search_archive.py src/test_agent_publish_workflow.py src/test_probe_workflow.py src/test_authenticate_probe_fixture.py src/test_full_search_probe.py src/test_pack_full_search_probe.py src/test_evaluate_full_search_probe.py src/test_full_search_replay.py src/test_preflight_full_search_probe.py src/test_full_probe_canary.py src/test_tokenizer_contract.py
       - name: Worker tests
         working-directory: worker
         run: |
@@ -1091,12 +1091,13 @@ jobs:
     needs: offline
     if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.static_probe && inputs.probe_runtime == 'durable-object' && inputs.do_probe_phase == 'publish' && inputs.free_plan_confirmed
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     environment: public-search
     env:
       FREE_PLAN_CONFIRMED: ${{ inputs.free_plan_confirmed }}
       WRANGLER_SEND_METRICS: 'false'
       PUBLIC_WORKER_NAME: key-papers-search
+      PREVIEW_NAME: release-${{ github.run_id }}-${{ github.run_attempt }}
       PUBLICATION_ID: ${{ github.run_id }}-${{ github.run_attempt }}-${{ github.sha }}
     steps:
       - name: Check the explicitly selected Free account
@@ -1129,29 +1130,20 @@ jobs:
           python -m pip install -r requirements-agent.txt numpy==2.3.4
           npm --prefix worker ci
           npm --prefix worker run build:probe
-      - name: Authenticate and restore the retained corpus without inference
+      - name: Verify actual environment protections and reviewed credential
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN }}
+          TOKEN_SCOPE_SHA256: ${{ vars.PUBLIC_SEARCH_TOKEN_SCOPE_SHA256 }}
+        run: python src/public_search_release.py controls --report public-api-reports/controls.json
+      - name: Restore the permanent Release archive without inference
         id: restore
-        timeout-minutes: 3
+        timeout-minutes: 4
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           mkdir -p public-api-reports
-          gh api "repos/$GITHUB_REPOSITORY/actions/runs/40448979121" > public-api-reports/source-run.json
-          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/12715563729" > public-api-reports/source-artifact.json
-          python - <<'PYTHON'
-          import json
-          from pathlib import Path
-          import sys
-          sys.path.insert(0, 'src')
-          from restore_full_search_artifact import ARTIFACT_ID, RUN_ID, SOURCE_COMMIT
-          run = json.loads(Path('public-api-reports/source-run.json').read_text())
-          artifact = json.loads(Path('public-api-reports/source-artifact.json').read_text())
-          if (run.get('id') != RUN_ID or run.get('head_sha') != SOURCE_COMMIT
-                  or artifact.get('id') != ARTIFACT_ID or artifact.get('expired') is not False
-                  or artifact.get('workflow_run', {}).get('id') != RUN_ID):
-              raise SystemExit('STOP: retained artifact metadata differs from the reviewed pin.')
-          PYTHON
-          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/12715563729/zip" > "$RUNNER_TEMP/retained-search-artifact.zip"
+          python src/retained_search_archive.py --archive "$RUNNER_TEMP/retained-search-artifact.zip" --report public-api-reports/archive.json
           python src/restore_full_search_artifact.py \
             --archive "$RUNNER_TEMP/retained-search-artifact.zip" \
             --out full-probe-reports/replay
@@ -1180,6 +1172,7 @@ jobs:
       - name: Create credentials scoped to this publication
         run: |
           python - <<'PYTHON'
+          from datetime import datetime, timedelta, timezone
           import json
           import os
           from pathlib import Path
@@ -1188,10 +1181,68 @@ jobs:
           print('::add-mask::' + token)
           with open(os.environ['GITHUB_ENV'], 'a') as output:
               output.write('PUBLICATION_TOKEN=' + token + '\n')
+              expiry = datetime.now(timezone.utc) + timedelta(minutes=20)
+              output.write('PREVIEW_EXPIRES_AT=' + expiry.isoformat() + '\n')
           path = Path(os.environ['RUNNER_TEMP']) / 'public-search-secrets.json'
           path.write_text(json.dumps({'PUBLICATION_TOKEN': token}))
           path.chmod(0o600)
           PYTHON
+      - name: Check the previous code version and state-preservation contract
+        id: checkpoint
+        run: python src/public_search_release.py prepare --publication-id "$PUBLICATION_ID" --report public-api-reports/recovery.json
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN }}
+      - name: Deploy a private isolated Worker Preview before replacing live code
+        id: preview_deploy
+        timeout-minutes: 4
+        working-directory: worker
+        run: |
+          npx wrangler preview --config wrangler.public-search.toml --name "$PREVIEW_NAME" --worker-name "$PUBLIC_WORKER_NAME" \
+            --ignore-base-config --json --secrets-file "$RUNNER_TEMP/public-search-secrets.json" \
+            --var "PUBLICATION_ID:$PUBLICATION_ID" --var "PUBLIC_PREVIEW_EXPIRES_AT:$PREVIEW_EXPIRES_AT" > "$RUNNER_TEMP/public-search-preview.json"
+          python ../src/public_search_release.py preview-origin --name "$PREVIEW_NAME" --report "$RUNNER_TEMP/public-search-preview.json" | sed 's/^/origin=/' >> "$GITHUB_OUTPUT"
+          python - <<'PYTHON'
+          import json
+          import os
+          from pathlib import Path
+          receipt = json.loads((Path(os.environ['RUNNER_TEMP']) / 'public-search-preview.json').read_text())
+          sanitized = {key: receipt.get('preview', {}).get(key) for key in ('name', 'slug', 'urls')}
+          Path('../public-api-reports/preview.json').write_text(json.dumps(sanitized, indent=2))
+          PYTHON
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN }}
+      - name: Check fresh provider compatibility, REST and MCP in the isolated candidate
+        id: preview_smoke
+        timeout-minutes: 11
+        env:
+          PREVIEW_ORIGIN: ${{ steps.preview_deploy.outputs.origin }}
+        run: |
+          python src/smoke_public_search_api.py --preview --origin "$PREVIEW_ORIGIN" \
+            --publication-id "$PUBLICATION_ID" --restored full-probe-reports/replay \
+            --out public-api-reports/preview-smoke.json
+      - name: Delete only this run-specific Preview after every attempted creation
+        id: preview_cleanup
+        if: always() && (steps.preview_deploy.outcome == 'success' || steps.preview_deploy.outcome == 'failure' || steps.preview_deploy.outcome == 'cancelled')
+        timeout-minutes: 3
+        working-directory: worker
+        run: npx wrangler preview delete --config wrangler.public-search.toml --name "$PREVIEW_NAME" --worker-name "$PUBLIC_WORKER_NAME" --skip-confirmation
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN }}
+      - name: Recheck main and record the exact rollback target immediately before release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN }}
+        run: |
+          current_main=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq '.object.sha')
+          if [ "$current_main" != "$GITHUB_SHA" ]; then
+            echo '::error::main changed during candidate verification; dispatch a new run.'
+            exit 1
+          fi
+          python src/public_search_release.py prepare --publication-id "$PUBLICATION_ID" --report public-api-reports/recovery.json
       - name: Deploy the dedicated public API with semantic search initially gated
         id: deploy
         timeout-minutes: 3
@@ -1201,7 +1252,7 @@ jobs:
           npx wrangler deploy --config wrangler.public-search.toml --name "$PUBLIC_WORKER_NAME" \
             --secrets-file "$RUNNER_TEMP/public-search-secrets.json" \
             --var "PUBLICATION_ID:$PUBLICATION_ID" 2>&1 | tee public-search-deploy.txt
-          python -c "import os, pathlib, sys; sys.path.insert(0, '../src'); from write_discovery_links import worker_origin; origin=worker_origin(pathlib.Path('public-search-deploy.txt').read_text(encoding='utf-8'), os.environ['PUBLIC_WORKER_NAME']); sys.exit('deploy did not print the public API origin') if not origin else print('origin=' + origin)" >> "$GITHUB_OUTPUT"
+          python -c "import json, pathlib; print('origin=' + json.loads(pathlib.Path('../public-api-reports/recovery.json').read_text())['origin'])" >> "$GITHUB_OUTPUT"
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN }}
@@ -1217,17 +1268,29 @@ jobs:
             --out public-api-reports/smoke.json
       - name: Disable semantic search after failed or interrupted publication
         id: deactivate
-        if: always() && steps.deploy.outputs.origin != '' && steps.smoke.outcome != 'success'
+        if: always() && (steps.deploy.outcome == 'success' || steps.deploy.outcome == 'failure' || steps.deploy.outcome == 'cancelled') && steps.smoke.outcome != 'success'
+        continue-on-error: true
         timeout-minutes: 2
         env:
           PUBLIC_API_ORIGIN: ${{ steps.deploy.outputs.origin }}
         run: |
+          if [ -z "$PUBLIC_API_ORIGIN" ]; then
+            PUBLIC_API_ORIGIN=$(python -c "import json; print(json.load(open('public-api-reports/recovery.json'))['origin'])")
+          fi
           python src/smoke_public_search_api.py --origin "$PUBLIC_API_ORIGIN" \
             --publication-id "$PUBLICATION_ID" --deactivate-only \
             --out public-api-reports/deactivation.json
+      - name: Recover previous code and activation without rewinding global spending
+        id: recover
+        if: always() && (steps.deploy.outcome == 'success' || steps.deploy.outcome == 'failure' || steps.deploy.outcome == 'cancelled') && steps.smoke.outcome != 'success'
+        timeout-minutes: 3
+        run: python src/public_search_release.py recover --publication-id "$PUBLICATION_ID" --report public-api-reports/recovery.json
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN }}
       - name: Remove the temporary publication credential file
         if: always()
-        run: rm -f "$RUNNER_TEMP/public-search-secrets.json"
+        run: rm -f "$RUNNER_TEMP/public-search-secrets.json" "$RUNNER_TEMP/public-search-preview.json"
       - name: Preserve publication evidence after every outcome
         if: always()
         uses: actions/upload-artifact@v4

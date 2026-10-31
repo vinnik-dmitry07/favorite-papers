@@ -1,9 +1,10 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import type { createFullCorpusStoreLoader } from './full-corpus-store'
 import { createPublicGateway, PublicSearch, PUBLIC_LIMITS, PUBLIC_MANIFEST_SHA,
-  PUBLIC_OBJECT_NAME, PUBLIC_RELEASE_KEY, type PublicSearchEnv } from './public-search'
+  PUBLIC_OBJECT_NAME, publicationStateKey, CLIENT_LIMITS, type PublicSearchEnv } from './public-search'
 import { signatures, sha256Hex } from './signatures'
 
+const PUBLIC_RELEASE_KEY = publicationStateKey('publication-one')
 const TOKEN = 'publication-test-token-at-least-thirty-two-characters'
 const VECTOR = [1, ...Array(767).fill(0)]
 const INDICES = Array.from({ length: 200 }, (_, i) => 40574 - i * 173)
@@ -64,8 +65,10 @@ async function setup() {
   const rpc = (name: string, args: unknown) => call('/mcp', 'POST', {
     jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name, arguments: args } }, null)
   const compatible = async () => { for (let i = 0; i < 13; i++) expect((await call('/admin/compatibility', 'POST')).response.status).toBe(200) }
-  const activate = async () => { await compatible(); expect((await call('/admin/activate', 'POST')).body.active).toBe(true) }
-  return { data, env, call, rpc, request, loader, forwarded, compatible, activate,
+  const fresh = async () => { for (let i = 0; i < 2; i++) expect((await call('/admin/fresh-compatibility', 'POST')).response.status).toBe(200) }
+  const activate = async () => { await compatible(); await fresh(); expect((await call('/admin/activate', 'POST')).body.active).toBe(true) }
+  return { data, env, call, rpc, request, loader, forwarded, compatible, fresh, activate,
+    fetch: (request: Request) => object.fetch(request),
     restart: () => { object = new PublicSearch(state, env, { loader }) },
     embedQuery: (text: string) => embedQuery(text) }
 }
@@ -119,7 +122,7 @@ describe('permanent public full-corpus API', () => {
     expect(fetched.body.result.structuredContent.text).toBe(TEXT)
     f.restart(); expect((await f.call()).body.active).toBe(true)
     await f.call('/admin/compatibility', 'POST')
-    expect(f.env.AI.run).toHaveBeenCalledTimes(14)
+    expect(f.env.AI.run).toHaveBeenCalledTimes(16)
     await f.call('/admin/deactivate', 'POST')
     expect((await f.call('/v1/search?q=reasoning')).response.status).toBe(503)
     expect((await f.call('/v1/content?id=' + ID)).body.text).toBe(TEXT)
@@ -131,8 +134,9 @@ describe('permanent public full-corpus API', () => {
     const state = (await f.call()).body
     expect(state.active).toBe(false); expect(state.compatibility.status).toBe('passed')
     expect(state.budget.query_texts).toBe(1)
-    await f.call('/admin/activate', 'POST'); expect((await f.call()).body.active).toBe(true)
-    expect(f.env.AI.run).toHaveBeenCalledTimes(14)
+    expect((await f.call('/admin/activate', 'POST')).response.status).toBe(409)
+    await f.fresh(); await f.call('/admin/activate', 'POST'); expect((await f.call()).body.active).toBe(true)
+    expect(f.env.AI.run).toHaveBeenCalledTimes(18)
   })
 
   it('atomically admits only one concurrent request at the remaining daily allowance and resets only the UTC-day budget', async () => {
@@ -157,6 +161,7 @@ describe('permanent public full-corpus API', () => {
     const before = vi.mocked(f.env.AI.run).mock.calls.length
     vi.mocked(f.env.AI.run).mockImplementation(() => new Promise(() => {}))
     const waiting = Promise.allSettled(Array.from({ length: 4 }, () => f.embedQuery('a query')))
+    await vi.waitFor(() => expect(f.env.AI.run).toHaveBeenCalledTimes(before + 4))
     await vi.advanceTimersByTimeAsync(PUBLIC_LIMITS.ai_timeout_ms)
     expect((await waiting).every((row) => row.status === 'rejected')).toBe(true)
     await expect(f.embedQuery('another query')).rejects.toMatchObject({ code: 'probe_overloaded' })
@@ -172,6 +177,22 @@ describe('permanent public full-corpus API', () => {
     expect((await f.call('/admin/reset-compatibility', 'POST')).body.compatibility.status).toBe('not_started')
     expect((await f.call()).body.budget.compatibility_texts).toBe(16)
     expect((await f.call('/admin/reset-compatibility', 'POST')).response.status).toBe(409)
+  })
+
+  it('never dispatches AI if quota preparation finishes after the HTTP deadline', async () => {
+    vi.useFakeTimers(); const f = await setup(); await f.activate()
+    const before = vi.mocked(f.env.AI.run).mock.calls.length
+    let finish: (() => void) | undefined
+    vi.spyOn(crypto.subtle, 'digest').mockImplementationOnce(() => new Promise<ArrayBuffer>((resolve) => {
+      finish = () => resolve(new ArrayBuffer(32))
+    }))
+    const pending = f.embedQuery('delayed preparation').catch((error) => error)
+    await vi.waitFor(() => expect(finish).toBeDefined())
+    await vi.advanceTimersByTimeAsync(PUBLIC_LIMITS.ai_timeout_ms)
+    expect(await pending).toMatchObject({ code: 'embedding_timeout' })
+    finish!()
+    await vi.waitFor(() => expect(f.data.get('public-ai-day-v1').query_texts).toBe(1))
+    expect(f.env.AI.run).toHaveBeenCalledTimes(before)
   })
 
   it('fails closed on interrupted canary reservation and invalid durable counters', async () => {
@@ -225,6 +246,7 @@ describe('permanent public full-corpus API', () => {
     f.data.set('public-release-v1', old); f.data.delete(PUBLIC_RELEASE_KEY); f.restart()
     expect((await f.call()).body.active).toBe(true)
     expect((await f.call()).body.budget.query_texts).toBe(1)
+    f.data.delete('public-compatibility-v1:' + PUBLIC_MANIFEST_SHA)
     old.manifest_sha256 = 'f'.repeat(64)
     f.data.set('public-release-v1', old); f.data.delete(PUBLIC_RELEASE_KEY); f.restart()
     const next = (await f.call()).body
@@ -266,5 +288,102 @@ describe('permanent public full-corpus API', () => {
     request.headers.set('x-publication-id', 'another-publication')
     expect((await new PublicSearch({ storage: {} } as DurableObjectState, f.env).fetch(request)).status).toBe(409)
     expect((await f.call()).body.active).toBe(true)
+  })
+
+  it('requires a fresh model sample for every publication and preserves the rollback state', async () => {
+    const f = await setup(); await f.activate(); await f.embedQuery('before release')
+    const original = structuredClone(f.data.get(PUBLIC_RELEASE_KEY))
+    const baselineBudget = structuredClone(f.data.get('public-ai-day-v1'))
+    f.env.PUBLICATION_ID = 'publication-two'; f.restart()
+    expect((await f.call('/admin/activate', 'POST')).response.status).toBe(409)
+    expect((await f.call()).body.fresh_compatibility.checked).toBe(0)
+    vi.mocked(f.env.AI.run).mockImplementationOnce(async (_model, input) => ({ data: input.text.map(() => VECTOR.map((x) => -x)) }))
+    expect((await f.call('/admin/fresh-compatibility', 'POST')).body.status).toBe('failed')
+    expect((await f.call('/admin/activate', 'POST')).response.status).toBe(409)
+    await f.call('/admin/deactivate', 'POST')
+    expect(f.data.get(PUBLIC_RELEASE_KEY)).toEqual(original)
+    expect(f.data.get('public-ai-day-v1')).toEqual(baselineBudget)
+    expect(f.data.get('public-fresh-ai-day-v1').texts).toBe(48)
+    // Returning to the previous code/environment identity restores its state,
+    // without importing a snapshot or refunding either global ledger.
+    f.env.PUBLICATION_ID = 'publication-one'; f.restart()
+    expect((await f.call()).body.active).toBe(true)
+    await f.embedQuery('after recovery')
+    expect(f.data.get('public-ai-day-v1').query_texts).toBe(2)
+    expect(f.data.get('public-fresh-ai-day-v1').texts).toBe(48)
+  })
+
+  it('joins concurrent fresh checks, persists completion and rejects stale activation', async () => {
+    vi.useFakeTimers(); const f = await setup(); await f.compatible()
+    const before = vi.mocked(f.env.AI.run).mock.calls.length
+    const responses = await Promise.all(Array.from({ length: 4 }, () => f.call('/admin/fresh-compatibility', 'POST')))
+    expect(responses.every((r) => r.body.checked === 16)).toBe(true)
+    expect(f.env.AI.run).toHaveBeenCalledTimes(before + 1)
+    await f.call('/admin/fresh-compatibility', 'POST')
+    f.restart(); await f.call('/admin/fresh-compatibility', 'POST')
+    expect(f.env.AI.run).toHaveBeenCalledTimes(before + 2)
+    vi.setSystemTime(Date.now() + 3600001)
+    expect((await f.call('/admin/activate', 'POST')).response.status).toBe(409)
+  })
+
+  it('retains a charged interrupted fresh batch and keeps reading available', async () => {
+    const f = await setup(); await f.compatible()
+    const release = f.data.get(PUBLIC_RELEASE_KEY)
+    release.fresh.pending = Array.from({ length: 16 }, (_, i) => INDICES[Math.floor(i * 200 / 32)])
+    release.fresh.status = 'running'
+    f.data.set('public-fresh-ai-day-v1', { day: new Date().toISOString().slice(0, 10), texts: 16, tokens_reserved: 8192 })
+    f.restart()
+    expect((await f.call()).body.fresh_compatibility).toMatchObject({ status: 'failed', error: 'interrupted_fresh_batch' })
+    expect((await f.call('/admin/activate', 'POST')).response.status).toBe(409)
+    expect((await f.call('/v1/content?id=' + ID)).body.text).toBe(TEXT)
+    expect(f.data.get('public-fresh-ai-day-v1').texts).toBe(16)
+  })
+
+  it('atomically limits uncached calls by address across protocols, retaining budgets over restart', async () => {
+    vi.useFakeTimers(); vi.setSystemTime(new Date('2026-10-31T12:00:00Z'))
+    const f = await setup(); await f.activate()
+    for (let i = 0; i < CLIENT_LIMITS.minute; i++) {
+      expect((await f.call('/v1/search?q=uncached' + i)).response.status).toBe(200)
+    }
+    const denied = await f.call('/v1/search?q=one-too-many')
+    expect(denied.response.status).toBe(429); expect(denied.response.headers.get('retry-after')).toBe('60')
+    expect((await f.call('/v1/search?q=uncached0')).response.status).toBe(200)
+    expect((await f.rpc('search_passages', { q: 'new mcp query' })).body.result.isError).toBe(true)
+    expect(f.data.get('public-ai-day-v1').query_texts).toBe(20)
+    f.restart()
+    expect((await f.call('/v1/search?q=still-limited')).response.status).toBe(429)
+    const request = f.request('/v1/search?q=another-address')
+    request.headers.set('cf-connecting-ip', '192.0.2.7')
+    expect((await f.fetch(request)).status).toBe(200)
+    expect(JSON.stringify(f.data.get('public-client-day-v1'))).not.toContain('192.0.2.7')
+    vi.advanceTimersByTime(60000)
+    expect((await f.call('/v1/search?q=next-minute')).response.status).toBe(200)
+    expect((await f.call('/v1/catalog')).response.status).toBe(200)
+  })
+
+  it('reserves the per-client daily ceiling before AI and resets it only at UTC midnight', async () => {
+    vi.useFakeTimers(); vi.setSystemTime(new Date('2026-10-31T12:00:00Z'))
+    const f = await setup(); await f.activate()
+    for (let i = 0; i < CLIENT_LIMITS.daily; i++) {
+      if (i % CLIENT_LIMITS.minute === 0) vi.advanceTimersByTime(60000)
+      await f.embedQuery('unique ' + i)
+    }
+    await expect(f.embedQuery('denied')).rejects.toMatchObject({ code: 'client_daily_budget_exhausted' })
+    expect(f.data.get('public-ai-day-v1').query_texts).toBe(200)
+    vi.setSystemTime(new Date('2026-11-01T00:00:00Z'))
+    await f.embedQuery('new day')
+    expect(f.data.get('public-ai-day-v1').query_texts).toBe(1)
+  })
+
+  it('requires the private Preview token and rejects expired candidates before DO access', async () => {
+    const f = await setup(), gateway = createPublicGateway()
+    f.env.PUBLIC_PREVIEW = 'true'; f.env.PUBLIC_PREVIEW_EXPIRES_AT = new Date(Date.now() + 60000).toISOString()
+    expect((await gateway.fetch(f.request('/v1/catalog'), f.env)).status).toBe(403)
+    const request = f.request('/v1/catalog'); request.headers.set('x-preview-token', TOKEN)
+    expect((await gateway.fetch(request, f.env)).status).toBe(200)
+    vi.mocked(f.forwarded).mockClear()
+    f.env.PUBLIC_PREVIEW_EXPIRES_AT = '2000-01-01T00:00:00Z'
+    expect((await gateway.fetch(request, f.env)).status).toBe(503)
+    expect(f.forwarded).not.toHaveBeenCalled()
   })
 })

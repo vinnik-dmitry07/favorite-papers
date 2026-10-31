@@ -75,11 +75,14 @@ def verify_worker_ownership(api):
             'manifest_sha256': PACKED_SHA}
 
 
-def public_origin(value):
+def public_origin(value, preview=False):
     parsed = urllib.parse.urlsplit(value)
     require(
         parsed.scheme == 'https' and parsed.hostname
-        and parsed.hostname.startswith(WORKER_NAME + '.')
+        and (parsed.hostname.startswith(WORKER_NAME + '.')
+             if not preview else re.fullmatch(
+                 r'release-[1-9][0-9]*-[1-9][0-9]*-key-papers-search'
+                 r'\.[a-z0-9-]+\.workers\.dev', parsed.hostname))
         and parsed.hostname.endswith('.workers.dev')
         and not parsed.username and not parsed.password and not parsed.port
         and parsed.path in ('', '/')
@@ -137,7 +140,8 @@ def validate_daily_budget(budget):
 class PublicSmoke:
     def __init__(self, origin, token, publication, fixture, output, report,
                  exchange=exchange_once):
-        self.origin = public_origin(origin)
+        self.preview = report.get('preview', False)
+        self.origin = public_origin(origin, self.preview)
         require(bool(token), 'PUBLICATION_TOKEN is required')
         require(re.fullmatch(r'[A-Za-z0-9_.:-]{1,160}', publication),
                 'Invalid publication identity')
@@ -161,6 +165,8 @@ class PublicSmoke:
                 'Publication token may only be sent to admin routes')
         headers = {'accept': 'application/json, text/plain, text/event-stream',
                    'mcp-protocol-version': '2025-06-18'}
+        if self.preview:
+            headers['x-preview-token'] = self.token
         if admin:
             headers['x-publication-token'] = self.token
             headers['x-publication-id'] = self.publication
@@ -281,6 +287,35 @@ class PublicSmoke:
             'fresh_model_drift_check': (
                 compatibility['checked'] > initial_checked),
         }
+        fresh = state.get('fresh_compatibility', {})
+        initial_fresh = fresh.get('checked', 0)
+        for _ in range(2):
+            if fresh.get('status') == 'passed':
+                break
+            fresh = self.request(
+                'fresh_compatibility', '/admin/fresh-compatibility', {},
+                admin=True)
+            require(fresh.get('status') != 'failed',
+                    'Fresh provider compatibility failed')
+        expected_indices = self.fixture['manifest'][
+            'compatibility_indices']
+        expected_indices = [expected_indices[i * 200 // 32]
+                            for i in range(32)]
+        require(fresh.get('status') == 'passed'
+                and fresh.get('publication_id') == self.publication
+                and fresh.get('checked') == fresh.get('expected') == 32
+                and fresh.get('threshold') == .999
+                and [r['index'] for r in fresh.get('results', [])]
+                == expected_indices
+                and all(.999 <= r['cosine'] <= 1
+                        and r['remote_norm'] > 0
+                        for r in fresh.get('results', []))
+                and isinstance(fresh.get('checked_at'), (int, float))
+                and 0 <= time.time() * 1000 - fresh['checked_at'] <= 3600000,
+                'A fresh 32-input check must identify this publication')
+        self.report['fresh_compatibility'] = {
+            **fresh, 'new_inputs_checked': 32 - initial_fresh,
+        }
         active = self.request('activate', '/admin/activate', {}, admin=True)
         require(active.get('active') is True, 'Publication did not activate')
         self.report['semantic_active'] = True
@@ -382,7 +417,7 @@ class PublicSmoke:
 
 
 def run(origin, token, publication, restored, output, *, deactivate_only=False,
-        exchange=exchange_once):
+        exchange=exchange_once, preview=False):
     report = {
         'schema_version': 1, 'kind': 'public-retained-static-api-publication',
         'ok': False, 'origin': origin, 'publication_id': publication,
@@ -393,6 +428,7 @@ def run(origin, token, publication, restored, output, *, deactivate_only=False,
         'query_submissions_planned': 0 if deactivate_only else 3,
         'compatibility_gate': 'unverified', 'semantic_active': 'unverified',
         'provider_retry_policy': 'No provider retries or automatic resets',
+        'preview': preview,
     }
     persist(report, output)
     smoke = None
@@ -432,6 +468,7 @@ def main():
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--deactivate-only', action='store_true')
     parser.add_argument('--check-account-ownership', action='store_true')
+    parser.add_argument('--preview', action='store_true')
     args = parser.parse_args()
     if args.check_account_ownership:
         if (args.deactivate_only or args.origin
@@ -448,7 +485,7 @@ def main():
     report = run(
         args.origin, os.environ.get('PUBLICATION_TOKEN', ''),
         args.publication_id, args.restored, args.out,
-        deactivate_only=args.deactivate_only,
+        deactivate_only=args.deactivate_only, preview=args.preview,
     )
     print(json.dumps({key: report.get(key) for key in (
         'ok', 'origin', 'checks', 'semantic_active', 'error',

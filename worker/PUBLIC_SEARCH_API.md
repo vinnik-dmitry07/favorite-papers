@@ -17,60 +17,75 @@ records the exact deployed identity and the limits of the checks.
 
 ## Publish
 
-Future publications require the current `main` commit and the separate GitHub
-environment **public-search**. Configure its deployment branch restriction to
-`main`, a required reviewer (and prevention of self-review where available), and
-dedicated `PUBLIC_SEARCH_CLOUDFLARE_ACCOUNT_ID` and
-`PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN` environment secrets. Give that token only the
-account/resource operations needed for this API. There is no fallback to the
-repository production token or the temporary probe token. The workflow also
-rejects a queued commit that is no longer the head of `main` before accessing
-Cloudflare. These YAML checks do not replace external environment protection:
-a branch author can edit YAML. Those GitHub settings and token scope have not
-been verified or configured by this code change.
+Future publications require current `main`, GitHub environment **public-search**,
+a required reviewer, and exactly one deployment branch rule: branch `main`.
+The job reads the actual environment rules before restoration or Cloudflare
+access. A stale queued commit is rejected again immediately before live deploy.
+The dedicated environment secrets are `PUBLIC_SEARCH_CLOUDFLARE_ACCOUNT_ID` and
+`PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN`; production/probe credentials are not used.
 
-The earlier successful publication used the feature branch and repository
-credentials; that is historical evidence, not the current publication procedure.
-The selected account must still be Workers Free; no dimension budget is needed.
+Use Cloudflare's [per-Worker Editor role](https://developers.cloudflare.com/workers/authorization/workers/)
+for the existing `key-papers-search`, including its Previews. Do not grant
+account-wide Workers Admin, DNS, R2, Vectorize or token-administration access
+merely for this path. The deploy token cannot necessarily read its own policy;
+a successful operation does not prove least privilege. After reviewing the
+actual token scope, bind that exact credential's SHA-256 to environment variable
+`PUBLIC_SEARCH_TOKEN_SCOPE_SHA256`. Reports explicitly label this review as
+operator-attested, not machine-verified. Token rotation requires another review.
+
+The connected GitHub tools cannot administer environment settings. Run this with
+the repository owner's `gh` login after reviewing the token in Cloudflare:
 
 ```bash
-gh workflow run agent-api.yml \
-  --repo vinnik-dmitry07/favorite-papers \
-  --ref main \
-  -f static_probe=true \
-  -f probe_runtime=durable-object \
-  -f do_probe_phase=publish \
-  -f free_plan_confirmed=true
+python src/public_search_release.py setup --reviewer vinnik-dmitry07 --set-credentials --token-scope-reviewed --report public-api-reports/environment-setup.json
 ```
 
-Run a fresh dispatch after the reviewed changes are merged into `main` and the
-environment is protected. Re-running an old workflow uses its old source
-revision and its old protections. Ordinary
-pushes and pull requests run offline checks only.
+It configures required review and main-only branches, disables admin bypass,
+removes other deployment rules, then sets the two secrets using hidden prompts.
+For this single-maintainer setup, self-review is permitted; a reviewer can approve
+their own manual dispatch. Nothing is deployed. Setup uses standard-library
+Python and `gh`; credentials are never passed as command arguments or printed.
+The command is tested with mocks. Actual account rules and token permissions
+have not been changed by pushing the code. Environment-only secret placement is
+part of setup: YAML cannot prevent an administrator from changing protections.
 
-This is not yet an availability-preserving update procedure: direct deployment
-replaces live code before validation, and a failed update has no automatic code
-and durable-state rollback. Keep updates gated on review until an isolated
-candidate check and a tested recovery procedure are in place. The recovery fixes
-below have not themselves been deployed by pushing this branch.
+After review and merge, dispatch a fresh run; re-running an old job uses old code:
 
-The job verifies the retained artifact and local reconstruction before touching
-Cloudflare. A read-only ownership check permits an absent `key-papers-search` or
-an existing instance with the expected bindings and manifest; an unrelated
-Worker under that name stops publication. Deployment uses a new publication ID
-and a masked administrative token. Prior activation does not activate a new
-publication. Only a passing 200-input compatibility check can enable semantic
-search, after which public REST and MCP checks run without the administrative
-header. Failed or cancelled validation attempts to deactivate search and reports
-that result. The stable namespace is retained; the probe cleanup script is never
-used on it.
+```bash
+gh workflow run agent-api.yml --repo vinnik-dmitry07/favorite-papers --ref main -f static_probe=true -f probe_runtime=durable-object -f do_probe_phase=publish -f free_plan_confirmed=true
+```
 
-The public checks include catalog lookup, citation traversal and text reading,
-plus three genuine semantic query submissions: an initial question, a refined
-KV-cache question, and an MCP reasoning question followed by `fetch`. Complete
-responses are retained for later answer-quality review. Passing these checks
-establishes interface and data consistency, not that every returned passage
-answers its query or that the endpoint sustains arbitrary traffic.
+The earlier feature-branch publication with repository credentials is historical
+evidence, not the current procedure. Pushes and PRs do not deploy Cloudflare.
+
+The job requires the permanent Release archive and verifies reconstruction
+without encoding. It then deploys a run-specific **Worker Preview**, with isolated
+DO storage, its own secret, a private gateway and a 20-minute gateway expiry.
+REST/MCP and model checks run there first. Cleanup deletes only this Preview
+after every creation attempt. If candidate verification or cleanup fails, live
+code is untouched. These are [Worker Previews](https://developers.cloudflare.com/workers/previews/),
+not Version URLs. Preview responses use a preview credential; research checks
+on the permanent endpoint remain anonymous.
+
+Activation requires the retained 200-input baseline and **32 new model checks
+for this publication**, cosine at least 0.999, completed within the previous
+hour. The inputs are deterministically spread across the pinned reference set.
+Old publications cannot satisfy the fresh gate. Baseline reuse is labeled.
+
+Immediately before live deploy, the job records the exact previous version,
+corpus and public identity. Failed or cancelled validation attempts to pause the
+new publication and then restores that exact code version. The runner verifies
+the previous identity and activation; it refuses to overwrite a later release.
+Uncertain recovery remains unverified. No namespace or database is restored.
+Activation/pause records are publication-specific, so previous state survives;
+all charged daily ledgers stay charged. Class lifecycle changes require a new
+recovery review. The first approved rollback target is the reviewed `abe903d`
+publication; later targets must advertise this state-preservation protocol.
+
+Local tests exercise these failure paths. Preview support, production rollout
+and rollback still need an authorized live Cloudflare run. Tests do not certify
+platform memory or production readiness. The changed loader still does not match
+the historical live-geometry pin; that pin has not been rewritten.
 
 ## Use the endpoint
 
@@ -105,38 +120,35 @@ can be connected when the publication path is merged and verified.
 
 ## Bounded AI work on the shared Free account
 
-One fixed Durable Object owns the daily ledger, independently of release or
-publication IDs. Reservations are persisted before an AI call and are not
-refunded after a timeout or ambiguous failure. At most 1,000 query inputs are
-reserved per UTC day, each charged conservatively as 512 input tokens. Admin-only
-compatibility work has a separate limit of 200 inputs per day. Thus the maximum
-reserved inputs are 512,000 query tokens plus 102,400 compatibility tokens.
-Restarting or redeploying does not reset these counters. Completed compatibility
-is retained for the pinned corpus, rather than repeated on every cold start.
-The publication report now explicitly distinguishes `fresh`, `resumed` and
-`reused` compatibility evidence and records the number of newly checked inputs.
-A reused 200-input result is not a fresh check for provider model drift. A
-per-publication freshness requirement remains outstanding.
+The stable DO owns global UTC-day ledgers independent of publication IDs:
+1,000 query inputs (512,000 reserved tokens), 200 baseline inputs (102,400 tokens),
+and 200 fresh-check inputs (102,400 tokens). The old baseline ledger format and
+ceiling stay unchanged for rollback compatibility. Preview storage/ledgers are
+separate; its bounded verification work consumes additional shared account AI.
+These application reservations are not an account-wide allocation or bill cap.
 
-The application resets its daily allowance at 00:00 UTC. Semantic exhaustion
-returns an explicit error and retry information; catalog, graph and text reads
-require no AI reservation. This is a shared global allowance, not a small per-IP
-allowance that every user behind a common agent proxy must share. Concurrent
-requests and outstanding provider calls are bounded; provider work is not retried
-automatically. Provider admission is acquired before reservation: an already
-full provider pool rejects without consuming quota. Once admitted, a reservation
-is retained after an ambiguous submission failure or timeout; it is not billing
-telemetry. A single anonymous client can still exhaust the shared daily quota;
-the application cap bounds cost, not fairness or availability under abuse.
+Uncached searches also share **200/day and 20/minute per client IP** across REST
+and MCP. The client reservation is atomic with the global query reservation,
+after actual AI admission. Cached answers, exact title matches and catalog,
+text and citation reads do not consume embeddings. HTTP 429 reports the correct
+minute/day `Retry-After`. Shared proxies share an allowance; distributed clients
+can still exhaust the global quota. This is a fairness bound, not a complete
+anti-abuse or authenticated per-user system. Stored address keys use a random,
+durable private salt; raw client addresses are not stored in the limiter.
 
-Compatibility/activation state is namespaced by manifest hash. Matching legacy
-state is copied once without changing the global daily ledger; another corpus
-does not inherit it. Expired daily counters reset before validation, and valid
-same-day counters above a reduced cap cause quota exhaustion rather than a state
-error. Corrupt AI state stops semantic operations and degrades health while
-catalog/text/graph reads remain available when the corpus assets are valid.
-These migrations do not remove the explicit manifest and 40,575-passage pins:
-publishing another corpus still requires a reviewed data/configuration update.
+Reservations survive ambiguous failures, HTTP timeouts, restarts and rollback.
+At most four provider promises remain pending. A full provider pool rejects a
+new request before charging it. Research admission remains four active plus
+eight queued requests with a two-second wait; this is a deliberately bounded
+service, not an arbitrary-throughput promise. Provider HTTP timeout is 20 seconds.
+
+Compatibility, activation and pause state are scoped by manifest and publication.
+A matching baseline may be copied; fresh checks cannot be inherited. Historical
+activation/pause records remain untouched. Expired daily counters reset before
+validation; counters above a reduced cap return exhaustion instead of poisoning
+catalog access. Corrupt AI state stops semantic operations and degrades health,
+while valid catalog/text/graph data stays accessible. Another corpus still needs
+a reviewed manifest, data/config update and fresh checks.
 
 Cloudflare documents [SQLite Durable Objects on Free](https://developers.cloudflare.com/durable-objects/platform/pricing/)
 and a [30-second default DO CPU limit](https://developers.cloudflare.com/durable-objects/platform/limits/),
@@ -151,40 +163,31 @@ unlimited availability or establish the account's plan from a workflow flag.
 
 ## Pause and recovery
 
-Administrative operations require the run's generated `x-publication-token`:
-`GET /admin/state`, and POSTs to `/admin/compatibility`, `/admin/activate`,
-`/admin/deactivate`, or `/admin/reset-compatibility`. They are not research tools.
-The token is not put in the discovery artifact. A fresh publication rotates it.
-Resetting failed compatibility is explicit, requires inactive search, and does
-not refund its daily allowance.
+Administrative routes require the run's generated `x-publication-token`, with
+`x-publication-id` binding mutations to the intended publication. They are not
+research tools. Routes include state, compatibility, fresh-compatibility,
+activate, deactivate and explicit reset of a failed baseline check. Reset never
+refunds reservations. Failed fresh checks are not automatically retried.
 
-An authenticated emergency `POST /admin/deactivate` writes a separate durable
-pause latch without loading assets or validating compatibility/budget state. It
-also bypasses the research request queue. The standalone `--deactivate-only`
-command sends that operation directly and verifies the identified receipt,
-rather than requiring a healthy `/admin/state` first. Administrative clients
-send `x-publication-id`; a mismatched deployment is rejected before mutation.
-Only successful activation clears the latch. The generated token remains
-necessary; it is not made public to provide emergency access.
+Emergency `POST /admin/deactivate` writes only the publication's pause latch,
+without loading assets, validating AI state or waiting behind research requests.
+The CLI's `--deactivate-only` verifies its identified receipt directly. Only a
+successful activation clears that publication's latch. A later publication and
+code rollback do not erase prior ledgers or activation records.
 
-Transient asset HTTP/network/stream failures retry after a five-second backoff,
-sharing one initialization promise. Checksum, schema and configuration failures
-remain latched for the immutable release. This avoids both permanent transient
-outages and unbounded retries of corrupt data.
+Transient asset HTTP/network/stream failures retry after a shared five-second
+backoff. Hash/schema/configuration failures remain latched for the immutable
+release. This patch is pushed, not deployed; historical publication evidence
+continues to describe its original runtime.
 
-To pause semantic search later without deleting the stored budget, change the
-Worker's `PUBLICATION_ID` variable to `disabled` in Cloudflare and deploy that
-configuration. This cannot match an activation generated by the publication job;
-public catalog and text reads continue. Publish again with a new job to validate
-and reactivate. Do not delete the stable namespace to reset limits. A failed
-update is not silently rolled back to an old, apparently active publication.
-
-The retained source artifact currently expires on January 25, 2027. The deployed
-Worker's assets do not depend on that download at request time, but a future
-republication needs the retained data. Expiry or a changed hash stops before
-deployment. Preserve the authenticated artifact in durable release storage before
-that date; this first publication does not add another storage service or rerun
-the encoder.
+The original Actions artifact expires on January 25, 2027. **Preserve search
+corpus** copies its 149,682,694 authenticated bytes to the
+`retained-search-corpus-2026-10-26` GitHub Release and downloads them again to
+verify the SHA-256. Existing assets are never overwritten. The workflow calls no
+model or Cloudflare service. Future public publications require this Release,
+so Actions expiry cannot trigger re-encoding. Wrong bytes stop before deploy.
+Release assets have no Actions retention deadline; repository owners can still
+delete them. The deployed Worker never downloads this archive during a request.
 
 ## Validation before the first publication
 

@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 import re
 import subprocess
+import time
 import urllib.parse
 
 import pytest
@@ -69,6 +70,7 @@ class FakeApi:
         self.active = False
         self.checked = 200 if already_passed else 0
         self.budget = budget()
+        self.fresh_checked = 0
         self.calls = []
         self.corrupt_read = corrupt_read
         self.startup = startup
@@ -79,7 +81,19 @@ class FakeApi:
             'publication_id': 'publication-1', 'passage_count': 40575,
             'release_id': RELEASE, 'active': self.active,
             'compatibility': compatibility(self.checked),
+            'fresh_compatibility': self.fresh_state(),
             'budget': self.budget.copy(),
+        }
+
+    def fresh_state(self):
+        return {
+            'publication_id': 'publication-1', 'expected': 32,
+            'checked': self.fresh_checked, 'threshold': .999,
+            'status': 'passed' if self.fresh_checked == 32 else 'running',
+            'checked_at': time.time() * 1000,
+            'results': [
+                {'index': i * 200 // 32, 'cosine': 1, 'remote_norm': 1}
+                for i in range(self.fresh_checked)],
         }
 
     def __call__(self, url, payload, headers, timeout):
@@ -100,8 +114,11 @@ class FakeApi:
         elif path == '/admin/deactivate':
             self.active = False
             body = self.state()
+        elif path == '/admin/fresh-compatibility':
+            self.fresh_checked = min(32, self.fresh_checked + 16)
+            body = self.fresh_state()
         elif path == '/admin/activate':
-            assert self.checked == 200
+            assert self.checked == 200 and self.fresh_checked == 32
             self.active = True
             body = self.state()
         elif path == '/admin/compatibility':
@@ -425,7 +442,7 @@ def test_manual_publish_is_exclusive_and_shares_cloudflare_lock():
 
 def test_publication_reuses_artifact_without_encoding_or_probe_cleanup():
     commands = '\n'.join(step.get('run', '') for step in job()['steps'])
-    for expected in ('actions/artifacts/12715563729/zip',
+    for expected in ('python src/retained_search_archive.py --archive',
                      'python src/restore_full_search_artifact.py',
                      '--config wrangler.public-search.toml',
                      '--var "PUBLICATION_ID:$PUBLICATION_ID"',
@@ -440,7 +457,7 @@ def test_publication_reuses_artifact_without_encoding_or_probe_cleanup():
     assert job()['env']['PUBLIC_WORKER_NAME'] == publication.WORKER_NAME
     assert job()['env']['PUBLICATION_ID'] == (
         '${{ github.run_id }}-${{ github.run_attempt }}-${{ github.sha }}')
-    assert job()['needs'] == 'offline' and job()['timeout-minutes'] <= 30
+    assert job()['needs'] == 'offline' and job()['timeout-minutes'] <= 45
     for step in job()['steps']:
         if 'npm --prefix' in step.get('run', ''):
             assert not any('secrets.' in str(v) for v in step.get('env', {}).values())
@@ -469,7 +486,8 @@ def test_public_api_uses_separate_environment_credentials_and_current_main():
         if 'CLOUDFLARE_API_TOKEN' in env:
             assert env['CLOUDFLARE_API_TOKEN'] == (
                 '${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN }}')
-            assert env['CLOUDFLARE_ACCOUNT_ID'] == (
+            assert env.get('CLOUDFLARE_ACCOUNT_ID',
+                           '${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_ACCOUNT_ID }}') == (
                 '${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_ACCOUNT_ID }}')
     config = (ROOT / 'worker/wrangler.public-search.toml').read_text()
     assert '[build]' not in config
