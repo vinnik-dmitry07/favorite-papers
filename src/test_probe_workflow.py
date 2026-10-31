@@ -119,7 +119,8 @@ def test_selected_secrets_never_fallback(choice, repository, probe, expected):
                         'CLOUDFLARE_ACCOUNT_ID', 'CLOUDFLARE_API_TOKEN'}:
                     continue
                 if job_name == 'publish_retained_api':
-                    assert expression == '${{ secrets.PUBLIC_SEARCH_' + name + ' }}'
+                    assert expression == (
+                        '${{ secrets.PUBLIC_SEARCH_' + name + ' }}')
                     continue
                 values = {
                     'inputs.probe_credentials': choice,

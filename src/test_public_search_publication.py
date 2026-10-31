@@ -92,7 +92,8 @@ class FakeApi:
             return status, {}, json.dumps(body)
         if path.startswith('/admin/') and headers.get('x-publication-token') != TOKEN:
             return 403, {}, json.dumps({'error': {'code': 'unauthorized'}})
-        if path.startswith('/admin/') and headers.get('x-publication-id') != 'publication-1':
+        if (path.startswith('/admin/')
+                and headers.get('x-publication-id') != 'publication-1'):
             return 409, {}, json.dumps({'error': {'code': 'version_conflict'}})
         if path == '/admin/state':
             body = self.state()
@@ -466,8 +467,10 @@ def test_public_api_uses_separate_environment_credentials_and_current_main():
     for step in definition['steps']:
         env = step.get('env', {})
         if 'CLOUDFLARE_API_TOKEN' in env:
-            assert env['CLOUDFLARE_API_TOKEN'] == '${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN }}'
-            assert env['CLOUDFLARE_ACCOUNT_ID'] == '${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_ACCOUNT_ID }}'
+            assert env['CLOUDFLARE_API_TOKEN'] == (
+                '${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN }}')
+            assert env['CLOUDFLARE_ACCOUNT_ID'] == (
+                '${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_ACCOUNT_ID }}')
     config = (ROOT / 'worker/wrangler.public-search.toml').read_text()
     assert '[build]' not in config
 

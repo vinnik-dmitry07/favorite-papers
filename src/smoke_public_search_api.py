@@ -278,7 +278,8 @@ class PublicSmoke:
                 'fresh' if initial_checked == 0 else 'resumed'),
             'previously_checked': initial_checked,
             'new_inputs_checked': compatibility['checked'] - initial_checked,
-            'fresh_model_drift_check': compatibility['checked'] > initial_checked,
+            'fresh_model_drift_check': (
+                compatibility['checked'] > initial_checked),
         }
         active = self.request('activate', '/admin/activate', {}, admin=True)
         require(active.get('active') is True, 'Publication did not activate')
