@@ -90,15 +90,25 @@ def preserve(directory):
             f'Archive SHA-256: {ARTIFACT_SHA256}.\n'
             'This preserves existing bytes, without inference or a new '
             'production-readiness certificate.\n', encoding='utf-8')
+        # This Release stores data, not a software release of SOURCE_COMMIT.
+        # Target current main so a contents-only workflow token need not gain
+        # workflows:write for an old commit with different workflow files.
+        main = gh('api', f'repos/{REPOSITORY}/git/ref/heads/main')
+        target = main.get('object', {})
+        if (target.get('type') != 'commit'
+                or not isinstance(target.get('sha'), str)
+                or len(target['sha']) != 40):
+            raise ValueError('Cannot identify main for the archive Release')
+        target_commit = target['sha']
         # Never replace an existing release, tag or same-named asset.
         existing_tag = gh('api', f'repos/{REPOSITORY}/git/ref/tags/{TAG}',
                           absent=True)
-        target = (existing_tag or {}).get('object', {}).get('sha')
-        if existing_tag is not None and target != SOURCE_COMMIT:
+        tag_target = (existing_tag or {}).get('object', {}).get('sha')
+        if existing_tag is not None and tag_target != target_commit:
             raise ValueError('The archive tag points at another source commit')
         subprocess.run([
             'gh', 'release', 'create', TAG, str(path), '--repo', REPOSITORY,
-            '--target', SOURCE_COMMIT, '--title', 'Retained search corpus',
+            '--target', target_commit, '--title', 'Retained search corpus',
             '--notes-file', str(notes), '--latest=false',
         ], check=True, timeout=240)
     with tempfile.TemporaryDirectory() as temporary:

@@ -78,3 +78,34 @@ def test_archival_workflow_can_write_release_but_cannot_deploy_or_embed():
     for forbidden in ('CLOUDFLARE_', 'wrangler', 'AutoModel', 'embed_real_',
                       'pull_request_target', 'secrets.'):
         assert forbidden not in source
+
+
+def test_archive_release_targets_main_without_workflow_write_permission(
+        tmp_path, monkeypatch):
+    main = 'e' * 40
+    created = []
+
+    def gh(*args, **kwargs):
+        if args[-1].endswith('/git/ref/heads/main'):
+            return {'object': {'type': 'commit', 'sha': main}}
+        assert '/git/ref/tags/' in args[-1]
+        return None
+
+    downloads = []
+
+    def download(path, release_only=False):
+        downloads.append(release_only)
+        return {'source': 'release' if release_only else 'actions'}
+
+    monkeypatch.setattr(archive, 'gh', gh)
+    monkeypatch.setattr(archive, 'download', download)
+    monkeypatch.setattr(archive.subprocess, 'run',
+                        lambda args, **kw: created.append(args))
+    assert archive.preserve(tmp_path)['preserved'] is True
+    assert downloads == [False, True]
+    args = created[0]
+    assert args[args.index('--target') + 1] == main
+    assert archive.SOURCE_COMMIT not in args
+    notes = (tmp_path / 'release-notes.txt').read_text()
+    assert archive.SOURCE_COMMIT in notes
+    assert archive.ARTIFACT_SHA256 in notes

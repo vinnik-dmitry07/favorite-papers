@@ -188,6 +188,9 @@ model or Cloudflare service. Future public publications require this Release,
 so Actions expiry cannot trigger re-encoding. Wrong bytes stop before deploy.
 Release assets have no Actions retention deadline; repository owners can still
 delete them. The deployed Worker never downloads this archive during a request.
+The Release tag marks the current main commit used to store the data; the data's
+original source commit stays explicitly pinned inside the archive and notes.
+This avoids granting workflow-edit rights just to create an archive Release.
 
 ## Validation before the first publication
 
