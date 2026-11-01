@@ -135,6 +135,7 @@ def test_actual_environment_requires_review_and_only_main():
 
 
 def test_unreviewed_or_rotated_credential_stops_publication(monkeypatch):
+    monkeypatch.delenv('CREDENTIALS_REVIEWED_SHA256', raising=False)
     monkeypatch.setenv('GITHUB_REPOSITORY',
                        'vinnik-dmitry07/favorite-papers')
     monkeypatch.setenv('CLOUDFLARE_API_TOKEN', 'dedicated-token')
@@ -145,10 +146,18 @@ def test_unreviewed_or_rotated_credential_stops_publication(monkeypatch):
         release.controls()
     monkeypatch.setenv('TOKEN_SCOPE_SHA256', hashlib.sha256(
         b'dedicated-token').hexdigest())
+    with pytest.raises(ValueError, match='fingerprint does not approve'):
+        release.controls()
+    monkeypatch.setenv('CREDENTIALS_REVIEWED_SHA256', hashlib.sha256(
+        b'dedicated-token').hexdigest())
     report = release.controls()
     assert report['token_scope_machine_verified'] is False
     monkeypatch.setenv('CLOUDFLARE_API_TOKEN', 'rotated-token')
     with pytest.raises(ValueError, match='dedicated token scope'):
+        release.controls()
+    monkeypatch.setenv('TOKEN_SCOPE_SHA256', hashlib.sha256(
+        b'rotated-token').hexdigest())
+    with pytest.raises(ValueError, match='fingerprint does not approve'):
         release.controls()
 
 
@@ -175,6 +184,8 @@ def test_owner_setup_removes_wildcard_rules_and_keeps_secrets_out_of_argv(
         nonlocal reads
         if path.startswith('users/'):
             return {'login': 'vinnik-dmitry07', 'id': 24797359}
+        if '/actions/secrets?' in path:
+            return {'total_count': 0, 'secrets': []}
         if path.endswith('deployment-branch-policies'):
             reads += 1
             rows = [{'name': 'main', 'type': 'branch', 'id': 1}]
@@ -201,6 +212,67 @@ def test_owner_setup_removes_wildcard_rules_and_keeps_secrets_out_of_argv(
     assert len(secrets) == 2
     assert secrets[1][1]['input'] == token
     assert token not in json.dumps(report)
+    reviews = [args for args, _ in calls
+               if 'PUBLIC_SEARCH_CREDENTIALS_REVIEWED_SHA256' in args]
+    assert [args[-1] for args in reviews] == [
+        'unreviewed', hashlib.sha256(token.encode()).hexdigest(),
+    ]
+    assert calls[-1][0] == reviews[-1]
+
+
+@pytest.mark.parametrize('name', [
+    'CLOUDFLARE_API_TOKEN', 'PROBE_CLOUDFLARE_API_TOKEN',
+    'PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN',
+])
+def test_setup_rejects_repository_token_copies_before_mutating_settings(
+        monkeypatch, name):
+    monkeypatch.setattr(release, 'github', lambda _: {
+        'total_count': 1, 'secrets': [{'name': name}],
+    })
+    monkeypatch.setattr(release.subprocess, 'run', lambda *a, **kw:
+                        pytest.fail('No writes with repository token copies'))
+    with pytest.raises(ValueError, match='remain in repository secrets'):
+        release.setup_environment('vinnik-dmitry07', True, True)
+
+
+def test_setup_requires_complete_secret_names_without_reading_secret_values(
+        monkeypatch):
+    monkeypatch.setattr(release, 'github', lambda _: {
+        'total_count': 101, 'secrets': [{'name': 'UNRELATED'}],
+    })
+    with pytest.raises(ValueError, match='inventory is incomplete'):
+        release.require_environment_only_credentials(
+            'vinnik-dmitry07/favorite-papers')
+
+
+def test_failed_credential_rotation_cannot_retain_the_old_attestation(
+        monkeypatch):
+    calls = []
+
+    def github(path):
+        if '/actions/secrets?' in path:
+            return {'total_count': 0, 'secrets': []}
+        if path.startswith('users/'):
+            return {'login': 'vinnik-dmitry07', 'id': 24797359}
+        if path.endswith('deployment-branch-policies'):
+            return branches()
+        return environment()
+
+    def run(args, **kwargs):
+        calls.append(args)
+        if 'secret' in args:
+            raise release.subprocess.CalledProcessError(1, args)
+        return SimpleNamespace(stdout='{}')
+
+    prompts = iter(['a' * 32, 'dedicated-private-token'])
+    monkeypatch.setattr(release, 'github', github)
+    monkeypatch.setattr(release.subprocess, 'run', run)
+    monkeypatch.setattr(release.getpass, 'getpass', lambda _: next(prompts))
+    with pytest.raises(release.subprocess.CalledProcessError):
+        release.setup_environment('vinnik-dmitry07', True, True)
+    reviews = [args for args in calls
+               if 'PUBLIC_SEARCH_CREDENTIALS_REVIEWED_SHA256' in args]
+    assert len(reviews) == 1 and reviews[0][-1] == 'unreviewed'
 
 
 def test_credential_setup_requires_explicit_scope_review_before_any_mutation(
@@ -228,3 +300,10 @@ def test_release_workflow_checks_candidate_and_recovers_after_partial_deploy():
     assert 'steps.deploy.outputs.origin' not in ids['recover']['if']
     assert "steps.deploy.outcome == 'cancelled'" in ids['recover']['if']
     assert "steps.preview_deploy.outcome == 'cancelled'" in cleanup['if']
+    review = next(i for i, step in enumerate(steps)
+                  if 'controls --report' in step.get('run', ''))
+    install = next(i for i, step in enumerate(steps)
+                   if 'pip install' in step.get('run', ''))
+    assert review < install
+    assert steps[review]['env']['CREDENTIALS_REVIEWED_SHA256'] == (
+        '${{ vars.PUBLIC_SEARCH_CREDENTIALS_REVIEWED_SHA256 }}')

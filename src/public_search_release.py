@@ -82,11 +82,35 @@ def controls():
             and hashlib.sha256(token.encode()).hexdigest() == reviewed,
             'Review the dedicated token scope and set the matching '
             'PUBLIC_SEARCH_TOKEN_SCOPE_SHA256 environment variable')
+    require(os.environ.get('CREDENTIALS_REVIEWED_SHA256') == reviewed,
+            'A matching fingerprint does not approve permissions. Review '
+            'token scope and repository-secret isolation, then explicitly '
+            'set PUBLIC_SEARCH_CREDENTIALS_REVIEWED_SHA256 for that token')
     report['token_scope'] = 'operator-reviewed-matching-credential'
     report['token_scope_machine_verified'] = False
+    report['credentials_review'] = 'explicit-operator-attestation'
     # The token need not gain token-administration rights merely to read its
     # own policy. Scope review is explicit; capability checks are separate.
     return report
+
+
+def require_environment_only_credentials(repository):
+    '''Inspect secret names only, with the owner's administration access.'''
+    body = github(f'repos/{repository}/actions/secrets?per_page=100')
+    rows = body.get('secrets')
+    require(isinstance(rows, list)
+            and body.get('total_count') == len(rows),
+            'Repository secret inventory is incomplete; review it manually')
+    known = {'CLOUDFLARE_API_TOKEN', 'PROBE_CLOUDFLARE_API_TOKEN',
+             'PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN'}
+    names = {row.get('name') for row in rows if isinstance(row, dict)}
+    require(len(names) == len(rows)
+            and all(isinstance(name, str) and name for name in names),
+            'Repository secret inventory has invalid or duplicate names')
+    require(not names.intersection(known),
+            'Cloudflare tokens remain in repository secrets. Move them to '
+            'protected environments or retire them before approving '
+            'public-search isolation; this command does not delete them')
 
 
 def setup_environment(reviewer, credentials=False, scope_reviewed=False):
@@ -96,6 +120,8 @@ def setup_environment(reviewer, credentials=False, scope_reviewed=False):
     require(not credentials or scope_reviewed,
             'Review the token scope before --set-credentials')
     repository = 'vinnik-dmitry07/favorite-papers'
+    if credentials:
+        require_environment_only_credentials(repository)
     root = f'repos/{repository}/environments/public-search'
     user = github('users/' + reviewer)
     require(user.get('login', '').lower() == reviewer.lower()
@@ -132,6 +158,14 @@ def setup_environment(reviewer, credentials=False, scope_reviewed=False):
         token = getpass.getpass('Dedicated token (existing Worker Editor): ')
         require(re.fullmatch(r'[a-fA-F0-9]{32}', account)
                 and len(token) >= 20, 'Malformed Cloudflare credentials')
+        # Revoke the old attestation before a partial credential rotation.
+        # Only a fully completed owner-reviewed setup restores it below.
+        subprocess.run([
+            'gh', 'variable', 'set',
+            'PUBLIC_SEARCH_CREDENTIALS_REVIEWED_SHA256',
+            '--env', 'public-search', '--repo', repository,
+            '--body', 'unreviewed',
+        ], check=True, timeout=30)
         for name, value in (
                 ('PUBLIC_SEARCH_CLOUDFLARE_ACCOUNT_ID', account),
                 ('PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN', token)):
@@ -145,8 +179,16 @@ def setup_environment(reviewer, credentials=False, scope_reviewed=False):
             '--env', 'public-search', '--repo', repository,
             '--body', fingerprint,
         ], check=True, timeout=30)
+        subprocess.run([
+            'gh', 'variable', 'set',
+            'PUBLIC_SEARCH_CREDENTIALS_REVIEWED_SHA256',
+            '--env', 'public-search', '--repo', repository,
+            '--body', fingerprint,
+        ], check=True, timeout=30)
         report['token_scope'] = 'operator-reviewed-matching-credential'
         report['token_scope_machine_verified'] = False
+        report['credentials_review'] = 'explicit-operator-attestation'
+        report['known_repository_cloudflare_tokens_absent'] = True
     return report
 
 

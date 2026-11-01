@@ -30,8 +30,23 @@ account-wide Workers Admin, DNS, R2, Vectorize or token-administration access
 merely for this path. The deploy token cannot necessarily read its own policy;
 a successful operation does not prove least privilege. After reviewing the
 actual token scope, bind that exact credential's SHA-256 to environment variable
-`PUBLIC_SEARCH_TOKEN_SCOPE_SHA256`. Reports explicitly label this review as
-operator-attested, not machine-verified. Token rotation requires another review.
+`PUBLIC_SEARCH_TOKEN_SCOPE_SHA256`. This identifies the credential; calculating
+or copying this hash does not review its permissions. Actual review and removal
+of repository-secret copies are separately attested by
+`PUBLIC_SEARCH_CREDENTIALS_REVIEWED_SHA256`, bound to the same token hash. If it
+is absent or differs, publication stops before dependency installation, archive
+download or Cloudflare access. Do not populate it merely from successful token
+verification, Worker reads or empty resource lists. Reports label completed
+review as operator-attested, not machine-verified. Rotation requires another
+review, even after the identity hash is updated.
+
+The owner setup command checks repository secret names without reading their
+values. It stops before writes if `CLOUDFLARE_API_TOKEN`,
+`PROBE_CLOUDFLARE_API_TOKEN` or `PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN` remains at
+repository scope. Copying a working token into an environment leaves the old
+repository credential usable outside its rules. Move legacy credentials to
+protected environments, update their jobs to use those environments, or retire
+them first. The installer does not delete them or revoke Cloudflare tokens.
 
 The connected GitHub tools cannot administer environment settings. Run this with
 the repository owner's `gh` login after reviewing the token in Cloudflare:
@@ -42,6 +57,9 @@ python src/public_search_release.py setup --reviewer vinnik-dmitry07 --set-crede
 
 It configures required review and main-only branches, disables admin bypass,
 removes other deployment rules, then sets the two secrets using hidden prompts.
+It clears the previous review before rotating credentials and stores the new
+review digest only after all credential writes succeed. An interrupted setup
+cannot carry forward the previous approval.
 For this single-maintainer setup, self-review is permitted; a reviewer can approve
 their own manual dispatch. Nothing is deployed. Setup uses standard-library
 Python and `gh`; credentials are never passed as command arguments or printed.

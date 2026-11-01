@@ -1120,6 +1120,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Verify actual environment protections and reviewed credential
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN }}
+          TOKEN_SCOPE_SHA256: ${{ vars.PUBLIC_SEARCH_TOKEN_SCOPE_SHA256 }}
+          CREDENTIALS_REVIEWED_SHA256: ${{ vars.PUBLIC_SEARCH_CREDENTIALS_REVIEWED_SHA256 }}
+        run: python src/public_search_release.py controls --report public-api-reports/controls.json
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -1130,12 +1137,6 @@ jobs:
           python -m pip install -r requirements-agent.txt numpy==2.3.4
           npm --prefix worker ci
           npm --prefix worker run build:probe
-      - name: Verify actual environment protections and reviewed credential
-        env:
-          GH_TOKEN: ${{ github.token }}
-          CLOUDFLARE_API_TOKEN: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN }}
-          TOKEN_SCOPE_SHA256: ${{ vars.PUBLIC_SEARCH_TOKEN_SCOPE_SHA256 }}
-        run: python src/public_search_release.py controls --report public-api-reports/controls.json
       - name: Restore the permanent Release archive without inference
         id: restore
         timeout-minutes: 4
