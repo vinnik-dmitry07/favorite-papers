@@ -1,0 +1,49 @@
+# Isolated bounded live queries against the authenticated retained full corpus.
+# Restore via src/restore_full_search_artifact.py; never encode the corpus here.
+# A run must supply its own name, expiring token and PROBE_EXPIRES_AT.
+name = "key-papers-static-probe"
+main = "src/full-real-search-do-probe-entry.ts"
+compatibility_date = "2026-10-15"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+[vars]
+PROBE_CORPUS_MODE = "full"
+PROBE_MANIFEST_SHA = "6b9c87883f525a128eb9a48aead5914d9524ba2f7433ff3b14c62b3c0d970b47"
+
+[assets]
+directory = "../full-probe-reports/replay/runtime"
+binding = "ASSETS"
+run_worker_first = true
+
+[ai]
+binding = "AI"
+
+[[durable_objects.bindings]]
+name = "SEARCH_PROBE"
+class_name = "StaticSearchProbe"
+
+[exports.StaticSearchProbe]
+type = "durable-object"
+storage = "sqlite"
+
+[observability]
+enabled = true
+head_sampling_rate = 1
+
+[observability.logs]
+enabled = true
+head_sampling_rate = 1
+invocation_logs = true
+
+[observability.traces]
+enabled = true
+head_sampling_rate = 1
+
+[[rules]]
+type = "Text"
+globs = ["**/*.txt"]
+fallthrough = true
+
+[build]
+command = "npm run build:probe"

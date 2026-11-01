@@ -1,0 +1,51 @@
+# Stable public API; assets restored from the authenticated retained full corpus.
+name = "key-papers-search"
+main = "src/public-search-entry.ts"
+compatibility_date = "2026-10-15"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+[vars]
+PUBLIC_MANIFEST_SHA = "6b9c87883f525a128eb9a48aead5914d9524ba2f7433ff3b14c62b3c0d970b47"
+PUBLICATION_ID = "UNPUBLISHED"
+
+[assets]
+directory = "../full-probe-reports/replay/runtime"
+binding = "ASSETS"
+run_worker_first = true
+
+[ai]
+binding = "AI"
+
+[[durable_objects.bindings]]
+name = "PUBLIC_SEARCH"
+class_name = "PublicSearch"
+
+[exports.PublicSearch]
+type = "durable-object"
+storage = "sqlite"
+
+[observability]
+enabled = true
+head_sampling_rate = 0.1
+
+[[rules]]
+type = "Text"
+globs = ["**/*.txt"]
+fallthrough = true
+
+# The workflow builds scan.wasm before supplying Cloudflare credentials.
+
+# Worker Previews isolate Durable Object storage; Version URLs do not.
+[previews.vars]
+PUBLIC_MANIFEST_SHA = "6b9c87883f525a128eb9a48aead5914d9524ba2f7433ff3b14c62b3c0d970b47"
+PUBLICATION_ID = "UNPUBLISHED"
+PUBLIC_PREVIEW = "true"
+PUBLIC_PREVIEW_EXPIRES_AT = "EXPIRED"
+
+[previews.ai]
+binding = "AI"
+
+[[previews.durable_objects.bindings]]
+name = "PUBLIC_SEARCH"
+class_name = "PublicSearch"

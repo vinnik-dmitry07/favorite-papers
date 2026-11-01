@@ -1,0 +1,383 @@
+{
+  "schema_version": 1,
+  "kind": "real-agent-navigation-development-measurement",
+  "completed_at": "2026-10-28T22:51:39.172768+00:00",
+  "source_commit": "9dbcb22d804a3cf5d5d9899cacbe6f4a908ef7e1",
+  "corpus_passages": 40575,
+  "new_embedding_calls": 0,
+  "new_provider_calls": 0,
+  "production_deployed": false,
+  "arbitrary_query_embedding_measured": false,
+  "rest": {
+    "questions": 12,
+    "supported_correct": 12,
+    "abstained": 0,
+    "unsupported_answers": 0,
+    "total_calls": 49,
+    "median_calls": 3.0,
+    "call_range": [
+      2,
+      8
+    ],
+    "delivered_code_points_total": 253412,
+    "median_delivered_code_points": 16700.5,
+    "recovered_catalog_argument_errors": 2
+  },
+  "basic_mcp": {
+    "questions": 4,
+    "supported_correct": 3,
+    "abstained": 1,
+    "unsupported_answers": 0,
+    "total_calls": 9,
+    "delivered_code_points_total": 135591,
+    "budget_exhausted_sessions": [
+      "mcp-03"
+    ],
+    "failure": "Expected paper absent from exposed initial candidate pool. Agent read another item, then a second fetch was suppressed for exceeding remaining raw-wire budget. Reformulations were intentionally unavailable in this frozen-vector experiment."
+  },
+  "public_access": {
+    "http_gets": 11,
+    "incoming_deepseekmath_catalog_edges": 67,
+    "grpo_group_size": 64,
+    "grpo_kl_coefficient": 0.04,
+    "titans": "Agent did not locate title in expected alphabetical range; a separate post-journey local catalog check confirms no matching title among 415 records. This is a catalog absence, not an agent retrieval error.",
+    "web_operations": 5,
+    "web_result": "Instructions found in GitHub; both observed Pages guide and llms.txt URLs were inaccessible through the web retrieval tool; search fallback empty. Cause unknown, not proof the endpoint was down.",
+    "positive_title_attempt": {
+      "title": "VICReg",
+      "http_gets": 1,
+      "status": "protocol_invalid_stopped",
+      "reason": "Outer tool truncated initial output; exact delivered size and compliance with the 24000-character budget cannot be certified.",
+      "rerun": false,
+      "counts_toward_success_or_api_failure": false
+    }
+  },
+  "interpretation": "Existing advanced navigation recovered evidence on this small deterministic development selection. This does not establish general accuracy, new-query quality, other models, external MCP clients, public deployment or Cloudflare Free viability. No multiple-passage A/B is justified by the 12 REST outcomes. Basic MCP and REST comparison is descriptive only: tools, pools, reading granularity and raw serialization differ.",
+  "trace_caveat": "Baseline 01 original server log lacks a search-response row. A separately transcribed actual tool output matches reported 4919 code points / 4921 bytes. The original is untouched; its support grade uses a later complete-paper response. No rerun was substituted.",
+  "cases": [
+    {
+      "session_id": "baseline-01",
+      "question_id": "full-natural-055",
+      "question": "What validation had the proposed single-source optical computing design actually provided in the available preprint?",
+      "outcome": "supported_correct",
+      "api_attempts": 3,
+      "confirmed_http_successes_in_original_log": 2,
+      "http_errors": [],
+      "delivered_code_points": 14483,
+      "delivered_utf8_bytes": 14606,
+      "semantic_search_calls": 1,
+      "original_log_complete": false,
+      "navigation_seconds": 6.401,
+      "navigation_time_scope": "First API request to last API response, includes agent decisions between calls, excludes final-answer generation and setup; not Cloudflare performance.",
+      "transcript_sha256": "12ed251eb6d1660e960d7ce5919fc8273d28e10468a731978255f5e42fb048f0",
+      "answer_sha256": "62be54727fccfb896e2c55d4f253a86b1a49f226191977e444bd4ccaa8b2e3e3"
+    },
+    {
+      "session_id": "baseline-02",
+      "question_id": "full-natural-062",
+      "question": "Why can accumulating tool results make selective reading of an agent's existing context useful even when retrieval is already available?",
+      "outcome": "supported_correct",
+      "api_attempts": 3,
+      "confirmed_http_successes_in_original_log": 3,
+      "http_errors": [],
+      "delivered_code_points": 21493,
+      "delivered_utf8_bytes": 21545,
+      "semantic_search_calls": 1,
+      "original_log_complete": true,
+      "navigation_seconds": 8.304,
+      "navigation_time_scope": "First API request to last API response, includes agent decisions between calls, excludes final-answer generation and setup; not Cloudflare performance.",
+      "transcript_sha256": "515bd884440011fc2dbb951bd835a8069857727769c9b7191424855cc52ae52e",
+      "answer_sha256": "75e9b868faf64d8867793f390870775eecb85915738246db692a364de29af949"
+    },
+    {
+      "session_id": "baseline-03",
+      "question_id": "full-natural-009",
+      "question": "In the streaming image-classification experiment with changing classes, how did the learned learning rates evolve in early layers compared with the final layer?",
+      "outcome": "supported_correct",
+      "api_attempts": 8,
+      "confirmed_http_successes_in_original_log": 7,
+      "http_errors": [
+        {
+          "call": 3,
+          "status": 400
+        }
+      ],
+      "delivered_code_points": 45796,
+      "delivered_utf8_bytes": 46992,
+      "semantic_search_calls": 1,
+      "original_log_complete": true,
+      "navigation_seconds": 40.187,
+      "navigation_time_scope": "First API request to last API response, includes agent decisions between calls, excludes final-answer generation and setup; not Cloudflare performance.",
+      "transcript_sha256": "ddf06d4373b40a76a256941351633dbd2c697773b56424569f236b5c0910e57f",
+      "answer_sha256": "28caa3c1a5aca8ba7f0ea0e1f8b7430f79ceb29df145b3ef4f618ee09cac4d16"
+    },
+    {
+      "session_id": "baseline-04",
+      "question_id": "full-natural-020",
+      "question": "In the financial forecasting review, how does an expanding training set differ from a rolling training window?",
+      "outcome": "supported_correct",
+      "api_attempts": 3,
+      "confirmed_http_successes_in_original_log": 3,
+      "http_errors": [],
+      "delivered_code_points": 13549,
+      "delivered_utf8_bytes": 13579,
+      "semantic_search_calls": 1,
+      "original_log_complete": true,
+      "navigation_seconds": 8.878,
+      "navigation_time_scope": "First API request to last API response, includes agent decisions between calls, excludes final-answer generation and setup; not Cloudflare performance.",
+      "transcript_sha256": "f99727219fe7c3853f84a98703770d99788f50234da08aa7f0459b9b380c59fa",
+      "answer_sha256": "e7b5a8059739b9e0861b61d4636ba6332bfc1f7e72d3244e73a7424ba4256125"
+    },
+    {
+      "session_id": "baseline-05",
+      "question_id": "full-natural-045",
+      "question": "How were proposed historical space-mission routes compared fairly with reference routes, rather than with real missions' operational fuel budgets?",
+      "outcome": "supported_correct",
+      "api_attempts": 4,
+      "confirmed_http_successes_in_original_log": 4,
+      "http_errors": [],
+      "delivered_code_points": 27270,
+      "delivered_utf8_bytes": 27451,
+      "semantic_search_calls": 1,
+      "original_log_complete": true,
+      "navigation_seconds": 21.861,
+      "navigation_time_scope": "First API request to last API response, includes agent decisions between calls, excludes final-answer generation and setup; not Cloudflare performance.",
+      "transcript_sha256": "96b463c93a6dc93b9941963c4df3883094e685bab72faa0d98565a2b1aa38748",
+      "answer_sha256": "c35cde13dd6c472417cbef9af238bc5d9e77c9fa27c2d27400c35d5360180044"
+    },
+    {
+      "session_id": "baseline-06",
+      "question_id": "full-natural-013",
+      "question": "How much did learned context improve a general 8-billion-parameter model over the dedicated safety model on Aegis2.0?",
+      "outcome": "supported_correct",
+      "api_attempts": 3,
+      "confirmed_http_successes_in_original_log": 3,
+      "http_errors": [],
+      "delivered_code_points": 12752,
+      "delivered_utf8_bytes": 12778,
+      "semantic_search_calls": 1,
+      "original_log_complete": true,
+      "navigation_seconds": 20.767,
+      "navigation_time_scope": "First API request to last API response, includes agent decisions between calls, excludes final-answer generation and setup; not Cloudflare performance.",
+      "transcript_sha256": "e8fdff4d5d68e3899388c2f1e276602bf9b5245e6292c960eb2160a49553c763",
+      "answer_sha256": "b18018345c7588b8a6004a96131ca5449da50550269a140fb5ab1ca65e7b0cc8"
+    },
+    {
+      "session_id": "baseline-07",
+      "question_id": "full-natural-024",
+      "question": "When tested on made-up words introduced in noun-like or verb-like contexts, how well did BERT transfer their grammatical categories?",
+      "outcome": "supported_correct",
+      "api_attempts": 2,
+      "confirmed_http_successes_in_original_log": 2,
+      "http_errors": [],
+      "delivered_code_points": 11217,
+      "delivered_utf8_bytes": 11277,
+      "semantic_search_calls": 1,
+      "original_log_complete": true,
+      "navigation_seconds": 3.492,
+      "navigation_time_scope": "First API request to last API response, includes agent decisions between calls, excludes final-answer generation and setup; not Cloudflare performance.",
+      "transcript_sha256": "408f0f2dc697aa712b84b976e36025286b94129bfc7886280c41fb12e0da70ce",
+      "answer_sha256": "58696e3b4fb61c775653dd6bf1b161371ef633797cc196a8c72a7e9b5e4e332a"
+    },
+    {
+      "session_id": "baseline-08",
+      "question_id": "full-natural-044",
+      "question": "What relationship did the study report between cross-model representational agreement and downstream reasoning performance?",
+      "outcome": "supported_correct",
+      "api_attempts": 7,
+      "confirmed_http_successes_in_original_log": 6,
+      "http_errors": [
+        {
+          "call": 2,
+          "status": 400
+        }
+      ],
+      "delivered_code_points": 38019,
+      "delivered_utf8_bytes": 38216,
+      "semantic_search_calls": 1,
+      "original_log_complete": true,
+      "navigation_seconds": 28.925,
+      "navigation_time_scope": "First API request to last API response, includes agent decisions between calls, excludes final-answer generation and setup; not Cloudflare performance.",
+      "transcript_sha256": "066a775c74d9bc8a1cebaed5458c274a5d4d54c4ae7f491e8fff9c47b8d5e0df",
+      "answer_sha256": "f66ac810c7504ac077ec3080d61fde6d74c9d48c5d21fd27ad137991eb78c382"
+    },
+    {
+      "session_id": "baseline-09",
+      "question_id": "full-natural-021",
+      "question": "Why can averaging a deception detector's token scores give the wrong judgment for an entire response?",
+      "outcome": "supported_correct",
+      "api_attempts": 6,
+      "confirmed_http_successes_in_original_log": 6,
+      "http_errors": [],
+      "delivered_code_points": 22250,
+      "delivered_utf8_bytes": 22388,
+      "semantic_search_calls": 1,
+      "original_log_complete": true,
+      "navigation_seconds": 21.385,
+      "navigation_time_scope": "First API request to last API response, includes agent decisions between calls, excludes final-answer generation and setup; not Cloudflare performance.",
+      "transcript_sha256": "8007b81620ffa66f93965ac999dd8ccc4e90fc898ebe27c2e49c2da96c18c17d",
+      "answer_sha256": "e3317ca5228bf975994aa95e2e67d7b45380c4cbaa35ff0017340b1d57aa701d"
+    },
+    {
+      "session_id": "baseline-10",
+      "question_id": "full-natural-025",
+      "question": "How does imposing a minimum batch standard deviation on every embedding coordinate help prevent all examples receiving the same representation?",
+      "outcome": "supported_correct",
+      "api_attempts": 3,
+      "confirmed_http_successes_in_original_log": 3,
+      "http_errors": [],
+      "delivered_code_points": 15172,
+      "delivered_utf8_bytes": 15477,
+      "semantic_search_calls": 1,
+      "original_log_complete": true,
+      "navigation_seconds": 10.266,
+      "navigation_time_scope": "First API request to last API response, includes agent decisions between calls, excludes final-answer generation and setup; not Cloudflare performance.",
+      "transcript_sha256": "20aaa10f03f896bb2eeeb81bdef0d66d61540382d08643419ca65f3ee2000c23",
+      "answer_sha256": "6787453877c8b4c40723d8c95966ca5d6294978b3d19704c769fa2c12b87e5e2"
+    },
+    {
+      "session_id": "baseline-11",
+      "question_id": "full-natural-034",
+      "question": "Compared with brief image descriptions, how much more often did the two more detailed annotation levels mention actions?",
+      "outcome": "supported_correct",
+      "api_attempts": 3,
+      "confirmed_http_successes_in_original_log": 3,
+      "http_errors": [],
+      "delivered_code_points": 13182,
+      "delivered_utf8_bytes": 13207,
+      "semantic_search_calls": 1,
+      "original_log_complete": true,
+      "navigation_seconds": 15.276,
+      "navigation_time_scope": "First API request to last API response, includes agent decisions between calls, excludes final-answer generation and setup; not Cloudflare performance.",
+      "transcript_sha256": "f1972f96f84f0c870283f02298922a3265a1c5fcaab129214919c920651fb2ed",
+      "answer_sha256": "52c10ab020d9633b27e2ef91d5695839424573f61e39683b05173952e8f13043"
+    },
+    {
+      "session_id": "baseline-12",
+      "question_id": "full-natural-015",
+      "question": "What two model-size effects can make raw comparisons of neural representations misleading?",
+      "outcome": "supported_correct",
+      "api_attempts": 4,
+      "confirmed_http_successes_in_original_log": 4,
+      "http_errors": [],
+      "delivered_code_points": 18229,
+      "delivered_utf8_bytes": 18244,
+      "semantic_search_calls": 1,
+      "original_log_complete": true,
+      "navigation_seconds": 24.365,
+      "navigation_time_scope": "First API request to last API response, includes agent decisions between calls, excludes final-answer generation and setup; not Cloudflare performance.",
+      "transcript_sha256": "157770ff3b15c64ec4747201cdc3dcd64a2423a84d07a371d72feba39cc676a0",
+      "answer_sha256": "867ebe8f8bb0f6bdcd52ce5d456174343a9dc9c55d5b9fcfba1ebb4e760c3495"
+    },
+    {
+      "session_id": "mcp-01",
+      "question_id": "full-natural-055",
+      "question": "What validation had the proposed single-source optical computing design actually provided in the available preprint?",
+      "outcome": "supported_correct",
+      "api_attempts": 2,
+      "confirmed_http_successes_in_original_log": 2,
+      "http_errors": [],
+      "delivered_code_points": 22060,
+      "delivered_utf8_bytes": 22302,
+      "semantic_search_calls": 1,
+      "original_log_complete": true,
+      "navigation_seconds": 11.936,
+      "navigation_time_scope": "First API request to last API response, includes agent decisions between calls, excludes final-answer generation and setup; not Cloudflare performance.",
+      "transcript_sha256": "6202063af444f9bcae8e2cd758e30a98a4ae7cb2b96999d75f6ce07a1bb79224",
+      "answer_sha256": "5feeaef1e68e9fa00561aa1b2f771a43d0871033f5e5f7759ff72bfa145997b9"
+    },
+    {
+      "session_id": "mcp-02",
+      "question_id": "full-natural-062",
+      "question": "Why can accumulating tool results make selective reading of an agent's existing context useful even when retrieval is already available?",
+      "outcome": "supported_correct",
+      "api_attempts": 2,
+      "confirmed_http_successes_in_original_log": 2,
+      "http_errors": [],
+      "delivered_code_points": 37452,
+      "delivered_utf8_bytes": 37532,
+      "semantic_search_calls": 1,
+      "original_log_complete": true,
+      "navigation_seconds": 9.983,
+      "navigation_time_scope": "First API request to last API response, includes agent decisions between calls, excludes final-answer generation and setup; not Cloudflare performance.",
+      "transcript_sha256": "f8f47011d7cafa0256fe2336744ebf893e7be09f12c45f85b81031979b03ffac",
+      "answer_sha256": "a2be8c549a841f080e0b93e2a52b2e374ab912b7ba359565926253ed90dadc07"
+    },
+    {
+      "session_id": "mcp-03",
+      "question_id": "full-natural-009",
+      "question": "In the streaming image-classification experiment with changing classes, how did the learned learning rates evolve in early layers compared with the final layer?",
+      "outcome": "abstained",
+      "api_attempts": 3,
+      "confirmed_http_successes_in_original_log": 2,
+      "http_errors": [
+        {
+          "call": 3,
+          "status": 429
+        }
+      ],
+      "delivered_code_points": 38451,
+      "delivered_utf8_bytes": 38867,
+      "semantic_search_calls": 1,
+      "original_log_complete": true,
+      "navigation_seconds": 23.979,
+      "navigation_time_scope": "First API request to last API response, includes agent decisions between calls, excludes final-answer generation and setup; not Cloudflare performance.",
+      "transcript_sha256": "9aea431ec4a7c952a8d48c40f91b245218a90b7348355449d17652c8f38cd40e",
+      "answer_sha256": "f9c35582b1d25fa49398c57137debb1b67f7991d5f3f9856715a1eea1a8bd803"
+    },
+    {
+      "session_id": "mcp-04",
+      "question_id": "full-natural-020",
+      "question": "In the financial forecasting review, how does an expanding training set differ from a rolling training window?",
+      "outcome": "supported_correct",
+      "api_attempts": 2,
+      "confirmed_http_successes_in_original_log": 2,
+      "http_errors": [],
+      "delivered_code_points": 37628,
+      "delivered_utf8_bytes": 37646,
+      "semantic_search_calls": 1,
+      "original_log_complete": true,
+      "navigation_seconds": 4.181,
+      "navigation_time_scope": "First API request to last API response, includes agent decisions between calls, excludes final-answer generation and setup; not Cloudflare performance.",
+      "transcript_sha256": "1e30636bb67a62fc7d428fae85e496d7601dd944871e1408c1dc018c8135318a",
+      "answer_sha256": "8719c24576d2e7c970854e89d957b3a3ab47a33cebeacf2dcd1a2428c45e551e"
+    }
+  ],
+  "files": {
+    "journey-2026-10-28.evidence.json.gz": {
+      "bytes": 202852,
+      "sha256": "9eda2dd54da8f79b2270baeb8978307a1e42f2fb121ec077a94c353d980701db"
+    },
+    "journey-2026-10-28.runtime.mjs.gz": {
+      "bytes": 280850,
+      "sha256": "b6ef922e7951a92a2e8b2be2509fe97161c5e8117f7f12299959520fda444858"
+    },
+    "journey-2026-10-28-protocol.json": {
+      "bytes": 8678,
+      "sha256": "8fac4c24d09fc06d8dca8f64314c5491fd10c0c8e5b95f3521da11a2831c798a"
+    },
+    "journey-2026-10-28-mcp-protocol.json": {
+      "bytes": 2523,
+      "sha256": "4187b3b9afd73a2525e0f60966de9f3cfd34d09f8904823e2b3c38683658c56b"
+    },
+    "journey-2026-10-28.public-web-journey.json": {
+      "bytes": 6240,
+      "sha256": "eb59cd830ac9058f92fa50dec8d544cc45f0abfcf587b42d19d963bb0668a535"
+    },
+    "journey-2026-10-28.public-http-journey.json.gz": {
+      "bytes": 45476,
+      "sha256": "910fb6e35f6d139199543922d0d86336761652b6f2bb88cbaddfc4bc40cfbac8"
+    },
+    "journey-2026-10-28.public-catalog-positive.json": {
+      "bytes": 2828,
+      "sha256": "e6203040363a4c10ebbdc69c5aa0443cbdd5ad45467076bda77b55af68cf30d7"
+    }
+  },
+  "executed_sources": {
+    "worker/probe-kernel/agent-journey.ts": "871d10a7798d91176b5fe66f0c1e9f78667cc82304a34d35eb2487b9e27774e6",
+    "src/run_agent_journey_session.py": "1ff906fc074575f877f80e8a68c7a14647916ce9cb354bef139301c8e677c338",
+    "worker/probe-kernel/scan.wasm": "ee901fbad000de35a98d12ad48e3d8d5fff34378643dfb5ea13fe1c4b3075ae6",
+    "worker/tokenizer/vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3",
+    "worker/package-lock.json": "6e82629b400c7e5e49a6fe2a5ade81d23367bfdf40edce5c10b633db71f44c4c"
+  }
+}

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from copy import deepcopy
 import sys
 from pathlib import Path
 
@@ -13,6 +14,7 @@ sys.path.insert(0, str(SRC))
 from build_agent_index import (  # noqa: E402
     WordPieceTokenizer,
     build_release,
+    embedding_signature,
     load_embed,
     vector_id,
 )
@@ -82,6 +84,58 @@ def test_unchanged_passage_keeps_its_vector_without_a_release_stamp():
     assert 'corpus_version' not in confirmed['vectors'][kept]
     assert 'corpus_version' not in cloud.vectors[kept]['metadata']
     assert confirmed['release_id'] == second['release_id']
+
+
+@pytest.mark.parametrize('target_slot', ['a', 'b'])
+def test_tokenizer_only_release_reuses_provider_vectors_and_cache(target_slot):
+    previous_config = deepcopy(EMBED)
+    # Before literal-special-token support these characters were ordinary
+    # input text. Both releases send the exact same text to Workers AI.
+    previous_config['tokenizer']['added_tokens'] = [
+        row for row in previous_config['tokenizer']['added_tokens']
+        if row['content'] not in {'[PAD]', '[MASK]'}
+    ]
+    texts = {'arxiv:1': '# Title\nUse the [MASK] model for this experiment.'}
+    nodes = [_node(key) for key in texts]
+    previous = build_release(nodes, [], texts, previous_config)
+    current = build_release(nodes, [], texts, EMBED)
+    assert previous['build_signature'] != current['build_signature']
+    assert previous['embedding_signature'] == current['embedding_signature']
+    assert previous['report']['tokens'] != current['report']['tokens']
+    assert previous['passages'][0]['input_hash'] == (
+        current['passages'][0]['input_hash']
+    )
+    cloud = MemoryCloud(previous_config)
+    Publisher(cloud, previous_config).publish(previous, 'a', promote=False)
+    calls, upserts = cloud.embed_calls, cloud.upsert_calls
+    Publisher(cloud, EMBED).publish(current, target_slot, promote=False)
+    assert cloud.embed_calls == calls
+    if target_slot == 'a':
+        assert cloud.upsert_calls == upserts
+    else:
+        assert cloud.upsert_calls > upserts
+    assert cloud.get_json(slot_confirmed_key(target_slot))[
+        'build_signature'
+    ] == current['build_signature']
+
+
+@pytest.mark.parametrize('changed', ['text', 'model'])
+def test_provider_migration_does_not_reuse_changed_inputs(changed):
+    texts = {'arxiv:1': '# Title\nOriginal input to the embedding model.'}
+    nodes = [_node(key) for key in texts]
+    cloud = MemoryCloud(EMBED)
+    previous = build_release(nodes, [], texts, EMBED)
+    Publisher(cloud, EMBED).publish(previous, 'a', promote=False)
+    calls = cloud.embed_calls
+    config = deepcopy(EMBED)
+    if changed == 'text':
+        texts['arxiv:1'] += '\nChanged source sentence.'
+    else:
+        config['model'] += '-next-revision'
+        assert embedding_signature(config) != embedding_signature(EMBED)
+    current = build_release(nodes, [], texts, config)
+    Publisher(cloud, config).publish(current, 'a', promote=False)
+    assert cloud.embed_calls > calls
 
 
 def test_shorten_and_delete_remove_only_stale_slot_ids():

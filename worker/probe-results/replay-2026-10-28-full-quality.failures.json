@@ -1,0 +1,215 @@
+{
+  "kind": "post-hoc-candidate-reading-diagnostic",
+  "queries": 64,
+  "scope": "Uses frozen saved rankings; no new retrieval, model calls, or question edits. Not held-out validation.",
+  "protocols": {
+    "rest": {
+      "candidate_limit": 40,
+      "paper_limit": 8,
+      "dropped_gold_despite_selected_paper": 26,
+      "reading_additional_hits_per_selected_paper": {
+        "1": {
+          "answer_passage": 14,
+          "answer_window": 30
+        },
+        "2": {
+          "answer_passage": 21,
+          "answer_window": 38
+        },
+        "3": {
+          "answer_passage": 25,
+          "answer_window": 41
+        },
+        "5": {
+          "answer_passage": 29,
+          "answer_window": 46
+        },
+        "all": {
+          "answer_passage": 40,
+          "answer_window": 49
+        }
+      }
+    },
+    "mcp_semantic": {
+      "candidate_limit": 25,
+      "paper_limit": 5,
+      "dropped_gold_despite_selected_paper": 25,
+      "reading_additional_hits_per_selected_paper": {
+        "1": {
+          "answer_passage": 14,
+          "answer_window": 42
+        },
+        "2": {
+          "answer_passage": 20,
+          "answer_window": 45
+        },
+        "3": {
+          "answer_passage": 24,
+          "answer_window": 47
+        },
+        "5": {
+          "answer_passage": 28,
+          "answer_window": 50
+        },
+        "all": {
+          "answer_passage": 39,
+          "answer_window": 50
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "query_id": "full-natural-002",
+      "query": "When the hippocampal model retrieves sensory information, what happens to its spatial feature neurons during the update?",
+      "paper_id": "arxiv:2112.04035",
+      "answer_spans": [
+        {
+          "end": 27034,
+          "quote": "when retrieving 𝒙 ~ {\\bm{\\tilde{x}}} the 𝒈 ~ {\\bm{\\tilde{g}}} feature neurons stay constant while the 𝒙 ~ {\\bm{\\tilde{x}}} neurons are updated",
+          "quote_sha256": "235c68d7cf1a81cfe7fe616392679470b5b3e8e1d312b6b8cf383d659c47b208",
+          "start": 26892
+        }
+      ],
+      "gold_chunk_indices": [
+        46
+      ],
+      "fp32_gold_in_top50": true,
+      "int8_gold_in_top50": true,
+      "rest": {
+        "answer_passage": false,
+        "answer_window": false,
+        "context_end": 8910,
+        "context_start": 2910,
+        "paper": true,
+        "selected_rows": [
+          4904,
+          4878,
+          39064,
+          33067,
+          33921,
+          38530,
+          27156,
+          26525
+        ],
+        "source_chunk": false,
+        "target_chunk": 5
+      },
+      "mcp_semantic": {
+        "answer_passage": false,
+        "answer_window": false,
+        "context_end": 16000,
+        "context_start": 0,
+        "paper": true,
+        "selected_rows": [
+          4904,
+          4878,
+          39064,
+          33067
+        ],
+        "source_chunk": false,
+        "target_chunk": 5
+      }
+    },
+    {
+      "query_id": "full-natural-003",
+      "query": "How is evidence divided between two communicating language models in the ten-paragraph multi-hop question experiment?",
+      "paper_id": "arxiv:2605.22863",
+      "answer_spans": [
+        {
+          "end": 18052,
+          "quote": "We split these ten paragraphs into two disjoint sets of five, with each set containing one supporting paragraph and four distractors. One set is assigned to the sharer and the other to the receiver.",
+          "quote_sha256": "06d5cdcdc8e14fdf5add21e3325a30ff5c514dd87ce25c3e4a433f0d8e8308a8",
+          "start": 17854
+        }
+      ],
+      "gold_chunk_indices": [
+        31
+      ],
+      "fp32_gold_in_top50": false,
+      "int8_gold_in_top50": false,
+      "rest": {
+        "answer_passage": false,
+        "answer_window": false,
+        "context_end": 24167,
+        "context_start": 18167,
+        "paper": true,
+        "selected_rows": [
+          17967,
+          32152,
+          28858,
+          21029,
+          5479,
+          8667,
+          12608,
+          26411
+        ],
+        "source_chunk": false,
+        "target_chunk": 32
+      },
+      "mcp_semantic": {
+        "answer_passage": false,
+        "answer_window": true,
+        "context_end": 32000,
+        "context_start": 16000,
+        "paper": true,
+        "selected_rows": [
+          17967,
+          32152,
+          28858,
+          21029,
+          5479
+        ],
+        "source_chunk": false,
+        "target_chunk": 32
+      }
+    },
+    {
+      "query_id": "full-natural-004",
+      "query": "Before feature fusion between two language models, how are their per-token attention keys combined and resized?",
+      "paper_id": "arxiv:2605.22863",
+      "answer_spans": [
+        {
+          "end": 4888,
+          "quote": "The fuser concatenates these keys and flattens them along the head dimension to form a joint per-token feature vector. A linear layer then projects this vector down to the receiver’s hidden dimension.",
+          "quote_sha256": "ad3f0490c68f8cc26c5b8e8b9d17a6b3f6f298fe311055db43b1cb90da678efd",
+          "start": 4688
+        }
+      ],
+      "gold_chunk_indices": [
+        7
+      ],
+      "fp32_gold_in_top50": false,
+      "int8_gold_in_top50": false,
+      "rest": {
+        "answer_passage": false,
+        "answer_window": false,
+        "paper": false,
+        "selected_rows": [
+          11332,
+          19624,
+          7948,
+          6522,
+          28513,
+          25912,
+          7599,
+          11105
+        ],
+        "source_chunk": false
+      },
+      "mcp_semantic": {
+        "answer_passage": false,
+        "answer_window": false,
+        "paper": false,
+        "selected_rows": [
+          11332,
+          19624,
+          7948,
+          6522,
+          28513
+        ],
+        "source_chunk": false
+      }
+    }
+  ]
+}

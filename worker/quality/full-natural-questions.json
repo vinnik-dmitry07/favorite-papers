@@ -1,0 +1,2152 @@
+{
+  "schema_version": 1,
+  "diagnostic_id": "full-natural-v1",
+  "name": "Full-corpus natural-language development diagnostic",
+  "status": "frozen-before-retrieval-evaluation",
+  "authorship": "model-authored",
+  "purpose": "Frozen DEVELOPMENT diagnostic for passage retrieval and source-grounded answering; not human gold and not a representative or independent holdout.",
+  "frozen_at": "2026-10-25T22:32:48.467363+00:00",
+  "frozen_before_retrieval_evaluation": true,
+  "retrieval_results_observed_during_authoring": false,
+  "question_count": 64,
+  "paper_count": 32,
+  "answer_span_policy": "all",
+  "offset_convention": "Zero-based Unicode code-point offsets into canonical paper.text; end is exclusive. Quotes match exact canonical slices.",
+  "gold_chunk_id_convention": "Exact row id from agent_full_probe/probe.json; SHA256 of canonical JSON [slot, paper_id, chunk_index], slot=full-probe. gold_chunk_keys are paper_id#chunk_index for slot-independent identification.",
+  "provenance": {
+    "source_path": "assets/graph.json",
+    "source_git_sha": "96919836dc418cd5bd9773de498e83e39d84bb96",
+    "source_graph_sha256": "1ab1543902cb6bd541822320f10df3ccc282e4a217dfb5083e4b2456f7134667",
+    "source_texts_sha256": "f023aed287d2a0702e8f6fc41d09aa3361f4dff7e1162dd9731674a1fcb4e174",
+    "source_embed_sha256": "256feb244c7e979b8515776ebf5ad286b6d3083de1761dae85f3aae41c2780f7",
+    "release_id": "de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409",
+    "canonical_manifest_sha256": "de1ca2f49dbf6b418d6d8571eefeb780a88654745f50490695ee4af3c4332c8d",
+    "release_graph_sha256": "dce042760f976a963a5360e476df31242a2f14840f714f61ce387adcd07b27b8",
+    "build_signature": "8cec41af54e9f4bb7432061c6d77bb5cad8c7f9513b2ce209edd5a638b4476e5",
+    "embedding_signature": "df5126063ec2f6589a0b994d6b7ebaaed8767dd49adb742803ab02b8a666cefe",
+    "rows_sha256": "301d0adf0398172cb637dc765b38b03e1b36f71fb5115b9686fe8073bb2c8e3f",
+    "slot": "full-probe"
+  },
+  "selection": {
+    "seed": "full-natural-v1",
+    "eligibility": "Canonical full-corpus text exists and contains at least 2000 Unicode code points; exclude titles containing DeepSeekMath, case-insensitively.",
+    "excluded_prior_smoke_paper_ids": [
+      "arxiv:2402.03300"
+    ],
+    "eligible_paper_count": 359,
+    "eligible_section_count": 15,
+    "method": "Rank section strings and, independently within each section, paper IDs by ascending SHA256(UTF8('full-natural-v1' + U+0000 + value)). Traverse sections in that order, taking rank 0 from every section, then rank 1, etc., skipping exhausted sections, until 32 distinct papers are selected. No retrieval results or rankings enter selection.",
+    "section_order": [
+      "NeuroAI",
+      "LLMs: architectures, context, training",
+      "Retrieval, embeddings, benchmarks",
+      "Post-training",
+      "Data, training, optimization",
+      "Books",
+      "Agents, open-endedness, AGI",
+      "Representation alignment",
+      "Harness",
+      "Finance",
+      "AI safety and consciousness",
+      "Reasoning and the \"physics\" of language models",
+      "Self-supervised learning and vision",
+      "Other",
+      "Reinforcement learning"
+    ],
+    "selected_papers": [
+      {
+        "selection_index": 0,
+        "paper_id": "arxiv:2112.04035",
+        "section": "NeuroAI",
+        "paper_selection_sha256": "08954535f43dcb6ea203a1f83a66602b72c19c31c22a28828c74efc22c78e4af",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/bfa03c56afb2b9dcd29555345740d1383a9cbeb8cef0af5139256e398066fb47.json",
+        "canonical_paper_file_sha256": "a884ee7a32f55f80c076f2076af58f8e2e4f956f780837d60faf0c6a4732868b",
+        "canonical_text_sha256": "2d5c93bd66ae90948298a9c8781d5fd819aff6027b101c1ccfbaebbd749b83d6",
+        "canonical_code_points": 54700
+      },
+      {
+        "selection_index": 1,
+        "paper_id": "arxiv:2605.22863",
+        "section": "LLMs: architectures, context, training",
+        "paper_selection_sha256": "051e8f1264d82d53acfef2f1780d99f7f9966989819bd492e34dbb206b885d53",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/eb6ed55f9fdbf8d212955b61ff74495737a2ecfacaa3645c7e4402b57e0c3e86.json",
+        "canonical_paper_file_sha256": "73322c7fac68a6621106dfbcec0fe7a597136f96a90b162c7c76fa9a3628abad",
+        "canonical_text_sha256": "bea51d91815aac011d667ab93ec2a0c751e30a1f49907cb718c353922a029caf",
+        "canonical_code_points": 37344
+      },
+      {
+        "selection_index": 2,
+        "paper_id": "arxiv:2606.18543",
+        "section": "Retrieval, embeddings, benchmarks",
+        "paper_selection_sha256": "0b96b26d9650965f3e355c44d3687c45787ad7d1f4dd773d9abd5ad40a8b40c2",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/696d7ac1dfd7539fbe8147ed713574b8eb5a7400a35e96805c7f0c9add99165c.json",
+        "canonical_paper_file_sha256": "294e8b17bcccac4397c22bca60a1e780f82ea26c10c79ab9a7bebca74bc49582",
+        "canonical_text_sha256": "72f6d8b5d95cc658aceca3cc55995bee2ce839f74b1aa785fce80fa8b9501d74",
+        "canonical_code_points": 102889
+      },
+      {
+        "selection_index": 3,
+        "paper_id": "arxiv:2609.16454",
+        "section": "Post-training",
+        "paper_selection_sha256": "0570607722183401a2da79b306ae7d2c0bfabd9defd975a91e783b8b82af478f",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/96b9ce3c41bf5be0185a59605d2cade1d5dcdc9432040a1195506fac45cb96fa.json",
+        "canonical_paper_file_sha256": "030b13848cd68f3c4bc2bf424bba34c50166dd71ad268f5879c01944ea351e9c",
+        "canonical_text_sha256": "a33199371eec0533a18eb7efb043eadba6bceb9e938152ccdeb7238630ce858b",
+        "canonical_code_points": 98879
+      },
+      {
+        "selection_index": 4,
+        "paper_id": "arxiv:2402.02342",
+        "section": "Data, training, optimization",
+        "paper_selection_sha256": "00c453ca92a25a81e57399b016d2ed7fb7f13634b96e8b05239f4c14008d8969",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/6801d4fe20b85924aed2dec1855a35232b2ec1d98e15ec3bc27a0fbe5dfd1af7.json",
+        "canonical_paper_file_sha256": "ddb9cba2309859752aac1c1f42d56f012e913423be84c76258c03848579422ed",
+        "canonical_text_sha256": "d8ebdc818517c6d8974e1449060d609d362d0148ab8457a4ebf4451bc3c1de4d",
+        "canonical_code_points": 128659
+      },
+      {
+        "selection_index": 5,
+        "paper_id": "arxiv:2201.09746",
+        "section": "Books",
+        "paper_selection_sha256": "03684843413d0ce5e4900228d4760539f79e99558f6b4fcb583d8052b142dd0c",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/858e0104d53b9ae09818c743578349bb5385c3aed320640a292c13f01ea5b6d8.json",
+        "canonical_paper_file_sha256": "574f756a4cba989ebff6d386b6e6682da6cf91d6139c1d1dd89f826f37bbb5d2",
+        "canonical_text_sha256": "aea660c9f953fc2e2bec381b1cc96899c6d924bc7d2b7ba52e3eecbc0fa4258f",
+        "canonical_code_points": 8536
+      },
+      {
+        "selection_index": 6,
+        "paper_id": "arxiv:2601.21557",
+        "section": "Agents, open-endedness, AGI",
+        "paper_selection_sha256": "0142544e2e07f8b5e7f351fdf2ca0081e07dd52e1416e0be134b7e436ffae784",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/bedaeecadf58846f4728c50c03396fc96ba18429ecf14052b4c5e177394a246e.json",
+        "canonical_paper_file_sha256": "1f2445f4ace95d33c7dd9c0e82a31bc7a1c115df73e3655c0f9d10de90111af1",
+        "canonical_text_sha256": "8df626719f9ba2d9f56a46e3561422d59df2e76d60c5f139c6f7f1d71ed6e0ee",
+        "canonical_code_points": 62573
+      },
+      {
+        "selection_index": 7,
+        "paper_id": "arxiv:2602.14486",
+        "section": "Representation alignment",
+        "paper_selection_sha256": "27dc687829ed3edb452b0a67af65d76c2f0e56883ff62d760d6a6b5122adf7b6",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/7f56b2d833094d17524bf9ad90c5d16bc602e9888589afd624ae8efc3f9d9fc0.json",
+        "canonical_paper_file_sha256": "e649ad879ee5671936dd475216bf8801de289f62d2abaf8fb77d57348aabbca2",
+        "canonical_text_sha256": "8cbcfb74edb953bbde338e976b1c7e4d7348c742f3d5170293909356bfc149af",
+        "canonical_code_points": 117409
+      },
+      {
+        "selection_index": 8,
+        "paper_id": "arxiv:2606.01770",
+        "section": "Harness",
+        "paper_selection_sha256": "18eb76f5c2c4019250e20429cf38eb985b558072148fd3d8535fb83bb25b4458",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/e168e03e04c685d889bb8d0c68d63fc7aaa73099093ade681bebd7b2d1069bac.json",
+        "canonical_paper_file_sha256": "ef95189f9a377ba94b464d63b2ed907689e15909498f67e13621420400a4d44a",
+        "canonical_text_sha256": "d6b44de1fe42096ce67f117fa3a95aa75fcef2a8c883060d2b1678b284d75f85",
+        "canonical_code_points": 50453
+      },
+      {
+        "selection_index": 9,
+        "paper_id": "arxiv:2003.01859",
+        "section": "Finance",
+        "paper_selection_sha256": "abb4e1b4a8f61271afb763b6311751290e4f56b1753347293e5617cb3d4e32e1",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/524c5cd6ea249552053f530cd3a818510c330d82c7845410c4d74c4e648b8669.json",
+        "canonical_paper_file_sha256": "4d52688ecbd43a49f7d110b97e9d89687d2c111c8cfdc9cee15a0b416441dfa2",
+        "canonical_text_sha256": "ab54a8cad608bcfc87e3a4dc15415016be000a8899a1cc5a2c128d9d8c8a1a08",
+        "canonical_code_points": 65690
+      },
+      {
+        "selection_index": 10,
+        "paper_id": "arxiv:2502.03407",
+        "section": "AI safety and consciousness",
+        "paper_selection_sha256": "315916bee5cfa8ae722a88abb417a41ecdb4d074563cbf942318394e06dc0c6a",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/8297cbfb305547d6946bba3998d8921b9578398ed371961d3f0eeadd871e4a49.json",
+        "canonical_paper_file_sha256": "4c102ba42ad3045a7875beb4d2062434e72a8988efb035112a5abfb33f21e474",
+        "canonical_text_sha256": "ff2a9a96a36295f2a181ba0832353c73a6e5c64a2eab2ac7640d346b2151e40b",
+        "canonical_code_points": 50205
+      },
+      {
+        "selection_index": 11,
+        "paper_id": "arxiv:2301.06627",
+        "section": "Reasoning and the \"physics\" of language models",
+        "paper_selection_sha256": "0e6f0784d5d65a99fb2b640c9828469f84ab59c6c882633bd7362837e2e172e1",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/3791d7ed420be517ded1ee7ae5558cf6afa948ea5b841a76ec3da8a9134ec565.json",
+        "canonical_paper_file_sha256": "c3788f0f42f1b25a0848c1a4713d125b7247a95e3f4adf71d96336127f66b24b",
+        "canonical_text_sha256": "15618b730bf6420b26b656d95f88900a680a7200fc8448fb78c4ed6a3b6b1bd4",
+        "canonical_code_points": 72564
+      },
+      {
+        "selection_index": 12,
+        "paper_id": "arxiv:2105.04906",
+        "section": "Self-supervised learning and vision",
+        "paper_selection_sha256": "1a1bce63af92f71da10001011c9188455f0298beadb4a60a691d105f3896a9bb",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/822b6414fb02bd6c746e0d559fd3dcc60766476142ebae7795b02bc6c45223ce.json",
+        "canonical_paper_file_sha256": "017906557f629f14004f0ccf6bf0701f4d8d561387b5bf327ca6e1c0c689e3b2",
+        "canonical_text_sha256": "f87bf0c7c87c7b6c8312c3095932b19073866d2637347fbf1b127d85a2848ad6",
+        "canonical_code_points": 32804
+      },
+      {
+        "selection_index": 13,
+        "paper_id": "doi:10.1038/s41566-024-01394-2",
+        "section": "Other",
+        "paper_selection_sha256": "5cf6fc4a66184bbf95555bdb945aa9de2517840e4c72c3938194dd92edeed8fd",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/d76c7e42328d59edd381378f058bcbe3fa95ed88309ef2d703a9a5ca4b96d27b.json",
+        "canonical_paper_file_sha256": "265255d1f7c14aec02ed6c1d13fab76cb37ff0917f4560994b56a4c11c4db2d1",
+        "canonical_text_sha256": "27873df468363019dac0dc08f8ce0f6dd4b5aa192626c58c18ab304430347ea8",
+        "canonical_code_points": 58739
+      },
+      {
+        "selection_index": 14,
+        "paper_id": "arxiv:2503.14858",
+        "section": "Reinforcement learning",
+        "paper_selection_sha256": "08a0f576f63f88ec8e3c89fdcf6b8ea20a70468b58c7cebd5724e9b042aa7fb4",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/dfa04045239215a4a49544cd31c178090abc3a587e98bd9af08e0ea96d658911.json",
+        "canonical_paper_file_sha256": "a079a28fa7f99cf3bfa7d8dc455387d826ae908d65ba99edb5d3101c928caf31",
+        "canonical_text_sha256": "0c851f8c030452f125cf92f2bbcdc5b3b1579792263ff68c4c1ed8d42fd735e5",
+        "canonical_code_points": 61535
+      },
+      {
+        "selection_index": 15,
+        "paper_id": "arxiv:2112.03978",
+        "section": "NeuroAI",
+        "paper_selection_sha256": "0d181ba2e5a913e0636b262e812e5e527461eaac28669643cca06eebcc79b709",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/23ad84d7f32b6f14b2e6d5af2302b4a78e56350dff242bee3a4021d4b7373f7f.json",
+        "canonical_paper_file_sha256": "1f169ed56082f47777bf9cfb7f8a09e45a7a9a0319c2d1c220df9435b15ed9ba",
+        "canonical_text_sha256": "a9e70ee7e0aab637f5867873a3f54bcc2dddec34ab786eef789ecccdcc23f558",
+        "canonical_code_points": 140478
+      },
+      {
+        "selection_index": 16,
+        "paper_id": "arxiv:2311.06242",
+        "section": "LLMs: architectures, context, training",
+        "paper_selection_sha256": "070633f1cdddd79252200b893f46a760bbe5d5bc4c42fe9de754a826e8323d1b",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/edc2679fff98a10c70395e79c58b56eaf9ec0001691dbca2b33ba94a401a8398.json",
+        "canonical_paper_file_sha256": "826dee50f1712db93630692d04677d2513d530d40b2e952cfced0d18bcbccbea",
+        "canonical_text_sha256": "6db5628e5827f6c5d24c0abdd8a5c2b9e2f93f4aae636275fd89f7bac833671a",
+        "canonical_code_points": 68820
+      },
+      {
+        "selection_index": 17,
+        "paper_id": "arxiv:2101.02235",
+        "section": "Retrieval, embeddings, benchmarks",
+        "paper_selection_sha256": "14940632e251f7a478a0f594419382293d3aff890b2185bc870b19f9aa658475",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/5b44455f95aaaeefc838faceeaf20aaf1008889ca2e479d95291e245d5365a36.json",
+        "canonical_paper_file_sha256": "a7ce487c07c60cbb5f071324f17af5c1c4291a3f5fdde4f6f61ce86b01a121dc",
+        "canonical_text_sha256": "d953ff5925852da5de2a1da4d806251b222cb0f822c8ba96ba2955920c9399f2",
+        "canonical_code_points": 44820
+      },
+      {
+        "selection_index": 18,
+        "paper_id": "arxiv:2601.11061",
+        "section": "Post-training",
+        "paper_selection_sha256": "079d4c6ca389faa2e95f3a57cdd444439a4e81e294ba4d97ecdfb13ddf7d308b",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/96002027cf4c274573f7320398481a0cd73dbf72f18d7f37c783605f5158ea7b.json",
+        "canonical_paper_file_sha256": "82386c956b6aa96a0224b6fd9b7480ea49f8906ca4ce837f32d8d1dca132ec30",
+        "canonical_text_sha256": "f5231bc4491f80da7025251555bfdcf9e96efbf84ac552305cab4c3a50d04cfa",
+        "canonical_code_points": 56464
+      },
+      {
+        "selection_index": 19,
+        "paper_id": "arxiv:2405.16684",
+        "section": "Data, training, optimization",
+        "paper_selection_sha256": "00d0ee38fa5c05b3d717209e8177e0caedb55674cbb106974b63bf90c196b013",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/8d5456f36b61f2ce9a45da0889b5f0318dc816cab90ee57d54bba06246041de3.json",
+        "canonical_paper_file_sha256": "7fb9949c89c0053e6ee14629bef6674d99b8d23ebf195f225feef18cc8318425",
+        "canonical_text_sha256": "34d2e2edba5f88d375f129efcf7a437ad22501c8e8e67f8fc3f6b615756eb3de",
+        "canonical_code_points": 26027
+      },
+      {
+        "selection_index": 20,
+        "paper_id": "arxiv:2402.16823",
+        "section": "Agents, open-endedness, AGI",
+        "paper_selection_sha256": "09a9df6d99ae019c9e53f3101dd0276cde97b463328246dbe77270c07fe18bda",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/750bd3807bf9c9a9b5cd2d60cc14387431aec3fe8a3f942916ca5d8922b2a5b0.json",
+        "canonical_paper_file_sha256": "d70f6ec718d64406028988510515bc836bf397fc189014771e3708e7dbf85788",
+        "canonical_text_sha256": "3e80aedf42e21df05c51ddb915f1a2f2a68df339ef600f6fed4bc0f5ad450f5e",
+        "canonical_code_points": 53258
+      },
+      {
+        "selection_index": 21,
+        "paper_id": "arxiv:2405.07987",
+        "section": "Representation alignment",
+        "paper_selection_sha256": "486cece278cfbbc7b9f29b8d3e6ab451dbf93fb699300a0ffa8cb119c02b8261",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/6c7695929f8bbcea43ee98da9cd8f2fe806f2ba292f0b4e3e7fea2b64254afb4.json",
+        "canonical_paper_file_sha256": "cbee9e891a79be623bdf37deb67b58da542cd8d91b21fd7228a7f1ba23aba67b",
+        "canonical_text_sha256": "a657c4a61f3b4032346eeb1e33240a41039c1d6f2364091a2bd41dc4c16f6025",
+        "canonical_code_points": 87178
+      },
+      {
+        "selection_index": 22,
+        "paper_id": "arxiv:2604.19341",
+        "section": "Harness",
+        "paper_selection_sha256": "4d2b7e4278043d002ef0c95b14c6d5e73046c1793b89e32e8b8d0035645bd1d6",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/33ad3375247f86197210840a19064548b997e8617475e606d7a7ac2cda64740e.json",
+        "canonical_paper_file_sha256": "ffc908ee1812d3a56eeed2584114db17f66e2ea15440e11713d656972c3a3229",
+        "canonical_text_sha256": "009c155c01de1078cd7a7774558d30aee41fc37b38791ccbb5cbd475b83ccc21",
+        "canonical_code_points": 175457
+      },
+      {
+        "selection_index": 23,
+        "paper_id": "acl:2025.acl-long.126",
+        "section": "Finance",
+        "paper_selection_sha256": "df40ffe4500dd9cca3d4b7d706e63648e0ce1c6da94e836a4d660ffbb8df6c5a",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/f71b6d3b384030032d1a701195d7c5af5874f1b3e87a5db8ab0073648c1190cd.json",
+        "canonical_paper_file_sha256": "ede1d721a446843924341f293625b283e85742ff2d097d18850d70ad0f6419b6",
+        "canonical_text_sha256": "42f75b27167eebd0085c1c14410b47f59fb790ea96a8cece607342580cbc57a5",
+        "canonical_code_points": 73737
+      },
+      {
+        "selection_index": 24,
+        "paper_id": "arxiv:2607.23379",
+        "section": "AI safety and consciousness",
+        "paper_selection_sha256": "4e8190c36945351e05eabdb2bf73e11708c09a0a1ed6b91223acc9cb8017bda7",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/a90f5a062f6ed3f603a48433557f8d622d5e5e5007884638f465243b87f67ac5.json",
+        "canonical_paper_file_sha256": "1a7cc8d88c77aca86aef85bc20c7556720438cd1266bd32e7e3f715093e6461f",
+        "canonical_text_sha256": "070d441b0218221f5fcc26e67b9d522c0d1979e61e09462db7ac691067f20d7a",
+        "canonical_code_points": 78796
+      },
+      {
+        "selection_index": 25,
+        "paper_id": "arxiv:2502.05171",
+        "section": "Reasoning and the \"physics\" of language models",
+        "paper_selection_sha256": "0fad2eef7a19aec9e0ad5256cb0d1b06ccbc0a91982e0c6cd2ad7448d28dfc0f",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/24a6ab865777290627cecebd3f06ea3daef01622f102d32a95f7fb2a5a42880f.json",
+        "canonical_paper_file_sha256": "778adc5b9d0c7acffb5b9f6914822b77acc63ba1f20be5ed376f37701e052f9f",
+        "canonical_text_sha256": "0caa314462f22e2f71c15864dc8ebc8c96d049117de97318aa99dcdd7d99a61b",
+        "canonical_code_points": 66233
+      },
+      {
+        "selection_index": 26,
+        "paper_id": "arxiv:2309.15807",
+        "section": "Self-supervised learning and vision",
+        "paper_selection_sha256": "1d340c717fabaa9718f814fd95e98ed7c9048201cd79e58c4cc6e4e18024e7ce",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/f1b51d5d6f9eb66c9b6424518136746ec684fa58752ed4e2ec2a7031df9fe2ad.json",
+        "canonical_paper_file_sha256": "fdd410cc0aee3426c695575c0684a406cf47e2eb5c685ebb637578680a37f798",
+        "canonical_text_sha256": "252bcd8c023e700e26232f092b7136493bc6e5784505e6dcdc69241250b7a588",
+        "canonical_code_points": 27168
+      },
+      {
+        "selection_index": 27,
+        "paper_id": "arxiv:2309.10232",
+        "section": "Other",
+        "paper_selection_sha256": "915cdbd47f5879c078af293a5c6ef473e4549e733c991fcf1e63423895e26a1a",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/5462c0d76ea10b3a4230fec0672d24778a1a010ba26bddcda2f5feb0875996fd.json",
+        "canonical_paper_file_sha256": "d639532dbb5285ba2e87d89adad665e6421645f6d79a7605dc705a09f3d8b79d",
+        "canonical_text_sha256": "d1910311410931fd16365499bb41979d5fda2be19f87df4afc764aa0d48ca719",
+        "canonical_code_points": 8831
+      },
+      {
+        "selection_index": 28,
+        "paper_id": "arxiv:2211.10869",
+        "section": "Reinforcement learning",
+        "paper_selection_sha256": "0c27a1f39255d207d9dd0ff8de0229691e01c25ee561f5701d4ad6f7ed18a8bf",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/919bff55efff4ed3549bd106b843afa3d140b32938f5283c77821d7fd569452e.json",
+        "canonical_paper_file_sha256": "cbd06e2ba0a1e20b0014d2e2c7d1c6cbddb357fbc1e92f8d925076922a3cd0a2",
+        "canonical_text_sha256": "1a592ae9ace3b6b6349064b3d547f0d20b4b54d26f13f68beba1d0e9c058b346",
+        "canonical_code_points": 50391
+      },
+      {
+        "selection_index": 29,
+        "paper_id": "doi:10.1038/s41467-021-26568-2",
+        "section": "NeuroAI",
+        "paper_selection_sha256": "1bec5cf7306c9dc18b2817873dda6b6c7ea4eaf85ccf9a39b0a38d15a52114d2",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/21875123ceb4116f9890b5b8d70154234ec0aa1bb29c70d3439a48aad10629b0.json",
+        "canonical_paper_file_sha256": "66497b464249ee79395dfe122aad315f0bef123368485f2e78a47d32ff5ecf78",
+        "canonical_text_sha256": "6bf87c44b1e09c6f01fd7c11ac93114c56d46ab381d3e432ffca3724236f340e",
+        "canonical_code_points": 43135
+      },
+      {
+        "selection_index": 30,
+        "paper_id": "arxiv:2609.02737",
+        "section": "LLMs: architectures, context, training",
+        "paper_selection_sha256": "12e2acba3a7b1ff28623fdf887a24c30b0faa0f46153d48588ccca85cb40a5f8",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/d92e296c1a145dd5abf7d3efa06faf9f01243de35f8f197fc1e6221cba9fe442.json",
+        "canonical_paper_file_sha256": "f72f139223d2ca3aeca68d823ebb20a040bdbf0c76697758058bfe87b9fab5ea",
+        "canonical_text_sha256": "9ce1174ff224272201fca597dd4197ef54db53212c968514f7aecf683e94e65c",
+        "canonical_code_points": 91934
+      },
+      {
+        "selection_index": 31,
+        "paper_id": "arxiv:2309.16797",
+        "section": "Retrieval, embeddings, benchmarks",
+        "paper_selection_sha256": "18b3a7ec87a329b600b4ba058f4ca141bcdcaabd6ae484fa9cbb8262eb145817",
+        "canonical_paper_path": "agent_full_probe/releases/de16539818c24eae6fcec2fbbc5e49120273e548bc737a713e9acd29dcc3e409/papers/daac3bcfcd7f39084d995905e9ef96ae01c5aab7bfe8e565bd7622b4e44088f7.json",
+        "canonical_paper_file_sha256": "f608860a1795856c29aaf21c22755b6536f7c975440acdf5e05a7e68a19819e2",
+        "canonical_text_sha256": "235fc3dcc508fff95a690d0ecaf811aa323f18eab75369c15cefaec042b4c5ea",
+        "canonical_code_points": 51843
+      }
+    ]
+  },
+  "authoring_protocol": {
+    "question_method": "Read canonical source content, author two original English factual or explanatory questions per selected paper from disjoint source evidence spans, paraphrase the wording and omit paper titles and identifying method names when possible. Preserve exact answer evidence.",
+    "evidence_method": "Each question has one concise exact answer span uniquely present in its selected source and in no other canonical paper. All source chunks that fully contain that span are listed as gold. Evidence boundaries were tightened before freeze for complete chunk containment; no semantic-search output was inspected.",
+    "freeze_rule": "Queries, expected answers, source spans, and gold chunk labels must remain unchanged after retrieval evaluation begins. If corrections are needed, retain this version, record errata, and create a new version before a separate run.",
+    "not_used": [
+      "embeddings",
+      "vector rankings",
+      "retrieved passages",
+      "retrieval results",
+      "prior smoke queries"
+    ],
+    "cross_lingual_items": "The two Books questions are in English with Russian source evidence; source_language identifies them."
+  },
+  "limitations": [
+    "Model-authored development diagnostic, not human-authored gold, representative user-query sampling, or an independent holdout.",
+    "Paper sampling spans available catalog sections but passage and question choices are judgmental and were made with source text visible.",
+    "Quote uniqueness establishes exact source grounding, not proof that no other paper could answer an equivalent question.",
+    "Gold labels identify exact preserved evidence in the canonical extraction; they do not independently verify scientific claims or the completeness of the original document extraction.",
+    "Two cross-lingual questions and heterogeneous extraction quality can affect retrieval difficulty."
+  ],
+  "validation": {
+    "questions": 64,
+    "distinct_papers": 32,
+    "sections": 15,
+    "questions_per_paper": 2,
+    "all_quotes_exact": true,
+    "all_quotes_unique_within_source": true,
+    "all_quotes_unique_across_canonical_corpus": true,
+    "all_gold_chunks_fully_contain_evidence": true,
+    "two_evidence_spans_per_paper_do_not_overlap": true,
+    "exact_paper_title_absent_from_every_query": true,
+    "question_embeddings_or_retrieval_performed": false
+  },
+  "questions_sha256": "987beb2aa6e50c2899cfcd17f5c396a2fa5cc44b8c078aa6e21f32309283d1e0",
+  "questions": [
+    {
+      "id": "full-natural-001",
+      "query": "In a softmax memory model of navigation, how do neighboring place-like neurons behave when the animal enters a different environment, and how does this differ from grid cells?",
+      "expected_paper_id": "arxiv:2112.04035",
+      "source_paper_id": "arxiv:2112.04035",
+      "source_section": "NeuroAI",
+      "source_language": "en",
+      "expected_answer": "Adjacency of place-like neurons in one environment does not predict adjacency in another; grid cells preserve their phase neighbors.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 26088,
+          "end": 26268,
+          "quote": "place cells being neighbours in one environment is not predictive of them being neighbours in another (unlike grid cells which maintain their phase neighbours across environments).",
+          "quote_sha256": "9d76edae331c28da9c670e6d3bb82be8de7b40f48f713d76f4e821d5f8cebd8b"
+        }
+      ],
+      "gold_chunk_indices": [
+        45
+      ],
+      "gold_chunk_ids": [
+        "461ae2c3f0024697e13475d007fbd49ba6a9af03a35a3a2863d4ee64927972df"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2112.04035#45"
+      ]
+    },
+    {
+      "id": "full-natural-002",
+      "query": "When the hippocampal model retrieves sensory information, what happens to its spatial feature neurons during the update?",
+      "expected_paper_id": "arxiv:2112.04035",
+      "source_paper_id": "arxiv:2112.04035",
+      "source_section": "NeuroAI",
+      "source_language": "en",
+      "expected_answer": "The spatial feature neurons stay fixed while the sensory feature neurons are updated.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 26892,
+          "end": 27034,
+          "quote": "when retrieving 𝒙 ~ {\\bm{\\tilde{x}}} the 𝒈 ~ {\\bm{\\tilde{g}}} feature neurons stay constant while the 𝒙 ~ {\\bm{\\tilde{x}}} neurons are updated",
+          "quote_sha256": "235c68d7cf1a81cfe7fe616392679470b5b3e8e1d312b6b8cf383d659c47b208"
+        }
+      ],
+      "gold_chunk_indices": [
+        46
+      ],
+      "gold_chunk_ids": [
+        "98f9591fda42d5d26ed120764c8c341c569aab9b161c32f75ae3c5a6e723f0fe"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2112.04035#46"
+      ]
+    },
+    {
+      "id": "full-natural-003",
+      "query": "How is evidence divided between two communicating language models in the ten-paragraph multi-hop question experiment?",
+      "expected_paper_id": "arxiv:2605.22863",
+      "source_paper_id": "arxiv:2605.22863",
+      "source_section": "LLMs: architectures, context, training",
+      "source_language": "en",
+      "expected_answer": "Each model receives five paragraphs: one supporting paragraph and four distractors, with no overlap between their sets.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 17854,
+          "end": 18052,
+          "quote": "We split these ten paragraphs into two disjoint sets of five, with each set containing one supporting paragraph and four distractors. One set is assigned to the sharer and the other to the receiver.",
+          "quote_sha256": "06d5cdcdc8e14fdf5add21e3325a30ff5c514dd87ce25c3e4a433f0d8e8308a8"
+        }
+      ],
+      "gold_chunk_indices": [
+        31
+      ],
+      "gold_chunk_ids": [
+        "720cb9934e888b2482f3d9f79b36b43c82282b82eaaf18ac3d8ba6dad923c61f"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2605.22863#31"
+      ]
+    },
+    {
+      "id": "full-natural-004",
+      "query": "Before feature fusion between two language models, how are their per-token attention keys combined and resized?",
+      "expected_paper_id": "arxiv:2605.22863",
+      "source_paper_id": "arxiv:2605.22863",
+      "source_section": "LLMs: architectures, context, training",
+      "source_language": "en",
+      "expected_answer": "Their keys are concatenated and flattened across heads, then projected by a linear layer to the receiver's hidden size.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 4688,
+          "end": 4888,
+          "quote": "The fuser concatenates these keys and flattens them along the head dimension to form a joint per-token feature vector. A linear layer then projects this vector down to the receiver’s hidden dimension.",
+          "quote_sha256": "ad3f0490c68f8cc26c5b8e8b9d17a6b3f6f298fe311055db43b1cb90da678efd"
+        }
+      ],
+      "gold_chunk_indices": [
+        7
+      ],
+      "gold_chunk_ids": [
+        "4db9818750ea9da3d23e901a66eecbc17edf46c6e00598dd91ed1084e43bdb37"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2605.22863#7"
+      ]
+    },
+    {
+      "id": "full-natural-005",
+      "query": "In the simulated subscription business, what data can the agent use to infer customer preferences it cannot observe directly?",
+      "expected_paper_id": "arxiv:2606.18543",
+      "source_paper_id": "arxiv:2606.18543",
+      "source_section": "Retrieval, embeddings, benchmarks",
+      "source_language": "en",
+      "expected_answer": "It infers them from subscriptions, churn, support, revenue, reputation, and simulated social media.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 12503,
+          "end": 12643,
+          "quote": "It instead infers feedback by analyzing subscription, churn, support, revenue, and reputation data and by monitoring simulated social media.",
+          "quote_sha256": "fdb7dec59dccaf6fd61ba352af68c1d90ff44dbec6cdc08465b8e49764a2ee73"
+        }
+      ],
+      "gold_chunk_indices": [
+        20
+      ],
+      "gold_chunk_ids": [
+        "dd80353d1bc0642aae618bfe93589c563b4e409c38c4aa30ce7fecbc6ca9e01c"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2606.18543#20"
+      ]
+    },
+    {
+      "id": "full-natural-006",
+      "query": "In the subscription-business simulator, why can a discount improve customer retention without improving the product?",
+      "expected_paper_id": "arxiv:2606.18543",
+      "source_paper_id": "arxiv:2606.18543",
+      "source_section": "Retrieval, embeddings, benchmarks",
+      "source_language": "en",
+      "expected_answer": "Promotions reduce the dollar price rather than boosting quality; they can aid acquisition or retention but directly reduce revenue.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 50352,
+          "end": 50499,
+          "quote": "Promotions therefore act as dollar discounts rather than hidden quality boosts; they can help acquisition or retention but directly reduce revenue.",
+          "quote_sha256": "defbff138eed194ce8c131d58e79e6a1ac2818e33b5c1b3c341d8ee325757a5a"
+        }
+      ],
+      "gold_chunk_indices": [
+        82
+      ],
+      "gold_chunk_ids": [
+        "f038667d8f91b357e1dda09e0251d11f02bfdf1f952c9778fed986713fe3fb48"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2606.18543#82"
+      ]
+    },
+    {
+      "id": "full-natural-007",
+      "query": "Why did the synthetic-language experiment train many independently initialized models instead of measuring just one model's diversity?",
+      "expected_paper_id": "arxiv:2609.16454",
+      "source_paper_id": "arxiv:2609.16454",
+      "source_section": "Post-training",
+      "source_language": "en",
+      "expected_answer": "A single fitted model cannot reveal variance across runs, which is needed to decompose the expected collision gap.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 23852,
+          "end": 23997,
+          "quote": "Decomposing the expected collision gap as in Section 3.1 requires independent fits: a single fitted model does not show the variance across runs.",
+          "quote_sha256": "678c223e894e13b05b418132dbe6e5cb722054a5ac91e0de9db9f1fb53459200"
+        }
+      ],
+      "gold_chunk_indices": [
+        40
+      ],
+      "gold_chunk_ids": [
+        "759df9fbbe2a52c47887a02b64368b3870d2bc048b30a7b74b72e6a1da2af7f3"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2609.16454#40"
+      ]
+    },
+    {
+      "id": "full-natural-008",
+      "query": "What does a collision ratio of two mean for the variety of responses a language model offers relative to its target data?",
+      "expected_paper_id": "arxiv:2609.16454",
+      "source_paper_id": "arxiv:2609.16454",
+      "source_section": "Post-training",
+      "source_language": "en",
+      "expected_answer": "The model provides half as many effective choices as the data.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 22037,
+          "end": 22126,
+          "quote": "for example, R = 2 R=2 means the model offers half as many effective choices as the data.",
+          "quote_sha256": "f68c08ad90469076b6e3d6599f60d7a85d034bdcccf9d28f6fefee0d4e502411"
+        }
+      ],
+      "gold_chunk_indices": [
+        36,
+        37
+      ],
+      "gold_chunk_ids": [
+        "c3478cde00183f4bb57841bc0981c0765a4ef48d461e4751d37e4c4a24598360",
+        "b8140b44b25f7188a5922f66585f8bc9e18da512991863eb86f552e87464136b"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2609.16454#36",
+        "arxiv:2609.16454#37"
+      ]
+    },
+    {
+      "id": "full-natural-009",
+      "query": "In the streaming image-classification experiment with changing classes, how did the learned learning rates evolve in early layers compared with the final layer?",
+      "expected_paper_id": "arxiv:2402.02342",
+      "source_paper_id": "arxiv:2402.02342",
+      "source_section": "Data, training, optimization",
+      "source_language": "en",
+      "expected_answer": "Early-layer rates declined as general features stabilized, while final-layer rates increased to adapt to changing labels.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 28419,
+          "end": 28600,
+          "quote": "early-layer step-sizes decrease over time, indicating convergence to globally useful features, while last-layer step-sizes increase, reflecting the need to adapt to changing labels.",
+          "quote_sha256": "7e8c4ec8dd2ceec1a7b54e418294d370ead8d2d1b97abfcbd83cf0bd05b527f8"
+        }
+      ],
+      "gold_chunk_indices": [
+        49
+      ],
+      "gold_chunk_ids": [
+        "01642e2d2296892fd94a0428e12b643b320d45f13a5015469992f8284366f406"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2402.02342#49"
+      ]
+    },
+    {
+      "id": "full-natural-010",
+      "query": "How does the online hyperparameter method's training schedule and objective differ from validation-based bilevel optimization?",
+      "expected_paper_id": "arxiv:2402.02342",
+      "source_paper_id": "arxiv:2402.02342",
+      "source_section": "Data, training, optimization",
+      "source_language": "en",
+      "expected_answer": "It adjusts metaparameters during one streaming run and directly minimizes online loss or regret without validation loss.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 35967,
+          "end": 36125,
+          "quote": "optimizes meta-parameters on-the-fly during a single streaming run, without relying on validation loss. Instead, it minimizes online loss (or regret) directly",
+          "quote_sha256": "aa1be76a61fd083d67fb45e3e1092d142ae03d28dd8a3255afb67bdec184b8dc"
+        }
+      ],
+      "gold_chunk_indices": [
+        63
+      ],
+      "gold_chunk_ids": [
+        "df936e706aa6500628640974296027b0ba0e1bfdf9dff15218fff67a8df3bd72"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2402.02342#63"
+      ]
+    },
+    {
+      "id": "full-natural-011",
+      "query": "In the value-based approach that extends tabular value iteration to more complex state spaces, which restriction on actions remains?",
+      "expected_paper_id": "arxiv:2201.09746",
+      "source_paper_id": "arxiv:2201.09746",
+      "source_section": "Books",
+      "source_language": "ru",
+      "expected_answer": "The action space must remain finite.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 4543,
+          "end": 4738,
+          "quote": "Для этого табличный алгоритм Value Iteration будет обобщён на более сложные пространства состояний; требование конечности пространства действий | 𝓐 | |\\mathcal{A}| останется ограничением подхода.",
+          "quote_sha256": "cfae193219d6f524cfcdbf7699d162ca9580678d81960a1ec96f1fda9a33fabe"
+        }
+      ],
+      "gold_chunk_indices": [
+        9
+      ],
+      "gold_chunk_ids": [
+        "dcdd10621386e476882fa63aa473cc388948f6d1e138223677a88ef49ae6ea49"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2201.09746#9"
+      ]
+    },
+    {
+      "id": "full-natural-012",
+      "query": "When a learning agent's current observation does not fully specify the environment state, what two abilities does the textbook say it needs?",
+      "expected_paper_id": "arxiv:2201.09746",
+      "source_paper_id": "arxiv:2201.09746",
+      "source_section": "Books",
+      "source_language": "ru",
+      "expected_answer": "It needs memory of previous observations and the ability to act under uncertainty.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 6615,
+          "end": 6834,
+          "quote": "в общем случае, текущее наблюдение среды не описывает её состояние полностью, и агент, во-первых, должен обладать модулем памяти для запоминания предыдущих наблюдений, во-вторых, действовать в условиях неопределённости.",
+          "quote_sha256": "b24ffbf422f7e76ff0a7e90232bd73493859e406ba993bf4917e097e520ef8eb"
+        }
+      ],
+      "gold_chunk_indices": [
+        14
+      ],
+      "gold_chunk_ids": [
+        "b20d5401d8b9f3e2d02f0476c24ab2e48d6d4a0de3a754254808d33fc862067d"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2201.09746#14"
+      ]
+    },
+    {
+      "id": "full-natural-013",
+      "query": "How much did learned context improve a general 8-billion-parameter model over the dedicated safety model on Aegis2.0?",
+      "expected_paper_id": "arxiv:2601.21557",
+      "source_paper_id": "arxiv:2601.21557",
+      "source_section": "Agents, open-endedness, AGI",
+      "source_language": "en",
+      "expected_answer": "It reached 0.80 F1 versus 0.72 for the dedicated model.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 29984,
+          "end": 30103,
+          "quote": "On Aegis2.0, Qwen3-8B with MCE attains 0.80 F1, surpassing Llama Guard 3 8B (0.72), a dedicated safety guardrail model.",
+          "quote_sha256": "231c656e0d666ca88db591ecf570b2649e4b85db623b89bdb843529bbf76f9c5"
+        }
+      ],
+      "gold_chunk_indices": [
+        50
+      ],
+      "gold_chunk_ids": [
+        "b411f2d8331deeeed5d1e89c7c7d899387413bdff56fdc50409055f7112967be"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2601.21557#50"
+      ]
+    },
+    {
+      "id": "full-natural-014",
+      "query": "How different were the lengths of the two most effective learned contexts on the financial entity-recognition task?",
+      "expected_paper_id": "arxiv:2601.21557",
+      "source_paper_id": "arxiv:2601.21557",
+      "source_section": "Agents, open-endedness, AGI",
+      "source_language": "en",
+      "expected_answer": "The two contexts contained 1.5 thousand and 20 thousand tokens.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 30718,
+          "end": 30783,
+          "quote": "The two most effective contexts on FiNER have 1.5K and 20K tokens",
+          "quote_sha256": "deee9595534cb5c00ee420aa81a961f5784d8d3c2fdd7dcfbea2d9c1421702d9"
+        }
+      ],
+      "gold_chunk_indices": [
+        51,
+        52
+      ],
+      "gold_chunk_ids": [
+        "ea9f766126f9e164987192cac88b8a6af38608c1f8af977a46e48155cbdc67b8",
+        "ab26cbed4f03d4bff050cb1cb62551fbb53b3de9e3669600d926a08d938adb60"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2601.21557#51",
+        "arxiv:2601.21557#52"
+      ]
+    },
+    {
+      "id": "full-natural-015",
+      "query": "What two model-size effects can make raw comparisons of neural representations misleading?",
+      "expected_paper_id": "arxiv:2602.14486",
+      "source_paper_id": "arxiv:2602.14486",
+      "source_section": "Representation alignment",
+      "source_language": "en",
+      "expected_answer": "Representation dimensionality introduces a width confounder, and the number of compared layers introduces a depth confounder.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 14164,
+          "end": 14368,
+          "quote": "We identify two distinct sources of confounding: (i) the width confounder driven by representation dimension, and (ii) the depth confounder driven by the number of layers considered when comparing models.",
+          "quote_sha256": "7533b61afd66206a985ea420a2a5f30e4fedf204666fff9e92c499783bf74023"
+        }
+      ],
+      "gold_chunk_indices": [
+        23
+      ],
+      "gold_chunk_ids": [
+        "dcf012542fee2361e97257a2b1c8fb89d3e748009576b16d2a5d06818c94925b"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2602.14486#23"
+      ]
+    },
+    {
+      "id": "full-natural-016",
+      "query": "Why is a purely rank-based adjustment insufficient when correcting neural similarity scores for model-size effects?",
+      "expected_paper_id": "arxiv:2602.14486",
+      "source_paper_id": "arxiv:2602.14486",
+      "source_section": "Representation alignment",
+      "source_language": "en",
+      "expected_answer": "It only shifts scores and cannot remove the scale-dependent chance baselines.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 26328,
+          "end": 26492,
+          "quote": "A purely rank-based calibration would be equivalent to a score shift and would be unable to correct for the scale-dependent null baselines identified in Section 4 .",
+          "quote_sha256": "4b9192fda4398fac35b71d674e317cfc32cb891da710bc4c3e40da585b65f997"
+        }
+      ],
+      "gold_chunk_indices": [
+        45
+      ],
+      "gold_chunk_ids": [
+        "e53d1efc553f80d48b27cb1febc55d563ec5e539e2d911cdceb6e42aa00d8611"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2602.14486#45"
+      ]
+    },
+    {
+      "id": "full-natural-017",
+      "query": "How does the evolving agent system avoid learning from the future when the outcomes of forecasting tasks become known late?",
+      "expected_paper_id": "arxiv:2606.01770",
+      "source_paper_id": "arxiv:2606.01770",
+      "source_section": "Harness",
+      "source_language": "en",
+      "expected_answer": "A temporal gate withholds each evaluation signal until that task's resolution date.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 14605,
+          "end": 14812,
+          "quote": "We implement a temporal-reveal gate that surfaces each task’s evaluation signal to the evolver only after its resolution date, providing a proper streaming feedback signal without leaking future information.",
+          "quote_sha256": "0d34414c7ed4e3576aca2d0eab774ee535a09bed571491d2c4ecf52bc95ec48a"
+        }
+      ],
+      "gold_chunk_indices": [
+        23
+      ],
+      "gold_chunk_ids": [
+        "6ba8416f278d8114c6a2274683bda52e822f61e1ea73aeab1080b0a0b1881bd6"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2606.01770#23"
+      ]
+    },
+    {
+      "id": "full-natural-018",
+      "query": "What persistent records help the agent-building system avoid repeating unsuccessful research across development cycles?",
+      "expected_paper_id": "arxiv:2606.01770",
+      "source_paper_id": "arxiv:2606.01770",
+      "source_section": "Harness",
+      "source_language": "en",
+      "expected_answer": "It retains a prioritized failure-analysis task board, research logs with pass/fail outcomes, architecture documentation, and verification tests.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 14848,
+          "end": 15102,
+          "quote": "We provide the evolver with a dedicated workspace that persists across cycles, containing a task board (prioritised failure analysis), research logs (tested hypotheses with pass/fail verdicts), architecture documentation (README), and verification tests.",
+          "quote_sha256": "0131c42d307e174bf7003a431862dc03121efa2bf19e4f046927d35bc087b685"
+        }
+      ],
+      "gold_chunk_indices": [
+        24
+      ],
+      "gold_chunk_ids": [
+        "c62308efc2729277ae88d9efe908cbff3504f51243569cfc670eb47ba57fbffb"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2606.01770#24"
+      ]
+    },
+    {
+      "id": "full-natural-019",
+      "query": "How did the reviewed stock-index forecasting system augment its training examples using ten related companies?",
+      "expected_paper_id": "arxiv:2003.01859",
+      "source_paper_id": "arxiv:2003.01859",
+      "source_section": "Finance",
+      "source_language": "en",
+      "expected_answer": "It used all combinations of five out of ten highly correlated companies in an overfitting-prevention LSTM before a prediction LSTM.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 34270,
+          "end": 34580,
+          "quote": "the authors choose 10 companies’ stock that are highly correlated to the stock index and augment the data samples by using the combinations of 10 companies taken 5 at a time in an overfitting prevention LSTM module, before feeding the data samples to a prediction LSTM module for stock market index prediction.",
+          "quote_sha256": "024f1f37f4289469ba48d02d345c60478c4f832d92caf916aadbd166731b1f34"
+        }
+      ],
+      "gold_chunk_indices": [
+        60
+      ],
+      "gold_chunk_ids": [
+        "0c0e7dac881f5823f4f736c47c601255e31345b9b704507b2348c46a2e058f83"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2003.01859#60"
+      ]
+    },
+    {
+      "id": "full-natural-020",
+      "query": "In the financial forecasting review, how does an expanding training set differ from a rolling training window?",
+      "expected_paper_id": "arxiv:2003.01859",
+      "source_paper_id": "arxiv:2003.01859",
+      "source_section": "Finance",
+      "source_language": "en",
+      "expected_answer": "A rolling window uses only recent samples; the expanding variant combines earlier rolling training sets.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 33230,
+          "end": 33444,
+          "quote": "only the latest part of data samples are used for a new training round of prediction models. Another variant is to use successive training sets, which are union set of the rolling training set that come before them",
+          "quote_sha256": "a46fca04c1e058b52a119671160519077c4197ef66f4cf38e9bc74da56b45027"
+        }
+      ],
+      "gold_chunk_indices": [
+        58
+      ],
+      "gold_chunk_ids": [
+        "453e97250adfb1ae87f9550940f1033eb2dd43ca867cc65c3c781fcaee43f419"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2003.01859#58"
+      ]
+    },
+    {
+      "id": "full-natural-021",
+      "query": "Why can averaging a deception detector's token scores give the wrong judgment for an entire response?",
+      "expected_paper_id": "arxiv:2502.03407",
+      "source_paper_id": "arxiv:2502.03407",
+      "source_section": "AI safety and consciousness",
+      "source_language": "en",
+      "expected_answer": "If only part of the response is deceptive, averaging can hide it even when token-level scores are sensible.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 19605,
+          "end": 19818,
+          "quote": "We take the mean across per-token scores to get a per-prompt score. When responses are only partially deceptive, however, this can result in a misclassification even if the per-token probe activations are sensible",
+          "quote_sha256": "1973f20bf8317e7f602937bbf6ade3e07d21e1c738431af675700640ea2defb9"
+        }
+      ],
+      "gold_chunk_indices": [
+        38
+      ],
+      "gold_chunk_ids": [
+        "5ebb2935e2f17e233ad780681eb42ee4478e37f3bc8efcddd7836338f40173c6"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2502.03407#38"
+      ]
+    },
+    {
+      "id": "full-natural-022",
+      "query": "What happened to cross-task generalization when the honesty probe was trained on roleplaying examples instead of explicit instructions to lie?",
+      "expected_paper_id": "arxiv:2502.03407",
+      "source_paper_id": "arxiv:2502.03407",
+      "source_section": "AI safety and consciousness",
+      "source_language": "en",
+      "expected_answer": "It generalized slightly better to insider-trading reports but substantially worse to sandbagging.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 20347,
+          "end": 20510,
+          "quote": "This probe perfectly separates the held-out roleplaying examples. It generalizes slightly better to Insider Trading Report, but significantly worse on Sandbagging.",
+          "quote_sha256": "307d8d64264b63fe479cdbe59f5480308ae154c3301f5598e793e6b83d48991a"
+        }
+      ],
+      "gold_chunk_indices": [
+        40
+      ],
+      "gold_chunk_ids": [
+        "566eee96c0edfb64f339fd60a40b98368633f93082418a59524c48e2eeeb6806"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2502.03407#40"
+      ]
+    },
+    {
+      "id": "full-natural-023",
+      "query": "What makes semantically absurd sentences useful for testing whether a language model has learned grammatical agreement rules?",
+      "expected_paper_id": "arxiv:2301.06627",
+      "source_paper_id": "arxiv:2301.06627",
+      "source_section": "Reasoning and the \"physics\" of language models",
+      "source_language": "en",
+      "expected_answer": "They test abstract grammatical knowledge without relying on meaningful sentence content; models still performed agreement well in several languages.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 29273,
+          "end": 29572,
+          "quote": "One way to test a model’s knowledge of abstract rules is by using semantically nonsensical sentences, like “The colorless green ideas I ate with the chair… (sleep/sleeps)”. Models have been shown to perform the agreement task well in several languages, even on these semantically anomalous sentences",
+          "quote_sha256": "0a8c022c5a29a81aac5c54bd7a9530b8ae83e68191a6535ff4c49bef8cccd709"
+        }
+      ],
+      "gold_chunk_indices": [
+        50
+      ],
+      "gold_chunk_ids": [
+        "7bd7d18f936fe09047e0352231e4409d91fdb2f16b0617443c21389b39cdc11e"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2301.06627#50"
+      ]
+    },
+    {
+      "id": "full-natural-024",
+      "query": "When tested on made-up words introduced in noun-like or verb-like contexts, how well did BERT transfer their grammatical categories?",
+      "expected_paper_id": "arxiv:2301.06627",
+      "source_paper_id": "arxiv:2301.06627",
+      "source_section": "Reasoning and the \"physics\" of language models",
+      "source_language": "en",
+      "expected_answer": "It generalized only partially and needed repeated examples.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 30147,
+          "end": 30265,
+          "quote": "They conclude that BERT succeeds partially at this task: it does learn to generalize, but only after repeated examples",
+          "quote_sha256": "89bdfd3918d0623e1787f3ebdf749b4e59d301bf584e067990b0ad628ee3fc83"
+        }
+      ],
+      "gold_chunk_indices": [
+        52
+      ],
+      "gold_chunk_ids": [
+        "02d4eb19a3f6e95ab5da3a6b5680e5f431eaad4942f851f62186ab99a9551724"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2301.06627#52"
+      ]
+    },
+    {
+      "id": "full-natural-025",
+      "query": "How does imposing a minimum batch standard deviation on every embedding coordinate help prevent all examples receiving the same representation?",
+      "expected_paper_id": "arxiv:2105.04906",
+      "source_paper_id": "arxiv:2105.04906",
+      "source_section": "Self-supervised learning and vision",
+      "source_language": "en",
+      "expected_answer": "A hinge penalty keeps each coordinate's standard deviation above a threshold, forcing different samples' embedding vectors to differ.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 4791,
+          "end": 4994,
+          "quote": "a hinge loss to maintain the standard deviation (over a batch) of each variable of the embedding above a given threshold. This term forces the embedding vectors of samples within a batch to be different.",
+          "quote_sha256": "a4146e361bf69dbad2c484b57ab941219544cad5f933d0e5ae6202db1a2a51b8"
+        }
+      ],
+      "gold_chunk_indices": [
+        7
+      ],
+      "gold_chunk_ids": [
+        "d60070da9b242431283ce358520b3d76f75cdb365cc1cf549fba51720c1522ba"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2105.04906#7"
+      ]
+    },
+    {
+      "id": "full-natural-026",
+      "query": "What architectural freedom comes from preventing representation collapse independently in both branches of a self-supervised network?",
+      "expected_paper_id": "arxiv:2105.04906",
+      "source_paper_id": "arxiv:2105.04906",
+      "source_section": "Self-supervised learning and vision",
+      "source_language": "en",
+      "expected_answer": "The branches no longer need shared weights or identical architectures, enabling multimodal inputs.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 11123,
+          "end": 11357,
+          "quote": "our method explicitly prevents collapse in the two branches independently, which removes the requirement for shared weights and identical architecture, opening the door to the application of joint-embedding SSL to multi-modal signals.",
+          "quote_sha256": "bb42d2a50038594ae7f3450af234419679d499efbdfead14ecc23d0b53bc4fa2"
+        }
+      ],
+      "gold_chunk_indices": [
+        18
+      ],
+      "gold_chunk_ids": [
+        "ece7d73795f0707c05b129d6f6a1c3be7e66f4c05b4dea044e9e1a674a625d93"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2105.04906#18"
+      ]
+    },
+    {
+      "id": "full-natural-027",
+      "query": "What optical-depth benefit did the 2016 interferometer-mesh design offer compared with the earlier recursive layout?",
+      "expected_paper_id": "doi:10.1038/s41566-024-01394-2",
+      "source_paper_id": "doi:10.1038/s41566-024-01394-2",
+      "source_section": "Other",
+      "source_language": "en",
+      "expected_answer": "It required half the optical depth and significantly reduced optical loss.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 12176,
+          "end": 12281,
+          "quote": "Only half the optical depth of the Reck design is required, and the optical loss is significantly reduced",
+          "quote_sha256": "39bc9e760c127c48331c258bc29d2585a9bd171e3db3659d0de0058553911a64"
+        }
+      ],
+      "gold_chunk_indices": [
+        19
+      ],
+      "gold_chunk_ids": [
+        "22fd2f55177d6286f0599336f839f394b98bcb5b61277f47b66292363d7a2a2e"
+      ],
+      "gold_chunk_keys": [
+        "doi:10.1038/s41566-024-01394-2#19"
+      ]
+    },
+    {
+      "id": "full-natural-028",
+      "query": "In the spatial-light-modulator implementation of an Ising machine, how were spins and their interactions represented?",
+      "expected_paper_id": "doi:10.1038/s41566-024-01394-2",
+      "source_paper_id": "doi:10.1038/s41566-024-01394-2",
+      "source_section": "Other",
+      "source_language": "en",
+      "expected_answer": "Spins used optical phases of zero and pi at separate spatial points, while another modulator's intensity controlled spin interactions.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 31611,
+          "end": 31785,
+          "quote": "The spins were encoded into binary optical phases of 0 and π at separated spatial points by an SLM. Intensity modulation was used to set the spin interaction via another SLM.",
+          "quote_sha256": "a35deef83c672354536aa75e3ad4927196f50d96e9537e6ce95c589263147e35"
+        }
+      ],
+      "gold_chunk_indices": [
+        50
+      ],
+      "gold_chunk_ids": [
+        "25fe2660da19eaae6920cb1db6a062ca62fd9e5597066a75b2aeb87a9149b07b"
+      ],
+      "gold_chunk_keys": [
+        "doi:10.1038/s41566-024-01394-2#50"
+      ]
+    },
+    {
+      "id": "full-natural-029",
+      "query": "In the U-shaped ant maze, why did the shallow critic fail to value the route around a wall correctly?",
+      "expected_paper_id": "arxiv:2503.14858",
+      "source_paper_id": "arxiv:2503.14858",
+      "source_section": "Reinforcement learning",
+      "source_language": "en",
+      "expected_answer": "It appeared to use straight-line distance to the goal as its value proxy even when a wall blocked that path.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 24692,
+          "end": 24834,
+          "quote": "the depth 4 network seemingly relies on Euclidean distance to the goal as a proxy for the Q value, even when a wall obstructs the direct path.",
+          "quote_sha256": "30117a963f34ea408a7bdcbfee1711097dd2730caf37a57d438b4b424c8c4e46"
+        }
+      ],
+      "gold_chunk_indices": [
+        42
+      ],
+      "gold_chunk_ids": [
+        "b4c7be0449116082a64f154b9ee39fefc5ecabde8dacf518fc077a25b4cae493"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2503.14858#42"
+      ]
+    },
+    {
+      "id": "full-natural-030",
+      "query": "What prevented the goal-reaching experiments from testing networks deeper than 1,024 layers?",
+      "expected_paper_id": "arxiv:2503.14858",
+      "source_paper_id": "arxiv:2503.14858",
+      "source_section": "Reinforcement learning",
+      "source_language": "en",
+      "expected_answer": "Computational constraints prevented further scaling.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 23707,
+          "end": 23788,
+          "quote": "While we were unable to scale beyond 1024 layers due to computational constraints",
+          "quote_sha256": "d348c2eda968e62f1d93c1e4859b3c84abbe7228d12c82cfa4cf6e4c5d0ea05b"
+        }
+      ],
+      "gold_chunk_indices": [
+        40
+      ],
+      "gold_chunk_ids": [
+        "dade22371475c9f3c0cdcc29c13d3defb96130dee81208696494f5935512bde7"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2503.14858#40"
+      ]
+    },
+    {
+      "id": "full-natural-031",
+      "query": "What observable combination of behaviors would support the claim that a neural circuit has an attractor rather than merely a low-dimensional activity pattern?",
+      "expected_paper_id": "arxiv:2112.03978",
+      "source_paper_id": "arxiv:2112.03978",
+      "source_section": "NeuroAI",
+      "source_language": "en",
+      "expected_answer": "States should localize to a low-dimensional set, return toward it after perturbations, and remain there autonomously for long periods.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 10095,
+          "end": 10300,
+          "quote": "localization of the states of a system to a\nlower-dimensional subset, ﬂow of the states towards the subset after perturbation, and long-time\nand (effectively) autonomous stability of states in that subset.",
+          "quote_sha256": "5503a4ccd0943d9303cf63e19b54b0d93232897f0bdde953ec75359f8dc7de06"
+        }
+      ],
+      "gold_chunk_indices": [
+        16
+      ],
+      "gold_chunk_ids": [
+        "f598a5f7d4f93a801e562e3a66e1ae0f100a08eb770cbf8434ce9ea2f650cf71"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2112.03978#16"
+      ]
+    },
+    {
+      "id": "full-natural-032",
+      "query": "Under what restrictions can an energy-function argument characterize the dynamics of a recurrent neural network?",
+      "expected_paper_id": "arxiv:2112.03978",
+      "source_paper_id": "arxiv:2112.03978",
+      "source_section": "NeuroAI",
+      "source_language": "en",
+      "expected_answer": "The cited Lyapunov approach applies to symmetric weight matrices and rate-based neural dynamics.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 12264,
+          "end": 12401,
+          "quote": "A more powerful method, the Lyapunov function approach, holds for symmetric weight\nmatrices ( Wij = Wji ) and rate-based neural dynamics.",
+          "quote_sha256": "ceb5efbf9600bae6b6fd07c0030bbe309e99c14659e5d16e2dbd6295d1ce5717"
+        }
+      ],
+      "gold_chunk_indices": [
+        19
+      ],
+      "gold_chunk_ids": [
+        "f428b6322495fca7dcfad0999ffd7973aeba6b63cded243ab419494b70456fab"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2112.03978#19"
+      ]
+    },
+    {
+      "id": "full-natural-033",
+      "query": "How did the image-annotation study quantify how richly an object or action word was connected to the rest of a caption?",
+      "expected_paper_id": "arxiv:2311.06242",
+      "source_paper_id": "arxiv:2311.06242",
+      "source_section": "LLMs: architectures, context, training",
+      "source_language": "en",
+      "expected_answer": "It measured the word's total degree in the dependency parse tree treated as an undirected graph.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 27763,
+          "end": 27955,
+          "quote": "token complexity , measured by the total degrees of the token in the dependency parsing tree when treated as an undirected graph. This complexity reflects the richness of semantic connections.",
+          "quote_sha256": "104326cd6e285e31c87be9b4e05a4450e0be67415ec744c709e59dcddd296771"
+        }
+      ],
+      "gold_chunk_indices": [
+        51
+      ],
+      "gold_chunk_ids": [
+        "4c0eccfcb36d14d9264285bcce411f2e5c395954d3f2efb5448bdecac2a9c290"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2311.06242#51"
+      ]
+    },
+    {
+      "id": "full-natural-034",
+      "query": "Compared with brief image descriptions, how much more often did the two more detailed annotation levels mention actions?",
+      "expected_paper_id": "arxiv:2311.06242",
+      "source_paper_id": "arxiv:2311.06242",
+      "source_section": "LLMs: architectures, context, training",
+      "source_language": "en",
+      "expected_answer": "The detailed and more detailed versions contained seven and fifteen times as many actions, respectively.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 28260,
+          "end": 28438,
+          "quote": "average actions experience the most significant boost, with detailed and more detailed text exhibiting 7 × \\times and 15 × \\times increases, respectively, compared to brief text.",
+          "quote_sha256": "5c1441d00bf992ae40834a04c9652462b32804cc0439062493868750729b9093"
+        }
+      ],
+      "gold_chunk_indices": [
+        52
+      ],
+      "gold_chunk_ids": [
+        "3a7784a2e0d154927a4d1094683e5ad907de9558260658737c58f7c4ec2ca257"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2311.06242#52"
+      ]
+    },
+    {
+      "id": "full-natural-035",
+      "query": "How did question annotators make sure their intermediate reasoning questions would be answerable from Wikipedia without reading every proposed page?",
+      "expected_paper_id": "arxiv:2101.02235",
+      "source_paper_id": "arxiv:2101.02235",
+      "source_section": "Retrieval, embeddings, benchmarks",
+      "source_language": "en",
+      "expected_answer": "They specified an expected Wikipedia page for the answer to each decomposition step.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 17907,
+          "end": 18011,
+          "quote": "we ask them to specify, for each decomposition step, a Wikipedia page they expect to find the answer in.",
+          "quote_sha256": "620faea35a37b44746af3946afef98a5a9591653d4ddc1b8cbd19c9e73b7ae26"
+        }
+      ],
+      "gold_chunk_indices": [
+        32
+      ],
+      "gold_chunk_ids": [
+        "823cba6bb7990adf72a72872d52a6972513980c5d2d4ff2ee8143c16b3c79111"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2101.02235#32"
+      ]
+    },
+    {
+      "id": "full-natural-036",
+      "query": "How consistently did two independent workers break down the same implicit-reasoning questions?",
+      "expected_paper_id": "arxiv:2101.02235",
+      "source_paper_id": "arxiv:2101.02235",
+      "source_section": "Retrieval, embeddings, benchmarks",
+      "source_language": "en",
+      "expected_answer": "They followed the same reasoning path in 44 of 50 cases, and every pair reached the same final answer.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 25598,
+          "end": 25732,
+          "quote": "for all pairs, the last step returns the same answer, b) in 44 out of 50 pairs, the decomposition pairs follow the same reasoning path",
+          "quote_sha256": "4698ccfa90fc0e33d302674231272d16659d5944c7e973b452b9d6e10002fb9a"
+        }
+      ],
+      "gold_chunk_indices": [
+        47
+      ],
+      "gold_chunk_ids": [
+        "e1ae2e708f2bf28aa3eed17e4ff29b400b54ccfe45ecba1829869b01b2eb6ff7"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2101.02235#47"
+      ]
+    },
+    {
+      "id": "full-natural-037",
+      "query": "What direct change to feed-forward neurons let the researchers increase or suppress a language model's use of memorized contaminated answers?",
+      "expected_paper_id": "arxiv:2601.11061",
+      "source_paper_id": "arxiv:2601.11061",
+      "source_section": "Post-training",
+      "source_language": "en",
+      "expected_answer": "They scaled the keys of selected MLP neurons.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 6719,
+          "end": 6884,
+          "quote": "By performing a mechanistic intervention, specifically scaling the keys of these MLP neurons, we demonstrate the ability to causally steer the Qwen model’s behavior.",
+          "quote_sha256": "b52ffb432865129baa95fb773405c482f9a1363d7d3d90a7e26ff36fab5f5352"
+        }
+      ],
+      "gold_chunk_indices": [
+        10
+      ],
+      "gold_chunk_ids": [
+        "20b18e9704faf6a7e5122da38d5d857cae59081282aabcf80bf2e364bff6b322"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2601.11061#10"
+      ]
+    },
+    {
+      "id": "full-natural-038",
+      "query": "At what stage did the internal trajectories for memorized examples and stable examples begin to separate?",
+      "expected_paper_id": "arxiv:2601.11061",
+      "source_paper_id": "arxiv:2601.11061",
+      "source_section": "Post-training",
+      "source_language": "en",
+      "expected_answer": "They overlapped early, then split in the middle layers and diverged into different latent-space regions.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 23860,
+          "end": 24041,
+          "quote": "The two trajectories overlap substantially in early layers but exhibit a distinct bifurcation in the middle layers, subsequently diverging into separate regions of the latent space.",
+          "quote_sha256": "07c3f971db721a4d20c464c1598f2c24513f272b0264a125ab1d2788ce94f41e"
+        }
+      ],
+      "gold_chunk_indices": [
+        39
+      ],
+      "gold_chunk_ids": [
+        "3d5533b4616a70a5c8e833164084e22d52ad6431a3b84fe34f98f0596ebfa968"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2601.11061#39"
+      ]
+    },
+    {
+      "id": "full-natural-039",
+      "query": "Which summary of sentence compression was used as an inexpensive proxy for the complexity of each synthetic dataset?",
+      "expected_paper_id": "arxiv:2405.16684",
+      "source_paper_id": "arxiv:2405.16684",
+      "source_section": "Data, training, optimization",
+      "source_language": "en",
+      "expected_answer": "The median compressibility of its token sequences.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 3862,
+          "end": 3954,
+          "quote": "we use median compressibility of each token sequence in a dataset as a measure of complexity",
+          "quote_sha256": "2c8be7475408a7a6f104644f1202aad5dec1f78c981d9803f46c361a6b3af328"
+        }
+      ],
+      "gold_chunk_indices": [
+        6
+      ],
+      "gold_chunk_ids": [
+        "523e428c2f2793391f5339da9414aec72ff37480105f3a742dbbf09a4708981a"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2405.16684#6"
+      ]
+    },
+    {
+      "id": "full-natural-040",
+      "query": "What four grammar controls were varied to make the generated text more or less syntactically complex?",
+      "expected_paper_id": "arxiv:2405.16684",
+      "source_paper_id": "arxiv:2405.16684",
+      "source_section": "Data, training, optimization",
+      "source_language": "en",
+      "expected_answer": "The numbers of terminals and nonterminals, maximum production right-hand-side length, and maximum productions allowed for each nonterminal.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 10350,
+          "end": 10535,
+          "quote": "the number of terminals, number of non-terminals, the maximum length of the right-hand side of a production rule, and the maximum number of production rules allowed for any non-terminal",
+          "quote_sha256": "70961bfe803467889a457e9bce61d93649154af057e1188cb10476fc6afc89ab"
+        }
+      ],
+      "gold_chunk_indices": [
+        17
+      ],
+      "gold_chunk_ids": [
+        "713e2615b1c2016b088c995bcf93dc2083d7318e9360cddb5d8c816c5a84d31e"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2405.16684#17"
+      ]
+    },
+    {
+      "id": "full-natural-041",
+      "query": "In the modular multi-agent framework, what different roles do connections inside an agent and connections between agents play?",
+      "expected_paper_id": "arxiv:2402.16823",
+      "source_paper_id": "arxiv:2402.16823",
+      "source_section": "Agents, open-endedness, AGI",
+      "source_language": "en",
+      "expected_answer": "Internal edges determine execution order; edges between agents support communication and collaboration.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 5702,
+          "end": 5843,
+          "quote": "the edges within an agent define its execution topology, while the edges between agents establish collaboration and communication among them.",
+          "quote_sha256": "6d5c6e2138eed2cb48f94833ef15f1f08e0bd0d537e8104fe165326abc7d2d17"
+        }
+      ],
+      "gold_chunk_indices": [
+        9
+      ],
+      "gold_chunk_ids": [
+        "286eb0897f1eb8104c8257c388e676b842a86e09aa8ea36682aa9a1ea004a7cf"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2402.16823#9"
+      ]
+    },
+    {
+      "id": "full-natural-042",
+      "query": "When a swarm returned several candidate crossword solutions, which one determined its utility score?",
+      "expected_paper_id": "arxiv:2402.16823",
+      "source_paper_id": "arxiv:2402.16823",
+      "source_section": "Agents, open-endedness, AGI",
+      "source_language": "en",
+      "expected_answer": "The returned solution with the highest number of correctly filled words.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 22056,
+          "end": 22160,
+          "quote": "we choose the best of all the graph-returned solutions according to the number of words correctly filled",
+          "quote_sha256": "23515a5882689ff93777637247a6ace5b2c6e61a692ec5207f1e4f0709704b4e"
+        }
+      ],
+      "gold_chunk_indices": [
+        37
+      ],
+      "gold_chunk_ids": [
+        "a16d7950e211555acf390c6648ebab1bda32d5c8c58b6cfe7faa7b14d467ce61"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2402.16823#37"
+      ]
+    },
+    {
+      "id": "full-natural-043",
+      "query": "What paired observations let the researchers compare representations learned separately from images and from language?",
+      "expected_paper_id": "arxiv:2405.07987",
+      "source_paper_id": "arxiv:2405.07987",
+      "source_section": "Representation alignment",
+      "source_language": "en",
+      "expected_answer": "Wikipedia images paired with their captions.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 16525,
+          "end": 16751,
+          "quote": "For vision and text, we use the Wikipedia captions dataset { ( x i , y i ) } i \\{(x_{i},y_{i})\\}_{i} ( Srinivasan et al., 2021 ) , composed of images from Wikipedia ( x i x_{i} ) and their corresponding captions ( y i y_{i} ).",
+          "quote_sha256": "42f903b7b3e10e3452ae20154de14fa7e0b9c4bf254841deba0cab4100956a1f"
+        }
+      ],
+      "gold_chunk_indices": [
+        29
+      ],
+      "gold_chunk_ids": [
+        "399e3d784df9500b982bc158895d849f997919f3c7cefb7b58e11ed9778f1a5d"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2405.07987#29"
+      ]
+    },
+    {
+      "id": "full-natural-044",
+      "query": "What relationship did the study report between cross-model representational agreement and downstream reasoning performance?",
+      "expected_paper_id": "arxiv:2405.07987",
+      "source_paper_id": "arxiv:2405.07987",
+      "source_section": "Representation alignment",
+      "source_language": "en",
+      "expected_answer": "Greater agreement was associated with better performance on commonsense reasoning and mathematical problem solving.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 19381,
+          "end": 19599,
+          "quote": "Figure 4 supports this hypothesis by demonstrating improved performance on commonsense reasoning (Hellaswag; Zellers et al. (2019) ) and mathematical problem solving (GSM8K; Cobbe et al. (2021) ) as alignment improves.",
+          "quote_sha256": "176163c7923930cd8807bae5edd0ebd115683c56ea2746fe1c0d4b961d52e865"
+        }
+      ],
+      "gold_chunk_indices": [
+        33
+      ],
+      "gold_chunk_ids": [
+        "d41b347de32c4e98deee67cddce165f7d48be505cd4449d1e3cb2d197d501e4b"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2405.07987#33"
+      ]
+    },
+    {
+      "id": "full-natural-045",
+      "query": "How were proposed historical space-mission routes compared fairly with reference routes, rather than with real missions' operational fuel budgets?",
+      "expected_paper_id": "arxiv:2604.19341",
+      "source_paper_id": "arxiv:2604.19341",
+      "source_section": "Harness",
+      "source_language": "en",
+      "expected_answer": "The reference routes were rebuilt from historical encounter sequences and timings, then scored with the same dynamics model, constraints, and cost definition.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 21989,
+          "end": 22187,
+          "quote": "each reference trajectory is constructed from the historical encounter sequence and nominal timing, then evaluated under the same orbital-dynamics model, feasibility constraints, and cost definition",
+          "quote_sha256": "58cf84a6e33ee3d39d7719c1ed405bb7439eafa2702ea73c451639d7754ebc8c"
+        }
+      ],
+      "gold_chunk_indices": [
+        34
+      ],
+      "gold_chunk_ids": [
+        "4cb7934145b1e577222f7f8be580007c422ad247c5fd08d7d08574dd2863c455"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2604.19341#34"
+      ]
+    },
+    {
+      "id": "full-natural-046",
+      "query": "When post-training the scientific discovery model on its own searches, how was credit assigned to an unsuccessful intermediate attempt that later led to a good solution?",
+      "expected_paper_id": "arxiv:2604.19341",
+      "source_paper_id": "arxiv:2604.19341",
+      "source_section": "Harness",
+      "source_language": "en",
+      "expected_answer": "Attempts were credited according to the trajectory's final outcome rather than their own immediate scores.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 9158,
+          "end": 9312,
+          "quote": "post-training the model on its own successful trajectories, crediting each attempt by the final outcome of its trajectory rather than its immediate score.",
+          "quote_sha256": "6853e446195a77ea361ccff8f2eb14de37cd562bbcc53ead55db2dfa8e5c2b60"
+        }
+      ],
+      "gold_chunk_indices": [
+        14
+      ],
+      "gold_chunk_ids": [
+        "e8c9f8098d74b96c4296ff5220b250b285ae5db189545783c6f2af8dc266caa7"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2604.19341#14"
+      ]
+    },
+    {
+      "id": "full-natural-047",
+      "query": "How do deeper and shallower memory layers differ in the financial agent's retention of information?",
+      "expected_paper_id": "acl:2025.acl-long.126",
+      "source_paper_id": "acl:2025.acl-long.126",
+      "source_section": "Finance",
+      "source_language": "en",
+      "expected_answer": "Deeper layers decay more slowly and retain information longer; shallow layers decay faster for transient information.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 11353,
+          "end": 11501,
+          "quote": "Deeper layers retain\ninformation longer with smaller decay rates, while\nshallower layers, dealing with more transient data,\nhave larger decay rates.",
+          "quote_sha256": "aae89c215b9f6d4f6236e5ac9ce35b378904437675b0f11cb4b9674fd24d0171"
+        }
+      ],
+      "gold_chunk_indices": [
+        17
+      ],
+      "gold_chunk_ids": [
+        "883b377ceb40db3deea7d3a423d0e5b2a5a81d78650bde2443665bbac2684b20"
+      ],
+      "gold_chunk_keys": [
+        "acl:2025.acl-long.126#17"
+      ]
+    },
+    {
+      "id": "full-natural-048",
+      "query": "What access to price information changes between the financial agent's warm-up and evaluation phases?",
+      "expected_paper_id": "acl:2025.acl-long.126",
+      "source_paper_id": "acl:2025.acl-long.126",
+      "source_section": "Finance",
+      "source_language": "en",
+      "expected_answer": "Warm-up exposes consecutive days' adjusted price differences; evaluation denies future prices and relies on historical data.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 12486,
+          "end": 12966,
+          "quote": "during the warm-up stage , the agent\nobserves daily adjusted price differences between\nconsecutive days, which are critical for identify-\ning potential “Buy\" or “Sell\" signals. This period\nallows the agent to calibrate and adjust its decision-\nmaking strategies based on near-term market move-\nments; during the evaluation stage, access to future\nprice data is restricted, compelling the agent to rely\nsolely on available historical data and its cognitive\nprocessing capabilities.",
+          "quote_sha256": "de8e1ccf8cd48c06044017399c0eaaba0ff060f5270e85922e33f6248962c5b7"
+        }
+      ],
+      "gold_chunk_indices": [
+        19
+      ],
+      "gold_chunk_ids": [
+        "c397465e98ea1e43aba2c276d12ca0b9f162cad4f6e6771035e77a469c87d497"
+      ],
+      "gold_chunk_keys": [
+        "acl:2025.acl-long.126#19"
+      ]
+    },
+    {
+      "id": "full-natural-049",
+      "query": "Why is failure to name a hidden concept insufficient to conclude that the concept has disappeared from a model's internal representation?",
+      "expected_paper_id": "arxiv:2607.23379",
+      "source_paper_id": "arxiv:2607.23379",
+      "source_section": "AI safety and consciousness",
+      "source_language": "en",
+      "expected_answer": "The concept may still be present and linearly decodable even when the model interpreting those activations does not verbalize it.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 10268,
+          "end": 10398,
+          "quote": "A concept may be present in the activation and even linearly decodable by a probe, while still failing to be verbalized by the AO.",
+          "quote_sha256": "4babac06f67af46e21ab0ba60572b1eeb4c8bd7fb5d338f64b632eea279619b9"
+        }
+      ],
+      "gold_chunk_indices": [
+        17
+      ],
+      "gold_chunk_ids": [
+        "76742dc03fbcab7694fe6783c826f9318d48d33412b65523c682b1372ea7a982"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2607.23379#17"
+      ]
+    },
+    {
+      "id": "full-natural-050",
+      "query": "What architecture was used for the model that explains another language model's hidden states?",
+      "expected_paper_id": "arxiv:2607.23379",
+      "source_paper_id": "arxiv:2607.23379",
+      "source_section": "AI safety and consciousness",
+      "source_language": "en",
+      "expected_answer": "It was a LoRA-fine-tuned copy of the subject model, rather than a separate decoder.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 9242,
+          "end": 9362,
+          "quote": "the oracle is implemented as a LoRA-fine-tuned copy of the subject model rather than as a separate decoder architecture.",
+          "quote_sha256": "a4669f8f8124a3426cbd9788ae782ebbae7f5036781497153d126b0fff79faa1"
+        }
+      ],
+      "gold_chunk_indices": [
+        15,
+        16
+      ],
+      "gold_chunk_ids": [
+        "52da9dd0949b190619098bd3b173e8ec3105a25d61b618ca619d7afbeeff78e5",
+        "e37b89fb3ab50671480807ed3e91d84ffcc06a0d5d12115420a4c6928de55bc7"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2607.23379#15",
+        "arxiv:2607.23379#16"
+      ]
+    },
+    {
+      "id": "full-natural-051",
+      "query": "What did hidden-state correlation approaching one reveal about a failed recurrent language-model training run?",
+      "expected_paper_id": "arxiv:2502.05171",
+      "source_paper_id": "arxiv:2502.05171",
+      "source_section": "Reasoning and the \"physics\" of language models",
+      "source_language": "en",
+      "expected_answer": "Every token was receiving the same hidden state; repeated recurrence mixed the sequence until the representation collapsed.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 26539,
+          "end": 26711,
+          "quote": "The correlation of hidden states in the token dimension quickly goes to 1.0 (middle plot), meaning the model predicts the same hidden state for every token in the sequence.",
+          "quote_sha256": "b12b5bc01ec8d3f7d4d795b64b800019845d44656436a51f8fc17ade7ee338fa"
+        }
+      ],
+      "gold_chunk_indices": [
+        46
+      ],
+      "gold_chunk_ids": [
+        "e840a00ef5d44a2883e508523311db28d3b1f19c96e133cf2120c40d8b4a0a43"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2502.05171#46"
+      ]
+    },
+    {
+      "id": "full-natural-052",
+      "query": "Why did a repaired recurrent training run still gain nothing from using 32 internal iterations instead of one at inference?",
+      "expected_paper_id": "arxiv:2502.05171",
+      "source_paper_id": "arxiv:2502.05171",
+      "source_section": "Reasoning and the \"physics\" of language models",
+      "source_language": "en",
+      "expected_answer": "The model learned early to ignore the incoming state, preventing improvement from additional recurrence.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 27510,
+          "end": 27614,
+          "quote": "the model has learned early to ignore the incoming state 𝐬 \\mathbf{s} , preventing further improvements.",
+          "quote_sha256": "052b8b5b35856b5ec70172d874437695a298a6812c64427be83a5a7728f2c885"
+        }
+      ],
+      "gold_chunk_indices": [
+        48
+      ],
+      "gold_chunk_ids": [
+        "ebc622d0794902b751d5839381c98c388f38d2a0f9933668850e90c9cb29b36c"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2502.05171#48"
+      ]
+    },
+    {
+      "id": "full-natural-053",
+      "query": "How much exceptionally high-quality image data did the researchers find sufficient to improve aesthetics without losing the breadth of concepts the generator could depict?",
+      "expected_paper_id": "arxiv:2309.15807",
+      "source_paper_id": "arxiv:2309.15807",
+      "source_section": "Self-supervised learning and vision",
+      "source_language": "en",
+      "expected_answer": "Only a couple of thousand high-quality images with associated text.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 2425,
+          "end": 2712,
+          "quote": "a surprisingly small amount – a couple of thousand – exceptionally high-quality images and associated text is enough to make a significant impact on the aesthetics of the generated images without compromising the generality of the model in terms of visual concepts that can be generated.",
+          "quote_sha256": "835a0972f8a060f112f591f4add191d88aa7ff90befb4f5f603a68ae7c02d585"
+        }
+      ],
+      "gold_chunk_indices": [
+        3
+      ],
+      "gold_chunk_ids": [
+        "caed5c040ae444078cdee07b28cc1c46827d94609551a941fc89d92bde5e53ae"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2309.15807#3"
+      ]
+    },
+    {
+      "id": "full-natural-054",
+      "query": "What autoencoder change substantially improved reconstructed image detail beyond the commonly used four-channel latent representation?",
+      "expected_paper_id": "arxiv:2309.15807",
+      "source_paper_id": "arxiv:2309.15807",
+      "source_section": "Self-supervised learning and vision",
+      "source_language": "en",
+      "expected_answer": "Increasing the number of latent channels to sixteen.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 10924,
+          "end": 11016,
+          "quote": "We find that increasing the channel size to 16 significantly improves reconstruction quality",
+          "quote_sha256": "72fa86b7f3b3b1ca7a5f7c85d2f7260c611d2c6ac563391e31c24cd74a4738a9"
+        }
+      ],
+      "gold_chunk_indices": [
+        18
+      ],
+      "gold_chunk_ids": [
+        "e00b35fc78ad91411d577b5adddd1765ea93ece8d41407b50815b34714a109a8"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2309.15807#18"
+      ]
+    },
+    {
+      "id": "full-natural-055",
+      "query": "What validation had the proposed single-source optical computing design actually provided in the available preprint?",
+      "expected_paper_id": "arxiv:2309.10232",
+      "source_paper_id": "arxiv:2309.10232",
+      "source_section": "Other",
+      "source_language": "en",
+      "expected_answer": "Theoretical analysis only; experimental results and conclusions were deferred to future work.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 635,
+          "end": 754,
+          "quote": "This preprint presents theoretical analysis, and we will supplement experimental results and conclusions in the future.",
+          "quote_sha256": "070a628a98b376006329e972035a235709df45ba973e208adeed7d1d00d999ce"
+        }
+      ],
+      "gold_chunk_indices": [
+        0
+      ],
+      "gold_chunk_ids": [
+        "27d295ce9b8dd2a00495f5e74d7404525a6d705c3c7ff02a299eb7f8e9c3cc67"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2309.10232#0"
+      ]
+    },
+    {
+      "id": "full-natural-056",
+      "query": "How many light sources and wavelengths did the proposed direct matrix computation need, and did it require advance encoding of the matrices?",
+      "expected_paper_id": "arxiv:2309.10232",
+      "source_paper_id": "arxiv:2309.10232",
+      "source_section": "Other",
+      "source_language": "en",
+      "expected_answer": "It used one light source at one wavelength and did not require matrix precoding or preprocessing.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 4102,
+          "end": 4290,
+          "quote": "our method does not require any pre-coding or pre-processing of matrixs, and the computing operation is completed through the propagation of light with single source and single wavelength.",
+          "quote_sha256": "917c7835ab774af0d2f5f93816f02b1822fd1955f5523cc76d29b8ec885438fd"
+        }
+      ],
+      "gold_chunk_indices": [
+        6
+      ],
+      "gold_chunk_ids": [
+        "1208f17c6515a878278ce5cdbca41277e16bf25fe086fccb28604d25865ea515"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2309.10232#6"
+      ]
+    },
+    {
+      "id": "full-natural-057",
+      "query": "Which decision task was the exception when task-specific fine-tuning after random masking outperformed training directly on a single task?",
+      "expected_paper_id": "arxiv:2211.10869",
+      "source_paper_id": "arxiv:2211.10869",
+      "source_section": "Reinforcement learning",
+      "source_language": "en",
+      "expected_answer": "Behavior cloning.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 19954,
+          "end": 20122,
+          "quote": "Specializing a model trained with random-mask via finetuning ( finetune ) leads to the best performance, outperforming single-task on all tasks except behavior cloning.",
+          "quote_sha256": "d85ad1f6cc6ceae95c570d01f11e33fcdc7a1ed9e37512f0ce79c745e2ab82cf"
+        }
+      ],
+      "gold_chunk_indices": [
+        33
+      ],
+      "gold_chunk_ids": [
+        "aaa7915fa6400241f020ce696dc09688542a1f310646a22c38fea0a3af57a830"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2211.10869#33"
+      ]
+    },
+    {
+      "id": "full-natural-058",
+      "query": "For reward-conditioned trajectory prediction, what information replaced feeding a return-to-go token at every timestep?",
+      "expected_paper_id": "arxiv:2211.10869",
+      "source_paper_id": "arxiv:2211.10869",
+      "source_section": "Reinforcement learning",
+      "source_language": "en",
+      "expected_answer": "Only the first return-to-go token in the context window, together with the number of timesteps remaining.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 11854,
+          "end": 12015,
+          "quote": "For reward-conditioned tasks, in each context window we only feed the first RTG token into the model along with the number of timesteps remaining in the horizon.",
+          "quote_sha256": "ef86bd1036db6bca6b4942d75061c156538e4468d21930499ba85fefb594a3d7"
+        }
+      ],
+      "gold_chunk_indices": [
+        19
+      ],
+      "gold_chunk_ids": [
+        "b447ffe724e931579472df9316609a59930e550c135241cc7556d891ecb624c7"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2211.10869#19"
+      ]
+    },
+    {
+      "id": "full-natural-059",
+      "query": "Under what mutation-size condition can random parameter changes accepted probabilistically reproduce noisy gradient-based learning?",
+      "expected_paper_id": "doi:10.1038/s41467-021-26568-2",
+      "source_paper_id": "doi:10.1038/s41467-021-26568-2",
+      "source_section": "NeuroAI",
+      "source_language": "en",
+      "expected_answer": "In the limit of small mutations.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 3595,
+          "end": 3851,
+          "quote": "a single copy of a neural network (a single individual) exposed to parameter mutations that are accepted probabilistically is equivalent, in the limit of small mutation size, to gradient descent on the loss function in the presence of Gaussian white noise.",
+          "quote_sha256": "75d3b290a32ac6339b61ae7937c607ca1a1ba87897e1e55066aaddd1bff448e2"
+        }
+      ],
+      "gold_chunk_indices": [
+        5
+      ],
+      "gold_chunk_ids": [
+        "afa70662735358075caa10ae864a1e5cdf23fe96220d5436ee83c9d19136938e"
+      ],
+      "gold_chunk_keys": [
+        "doi:10.1038/s41467-021-26568-2#5"
+      ]
+    },
+    {
+      "id": "full-natural-060",
+      "query": "What happens to the network when a proposed parameter mutation fails the Metropolis acceptance test?",
+      "expected_paper_id": "doi:10.1038/s41467-021-26568-2",
+      "source_paper_id": "doi:10.1038/s41467-021-26568-2",
+      "source_section": "NeuroAI",
+      "source_language": "en",
+      "expected_answer": "The mutation is rejected and the original neural network is restored.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 11932,
+          "end": 12017,
+          "quote": "and otherwise reject it. In the latter case we return to the original neural network.",
+          "quote_sha256": "0c2e6844c8c259a6168a099f48fd1065c49c0cd98c5772bd7dd214989c51a4da"
+        }
+      ],
+      "gold_chunk_indices": [
+        19
+      ],
+      "gold_chunk_ids": [
+        "0c0f7a0e626edb3d954414ba60018e436b1a70ebb3bbc237d17a002f0eb6d209"
+      ],
+      "gold_chunk_keys": [
+        "doi:10.1038/s41467-021-26568-2#19"
+      ]
+    },
+    {
+      "id": "full-natural-061",
+      "query": "Why were the regions used for selective attention aligned with document, paragraph, and conversation-turn boundaries?",
+      "expected_paper_id": "arxiv:2609.02737",
+      "source_paper_id": "arxiv:2609.02737",
+      "source_section": "LLMs: architectures, context, training",
+      "source_language": "en",
+      "expected_answer": "The authors expected models to track familiar boundaries from training more reliably than new arbitrary delimiters.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 11824,
+          "end": 11925,
+          "quote": "We expect models to track these familiar boundaries far more reliably than arbitrary novel delimiters",
+          "quote_sha256": "b5929dbc2776fe0ffb663d1fd1f535c7e59b24fd7ac581f56dbddb460c910ab6"
+        }
+      ],
+      "gold_chunk_indices": [
+        20
+      ],
+      "gold_chunk_ids": [
+        "87a84bcc5daadcf1b5845a4034ef92ce454b88e91cd02a1bb670fab2bdf1fec2"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2609.02737#20"
+      ]
+    },
+    {
+      "id": "full-natural-062",
+      "query": "Why can accumulating tool results make selective reading of an agent's existing context useful even when retrieval is already available?",
+      "expected_paper_id": "arxiv:2609.02737",
+      "source_paper_id": "arxiv:2609.02737",
+      "source_section": "LLMs: architectures, context, training",
+      "source_language": "en",
+      "expected_answer": "Each tool result stays in context for the rest of the episode even though it is usually relevant only to the steps that requested it.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 38469,
+          "end": 38601,
+          "quote": "each tool result remains in context for the rest of the episode, while it is typically relevant only to the steps that requested it.",
+          "quote_sha256": "8c9fe852b658d1beac16b80659035c65568a847fd5b96b242fee9ae245bde33b"
+        }
+      ],
+      "gold_chunk_indices": [
+        65
+      ],
+      "gold_chunk_ids": [
+        "2048f7ac86aac7e06558356b176a8b22d599ba0829b39c58e5dfb9d40d1c7cad"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2609.02737#65"
+      ]
+    },
+    {
+      "id": "full-natural-063",
+      "query": "How were training examples chosen to score each newly evolved instruction?",
+      "expected_paper_id": "arxiv:2309.16797",
+      "source_paper_id": "arxiv:2309.16797",
+      "source_section": "Retrieval, embeddings, benchmarks",
+      "source_language": "en",
+      "expected_answer": "A batch of 100 question-and-answer pairs was sampled from the domain's entire training set.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 14055,
+          "end": 14194,
+          "quote": "To evaluate the fitness of each evolved task-prompt, we sample a batch of 100 Q&A pairs from the entire training set of the domain at hand.",
+          "quote_sha256": "a58fd7f440ccba032a31d99721e78f30baaf587c6642678ade599c0e3c3e1d94"
+        }
+      ],
+      "gold_chunk_indices": [
+        22
+      ],
+      "gold_chunk_ids": [
+        "b67ebf4728bd210e44e23a3d2babf6440090e21d5c906dbf48ae476766450149"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2309.16797#22"
+      ]
+    },
+    {
+      "id": "full-natural-064",
+      "query": "How did the population-based instruction mutation step avoid filling its prompt list with near-duplicates?",
+      "expected_paper_id": "arxiv:2309.16797",
+      "source_paper_id": "arxiv:2309.16797",
+      "source_section": "Retrieval, embeddings, benchmarks",
+      "source_language": "en",
+      "expected_answer": "It omitted any instruction whose BERT-embedding cosine similarity to an existing entry exceeded 0.95.",
+      "answer_span_policy": "all",
+      "answer_spans": [
+        {
+          "start": 21291,
+          "end": 21558,
+          "quote": "We filter the population of prompts on the basis of BERT ( Devlin et al., 2019 ) embedding cosine similarities between each other—an individual is not included in the list if it is more than 0.95 0.95 similar to any other entry in the list, thus encouraging diversity",
+          "quote_sha256": "f13d8386ca999dcab558eec8304fde5c3b8e246d6e3246706568dd7b1de393e5"
+        }
+      ],
+      "gold_chunk_indices": [
+        35
+      ],
+      "gold_chunk_ids": [
+        "98bd8a2255f30837b466c9dda3c92fdbe3670afbba86e8fc9ec23bc614b3dc78"
+      ],
+      "gold_chunk_keys": [
+        "arxiv:2309.16797#35"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "kind": "verified-live-retained-full-corpus-http-smoke",
+  "workflow_run_id": 40806851930,
+  "workflow_run_url": "https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/40806851930",
+  "source_commit": "02c18b933dfc64dcbcdbb9f129815c8ca37ed20b",
+  "artifact_id": 12868622798,
+  "artifact_sha256": "52fbff403fe3f5ff8d4fd677184d74be2694de43b58df729f5fd4c79cc9f7eb3",
+  "packed_manifest_sha256": "6b9c87883f525a128eb9a48aead5914d9524ba2f7433ff3b14c62b3c0d970b47",
+  "query_manifest_sha256": "049e5e887505ec9c19e030559034ff5f999388c7722af0b42cfa836570d8d556",
+  "passage_count": 40575,
+  "smoke_gate": "passed",
+  "workload_complete": true,
+  "http_requests": 23,
+  "http_errors": 0,
+  "startup_retries": 0,
+  "compatibility": {
+    "checked": 200,
+    "threshold": 0.999,
+    "min_cosine": 0.9999992676399425
+  },
+  "budget": {
+    "compatibility_texts": 200,
+    "query_texts": 2,
+    "total_texts": 202,
+    "input_tokens": 38680,
+    "ai_calls": 15,
+    "limits": {
+      "total_texts": 300,
+      "query_texts": 24,
+      "input_tokens": 153600
+    }
+  },
+  "budget_scope": "Internal token ledger, not Cloudflare billing telemetry.",
+  "wall_seconds": 25.104498277000005,
+  "timing_scope": "Client-observed HTTP wall time. Searches followed startup and compatibility; these two samples are not cold-start or CPU metrics.",
+  "queries_absent_from_frozen_2064": true,
+  "journeys": [
+    {
+      "query": "How can an inference system reduce the memory occupied by a long conversation's key value cache while preserving useful earlier context?",
+      "selected_paper_id": "arxiv:2512.24601",
+      "state": "read_completed",
+      "search_wall_ms": 626.8333220000102,
+      "read_wall_ms": 156.08101899999838,
+      "read_code_points": 6000,
+      "top_three_papers": [
+        {
+          "id": "arxiv:2512.24601",
+          "title": "Recursive Language Models"
+        },
+        {
+          "id": "arxiv:2407.15017",
+          "title": "Knowledge Mechanisms in Large Language Models: A Survey and Perspective"
+        },
+        {
+          "id": "arxiv:2510.03215",
+          "title": "Cache-to-Cache: Direct Semantic Communication Between Large Language Models"
+        }
+      ]
+    },
+    {
+      "query": "Which methods let a language model spend extra computation checking and revising a difficult reasoning answer before returning it?",
+      "selected_paper_id": "arxiv:2407.20311",
+      "state": "read_completed",
+      "search_wall_ms": 611.8411580000043,
+      "read_wall_ms": 153.72276699997656,
+      "read_code_points": 6000,
+      "top_three_papers": [
+        {
+          "id": "arxiv:2407.20311",
+          "title": "Physics of Language Models: Part 2.1, Grade-School Math and the Hidden Reasoning Process"
+        },
+        {
+          "id": "arxiv:2508.11408",
+          "title": "On-Policy RL Meets Off-Policy Experts: Harmonizing Supervised Fine-Tuning and Reinforcement Learning via Dynamic Weighting"
+        },
+        {
+          "id": "arxiv:2605.07654",
+          "title": "Reliable Chain-of-Thought via Prefix Consistency"
+        }
+      ]
+    }
+  ],
+  "qualitative_relevance_review": {
+    "scope": "Only delivered snippets and the two top-one reading windows.",
+    "first_query": "RLM context offloading is an adjacent architectural alternative; the delivered window does not describe a concrete KV-cache reduction method preserving useful earlier context.",
+    "second_query": "The delivered Physics of Language Models window diagnoses reasoning errors through probing; it does not directly explain inference-time checking and revision methods. A later Prefix Consistency snippet suggests a useful further-reading direction.",
+    "interpretation": "Neither delivered top-one window directly answers its exact question. This is a qualitative observation about two cases, not a general retrieval-accuracy estimate. Other full papers were not assessed, and no agent reformulation was attempted."
+  },
+  "cleanup": {
+    "result": "passed",
+    "namespace_absent_verified": true,
+    "worker_delete_api_succeeded": true,
+    "separate_worker_absence_get_recorded": false
+  },
+  "corpus_reencoded": false,
+  "autonomous_agent_evaluation": false,
+  "public_endpoint_remains_deployed": false,
+  "production_readiness": "unverified",
+  "platform_cpu": "unverified",
+  "platform_memory": "unverified",
+  "free_tier_sustained_capacity": "unverified",
+  "evidence": {
+    "file": "retained-smoke-40806851930.evidence.json.gz",
+    "bytes": 145240,
+    "sha256": "715ccbe7ee7e3d9f3dc51a33a451ea7cd583957298b5ae6314d9036928d58b78"
+  }
+}

@@ -1,0 +1,4 @@
+# Install the CPU torch wheel first from requirements-torch-probe.txt.
+# All remaining packages resolve only through PyPI.
+transformers==4.57.1
+numpy==2.3.4

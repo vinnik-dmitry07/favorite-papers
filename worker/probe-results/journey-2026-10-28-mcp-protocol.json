@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "kind": "basic-mcp-fixed-initial-query-development-measurement",
+  "frozen_at": "2026-10-28T22:44:27.025679+00:00",
+  "selection": "First four sessions of the already frozen 12-question REST development cohort, unchanged question/vector rows. REST outcomes observed before this client-path check; not held-out or randomized treatment evidence.",
+  "sessions": [
+    {
+      "id": "mcp-01",
+      "question_id": "full-natural-055",
+      "question": "What validation had the proposed single-source optical computing design actually provided in the available preprint?",
+      "vector_row": 2054
+    },
+    {
+      "id": "mcp-02",
+      "question_id": "full-natural-062",
+      "question": "Why can accumulating tool results make selective reading of an agent's existing context useful even when retrieval is already available?",
+      "vector_row": 2061
+    },
+    {
+      "id": "mcp-03",
+      "question_id": "full-natural-009",
+      "question": "In the streaming image-classification experiment with changing classes, how did the learned learning rates evolve in early layers compared with the final layer?",
+      "vector_row": 2008
+    },
+    {
+      "id": "mcp-04",
+      "question_id": "full-natural-020",
+      "question": "In the financial forecasting review, how does an expanding training set differ from a rolling training window?",
+      "vector_row": 2019
+    }
+  ],
+  "source_commit": "9dbcb22d804a3cf5d5d9899cacbe6f4a908ef7e1",
+  "executed_bundle_sha256": "c6437811939f969edbeb54d315353ddd83c170481b5d70d822952cdfcf18ab3c",
+  "limits": {
+    "tool_calls": 8,
+    "delivered_unicode_code_points": 48000,
+    "semantic_calls": 1
+  },
+  "transport": "Fresh independent Codex subagent launches fixed local REPL/API pair in its own namespace, calls setup once, then only ordinary MCP tools/call search and fetch using rpc helper. No advanced REST, labels, files, other network, or agents. First exact query uses its saved vector.",
+  "accounting": "Entire raw MCP response bodies including any duplicated text/structured fields; not an assumption that every MCP client displays these bytes. Setup excluded; terminal error reserve37. Repeated text counts. Raw-wire budget results cannot be generalized to connector-specific rendered context.",
+  "grading": "Same supported-answer and visible-evidence rubric as frozen REST protocol; fixed answers before grading, equivalent evidence accepted. No gold-directed navigation.",
+  "production_changed": false,
+  "provider_calls_planned": 0
+}

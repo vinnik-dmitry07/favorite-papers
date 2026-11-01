@@ -1,0 +1,109 @@
+{
+  "run_id": 40226910117,
+  "run_attempt": 1,
+  "run_url": "https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/40226910117",
+  "source_sha": "10b3a354c2ff900fcb4296dfa97ace95642cad8a",
+  "phase": "pilot",
+  "artifact": {
+    "id": 12611064859,
+    "name": "durable-object-probe-40226910117-1",
+    "sha256": "2e15dfc0a438d049067315ce51333eb6b10cf5b21b1423d781752887e709aed7"
+  },
+  "raw_evidence": {
+    "file": "cloudflare-2026-10-25-do-pilot.raw.json.gz",
+    "format": "gzip JSON object mapping artifact paths to their exact UTF-8 text",
+    "sha256": "870900b65ceabaf63ac1764fbe3a76e03af9f31f8a170619d03995f67bf1a8b3",
+    "file_sha256": {
+      "probe-do-report.json": "d3107e6cfcafc1b45875a05948583c22adab45c10d17c83d9e1dad342d460f53",
+      "probe-do-lifecycle.json": "e74ab6d58b68418c21aa4f3399ae6d2582e6e692a9701a44e1127f6bbb277dcd",
+      "probe-do-cleanup.txt": "a7d72a2376ffb38cc9036536b9673128a83ea442219e7c7e7acd9c334a114f70",
+      "agent_probe/probe/measurements.json": "978ce1c0e28ac7e8bb402aa62038dbabd35dd10e59ede30837bdc47811b79c55",
+      "agent_probe/probe/index.json": "f1ae3c0c9636bd5efc59412a6a54b5766c44c51b451c73336aca4e53416653a0",
+      "worker/probe-do-deploy.txt": "fa7d77c76c01ef1b573ecedf8eb4c2429b49d51666b7f9716723eb7efd1b5001"
+    }
+  },
+  "http_attempts": 3,
+  "successful_service_requests": 3,
+  "startup_retries": 0,
+  "groups": {
+    "requests": 0,
+    "pilot": 2,
+    "discovery": 1,
+    "priming": 0,
+    "concurrency": 0
+  },
+  "gates": {
+    "functional_gate": "passed",
+    "gateway_cpu_gate": "passed",
+    "do_cpu_gate": "passed",
+    "latency_gate": "passed",
+    "preflight_gate": "passed",
+    "phase_complete": true,
+    "sample_gate": "passed",
+    "runtime_gate": "unverified",
+    "memory_gate": "unverified",
+    "isolate_cold_gate": "unverified",
+    "retrieval_quality": "not_tested"
+  },
+  "platform_cpu": {
+    "gateway": {
+      "expected": 3,
+      "matched": 3,
+      "missing": 0,
+      "cpu_ms": {
+        "p50": 1,
+        "p95": 1,
+        "p99": 1
+      },
+      "cpu_max_ms": 1
+    },
+    "durable_object": {
+      "expected": 3,
+      "matched": 3,
+      "missing": 0,
+      "cpu_ms": {
+        "p50": 70,
+        "p95": 85,
+        "p99": 85
+      },
+      "cpu_max_ms": 85
+    }
+  },
+  "telemetry_conflicts": [],
+  "telemetry_error": null,
+  "telemetry_diagnostics": {
+    "queries": 10,
+    "events_across_queries": 64,
+    "object_events_across_queries": 24
+  },
+  "missing_cpu": [],
+  "cases": {},
+  "warm_latency_cases": {},
+  "max_client_wall_ms": 761.7385500000182,
+  "object_id_count": 1,
+  "constructor_id_count": 1,
+  "cleanup": {
+    "name": "key-papers-static-do-probe-40226910117-1",
+    "phase": "removed",
+    "preflight": "passed",
+    "namespace": {
+      "id": "679255bbc8e6494d982560e169f54780",
+      "script": "key-papers-static-do-probe-40226910117-1",
+      "class": "StaticSearchProbe",
+      "use_sqlite": true
+    },
+    "cleanup": "passed",
+    "source_sha": "10b3a354c2ff900fcb4296dfa97ace95642cad8a",
+    "account_fingerprint": "572b4b152b895f4bc456120ee6f3df2680a2be48d5a5efcbbd15eadabe7042b3",
+    "namespace_absent": true
+  },
+  "limitations": [
+    "Synthetic vectors do not test Workers AI or semantic usefulness.",
+    "App cache reset and object construction do not prove a new isolate.",
+    "Platform CPU must be scoped separately to gateway and object.",
+    "Absent/aggregate data cannot establish request-level percentiles.",
+    "Sample gates do not establish population p99 or production readiness.",
+    "Memory, quality, account quotas and rollback need later evidence."
+  ],
+  "interpretation": "Pilot passed its observed-sample gates and verified cleanup; not a full runtime or semantic quality gate."
+}

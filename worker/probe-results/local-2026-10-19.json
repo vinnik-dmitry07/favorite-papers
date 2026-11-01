@@ -1,0 +1,261 @@
+{
+  "purpose": "Local full-corpus functional run; NOT Cloudflare CPU or semantic quality evidence",
+  "date": "2026-10-19",
+  "runtime": "wrangler 4.151.0, local workerd, loopback HTTP",
+  "corpus_version": "38cdfcc9144b38a1a5b83892e24fcf4eb6bde34eaa19a2073cd9056aba0ff5f1",
+  "synthetic": true,
+  "index_count": 40575,
+  "source_files_sha256": {
+    "src/build_static_search_probe.py": "168e42e151cf2549194795f2458add956034479d19f5f1eb1dc2e6c55dd165cf",
+    "src/run_static_search_probe.py": "bf8161cfb4f283e3a74be49e7bfb8741d1949b5de7c6f2248f1d6107f0536b83",
+    "worker/src/static-search.ts": "116f69cf2251b5a20200537b78e0e52d181863d6eec6ee5cafb0f305cc6e3a88",
+    "worker/src/static-search-probe.ts": "ab03f29259b2754e6c0bc9d21a9f5e400295e8ecb375f2774cfd0b1ab90082e5",
+    "worker/wrangler.probe.toml": "2ad46c7839467e6549614ed4df394dec3a7fb013c8c8f0f4fd1ab6cba3a586ce"
+  },
+  "raw_report_sha256": "ffbe90ce47e0d0f5361605c0ffdbd7083e40fcdd77180cc1dae3a0661725dee2",
+  "functional_gate": "passed",
+  "measured_requests": 600,
+  "priming_requests": 6,
+  "successful_measured_requests": 600,
+  "cpu_gate": "unverified",
+  "runtime_gate": "unverified",
+  "memory_gate": "unverified",
+  "isolate_cold_gate": "unverified",
+  "retrieval_quality": "not_tested",
+  "limitations": [
+    "Synthetic embeddings; Workers AI inference is not exercised.",
+    "cold=1 resets application cache, not the Cloudflare V8 isolate.",
+    "Client wall time is not CPU time; absent telemetry never means zero.",
+    "Memory and isolate cold starts require separate measurement."
+  ],
+  "cases": {
+    "content.application_cold": {
+      "samples": 50,
+      "successful": 50,
+      "client_wall_ms": {
+        "p50": 9.122381999986828,
+        "p95": 15.082821999385487,
+        "p99": 29.883880000852514
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "matched_telemetry": 0,
+      "missing_telemetry": 50,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "max_query_samples": 0
+    },
+    "content.warm": {
+      "samples": 50,
+      "successful": 50,
+      "client_wall_ms": {
+        "p50": 4.138101000535244,
+        "p95": 7.849681000152486,
+        "p99": 9.224555999935546
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "matched_telemetry": 0,
+      "missing_telemetry": 50,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "max_query_samples": 0
+    },
+    "contents.application_cold": {
+      "samples": 50,
+      "successful": 50,
+      "client_wall_ms": {
+        "p50": 8.375343000807334,
+        "p95": 14.01974300006259,
+        "p99": 17.70437300001504
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "matched_telemetry": 0,
+      "missing_telemetry": 50,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "max_query_samples": 0
+    },
+    "contents.warm": {
+      "samples": 50,
+      "successful": 50,
+      "client_wall_ms": {
+        "p50": 5.788248000499152,
+        "p95": 9.470725000028324,
+        "p99": 11.550160000297183
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "matched_telemetry": 0,
+      "missing_telemetry": 50,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "max_query_samples": 0
+    },
+    "find.application_cold": {
+      "samples": 50,
+      "successful": 50,
+      "client_wall_ms": {
+        "p50": 9.045587999935378,
+        "p95": 13.514034999388969,
+        "p99": 14.151233000120556
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "matched_telemetry": 0,
+      "missing_telemetry": 50,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "max_query_samples": 0
+    },
+    "find.warm": {
+      "samples": 50,
+      "successful": 50,
+      "client_wall_ms": {
+        "p50": 3.764758999750484,
+        "p95": 5.370361000132107,
+        "p99": 6.678976999864972
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "matched_telemetry": 0,
+      "missing_telemetry": 50,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "max_query_samples": 0
+    },
+    "mcp_fetch.application_cold": {
+      "samples": 50,
+      "successful": 50,
+      "client_wall_ms": {
+        "p50": 10.563198000454577,
+        "p95": 16.025914999772795,
+        "p99": 18.575502000203414
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "matched_telemetry": 0,
+      "missing_telemetry": 50,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "max_query_samples": 0
+    },
+    "mcp_fetch.warm": {
+      "samples": 50,
+      "successful": 50,
+      "client_wall_ms": {
+        "p50": 7.55606200073089,
+        "p95": 11.371324000720051,
+        "p99": 13.524159000553482
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "matched_telemetry": 0,
+      "missing_telemetry": 50,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "max_query_samples": 0
+    },
+    "mcp_search.application_cold": {
+      "samples": 50,
+      "successful": 50,
+      "client_wall_ms": {
+        "p50": 27.140176999637333,
+        "p95": 39.26435900029901,
+        "p99": 47.81997299960494
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "matched_telemetry": 0,
+      "missing_telemetry": 50,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "max_query_samples": 5
+    },
+    "mcp_search.warm": {
+      "samples": 50,
+      "successful": 50,
+      "client_wall_ms": {
+        "p50": 18.252048999784165,
+        "p95": 25.338531000670628,
+        "p99": 34.998444000848394
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "matched_telemetry": 0,
+      "missing_telemetry": 50,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "max_query_samples": 5
+    },
+    "rest_search.application_cold": {
+      "samples": 50,
+      "successful": 50,
+      "client_wall_ms": {
+        "p50": 26.591548999931547,
+        "p95": 51.25778399997216,
+        "p99": 102.61004299991328
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "matched_telemetry": 0,
+      "missing_telemetry": 50,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "max_query_samples": 5
+    },
+    "rest_search.warm": {
+      "samples": 50,
+      "successful": 50,
+      "client_wall_ms": {
+        "p50": 20.160119000138366,
+        "p95": 26.32183100013208,
+        "p99": 34.455606999472366
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "matched_telemetry": 0,
+      "missing_telemetry": 50,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "max_query_samples": 5
+    }
+  }
+}

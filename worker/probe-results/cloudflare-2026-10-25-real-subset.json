@@ -1,0 +1,218 @@
+{
+  "run_id": 40238828496,
+  "run_attempt": 1,
+  "run_url": "https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/40238828496",
+  "source_sha": "4723db4635bd6d2865211e1527f014460e1405da",
+  "artifact": {
+    "id": 12616396041,
+    "name": "real-search-probe-40238828496-1",
+    "sha256": "ae50de4d8de1ebc0d44c9b73d1d3e677a4523bbb9caf10a8db78acad8030a8c0",
+    "expires_at": "2027-01-23T22:09:04Z"
+  },
+  "raw_evidence": {
+    "file": "cloudflare-2026-10-25-real-subset.raw.json.gz",
+    "sha256": "cce93364ce03a365b141777170f00e2320b62215006037f37df9f52decd8e05a",
+    "format": "gzip JSON object mapping all UTF-8 artifact paths to exact text",
+    "file_sha256": {
+      "agent_real_probe/probe.json": "1b8997ec243a79ffb542e3ce770afa18837a096cf22f3f9d07db35ea77f1d8f3",
+      "agent_real_probe/releases/5c8c58d90ec7bfdbcf66c40c363ff2e8967f263eda9257f7d562f9b71fcb617f/graph.json": "c295c69e6e274061fe2412032e997e2197a853ed070573a18c471e83b9641b87",
+      "agent_real_probe/releases/5c8c58d90ec7bfdbcf66c40c363ff2e8967f263eda9257f7d562f9b71fcb617f/papers/5a0b4b0b524698ee5f30eab659b7cd5104f5fe6497c8dec2d0c4b9d332350047.json": "2b3d87141158c613a844900f68b93de969ea9ce882a1787fca45aae454321f3e",
+      "agent_real_probe/releases/5c8c58d90ec7bfdbcf66c40c363ff2e8967f263eda9257f7d562f9b71fcb617f/papers/636fb871904bc06f742cfdea069796f9e9665f95bd58dc63260eaff5154ef985.json": "88bb67a684c0ff278edd76014622ee3bb0e6da8e22409bdd06c4655387a8d4fc",
+      "agent_real_probe/releases/5c8c58d90ec7bfdbcf66c40c363ff2e8967f263eda9257f7d562f9b71fcb617f/papers/68c71dc1a042dedd5e3c4d9c1ad32c9d046fd31b8dc79080bd6dff1c9800abc7.json": "39955d1dac16d7beecd73029bf532b5eae891a43e8629f1993a5d1c72c5961b3",
+      "local-encoder-report.json": "5d2f342a26058aabca398abaaa2fc5f3889d3258c00c2549a416a9f7a461335b",
+      "local-query-vectors.json": "684575807c109388395f7ae81834d680d15fac5bf0bd52bdacd9b9fdf3c63702",
+      "local-real-integration.json": "33c628a5c16c76a6771ef70933dbfd25c8bb0f23b3918f639dd3a82d60ebd010",
+      "probe-do-cleanup.txt": "b3ee676e74988c12e15b0e81d72cbb8e8613cda4b3a4f498dd4bd8866fa8da72",
+      "probe-do-lifecycle.json": "082b8e7d2644a6c48f3422d9234c0ab785c9b2bfc29313c92e03d06ff8542ace",
+      "probe-real-report.json": "c1da94fbb73d7455e0497a2269d840468d4c82c429971f3e9bbe3666fa94655f",
+      "worker/probe-real-deploy.txt": "3747970bd5ddea32aa246dc637c54d107c6d7f8a46e5d7fe6920f55ecddc979b"
+    },
+    "binary_vectors": "Not duplicated in this compressed JSON. Exact vectors.f32 hash is recorded below; original ZIP remains in Actions until expiry."
+  },
+  "corpus": {
+    "manifest_sha256": "1b8997ec243a79ffb542e3ce770afa18837a096cf22f3f9d07db35ea77f1d8f3",
+    "release_id": "5c8c58d90ec7bfdbcf66c40c363ff2e8967f263eda9257f7d562f9b71fcb617f",
+    "paper_ids": [
+      "arxiv:2402.03300",
+      "arxiv:2412.06769",
+      "arxiv:2412.14135"
+    ],
+    "passage_count": 390,
+    "vectors_sha256": "3ae371a2e24940b66c6b7b0fe719431a46c91d457dddf28646120a6bf3bc576c",
+    "vectors_byte_count": 1198080,
+    "encoder": {
+      "attention_implementation": "eager",
+      "byte_order": "little",
+      "count": 390,
+      "device": "cpu",
+      "dimensions": 768,
+      "dtype": "float32",
+      "embedding_signature": "df5126063ec2f6589a0b994d6b7ebaaed8767dd49adb742803ab02b8a666cefe",
+      "encoder_signature": "72e810e6f1b2f39c975bd03978a7ef113be948565d527819608d4c4d782b2e29",
+      "implementation": "canonical-wordpiece-bge-cls-fp32-v1",
+      "model_id": "BAAI/bge-base-en-v1.5",
+      "model_revision": "a5beb1e3e68b9ab74eb54cfd186867f64f240e1a",
+      "normalization": "l2",
+      "path": "vectors.f32",
+      "pooling": "cls",
+      "sha256": "3ae371a2e24940b66c6b7b0fe719431a46c91d457dddf28646120a6bf3bc576c",
+      "versions": {
+        "torch": "2.8.0+cpu",
+        "transformers": "4.57.1"
+      },
+      "workers_ai_compatibility": "unverified"
+    }
+  },
+  "compatibility": {
+    "checked": 200,
+    "threshold": 0.999,
+    "min_cosine": 0.9999993412819048,
+    "mean_cosine": 0.9999996306027331,
+    "max_cosine": 0.9999997630149208,
+    "gate": "passed",
+    "evidence": "Scores computed by the pinned deployed runtime; remote embedding vectors were not retained, so raw remote cosine recomputation is unavailable."
+  },
+  "workload": {
+    "http_attempts": 46,
+    "identified_requests": 45,
+    "expected_responses": 45,
+    "startup_unidentified_404_retries": 1,
+    "expected_non_200_statuses": [
+      503,
+      409,
+      400
+    ],
+    "load_elapsed_ms": 12148,
+    "journeys": 12,
+    "query_count": 6,
+    "source_backed_answer_queries": 2,
+    "budget": {
+      "compatibility_texts": 200,
+      "query_texts": 12,
+      "total_texts": 212,
+      "input_tokens": 35437,
+      "ai_calls": 25,
+      "limits": {
+        "total_texts": 300,
+        "query_texts": 24,
+        "input_tokens": 153600
+      }
+    }
+  },
+  "gates": {
+    "compatibility_gate": "passed",
+    "contracts_gate": "passed",
+    "passage_retrieval_gate": "failed",
+    "relevance_smoke_gate": "failed",
+    "answer_context_gate": "passed",
+    "latency_gate": "passed",
+    "budget_gate": "passed",
+    "gateway_cpu_gate": "unverified",
+    "durable_object_cpu_gate": "passed",
+    "cpu_gate": "unverified",
+    "integration_gate": "passed",
+    "sample_gate": "unverified",
+    "runtime_gate": "unverified",
+    "memory_gate": "unverified",
+    "full_corpus_quality_gate": "unverified"
+  },
+  "passage_misses": [
+    {
+      "query_id": "grpo-settings",
+      "protocol": "rest",
+      "paper_id": "arxiv:2402.03300",
+      "chunk_index": 59,
+      "start": 34320,
+      "end": 35119,
+      "context_start": 34320,
+      "context_end": 40320,
+      "answer_context_relevant": true
+    }
+  ],
+  "oracle_revision": 2,
+  "oracle_note": {
+    "post_observation": true,
+    "reason": "After the local v1 run, source review confirmed that chunk 56 answers the baseline question using the value-function synonym. Revision 2 corrects that lexical false negative for diagnosis; it is not a held-out or preregistered retrieval pass. The GRPO settings oracle and all query strings are unchanged."
+  },
+  "platform_cpu": {
+    "gateway": {
+      "expected": 45,
+      "observed": 44,
+      "cpu_max_ms": 3,
+      "outcomes": [
+        "ok"
+      ]
+    },
+    "durable_object": {
+      "expected": 45,
+      "observed": 45,
+      "cpu_max_ms": 92,
+      "outcomes": [
+        "ok"
+      ]
+    }
+  },
+  "missing_cpu": [
+    {
+      "role": "gateway",
+      "kind": "compatibility_search_guard",
+      "sequence": 3,
+      "marker": "734bf41b-6d03-4900-8ad1-531153eb4329"
+    }
+  ],
+  "telemetry_conflicts": [],
+  "telemetry_error": "TimeoutError: The read operation timed out",
+  "telemetry_collection_http_attempts": 102,
+  "telemetry_collection_successful_queries": 101,
+  "client_latency": {
+    "rest_search": {
+      "samples": 6,
+      "median_ms": 212.46330150000858,
+      "max_ms": 366.6303799999753
+    },
+    "mcp_search": {
+      "samples": 6,
+      "median_ms": 156.48706599999684,
+      "max_ms": 220.95884899999874
+    },
+    "content": {
+      "samples": 6,
+      "median_ms": 116.67445300001589,
+      "max_ms": 289.58577800000285
+    },
+    "mcp_fetch": {
+      "samples": 6,
+      "median_ms": 63.833564500001216,
+      "max_ms": 74.23214199999961
+    }
+  },
+  "client_latency_method": "Median is the average of two central observations for even sample counts; maxima are observed values, not population p99.",
+  "cleanup": {
+    "name": "key-papers-static-do-probe-40238828496-1",
+    "phase": "removed",
+    "preflight": "passed",
+    "namespace": {
+      "id": "db1e9a0279084269a7088ca658a7e63d",
+      "script": "key-papers-static-do-probe-40238828496-1",
+      "class": "StaticSearchProbe",
+      "use_sqlite": true
+    },
+    "cleanup": "passed",
+    "source_sha": "4723db4635bd6d2865211e1527f014460e1405da",
+    "account_fingerprint": "572b4b152b895f4bc456120ee6f3df2680a2be48d5a5efcbbd15eadabe7042b3",
+    "namespace_absent": true
+  },
+  "local_encoder_elapsed_seconds": 134.43280987100002,
+  "interpretation": "The 390-passage real-subset integration and Workers AI compatibility passed. GRPO settings passage retrieval still failed, while the read context supports its answer. One gateway CPU record is missing; aggregate CPU/sample readiness remains unverified.",
+  "limitations": [
+    "Small development subset, not a held-out full-corpus benchmark.",
+    "Paper retrieval alone is trivial in this small catalog; source-backed passage and answer-window checks are separate.",
+    "HTTP/MCP contract journey, not an external LLM agent evaluation.",
+    "Missing platform CPU remains unverified; wall time is never CPU.",
+    "Old synthetic matrix gates are unchanged.",
+    "Only three papers, six fixed development queries and two source-backed answer checks.",
+    "A single object constructor ID was observed; this is not an isolate-cold or concurrency benchmark.",
+    "This run does not establish full-corpus memory, quality, account-wide quota fit or production readiness.",
+    "The earlier synthetic matrix still has its separate 17 missing CPU records."
+  ]
+}

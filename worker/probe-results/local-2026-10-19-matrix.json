@@ -1,0 +1,2702 @@
+{
+  "run_id": "111299a5-9b40-4ea1-9805-eaaf446aa1af",
+  "origin": "http://127.0.0.1:8789",
+  "started_ms": 1792450090366,
+  "finished_ms": 1792450151880,
+  "info": {
+    "synthetic": true,
+    "corpus_version": "090568974946c0f2a77eb284a709b2fa4df78b54f056640feab7fc723031ed54",
+    "count": 40575,
+    "sample_paper_id": "arxiv:2402.03300",
+    "longest_paper_id": "arxiv:2405.04517",
+    "sample_query": "How is group relative policy optimization used?",
+    "sample_find_query": "the",
+    "sample_query_max": "a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a",
+    "sample_query_adversarial": "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\ud83e\uddea qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\ud83e\uddea qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\ud83e\uddea qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\ud83e\uddea qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\ud83e\uddea qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\ud83e\uddea qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\ud83e\uddea qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\ud83e\uddea qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\ud83e\uddea qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\ud83e\uddea qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\ud83e\uddea qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\ud83e\uddea qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\ud83e\uddea qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\ud83e\uddea qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\ud83e\uddea qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\ud83e\uddea qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\ud83e\uddea qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\ud83e\uddea qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq\ud83e\uddea",
+    "sample_fetch_id": "probe-doc:eyJwYXBlciI6ImFyeGl2OjI0MDUuMDQ1MTciLCJ2ZXJzaW9uIjoiMDkwNTY4OTc0OTQ2YzBmMmE3N2ViMjg0YTcwOWIyZmE0ZGY3OGI1NGYwNTY2NDBmZWFiN2ZjNzIzMDMxZWQ1NCIsInN0YXJ0IjowfQ",
+    "variants": [
+      "js-json128",
+      "js-json16",
+      "js4-json128",
+      "js4-json16",
+      "wasm-json128",
+      "wasm-json16",
+      "wasm-rerank100",
+      "wasm-int8",
+      "wasm-binary200"
+    ],
+    "semantic_quality_measured": false,
+    "embedding_provider_called": false
+  },
+  "variants": [
+    "js-json128",
+    "js-json16",
+    "js4-json128",
+    "js4-json16",
+    "wasm-json128",
+    "wasm-json16",
+    "wasm-rerank100",
+    "wasm-int8",
+    "wasm-binary200"
+  ],
+  "cases": {
+    "js-json128.content.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 8.938650997151854,
+        "p95": 11.685508001392009,
+        "p99": 11.685508001392009
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js-json128.content.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 4.73798199891462,
+        "p95": 6.9129580006119795,
+        "p99": 6.9129580006119795
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js-json128.contents.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 7.839772999432171,
+        "p95": 13.124356999469455,
+        "p99": 13.124356999469455
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js-json128.contents.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 5.922115997236688,
+        "p95": 9.16720899840584,
+        "p99": 9.16720899840584
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js-json128.find.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 8.181572000466986,
+        "p95": 9.609972003090661,
+        "p99": 9.609972003090661
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js-json128.find.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 4.071693001606036,
+        "p95": 8.980683000118006,
+        "p99": 8.980683000118006
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js-json128.mcp_fetch.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 9.03011099944706,
+        "p95": 12.966739999683341,
+        "p99": 12.966739999683341
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js-json128.mcp_fetch.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 7.667848996788962,
+        "p95": 10.275815999193583,
+        "p99": 10.275815999193583
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js-json128.mcp_search.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 26.70063099867548,
+        "p95": 56.0503590022563,
+        "p99": 56.0503590022563
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "js-json128.mcp_search.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 20.269963999453466,
+        "p95": 48.547459999099374,
+        "p99": 48.547459999099374
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "js-json128.rest_search.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 29.204299000411993,
+        "p95": 61.20330500198179,
+        "p99": 61.20330500198179
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "js-json128.rest_search.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 21.66664800097351,
+        "p95": 38.6077250004746,
+        "p99": 38.6077250004746
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "js-json16.content.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 8.551830000214977,
+        "p95": 16.8038970005,
+        "p99": 16.8038970005
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js-json16.content.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 5.085851000330877,
+        "p95": 7.130660997063387,
+        "p99": 7.130660997063387
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js-json16.contents.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 7.92080799874384,
+        "p95": 17.754651998984627,
+        "p99": 17.754651998984627
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js-json16.contents.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 5.868788000952918,
+        "p95": 10.000533999118488,
+        "p99": 10.000533999118488
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js-json16.find.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 7.375807999778772,
+        "p95": 12.416757999744732,
+        "p99": 12.416757999744732
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js-json16.find.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 4.413648999616271,
+        "p95": 6.7172409981139936,
+        "p99": 6.7172409981139936
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js-json16.mcp_fetch.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 9.0209740010323,
+        "p95": 13.956116999906953,
+        "p99": 13.956116999906953
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js-json16.mcp_fetch.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 7.763416000670986,
+        "p95": 11.210573000425939,
+        "p99": 11.210573000425939
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js-json16.mcp_search.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 22.270209999987856,
+        "p95": 50.39060000126483,
+        "p99": 50.39060000126483
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "js-json16.mcp_search.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 17.886352001369232,
+        "p95": 39.309565003350144,
+        "p99": 39.309565003350144
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "js-json16.rest_search.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 20.796693999727722,
+        "p95": 35.01025699733873,
+        "p99": 35.01025699733873
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "js-json16.rest_search.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 16.03287900070427,
+        "p95": 27.834428001369815,
+        "p99": 27.834428001369815
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "js4-json128.content.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 8.95026299986057,
+        "p95": 12.4499220000871,
+        "p99": 12.4499220000871
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js4-json128.content.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 4.702433998318156,
+        "p95": 8.09588599804556,
+        "p99": 8.09588599804556
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js4-json128.contents.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 8.832007999444613,
+        "p95": 10.8227579985396,
+        "p99": 10.8227579985396
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js4-json128.contents.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 5.786955000075977,
+        "p95": 8.663605000037933,
+        "p99": 8.663605000037933
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js4-json128.find.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 8.335999998962507,
+        "p95": 9.747389998665312,
+        "p99": 9.747389998665312
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js4-json128.find.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 4.252729999279836,
+        "p95": 8.484484998916741,
+        "p99": 8.484484998916741
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js4-json128.mcp_fetch.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 9.890045002975967,
+        "p95": 12.873026000306709,
+        "p99": 12.873026000306709
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js4-json128.mcp_fetch.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 7.32916299966746,
+        "p95": 8.377736998227192,
+        "p99": 8.377736998227192
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js4-json128.mcp_search.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 25.613254998461343,
+        "p95": 52.23055000169552,
+        "p99": 52.23055000169552
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "js4-json128.mcp_search.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 18.838420997781213,
+        "p95": 44.24374999871361,
+        "p99": 44.24374999871361
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "js4-json128.rest_search.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 26.384539996797685,
+        "p95": 48.27440200097044,
+        "p99": 48.27440200097044
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "js4-json128.rest_search.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 18.507582000893308,
+        "p95": 31.931265999446623,
+        "p99": 31.931265999446623
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "js4-json16.content.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 10.00673300222843,
+        "p95": 15.44365800145897,
+        "p99": 15.44365800145897
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js4-json16.content.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 4.518694000580581,
+        "p95": 5.522847000975162,
+        "p99": 5.522847000975162
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js4-json16.contents.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 9.41411399981007,
+        "p95": 20.230887999787228,
+        "p99": 20.230887999787228
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js4-json16.contents.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 5.801398001494817,
+        "p95": 6.435660001443466,
+        "p99": 6.435660001443466
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js4-json16.find.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 10.21648900132277,
+        "p95": 18.96174400098971,
+        "p99": 18.96174400098971
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js4-json16.find.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 4.17737899988424,
+        "p95": 7.436853000399424,
+        "p99": 7.436853000399424
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js4-json16.mcp_fetch.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 10.062561002996517,
+        "p95": 15.50030200087349,
+        "p99": 15.50030200087349
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js4-json16.mcp_fetch.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 7.058038998366101,
+        "p95": 9.457322001253488,
+        "p99": 9.457322001253488
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "js4-json16.mcp_search.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 22.883046000060858,
+        "p95": 53.46466099945246,
+        "p99": 53.46466099945246
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "js4-json16.mcp_search.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 14.671035998617299,
+        "p95": 43.25033399800304,
+        "p99": 43.25033399800304
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "js4-json16.rest_search.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 28.710762002447154,
+        "p95": 64.88197300132015,
+        "p99": 64.88197300132015
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "js4-json16.rest_search.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 15.634033999958774,
+        "p95": 33.271566997427726,
+        "p99": 33.271566997427726
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "wasm-binary200.content.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 10.03425900125876,
+        "p95": 16.999225998006295,
+        "p99": 16.999225998006295
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-binary200.content.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 4.939353999361629,
+        "p95": 5.470187999890186,
+        "p99": 5.470187999890186
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-binary200.contents.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 9.09657000011066,
+        "p95": 19.05029500267119,
+        "p99": 19.05029500267119
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-binary200.contents.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 7.042170000204351,
+        "p95": 13.118643997586332,
+        "p99": 13.118643997586332
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-binary200.find.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 9.580154001014307,
+        "p95": 27.648723997117486,
+        "p99": 27.648723997117486
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-binary200.find.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 5.2910339982190635,
+        "p95": 7.6522319977812,
+        "p99": 7.6522319977812
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-binary200.mcp_fetch.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 11.465963998489315,
+        "p95": 32.16838300068048,
+        "p99": 32.16838300068048
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-binary200.mcp_fetch.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 9.33872300083749,
+        "p95": 11.585751002712641,
+        "p99": 11.585751002712641
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-binary200.mcp_search.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 45.14844900040771,
+        "p95": 69.96521000110079,
+        "p99": 69.96521000110079
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "wasm-binary200.mcp_search.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 13.004635999095626,
+        "p95": 39.76874300133204,
+        "p99": 39.76874300133204
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "wasm-binary200.rest_search.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 41.49226899971836,
+        "p95": 59.56962799973553,
+        "p99": 59.56962799973553
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "wasm-binary200.rest_search.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 13.64886800001841,
+        "p95": 31.283978001738433,
+        "p99": 31.283978001738433
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "wasm-int8.content.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 9.474252998188604,
+        "p95": 16.96488499874249,
+        "p99": 16.96488499874249
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-int8.content.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 6.009861001075478,
+        "p95": 7.888449999882141,
+        "p99": 7.888449999882141
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-int8.contents.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 9.254897999198874,
+        "p95": 20.317313999839826,
+        "p99": 20.317313999839826
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-int8.contents.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 7.253481999214273,
+        "p95": 10.583655002847081,
+        "p99": 10.583655002847081
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-int8.find.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 10.345900998800062,
+        "p95": 17.655129999184282,
+        "p99": 17.655129999184282
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-int8.find.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 4.615706999175018,
+        "p95": 6.3659519983048085,
+        "p99": 6.3659519983048085
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-int8.mcp_fetch.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 12.241303000337211,
+        "p95": 15.421297001012135,
+        "p99": 15.421297001012135
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-int8.mcp_fetch.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 8.88215800296166,
+        "p95": 19.14528099950985,
+        "p99": 19.14528099950985
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-int8.mcp_search.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 76.38217699786765,
+        "p95": 101.10690700093983,
+        "p99": 101.10690700093983
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "wasm-int8.mcp_search.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 44.369522998749744,
+        "p95": 87.34136299972306,
+        "p99": 87.34136299972306
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "wasm-int8.rest_search.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 77.52167799844756,
+        "p95": 101.87628899802803,
+        "p99": 101.87628899802803
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "wasm-int8.rest_search.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 38.94535899962648,
+        "p95": 76.90875800108188,
+        "p99": 76.90875800108188
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "wasm-json128.content.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 8.166299998265458,
+        "p95": 21.762339998531388,
+        "p99": 21.762339998531388
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-json128.content.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 4.646261000743834,
+        "p95": 9.308653003245126,
+        "p99": 9.308653003245126
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-json128.contents.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 7.905609996669227,
+        "p95": 9.903871003189124,
+        "p99": 9.903871003189124
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-json128.contents.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 5.797793000965612,
+        "p95": 9.594029001164017,
+        "p99": 9.594029001164017
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-json128.find.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 8.831807997921715,
+        "p95": 10.1948409974284,
+        "p99": 10.1948409974284
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-json128.find.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 4.395611998916138,
+        "p95": 6.985740998061374,
+        "p99": 6.985740998061374
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-json128.mcp_fetch.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 9.456637002585921,
+        "p95": 17.515477000415558,
+        "p99": 17.515477000415558
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-json128.mcp_fetch.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 7.554321000498021,
+        "p95": 17.197567998664454,
+        "p99": 17.197567998664454
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-json128.mcp_search.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 23.357506001048023,
+        "p95": 53.613904001394985,
+        "p99": 53.613904001394985
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "wasm-json128.mcp_search.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 15.821255001355894,
+        "p95": 45.6138599984115,
+        "p99": 45.6138599984115
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "wasm-json128.rest_search.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 25.82114899996668,
+        "p95": 45.08464299942716,
+        "p99": 45.08464299942716
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "wasm-json128.rest_search.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 17.415550999430707,
+        "p95": 44.77749400030007,
+        "p99": 44.77749400030007
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "wasm-json16.content.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 11.45012599954498,
+        "p95": 36.46280600150931,
+        "p99": 36.46280600150931
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-json16.content.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 4.967725999449613,
+        "p95": 28.98302399989916,
+        "p99": 28.98302399989916
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-json16.contents.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 9.773605001100805,
+        "p95": 20.50350100034848,
+        "p99": 20.50350100034848
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-json16.contents.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 7.00783999855048,
+        "p95": 7.847208999010036,
+        "p99": 7.847208999010036
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-json16.find.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 10.104773999046301,
+        "p95": 14.358164997247513,
+        "p99": 14.358164997247513
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-json16.find.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 4.670538000937086,
+        "p95": 7.142594000470126,
+        "p99": 7.142594000470126
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-json16.mcp_fetch.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 9.881002999463817,
+        "p95": 36.71788700012257,
+        "p99": 36.71788700012257
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-json16.mcp_fetch.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 7.630268999491818,
+        "p95": 10.169864999625133,
+        "p99": 10.169864999625133
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-json16.mcp_search.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 22.85404199938057,
+        "p95": 54.936177999479696,
+        "p99": 54.936177999479696
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "wasm-json16.mcp_search.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 14.608764002332464,
+        "p95": 43.70901700167451,
+        "p99": 43.70901700167451
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "wasm-json16.rest_search.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 24.68595800019102,
+        "p95": 45.722701001068344,
+        "p99": 45.722701001068344
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "wasm-json16.rest_search.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 15.70371699926909,
+        "p95": 32.198487999266945,
+        "p99": 32.198487999266945
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "wasm-rerank100.content.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 10.018535998824518,
+        "p95": 17.19783000226016,
+        "p99": 17.19783000226016
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-rerank100.content.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 5.245987998932833,
+        "p95": 6.165445000078762,
+        "p99": 6.165445000078762
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-rerank100.contents.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 9.232734999386594,
+        "p95": 22.399322002456756,
+        "p99": 22.399322002456756
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-rerank100.contents.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 7.035981001536129,
+        "p95": 13.705320998269599,
+        "p99": 13.705320998269599
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-rerank100.find.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 9.085037996555911,
+        "p95": 14.990930001658853,
+        "p99": 14.990930001658853
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-rerank100.find.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 5.0718599995889235,
+        "p95": 7.851856000343105,
+        "p99": 7.851856000343105
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-rerank100.mcp_fetch.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 10.799910000059754,
+        "p95": 17.23180000044522,
+        "p99": 17.23180000044522
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-rerank100.mcp_fetch.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 8.681661998707568,
+        "p95": 20.179056999040768,
+        "p99": 20.179056999040768
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 0,
+      "adversarial_query_samples": 0
+    },
+    "wasm-rerank100.mcp_search.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 56.73462100094184,
+        "p95": 81.3831890009169,
+        "p99": 81.3831890009169
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "wasm-rerank100.mcp_search.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 16.645218998746714,
+        "p95": 44.700308000756195,
+        "p99": 44.700308000756195
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "wasm-rerank100.rest_search.application_cold": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 54.95598400011659,
+        "p95": 170.689560000028,
+        "p99": 170.689560000028
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    },
+    "wasm-rerank100.rest_search.warm": {
+      "attempted": 10,
+      "samples": 10,
+      "excluded": 0,
+      "successful": 10,
+      "client_wall_ms": {
+        "p50": 19.703619997017086,
+        "p95": 31.59076599695254,
+        "p99": 31.59076599695254
+      },
+      "cpu_ms": {
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "cpu_max_ms": null,
+      "matched_telemetry": 0,
+      "missing_telemetry": 10,
+      "outcomes": {},
+      "cpu_gate": "unverified",
+      "zero_exceedance_upper_95": null,
+      "max_query_samples": 1,
+      "adversarial_query_samples": 1
+    }
+  },
+  "variant_gates": {
+    "js-json128": "unverified",
+    "js-json16": "unverified",
+    "js4-json128": "unverified",
+    "js4-json16": "unverified",
+    "wasm-json128": "unverified",
+    "wasm-json16": "unverified",
+    "wasm-rerank100": "unverified",
+    "wasm-int8": "unverified",
+    "wasm-binary200": "unverified"
+  },
+  "functional_gate": "passed",
+  "cpu_gate": "unverified",
+  "runtime_gate": "unverified",
+  "memory_gate": "unverified",
+  "isolate_cold_gate": "unverified",
+  "retrieval_quality": "not_tested",
+  "limitations": [
+    "A failed variant does not reject static search or authorize Paid.",
+    "Synthetic embeddings; Workers AI inference is not exercised.",
+    "Observed-sample CPU gate is not a population p99 guarantee; bounds assume independent representative requests.",
+    "cold=1 resets application cache, not the Cloudflare V8 isolate.",
+    "Client wall time is not CPU time; absent telemetry never means zero.",
+    "Excluded requests are retained; their CPU/outcomes still require review.",
+    "Memory and isolate cold starts require separate measurement."
+  ],
+  "raw_report_sha256": "d4bea37e517ec3f58f4e412d64785b5096ce6c82e285c409386d375b3a73a4fa",
+  "source_sha256": {
+    "src/build_static_search_probe.py": "c33aadd806d30af0335c28485272949313adeaf4d8c9315a94f2aa0ba1ca6378",
+    "src/run_static_search_probe.py": "584409a67735f2f83a902e0ca829cda8455de4164202cf01c3c0186612eef3ff",
+    "src/summarize_static_search_probe.py": "15ab277e50893cb839f89d01af5fe2c3bdb845db4f2343caeb5b33eb01ea3338",
+    "src/test_static_search_probe.py": "690a146809f302dc9d9e1f8523bc08c17cc195a1e79457d19a69bd84d9943717",
+    "src/test_static_search_probe_run.py": "34b779791a47f5bc2773faa2a7b623c3e813dd9890ebe528fcd443e1ad5b375a",
+    "worker/package-lock.json": "6e82629b400c7e5e49a6fe2a5ade81d23367bfdf40edce5c10b633db71f44c4c",
+    "worker/package.json": "716e0b7abfdd9fba9c7e7180a02c5f36cbb23b13389f310af3d95209dece74d1",
+    "worker/probe-kernel/build.mjs": "e08ee1041b5a353b56db552169da09a6516b1e2a152058c423c028f09aa51215",
+    "worker/probe-kernel/scan.wat": "dce1d27a2bd90e0de36b75c0257b08e5a9f6db4e11c79e166fd857c045e56831",
+    "worker/src/catalog-search.test.ts": "7ddb14b65497662a67aae37f7d2117382cf04ec2564a69207d26b8e9559af935",
+    "worker/src/catalog-search.ts": "d702c05a9429a3284f85909982914222cca084ec254869c5ad3782cb1c580262",
+    "worker/src/service.ts": "359a181c74145aff09dcb92f856cca880e3913f4c1f870025f6c029011a43766",
+    "worker/src/static-search-int8.ts": "9a088bab942f6e05b865b3045bcc28f63fe2c3f3341d80a9685f34539e41ab8b",
+    "worker/src/static-search-probe-entry.ts": "945d4e23d298392971028b162cdead77b9f82dd2a662aa6c1b1c0e635635c562",
+    "worker/src/static-search-probe.test.ts": "3657e5c203e53964537fcf699d522f0ceb663ba7b656c5537e275ef477257533",
+    "worker/src/static-search-probe.ts": "ccf85537644014b57345e8e2af4805548c2f6f4377673dcd375b71afd8ef92e1",
+    "worker/src/static-search-wasm.test.ts": "e4e2cfcde9774d3cd4da5d3b1ddaf5eb055f83e91cb9c7e1710b6ff65ee1e51d",
+    "worker/src/static-search-wasm.ts": "5e59b7c4b1a5cfb1c131db5f50ef8d78bb178dca599c2d137441d4421aa22844",
+    "worker/src/static-search.test.ts": "e585cdb01cccac780cb219d00dd3dd8a21ef28e4411b4e454368b8e50822787b",
+    "worker/src/static-search.ts": "0a888ad798ea01f58ffa855bc90d0a53fee8ecf20834d5f19abec932c568e06e",
+    "worker/src/tokenize.test.ts": "49a960691d22285935444e49bd00e710156e6d662512d37db74543d7546c3340",
+    "worker/src/tokenize.ts": "770982d4c0a18dfc9f25d5b4e7c96d5cafaf4bd7aa735eba64c0b49600c6526e",
+    "worker/wrangler.probe.toml": "e5d9bafed0ac284a1a28a81b11d42ce2e328e5cba9d26ac75890e167d33207c0"
+  },
+  "requests": {
+    "requests": {
+      "count": 1080,
+      "successful": 1080
+    },
+    "priming_requests": {
+      "count": 54,
+      "successful": 54
+    },
+    "diagnostics": {
+      "count": 540,
+      "successful": 540
+    }
+  }
+}

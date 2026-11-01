@@ -1,0 +1,162 @@
+{
+  "scope": "local-real-subset-development-integration",
+  "base_commit": "2309d44f6c8f71c797f6cf21f39858a08cc4bfcf",
+  "source_state": "Uncommitted stage implementation identified by file hashes below.",
+  "source_sha256": {
+    "src/build_real_search_probe.py": "cb42d850e13a1b352dfe283b2ab819eb37556e7913230ed519ab8ed0ea044e01",
+    "src/embed_real_search_probe.py": "38c2d2399ecb07e71ea049fa9a58a5263cc64343c4a85490b453248babf14d62",
+    "src/run_real_search_probe.py": "c881452f117324284caaf5c16729907afc6d186448e50e43765604afdebb51ec",
+    "worker/src/static-corpus-store.ts": "f3e7afef12b1d8bea5b4a1add0d5ac1a3e68e13a86687d22597c6d1648d4fe74",
+    "worker/src/real-search-do-probe.ts": "2be9efb399d86eb64d5f005cc154ba126d2487042d85c705e57a7439db4d368e",
+    "worker/src/real-search-integration.test.ts": "21f457ddea500f0a8f3745e797356cee69141f6a7fea68df2ff99b2e4ab8961b",
+    "worker/src/service.ts": "359a181c74145aff09dcb92f856cca880e3913f4c1f870025f6c029011a43766",
+    "worker/src/http.ts": "35b9b8c453d7347fc8852c011cf5a21fa55823ee32d11c2660f1fe75d707773c",
+    "worker/src/mcp.ts": "ae37351c1f5ce42a11d773641054f76ce4e7fcd46807f612666d40d4bd216cb4",
+    "worker/embed.json": "46280219e5c404a5406f0a3e6e3a46ad5db792b15b4942ca523e5d72dc0ddc69",
+    "worker/tokenizer/vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3",
+    "requirements-real-probe.txt": "75b652b2f80d46a9077957c578b467444bcd41a3a69e64eba3c095323897551d"
+  },
+  "artifact_sha256": {
+    "local-2026-10-25-real-encoder-cache-check.json": "bfe5cb35cda590469e44e7191db87e28164eb1c7aefbf61012459ce5012190a8",
+    "local-2026-10-25-real-encoder.json": "e4dd240955ac37fa99e7c53062efc8648a3f3d718fd3af77e25428ab37bd1d9a",
+    "local-2026-10-25-real-integration-v1.json": "ec264e439879c7e9282104f244756b03511a3361ba019359745d935f29d792ed",
+    "local-2026-10-25-real-integration-v2.json": "bf94ab0ba850a27824e8b2d5dec04025bcf18f488860f3de7c51f38700941290"
+  },
+  "manifest_v1_sha256": "bafff190d8c4fa08b1375c7ba21cde7ff2508a8c44368dc258c9e85b934b6827",
+  "manifest_v2_sha256": "c625483008b4570c7e3dcfff87a0bdbefef80abd4a44daf9b12bcfebd0b3fe81",
+  "release_id": "5c8c58d90ec7bfdbcf66c40c363ff2e8967f263eda9257f7d562f9b71fcb617f",
+  "source_graph_sha256": "1ab1543902cb6bd541822320f10df3ccc282e4a217dfb5083e4b2456f7134667",
+  "paper_ids": [
+    "arxiv:2402.03300",
+    "arxiv:2412.06769",
+    "arxiv:2412.14135"
+  ],
+  "passage_count": 390,
+  "vectors_sha256": "3ae371a2e24940b66c6b7b0fe719431a46c91d457dddf28646120a6bf3bc576c",
+  "original_queries": [
+    {
+      "expected_paper_id": "arxiv:2402.03300",
+      "gold_chunk_indices": [
+        7,
+        12
+      ],
+      "id": "group-baseline",
+      "query": "How can policy optimization estimate a reward baseline from groups of generated answers without training a separate critic?",
+      "required_passage_terms": [
+        "critic",
+        "baseline"
+      ]
+    },
+    {
+      "expected_paper_id": "arxiv:2402.03300",
+      "id": "relative-advantage",
+      "query": "How are advantages calculated using relative rewards of several outputs sampled for the same question?"
+    },
+    {
+      "expected_paper_id": "arxiv:2402.03300",
+      "id": "kl-placement",
+      "query": "Why would a reinforcement learning algorithm add KL divergence directly to the loss instead of adding a KL penalty to rewards?"
+    },
+    {
+      "expected_paper_id": "arxiv:2402.03300",
+      "expected_quote": "The KL coefficient is 0.04.",
+      "gold_chunk_indices": [
+        66,
+        67
+      ],
+      "id": "grpo-settings",
+      "query": "What KL coefficient and number of sampled outputs per question were used in the GRPO training experiment?",
+      "required_passage_terms": [
+        "0.04",
+        "64"
+      ]
+    },
+    {
+      "expected_paper_id": "arxiv:2402.03300",
+      "id": "web-math-data",
+      "query": "How was mathematical pretraining data selected from Common Crawl to improve language model reasoning?"
+    },
+    {
+      "expected_paper_id": "arxiv:2402.03300",
+      "id": "online-training",
+      "query": "What factors make online reinforcement learning more effective than offline training for mathematical reasoning?"
+    }
+  ],
+  "revised_queries": [
+    {
+      "expected_paper_id": "arxiv:2402.03300",
+      "gold_chunk_indices": [
+        7,
+        12,
+        56
+      ],
+      "id": "group-baseline",
+      "passage_evidence_any": [
+        [
+          "critic",
+          "group"
+        ],
+        [
+          "value function",
+          "average reward",
+          "multiple sampled outputs"
+        ]
+      ],
+      "query": "How can policy optimization estimate a reward baseline from groups of generated answers without training a separate critic?",
+      "required_passage_terms": [
+        "baseline"
+      ]
+    },
+    {
+      "expected_paper_id": "arxiv:2402.03300",
+      "id": "relative-advantage",
+      "query": "How are advantages calculated using relative rewards of several outputs sampled for the same question?"
+    },
+    {
+      "expected_paper_id": "arxiv:2402.03300",
+      "id": "kl-placement",
+      "query": "Why would a reinforcement learning algorithm add KL divergence directly to the loss instead of adding a KL penalty to rewards?"
+    },
+    {
+      "expected_paper_id": "arxiv:2402.03300",
+      "expected_quote": "The KL coefficient is 0.04.",
+      "gold_chunk_indices": [
+        66,
+        67
+      ],
+      "id": "grpo-settings",
+      "query": "What KL coefficient and number of sampled outputs per question were used in the GRPO training experiment?",
+      "required_passage_terms": [
+        "0.04",
+        "64"
+      ]
+    },
+    {
+      "expected_paper_id": "arxiv:2402.03300",
+      "id": "web-math-data",
+      "query": "How was mathematical pretraining data selected from Common Crawl to improve language model reasoning?"
+    },
+    {
+      "expected_paper_id": "arxiv:2402.03300",
+      "id": "online-training",
+      "query": "What factors make online reinforcement learning more effective than offline training for mathematical reasoning?"
+    }
+  ],
+  "oracle_note": {
+    "post_observation": true,
+    "reason": "After the local v1 run, source review confirmed that chunk 56 answers the baseline question using the value-function synonym. Revision 2 corrects that lexical false negative for diagnosis; it is not a held-out or preregistered retrieval pass. The GRPO settings oracle and all query strings are unchanged."
+  },
+  "interpretation": {
+    "passage_retrieval_gate": "failed",
+    "answer_context_gate": "passed",
+    "scope": "Six fixed development queries; only two source-backed answer checks. Not held-out quality.",
+    "baseline": "v1 literal critic requirement caused a false negative. Source review accepted value-function wording in chunk 56.",
+    "settings": "Returned chunk 59 lacks the settings. Gold chunks 66/67 remain unchanged. REST 6000-codepoint window and MCP text part contain 0.04 and 64.",
+    "workers_ai_compatibility": "not_tested",
+    "platform_cpu": "not_tested",
+    "full_corpus_quality": "not_tested",
+    "external_llm_agent": "not_tested",
+    "production_readiness": "unverified",
+    "original_report_limit": "The unchanged v1 report labels REST text exact but its local assertion only checked the returned passage prefix. V2 checks full default-window equality; runner also checks the full actual window."
+  }
+}

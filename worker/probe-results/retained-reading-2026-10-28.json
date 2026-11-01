@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "kind": "retained-live-response-local-reading-recovery-development-diagnostic",
+  "source_base_commit": "7d928317d808a37cd87e00577855567464f8866b",
+  "seed_workflow_run_id": 40806851930,
+  "seed_report_sha256": "89b4a5fe6cda64396e4e485a189496928417eda3569d60fccaaf2677d5b58b2a",
+  "packed_manifest_sha256": "6b9c87883f525a128eb9a48aead5914d9524ba2f7433ff3b14c62b3c0d970b47",
+  "executed_bundle_sha256": "0609386aeb7f6cd7ad117664087c0df01d3d214c99650ab97fab211151a90f94",
+  "executed_code_sha256": {
+    "adapter_sha256": "b2915163a6c89c8cad5b94de1aaef6006ddb9ae812eb37f6c9451e7671b51fad",
+    "harness_sha256": "af2a2aa1e6d028135d8ffb88875cae231537cf56c8337d0dfd6da816344225f1",
+    "launcher_sha256": "c06d6e104fe8c3e77699eb615a63e6334d4298ae01ea947a5b110e0c4021b979"
+  },
+  "cases": [
+    {
+      "session_id": "recovery-01",
+      "question": "How can an inference system reduce the memory occupied by a long conversation's key value cache while preserving useful earlier context?",
+      "outcome": "supported_partial",
+      "rationale": "The answer recovers useful, directly supported mechanisms: bounded recent KV state plus recurrent FAM, and gist-token prompt-prefix compression. All material factual claims and all four quotations are supported by actual delivered response bodies, and architectural extrapolation is clearly labeled. The exact long-conversation inference task remains partially resolved: the evidence is for trained attention/compression changes and prompt/task experiments, rather than a literal cache eviction/compression recipe for an arbitrary existing conversational model, with no target-system memory/quality validation. This is a scope/directness limitation, not a fabrication finding, and does not penalize failure to enumerate every possible method.",
+      "api_attempts": 8,
+      "delivered_code_points": 47058,
+      "papers_read": [
+        "arxiv:2404.09173",
+        "arxiv:2304.08467"
+      ],
+      "quoted_citations": 4,
+      "proposed_next_semantic_query_unexecuted": "Training-free key value cache compression or eviction for long multi-turn conversations preserving important earlier tokens",
+      "reported_tool_problems": []
+    },
+    {
+      "session_id": "recovery-02",
+      "question": "Which methods let a language model spend extra computation checking and revising a difficult reasoning answer before returning it?",
+      "outcome": "supported_correct",
+      "rationale": "The answer directly addresses the requested use of extra inference computation to check and revise a difficult reasoning answer. Delivered call 5 documents an explicit draft-feedback-revision loop (Self-Refine), and delivered call 3 documents extending reasoning with budget forcing, including double-checking and correcting reasoning steps. The answer accurately describes self-consistency and prefix-consistency-weighted voting as a broader candidate-checking family, explicitly distinguishing them from critique-and-edit revision. All material scientific and mechanism claims are supported by the actually delivered response.body text. All four quotes are literal substrings and all four declared window ranges exactly match delivered Unicode-code-point windows. The question is open ended, so an explicitly non-exhaustive selection does not leave a material requested portion unanswered. No evidence of fabrication or material mismatch was found.",
+      "api_attempts": 8,
+      "delivered_code_points": 47760,
+      "papers_read": [
+        "arxiv:2303.17651",
+        "arxiv:2501.19393",
+        "arxiv:2203.11171",
+        "arxiv:2605.07654"
+      ],
+      "quoted_citations": 4,
+      "proposed_next_semantic_query_unexecuted": null,
+      "reported_tool_problems": [
+        "No retrieval truncation or transport problems observed. Initial answer serialization command failed before file creation because Python null was undefined; corrected to None in the successful write."
+      ]
+    }
+  ],
+  "totals": {
+    "api_attempts": 16,
+    "http_200": 16,
+    "api_errors": 0,
+    "delivered_unicode_code_points": 94818,
+    "delivered_utf8_bytes": 95392,
+    "quote_checks_passed": 8,
+    "reading_windows_authenticated": 8
+  },
+  "limits_per_case": {
+    "api_attempts": 8,
+    "delivered_unicode_code_points": 48000,
+    "semantic_search_calls": 1
+  },
+  "provider_calls": 0,
+  "corpus_reencoded": false,
+  "semantic_reformulation_executed": false,
+  "public_api_deployed": false,
+  "integrity_audit": "passed",
+  "scope_limits": [
+    "Two development diagnostic cases, not an accuracy estimate.",
+    "Search seed replay + local reading, not another live Cloudflare run.",
+    "No fresh semantic reformulation; agents may propose an unexecuted next query.",
+    "No CPU/memory/Free capacity/public accessibility conclusion.",
+    "Model revision and sampling parameters not exposed.",
+    "Agent retrieval restrictions instructed; not an OS sandbox.",
+    "HTTP body completeness verified; outer display completeness self-reported."
+  ],
+  "evidence": {
+    "file": "retained-reading-2026-10-28.evidence.json.gz",
+    "bytes": 49918,
+    "sha256": "96c055019c05c7cd7a120ebaad8546138523227222dd440ff848c3a67cf1b5ab"
+  }
+}

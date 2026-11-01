@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "kind": "offline-admission-component-validation",
+  "scope": "Component validators only; no tokenizer/provider gate or PASS certificate executed",
+  "corpus": {
+    "passages": 40575,
+    "cards": 415,
+    "texts": 362
+  },
+  "release_id": "9b4203dbfbcd1f44005dd52c65b8b938ee37cd176e24a86d41b285555ab36c29",
+  "local_memory": {
+    "local_memory_filter": "FAIL",
+    "peak_bytes": 141055562
+  },
+  "observed_peak_mib": 134.5210666656494,
+  "non_peak_contracts": "PASS",
+  "reviewed_live_evidence": "PASS",
+  "live_files_verified": 3,
+  "raw_report": "local-2026-10-26-admission-memory.raw.json.gz",
+  "raw_report_sha256": "2ffd22da437ce61be50de8b2cc99ace4b0ec4e5446d6fa6c971c791b853dd65c",
+  "preflight_source_sha256": "61739fd14a5695ff3b00cc32c817b67fba328ef3674ebcca7c8f8b583c0bae84",
+  "pin_sha256": "20553803b5ffac9d8437b48ec8002d1f8f66d3f22d5415457bede95050542318",
+  "model_loaded": false,
+  "provider_calls": 0,
+  "full_encoding_started": false,
+  "platform_memory": "UNKNOWN"
+}

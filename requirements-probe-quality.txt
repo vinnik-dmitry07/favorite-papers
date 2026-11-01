@@ -1,0 +1,3 @@
+# Optional reproduction of the supplied review; not needed by the Worker or CI.
+faiss-cpu==1.15.1
+numpy==2.5.4

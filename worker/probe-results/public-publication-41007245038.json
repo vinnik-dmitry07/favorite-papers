@@ -1,0 +1,466 @@
+{
+  "schema_version": 1,
+  "kind": "permanent-api-publication-and-live-agent-evidence",
+  "recorded_at_utc": "2026-10-30T17:06:56.890429+00:00",
+  "source_run": "https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/41007245038",
+  "runtime_commit": "abe903d8c3e6ef39da0c57b20f10283ec76771c3",
+  "publication_artifact": {
+    "id": 12955649248,
+    "name": "public-search-publication-41007245038-1",
+    "zip_sha256": "e2b12f9a365dc4e347a143017c38d1e1173bd2347ef803919409ccbf3672b999",
+    "zip_bytes": 93896
+  },
+  "publication_audit": {
+    "schema_version": 1,
+    "run_id": 41007245038,
+    "source_commit": "abe903d8c3e6ef39da0c57b20f10283ec76771c3",
+    "ok": true,
+    "audit_method": "Read-only offline response replay plus independent graph, text-range and ledger assertions; no live API calls.",
+    "artifact_zip_sha256": "e2b12f9a365dc4e347a143017c38d1e1173bd2347ef803919409ccbf3672b999",
+    "smoke_report_sha256": "9f70342101c44f8d82f8a672d4d5c67c1c9cf3621ce421e3e61ed16a6f1fca80",
+    "origin": "https://key-papers-search.vinnik-dmitry07.workers.dev",
+    "manifest_sha256": "6b9c87883f525a128eb9a48aead5914d9524ba2f7433ff3b14c62b3c0d970b47",
+    "release_id": "9b4203dbfbcd1f44005dd52c65b8b938ee37cd176e24a86d41b285555ab36c29",
+    "passages": 40575,
+    "catalog_papers": 415,
+    "requests": 37,
+    "statuses": {
+      "200": 36,
+      "403": 1
+    },
+    "expected_admin_denials": 1,
+    "unexpected_http_failures": 0,
+    "public_requests_without_admin_token": 20,
+    "compatibility": {
+      "checked": 200,
+      "indices_match_pin": true,
+      "minimum_cosine": 0.9999992676399425,
+      "batch_progress": [
+        16,
+        32,
+        48,
+        64,
+        80,
+        96,
+        112,
+        128,
+        144,
+        160,
+        176,
+        192,
+        200
+      ],
+      "raw_remote_vectors_available": false
+    },
+    "graph": {
+      "paper_id": "arxiv:2402.03300",
+      "direction": "in",
+      "neighbors": 67,
+      "pages": [
+        24,
+        24,
+        19
+      ],
+      "exact_canonical": true
+    },
+    "text_reads": [
+      {
+        "kind": "read_at_match",
+        "paper_id": "arxiv:2402.03300",
+        "start": 683,
+        "length": 6000,
+        "exact_canonical": true
+      },
+      {
+        "kind": "read_semantic_result",
+        "paper_id": "arxiv:2512.24601",
+        "start": 1746,
+        "length": 6000,
+        "exact_canonical": true
+      },
+      {
+        "kind": "read_semantic_result",
+        "paper_id": "arxiv:2510.03215",
+        "start": 0,
+        "length": 6000,
+        "exact_canonical": true
+      },
+      {
+        "kind": "mcp_fetch",
+        "paper_id": "arxiv:2510.11686",
+        "start": 0,
+        "length": 16000,
+        "exact_canonical": true
+      }
+    ],
+    "rest_semantic": [
+      {
+        "query": "How can an inference system reduce the memory occupied by a long conversation's key value cache while preserving useful earlier context?",
+        "elapsed_ms": 461.9530230000066,
+        "hits": [
+          {
+            "paper_id": "arxiv:2512.24601",
+            "title": "Recursive Language Models",
+            "start": 1746,
+            "end": 2536,
+            "score": 0.7746359942051126
+          },
+          {
+            "paper_id": "arxiv:2407.15017",
+            "title": "Knowledge Mechanisms in Large Language Models: A Survey and Perspective",
+            "start": 63214,
+            "end": 64007,
+            "score": 0.7632069718011831
+          },
+          {
+            "paper_id": "arxiv:2510.03215",
+            "title": "Cache-to-Cache: Direct Semantic Communication Between Large Language Models",
+            "start": 0,
+            "end": 799,
+            "score": 0.7628543248971825
+          }
+        ]
+      },
+      {
+        "query": "Training-free key value cache compression or eviction for long multi-turn conversations preserving important earlier tokens",
+        "elapsed_ms": 298.3445220000078,
+        "hits": [
+          {
+            "paper_id": "arxiv:2510.03215",
+            "title": "Cache-to-Cache: Direct Semantic Communication Between Large Language Models",
+            "start": 0,
+            "end": 799,
+            "score": 0.7538772322924099
+          },
+          {
+            "paper_id": "arxiv:2404.07143",
+            "title": "Leave No Context Behind: Efficient Infinite Context Transformers with Infini-attention",
+            "start": 17856,
+            "end": 18624,
+            "score": 0.7369118184990705
+          },
+          {
+            "paper_id": "arxiv:2507.10524",
+            "title": "Mixture-of-Recursions: Learning Dynamic Recursive Depths for Adaptive Token-Level Computation",
+            "start": 3914,
+            "end": 4713,
+            "score": 0.7327176416025405
+          }
+        ]
+      }
+    ],
+    "mcp_search_results": [
+      {
+        "paper_id": "arxiv:2510.11686",
+        "start": 0,
+        "title": "Representation-Based Exploration for Language Models: From Test-Time to Post-Training (text part 1)"
+      },
+      {
+        "paper_id": "arxiv:2602.09000",
+        "start": 0,
+        "title": "iGRPO: Self-Feedback-Driven LLM Reasoning (text part 1)"
+      },
+      {
+        "paper_id": "arxiv:2607.13104",
+        "start": 64000,
+        "title": "Self-Improvements in Modern Agentic Systems: A Survey (text part 5)"
+      },
+      {
+        "paper_id": "arxiv:2506.03106",
+        "start": 96000,
+        "title": "Critique-GRPO: Advancing LLM Reasoning with Natural Language and Numerical Feedback (text part 7)"
+      },
+      {
+        "paper_id": "arxiv:2609.30652",
+        "start": 0,
+        "title": "Recursive Self-Improvement via On-Policy Distillation for Reasoning (text part 1)"
+      }
+    ],
+    "budget": {
+      "day": "2026-10-30",
+      "query_texts": 3,
+      "query_tokens_reserved": 1536,
+      "compatibility_texts": 200,
+      "compatibility_tokens_reserved": 102400,
+      "ai_calls": 16,
+      "limits": {
+        "query_texts": 1000,
+        "query_tokens_reserved": 512000,
+        "compatibility_texts": 200,
+        "compatibility_tokens_reserved": 102400,
+        "ai_timeout_ms": 20000
+      }
+    },
+    "smoke_elapsed_seconds": 36.866454645999994,
+    "sum_request_elapsed_seconds": 36.57202315400016,
+    "initial_state_ms": 4797.041873000012,
+    "mcp_search_ms": 429.50662900000225,
+    "mcp_fetch_ms": 218.06015800001433,
+    "three_queries_absent_from_frozen_2064": true,
+    "limitations": [
+      "Compatibility cosine values are server-reported; indices and minima are verified, but raw remote vectors are absent so cosine cannot be independently recomputed.",
+      "Budget token fields reserve 512 per input; they are not measured input-token usage or billing. ai_calls counts reservations, not independently observed provider calls.",
+      "The two REST and one MCP queries are scripted integration checks, not autonomous-agent or held-out answer-quality evaluations.",
+      "Successful exact returned ranges establish source fidelity, not that top-ranked text answers the query. KV reformulation top-1 is Cache-to-Cache, not evidence of training-free conversation KV compression.",
+      "All elapsed timings are client wall time. No Cloudflare CPU, memory, sustained capacity or uptime telemetry is present.",
+      "MCP POST request payloads and HTTP headers are not retained. Their expected payloads can be reconstructed from the pinned runner; response text and schema consistency are retained."
+    ],
+    "runtime_asset_integrity": {
+      "files": 376,
+      "bytes": 71104824,
+      "all_hashes_match": true,
+      "publication_manifest_equals_restored": true
+    },
+    "deployment_version_id": "bde6f5d0-1c1c-4d99-807f-0a8f640cd01e"
+  },
+  "fresh_http_agent": {
+    "calls": 12,
+    "semantic_searches": 2,
+    "response_code_points": 63470,
+    "all_http_200": true,
+    "summed_client_wall_seconds": 51.65931092299934,
+    "median_client_wall_seconds": 4.131084063499998,
+    "grade": {
+      "schema_version": 1,
+      "kind": "independent-frozen-live-research-grade",
+      "transcript_sha256": "4cf5dc1fc775056dddbc65c6c84c96f16d9bc79ddc0c950c5651ba66fb825d98",
+      "frozen_answer_sha256": "b7ff2bbc72239175e717f656d3cb7040d0c9efd4147a1b92ae37e86c57579517",
+      "independent_network_calls": 0,
+      "source": "Pinned restored canonical text plus captured live HTTP responses; no prior agent grade used.",
+      "corpus_version": "9b4203dbfbcd1f44005dd52c65b8b938ee37cd176e24a86d41b285555ab36c29",
+      "requests": 12,
+      "semantic_searches": 2,
+      "statuses": {
+        "200": 12
+      },
+      "http_failures": 0,
+      "response_unicode_chars": 63470,
+      "http_duration_seconds_sum": 51.65931092299934,
+      "http_duration_seconds_median": 4.131084063499998,
+      "all_calls_same_public_origin_without_auth": true,
+      "all_four_reads_match_canonical": true,
+      "read_ranges": [
+        {
+          "paper_id": "arxiv:2303.17651",
+          "start": 0,
+          "end_exclusive": 14000,
+          "exact_canonical": true
+        },
+        {
+          "paper_id": "arxiv:2203.11171",
+          "start": 0,
+          "end_exclusive": 11000,
+          "exact_canonical": true
+        },
+        {
+          "paper_id": "arxiv:2506.03106",
+          "start": 0,
+          "end_exclusive": 12500,
+          "exact_canonical": true
+        },
+        {
+          "paper_id": "arxiv:2506.03106",
+          "start": 89200,
+          "end_exclusive": 93700,
+          "exact_canonical": true
+        }
+      ],
+      "exact_excerpts_checked": 11,
+      "all_excerpt_ranges_match": true,
+      "all_search_hits_match_canonical_chunk_id_range_snippet": true,
+      "searches": [
+        {
+          "query": "language model iterative feedback revision improve answer inference time",
+          "hits": [
+            "arxiv:2506.03106",
+            "arxiv:2303.17651",
+            "acl:2023.acl-demo.51",
+            "arxiv:2503.21676",
+            "arxiv:2402.12483"
+          ]
+        },
+        {
+          "query": "iterative refinement self feedback reflection verbal reinforcement learning",
+          "hits": [
+            "arxiv:2607.13104",
+            "arxiv:2506.03106",
+            "arxiv:2303.17651",
+            "arxiv:2602.09000",
+            "arxiv:2503.00735"
+          ]
+        }
+      ],
+      "claim_grades": [
+        {
+          "claim": "Self-Refine uses the same model for draft, feedback and revision at inference time without training.",
+          "grade": "supported",
+          "evidence": "Canonical arxiv:2303.17651 section2 within observed0:14000."
+        },
+        {
+          "claim": "Previous drafts and feedback are retained, stopping condition ends the loop, final revised answer returned.",
+          "grade": "supported",
+          "evidence": "Canonical arxiv:2303.17651 observed0:14000, iterative process and history paragraphs."
+        },
+        {
+          "claim": "Self-consistency samples multiple reasoning paths and aggregates final answers by majority vote; does not revise candidates based on prior critiques.",
+          "grade": "supported",
+          "evidence": "Canonical arxiv:2203.11171 section2 observed0:11000; algorithm comparison explicitly labeled inference."
+        },
+        {
+          "claim": "Critique-GRPO is training-centered and the read evidence does not establish it as a second pure inference-only method.",
+          "grade": "supported_cautious_distinction",
+          "evidence": "Canonical arxiv:2506.03106 abstract, section3.2 and appendixH within read ranges; refinement experiment does exist, but paper presents onlineRL."
+        },
+        {
+          "claim": "All requests200,12calls,2semantic,63470characters; exact source quotations and offsets.",
+          "grade": "independently_verified",
+          "evidence": "Transcript, metadata and all11 evidence excerpts."
+        }
+      ],
+      "unsupported_answer_claims_found": [],
+      "research_result": "One directly supported inference-time feedback/revision method plus explicit comparison to sampling/voting; cautious refusal to count training-centered related work as second method.",
+      "limitations": [
+        "A single bounded development case cannot estimate broad research answer quality, search recall, availability, Cloudflare CPU or platform memory.",
+        "Observed HTTPwall timings include this executor/proxy/network; do not attribute4.13smedian to WorkerCPU or compare directly with GitHub smoke without caveat.",
+        "Transcript complete HTTP bodies and canonical content are verified. Tool-display completeness and absence of unrecorded calls rely on the research agent/session rather than an independent wire capture.",
+        "Direct successful HTTP requests do not demonstrate web-only ChatGPT browser access or native connector registration."
+      ],
+      "protocol": {
+        "task": "Using ONLY the live API at https://key-papers-search.vinnik-dmitry07.workers.dev (start GET / or /llms.txt), find papers describing how an LLM can improve an answer at inference time through feedback and revision. Explain how this differs from sampling multiple independent answers and choosing by agreement; support with exact excerpts and paper links/ranges.",
+        "limits": {
+          "http_requests": 12,
+          "semantic_searches": 4,
+          "response_unicode_chars": 65000
+        },
+        "fresh_fork": "none",
+        "disallowed_sources": [
+          "repository",
+          "prior evidence",
+          "local corpus",
+          "general web"
+        ],
+        "root_followup": "Freeze once supported and save answer/metrics; no substantive hints.",
+        "provenance": "Parent supplied original task and scope after answer was frozen; counts and cited evidence independently checked."
+      },
+      "budget_passed": true,
+      "grade": "supported_partial",
+      "grade_reason": "The feedback/revision explanation, self-consistency contrast, exact excerpts and citations are supported. The plural request for papers on inference-time feedback/revision yielded only one directly established example; the agent explicitly acknowledges this and avoids misclassifying Critique-GRPO. Transport and source fidelity pass, but this is not complete research-task coverage."
+    },
+    "limits": "One development case, not held-out accuracy or general agent compatibility."
+  },
+  "direct_health": {
+    "reader_schema": 1,
+    "model": "@cf/baai/bge-base-en-v1.5",
+    "pooling": "cls",
+    "dimensions": 768,
+    "build_signature": "6362650290666e9debb571b4bc6f8191135b7b4dc8dd443d7a7a61a6f320b673",
+    "embedding_signature": "df5126063ec2f6589a0b994d6b7ebaaed8767dd49adb742803ab02b8a666cefe",
+    "search_enabled": true,
+    "grace_seconds": 120,
+    "status": "ready",
+    "release_id": "9b4203dbfbcd1f44005dd52c65b8b938ee37cd176e24a86d41b285555ab36c29",
+    "slot": "full-probe",
+    "verified_passage_count": 40575,
+    "global_index_count": 40575,
+    "publication_check": {
+      "ok": true,
+      "checked_at": 1793379663726,
+      "by": "isolated-full-probe"
+    },
+    "published_build_signature": "6362650290666e9debb571b4bc6f8191135b7b4dc8dd443d7a7a61a6f320b673",
+    "published_embedding_signature": "df5126063ec2f6589a0b994d6b7ebaaed8767dd49adb742803ab02b8a666cefe",
+    "manifest_sha256": "6b9c87883f525a128eb9a48aead5914d9524ba2f7433ff3b14c62b3c0d970b47",
+    "passage_count": 40575,
+    "publication_id": "41007245038-1-abe903d8c3e6ef39da0c57b20f10283ec76771c3"
+  },
+  "web_tool_access": {
+    "attempts": [
+      {
+        "open": [
+          "https://key-papers-search.vinnik-dmitry07.workers.dev/llms.txt",
+          "https://key-papers-search.vinnik-dmitry07.workers.dev/health"
+        ],
+        "result": {
+          "content": [],
+          "isError": true
+        }
+      },
+      {
+        "open": [
+          "https://key-papers-search.vinnik-dmitry07.workers.dev/"
+        ],
+        "result": {
+          "content": [],
+          "isError": true
+        }
+      }
+    ],
+    "cause": "unknown; tool returned no diagnostic text",
+    "conclusion": "Web-tool access remains unverified; direct HTTP succeeded."
+  },
+  "corpus_reencoded": false,
+  "runtime_changes_after_publication": false,
+  "evidence": {
+    "file": "public-publication-41007245038.evidence.json.gz",
+    "sha256": "396c241fb6b6b0b5dba09b78d7eb0d92c1a62c551446d139126d983738fe09c4",
+    "bytes": 125934,
+    "files": {
+      "publication/public-api-reports/ownership.json": {
+        "sha256": "f7424e1963818d94ebf0e5c74837124d88f79454fc25678455fb5cefe01f1727",
+        "bytes": 95
+      },
+      "publication/public-api-reports/smoke.json": {
+        "sha256": "9f70342101c44f8d82f8a672d4d5c67c1c9cf3621ce421e3e61ed16a6f1fca80",
+        "bytes": 385284
+      },
+      "publication/public-api-reports/source-artifact.json": {
+        "sha256": "28706112933b2d3b7a402d10d1f41e125a55b239cc06ba7af21e0df5bc982080",
+        "bytes": 745
+      },
+      "publication/public-api-reports/source-run.json": {
+        "sha256": "76c2de1135d2ac589e4d4c6f1e2808bffc5275fd4fd533d4fc1497e0e15ca511",
+        "bytes": 14280
+      },
+      "publication/full-probe-reports/replay/restoration.json": {
+        "sha256": "c8a58d0ba2e19601a39398ec2c305b8151f06e55db827bb1bfe41914a63f9f55",
+        "bytes": 2543
+      },
+      "publication/full-probe-reports/replay/runtime/probe.json": {
+        "sha256": "6b9c87883f525a128eb9a48aead5914d9524ba2f7433ff3b14c62b3c0d970b47",
+        "bytes": 113589
+      },
+      "publication/worker/public-search-deploy.txt": {
+        "sha256": "ac9a0b974ab9ab21636f4e3e013e6f618182c906fdeb9aa63bbcd0845cf65470",
+        "bytes": 17296
+      },
+      "audit/publication.json": {
+        "sha256": "9012b45790f09079f0d7332a25498de3d4cab3947116baa9448aa00e8b23818f",
+        "bytes": 6771
+      },
+      "external/direct-health-and-manual.json": {
+        "sha256": "47a010919eea9b73a49cce0fd61eee0beb0805087782e769442b8eaf9d8df5c9",
+        "bytes": 4373
+      },
+      "external/research.jsonl": {
+        "sha256": "4cf5dc1fc775056dddbc65c6c84c96f16d9bc79ddc0c950c5651ba66fb825d98",
+        "bytes": 80320
+      },
+      "external/answer.md": {
+        "sha256": "b7ff2bbc72239175e717f656d3cb7040d0c9efd4147a1b92ae37e86c57579517",
+        "bytes": 6449
+      },
+      "external/metrics.json": {
+        "sha256": "a8cb2a6805fffafef16ca0f44153da1771efb9a5757886c2e7a7968437ec2c24",
+        "bytes": 3834
+      },
+      "external/grade.json": {
+        "sha256": "ffb8ffb2c777530c5666641bebf7a982ffcb7a0ee6254b3d63fe43c8cdbb26c8",
+        "bytes": 5801
+      },
+      "external/web-tool-attempts.json": {
+        "sha256": "1a05664bee43643575aed57abd41ae68a4a39ae740d7c16379359ec52b99940e",
+        "bytes": 589
+      }
+    }
+  }
+}

@@ -29,8 +29,23 @@ assets/fulltext_search.js
 
 # Agent API build output (derived; the worker reads R2, not this directory)
 agent_build/
+agent_probe/
+agent_real_probe/
+agent_full_probe/
+agent_full_runtime/
+agent_full_quality/
+agent_geometry_probe/
+full-probe-reports/
+.cache/full-probe-embeddings/
+.cache/full-probe-queries/
+.cache/real-probe-embeddings/
+local-query-vectors.json
+local-encoder-report.json
+local-real-integration.json
+probe-real-report*.json
+probe-report*.json
 site/
-worker/node_modules/
+worker/node_modules
 worker/.wrangler/
 worker/dist/
 
@@ -60,3 +75,36 @@ env/
 .vscode/
 .DS_Store
 Thumbs.db
+
+worker/probe-kernel/scan.wasm
+
+# Reviewed probe measurements, distinct from the private Telegram export above.
+# Review bounded raw evidence for credentials/personal content before adding it.
+# Explicit reviewed filenames only; new compressed exports remain ignored.
+!worker/probe-results/cloudflare-2026-10-25-do-collection.raw.json.gz
+!worker/probe-results/cloudflare-2026-10-25-do-matrix.raw.json.gz
+!worker/probe-results/cloudflare-2026-10-25-do-pilot.raw.json.gz
+!worker/probe-results/cloudflare-2026-10-25-real-subset.raw.json.gz
+!worker/probe-results/cloudflare-2026-10-26-full-geometry.raw.json.gz
+!worker/probe-results/github-2026-10-27-full-offline.memory.raw.json.gz
+!worker/probe-results/journey-2026-10-28.evidence.json.gz
+!worker/probe-results/journey-2026-10-28.public-http-journey.json.gz
+!worker/probe-results/local-2026-10-25-durable-object.raw.json.gz
+!worker/probe-results/local-2026-10-25-full-memory-after.json.gz
+!worker/probe-results/local-2026-10-25-full-memory-before.json.gz
+!worker/probe-results/local-2026-10-25-full-preflight-evidence.json.gz
+!worker/probe-results/local-2026-10-26-admission-memory.raw.json.gz
+!worker/probe-results/local-2026-10-26-full-memory-baseline.json.gz
+!worker/probe-results/local-2026-10-26-full-memory-constrained-diagnostic.json.gz
+!worker/probe-results/local-2026-10-26-full-memory-key-lookup.json.gz
+!worker/probe-results/local-2026-10-26-full-memory-numeric-scan.json.gz
+!worker/probe-results/local-2026-10-26-full-memory-profiled.json.gz
+!worker/probe-results/local-2026-10-27-full-geometry.raw.json.gz
+!worker/probe-results/public-publication-41007245038.evidence.json.gz
+!worker/probe-results/replay-2026-10-28-full-quality.rankings.json.gz
+!worker/probe-results/retained-reading-2026-10-28.evidence.json.gz
+!worker/probe-results/retained-smoke-40806851930.evidence.json.gz
+
+public-api-reports/
+
+worker/public-search-deploy.txt

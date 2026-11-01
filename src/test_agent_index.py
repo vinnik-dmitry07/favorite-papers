@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from copy import deepcopy
 import sys
 from pathlib import Path
 
@@ -18,8 +19,11 @@ from build_agent_index import (  # noqa: E402
     assert_capacity,
     build_from_disk,
     build_release,
+    build_signature,
     chunk_text,
     clean_markdown,
+    embedding_signature,
+    input_hash,
     load_embed,
     load_written_release,
     vector_id,
@@ -45,6 +49,36 @@ def _node(node_id, title='Title', kind='web', url='https://example.test'):
 
 def _count_chars(piece: str) -> int:
     return len(piece) + 2
+
+
+def test_provider_signature_preserves_exact_main_cache_namespace():
+    assert embedding_signature(EMBED) == (
+        'df5126063ec2f6589a0b994d6b7ebaaed'
+        '8767dd49adb742803ab02b8a666cefe'
+    )
+    changed = deepcopy(EMBED)
+    changed['tokenizer']['do_lower_case'] = False
+    signature = embedding_signature(EMBED)
+    assert embedding_signature(changed) == signature
+    assert build_signature(changed) != build_signature(EMBED)
+    assert input_hash(changed, 'Keep CASE', signature) == input_hash(
+        EMBED, 'Keep CASE', signature,
+    )
+    assert input_hash(EMBED, 'Keep CASE', signature) != input_hash(
+        EMBED, 'keep case', signature,
+    )
+
+
+@pytest.mark.parametrize('key,value', [
+    ('model', '@cf/other/model'), ('dimensions', 384),
+    ('metric', 'euclidean'), ('pooling', 'mean'),
+    ('query_template', 'new query: '), ('passage_template', 'new passage: '),
+    ('max_input_tokens', 256),
+])
+def test_provider_configuration_still_invalidates_embedding_cache(key, value):
+    changed = deepcopy(EMBED)
+    changed[key] = value
+    assert embedding_signature(changed) != embedding_signature(EMBED)
 
 
 def test_banner_is_only_the_leading_issue_block():
