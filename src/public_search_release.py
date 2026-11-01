@@ -198,10 +198,12 @@ def version_publication(api, version):
 
 
 def health(origin):
-    request = urllib.request.Request(origin + '/health',
-                                     headers={'accept': 'application/json'})
-    with urllib.request.urlopen(request, timeout=30) as response:
-        return json.load(response)
+    from run_retained_search_smoke import exchange_once
+    status, _, text = exchange_once(origin + '/health', None, {}, 30)
+    require(status == 200, f'Public health check returned HTTP {status}')
+    body = json.loads(text)
+    require(isinstance(body, dict), 'Public health must return a JSON object')
+    return body
 
 
 def prepare(api, publication):

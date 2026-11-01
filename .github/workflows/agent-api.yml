@@ -47,6 +47,8 @@ name: Agent probe
       - src/test_retained_smoke_workflow.py
       - src/smoke_public_search_api.py
       - src/test_public_search_publication.py
+      - src/public_search_release.py
+      - src/test_public_search_release.py
       - src/restore_full_search_artifact.py
       - src/test_run_full_geometry_probe.py
       - src/test_agent_publish_workflow.py

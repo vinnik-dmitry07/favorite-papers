@@ -90,6 +90,13 @@ the historical live-geometry pin; that pin has not been rewritten.
 
 ## Use the endpoint
 
+Automated HTTP clients should send a descriptive `User-Agent`, such as
+`favorite-papers-static-probe/1.0`. Cloudflare can reject the default Python
+`urllib` identity with error 1010 before the Worker runs. The publication health
+check uses the same identified, non-redirecting client as the REST/MCP smoke.
+It still requires HTTP 200 and a JSON object. See
+[Cloudflare's client guidance](https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/#requests-to-pages-projects-or-workersdev).
+
 Given the verified origin as `API_BASE`, a browsing agent can start at
 `API_BASE/llms.txt`, then make ordinary GET requests:
 
