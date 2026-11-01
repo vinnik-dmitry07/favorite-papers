@@ -3,6 +3,10 @@
 import hashlib
 import io
 import json
+import os
+import shutil
+import subprocess
+import sys
 from types import SimpleNamespace
 
 import pytest
@@ -213,17 +217,138 @@ def test_missing_fingerprint_or_rotated_credential_stops_publication(
         release.controls()
 
 
-def test_preview_receipt_cannot_redirect_credentials_to_a_foreign_origin(
-        tmp_path):
-    path = tmp_path / 'preview.json'
+def preview_record():
     name = 'release-123-1'
     origin = f'https://{name}-key-papers-search.example.workers.dev'
-    path.write_text(json.dumps({'preview': {'name': name, 'urls': [origin]}}))
+    return {'type': 'preview', 'version': 1,
+            'worker_name': release.WORKER_NAME,
+            'preview_name': name, 'preview_slug': name,
+            'preview_urls': [origin], 'deployment_id': 'test-deployment'}
+
+
+def test_preview_receipt_cannot_redirect_credentials_to_a_foreign_origin(
+        tmp_path):
+    path = tmp_path / 'preview.ndjson'
+    name = 'release-123-1'
+    row = preview_record()
+    origin = row['preview_urls'][0]
+    path.write_text(json.dumps(row) + '\n')
     assert release.preview_origin(path, name) == origin
     for url in [ORIGIN, 'https://attacker.example', origin + '/path']:
-        path.write_text(json.dumps({'preview': {'name': name, 'urls': [url]}}))
+        path.write_text(json.dumps({**row, 'preview_urls': [url]}) + '\n')
         with pytest.raises(ValueError):
             release.preview_origin(path, name)
+
+
+@pytest.mark.parametrize('changes', [
+    {'version': 2}, {'worker_name': 'key-papers-api'},
+    {'preview_name': 'release-456-1'}, {'preview_urls': 'not-a-list'},
+])
+def test_preview_receipt_requires_the_expected_schema_worker_and_run(
+        tmp_path, changes):
+    path = tmp_path / 'preview.ndjson'
+    path.write_text(json.dumps({**preview_record(), **changes}) + '\n')
+    with pytest.raises(ValueError):
+        release.preview_origin(path, 'release-123-1')
+
+
+@pytest.mark.parametrize('mode', [
+    'empty', 'session-only', 'duplicate', 'failed', 'non-object', 'truncated',
+])
+def test_preview_receipt_rejects_missing_ambiguous_or_failed_output(
+        tmp_path, mode):
+    row = preview_record()
+    session = {'type': 'wrangler-session', 'version': 1}
+    records = {
+        'empty': [], 'session-only': [session], 'duplicate': [row, row],
+        'failed': [row, {'type': 'command-failed'}],
+        'non-object': [[]], 'truncated': [row],
+    }[mode]
+    text = '\n'.join(json.dumps(value) for value in records)
+    if mode == 'truncated':
+        text += '\n{'
+    path = tmp_path / 'preview.ndjson'
+    path.write_text(text)
+    with pytest.raises(ValueError):
+        release.preview_origin(path, 'release-123-1')
+
+
+@pytest.mark.parametrize('mode', [
+    'success', 'nonzero', 'missing', 'malformed', 'wrong-worker',
+])
+def test_actual_preview_workflow_consumes_machine_output_not_stdout(
+        tmp_path, mode):
+    from test_public_search_publication import ROOT, job
+    step = next(value for value in job()['steps']
+                if value.get('id') == 'preview_deploy')
+    checkout = tmp_path / 'checkout'
+    shutil.copytree(ROOT / 'src', checkout / 'src',
+                    ignore=shutil.ignore_patterns('__pycache__'))
+    worker = checkout / 'worker'
+    worker.mkdir()
+    reports = checkout / 'public-api-reports'
+    reports.mkdir()
+    runner = tmp_path / 'runner'
+    runner.mkdir()
+    output = runner / 'github-output'
+    output.touch()
+    commands = tmp_path / 'bin'
+    commands.mkdir()
+    fake_npx = commands / 'npx'
+    fake_npx.write_text('#!' + sys.executable + '\n' + '''
+import os
+from pathlib import Path
+import sys
+
+print('Building list of assets...')
+print('Starting asset upload...')
+print('{"deployment": {"secret": "must-stay-private"}}')
+path = os.environ.get('WRANGLER_OUTPUT_FILE_PATH')
+if path:
+    with Path(path).open('a') as output:
+        output.write(os.environ['FAKE_WRANGLER_OUTPUT'])
+sys.exit(int(os.environ['FAKE_WRANGLER_EXIT']))
+''')
+    fake_npx.chmod(0o755)
+    row = preview_record()
+    if mode == 'wrong-worker':
+        row['worker_name'] = 'key-papers-api'
+    records = [{'type': 'wrangler-session', 'version': 1}]
+    if mode != 'missing':
+        records.append(row)
+    text = '\n'.join(json.dumps(value) for value in records) + '\n'
+    if mode == 'malformed':
+        text += '{'
+    # Wrangler appends records: a previous attempt must not be reused.
+    (runner / 'public-search-preview.ndjson').write_text(json.dumps(row))
+    env = {**os.environ,
+           'PATH': str(commands) + os.pathsep + os.environ['PATH'],
+           'RUNNER_TEMP': str(runner), 'GITHUB_OUTPUT': str(output),
+           'PREVIEW_NAME': 'release-123-1',
+           'PUBLIC_WORKER_NAME': release.WORKER_NAME,
+           'PUBLICATION_ID': 'test-publication',
+           'PREVIEW_EXPIRES_AT': '2026-11-01T21:00:00Z',
+           'FAKE_WRANGLER_OUTPUT': text,
+           'FAKE_WRANGLER_EXIT': '23' if mode == 'nonzero' else '0'}
+    result = subprocess.run(
+        ['bash', '-c', step['run']], cwd=worker, env=env,
+        capture_output=True, text=True, timeout=30,
+    )
+    report = reports / 'preview.json'
+    if mode != 'success':
+        assert result.returncode != 0
+        if mode == 'nonzero':
+            assert result.returncode == 23
+        assert output.read_text() == ''
+        assert not report.exists()
+        return
+    assert result.returncode == 0, result.stderr
+    assert output.read_text() == 'origin=' + row['preview_urls'][0] + '\n'
+    assert json.loads(report.read_text()) == {
+        'name': row['preview_name'], 'slug': row['preview_slug'],
+        'urls': row['preview_urls'], 'origin': row['preview_urls'][0],
+    }
+    assert 'must-stay-private' not in report.read_text() + result.stdout
 
 
 @pytest.mark.parametrize('scope_reviewed', [False, True])

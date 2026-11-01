@@ -68,6 +68,12 @@ code is untouched. These are [Worker Previews](https://developers.cloudflare.com
 not Version URLs. Preview responses use a preview credential; research checks
 on the permanent endpoint remain anonymous.
 
+Preview receipts come from Wrangler's `WRANGLER_OUTPUT_FILE_PATH` NDJSON file,
+not stdout: asset-upload progress can precede the JSON printed by `--json`.
+The runner requires one version-1 Preview record for this Worker and run before
+passing its validated URL to smoke checks. Only its public identity and URL are
+saved as evidence; raw output stays temporary and is removed during cleanup.
+
 Activation requires the retained 200-input baseline and **32 new model checks
 for this publication**, cosine at least 0.999, completed within the previous
 hour. The inputs are deterministically spread across the pinned reference set.

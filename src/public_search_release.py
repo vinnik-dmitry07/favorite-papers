@@ -258,19 +258,36 @@ def recover(api, report, publication, probe=health):
     return {**report, 'recovery': 'verified', 'restored_health': after}
 
 
-def preview_origin(path, name):
+def preview_receipt(path, name):
     require(re.fullmatch(r'release-[1-9][0-9]*-[1-9][0-9]*', name),
             'Only a run-specific release Preview is allowed')
-    body = json.loads(Path(path).read_text())
-    preview = body.get('preview', {})
-    require(preview.get('name') == name or preview.get('slug') == name,
+    records = [json.loads(line) for line in Path(path).read_text().splitlines()
+               if line.strip()]
+    require(all(isinstance(row, dict) for row in records),
+            'Wrangler output must contain JSON objects')
+    require(not any(row.get('type') == 'command-failed' for row in records),
+            'Wrangler reported a failed command')
+    previews = [row for row in records if row.get('type') == 'preview']
+    require(len(previews) == 1, 'One Wrangler Preview record is required')
+    preview = previews[0]
+    require(preview.get('version') == 1
+            and preview.get('worker_name') == WORKER_NAME,
+            'Unexpected Wrangler Preview schema or Worker')
+    require(preview.get('preview_name') == name,
             'Preview name differs from this run')
-    urls = preview.get('urls', [])
+    urls = preview.get('preview_urls')
+    require(isinstance(urls, list), 'Preview URLs must be a list')
     origins = [public_origin(url, preview=True) for url in urls
                if isinstance(url, str) and url.startswith(
                    'https://' + name + '-' + WORKER_NAME + '.')]
     require(len(origins) == 1, 'One run-specific Preview URL is required')
-    return origins[0]
+    return {'name': preview['preview_name'],
+            'slug': preview.get('preview_slug'), 'urls': urls,
+            'origin': origins[0]}
+
+
+def preview_origin(path, name):
+    return preview_receipt(path, name)['origin']
 
 
 def main():
@@ -281,6 +298,7 @@ def main():
     parser.add_argument('--publication-id')
     parser.add_argument('--report', type=Path, required=True)
     parser.add_argument('--name')
+    parser.add_argument('--preview-report', type=Path)
     parser.add_argument('--reviewer')
     parser.add_argument('--set-credentials', action='store_true')
     parser.add_argument(
@@ -289,7 +307,10 @@ def main():
     )
     args = parser.parse_args()
     if args.mode == 'preview-origin':
-        print(preview_origin(args.report, args.name))
+        receipt = preview_receipt(args.report, args.name)
+        if args.preview_report:
+            persist(receipt, args.preview_report)
+        print(receipt['origin'])
         return
     if args.mode == 'setup':
         report = setup_environment(args.reviewer, args.set_credentials,

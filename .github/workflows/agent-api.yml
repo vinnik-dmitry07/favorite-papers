@@ -1200,18 +1200,15 @@ jobs:
         timeout-minutes: 4
         working-directory: worker
         run: |
-          npx wrangler preview --config wrangler.public-search.toml --name "$PREVIEW_NAME" --worker-name "$PUBLIC_WORKER_NAME" \
+          set -euo pipefail
+          umask 077
+          receipt="$RUNNER_TEMP/public-search-preview.ndjson"
+          : > "$receipt"
+          WRANGLER_OUTPUT_FILE_PATH="$receipt" npx wrangler preview --config wrangler.public-search.toml --name "$PREVIEW_NAME" --worker-name "$PUBLIC_WORKER_NAME" \
             --ignore-base-config --json --secrets-file "$RUNNER_TEMP/public-search-secrets.json" \
-            --var "PUBLICATION_ID:$PUBLICATION_ID" --var "PUBLIC_PREVIEW_EXPIRES_AT:$PREVIEW_EXPIRES_AT" > "$RUNNER_TEMP/public-search-preview.json"
-          python ../src/public_search_release.py preview-origin --name "$PREVIEW_NAME" --report "$RUNNER_TEMP/public-search-preview.json" | sed 's/^/origin=/' >> "$GITHUB_OUTPUT"
-          python - <<'PYTHON'
-          import json
-          import os
-          from pathlib import Path
-          receipt = json.loads((Path(os.environ['RUNNER_TEMP']) / 'public-search-preview.json').read_text())
-          sanitized = {key: receipt.get('preview', {}).get(key) for key in ('name', 'slug', 'urls')}
-          Path('../public-api-reports/preview.json').write_text(json.dumps(sanitized, indent=2))
-          PYTHON
+            --var "PUBLICATION_ID:$PUBLICATION_ID" --var "PUBLIC_PREVIEW_EXPIRES_AT:$PREVIEW_EXPIRES_AT" > "$RUNNER_TEMP/public-search-preview.stdout"
+          origin=$(python ../src/public_search_release.py preview-origin --name "$PREVIEW_NAME" --report "$receipt" --preview-report ../public-api-reports/preview.json)
+          printf 'origin=%s\n' "$origin" >> "$GITHUB_OUTPUT"
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN }}
@@ -1292,7 +1289,7 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN }}
       - name: Remove the temporary publication credential file
         if: always()
-        run: rm -f "$RUNNER_TEMP/public-search-secrets.json" "$RUNNER_TEMP/public-search-preview.json"
+        run: rm -f "$RUNNER_TEMP/public-search-secrets.json" "$RUNNER_TEMP/public-search-preview.ndjson" "$RUNNER_TEMP/public-search-preview.stdout"
       - name: Preserve publication evidence after every outcome
         if: always()
         uses: actions/upload-artifact@v4
