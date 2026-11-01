@@ -303,10 +303,13 @@ def test_only_exact_initial_routing_error_is_retried(
     report = execute(tmp_path, monkeypatch, api)
     assert report['ok'] is retries
     if not retries:
-        assert len(api.calls) == 1
+        assert [path for path, _, _ in api.calls] == [
+            '/health', '/admin/state',
+        ]
 
 
 def test_wrong_publication_identity_prevents_mutations(tmp_path, monkeypatch):
+    monkeypatch.setattr(publication.time, 'sleep', lambda _: None)
     api = FakeApi()
     original = api.state
 
@@ -316,7 +319,146 @@ def test_wrong_publication_identity_prevents_mutations(tmp_path, monkeypatch):
     api.state = wrong_state
     report = execute(tmp_path, monkeypatch, api)
     assert report['ok'] is False
-    assert [path for path, _, _ in api.calls] == ['/admin/state']
+    assert report['deployment_gate'] == 'unverified'
+    assert [path for path, _, _ in api.calls] == (
+        ['/health'] * publication.DEPLOYMENT_ATTEMPTS)
+
+
+def test_old_deployment_is_observed_before_new_credentials_are_used(
+        tmp_path, monkeypatch):
+    sleeps = []
+    monkeypatch.setattr(publication.time, 'sleep', sleeps.append)
+    api = FakeApi(already_passed=True)
+    original = api.__call__
+    health_reads = 0
+
+    def exchange(url, payload, headers, timeout):
+        nonlocal health_reads
+        if urllib.parse.urlsplit(url).path == '/health':
+            health_reads += 1
+            if health_reads <= 2:
+                assert 'x-publication-token' not in headers
+                assert not api.calls
+                body = {**api.state(),
+                        'publication_id': 'previous-publication',
+                        'status': 'ready', 'search_enabled': True}
+                assert 0 < timeout <= 5
+                return 200, {}, json.dumps(body)
+        if urllib.parse.urlsplit(url).path.startswith('/admin/'):
+            if health_reads < 3:
+                return 403, {}, json.dumps({'error': {
+                    'code': 'forbidden',
+                    'message': 'Publication authorization required',
+                }})
+        return original(url, payload, headers, timeout)
+
+    monkeypatch.setattr(publication, 'load_fixture', lambda _: api.fixture)
+    report = publication.run(
+        ORIGIN, TOKEN, 'publication-1', tmp_path, tmp_path / 'report.json',
+        exchange=exchange,
+    )
+    assert report['ok'] is True
+    assert report['deployment_gate'] == 'passed'
+    assert report['served_publication_id'] == 'publication-1'
+    assert sleeps == [publication.DEPLOYMENT_POLL_SECONDS] * 2
+    rows = report['requests']
+    assert [row['kind'] for row in rows[:3]] == ['deployment_identity'] * 3
+    assert all(row.get('deployment_pending') for row in rows[:2])
+    assert rows[3]['path'] == '/admin/state'
+
+
+@pytest.mark.parametrize('changes', [
+    {'manifest_sha256': 'wrong'}, {'passage_count': 1},
+    {'release_id': 'another-corpus'}, {'publication_id': None},
+    {'search_error': 'public_state_invalid'},
+])
+def test_invalid_deployment_health_prevents_admin_and_ai_calls(
+        tmp_path, monkeypatch, changes):
+    api = FakeApi()
+
+    def exchange(url, payload, headers, timeout):
+        assert url == ORIGIN + '/health'
+        assert payload is None and 'x-publication-token' not in headers
+        assert 0 < timeout <= 5
+        return 200, {}, json.dumps({**api.state(), **changes})
+
+    monkeypatch.setattr(publication, 'load_fixture', lambda _: api.fixture)
+    report = publication.run(
+        ORIGIN, TOKEN, 'publication-1', tmp_path, tmp_path / 'report.json',
+        exchange=exchange,
+    )
+    assert report['ok'] is False and report['deployment_gate'] == 'unverified'
+    assert len(report['requests']) == 1
+    assert api.budget['ai_calls'] == 0
+
+
+def test_current_deployment_rejecting_token_is_not_retried(
+        tmp_path, monkeypatch):
+    api = FakeApi(startup=(403, {'error': {
+        'code': 'forbidden', 'message': 'Publication authorization required',
+    }}))
+    report = execute(tmp_path, monkeypatch, api)
+    assert report['ok'] is False
+    assert report['deployment_gate'] == 'passed'
+    assert report['served_publication_id'] == 'publication-1'
+    assert [path for path, _, _ in api.calls] == ['/health', '/admin/state']
+    assert api.budget['ai_calls'] == 0
+
+
+@pytest.mark.parametrize('status,body,retries', [
+    (404, {'cloudflare_error': True, 'status': 404, 'error_code': 1042,
+           'error_name': 'workers_dev_script_not_found'}, True),
+    (404, {'error': 'missing'}, False),
+    (403, {'error': 'forbidden'}, False),
+    (503, {'error': 'unavailable'}, False),
+])
+def test_deployment_health_retries_only_exact_initial_routing_error(
+        tmp_path, monkeypatch, status, body, retries):
+    sleeps = []
+    monkeypatch.setattr(publication.time, 'sleep', sleeps.append)
+    api = FakeApi(already_passed=True)
+    original = api.__call__
+    pending = True
+
+    def exchange(url, payload, headers, timeout):
+        nonlocal pending
+        if pending:
+            pending = False
+            assert url == ORIGIN + '/health'
+            assert payload is None and 'x-publication-token' not in headers
+            return status, {}, json.dumps(body)
+        return original(url, payload, headers, timeout)
+
+    monkeypatch.setattr(publication, 'load_fixture', lambda _: api.fixture)
+    report = publication.run(
+        ORIGIN, TOKEN, 'publication-1', tmp_path, tmp_path / 'report.json',
+        exchange=exchange,
+    )
+    assert report['ok'] is retries
+    assert sleeps == ([publication.DEPLOYMENT_POLL_SECONDS] if retries else [])
+    if not retries:
+        assert len(report['requests']) == 1
+        assert not api.calls and api.budget['ai_calls'] == 0
+
+
+def test_deployment_identity_wait_obeys_its_wall_time_deadline(
+        tmp_path, monkeypatch):
+    now = 100.0
+
+    def sleep(seconds):
+        nonlocal now
+        now += seconds
+
+    monkeypatch.setattr(publication.time, 'monotonic', lambda: now)
+    monkeypatch.setattr(publication.time, 'sleep', sleep)
+    monkeypatch.setattr(publication, 'DEPLOYMENT_WAIT_SECONDS', 3)
+    api = FakeApi()
+    original = api.state
+    api.state = lambda: {**original(), 'publication_id': 'old-publication'}
+    report = execute(tmp_path, monkeypatch, api)
+    assert report['ok'] is False and now == 103
+    assert [path for path, _, _ in api.calls] == ['/health', '/health']
+    assert 'deadline exhausted' in report['error']
 
 
 @pytest.mark.parametrize('origin', [
