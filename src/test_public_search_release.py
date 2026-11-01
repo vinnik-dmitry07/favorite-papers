@@ -1,6 +1,7 @@
 '''A failed candidate must not mutate a later release or refund usage.'''
 
 import hashlib
+import io
 import json
 from types import SimpleNamespace
 
@@ -62,6 +63,63 @@ def old_health(origin):
     assert origin == ORIGIN
     return {'publication_id': 'old-publication', 'search_enabled': True,
             'manifest_sha256': release.PACKED_SHA}
+
+
+def health_transport(monkeypatch, status, text):
+    import run_retained_search_smoke as smoke
+    calls = []
+
+    def open_response(request, timeout):
+        calls.append(request)
+        assert request.full_url == ORIGIN + '/health'
+        assert request.get_method() == 'GET' and request.data is None
+        assert request.get_header('User-agent') == smoke.PROBE_USER_AGENT
+        assert request.get_header('Authorization') is None
+        assert request.get_header('X-publication-token') is None
+        assert timeout == 30
+        body = io.BytesIO(text.encode())
+        headers = {'content-type': 'application/json'}
+        if status != 200:
+            raise release.urllib.error.HTTPError(
+                request.full_url, status, 'rejected', headers, body)
+        body.status = status
+        body.headers = headers
+        return body
+
+    def build(*handlers):
+        assert len(handlers) == 1
+        assert isinstance(handlers[0], smoke.NoRedirect)
+        return SimpleNamespace(open=open_response)
+
+    monkeypatch.setattr(smoke.urllib.request, 'build_opener', build)
+    monkeypatch.setattr(smoke.urllib.request, 'urlopen', lambda *a, **kw:
+                        pytest.fail('Health must use the shared smoke client'))
+    return calls
+
+
+def test_health_uses_project_identity_without_admin_credentials(monkeypatch):
+    expected = old_health(ORIGIN)
+    calls = health_transport(monkeypatch, 200, json.dumps(expected))
+    assert release.health(ORIGIN) == expected
+    assert len(calls) == 1
+
+
+@pytest.mark.parametrize('status', [302, 403, 503])
+def test_health_rejects_http_errors_without_retry_or_redirect(
+        monkeypatch, status):
+    calls = health_transport(monkeypatch, status,
+                             json.dumps(old_health(ORIGIN)))
+    with pytest.raises(ValueError, match=f'HTTP {status}'):
+        release.health(ORIGIN)
+    assert len(calls) == 1
+
+
+@pytest.mark.parametrize('text', ['not-json', '[]'])
+def test_health_requires_a_json_object(monkeypatch, text):
+    calls = health_transport(monkeypatch, 200, text)
+    with pytest.raises(ValueError):
+        release.health(ORIGIN)
+    assert len(calls) == 1
 
 
 def test_exact_previous_version_and_activation_are_recovered():
