@@ -19,8 +19,9 @@ Publication now checks a private isolated Worker Preview first, requires a fresh
 path with preserved publication state and global quota. Uncached requests have
 per-address limits in addition to the shared daily ceiling. The corpus is saved
 in a pinned GitHub Release without re-encoding. These code changes are not a
-deployment; external environment/token setup and live rollout/recovery checks
-remain required. Historical geometry evidence does not certify the changed loader.
+deployment; live rollout/recovery checks remain required. The configured token's
+identity is checked; scope review and repository-secret migration are not release
+gates. Historical geometry evidence does not certify the changed loader.
 
 The [static-search feasibility probe](STATIC_SEARCH_PROBE.md),
 [real subset](REAL_SEARCH_PROBE.md) and [full offline gates](FULL_SEARCH_PROBE.md)

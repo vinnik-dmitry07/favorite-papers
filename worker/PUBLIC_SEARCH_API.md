@@ -24,49 +24,32 @@ access. A stale queued commit is rejected again immediately before live deploy.
 The dedicated environment secrets are `PUBLIC_SEARCH_CLOUDFLARE_ACCOUNT_ID` and
 `PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN`; production/probe credentials are not used.
 
-Use Cloudflare's [per-Worker Editor role](https://developers.cloudflare.com/workers/authorization/workers/)
-for the existing `key-papers-search`, including its Previews. Do not grant
-account-wide Workers Admin, DNS, R2, Vectorize or token-administration access
-merely for this path. The deploy token cannot necessarily read its own policy;
-a successful operation does not prove least privilege. After reviewing the
-actual token scope, bind that exact credential's SHA-256 to environment variable
-`PUBLIC_SEARCH_TOKEN_SCOPE_SHA256`. This identifies the credential; calculating
-or copying this hash does not review its permissions. Actual review and removal
-of repository-secret copies are separately attested by
-`PUBLIC_SEARCH_CREDENTIALS_REVIEWED_SHA256`, bound to the same token hash. If it
-is absent or differs, publication stops before dependency installation, archive
-download or Cloudflare access. Do not populate it merely from successful token
-verification, Worker reads or empty resource lists. Reports label completed
-review as operator-attested, not machine-verified. Rotation requires another
-review, even after the identity hash is updated.
+The owner accepts the existing token configuration. Token-scope review and
+migration of repository-secret copies are not publication conditions. The job
+checks `PUBLIC_SEARCH_TOKEN_SCOPE_SHA256` only to identify the configured
+credential. It does not infer permissions from that hash or claim scope approval:
+reports retain `token_scope: unverified` and
+`token_scope_machine_verified: false`. No separate
+`PUBLIC_SEARCH_CREDENTIALS_REVIEWED_SHA256` variable is required or read.
 
-The owner setup command checks repository secret names without reading their
-values. It stops before writes if `CLOUDFLARE_API_TOKEN`,
-`PROBE_CLOUDFLARE_API_TOKEN` or `PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN` remains at
-repository scope. Copying a working token into an environment leaves the old
-repository credential usable outside its rules. Move legacy credentials to
-protected environments, update their jobs to use those environments, or retire
-them first. The installer does not delete them or revoke Cloudflare tokens.
-
-The connected GitHub tools cannot administer environment settings. Run this with
-the repository owner's `gh` login after reviewing the token in Cloudflare:
+The connected GitHub tools cannot administer environment settings. If setup is
+needed, run this with the repository owner's `gh` login:
 
 ```bash
-python src/public_search_release.py setup --reviewer vinnik-dmitry07 --set-credentials --token-scope-reviewed --report public-api-reports/environment-setup.json
+python src/public_search_release.py setup --reviewer vinnik-dmitry07 --set-credentials --report public-api-reports/environment-setup.json
 ```
 
 It configures required review and main-only branches, disables admin bypass,
-removes other deployment rules, then sets the two secrets using hidden prompts.
-It clears the previous review before rotating credentials and stores the new
-review digest only after all credential writes succeed. An interrupted setup
-cannot carry forward the previous approval.
-For this single-maintainer setup, self-review is permitted; a reviewer can approve
-their own manual dispatch. Nothing is deployed. Setup uses standard-library
-Python and `gh`; credentials are never passed as command arguments or printed.
-The command is tested with mocks. Actual account rules and token permissions
-have not been changed by pushing the code. Environment-only secret placement is
-part of setup: YAML cannot prevent an administrator from changing protections.
+removes other deployment rules, then sets the two environment secrets using
+hidden prompts and records their identity hash. It does not inspect, move or
+delete repository secrets, or require token-policy approval. The old
+`--token-scope-reviewed` option remains accepted for command compatibility and
+records no permission-review claim.
 
+For this single-maintainer setup, self-review is permitted; a reviewer can approve
+their own manual dispatch. Nothing is deployed by setup. It uses standard-library
+Python and `gh`; credentials are not passed as command arguments or printed.
+Current-main, environment, ownership, corpus and rollout checks remain in place.
 After review and merge, dispatch a fresh run; re-running an old job uses old code:
 
 ```bash

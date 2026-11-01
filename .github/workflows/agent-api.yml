@@ -1111,7 +1111,7 @@ jobs:
             exit 1
           fi
           if [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_API_TOKEN" ]; then
-            echo '::error::Configure the dedicated PUBLIC_SEARCH_CLOUDFLARE_* environment secrets; production/probe credentials are never used.'
+            echo '::error::Configure the PUBLIC_SEARCH_CLOUDFLARE_* environment secrets.'
             exit 1
           fi
       - uses: actions/checkout@v4
@@ -1120,12 +1120,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Verify actual environment protections and reviewed credential
+      - name: Verify environment protections and credential identity
         env:
           GH_TOKEN: ${{ github.token }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_API_TOKEN }}
           TOKEN_SCOPE_SHA256: ${{ vars.PUBLIC_SEARCH_TOKEN_SCOPE_SHA256 }}
-          CREDENTIALS_REVIEWED_SHA256: ${{ vars.PUBLIC_SEARCH_CREDENTIALS_REVIEWED_SHA256 }}
         run: python src/public_search_release.py controls --report public-api-reports/controls.json
       - uses: actions/setup-node@v4
         with:
