@@ -8,12 +8,14 @@ This is a bounded scripted integration check, not an autonomous quality test.
 from __future__ import annotations
 
 import argparse
+from contextlib import contextmanager
 from datetime import date
 import hashlib
 import json
 import os
 from pathlib import Path
 import re
+import signal
 import time
 import urllib.parse
 
@@ -141,6 +143,29 @@ def validate_daily_budget(budget):
             'AI call count is inconsistent with reserved inputs')
 
 
+@contextmanager
+def elapsed_http_deadline(seconds):
+    '''Interrupt opening and reading HTTP on the Ubuntu publication runner.'''
+    if seconds is None:
+        yield
+        return
+    require(hasattr(signal, 'setitimer'),
+            'Elapsed HTTP deadlines require a POSIX publication runner')
+    require(signal.getitimer(signal.ITIMER_REAL) == (0, 0),
+            'Cannot replace an existing elapsed-time alarm')
+
+    def expired(signum, frame):
+        raise TimeoutError('HTTP elapsed-time deadline exceeded')
+
+    previous = signal.signal(signal.SIGALRM, expired)
+    try:
+        signal.setitimer(signal.ITIMER_REAL, seconds)
+        yield
+    finally:
+        signal.setitimer(signal.ITIMER_REAL, 0)
+        signal.signal(signal.SIGALRM, previous)
+
+
 class PublicSmoke:
     def __init__(self, origin, token, publication, fixture, output, report,
                  exchange=exchange_once):
@@ -156,7 +181,8 @@ class PublicSmoke:
         self.identity_verified = False
 
     def request(self, kind, path, payload=None, *, admin=False,
-                expected=200, raw=False, rollback=False, timeout_cap=None):
+                expected=200, raw=False, rollback=False, timeout_cap=None,
+                absolute_deadline=None):
         limit = MAX_HTTP_ATTEMPTS if rollback else MAX_HTTP_ATTEMPTS - 1
         require(len(self.report['requests']) < limit, 'HTTP budget exhausted')
         require(rollback or time.monotonic() < self.deadline,
@@ -184,9 +210,19 @@ class PublicSmoke:
                 60, max(.01, self.deadline - time.monotonic()))
             if timeout_cap is not None:
                 timeout = min(timeout, timeout_cap)
-            status, _, text = self.exchange(
-                self.origin + path, payload, headers, timeout)
+            if absolute_deadline is not None:
+                remaining = absolute_deadline - time.monotonic()
+                require(remaining > 0,
+                        'Deployment identity deadline exhausted')
+                timeout = min(timeout, remaining)
+            with elapsed_http_deadline(
+                    timeout if timeout_cap is not None else None):
+                status, _, text = self.exchange(
+                    self.origin + path, payload, headers, timeout)
             row.update(status=status, response_text=text)
+            if timeout_cap is not None:
+                require(time.monotonic() - started < timeout,
+                        'HTTP elapsed-time deadline exceeded')
             require(status == expected, f'Unexpected HTTP status: {status}')
             body = text if raw else json.loads(text)
             row['success'] = True
@@ -207,11 +243,13 @@ class PublicSmoke:
             require(remaining > 0, 'Deployment identity deadline exhausted')
             try:
                 body = self.request('deployment_identity', '/health',
-                                    timeout_cap=min(5, remaining))
+                                    timeout_cap=5, absolute_deadline=deadline)
             except ValueError:
                 if not deployment_pending(self.report['requests'][-1]):
                     raise
             else:
+                require(time.monotonic() < deadline,
+                        'Deployment identity deadline exhausted')
                 require(isinstance(body, dict)
                         and body.get('manifest_sha256') == PACKED_SHA
                         and body.get('passage_count') == 40575
@@ -225,7 +263,7 @@ class PublicSmoke:
                 self.report['served_publication_id'] = served
                 if served == self.publication:
                     require(not body.get('search_error'),
-                            'Deployed publication reports invalid search state')
+                            'Deployed publication reports invalid state')
                     self.report['deployment_gate'] = 'passed'
                     persist(self.report, self.output)
                     return

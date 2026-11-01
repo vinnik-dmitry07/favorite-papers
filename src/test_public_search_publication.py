@@ -6,8 +6,10 @@ from datetime import date
 import json
 from pathlib import Path
 import re
+import signal
 import subprocess
 import time
+from types import SimpleNamespace
 import urllib.parse
 
 import pytest
@@ -459,6 +461,114 @@ def test_deployment_identity_wait_obeys_its_wall_time_deadline(
     assert report['ok'] is False and now == 103
     assert [path for path, _, _ in api.calls] == ['/health', '/health']
     assert 'deadline exhausted' in report['error']
+
+
+@pytest.mark.parametrize('read_seconds,wait_seconds', [
+    (6, 30), (31, 30), (4, 3),
+])
+def test_late_matching_health_does_not_admit_admin_or_model_calls(
+        tmp_path, monkeypatch, read_seconds, wait_seconds):
+    now = 100.0
+    monkeypatch.setattr(publication.time, 'monotonic', lambda: now)
+    monkeypatch.setattr(publication, 'DEPLOYMENT_WAIT_SECONDS', wait_seconds)
+    api = FakeApi()
+
+    def exchange(url, payload, headers, timeout):
+        nonlocal now
+        assert url == ORIGIN + '/health'
+        now += read_seconds
+        return api(url, payload, headers, timeout)
+
+    monkeypatch.setattr(publication, 'load_fixture', lambda _: api.fixture)
+    report = publication.run(
+        ORIGIN, TOKEN, 'publication-1', tmp_path, tmp_path / 'report.json',
+        exchange=exchange,
+    )
+    assert report['ok'] is False and report['deployment_gate'] == 'unverified'
+    assert [path for path, _, _ in api.calls] == ['/health']
+    assert api.budget['ai_calls'] == 0
+    assert 'elapsed-time deadline' in report['error']
+
+
+def test_matching_identity_is_rechecked_after_response_bookkeeping(
+        tmp_path, monkeypatch):
+    now = 100.0
+    monkeypatch.setattr(publication.time, 'monotonic', lambda: now)
+    persist = publication.persist
+
+    def slow_persist(report, output):
+        nonlocal now
+        persist(report, output)
+        rows = report.get('requests', [])
+        if rows and rows[-1].get('state') == 'completed':
+            now = 131.0
+
+    monkeypatch.setattr(publication, 'persist', slow_persist)
+    api = FakeApi()
+    report = execute(tmp_path, monkeypatch, api)
+    assert report['ok'] is False and report['deployment_gate'] == 'unverified'
+    assert [path for path, _, _ in api.calls] == ['/health']
+    assert report['requests'][0]['success'] is True
+    assert 'Deployment identity deadline exhausted' in report['error']
+
+
+@pytest.mark.parametrize('stage', ['opening', 'reading'])
+def test_elapsed_limit_interrupts_opening_and_dripping_body_reads(
+        tmp_path, monkeypatch, stage):
+    import run_retained_search_smoke as transport
+
+    class SlowResponse:
+        status = 200
+        headers = {}
+        closed = False
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            self.closed = True
+
+        def read(self):
+            for _ in range(100):
+                time.sleep(.01)
+            return b'{}'
+
+    response = SlowResponse()
+
+    def open_response(request, timeout):
+        assert timeout == .05
+        if stage == 'opening':
+            for _ in range(100):
+                time.sleep(.01)
+        return response
+
+    monkeypatch.setattr(transport.urllib.request, 'build_opener',
+                        lambda *args: SimpleNamespace(open=open_response))
+    smoke = publication.PublicSmoke(
+        ORIGIN, TOKEN, 'publication-1', fixture(), tmp_path / 'report.json',
+        {'requests': []}, exchange=transport.exchange_once,
+    )
+    previous = signal.getsignal(signal.SIGALRM)
+    started = time.monotonic()
+    with pytest.raises(TimeoutError, match='elapsed-time deadline'):
+        smoke.request('deployment_identity', '/health', timeout_cap=.05)
+    assert time.monotonic() - started < .75
+    assert response.closed is (stage == 'reading')
+    assert signal.getsignal(signal.SIGALRM) == previous
+    assert signal.getitimer(signal.ITIMER_REAL) == (0, 0)
+    row = smoke.report['requests'][0]
+    assert row['success'] is False and row['state'] == 'completed'
+
+
+def test_elapsed_alarm_is_restored_after_a_successful_read(tmp_path):
+    smoke = publication.PublicSmoke(
+        ORIGIN, TOKEN, 'publication-1', fixture(), tmp_path / 'report.json',
+        {'requests': []}, exchange=FakeApi(),
+    )
+    previous = signal.getsignal(signal.SIGALRM)
+    smoke.request('deployment_identity', '/health', timeout_cap=1)
+    assert signal.getsignal(signal.SIGALRM) == previous
+    assert signal.getitimer(signal.ITIMER_REAL) == (0, 0)
 
 
 @pytest.mark.parametrize('origin', [

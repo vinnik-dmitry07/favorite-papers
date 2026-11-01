@@ -85,6 +85,9 @@ smoke waits for `/health` to identify the expected publication and retained
 corpus. This is bounded by 12 reads and 30 seconds, with no AI calls; an old
 publication is recorded rather than treated as an authorization failure. A 403
 from the expected publication still fails immediately and is not retried.
+On the Ubuntu publication runner, an elapsed-time alarm interrupts the entire
+HTTP operation, including opening the connection and reading a slow response.
+The polling deadline is checked again before accepting the served identity.
 Failed or cancelled validation attempts to pause the
 new publication and then restores that exact code version. The runner verifies
 the previous identity and activation; it refuses to overwrite a later release.
