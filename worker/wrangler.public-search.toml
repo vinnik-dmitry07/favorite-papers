@@ -21,6 +21,10 @@ binding = "AI"
 name = "PUBLIC_SEARCH"
 class_name = "PublicSearch"
 
+# Publication checks must observe the new code and its per-release credential.
+[durable_objects.code_update_strategy]
+mode = "immediate"
+
 [exports.PublicSearch]
 type = "durable-object"
 storage = "sqlite"

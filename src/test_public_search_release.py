@@ -135,6 +135,29 @@ def test_exact_previous_version_and_activation_are_recovered():
     assert api.writes == [PREVIOUS]
 
 
+def test_rollback_applies_the_recorded_version_to_active_objects_immediately(
+        monkeypatch):
+    monkeypatch.setenv('CLOUDFLARE_ACCOUNT_ID', 'a' * 32)
+    monkeypatch.setenv('CLOUDFLARE_API_TOKEN', 'test-release-api-token')
+    calls = []
+
+    def open_response(request, timeout):
+        calls.append(request)
+        assert request.full_url.endswith(
+            '/workers/scripts/key-papers-search/deployments?force=true')
+        assert request.get_method() == 'POST' and timeout == 30
+        body = json.loads(request.data)
+        assert body['strategy'] == 'percentage'
+        assert body['versions'] == [
+            {'version_id': PREVIOUS, 'percentage': 100}]
+        assert body['code_update_strategy'] == {'mode': 'immediate'}
+        return io.BytesIO(b'{"success": true}')
+
+    monkeypatch.setattr(release.urllib.request, 'urlopen', open_response)
+    release.ReleaseApi().write_deployment(PREVIOUS)
+    assert len(calls) == 1
+
+
 def test_already_recovered_or_failed_before_deploy_requires_no_mutation():
     api = FakeCloudflare(current=PREVIOUS)
     assert release.recover(

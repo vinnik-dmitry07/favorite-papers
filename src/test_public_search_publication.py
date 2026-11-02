@@ -9,6 +9,7 @@ import re
 import signal
 import subprocess
 import time
+import tomllib
 from types import SimpleNamespace
 import urllib.parse
 
@@ -743,6 +744,8 @@ def test_public_api_uses_separate_environment_credentials_and_current_main():
                 '${{ secrets.PUBLIC_SEARCH_CLOUDFLARE_ACCOUNT_ID }}')
     config = (ROOT / 'worker/wrangler.public-search.toml').read_text()
     assert '[build]' not in config
+    strategy = tomllib.loads(config)['durable_objects']['code_update_strategy']
+    assert strategy == {'mode': 'immediate'}
 
 
 def test_workflow_embedded_commands_parse_without_credentials():

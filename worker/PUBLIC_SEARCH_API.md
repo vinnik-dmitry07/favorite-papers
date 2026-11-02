@@ -80,7 +80,16 @@ hour. The inputs are deterministically spread across the pinned reference set.
 Old publications cannot satisfy the fresh gate. Baseline reuse is labeled.
 
 Immediately before live deploy, the job records the exact previous version,
-corpus and public identity. Before sending admin credentials after deployment,
+corpus and public identity. The stable Worker's configuration explicitly uses
+`durable_objects.code_update_strategy.mode = "immediate"`. The rollback REST
+request also sends `code_update_strategy: {"mode": "immediate"}`: this policy
+belongs to each deployment and is not restored by selecting an old version.
+This makes active objects adopt the deployed code and credentials immediately;
+in-flight requests may be interrupted. Durable state and charged ledgers remain.
+Cloudflare's [default deferred code updates](https://developers.cloudflare.com/changelog/post/2026-10-30-durable-objects-deferred-code-updates/)
+can otherwise leave an active object on old code for up to 300 seconds.
+
+Before sending admin credentials after deployment,
 smoke waits for `/health` to identify the expected publication and retained
 corpus. This is bounded by 12 reads and 30 seconds, with no AI calls; an old
 publication is recorded rather than treated as an authorization failure. A 403
@@ -99,9 +108,12 @@ publication; later targets must advertise this state-preservation protocol.
 
 [Run 41349915591](https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/41349915591)
 verified the private Preview and restored the previous code and activation after
-the permanent endpoint rejected its first admin request. The served publication
-identity was not recorded at that 403, so propagation delay remains a hypothesis.
-The new identity wait still needs a live publication. These checks do not certify
+the permanent endpoint rejected its first admin request.
+[Run 41365267577](https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/41365267577)
+then observed the old publication in all 12 health reads after deployment and
+verified rollback again. This matches deferred updates of an active object;
+the corrected immediate-update strategy still needs a live publication.
+These checks do not certify
 platform memory or production readiness. The changed loader still does not match
 the historical live-geometry pin; that pin has not been rewritten.
 

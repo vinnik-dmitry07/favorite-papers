@@ -156,6 +156,7 @@ class ReleaseApi(Cloudflare):
         path = SCRIPT + '/deployments?force=true'
         payload = {'strategy': 'percentage',
                    'versions': [{'version_id': version, 'percentage': 100}],
+                   'code_update_strategy': {'mode': 'immediate'},
                    'annotations': {'workers/message':
                                    'Recover failed retained API publication'}}
         request = urllib.request.Request(
