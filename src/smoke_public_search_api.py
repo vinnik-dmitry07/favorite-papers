@@ -8,12 +8,14 @@ This is a bounded scripted integration check, not an autonomous quality test.
 from __future__ import annotations
 
 import argparse
+from contextlib import contextmanager
 from datetime import date
 import hashlib
 import json
 import os
 from pathlib import Path
 import re
+import signal
 import time
 import urllib.parse
 
@@ -29,6 +31,9 @@ from static_search_do_lifecycle import Cloudflare
 WORKER_NAME = 'key-papers-search'
 MAX_HTTP_ATTEMPTS = 80
 MAX_SECONDS = 600
+DEPLOYMENT_ATTEMPTS = 12
+DEPLOYMENT_WAIT_SECONDS = 30
+DEPLOYMENT_POLL_SECONDS = 2
 PUBLIC_LIMITS = {
     'query_texts': 1000, 'query_tokens_reserved': 512000,
     'compatibility_texts': 200, 'compatibility_tokens_reserved': 102400,
@@ -107,7 +112,8 @@ def deployment_pending(row):
     except (ValueError, TypeError):
         return False
     return (
-        row.get('path') == '/admin/state' and row.get('method') == 'GET'
+        row.get('path') in ('/admin/state', '/health')
+        and row.get('method') == 'GET'
         and row.get('status') == 404 and isinstance(body, dict)
         and body.get('cloudflare_error') is True
         and body.get('status') == 404 and body.get('error_code') == 1042
@@ -137,6 +143,29 @@ def validate_daily_budget(budget):
             'AI call count is inconsistent with reserved inputs')
 
 
+@contextmanager
+def elapsed_http_deadline(seconds):
+    '''Interrupt opening and reading HTTP on the Ubuntu publication runner.'''
+    if seconds is None:
+        yield
+        return
+    require(hasattr(signal, 'setitimer'),
+            'Elapsed HTTP deadlines require a POSIX publication runner')
+    require(signal.getitimer(signal.ITIMER_REAL) == (0, 0),
+            'Cannot replace an existing elapsed-time alarm')
+
+    def expired(signum, frame):
+        raise TimeoutError('HTTP elapsed-time deadline exceeded')
+
+    previous = signal.signal(signal.SIGALRM, expired)
+    try:
+        signal.setitimer(signal.ITIMER_REAL, seconds)
+        yield
+    finally:
+        signal.setitimer(signal.ITIMER_REAL, 0)
+        signal.signal(signal.SIGALRM, previous)
+
+
 class PublicSmoke:
     def __init__(self, origin, token, publication, fixture, output, report,
                  exchange=exchange_once):
@@ -152,7 +181,8 @@ class PublicSmoke:
         self.identity_verified = False
 
     def request(self, kind, path, payload=None, *, admin=False,
-                expected=200, raw=False, rollback=False):
+                expected=200, raw=False, rollback=False, timeout_cap=None,
+                absolute_deadline=None):
         limit = MAX_HTTP_ATTEMPTS if rollback else MAX_HTTP_ATTEMPTS - 1
         require(len(self.report['requests']) < limit, 'HTTP budget exhausted')
         require(rollback or time.monotonic() < self.deadline,
@@ -178,9 +208,21 @@ class PublicSmoke:
         try:
             timeout = 20 if rollback else min(
                 60, max(.01, self.deadline - time.monotonic()))
-            status, _, text = self.exchange(
-                self.origin + path, payload, headers, timeout)
+            if timeout_cap is not None:
+                timeout = min(timeout, timeout_cap)
+            if absolute_deadline is not None:
+                remaining = absolute_deadline - time.monotonic()
+                require(remaining > 0,
+                        'Deployment identity deadline exhausted')
+                timeout = min(timeout, remaining)
+            with elapsed_http_deadline(
+                    timeout if timeout_cap is not None else None):
+                status, _, text = self.exchange(
+                    self.origin + path, payload, headers, timeout)
             row.update(status=status, response_text=text)
+            if timeout_cap is not None:
+                require(time.monotonic() - started < timeout,
+                        'HTTP elapsed-time deadline exceeded')
             require(status == expected, f'Unexpected HTTP status: {status}')
             body = text if raw else json.loads(text)
             row['success'] = True
@@ -192,6 +234,46 @@ class PublicSmoke:
             row.update(state='completed',
                        elapsed_ms=(time.monotonic() - started) * 1000)
             persist(self.report, self.output)
+
+    def wait_for_publication(self):
+        deadline = min(self.deadline,
+                       time.monotonic() + DEPLOYMENT_WAIT_SECONDS)
+        for attempt in range(DEPLOYMENT_ATTEMPTS):
+            remaining = deadline - time.monotonic()
+            require(remaining > 0, 'Deployment identity deadline exhausted')
+            try:
+                body = self.request('deployment_identity', '/health',
+                                    timeout_cap=5, absolute_deadline=deadline)
+            except ValueError:
+                if not deployment_pending(self.report['requests'][-1]):
+                    raise
+            else:
+                require(time.monotonic() < deadline,
+                        'Deployment identity deadline exhausted')
+                require(isinstance(body, dict)
+                        and body.get('manifest_sha256') == PACKED_SHA
+                        and body.get('passage_count') == 40575
+                        and body.get('release_id')
+                        == self.fixture['manifest']['release_id'],
+                        'Deployment health identifies another corpus')
+                served = body.get('publication_id')
+                require(isinstance(served, str)
+                        and re.fullmatch(r'[A-Za-z0-9_.:-]{1,160}', served),
+                        'Deployment health omits a publication identity')
+                self.report['served_publication_id'] = served
+                if served == self.publication:
+                    require(not body.get('search_error'),
+                            'Deployed publication reports invalid state')
+                    self.report['deployment_gate'] = 'passed'
+                    persist(self.report, self.output)
+                    return
+            self.report['requests'][-1]['deployment_pending'] = True
+            persist(self.report, self.output)
+            if attempt + 1 < DEPLOYMENT_ATTEMPTS:
+                delay = min(DEPLOYMENT_POLL_SECONDS,
+                            max(0, deadline - time.monotonic()))
+                time.sleep(delay)
+        raise ValueError('Expected publication was not observed after deploy')
 
     def state(self, *, initial=False):
         for attempt in range(3 if initial else 1):
@@ -259,6 +341,7 @@ class PublicSmoke:
         return body
 
     def run(self):
+        self.wait_for_publication()
         state = self.state(initial=True)
         self.deactivate()
         compatibility = state['compatibility']
@@ -427,6 +510,9 @@ def run(origin, token, publication, restored, output, *, deactivate_only=False,
         'corpus_reencoded': False, 'autonomous_agent_evaluation': False,
         'query_submissions_planned': 0 if deactivate_only else 3,
         'compatibility_gate': 'unverified', 'semantic_active': 'unverified',
+        'deployment_gate': (
+            'not_requested' if deactivate_only else 'unverified'),
+        'served_publication_id': None,
         'provider_retry_policy': 'No provider retries or automatic resets',
         'preview': preview,
     }
@@ -489,7 +575,7 @@ def main():
     )
     print(json.dumps({key: report.get(key) for key in (
         'ok', 'origin', 'checks', 'semantic_active', 'error',
-        'failure_deactivation')}))
+        'failure_deactivation', 'deployment_gate', 'served_publication_id')}))
     raise SystemExit(0 if report['ok'] else 1)
 
 

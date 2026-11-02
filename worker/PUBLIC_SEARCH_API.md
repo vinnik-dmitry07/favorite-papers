@@ -80,7 +80,15 @@ hour. The inputs are deterministically spread across the pinned reference set.
 Old publications cannot satisfy the fresh gate. Baseline reuse is labeled.
 
 Immediately before live deploy, the job records the exact previous version,
-corpus and public identity. Failed or cancelled validation attempts to pause the
+corpus and public identity. Before sending admin credentials after deployment,
+smoke waits for `/health` to identify the expected publication and retained
+corpus. This is bounded by 12 reads and 30 seconds, with no AI calls; an old
+publication is recorded rather than treated as an authorization failure. A 403
+from the expected publication still fails immediately and is not retried.
+On the Ubuntu publication runner, an elapsed-time alarm interrupts the entire
+HTTP operation, including opening the connection and reading a slow response.
+The polling deadline is checked again before accepting the served identity.
+Failed or cancelled validation attempts to pause the
 new publication and then restores that exact code version. The runner verifies
 the previous identity and activation; it refuses to overwrite a later release.
 Uncertain recovery remains unverified. No namespace or database is restored.
@@ -89,8 +97,11 @@ all charged daily ledgers stay charged. Class lifecycle changes require a new
 recovery review. The first approved rollback target is the reviewed `abe903d`
 publication; later targets must advertise this state-preservation protocol.
 
-Local tests exercise these failure paths. Preview support, production rollout
-and rollback still need an authorized live Cloudflare run. Tests do not certify
+[Run 41349915591](https://github.com/vinnik-dmitry07/favorite-papers/actions/runs/41349915591)
+verified the private Preview and restored the previous code and activation after
+the permanent endpoint rejected its first admin request. The served publication
+identity was not recorded at that 403, so propagation delay remains a hypothesis.
+The new identity wait still needs a live publication. These checks do not certify
 platform memory or production readiness. The changed loader still does not match
 the historical live-geometry pin; that pin has not been rewritten.
 
