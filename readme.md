@@ -1,19 +1,19 @@
 # Key papers of AI/AGI/ASI
 
-**For AI agents:** start at the [agent guide and paginated catalog](https://vinnik-dmitry07.github.io/favorite-papers/agents/) or [llms.txt](https://vinnik-dmitry07.github.io/favorite-papers/llms.txt). Each paper links its full text and source Markdown where available, along with all incoming/outgoing catalog citations. No JavaScript, login, or clone is needed. The guide links REST/OpenAPI/MCP when a live API deployment has passed its checks; semantic search requires that API. [API setup and limits](worker/README.md).
-
-Score badges: [⚖ final · accepts/models · WATCH|DROP](filter/report.md) — aggregated quality in [-1, +1]. 0 is where reviewer Accept/Reject votes split 50/50. accepts/models are raw reviewer votes, not the aggregated score. WATCH/DROP is appended when the verdict is not KEEP. Older landmark papers can be inflated (pretrain leakage).
+### [->Live map<-](https://vinnik-dmitry07.github.io/favorite-papers/)
 
 ### New: Spurious rewards [analysis](llm_gains.md).
 
 ![Own citation map](assets/preview.png)
 
-Own version of the Litmaps map (preferred), with the links parsed straight out of the papers (arXiv/ar5iv HTML, page HTML, Crossref) instead of a hosted service: [->live map<-](https://vinnik-dmitry07.github.io/favorite-papers/) (select papers — shift-click adds — and press *copy link*, or append `#sel=arxiv:2407.21783,doi:10.1038/s41586-023-06924-6` with the readme keys) or open src/index.html locally (`python -m http.server` from the repo root). Rebuild with `python src/parse_readme.py`, then `python src/fetch_refs.py`, then `python src/build_graph.py`. Telegram posts: put `TG_API_ID` and `TG_API_HASH` in `.env`, then `python tg/export.py` (interactive first login; the local index is hundreds of MB). Look up with `python tg/find.py <url>`. [⚖ +0.08 · 3/7 · WATCH](filter/report.md#arxiv-2407.21783)
-
 ![Litmaps](assets/map.png)
 
 Litmaps — [https://app.litmaps.com/shared/5bb436d0-a026-493a-a765-f48fda77ad0c](https://app.litmaps.com/shared/5bb436d0-a026-493a-a765-f48fda77ad0c)
 
+**For AI agents:** start at the [agent guide and paginated catalog](https://vinnik-dmitry07.github.io/favorite-papers/agents/) or [llms.txt](https://vinnik-dmitry07.github.io/favorite-papers/llms.txt). Each paper links its full text and source Markdown where available, along with all incoming/outgoing catalog citations. No JavaScript, login, or clone is needed. The guide links REST/OpenAPI/MCP when a live API deployment has passed its checks; semantic search requires that API. [API setup and limits](worker/README.md).
+Rebuild with `python src/parse_readme.py`, then `python src/fetch_refs.py`, then `python src/build_graph.py`. Telegram posts: put `TG_API_ID` and `TG_API_HASH` in `.env`, then `python tg/export.py` (interactive first login; the local index is hundreds of MB). Look up with `python tg/find.py <url>`.
+
+Score badges: [⚖ final · accepts/models · WATCH|DROP](filter/report.md) — aggregated quality in [-1, +1]. 0 is where reviewer Accept/Reject votes split 50/50. accepts/models are raw reviewer votes, not the aggregated score. WATCH/DROP is appended when the verdict is not KEEP. Older landmark papers can be inflated (pretrain leakage).
 
 ## Reinforcement learning
 
@@ -471,7 +471,5 @@ Litmaps — [https://app.litmaps.com/shared/5bb436d0-a026-493a-a765-f48fda77ad0c
 - Machine Learning for Ancient Languages: A Survey — [https://direct.mit.edu/coli/article/doi/10.1162/coli_a_00481/116160/](https://direct.mit.edu/coli/article/doi/10.1162/coli_a_00481/116160/)
 - TPU v4 — [https://arxiv.org/abs/2304.01433](https://arxiv.org/abs/2304.01433) [⌲ tg](https://t-me.translate.goog/s/gonzo_ML/2313?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp) [⚖ +0.02 · 3/6 · WATCH](filter/report.md#arxiv-2304.01433)
 - Orbifold Tutte embeddings (geometry processing) — [https://www.semanticscholar.org/paper/4165542ba777ea63facc7ea9866f43ba63f054ae](https://www.semanticscholar.org/paper/4165542ba777ea63facc7ea9866f43ba63f054ae)
-
----
 
 Telegram links: `[⌲ tg](...)` is included only when a public channel post (`t.me/<channel>/<id>`) was found in the saved message. It opens that post through Google Translate to English (`https://t-me.translate.goog/s/<channel>/<id>?_x_tr_sl=auto&_x_tr_tl=en...`). Papers without such a public post link have no Telegram badge.
